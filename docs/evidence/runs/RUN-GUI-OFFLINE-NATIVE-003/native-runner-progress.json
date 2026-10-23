@@ -1,0 +1,47 @@
+{
+  "phase": "parent-navigation",
+  "source_commit": "80a40511d04757750746c534c9257e2d9b611c3a",
+  "expected_test_ids": [
+    "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
+    "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+    "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once"
+  ],
+  "completed_jobs": [
+    {
+      "name": "desktop",
+      "command": [
+        "/workspace/template-Ai/.venv/bin/python",
+        "tools/capture_desktop_workspace.py",
+        "--folder",
+        "/tmp/template-ai-desktop-native-003"
+      ],
+      "qt_platform": "xcb",
+      "PYTHONPATH": "tests:.",
+      "exit_code": 0,
+      "test_ids": [
+        "test_desktop_workspace.DesktopNavigationTests.test_deleted_property_timer_ignores_real_pending_shutdown_signal",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_background_job_records_duration_without_private_message",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_guidance_navigation_opens_four_task_pages",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_navigation_keeps_three_modes_and_original_commands",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_support_navigation_exports_local_safe_report",
+        "test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling",
+        "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data",
+        "test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview",
+        "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation",
+        "test_desktop_workspace.DesktopProductionTests.test_real_background_cancel_stays_enabled_and_close_waits_for_worker",
+        "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+        "test_desktop_workspace.DesktopProductionTests.test_resume_selector_updates_main_graph_dimensions_and_embedded_session"
+      ],
+      "expected_test_count": 12,
+      "tests_run": 12,
+      "unittest_seconds": 234.735,
+      "elapsed_seconds": 235.542,
+      "source_manifest_before": "31cb3f2505d6cdaaeea453a6d45ceed655268b05ea5b8d2e0cddac56069aade4",
+      "source_manifest_after": "31cb3f2505d6cdaaeea453a6d45ceed655268b05ea5b8d2e0cddac56069aade4",
+      "source_unchanged": true,
+      "runtime_error_lines": [],
+      "log": "desktop.log",
+      "status": "PASS"
+    }
+  ]
+}

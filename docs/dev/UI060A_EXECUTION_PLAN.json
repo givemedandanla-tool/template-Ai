@@ -1,0 +1,120 @@
+{
+  "id": "UI060A-EXECUTION-PLAN",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
+  "parent": "UI-060A",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "original_clauses": [
+    "預設突出 AI 推薦的最佳排版，但若搜尋未完成或未有可證明的全域最佳，不得誤稱最優。",
+    "使用者可展開其他候選方案，檢視預覽、優缺點及驗證差異。",
+    "明確區分正常、警告、阻擋；低把握草稿不得標示為正式合格。",
+    "點選問題可定位對應人物、公司、欄位及版面物件，並顯示原因與修正入口。",
+    "允許人工修正，遵守 UI-059 人工編輯保護、版本柵欄與重驗規則。",
+    "任何未通過當前實體尺寸完整硬性印前驗證的候選，不得正式輸出。"
+  ],
+  "normative_clause_count": 6,
+  "authorization": "User all28 instruction supersedes old requirements-only footer; UI060A approved six clauses only. Original synchronization topic is already approved as UI061, not an extra undecided duplicate.",
+  "references": [
+    {
+      "name": "Qt6.8.3 QItemSelectionModel",
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/corelib/itemmodels/qitemselectionmodel.cpp",
+      "bytes": 69537,
+      "sha256": "372589d263c50ef18a8db74257a98dc236544a0262313dabce456664b4e5b68a",
+      "local": "/tmp/ui060a-reference-review/qitemselectionmodel.cpp"
+    }
+  ],
+  "actually_reviewed": [
+    "Qt6.8.3 currentChanged/currentIndex selection model implementation; reuse Qt item selection and existing Canvas, not new result database",
+    "MicrosoftVSCode1.66 public LocalHistory compare/restore workflow previously actually reviewed for UI059; compare nonformal copies and explicit selection only",
+    "Existing layout score and layout_session/search_result use exact evaluated scope; do not invent calibrated model confidence"
+  ],
+  "math": [
+    "Recommend argmax(existing rule score) over current fully qualified evaluated candidates only; deterministic stable identity tie break",
+    "An incomplete finite candidate subset does not prove global optimality or global infeasibility; preserve checked/unstarted/excluded scope",
+    "Gate comparison uses same named condition IDs and actual PASS/FAIL/UNKNOWN, no score conversion into safety"
+  ],
+  "reuse": [
+    "Existing result pane and candidate objects/risk groups; no parallel results center or store",
+    "Existing candidate_edit/manual fencing, shared worker and UI058 scope metadata",
+    "Existing diagnostic_schema typed slot/owner/kind and actual input graph/Canvas focus; no inferred owner from strings",
+    "Qt selection/splitter/scroll controls and existing marked preview rendering"
+  ],
+  "packages": [
+    {
+      "order": 1,
+      "scope": "Current qualified recommendation and truthful partial-scope summary; existing result pane integration"
+    },
+    {
+      "order": 2,
+      "scope": "Expandable nonformal two-candidate preview and named Gate differences; exact snapshot/version selection fence"
+    },
+    {
+      "order": 3,
+      "scope": "Clickable typed problem location and existing correction routes for field/owner/slot/font/logo/source"
+    },
+    {
+      "order": 4,
+      "scope": "Adversarial native tests/capture and original6 mapping; then next UI061"
+    }
+  ],
+  "tests": [
+    "High score blocked/stale/unknown candidate never recommended or exported",
+    "Partial/cancelled collection never called global optimum or all designs checked",
+    "Comparison does not mutate any candidate/manual geometry/business object; stale dialog selection rejected",
+    "Problem location highlights actual slot and correct owner/field in input graph or legacy table; unknown scope remains explicit",
+    "Actual candidate fixes preserve UI059 manual history/locked geometry and enforce current per-size output Gate"
+  ],
+  "limits": [
+    "Controlled synthetic Linux verification; no actual reference Windows host/private Illustrator certification",
+    "No model training/paid inference/new output engine/new customer categories/UI056D/UI048 scope"
+  ],
+  "next_action": "UI061 approved synchronization scope; UI059/UI060A await next immutable full batch.",
+  "targeted_checks": [
+    {
+      "log": "docs/qa/targeted/ui060a-recommendation-001.log",
+      "status": "PASS",
+      "tests": 15
+    },
+    {
+      "log": "docs/qa/targeted/ui060a-comparison-localization-003.log",
+      "status": "PASS",
+      "tests": 25
+    },
+    {
+      "log": "docs/qa/targeted/ui059-ui060a-combined-008.log",
+      "status": "PASS",
+      "tests": 90
+    },
+    {
+      "log": "docs/qa/targeted/ui060a-final-current-output-010.log",
+      "status": "PASS",
+      "tests": 33
+    }
+  ],
+  "native_checks": [
+    {
+      "log": "docs/qa/targeted/ui060a-native-004.log",
+      "status": "PASS",
+      "views": 8,
+      "visual_review": "First4 reviewed; found compare reason too generic and legacy field clipped, fixed"
+    },
+    {
+      "log": "docs/qa/targeted/ui060a-native-005.log",
+      "status": "PASS",
+      "views": 8,
+      "visual_review": "All8 individually inspected and hashed: docs/qa/targeted/ui060a-native-005-visual-review.json"
+    }
+  ],
+  "diagnostics": [
+    {
+      "log": "docs/qa/targeted/ui060a-size-output-regression-007.log",
+      "status": "FAIL",
+      "finding": "After target dimension changes, recheck old-size candidate still opened formal file dialog; preserve actual failure and fix Main list/selection/pre-save gates to current_assessment"
+    },
+    {
+      "log": "docs/qa/targeted/ui060a-save-window-009.log",
+      "status": "FAIL",
+      "finding": "Positive formal PNG and input-change fence passed; manual mutation inside save dialog exported earlier geometry. Fixed exact selection/input/source/root/manual/risk token before/after dialog;01033PASS."
+    }
+  ]
+}

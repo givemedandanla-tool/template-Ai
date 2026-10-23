@@ -1,0 +1,39 @@
+test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block (test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block) ... Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+FAIL
+test_actual_encrypted_save_failure_success_later_edit_and_clear_are_distinct (test_workbench_navigation.WorkbenchNavigationTests.test_actual_encrypted_save_failure_success_later_edit_and_clear_are_distinct) ... This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+FAIL
+
+======================================================================
+FAIL: test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block (test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_workbench_multi_navigation.py", line 17, in test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block
+    QTimer.singleShot(0,cancel);f.w.logo_center(return_origin=f.d);self.assertEqual(seen,[[100,60]]);f.select('A90')
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[90, 54]] != [[100, 60]]
+
+First differing element 0:
+[90, 54]
+[100, 60]
+
+- [[90, 54]]
++ [[100, 60]]
+
+======================================================================
+FAIL: test_actual_encrypted_save_failure_success_later_edit_and_clear_are_distinct (test_workbench_navigation.WorkbenchNavigationTests.test_actual_encrypted_save_failure_success_later_edit_and_clear_are_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_workbench_navigation.py", line 113, in test_actual_encrypted_save_failure_success_later_edit_and_clear_are_distinct
+    self.assertNotIn('背景執行中',w.statusBar().currentMessage())
+AssertionError: '背景執行中' unexpectedly found in '保存短期加密排版快照 · 背景執行中，完成前不宣稱成功'
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.294s
+
+FAILED (failures=2)

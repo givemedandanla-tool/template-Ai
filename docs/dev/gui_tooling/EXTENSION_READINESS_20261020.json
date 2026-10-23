@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "status": "DEVELOPMENT_TOOLING_SELF_VERIFIED_SUPPORTED_LINUX_SCOPE",
+  "contract": "docs/dev/GUI_OFFLINE_DELIVERY_CONTRACT_20261020.md",
+  "source_integrity": {
+    "original_upstream_files": 74,
+    "additional_public_files": 15,
+    "all_hashes_verified": true,
+    "additional_bytes": 85144
+  },
+  "discovery": {
+    "project_skills": [
+      "template-ai-gui",
+      "template-ai-desktop-visual-review",
+      "template-ai-qt-interaction-review",
+      "template-ai-gui-code-review"
+    ],
+    "agent_task_roles": [
+      "visual-designer",
+      "qt-integrator",
+      "interaction-reviewer",
+      "offline-privacy-reviewer",
+      "gui-code-reviewer"
+    ],
+    "scope": "Project-local discoverability and reusable tasks; no platform model settings changed"
+  },
+  "executed": [
+    {
+      "command": ".venv/bin/python docs/dev/gui_tooling/bootstrap_gui.py",
+      "result": "PASS_REPEATED"
+    },
+    {
+      "command": ".venv/bin/python docs/dev/gui_tooling/agent_task.py --list",
+      "result": "PASS_5_ROLES"
+    },
+    {
+      "command": ".venv/bin/python docs/dev/gui_tooling/agent_task.py --role interaction-reviewer --base 33d24c2 --goal REVIEW",
+      "result": "PASS_TASK_RENDERED"
+    },
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_gui_tooling_extensions.py -v",
+      "result": "PASS_3_TESTS"
+    },
+    {
+      "command": ".venv/bin/python docs/dev/gui_tooling/vendor/openai-screenshot/scripts/take_screenshot.py --help",
+      "result": "PASS"
+    }
+  ],
+  "native_smoke": {
+    "status": "INITIAL_REAL_MAINWINDOW_3_NATIVE_CAPTURES_PASS",
+    "size": [
+      1280,
+      860
+    ],
+    "data": "Generated empty local library only",
+    "capture": "Explicit owned winId; original screenshot helper; no test mode",
+    "adoption": "Initial development-tool smoke only; final updated GUI/source-fenced capture must be independently rerun after source freeze"
+  },
+  "not_verified": [
+    "Final refactored GUI behavior by this tool receipt",
+    "Human beginner usability",
+    "Windows/macOS helper execution",
+    "Complete accessibility certification",
+    "Real artwork, print or hardware qualification"
+  ],
+  "tool_sources": {
+    "docs/dev/gui_tooling/bootstrap_gui.py": "72df9a9e51013c68a6c7cc5ac8c91542ab956f72504f4d7be86207df33035ebe",
+    "docs/dev/gui_tooling/tooling_extensions.py": "6f81115e8e5796fe9aefde9a9749f524a55dfbe5bf3023e3f0080ab4614ce600",
+    "docs/dev/gui_tooling/agent_task.py": "2dc81b1c256f5802a635e5fff62ef6bc414af0db6ca4c209facdc121b556856d",
+    "docs/dev/gui_tooling/capture_owned_workspace.py": "e4b493fc0f7e006612a1bb6e28d8d0377d970e713b44e5b5a25e107fdc58445a"
+  }
+}

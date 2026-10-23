@@ -1,0 +1,14 @@
+F.......
+======================================================================
+FAIL: test_actual_runtime_probe_returns_finite_metrics_without_claiming_reference_hardware (test_runtime_resources.RuntimeResourcesTests.test_actual_runtime_probe_returns_finite_metrics_without_claiming_reference_hardware)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_runtime_resources.py", line 58, in test_actual_runtime_probe_returns_finite_metrics_without_claiming_reference_hardware
+    self.assertIsNotNone(value.memory_total);self.assertIsNotNone(value.memory_available);self.assertGreaterEqual(value.memory_total,value.memory_available);self.assertGreaterEqual(value.memory_available,0);self.assertGreater(value.disk_free,0);self.assertEqual(value.basis,'CURRENT_RUNTIME_ONLY_NOT_REFERENCE_HARDWARE')
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+FAILED (failures=1)

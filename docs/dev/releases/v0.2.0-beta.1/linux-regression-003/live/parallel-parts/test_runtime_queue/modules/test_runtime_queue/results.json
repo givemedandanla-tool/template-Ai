@@ -1,0 +1,61 @@
+{
+  "records": [
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_dead_running_request_is_recoverable_and_keeps_all_original_backend_results",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.758151
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_dead_session_does_not_auto_resume_and_explicit_resume_keeps_original_arrival_rank",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.594341
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_fifo_does_not_follow_wall_clock_and_atomic_claim_cannot_bypass_older_live_scope",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.138078
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_other_window_cannot_duplicate_worker_and_stale_request_cas_rolls_back",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.629753
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_pressure_resume_uses_same_confirmed_scope_and_persisted_completed_units",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.342882
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_queue_audit_failure_rolls_back_backend_claim_worker_lease_and_request",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.641011
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_queue_bookkeeping_never_changes_learning_epoch_and_requires_scope_confirmation",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.654141
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure",
+      "status": "ERROR",
+      "details": [
+        "Traceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_runtime_queue.py\", line 95, in test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure\n    with self.assertRaises(WorkerTimeout):run_isolated(self.library.root,'AUTO_JOB',job['id'],token,admission=lambda:resources.ALLOW,unit_timeout=2.5,process_factory=factory)\n                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/template-Ai/template_ai/runtime_worker.py\", line 110, in run_isolated\n    if process.returncode!=0 or not result:raise RuntimeError('worker未完成已核實結果；'+''.join(errors)[-4000:])\n                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: worker未完成已核實結果；usage: -c [-h] --root ROOT --kind {JOB,AUTO_JOB,EVAL_JOB} --job JOB --token\n          TOKEN\n-c: error: unrecognized arguments: template_ai.runtime_worker\n\n"
+      ],
+      "seconds": 0.951455
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_scope_changed_request_is_blocked_and_next_eligible_is_not_starved",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.41701
+    }
+  ],
+  "runtime_errors": []
+}

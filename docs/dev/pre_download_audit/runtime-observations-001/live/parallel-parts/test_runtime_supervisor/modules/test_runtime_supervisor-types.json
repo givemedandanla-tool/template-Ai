@@ -1,0 +1,297 @@
+{
+  "schema": 1,
+  "mode": "TYPE_NAMES_ONLY_NO_PAYLOADS_NO_PROPERTY_GETTERS",
+  "bounded_visits_per_point": 128,
+  "observer_errors": {},
+  "rows": {
+    "D-APP-03575": {
+      "visits": 11,
+      "values": {
+        "value": {
+          "builtins.int": 10,
+          "builtins.dict": 11,
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_failed_policy_audit_rolls_back_persistence_but_keeps_safe_unpersisted_local_pause",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_invalid_persisted_policy_pauses_background_without_silently_resetting_it",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_library_close_and_project_switch_stop_admission_without_sqlite_from_worker",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_raw_sqlite_close_stops_probe_and_timer_without_late_ui_database_errors"
+      ],
+      "member_checks": {}
+    },
+    "D-APP-03577": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.dict": 3,
+          "template_ai.runtime_supervisor.RuntimeSupervisor": 3
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 3
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_failed_policy_audit_rolls_back_persistence_but_keeps_safe_unpersisted_local_pause",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes"
+      ],
+      "member_checks": {}
+    },
+    "D-TOO-04654": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_raw_sqlite_close_stops_probe_and_timer_without_late_ui_database_errors"
+      ],
+      "member_checks": {}
+    },
+    "D-TOO-04656": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "run_evidence.EvidenceResult": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_raw_sqlite_close_stops_probe_and_timer_without_late_ui_database_errors"
+      ],
+      "member_checks": {
+        "run_evidence.EvidenceResult:True": 1
+      }
+    },
+    "D-TES-11008": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QWidget": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_raw_sqlite_close_stops_probe_and_timer_without_late_ui_database_errors"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QWidget:True": 1
+      }
+    },
+    "D-TES-11009": {
+      "visits": 20,
+      "values": {
+        "receiver": {
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 5,
+          "PySide6.QtWidgets.QWidget": 15
+        }
+      },
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_failed_policy_audit_rolls_back_persistence_but_keeps_safe_unpersisted_local_pause",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_invalid_persisted_policy_pauses_background_without_silently_resetting_it",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_library_close_and_project_switch_stop_admission_without_sqlite_from_worker",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_raw_sqlite_close_stops_probe_and_timer_without_late_ui_database_errors"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QWidget:True": 15
+      }
+    },
+    "D-TES-11010": {
+      "visits": 20,
+      "values": {
+        "receiver": {
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 5,
+          "PySide6.QtWidgets.QWidget": 15
+        }
+      },
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_failed_policy_audit_rolls_back_persistence_but_keeps_safe_unpersisted_local_pause",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_invalid_persisted_policy_pauses_background_without_silently_resetting_it",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_library_close_and_project_switch_stop_admission_without_sqlite_from_worker",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_raw_sqlite_close_stops_probe_and_timer_without_late_ui_database_errors"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QWidget:True": 15
+      }
+    },
+    "D-TES-11016": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QWidget": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QWidget:True": 1
+      }
+    },
+    "D-TES-11017": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QWidget": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QWidget:True": 1
+      }
+    },
+    "D-TES-11018": {
+      "visits": 3,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QWidget": 3
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QWidget:True": 3
+      }
+    },
+    "D-TES-11019": {
+      "visits": 2,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QWidget": 2
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_failed_policy_audit_rolls_back_persistence_but_keeps_safe_unpersisted_local_pause"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QWidget:True": 2
+      }
+    },
+    "D-TES-11020": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QWidget": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_failed_policy_audit_rolls_back_persistence_but_keeps_safe_unpersisted_local_pause"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QWidget:True": 1
+      }
+    },
+    "D-TES-11021": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QWidget": 1
+        }
+      },
+      "returns": {
+        "Library.close:builtins.NoneType": 1
+      },
+      "normal_calls": {},
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_library_close_and_project_switch_stop_admission_without_sqlite_from_worker"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QWidget:True": 1
+      }
+    },
+    "D-TES-11022": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QWidget": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_invalid_persisted_policy_pauses_background_without_silently_resetting_it"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QWidget:True": 1
+      }
+    },
+    "D-TES-11023": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QWidget": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_invalid_persisted_policy_pauses_background_without_silently_resetting_it"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QWidget:True": 1
+      }
+    }
+  }
+}

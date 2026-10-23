@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261021-NONCODE-RESEARCH",
+  "kind": "INCREMENTAL_RESEARCH_ONLY_NOT_PRODUCT_SNAPSHOT",
+  "phase": "PREPARED",
+  "base_commit": "24202acab96c84f81aede27eb947d3975be1851f",
+  "created_utc": "2026-10-21T02:57:06.302712+00:00",
+  "source_files": {
+    "docs/dev/non_code_audit/SOURCES.json": {
+      "bytes": 9161,
+      "sha256": "31da55eec6949ef2ba9fcc71b7beba68ebdba93b86e17c1bbbe2571910e7a0ed",
+      "git_blob_sha1": "5b8126debd78f863fdfe18a2e086ce9ea61e2919"
+    }
+  },
+  "source_manifest_sha256": "33d2dcd25532148606ec39f1de8cc224af21a7ec46b5baeab7e2708ef225db3f",
+  "local_snapshot": {
+    "path": ".checkpoints/CP-20261021-NONCODE-RESEARCH/source.zip",
+    "sha256": "1e49119931007816833602ac470f3a5f16aa07e30cd40b86533c410ca51cf765"
+  },
+  "prerequisite": "Existing verified24202aca repository; ZIP contains only this research file, not product code.",
+  "requirement_ids": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-004"
+  ],
+  "next_step": "Complete design-only32-check non-code audit plan, persist scope and acceptance, report without executing product audit.",
+  "remote_confirmation": "Not yet read back; no remote status inferred from local commit."
+}

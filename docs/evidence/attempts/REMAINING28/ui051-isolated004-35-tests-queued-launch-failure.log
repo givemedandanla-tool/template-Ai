@@ -1,0 +1,20 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.........This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+...........F...........
+======================================================================
+FAIL: test_worker_start_failure_releases_lease_and_busy_controls_without_publishing (test_automatic_training.AutomaticTrainingGuiTests.test_worker_start_failure_releases_lease_and_busy_controls_without_publishing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_automatic_training.py", line 179, in test_worker_start_failure_releases_lease_and_busy_controls_without_publishing
+    self.assertFalse(dialog.running);self.assertFalse(window.busy)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 35 tests in 48.109s
+
+FAILED (failures=1)

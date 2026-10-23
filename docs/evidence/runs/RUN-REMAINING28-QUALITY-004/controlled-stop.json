@@ -1,0 +1,33 @@
+{
+  "status": "CONTROLLED_STOP_AFTER_CONFIRMED_BORROWED_FIXTURE_FAILURE",
+  "source_commit": "95d11c53942c7b6ef20d0d65d8724829de24b75e",
+  "actual_shell_exit_code": 130,
+  "failed_modules": [
+    {
+      "module": "test_diagnostic_reports",
+      "owned_pid": 337010,
+      "exit_code": 1,
+      "seconds": 22.413073,
+      "expected": 29,
+      "completed": 29,
+      "missing_test_ids": [],
+      "unexpected_test_ids": [],
+      "duplicate_ids": false,
+      "parse_error": null,
+      "timed_out": false,
+      "failure": null,
+      "remaining_owned_pids": [],
+      "healthy": false,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "completed_module_journal_tests": 644,
+  "source_unchanged": true,
+  "formal_complete": false,
+  "capture_executed": false,
+  "run_json_not_fabricated": true,
+  "cause": "SeventyUiTests borrowed setUp registered self.close_window that other TestCase classes do not own; fix class-qualified cleanup registration",
+  "raw_module_files": 481,
+  "raw_module_bytes": 563158
+}

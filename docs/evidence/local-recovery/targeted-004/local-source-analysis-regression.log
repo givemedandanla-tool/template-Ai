@@ -1,0 +1,33 @@
+....E..........................
+======================================================================
+ERROR: test_bad_source_is_isolated_and_other_source_finishes (test_automatic_training.AutomaticTrainingTests.test_bad_source_is_isolated_and_other_source_finishes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_automatic_training.py", line 71, in test_bad_source_is_isolated_and_other_source_finishes
+    result=self.run_job(self.job([bad,self.path]))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_automatic_training.py", line 36, in job
+    return self.service.create(self.service.preflight(paths or [self.path]),'SYNTHETIC_TEST',True)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/automatic_training.py", line 29, in preflight
+    inspect_report(self.library,report,cancel,lambda done,total,path:progress(dict(stage='作品／結構比對',done=done,total=total,path=path)) if progress else None)
+  File "/workspace/template-Ai/template_ai/similarity_preflight.py", line 109, in inspect_report
+    source=import_file(item['path'],temp,item['page']);source.update(id='preflight-'+item['id'],current_path=item['path'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/importer.py", line 204, in import_file
+    width, height = svg_size(svg_path)
+                    ^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/importer.py", line 84, in svg_size
+    root = ET.parse(path).getroot()
+           ^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/xml/etree/ElementTree.py", line 1204, in parse
+    tree.parse(source, parser)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/xml/etree/ElementTree.py", line 569, in parse
+    self._root = parser._parse_whole(source)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+xml.etree.ElementTree.ParseError: syntax error: line 1, column 0
+
+----------------------------------------------------------------------
+Ran 31 tests in 43.153s
+
+FAILED (errors=1)

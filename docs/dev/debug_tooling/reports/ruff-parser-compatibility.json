@@ -1,0 +1,90 @@
+{
+  "status": "UPSTREAM_LIMITATION_NOT_PRODUCT_SYNTAX_ERROR",
+  "selected_version": "0.17.1",
+  "same_rules_and_python_target": true,
+  "probes": [
+    {
+      "python": "3.11",
+      "cpython_compile": [
+        true,
+        true,
+        true
+      ],
+      "minimal_source": "value = 1;match = 2\n",
+      "ruff_exit": 1,
+      "ruff_diagnostics": [
+        {
+          "cell": null,
+          "code": "invalid-syntax",
+          "end_location": {
+            "column": 16,
+            "row": 1
+          },
+          "filename": "ISOLATED_PROBE.py",
+          "fix": null,
+          "location": {
+            "column": 11,
+            "row": 1
+          },
+          "message": "Compound statements are not allowed on the same line as simple statements",
+          "name": "invalid-syntax",
+          "noqa_row": null,
+          "severity": "error",
+          "url": null
+        }
+      ]
+    },
+    {
+      "version": "0.16.0",
+      "exit": 1,
+      "diagnostics": [
+        {
+          "cell": null,
+          "code": "invalid-syntax",
+          "end_location": {
+            "column": 16,
+            "row": 1
+          },
+          "filename": "ISOLATED_PROBE.py",
+          "fix": null,
+          "location": {
+            "column": 11,
+            "row": 1
+          },
+          "message": "Compound statements are not allowed on the same line as simple statements",
+          "name": "invalid-syntax",
+          "noqa_row": null,
+          "severity": "error",
+          "url": null
+        }
+      ]
+    },
+    {
+      "version": "0.15.6",
+      "exit": 1,
+      "diagnostics": [
+        {
+          "cell": null,
+          "code": "invalid-syntax",
+          "end_location": {
+            "column": 16,
+            "row": 1
+          },
+          "filename": "ISOLATED_PROBE.py",
+          "fix": null,
+          "location": {
+            "column": 11,
+            "row": 1
+          },
+          "message": "Compound statements are not allowed on the same line as simple statements",
+          "noqa_row": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "decision": "All three releases reject a Python-3.11-grammar-valid, CPython-3.12-compiled soft-keyword assignment. Keep pinned current release; preserve findings, add CPython compile coverage and mark parser limitations. Do not modify product code or hide warnings. Ruff F821 coverage is incomplete on the three parser-limited files; Pyright and CPython still cover them.",
+  "correction": "Initial 3.11 label was inferred from Windows documentation; actual compile runtime is 3.12.14. Native Python 3.11 is not verified.",
+  "actual_compile_runtime": "3.12.14",
+  "python_3_11_grammar_under_3_12": "PASS"
+}

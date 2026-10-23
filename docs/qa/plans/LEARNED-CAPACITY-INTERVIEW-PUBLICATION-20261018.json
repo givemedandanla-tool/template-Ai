@@ -1,0 +1,28 @@
+{
+  "status": "REMOTE_VERIFIED_INTERVIEW_DIRECTION_ONLY",
+  "created_at": "2026-10-18T09:34:22.044175+00:00",
+  "snapshot": {
+    "commit": "182600481163e1bfae3aa19605fd56a6d1adfa0f",
+    "tree": "e78ec5f8756832fe9e92a4233521d6aa97904f5a",
+    "files": 7061,
+    "method": "NATIVE_GIT_FETCH_AND_EXACT_TREE_BLOB_READBACK",
+    "checkpoint": "CP-20261018-LEARNED-CAPACITY-INTERVIEW"
+  },
+  "receipt": "docs/checkpoints/CP-20261018-LEARNED-CAPACITY-INTERVIEW.receipt.json",
+  "decision": "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
+  "contract_field": "learned_capacity_input_policy",
+  "check": "docs/qa/plans/LEARNED-CAPACITY-INTERVIEW-CHECK-20261018.json",
+  "governance": {
+    "status": "PASS",
+    "requirements": 169,
+    "completed_scoped": 163,
+    "parent_topics": 75,
+    "tests_known": 1549
+  },
+  "scope": "Capacity-first interview direction and parameter schema only; no code,numeric limits,model training or feature verification",
+  "work_packages": 8,
+  "retained_acceptance": 50,
+  "implemented": 0,
+  "verified": 0,
+  "next_interview": "Quality reference/label source for optimal intervals,then quality-capacity tradeoffs"
+}

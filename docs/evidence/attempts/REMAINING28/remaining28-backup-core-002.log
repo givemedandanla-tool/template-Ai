@@ -1,0 +1,14 @@
+.F...........
+======================================================================
+FAIL: test_authenticated_unknown_schema_is_blocked_and_incomplete_restore_cannot_open_as_library (test_relational_backup.RelationalBackupTests.test_authenticated_unknown_schema_is_blocked_and_incomplete_restore_cannot_open_as_library)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_relational_backup.py", line 112, in test_authenticated_unknown_schema_is_blocked_and_incomplete_restore_cannot_open_as_library
+    with self.assertRaisesRegex(ValueError,'trigger/view'):backup.restore_bundle(forged,self.root/'unsupported',PASSWORD,True)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 13 tests in 3.747s
+
+FAILED (failures=1)

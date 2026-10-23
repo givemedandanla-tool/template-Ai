@@ -1,0 +1,12 @@
+# UI053原第4條：訓練／保留集切換的診斷邊界
+
+原9全文不改；此文件是尚未實作的缺口方案，不能當驗收完成。現有TRAIN filter只是0個HOLDOUT案例，不等於真的TRAIN推論診斷。
+
+- 重用QualityGold／QualitySets／QualityProtocols／EVAL_JOB／同FIFO與source-only engine，不建立平行DB／執行器。Math沿用connected related groups、class-agnostic匹配、適用領域計數；fit資料的描述數不作新來源泛化或Wilson品質放行依據。依已實讀sklearn GroupKFold/TP-FP-FN與SageMaker ModelQualityMonitor separate baseline/groundtruth/input scope，版本hash在REMAINING28_ENGINEERING_BASIS。
+- manifest明列evaluation_role=HOLDOUT/TRAIN/VALIDATION。TRAIN/VALIDATION只做受控診斷，不等於新增訓練准入或執行訓練，不使用independent品質PASS。相同來源／近重複／客戶／模板家族仍不能跨角色；歷史TRAIN曝光不能被改名洗成HOLDOUT。
+- 既有Gold的INDEPENDENT_QUALITY_EVALUATION_LOCAL許可不擴張。TRAIN/VALIDATION需另建明確QUALITY_DIAGNOSTICS_LOCAL_ONLY許可的Gold版本；DIAGNOSTIC Gold不能混入獨立HOLDOUT。均local only，不授權雲端上傳／訓練。
+- HOLDOUT沿用每相關content一個固定預宣告pair及答案曝光失效。TRAIN/VALIDATION可用相同固定診斷集在不同預宣告pair檢查候選，每pair固定版本／分母，不消耗或重置HOLDOUT資格。答案揭露獨立記QUALITY_ANSWER_EXPOSURE（perprotocol）；只有HOLDOUT另標HOLDOUT_EXPOSED。無合法Gold或未解析來源仍在分母。
+- statistics在TRAIN/VALIDATION僅描述TP/FP/FN/mm/重大錯誤／未知，各classstate明示DESCRIPTIVE_ONLY，quality_pass=False、candidate_decision_eligible=False、無quality_verified推薦或規則發布；不把fit資料的CI解讀成泛化品質。
+- GUI原生選擇用途與資料角色、版本和分頁診斷；actual source inference先於Gold讀取，正確答案對照仍需明確揭露。
+
+驗證：真實受控TRAIN來源+DIAGNOSTIC-only Gold+兩actual pipelines→FIFO結果→逐案GUI；無Gold入獨立集許可的錯用拒絕、role跨界拒絕、即使描述perfect也不能正式qualitydecision、重複診斷不洗獨立性、HOLDOUT舊防洩漏／取消續跑／原9及全source回歸。

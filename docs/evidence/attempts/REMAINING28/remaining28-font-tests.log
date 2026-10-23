@@ -1,0 +1,45 @@
+..........F.........................................This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+...This plugin does not support propagateSizeHints()
+.............E.....
+======================================================================
+ERROR: test_persistent_actual_style_matches_layout_and_real_export (test_font_review.FontReviewTests.test_persistent_actual_style_matches_layout_and_real_export)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_review.py", line 246, in test_persistent_actual_style_matches_layout_and_real_export
+    for ext in ('png','pdf'):self.assertGreater(export(candidate,self.root/('style.'+ext),96).stat().st_size,100)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/render.py", line 204, in export
+    raise ValueError('；'.join(dict.fromkeys(rights_issues)))
+ValueError: 匯入字型尚無印製／轉出授權確認，僅允許非正式預覽
+
+======================================================================
+FAIL: test_unapproved_invalid_and_duplicate_font_protect_catalog (test_persistent_fonts.PersistentFontTests.test_unapproved_invalid_and_duplicate_font_protect_catalog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/template_ai/font_evidence.py", line 35, in _faces
+    return [TTFont(BytesIO(data), lazy=True)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/ttFont.py", line 189, in __init__
+    self.reader = SFNTReader(file, checkChecksums, fontNumber=fontNumber)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/sfnt.py", line 81, in __init__
+    raise TTLibError("Not a TrueType or OpenType font (not enough data)")
+fontTools.ttLib.TTLibError: Not a TrueType or OpenType font (not enough data)
+
+The above exception was the direct cause of the following exception:
+
+ValueError: 無法解析OpenType字型證據
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_persistent_fonts.py", line 71, in test_unapproved_invalid_and_duplicate_font_protect_catalog
+    with self.assertRaisesRegex(ValueError, "無法由 Qt"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "無法由 Qt" does not match "無法解析OpenType字型證據"
+
+----------------------------------------------------------------------
+Ran 75 tests in 8.191s
+
+FAILED (failures=1, errors=1)

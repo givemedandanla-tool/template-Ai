@@ -1,0 +1,16 @@
+test_unfocused_property_wheel_never_changes_numeric_draft_by_hover (test_canvas_command_focus.CanvasCommandFocusTests.test_unfocused_property_wheel_never_changes_numeric_draft_by_hover) ... Fontconfig error: No writable cache directories
+FAIL
+
+======================================================================
+FAIL: test_unfocused_property_wheel_never_changes_numeric_draft_by_hover (test_canvas_command_focus.CanvasCommandFocusTests.test_unfocused_property_wheel_never_changes_numeric_draft_by_hover)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_command_focus.py", line 51, in test_unfocused_property_wheel_never_changes_numeric_draft_by_hover
+    w=self.w;self.focus(w.edit_canvas);before=w.coords[0].value();APP.sendEvent(w.coords[0],QWheelEvent(QPointF(10,10),QPointF(10,10),QPoint(),QPoint(0,120),Qt.NoButton,Qt.NoModifier,Qt.NoScrollPhase,False));self.assertEqual(w.coords[0].value(),before);self.assertFalse(w.navigation.pending_form())
+                                                                                                                                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 9.0 != 8.0
+
+----------------------------------------------------------------------
+Ran 1 test in 0.357s
+
+FAILED (failures=1)

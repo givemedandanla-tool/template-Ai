@@ -1,0 +1,51 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+ERROR: test_group_checks_annotation_only_and_never_confirms_protected_fields (test_coverage_rules.CoverageRuleTests.test_group_checks_annotation_only_and_never_confirms_protected_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_coverage_rules.py", line 28, in test_group_checks_annotation_only_and_never_confirms_protected_fields
+    plan=self.service.group_rule_plan([member['id']],rule['id'],rule['revision'])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/coverage_rules.py", line 31, in group_rule_plan
+    if not items:raise ValueError('沒有可依同一有效核准規則處理的低風險項目；高風險仍逐項人工審核')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 沒有可依同一有效核准規則處理的低風險項目；高風險仍逐項人工審核
+
+======================================================================
+ERROR: test_rule_version_change_and_audit_failure_rollback_group (test_coverage_rules.CoverageRuleTests.test_rule_version_change_and_audit_failure_rollback_group)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_coverage_rules.py", line 39, in test_rule_version_change_and_audit_failure_rollback_group
+    source,work,rule,batch,member=self.seed();plan=self.service.group_rule_plan([member['id']],rule['id'],rule['revision'])
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/coverage_rules.py", line 31, in group_rule_plan
+    if not items:raise ValueError('沒有可依同一有效核准規則處理的低風險項目；高風險仍逐項人工審核')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 沒有可依同一有效核准規則處理的低風險項目；高風險仍逐項人工審核
+
+----------------------------------------------------------------------
+Ran 49 tests in 9.975s
+
+FAILED (errors=2)

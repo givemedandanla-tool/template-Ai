@@ -1,0 +1,90 @@
+{
+  "status": "CONTROLLED_STOP_AFTER_CONFIRMED_BOOTSTRAP_FAILURE",
+  "source_commit": "012c71724bd5b8e18a93afe8d098f40e03506153",
+  "actual_shell_exit_code": 130,
+  "signal": "SIGINT_BY_OWNER_AFTER_KNOWN_FAILURE",
+  "failed_modules": [
+    {
+      "module": "test_coverage_rules",
+      "owned_pid": 329056,
+      "exit_code": -6,
+      "seconds": 0.30563,
+      "expected": 5,
+      "completed": 0,
+      "missing_test_ids": [
+        "test_coverage_rules.CoverageRuleTests.test_failed_analysis_and_duplicate_label_are_real_blockers",
+        "test_coverage_rules.CoverageRuleTests.test_group_checks_annotation_only_and_never_confirms_protected_fields",
+        "test_coverage_rules.CoverageRuleTests.test_only_formally_approved_rule_can_verify_group",
+        "test_coverage_rules.CoverageRuleTests.test_persisted_assessment_facets_are_searchable_and_explicitly_not_current_closure",
+        "test_coverage_rules.CoverageRuleTests.test_rule_version_change_and_audit_failure_rollback_group"
+      ],
+      "unexpected_test_ids": [],
+      "duplicate_ids": false,
+      "parse_error": null,
+      "timed_out": false,
+      "failure": null,
+      "remaining_owned_pids": [],
+      "healthy": false,
+      "stdout_bytes": 79,
+      "stdout_sha256": "80389d67387265e4ba9679c6a256c87c59e92ff43ce1ee6c9206906a5d841c2f"
+    },
+    {
+      "module": "test_parent_navigation",
+      "owned_pid": 331632,
+      "exit_code": 1,
+      "seconds": 2.378831,
+      "expected": 3,
+      "completed": 3,
+      "missing_test_ids": [],
+      "unexpected_test_ids": [],
+      "duplicate_ids": false,
+      "parse_error": null,
+      "timed_out": false,
+      "failure": null,
+      "remaining_owned_pids": [],
+      "healthy": false,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "test_preflight_progress",
+      "owned_pid": 331660,
+      "exit_code": 1,
+      "seconds": 2.673758,
+      "expected": 3,
+      "completed": 3,
+      "missing_test_ids": [],
+      "unexpected_test_ids": [],
+      "duplicate_ids": false,
+      "parse_error": null,
+      "timed_out": false,
+      "failure": null,
+      "remaining_owned_pids": [],
+      "healthy": false,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "completed_module_journal_tests": 561,
+  "progress_snapshot": {
+    "phase": "RUNNING_OWNED_TEST_MODULE",
+    "current_test": "test_quality_decisions.QualityDecisionTests.test_known_bad_actual_parser_blocks_previously_accepted_version_and_new_id_clone",
+    "started": 565,
+    "completed": 564,
+    "passed": 562,
+    "failed_ids": [
+      "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once",
+      "test_preflight_progress.PreflightProgressTests.test_actual_preflight_escape_cancels_safely_and_shows_no_learned_job"
+    ],
+    "planned_tests": 939,
+    "formal_complete": false,
+    "updated_at": "2026-10-16T04:28:26.408656+00:00"
+  },
+  "source_unchanged": true,
+  "formal_complete": false,
+  "capture_executed": false,
+  "run_json_not_fabricated": true,
+  "cause": "Owned test worker omitted QApplication before loading modules; test_coverage_rules QFontDatabase abort(-6),5missing; restore existing Qt bootstrap contract before next source",
+  "raw_module_files": 401,
+  "raw_module_bytes": 421576
+}

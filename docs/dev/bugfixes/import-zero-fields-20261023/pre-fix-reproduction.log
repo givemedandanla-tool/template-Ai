@@ -1,0 +1,21 @@
+FF
+======================================================================
+FAIL: test_real_gui_import_then_source_analysis_creates_separate_labelled_candidates (test_import_then_analysis.ImportThenAnalysisTests.test_real_gui_import_then_source_analysis_creates_separate_labelled_candidates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_import_then_analysis.py", line 44, in test_real_gui_import_then_source_analysis_creates_separate_labelled_candidates
+    self.assertEqual(len(candidates), 2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_same_crop_empty_workspace_does_not_hide_real_extracted_fields (test_import_then_analysis.ImportThenAnalysisTests.test_same_crop_empty_workspace_does_not_hide_real_extracted_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_import_then_analysis.py", line 59, in test_same_crop_empty_workspace_does_not_hide_real_extracted_fields
+    self.assertEqual(len(candidates), 1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.635s
+
+FAILED (failures=2)

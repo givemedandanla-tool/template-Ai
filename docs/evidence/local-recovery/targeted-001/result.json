@@ -1,0 +1,21 @@
+{
+  "scope": "7 local recovery and actual outline-match tests;not full regression or real corpus qualification",
+  "first_attempt": {
+    "tests": 7,
+    "failures": 2,
+    "reason": "QPainter.fillPath integer brush rejected;fixed QColor and contiguous buffer"
+  },
+  "current_attempt": {
+    "tests": 7,
+    "failures": 0,
+    "status": "PASS"
+  },
+  "command": "QT_QPA_PLATFORM=offscreen OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m unittest discover -s tests -p test_local_recovery.py",
+  "source_sha256": {
+    "template_ai/importer.py": "604140c02d5ff3d3dda44426402352d30a02fc9215daced220f1e8a2f195ca9d",
+    "template_ai/recovery_diagnostics.py": "dff2ccaa5d1952c96ba79f92de9bb3d6ff75713b0cc0fedaac2f2e30dfd4b6c7",
+    "template_ai/source_recovery.py": "ca174a1ca912a5ae0ae42caa0a2872fa3d9276395dc6ac6ad174fb2d95dc689e",
+    "template_ai/visual_font_match.py": "b319a6381da29ef495e2ea6168a1632782f1ee124f6d595a07ebfd1ca4ff3164",
+    "tests/test_local_recovery.py": "79f031e9e63902d0a293139d0897ff6dd1e97a0f03933915becb4362525e3167"
+  }
+}

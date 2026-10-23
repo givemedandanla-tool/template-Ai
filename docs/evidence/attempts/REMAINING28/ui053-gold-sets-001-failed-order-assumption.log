@@ -1,0 +1,16 @@
+======================================================================
+FAIL: test_gold_is_local_immutable_reference_and_never_training_admission (test_quality_gold_sets.QualityGoldSetTests.test_gold_is_local_immutable_reference_and_never_training_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_gold_sets.py", line 33, in test_gold_is_local_immutable_reference_and_never_training_admission
+    self.assertEqual(gold['objects'][-1]['kind'],'ANNOTATION');self.assertTrue(self.gold.validity(gold['id'])['valid'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'email' != 'ANNOTATION'
+- email
++ ANNOTATION
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 3.821s
+
+FAILED (failures=1)

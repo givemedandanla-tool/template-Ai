@@ -1,0 +1,59 @@
+"""Real SQLite/Qt list views retain a coherent filtered read, then see new state on reload."""
+from copy import deepcopy
+from pathlib import Path
+import json,tempfile,unittest
+from unittest.mock import patch
+from PySide6.QtWidgets import QApplication
+from template_ai.storage import Library
+from template_ai.training_store import TrainingStore
+from template_ai.model import Template
+from template_ai.gui import MainWindow
+from template_ai.startup_catalog import editor_page
+from template_ai.rule_review_panel import RuleReviewPanel
+from template_ai.noise_hits_panel import NoiseHitsPanel
+from template_ai.coverage_command import execute
+from runtime_fixture import controlled_resources
+from gui_wait import dispose_main_window
+from test_rule_review import pending_rule
+APP=QApplication.instance() or QApplication([])
+
+class ReadViewSnapshotTests(unittest.TestCase):
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.w=MainWindow(self.root/'data');controlled_resources(self.w);self.addCleanup(dispose_main_window,self.w);self.reader=self.w.library;self.store=TrainingStore(self.reader);self.writer=Library(self.reader.root);self.addCleanup(self.writer.close)
+
+    def interleave(self,identity,table,body):
+        changed=[]
+        def factory(cursor,row):
+            if cursor.description[0][0]=='id' and row[0]==identity and not changed:
+                self.writer.db.execute('UPDATE '+table+' SET payload=? WHERE id=?',(json.dumps(body),identity));self.writer.db.commit();changed.append(True)
+            return row
+        self.reader.db.row_factory=factory;self.addCleanup(setattr,self.reader.db,'row_factory',None);return changed
+
+    def test_editor_page_keeps_selected_payload_before_concurrent_rename(self):
+        template=Template('AUTHORED_OLD_NAME',90,54,[]);self.reader.save_template(template);new=template.to_dict();new['name']='AUTHORED_NEW_NAME';changed=self.interleave(template.id,'templates',new)
+        page=editor_page(self.reader,'templates');self.reader.db.row_factory=None
+        self.assertEqual(changed,[True]);self.assertEqual([t.name for t in page['items']],['AUTHORED_OLD_NAME']);self.assertEqual(editor_page(self.reader,'templates')['items'][0].name,'AUTHORED_NEW_NAME')
+
+    def test_catalog_filter_keeps_payload_from_same_read_as_selected_ids(self):
+        template=Template('AUTHORED_FILTER_OLD',90,54,[]);self.reader.save_template(template);panel=self.w.template_catalog;panel.query.setText('AUTHORED_FILTER_OLD');self.assertEqual(panel.matching_count,1)
+        new=template.to_dict();new['name']='AUTHORED_FILTER_NEW';changed=self.interleave(template.id,'templates',new);panel.rebuild();self.reader.db.row_factory=None
+        self.assertEqual(changed,[True]);self.assertEqual([r['name'] for r in panel.visible],['AUTHORED_FILTER_OLD']);panel.rebuild();self.assertEqual(panel.visible,[])
+
+    def test_rule_state_filter_retains_selected_revision_through_inspection(self):
+        source,work,rule=pending_rule(self.store,self.root);panel=RuleReviewPanel(self.w);self.addCleanup(panel.deleteLater);panel.state.setCurrentText('PENDING');self.assertEqual([r['id'] for r in panel.rows],[rule['id']])
+        new=deepcopy(rule);new.pop('id');new.pop('revision');new['state']='DISABLED';changed=self.interleave(rule['id'],'training_records',new);panel.reload();self.reader.db.row_factory=None
+        self.assertEqual(changed,[True]);self.assertEqual([r['state'] for r in panel.rows],['PENDING']);panel.reload();self.assertEqual(panel.rows,[])
+
+    def test_noise_hit_search_retains_selected_stored_row_and_live_decision_snapshot(self):
+        source,work,rule=pending_rule(self.store,self.root);identity='authored-hit';body=dict(work_id=work['id'],observation_id='note',state='AUTHORED_HIT_OLD',reason='authored trace',text='authored trace',rule_matches=[])
+        with self.reader.db:self.reader.db.execute('INSERT INTO training_records VALUES(?,?,?,?)',('HIT',identity,1,json.dumps(body)))
+        panel=NoiseHitsPanel(self.w);self.addCleanup(panel.deleteLater);panel.search.setText('AUTHORED_HIT_OLD');self.assertEqual(len(panel.rows),1,panel.status.text());new=dict(body,state='AUTHORED_HIT_NEW');changed=self.interleave(identity,'training_records',new);panel.reload();self.reader.db.row_factory=None
+        self.assertEqual(changed,[True]);self.assertEqual([r['stored']['state'] for r in panel.rows],['AUTHORED_HIT_OLD']);panel.reload();self.assertEqual(panel.rows,[])
+
+    def test_coverage_batch_search_retains_selected_summary(self):
+        identity='authored-coverage-batch';body=dict(state='AUTHORED_BATCH_OLD',file_count=1,source_page_count=1,created=1)
+        with self.reader.db:self.reader.db.execute('INSERT INTO training_records VALUES(?,?,?,?)',('COVERAGE_BATCH',identity,1,json.dumps(body)))
+        changed=self.interleave(identity,'training_records',dict(body,state='AUTHORED_BATCH_NEW'))
+        # Real SQLite objects and command; only local connection factory is pinned to inject the second writer.
+        with patch('template_ai.storage.Library',return_value=self.reader):result=execute(self.reader.root,'BATCHES',dict(query='AUTHORED_BATCH_OLD'))
+        self.assertEqual(changed,[True]);self.assertEqual([r['state'] for r in result['rows']],['AUTHORED_BATCH_OLD'])

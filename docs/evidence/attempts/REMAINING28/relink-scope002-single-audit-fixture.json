@@ -1,0 +1,12 @@
+{
+  "kind": "NON_FORMAL_WORKTREE_TARGET_RUN",
+  "status": "FAILED",
+  "tests": 44,
+  "failures": 2,
+  "errors": 1,
+  "source_manifest_sha256": "c9bafa8c4b55919af324815334898b704bebbd19a2158abbddf755ea68721c4f",
+  "log": "docs/evidence/attempts/REMAINING28/relink-scope002-single-audit-fixture.log",
+  "sha256": "5fcd52f75ff316d354f9b95e27ca4279f8726cd1a6edc6a5dd3757c309f1954f",
+  "cause": "Single-source path now legitimately creates a mapping-audit batch; two older failure tests incorrectly expected no prior audit. New GUI confirmation test omitted QMessageBox import.",
+  "correction": "Retain full pre-existing audit list as rollback baseline and assert unchanged; add missing test import. Do not suppress failures or weaken source/revision checks."
+}

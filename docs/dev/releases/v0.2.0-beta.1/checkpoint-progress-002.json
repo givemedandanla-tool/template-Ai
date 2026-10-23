@@ -1,0 +1,42 @@
+{
+  "id": "WIN-BETA-PROGRESS-002",
+  "phase": "WIP_NOT_FULL_ACCEPTANCE",
+  "observed_utc": "2026-10-21T10:17:57.258005+00:00",
+  "source_commit": "570ecebe1e5135b0fc271b6c0d56639fdae55566",
+  "source_manifest_sha256": "3cd6da4bbe162df29746c17e12e55992a4eabc09042f4492896a0b54b9c9c95f",
+  "full_regression_progress": {
+    "phase": "RUNNING_OWNED_TEST_MODULES",
+    "current_test": "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_actual_output_revalidation_preserves_legal_manual_geometry_and_receipt, test_noise_authoring.NoiseAuthorGuiTests.test_actual_local_confirm_cancel_and_rule_authoring",
+    "started": 1157,
+    "completed": 1155,
+    "passed": 1155,
+    "failed_ids": [],
+    "planned_tests": 1958,
+    "formal_complete": false,
+    "updated_at": "2026-10-21T10:17:57.242424+00:00"
+  },
+  "original_captures": {
+    "path": "stock-captures-004/summary.json",
+    "status": "PASS",
+    "completed": 27
+  },
+  "portable_readback_helper": {
+    "path": "docs/dev/releases/verify_git_readback.py",
+    "sha256": "f94150d712a59344ddb70529496c59348343438253fb4078d9d4ece0e745b244",
+    "actual_git_preflight": {
+      "method": "NATIVE_AUTHENTICATED_GIT_FETCH_INDEPENDENT_BARE_REPOSITORY",
+      "api_response": false,
+      "raw_commit_sha256": "9593f0389b175df37048a44c8f929b18245787f351fcfd745fc35fb6214f3daa",
+      "recursive_file_list_sha256": "36691f113506a99574c727543e77ab6703a46a171f4ec92cba0f32a1f2763ddd",
+      "file_entries": 57405,
+      "verified_utc": "2026-10-21T10:13:21.219567+00:00",
+      "snapshot_commit": "137f8d3f20f14d72569e1b7bd3f3c9ab512208c3",
+      "tree_sha": "dbb19728ebf9e730a843b0496a291f5568b0f5be",
+      "content_verification": "Exact raw commit/tree objects and every path/mode/blob ID; not a REST API response"
+    }
+  },
+  "windows_actual": "NO_RECEIPT_OBSERVED",
+  "exe_built": false,
+  "release_published": false,
+  "next": "Complete full004; adopt actual results and source proof; prepare/readback full evidence checkpoint; require governance gate before latest Windows request."
+}

@@ -1,0 +1,161 @@
+{
+  "schema": "LOCAL_RECOVERY_FINAL_REPORT_V1",
+  "status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+  "source_commit": "96b1eb9dc23fe39fd5233d17513cc42f8ed547f8",
+  "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+  "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json",
+  "guide": "docs/dev/LOCAL_LEARNING_RECOVERY_GUIDE.md",
+  "authored_acceptance": {
+    "source_files": 22,
+    "train": 12,
+    "validation": 6,
+    "holdout": 4,
+    "shared_families": 2,
+    "global_templates": 0,
+    "evaluation_cases": 10
+  },
+  "actual_source_file_scales": [
+    {
+      "actual_glyph_runs": 35000,
+      "elapsed_item_seconds": 736.7734865462844,
+      "excluded": "Private Illustrator structure,full installed-font image search,real aesthetics,Windows and physical prepress",
+      "items": 1000,
+      "model_digest": "836b9eb951e19e050d1b032b6c497e15d9faa369306300d7ca82bb905f9c9a21",
+      "production_qualification": "NOT_GRANTED_SYNTHETIC_BENCHMARK",
+      "profiles": 1,
+      "scope": "ACTUAL_OWNED_PDF_COMPATIBLE_AI_GENERATION_IMPORT_ORIGINAL_GLYPHS_LOCAL_FONT_MEASUREMENT_AND_SHARED_FIT",
+      "shared_families": 1,
+      "shared_fit_seconds": 1.4069795140094357,
+      "source_bytes_unchanged": true,
+      "status": "PASS",
+      "wall_seconds": 739.7307931230025,
+      "paused_at": 17,
+      "reopened_prefix_unchanged": true,
+      "peak_process_tree_rss_sampled_bytes": 247779328,
+      "rss_scope": "50MS_SAMPLED_PARENT_AND_CHILDREN_NOT_EXACT_PEAK_OR_VIVOBOOK_QUALIFICATION"
+    },
+    {
+      "actual_glyph_runs": 105000,
+      "elapsed_item_seconds": 2175.024589472334,
+      "excluded": "Private Illustrator structure,full installed-font image search,real aesthetics,Windows and physical prepress",
+      "items": 3000,
+      "model_digest": "634be92a6fdab3462d4f0471792167d5601f815c6b4f726de010aa4ddef59686",
+      "production_qualification": "NOT_GRANTED_SYNTHETIC_BENCHMARK",
+      "profiles": 1,
+      "scope": "ACTUAL_OWNED_PDF_COMPATIBLE_AI_GENERATION_IMPORT_ORIGINAL_GLYPHS_LOCAL_FONT_MEASUREMENT_AND_SHARED_FIT",
+      "shared_families": 1,
+      "shared_fit_seconds": 5.027323139001965,
+      "source_bytes_unchanged": true,
+      "status": "PASS",
+      "wall_seconds": 2186.785853164998,
+      "paused_at": 17,
+      "reopened_prefix_unchanged": true,
+      "peak_process_tree_rss_sampled_bytes": 327495680,
+      "rss_scope": "50MS_SAMPLED_PARENT_AND_CHILDREN_NOT_EXACT_PEAK_OR_VIVOBOOK_QUALIFICATION"
+    }
+  ],
+  "private_user_artwork_used": false,
+  "private_user_fonts_provided": false,
+  "paid_ai_services_used": false,
+  "automatic_private_upload": false,
+  "original_scope": {
+    "work_packages": 8,
+    "clauses": 50,
+    "full_complete_packages": 0,
+    "partial_packages": 8,
+    "real_production_models": 0
+  },
+  "deferred": [
+    "独立網頁",
+    "手機端",
+    "EXE"
+  ],
+  "not_verified": [
+    "私人Illustrator通用還原",
+    "真實本地美學泛化",
+    "Windows/VivoBook實機",
+    "物理印前"
+  ],
+  "advanced_backend_not_full_gui": [
+    "複合run及label/圖示來源標註",
+    "容量校準",
+    "本地正式ranker/模型資格"
+  ],
+  "interrupted_not_adopted": [
+    "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-001/interruption.json",
+    "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-002/interruption.json",
+    "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-003/interruption.json",
+    "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-004/interruption.json"
+  ],
+  "formal_summary": {
+    "path": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+    "status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+    "tests": 1733,
+    "passed": 1733,
+    "modules": 222,
+    "attachments": 369,
+    "overall": "FAIL",
+    "software": "PASS",
+    "source_unchanged": true
+  },
+  "registry_status": {
+    "topic": {
+      "VERIFIED": 69,
+      "PARTIAL": 3,
+      "DEFERRED": 3
+    },
+    "core": {
+      "VERIFIED": 87
+    },
+    "governance": {
+      "VERIFIED": 7
+    }
+  },
+  "registry_total": 169,
+  "registry_completed_scoped": 163,
+  "legacy28": {
+    "complete": 25,
+    "partial": 3
+  },
+  "progress_delta": {
+    "newly_completed_requirements": 0,
+    "removed_test_ids": [],
+    "baseline_test_count": 1685,
+    "new_unique_tests": 48
+  },
+  "retained_external_clauses": [
+    {
+      "requirement_id": "UI-032",
+      "acceptance_id": "UI-032-CLAUSE-5",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-02",
+      "acceptance_id": "REV-02-CLAUSE-1",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-02",
+      "acceptance_id": "REV-02-CLAUSE-2",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-02",
+      "acceptance_id": "REV-02-CLAUSE-4",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-04",
+      "acceptance_id": "REV-04-CLAUSE-1",
+      "status": "NOT_VERIFIED"
+    }
+  ],
+  "formal_execution_strategy": "PARALLEL_OWNED_FRESH_MODULE_PROCESSES",
+  "formal_module_workers": 4,
+  "authored_independent_selftest": "docs/evidence/local-recovery/targeted-006/synthetic-selftest-003.json",
+  "actual_regression_corrections": [
+    "Semantic/appearance derivative source identity and reproducible object IDs",
+    "Reviewed Logo gold uses the same actual derivative channel as prediction"
+  ],
+  "original_acceptance_scope": "All8original packages remainPARTIAL,50clauses retained; supported local software self-verified,not universal private-format or real production qualification"
+}

@@ -1,0 +1,13 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ACTUAL_REGION_DIAGNOSTIC {'window': (960, 640), 'outer_frame': (0, 0, 0, 0), 'painted_viewport': (21, 81, 733, 409), 'scroll_viewport': (733, 409)}
+Traceback (most recent call last):
+  File "/tmp/diagnose_capture_viewport.py", line 17, in <module>
+    capture('/tmp/input-navigation-viewport-measurement')
+  File "/workspace/template-Ai/tools/capture_workbench_navigation.py", line 44, in capture
+    assert wait_for_gui(lambda:w.output_canvas.visibleRegion().boundingRect().height()>=180,2)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

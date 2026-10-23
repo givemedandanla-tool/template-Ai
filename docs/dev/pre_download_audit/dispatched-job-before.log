@@ -1,0 +1,39 @@
+test_reopen_dispatched_job_selects_exact_offpage_job_without_starting (source_scan_draft.DispatchedJobReopenTests.test_reopen_dispatched_job_selects_exact_offpage_job_without_starting) ... This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+ERROR
+test_reopen_does_not_change_different_running_job (source_scan_draft.DispatchedJobReopenTests.test_reopen_does_not_change_different_running_job) ... This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+ERROR
+
+======================================================================
+ERROR: test_reopen_dispatched_job_selects_exact_offpage_job_without_starting (source_scan_draft.DispatchedJobReopenTests.test_reopen_dispatched_job_selects_exact_offpage_job_without_starting)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_dispatched_job_reopen.py.txt", line 22, in test_reopen_dispatched_job_selects_exact_offpage_job_without_starting
+    f.dialog.launch()
+  File "/workspace/template-Ai/template_ai/source_scan_dialog.py", line 221, in launch
+    dialog.reload(identity);self.status.setText('已開啟確切既有工作，成果與續跑以該介面為準');return
+    ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: AutomaticTrainingDialog.reload() takes 1 positional argument but 2 were given
+
+======================================================================
+ERROR: test_reopen_does_not_change_different_running_job (source_scan_draft.DispatchedJobReopenTests.test_reopen_does_not_change_different_running_job)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_dispatched_job_reopen.py.txt", line 32, in test_reopen_does_not_change_different_running_job
+    f.dialog.launch()
+  File "/workspace/template-Ai/template_ai/source_scan_dialog.py", line 221, in launch
+    dialog.reload(identity);self.status.setText('已開啟確切既有工作，成果與續跑以該介面為準');return
+    ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: AutomaticTrainingDialog.reload() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 2 tests in 18.421s
+
+FAILED (errors=2)

@@ -1,0 +1,52 @@
+[
+  {
+    "path": "template_ai/training_store.py",
+    "line": 66,
+    "code": "[self.get(kind, r[0]) for r in self.db.execute('SELECT id FROM training_records WHERE kind=? ORDER BY id LIMIT ? OFFSET ?', (kind, limit, offset))]"
+  },
+  {
+    "path": "template_ai/automatic_training.py",
+    "line": 156,
+    "code": "[self.store.get('SAMPLE', sid) for sid, in self.db.execute(\"SELECT id FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? ORDER BY id LIMIT 201\", (work['id'],))]"
+  },
+  {
+    "path": "template_ai/training_exceptions.py",
+    "line": 20,
+    "code": "[service.store.get('AUTO_UNIT', identity) for identity, in library.db.execute(sql, (*args, offset))]"
+  },
+  {
+    "path": "template_ai/runtime_queue.py",
+    "line": 44,
+    "code": "[self.get(row[0]) for row in self.db.execute('SELECT id FROM runtime_requests ORDER BY seq DESC LIMIT ? OFFSET ?', (limit, offset))]"
+  },
+  {
+    "path": "template_ai/runtime_queue.py",
+    "line": 47,
+    "code": "[self.get(row[0]) for row in self.db.execute(\"SELECT id FROM runtime_requests WHERE json_extract(payload,'$.state') IN ('WAITING','PAUSED_RESOURCES') ORDER BY seq LIMIT 200\")]"
+  },
+  {
+    "path": "template_ai/customer_candidates.py",
+    "line": 57,
+    "code": "[self.get(r[0]) for r in self.db.execute('SELECT id FROM customer_import_candidates ORDER BY rowid LIMIT ? OFFSET ?', (limit, offset))]"
+  },
+  {
+    "path": "template_ai/dataset_panel.py",
+    "line": 59,
+    "code": "[self.store.get('USE', r[0]) for r in self.store.db.execute(\"SELECT id FROM training_records WHERE kind='USE' AND json_extract(payload,'$.dataset_id')=? ORDER BY id LIMIT 200\", (did,))]"
+  },
+  {
+    "path": "template_ai/batch_import.py",
+    "line": 120,
+    "code": "[self.get(r[0]) for r in self.db.execute('SELECT id FROM import_batches ORDER BY rowid DESC')]"
+  },
+  {
+    "path": "template_ai/trusted_samples.py",
+    "line": 97,
+    "code": "[self.get('USE', r[0]) for r in self.db.execute(\"SELECT id FROM training_records WHERE kind='USE' AND json_extract(payload,'$.sample_id')=? ORDER BY id LIMIT 201\", (sample_id,))]"
+  },
+  {
+    "path": "template_ai/trusted_samples.py",
+    "line": 99,
+    "code": "[self.get('DESIGN_USE', r[0]) for r in self.db.execute(\"SELECT id FROM training_records WHERE kind='DESIGN_USE' AND json_extract(payload,'$.sample_id')=? ORDER BY id LIMIT 201\", (sample_id,))]"
+  }
+]

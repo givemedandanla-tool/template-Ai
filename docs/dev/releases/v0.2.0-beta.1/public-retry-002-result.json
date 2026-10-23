@@ -1,0 +1,10 @@
+{
+  "status": "FAILED_NOT_VERIFIED",
+  "source_commit": "b0e1bc84bcb45149d038e2f9a0a29594d6a8c39e",
+  "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39591928487",
+  "recorded_at": "2026-10-21T11:28:10.280108+00:00",
+  "release_tag": "v0.2.0-beta.1",
+  "scope": "NATIVE_WINDOWS_AUTOMATION_NOT_USER_HARDWARE_QUALIFICATION",
+  "observed_failure": "Pinned dependency installation failed at tools/build_windows.ps1 line 6",
+  "hypothesis": "Adding Inkscape/bin to GITHUB_PATH may shadow setup-python with bundled Python. Capture actual command resolution and explicitly select the existing setup-python environment; do not change dependency pins or validation."
+}

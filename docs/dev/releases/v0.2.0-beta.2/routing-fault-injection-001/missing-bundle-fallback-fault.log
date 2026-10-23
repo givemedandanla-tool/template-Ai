@@ -1,0 +1,25 @@
+test_missing_bundle_does_not_fall_back_to_installed_engine (test_bundled_inkscape.BundledInkscapeTests.test_missing_bundle_does_not_fall_back_to_installed_engine) ... FAIL
+test_missing_dependency_is_rejected (test_bundled_inkscape.BundledInkscapeTests.test_missing_dependency_is_rejected) ... FAIL
+
+======================================================================
+FAIL: test_missing_bundle_does_not_fall_back_to_installed_engine (test_bundled_inkscape.BundledInkscapeTests.test_missing_bundle_does_not_fall_back_to_installed_engine)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_bundled_inkscape.py", line 50, in test_missing_bundle_does_not_fall_back_to_installed_engine
+    with self.assertRaisesRegex(ValueError, '內附|bundled'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_dependency_is_rejected (test_bundled_inkscape.BundledInkscapeTests.test_missing_dependency_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_bundled_inkscape.py", line 66, in test_missing_dependency_is_rejected
+    with self.assertRaisesRegex(ValueError,'內附'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (failures=2)

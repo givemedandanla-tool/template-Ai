@@ -1,0 +1,20 @@
+test_source_navigation_failure_retains_original_source_and_work (test_work_load_atomicity.WorkLoadAtomicityTests.test_source_navigation_failure_retains_original_source_and_work) ... ok
+test_unreadable_work_does_not_partially_replace_live_state (test_work_load_atomicity.WorkLoadAtomicityTests.test_unreadable_work_does_not_partially_replace_live_state) ... ok
+test_work_navigation_failure_does_not_persist_failed_selection (test_work_load_atomicity.WorkLoadAtomicityTests.test_work_navigation_failure_does_not_persist_failed_selection) ... FAIL
+
+======================================================================
+FAIL: test_work_navigation_failure_does_not_persist_failed_selection (test_work_load_atomicity.WorkLoadAtomicityTests.test_work_navigation_failure_does_not_persist_failed_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_work_load_atomicity.py", line 61, in test_work_navigation_failure_does_not_persist_failed_selection
+    self.assertEqual(self.state(),self.before);self.assertEqual(self.w.library.active_artwork(good['source_id'])['id'],good['id']);self.assertEqual(self.w.library.artwork(bad['id']),bad)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'ad5ec868f162463cbe17449722d9cfcb' != 'b55ae8f3eca94241800073a91d521244'
+- ad5ec868f162463cbe17449722d9cfcb
++ b55ae8f3eca94241800073a91d521244
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.771s
+
+FAILED (failures=1)

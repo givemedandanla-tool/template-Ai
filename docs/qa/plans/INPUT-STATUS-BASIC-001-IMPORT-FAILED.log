@@ -1,0 +1,18 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.E
+======================================================================
+ERROR: test_input_diagnostics (unittest.loader._FailedTest.test_input_diagnostics)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_input_diagnostics
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'test_input_diagnostics'
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 18.925s
+
+FAILED (errors=1)

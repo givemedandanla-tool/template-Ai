@@ -1,0 +1,193 @@
+Owned module test_import_then_analysis: exit=0; completed=10/10; healthy=True
+test_approved_source_sample_and_artwork_remain_unchanged (test_import_then_analysis.ImportThenAnalysisTests.test_approved_source_sample_and_artwork_remain_unchanged) ... ok
+test_explicit_empty_manual_crop_confirmation_history_and_name_are_preserved (test_import_then_analysis.ImportThenAnalysisTests.test_explicit_empty_manual_crop_confirmation_history_and_name_are_preserved) ... ok
+test_explicit_work_retry_does_not_expand_into_source_level_analysis (test_import_then_analysis.ImportThenAnalysisTests.test_explicit_work_retry_does_not_expand_into_source_level_analysis) ... ok
+test_manual_pending_source_facts_are_not_treated_as_an_import_placeholder (test_import_then_analysis.ImportThenAnalysisTests.test_manual_pending_source_facts_are_not_treated_as_an_import_placeholder) ... ok
+test_manual_populated_workspace_is_not_resegmented_or_overwritten (test_import_then_analysis.ImportThenAnalysisTests.test_manual_populated_workspace_is_not_resegmented_or_overwritten) ... ok
+test_meaningful_page_overflow_is_rejected_without_silently_clamping (test_import_then_analysis.ImportThenAnalysisTests.test_meaningful_page_overflow_is_rejected_without_silently_clamping) ... ok
+test_real_gui_import_then_source_analysis_creates_separate_labelled_candidates (test_import_then_analysis.ImportThenAnalysisTests.test_real_gui_import_then_source_analysis_creates_separate_labelled_candidates) ... ok
+test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields (test_import_then_analysis.ImportThenAnalysisTests.test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields) ... ok
+test_repeated_analysis_reuses_candidates_without_replacing_original_workspace (test_import_then_analysis.ImportThenAnalysisTests.test_repeated_analysis_reuses_candidates_without_replacing_original_workspace) ... ok
+test_same_crop_empty_workspace_does_not_hide_real_extracted_fields (test_import_then_analysis.ImportThenAnalysisTests.test_same_crop_empty_workspace_does_not_hide_real_extracted_fields) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 24.392s
+
+OK
+
+Owned module test_automatic_training: exit=0; completed=15/15; healthy=True
+test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel (test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel) ... ok
+test_actual_qt_confirmation_cancel_does_not_create_job_or_source (test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source) ... ok
+test_actual_qt_preflight_once_start_creates_two_pending_works_and_restores_controls (test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_preflight_once_start_creates_two_pending_works_and_restores_controls) ... ok
+test_worker_start_failure_releases_lease_and_busy_controls_without_publishing (test_automatic_training.AutomaticTrainingGuiTests.test_worker_start_failure_releases_lease_and_busy_controls_without_publishing) ... ok
+test_bad_source_is_isolated_and_other_source_finishes (test_automatic_training.AutomaticTrainingTests.test_bad_source_is_isolated_and_other_source_finishes) ... ok
+test_cancel_before_start_and_resume_then_incremental_cache_reuses_units (test_automatic_training.AutomaticTrainingTests.test_cancel_before_start_and_resume_then_incremental_cache_reuses_units) ... ok
+test_changed_source_cache_and_approved_work_revision_require_reanalysis (test_automatic_training.AutomaticTrainingTests.test_changed_source_cache_and_approved_work_revision_require_reanalysis) ... ok
+test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission (test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission) ... ok
+test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets (test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets) ... ok
+test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected (test_automatic_training.AutomaticTrainingTests.test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected) ... ok
+test_one_bad_work_is_isolated_and_same_source_other_work_continues (test_automatic_training.AutomaticTrainingTests.test_one_bad_work_is_isolated_and_same_source_other_work_continues) ... ok
+test_preflight_change_and_job_cas_do_not_overwrite_or_start (test_automatic_training.AutomaticTrainingTests.test_preflight_change_and_job_cas_do_not_overwrite_or_start) ... ok
+test_real_inkscape_two_work_hypotheses_keep_whole_logo_and_pending_facts (test_automatic_training.AutomaticTrainingTests.test_real_inkscape_two_work_hypotheses_keep_whole_logo_and_pending_facts) ... ok
+test_single_worker_lease_and_dead_owner_are_explicitly_recoverable (test_automatic_training.AutomaticTrainingTests.test_single_worker_lease_and_dead_owner_are_explicitly_recoverable) ... ok
+test_sqlite_or_late_audit_failure_stops_worker_without_false_success (test_automatic_training.AutomaticTrainingTests.test_sqlite_or_late_audit_failure_stops_worker_without_false_success) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 22.523s
+
+OK
+
+Owned module test_automatic_pages: exit=0; completed=2/2; healthy=True
+test_all_readable_pages_have_separate_sources_hypotheses_and_exact_second_page_retry (test_automatic_pages.AutomaticPagesTests.test_all_readable_pages_have_separate_sources_hypotheses_and_exact_second_page_retry) ... ok
+test_missing_page_manifest_is_rejected_and_explicit_single_page_remains_possible (test_automatic_pages.AutomaticPagesTests.test_missing_page_manifest_is_rejected_and_explicit_single_page_remains_possible) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 6.815s
+
+OK
+
+Owned module test_runtime_source_refresh: exit=0; completed=2/2; healthy=True
+test_metadata_refresh_preserves_empty_editor_without_creating_a_manual_work (test_runtime_source_refresh.RuntimeSourceRefreshTests.test_metadata_refresh_preserves_empty_editor_without_creating_a_manual_work) ... ok
+test_pause_after_source_registration_refresh_then_resume_keeps_both_work_regions (test_runtime_source_refresh.RuntimeSourceRefreshTests.test_pause_after_source_registration_refresh_then_resume_keeps_both_work_regions) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 5.190s
+
+OK
+
+Owned module test_runtime_dispatch: exit=0; completed=8/8; healthy=True
+test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending (test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending) ... ok
+test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop (test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop) ... ok
+test_closed_project_stops_real_timers_and_keeps_pending_backend_scope_unmodified (test_runtime_dispatch.RuntimeDispatchTests.test_closed_project_stops_real_timers_and_keeps_pending_backend_scope_unmodified) ... ok
+test_committed_backend_result_with_failed_queue_receipt_is_recovered_without_repeating_any_analysis (test_runtime_dispatch.RuntimeDispatchTests.test_committed_backend_result_with_failed_queue_receipt_is_recovered_without_repeating_any_analysis) ... ok
+test_deferred_pool_failure_uses_owned_callback_and_restores_controls_without_a_modal (test_runtime_dispatch.RuntimeDispatchTests.test_deferred_pool_failure_uses_owned_callback_and_restores_controls_without_a_modal) ... ok
+test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims (test_runtime_dispatch.RuntimeDispatchTests.test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims) ... ok
+test_recovery_requires_real_successful_audit_commit_and_never_clears_fault_on_write_failure (test_runtime_dispatch.RuntimeDispatchTests.test_recovery_requires_real_successful_audit_commit_and_never_clears_fault_on_write_failure) ... ok
+test_waiting_foreground_launch_can_be_cancelled_without_running_or_losing_the_gui (test_runtime_dispatch.RuntimeDispatchTests.test_waiting_foreground_launch_can_be_cancelled_without_running_or_losing_the_gui) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 18.046s
+
+OK
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_source_region_hypotheses: exit=0; completed=4/4; healthy=True
+test_competing_size_notes_do_not_duplicate_a_cluster_as_two_works (test_source_region_hypotheses.SourceRegionHypothesesTests.test_competing_size_notes_do_not_duplicate_a_cluster_as_two_works) ... ok
+test_explicit_units_are_required_and_normalized_without_identity_inference (test_source_region_hypotheses.SourceRegionHypothesesTests.test_explicit_units_are_required_and_normalized_without_identity_inference) ... ok
+test_original_pdf_readable_text_survives_outlined_derivative_and_hides_nonpainting (test_source_region_hypotheses.SourceRegionHypothesesTests.test_original_pdf_readable_text_survives_outlined_derivative_and_hides_nonpainting) ... ok
+test_separated_unframed_works_have_review_only_size_conditioned_crops (test_source_region_hypotheses.SourceRegionHypothesesTests.test_separated_unframed_works_have_review_only_size_conditioned_crops) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.737s
+
+OK
+
+Owned module test_source_text_budget: exit=0; completed=2/2; healthy=True
+test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish (test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish) ... ok
+test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation (test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 4.438s
+
+OK
+
+Owned module test_desktop_workspace: exit=0; completed=12/12; healthy=True
+test_deleted_property_timer_ignores_real_pending_shutdown_signal (test_desktop_workspace.DesktopNavigationTests.test_deleted_property_timer_ignores_real_pending_shutdown_signal) ... ok
+test_real_background_job_records_duration_without_private_message (test_desktop_workspace.DesktopNavigationTests.test_real_background_job_records_duration_without_private_message) ... ok
+test_real_guidance_navigation_opens_four_task_pages (test_desktop_workspace.DesktopNavigationTests.test_real_guidance_navigation_opens_four_task_pages) ... ok
+test_real_navigation_keeps_three_modes_and_original_commands (test_desktop_workspace.DesktopNavigationTests.test_real_navigation_keeps_three_modes_and_original_commands) ... ok
+test_real_support_navigation_exports_local_safe_report (test_desktop_workspace.DesktopNavigationTests.test_real_support_navigation_exports_local_safe_report) ... ok
+test_small_window_keeps_primary_and_canvas_visible_without_scrolling (test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling) ... ok
+test_embedded_pointer_drag_keeps_same_core_intent_and_data (test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data) ... ok
+test_embedded_primary_confirms_and_exports_same_real_preview (test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview) ... ok
+test_external_session_revision_clears_embedded_old_result_and_confirmation (test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation) ... ok
+test_real_background_cancel_stays_enabled_and_close_waits_for_worker (test_desktop_workspace.DesktopProductionTests.test_real_background_cancel_stays_enabled_and_close_waits_for_worker) ... ok
+test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data (test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data) ... ok
+test_resume_selector_updates_main_graph_dimensions_and_embedded_session (test_desktop_workspace.DesktopProductionTests.test_resume_selector_updates_main_graph_dimensions_and_embedded_session) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 73.882s
+
+OK
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_startup_catalog: exit=0; completed=7/7; healthy=True
+test_explicit_source_preflight_and_registration_lookup_never_expand_all_other_source_records (test_startup_catalog.StartupCatalogTests.test_explicit_source_preflight_and_registration_lookup_never_expand_all_other_source_records) ... ok
+test_invalid_resource_policy_still_opens_gui_and_diagnostic_entry_with_background_fail_closed (test_startup_catalog.StartupCatalogTests.test_invalid_resource_policy_still_opens_gui_and_diagnostic_entry_with_background_fail_closed) ... ok
+test_lazy_fonts_and_models_are_not_loaded_or_parsed_at_normal_startup (test_startup_catalog.StartupCatalogTests.test_lazy_fonts_and_models_are_not_loaded_or_parsed_at_normal_startup) ... ok
+test_oversized_single_payload_is_explicitly_blocked_without_hiding_denominator_or_loading_it (test_startup_catalog.StartupCatalogTests.test_oversized_single_payload_is_explicitly_blocked_without_hiding_denominator_or_loading_it) ... ok
+test_source_page_denominator_and_selected_id_work_across_pages_without_unbounded_read (test_startup_catalog.StartupCatalogTests.test_source_page_denominator_and_selected_id_work_across_pages_without_unbounded_read) ... ok
+test_sql_filter_count_and_page_are_global_and_query_bounds_fail_before_expansion (test_startup_catalog.StartupCatalogTests.test_sql_filter_count_and_page_are_global_and_query_bounds_fail_before_expansion) ... ok
+test_thousand_template_startup_never_calls_unbounded_catalog_and_global_unicode_search_opens_exact_id (test_startup_catalog.StartupCatalogTests.test_thousand_template_startup_never_calls_unbounded_catalog_and_global_unicode_search_opens_exact_id) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 4.686s
+
+OK
+
+Owned module test_design_observation: exit=0; completed=20/20; healthy=True
+test_automatic_work_records_references_and_reuses_without_creating_templates (test_design_observation.DesignObservationStoreTests.test_automatic_work_records_references_and_reuses_without_creating_templates) ... ok
+test_cancel_resume_preserves_exact_observation_identity_and_history (test_design_observation.DesignObservationStoreTests.test_cancel_resume_preserves_exact_observation_identity_and_history) ... ok
+test_default_typography_not_learned_and_no_source_or_training_records_rewritten (test_design_observation.DesignObservationStoreTests.test_default_typography_not_learned_and_no_source_or_training_records_rewritten) ... ok
+test_field_from_another_work_region_cannot_be_linked (test_design_observation.DesignObservationStoreTests.test_field_from_another_work_region_cannot_be_linked) ... ok
+test_idempotent_refresh_cas_history_and_reopen (test_design_observation.DesignObservationStoreTests.test_idempotent_refresh_cas_history_and_reopen) ... ok
+test_late_automatic_unit_failure_rolls_back_observation_too (test_design_observation.DesignObservationStoreTests.test_late_automatic_unit_failure_rolls_back_observation_too) ... ok
+test_modified_original_or_derivative_invalidates_and_cannot_be_saved (test_design_observation.DesignObservationStoreTests.test_modified_original_or_derivative_invalidates_and_cannot_be_saved) ... ok
+test_multi_size_same_source_has_distinct_scoped_nodes_and_one_content_group (test_design_observation.DesignObservationStoreTests.test_multi_size_same_source_has_distinct_scoped_nodes_and_one_content_group) ... ok
+test_newly_confirmed_cross_file_lineage_stales_existing_observation_and_old_plan (test_design_observation.DesignObservationStoreTests.test_newly_confirmed_cross_file_lineage_stales_existing_observation_and_old_plan) ... ok
+test_noise_revision_stales_snapshot_but_excluded_region_is_preserved (test_design_observation.DesignObservationStoreTests.test_noise_revision_stales_snapshot_but_excluded_region_is_preserved) ... ok
+test_old_facts_are_not_relinked_after_work_revision_changes (test_design_observation.DesignObservationStoreTests.test_old_facts_are_not_relinked_after_work_revision_changes) ... ok
+test_original_page_text_evidence_does_not_become_annotated_role_font_truth (test_design_observation.DesignObservationStoreTests.test_original_page_text_evidence_does_not_become_annotated_role_font_truth) ... ok
+test_oversized_role_budget_is_explicit_and_does_not_truncate (test_design_observation.DesignObservationStoreTests.test_oversized_role_budget_is_explicit_and_does_not_truncate) ... ok
+test_people_remain_separate_and_can_reference_one_company_without_position_identity (test_design_observation.DesignObservationStoreTests.test_people_remain_separate_and_can_reference_one_company_without_position_identity) ... ok
+test_source_crop_to_nominal_work_transform_is_not_a_font_transform (test_design_observation.DesignObservationStoreTests.test_source_crop_to_nominal_work_transform_is_not_a_font_transform) ... ok
+test_transaction_failure_rolls_back_snapshot_history_and_epoch (test_design_observation.DesignObservationStoreTests.test_transaction_failure_rolls_back_snapshot_history_and_epoch) ... ok
+test_anisotropy_shear_unknown_and_template_defaults_do_not_become_source_pt (test_design_observation.ObservationMetricTests.test_anisotropy_shear_unknown_and_template_defaults_do_not_become_source_pt) ... ok
+test_graph_rejects_duplicate_or_dangling_identity (test_design_observation.ObservationMetricTests.test_graph_rejects_duplicate_or_dangling_identity) ... ok
+test_uniform_rotation_and_scale_preserve_known_point_measurement (test_design_observation.ObservationMetricTests.test_uniform_rotation_and_scale_preserve_known_point_measurement) ... ok
+test_unknown_defaults_untraceable_and_nonfinite_metrics_rejected (test_design_observation.ObservationMetricTests.test_unknown_defaults_untraceable_and_nonfinite_metrics_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 10.127s
+
+OK
+
+Owned module test_semantic_learning: exit=0; completed=7/7; healthy=True
+test_actual_qt_preview_train_activation_and_close_reopen_preserve_exact_version (test_semantic_learning.SemanticLearningTests.test_actual_qt_preview_train_activation_and_close_reopen_preserve_exact_version) ... ok
+test_actual_source_confirmed_training_persists_parameters_heldout_denominators_and_draft_only (test_semantic_learning.SemanticLearningTests.test_actual_source_confirmed_training_persists_parameters_heldout_denominators_and_draft_only) ... ok
+test_approved_model_is_used_by_real_inkscape_pipeline_only_for_new_pending_source (test_semantic_learning.SemanticLearningTests.test_approved_model_is_used_by_real_inkscape_pipeline_only_for_new_pending_source) ... ok
+test_independent_activation_cas_inference_and_source_change_auto_abstention (test_semantic_learning.SemanticLearningTests.test_independent_activation_cas_inference_and_source_change_auto_abstention) ... ok
+test_late_audit_failure_rolls_back_weights_and_activation_approval (test_semantic_learning.SemanticLearningTests.test_late_audit_failure_rolls_back_weights_and_activation_approval) ... ok
+test_revoked_facts_and_changed_plan_block_training_without_reusing_geometry_rights (test_semantic_learning.SemanticLearningTests.test_revoked_facts_and_changed_plan_block_training_without_reusing_geometry_rights) ... ok
+test_same_source_and_same_literal_cannot_leak_into_validation (test_semantic_learning.SemanticLearningTests.test_same_source_and_same_literal_cannot_leak_into_validation) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 10.352s
+
+OK
+This plugin does not support propagateSizeHints()
+
+Owned module test_quality_provenance: exit=0; completed=3/3; healthy=True
+test_actual_auto_parser_and_model_provenance_are_found_and_quarantined (test_quality_provenance.QualityProducerProvenanceTests.test_actual_auto_parser_and_model_provenance_are_found_and_quarantined) ... ok
+test_actual_model_reapproval_changes_review_context_but_not_independent_truth_dependencies (test_quality_provenance.QualityProducerProvenanceTests.test_actual_model_reapproval_changes_review_context_but_not_independent_truth_dependencies) ... ok
+test_same_weights_other_version_is_potential_impact_and_review_keeps_actual_source_model (test_quality_provenance.QualityProducerProvenanceTests.test_same_weights_other_version_is_potential_impact_and_review_keeps_actual_source_model) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 15.622s
+
+OK
+
+Owned module test_quality_engine: exit=0; completed=4/4; healthy=True
+test_actual_distinct_source_versions_execute_their_own_frozen_code (test_quality_engine.QualityEngineTests.test_actual_distinct_source_versions_execute_their_own_frozen_code) ... ok
+test_actual_pipeline_does_not_call_later_live_parser_implementation (test_quality_engine.QualityEngineTests.test_actual_pipeline_does_not_call_later_live_parser_implementation) ... ok
+test_freeze_reuses_exact_immutable_code_without_capturing_private_library_data (test_quality_engine.QualityEngineTests.test_freeze_reuses_exact_immutable_code_without_capturing_private_library_data) ... ok
+test_tampered_or_missing_snapshot_cannot_execute_or_report_quality (test_quality_engine.QualityEngineTests.test_tampered_or_missing_snapshot_cannot_execute_or_report_quality) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 4.300s
+
+OK

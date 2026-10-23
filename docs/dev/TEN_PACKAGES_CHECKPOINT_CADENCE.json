@@ -1,0 +1,157 @@
+{
+  "target_seconds": 600,
+  "receipt_count": 25,
+  "all_intervals": [
+    {
+      "before": "CP-20261014-TEN-BEGIN",
+      "after": "CP-20261014-TEN-QUALITY-WIP",
+      "seconds": 1258.316,
+      "over_10_minutes": true
+    },
+    {
+      "before": "CP-20261014-TEN-QUALITY-WIP",
+      "after": "CP-20261014-TEN-QUALITY-SOURCE",
+      "seconds": 717.58,
+      "over_10_minutes": true
+    },
+    {
+      "before": "CP-20261014-TEN-QUALITY-SOURCE",
+      "after": "CP-20261014-TEN-QUALITY-FIXED",
+      "seconds": 813.154,
+      "over_10_minutes": true
+    },
+    {
+      "before": "CP-20261014-TEN-QUALITY-FIXED",
+      "after": "CP-20261014-TEN-P01-VERIFIED",
+      "seconds": 969.671,
+      "over_10_minutes": true
+    },
+    {
+      "before": "CP-20261014-TEN-P01-VERIFIED",
+      "after": "CP-20261014-TEN-FACTS-SOURCE",
+      "seconds": 759.862,
+      "over_10_minutes": true
+    },
+    {
+      "before": "CP-20261014-TEN-FACTS-SOURCE",
+      "after": "CP-20261014-TEN-P02-VERIFIED",
+      "seconds": 764.115,
+      "over_10_minutes": true
+    },
+    {
+      "before": "CP-20261014-TEN-P02-VERIFIED",
+      "after": "CP-20261014-TEN-NOISE-AUTHOR-SOURCE",
+      "seconds": 520.416,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-NOISE-AUTHOR-SOURCE",
+      "after": "CP-20261014-TEN-P03-VERIFIED",
+      "seconds": 379.331,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-P03-VERIFIED",
+      "after": "CP-20261014-TEN-RULE-REVIEW-SOURCE",
+      "seconds": 518.743,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-RULE-REVIEW-SOURCE",
+      "after": "CP-20261014-TEN-P04-VERIFIED",
+      "seconds": 409.8,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-P04-VERIFIED",
+      "after": "CP-20261014-TEN-AUTO-NOISE-SOURCE",
+      "seconds": 576.959,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-AUTO-NOISE-SOURCE",
+      "after": "CP-20261014-TEN-P05-VERIFIED",
+      "seconds": 456.355,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-P05-VERIFIED",
+      "after": "CP-20261014-TEN-NOISE-RECOVERY-SOURCE",
+      "seconds": 611.32,
+      "over_10_minutes": true
+    },
+    {
+      "before": "CP-20261014-TEN-NOISE-RECOVERY-SOURCE",
+      "after": "CP-20261014-TEN-P06-TEXT-VERIFIED",
+      "seconds": 821.954,
+      "over_10_minutes": true
+    },
+    {
+      "before": "CP-20261014-TEN-P06-TEXT-VERIFIED",
+      "after": "CP-20261014-TEN-TRUSTED-ENV-WIP",
+      "seconds": 602.006,
+      "over_10_minutes": true
+    },
+    {
+      "before": "CP-20261014-TEN-TRUSTED-ENV-WIP",
+      "after": "CP-20261014-TEN-TRUSTED-SAMPLES-SOURCE",
+      "seconds": 366.818,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-TRUSTED-SAMPLES-SOURCE",
+      "after": "CP-20261014-TEN-P07-TEXT-VERIFIED",
+      "seconds": 492.157,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-P07-TEXT-VERIFIED",
+      "after": "CP-20261014-TEN-DATASET-LEARNING-SOURCE",
+      "seconds": 661.998,
+      "over_10_minutes": true
+    },
+    {
+      "before": "CP-20261014-TEN-DATASET-LEARNING-SOURCE",
+      "after": "CP-20261014-TEN-DATASET-EDITOR-FIXED-SOURCE",
+      "seconds": 572.07,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-DATASET-EDITOR-FIXED-SOURCE",
+      "after": "CP-20261014-TEN-P08-TEXT-VERIFIED",
+      "seconds": 455.613,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-P08-TEXT-VERIFIED",
+      "after": "CP-20261014-TEN-COVERAGE-SOURCE",
+      "seconds": 334.161,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-COVERAGE-SOURCE",
+      "after": "CP-20261014-TEN-P09-TEXT-VERIFIED",
+      "seconds": 479.587,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-P09-TEXT-VERIFIED",
+      "after": "CP-20261014-TEN-TRAINING-QUEUE-SOURCE",
+      "seconds": 499.571,
+      "over_10_minutes": false
+    },
+    {
+      "before": "CP-20261014-TEN-TRAINING-QUEUE-SOURCE",
+      "after": "CP-20261014-TEN-P10-TEXT-VERIFIED",
+      "seconds": 486.75,
+      "over_10_minutes": false
+    }
+  ],
+  "strict_target_met": false,
+  "max_gap_seconds": 1258.316,
+  "notes": [
+    "Some intervals exceed 10 minutes; exact times retained, no claim of strict compliance.",
+    "Source checkpoints precede formal runs; tool output limits, environment transition and denied media refs added delays.",
+    "All new media publication omitted after event006; code/tests/metadata were saved and read back."
+  ]
+}

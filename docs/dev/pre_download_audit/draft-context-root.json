@@ -1,0 +1,26 @@
+{
+  "id": "BUG-DRAFT-CONTEXT-007",
+  "status": "FIXED_AND_VERIFIED",
+  "before": {
+    "FAIL": 2,
+    "ERROR": 1,
+    "PASS": 0
+  },
+  "evidence": "text-policy-context-before-corrected.log",
+  "severity": "P0_STALE_DRAFT_OVERWRITE",
+  "fix": "Check exact draft id/content/tab both before and after confirmation; missing draft gives existing plain rejection; no broad exception swallowing",
+  "next": "Apply prepared patch after unchanged-source full005 completes, run real-dialog3 and existing text policy/related UI tests. Final overall audit remains OPEN.",
+  "after": {
+    "PASS": 3
+  },
+  "corrected_after_evidence": "text-policy-context-after-corrected.log",
+  "rejected_attempt": "First before/after fixture had tracking above its max and never reached confirmation. Those 2 comparison failures do not prove overwrite; retained as rejected fixture attempt. Corrected cases explicitly assert confirmation callback exactly once and real registered replacement draft navigation.",
+  "isolated_before": "root7-isolated-before-source.json",
+  "targeted_related": {
+    "PASS": 33,
+    "runtime_errors": 0,
+    "healthy_modules": 4,
+    "source": "afa0e33f"
+  },
+  "regression": "draft-context-after-003/summary.json"
+}

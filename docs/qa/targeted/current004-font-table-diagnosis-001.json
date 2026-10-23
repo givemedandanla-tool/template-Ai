@@ -1,0 +1,49 @@
+{
+  "expected_face": {
+    "family": "Noto Sans CJK TC",
+    "style": "Regular"
+  },
+  "shaped_faces": [
+    {
+      "family": "Noto Sans CJK TC",
+      "style": "Regular"
+    }
+  ],
+  "table_differences": [
+    {
+      "tag": "head",
+      "sizes": [
+        54,
+        54
+      ],
+      "byte_offsets_first32": [
+        9,
+        10,
+        11
+      ],
+      "expected_sha256": "d68ad201448ae26db5d13f2644fa755a1adfdfd539a997602092ad24fa6aca57",
+      "actual_sha256": "0f911ad79f2cd820fd2bd3d2cdf342e09f3b8dc62e95f1b80619ab12ccc52dac",
+      "expected_head": "00010000000201069cfb443b5f0f3cf5000303e800000000dcb08e6400000000dcb08e64fc16fbe80b70071000000003000200000000",
+      "actual_head": "00010000000201069ceab0df5f0f3cf5000303e800000000dcb08e6400000000dcb08e64fc16fbe80b70071000000003000200000000"
+    }
+  ],
+  "analysis": {
+    "status": "BLOCKED",
+    "issues": [
+      "實際排版字面與所選字面未核對一致，拒絕替代／混用量測"
+    ],
+    "size_pt": 10,
+    "width_mm": null,
+    "scale": null,
+    "missing": [],
+    "coverage": 1.0,
+    "measurement_verified": false,
+    "scope": "所選字面的單行字形與宽度，不代表原稿身份／授權／完整模板合格",
+    "family": "Noto Sans CJK TC",
+    "style": "Regular",
+    "face_fingerprint": "e227d3113632d45dc3bf3421266d425fd4b8d04de66b25ce67dbf97fe7df0621"
+  },
+  "candidate_issues": [
+    "姓名／p1：實際排版字面與所選字面未核對一致，拒絕替代／混用量測"
+  ]
+}

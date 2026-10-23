@@ -1,0 +1,28 @@
+..FF.This plugin does not support propagateSizeHints()
+....
+======================================================================
+FAIL: test_late_audit_failure_rolls_back_custom_geometry_version_and_provenance_together (test_custom_layout.CustomLayoutTests.test_late_audit_failure_rolls_back_custom_geometry_version_and_provenance_together)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_custom_layout.py", line 40, in test_late_audit_failure_rolls_back_custom_geometry_version_and_provenance_together
+    with patch.object(self.library,'event',side_effect=fail),self.assertRaisesRegex(ValueError,'late failure'):self.service.create_draft(plan,self.people,[],{},'TEST','Synthetic',True)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_no_solution_and_unknown_font_never_become_qualified_custom_candidates (test_custom_layout.CustomLayoutTests.test_no_solution_and_unknown_font_never_become_qualified_custom_candidates)
+----------------------------------------------------------------------
+ValueError: 需明列特製變動框位
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_custom_layout.py", line 28, in test_no_solution_and_unknown_font_never_become_qualified_custom_candidates
+    with self.assertRaisesRegex(ValueError,'變更'):self.service.create_draft(plan,self.people,[],{},'TEST','Forged state',True)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "變更" does not match "需明列特製變動框位"
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.405s
+
+FAILED (failures=2)

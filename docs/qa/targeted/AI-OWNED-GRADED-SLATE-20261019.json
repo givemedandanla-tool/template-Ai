@@ -1,0 +1,70 @@
+{
+  "scope": "ACTUAL_API_OWNED_MULTI_SOURCE_STYLES_AND_GRADED_SLATE_ENGINEERING_ONLY",
+  "source_commit": "851ef2ac62a49f865bac52b524c66c31371d0942",
+  "code_manifest_sha256": "cbf04bc8f0b664595a7bdbc116fdaf9f91bec642301f7f3224a11d385146e173",
+  "training_sources": 12,
+  "heldout_source_groups": 2,
+  "source_families": 2,
+  "observations": [
+    {
+      "case_id": "authored-query-0",
+      "actual_candidates": 2,
+      "source_name_points": [
+        12.000000000000002,
+        18.000000000000004
+      ],
+      "expected_top1": 1
+    },
+    {
+      "case_id": "authored-query-1",
+      "actual_candidates": 2,
+      "source_name_points": [
+        12.000000000000002,
+        18.000000000000004
+      ],
+      "expected_top1": 0
+    }
+  ],
+  "report": {
+    "job_id": "3df159001c3947fbbdc7d0ae01bb0b5f",
+    "k": 1,
+    "origin": "AUTHORED_SYNTHETIC",
+    "queries": [
+      {
+        "case_id": "authored-query-0",
+        "lineage_group": "b5999cec8c770a42f83fde9f0a6a18d9c7806a4d4f2dfbbeaa7bb17a20272b4e",
+        "ndcg_at_k": 1.0,
+        "baseline_ndcg_at_k": 1.0,
+        "top_k_best_hit": 1
+      },
+      {
+        "case_id": "authored-query-1",
+        "lineage_group": "133840973c1a264fbe8df3e195cc2f15f1b3a17e4e0abde5dad9364aba2d3079",
+        "ndcg_at_k": 0.0,
+        "baseline_ndcg_at_k": 0.0,
+        "top_k_best_hit": 0
+      }
+    ],
+    "denominator": 2,
+    "known_queries": 2,
+    "unknown_queries": 0,
+    "independent_groups": 2,
+    "group_macro_ndcg_at_k": 0.5,
+    "group_macro_top_k_best_hit": 0.5,
+    "baseline_group_macro_ndcg_at_k": 0.5,
+    "ndcg_group_bootstrap_95": [
+      0.0,
+      1.0
+    ],
+    "bootstrap_seed": 0,
+    "bootstrap_replicates": 2000,
+    "uncertainty": "KNOWN_LINEAGE_GROUP_BOOTSTRAP;FEW_GROUPS_AND_INCOMPLETE_LABELS_LIMIT_INFERENCE",
+    "scope": "SEARCHED_TOP_10_ACTUAL_LAYOUTS_ONLY;NO_AESTHETIC_LABEL_INFERRED_FROM_GEOMETRY",
+    "production_qualification": "NOT_GRANTED_BY_THIS_REPORT",
+    "digest": "bbe3fc384bdaed1417136b221fc7ed2159523564da4c131d7caf2d4bc9277ca0"
+  },
+  "weights_unchanged": true,
+  "label_scope": "PREDECLARED_CONTRADICTORY_ORDER_SCOPED_TEST_ORACLES_NOT_REAL_HUMAN_PREFERENCES",
+  "actual_user_corpus": "NOT_PROVIDED",
+  "production_qualification": "NOT_GRANTED"
+}

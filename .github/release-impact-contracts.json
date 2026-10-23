@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "dynamic_imports": {
+    "template_ai/quality_engine.py": {
+      "sha256": "9ce2724ccff552c5ff675d4b779e51f5a204ec85c53d0b5e986b234abd658a62",
+      "imports": [
+        "template_ai.source_analysis",
+        "template_ai.semantic_fields",
+        "template_ai.quality_ocr",
+        "template_ai.quality_mapping",
+        "template_ai.quality_rules"
+      ],
+      "reason": "Reviewed frozen snapshot-prefix loader: five fixed module suffixes; any file-byte change invalidates this contract and widens scope. Historical-version and full-source gates remain mandatory."
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "status": "ALL_SEVEN_PROCESSES_COMPLETED_AFTER_REPAIR",
+  "individual_actual_exit": {
+    "006primary": 0,
+    "006font": 0,
+    "006source": 0,
+    "006digital": 0,
+    "006report": 0,
+    "008catalog": 0,
+    "010results": 0
+  },
+  "primary": {
+    "captures": 49,
+    "exports": 6,
+    "tests": "NOT_RUN_CAPTURE_ONLY"
+  },
+  "font_screens": 10,
+  "source_screens": 4,
+  "digital_screens": 17,
+  "report_screens": 4,
+  "catalog_fit_sizes": [
+    [
+      1340,
+      850
+    ],
+    [
+      1780,
+      1060
+    ]
+  ],
+  "catalog_tests_008": {
+    "tests": 19,
+    "pass": 19,
+    "actual_exit": 0
+  },
+  "governance_005": {
+    "tests": 24,
+    "pass": 24,
+    "actual_exit": 0
+  },
+  "previous_failures": {
+    "006catalog": "Obsolete whole-panel disabled assertion; child1, results not started",
+    "007catalog": "Process0 but visual source clipping found and repaired",
+    "009results": "Own QA full-view call used wrong out_canvas attribute; corrected to original output_canvas; child1, no screenshots"
+  },
+  "native_visual_review": "current005-critical-visual-review-011.json",
+  "privacy": "Only flat authored QA outputs/metadata copied; no font binaries, private working libraries, DBs or original user assets",
+  "final_immutable_gate": "PENDING"
+}

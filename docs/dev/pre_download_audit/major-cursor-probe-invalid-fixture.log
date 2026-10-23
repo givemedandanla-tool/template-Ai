@@ -1,0 +1,57 @@
+test_cases_delete (__main__.MajorCursorProbe.test_cases_delete) ... ERROR
+test_cases_update (__main__.MajorCursorProbe.test_cases_update) ... ERROR
+test_jobs_delete (__main__.MajorCursorProbe.test_jobs_delete) ... ERROR
+test_jobs_update (__main__.MajorCursorProbe.test_jobs_update) ... ERROR
+
+======================================================================
+ERROR: test_cases_delete (__main__.MajorCursorProbe.test_cases_delete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 26, in test_cases_delete
+    def test_cases_delete(self):self.check('CASES','delete')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 13, in check
+    reader.db.execute('INSERT INTO training_records VALUES(?,?,?,?)',(kind,identity,1,json.dumps(body)));reader.db.commit();expected=execute(reader,command,dict(case_id='synthetic-case'));changed=[]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: training_records
+
+======================================================================
+ERROR: test_cases_update (__main__.MajorCursorProbe.test_cases_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 27, in test_cases_update
+    def test_cases_update(self):self.check('CASES','update')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 13, in check
+    reader.db.execute('INSERT INTO training_records VALUES(?,?,?,?)',(kind,identity,1,json.dumps(body)));reader.db.commit();expected=execute(reader,command,dict(case_id='synthetic-case'));changed=[]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: training_records
+
+======================================================================
+ERROR: test_jobs_delete (__main__.MajorCursorProbe.test_jobs_delete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 28, in test_jobs_delete
+    def test_jobs_delete(self):self.check('JOBS','delete')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 13, in check
+    reader.db.execute('INSERT INTO training_records VALUES(?,?,?,?)',(kind,identity,1,json.dumps(body)));reader.db.commit();expected=execute(reader,command,dict(case_id='synthetic-case'));changed=[]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: training_records
+
+======================================================================
+ERROR: test_jobs_update (__main__.MajorCursorProbe.test_jobs_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 29, in test_jobs_update
+    def test_jobs_update(self):self.check('JOBS','update')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 13, in check
+    reader.db.execute('INSERT INTO training_records VALUES(?,?,?,?)',(kind,identity,1,json.dumps(body)));reader.db.commit();expected=execute(reader,command,dict(case_id='synthetic-case'));changed=[]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: training_records
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.007s
+
+FAILED (errors=4)

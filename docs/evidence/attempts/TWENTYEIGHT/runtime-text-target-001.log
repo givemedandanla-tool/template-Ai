@@ -1,0 +1,28 @@
+E..E.....................This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.......
+======================================================================
+ERROR: test_manual_source_selection_has_schema_before_readonly_fact_properties (test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_parent_navigation.py", line 41, in test_manual_source_selection_has_schema_before_readonly_fact_properties
+    source,work=source_work(self.w.library,self.root,'manual-without-training-panel.svg');self.w.work=work;self.w.slots=[Slot(**{**row,'rect':Rect(**row['rect'])}) for row in work['payload']['slots']];self.w.tabs.setCurrentIndex(0);changes=self.w.library.db.total_changes
+                                           ^^^^^^^^^
+AttributeError: 'ParentNavigationTests' object has no attribute 'root'
+
+======================================================================
+ERROR: test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish (test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_text_budget.py", line 20, in test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish
+    full=self.document(2200);result=self.run_job(self.job());source=self.library.source(result['items'][0]['source_id']);a,b=sorted(self.library.artworks(source['id']),key=lambda row:row['payload']['crop']['x']);unit=self.service.work_unit(a['id']);self.assertTrue(any(issue['code']=='SOURCE_TEXT_BUDGET' and issue['severity']=='BLOCK' for issue in unit['issues']));self.assertFalse(any(issue['code']=='SOURCE_TEXT_BUDGET' for issue in self.service.work_unit(b['id'])['issues']));self.assertEqual(self.service.store.facts(a['id'])['observations'],[]);self.assertEqual(a['payload']['analysis_evidence']['oversized_text'][0]['characters'],len(full))
+                                                                                                                                                                                                                                                                                                                                                             ~~~~^^^^^^^^^^
+TypeError: tuple indices must be integers or slices, not str
+
+----------------------------------------------------------------------
+Ran 33 tests in 34.535s
+
+FAILED (errors=2)

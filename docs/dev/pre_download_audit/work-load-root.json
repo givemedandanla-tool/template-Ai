@@ -1,0 +1,31 @@
+{
+  "id": "BUG-WORK-LOAD-CONTEXT-010",
+  "before": {
+    "source_commit": "1cef015a15abec15872a30e03fc07782f1e97a7f",
+    "isolated_root": "/tmp/template-ai-audit-root10-before",
+    "test_sha256": "05e743774afa8850469abfa2b3d7f6c0914b1d598f4432c37b48555cb4976b89",
+    "gui_sha256": "ba0ebc0ebee4df3593798dd4b27a8e016826d10c2bd41aa85a51d4922ade9658",
+    "correction": "Third case now explicitly restores and asserts prior active work before navigating; first invalid persistence interpretation rejected. All four tests use same exact source before and after fix."
+  },
+  "before_result": "4FAIL using exact corrected4 source on isolated1cef015a",
+  "rejected_premise": "Initial third case failed UI state, but active work was already changed by fixture creation; initial persistence interpretation rejected. Corrected fixture restores and asserts the prior active pointer before navigation.",
+  "after": {
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "source_commit": "3a2ef14207ca117624738e4d765b78162288a3fd",
+    "software_execution": "PASS",
+    "planned": 72,
+    "completed": 72,
+    "statuses": {
+      "PASS": 72
+    },
+    "modules": 5,
+    "healthy_modules": 5,
+    "runtime_errors": 0,
+    "source_unchanged_during_run": true,
+    "original_test_ids_preserved": null,
+    "remote_gate": "NOT_EXECUTED_REMOTE_PROVENANCE_UNAVAILABLE",
+    "windows_private_corpus_physical_print": "NOT_QUALIFIED_BY_THIS_RUN"
+  },
+  "test_sha256": "05e743774afa8850469abfa2b3d7f6c0914b1d598f4432c37b48555cb4976b89",
+  "boundaries": "Reject unreadable crop/slots and mismatched work/source before replacing live state. Does not claim arbitrary Qt OOM or native Windows qualification."
+}

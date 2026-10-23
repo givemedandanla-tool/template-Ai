@@ -1,0 +1,11 @@
+{
+  "source_commit": "62b2e163b92cc5a827ce03049d137bfe768b8478",
+  "fixture_sha256": "81ce9a9944addca97ad37f6a09c3807c07cb8389210ece7f7214b46c3c8b495c",
+  "fixture": "prepared-fixes/test_read_view_snapshot_corrected_before5.py.txt",
+  "scope": "Exact corrected first five tests; no snapshot helper nesting test on old source",
+  "rejected_initial": "Initial5 contains4actual snapshot failures and1fixture missing stored text; not5proven roots",
+  "result": "5FAIL0ERROR",
+  "log": "read-views-corrected-isolated-before.log",
+  "rejected_wrong_cwd": "read-views-corrected-before.log executed old tests but cwd imported new product; rejected as old-source proof",
+  "after": "read-views-corrected-after.log:6PASS; sixth test checks nested caller transaction"
+}

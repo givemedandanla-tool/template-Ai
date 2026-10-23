@@ -1,0 +1,86 @@
+Owned module test_background_context: exit=1; completed=3/3; healthy=False
+test_changed_background_choice_during_review_is_not_overwritten (test_background_context.BackgroundContextTests.test_changed_background_choice_during_review_is_not_overwritten) ... ok
+test_missing_draft_after_file_picker_is_plain_rejection (test_background_context.BackgroundContextTests.test_missing_draft_after_file_picker_is_plain_rejection) ... ok
+test_registered_draft_switch_during_review_is_not_overwritten (test_background_context.BackgroundContextTests.test_registered_draft_switch_during_review_is_not_overwritten) ... ERROR
+
+======================================================================
+ERROR: test_registered_draft_switch_during_review_is_not_overwritten (test_background_context.BackgroundContextTests.test_registered_draft_switch_during_review_is_not_overwritten)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_background_context.py", line 66, in test_registered_draft_switch_during_review_is_not_overwritten
+    def test_registered_draft_switch_during_review_is_not_overwritten(self):self.approval_race(True)
+                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_background_context.py", line 63, in approval_race
+    if replace:self.assertEqual(self.w.library.template(replacement.id).to_dict(),expected[0])
+                                ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Library' object has no attribute 'template'. Did you mean: 'templates'?
+
+----------------------------------------------------------------------
+Ran 3 tests in 3.799s
+
+FAILED (errors=1)
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_visual_background: exit=0; completed=11/11; healthy=True
+test_changed_background_after_candidate_blocks_and_cleans_export (test_visual_background.VisualBackgroundTests.test_changed_background_after_candidate_blocks_and_cleans_export) ... ok
+test_decoration_in_preview_and_all_actual_exports (test_visual_background.VisualBackgroundTests.test_decoration_in_preview_and_all_actual_exports) ... ok
+test_external_svg_resource_is_rejected_before_approval (test_visual_background.VisualBackgroundTests.test_external_svg_resource_is_rejected_before_approval) ... ok
+test_gui_background_controls_respect_published_version (test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version) ... ok
+test_missing_background_is_not_silently_rendered_white (test_visual_background.VisualBackgroundTests.test_missing_background_is_not_silently_rendered_white) ... ok
+test_raster_background_requires_matching_ratio (test_visual_background.VisualBackgroundTests.test_raster_background_requires_matching_ratio) ... ok
+test_raster_choice_uses_approved_imported_pixels (test_visual_background.VisualBackgroundTests.test_raster_choice_uses_approved_imported_pixels) ... ok
+test_real_background_review_dialog_saves_chosen_mode (test_visual_background.VisualBackgroundTests.test_real_background_review_dialog_saves_chosen_mode) ... ok
+test_reopen_version_and_old_schema_preserve_background (test_visual_background.VisualBackgroundTests.test_reopen_version_and_old_schema_preserve_background) ... ok
+test_text_color_is_real_rendered_and_invalid_color_blocks (test_visual_background.VisualBackgroundTests.test_text_color_is_real_rendered_and_invalid_color_blocks) ... ok
+test_unapproved_and_wrong_size_background_block_publication (test_visual_background.VisualBackgroundTests.test_unapproved_and_wrong_size_background_block_publication) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 38.225s
+
+OK
+This plugin does not support propagateSizeHints()
+
+Owned module test_text_policy_context: exit=0; completed=3/3; healthy=True
+test_changed_same_draft_during_confirmation_is_not_overwritten (test_text_policy_context.TextPolicyContextTests.test_changed_same_draft_during_confirmation_is_not_overwritten) ... ok
+test_missing_draft_is_plain_rejection (test_text_policy_context.TextPolicyContextTests.test_missing_draft_is_plain_rejection) ... ok
+test_replacement_draft_during_confirmation_is_not_overwritten (test_text_policy_context.TextPolicyContextTests.test_replacement_draft_during_confirmation_is_not_overwritten) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.818s
+
+OK
+
+Owned module test_property_context: exit=0; completed=12/12; healthy=True
+test_local_problem_button_never_uses_unrelated_previously_selected_problem (test_property_context.CandidatePropertyGateTests.test_local_problem_button_never_uses_unrelated_previously_selected_problem) ... ok
+test_pins_all_properties_and_hidden_panel_never_relax_actual_hard_block (test_property_context.CandidatePropertyGateTests.test_pins_all_properties_and_hidden_panel_never_relax_actual_hard_block) ... ok
+test_problem_selection_and_input_staleness_keep_same_object_scope_and_disable_old_correction (test_property_context.CandidatePropertyGateTests.test_problem_selection_and_input_staleness_keep_same_object_scope_and_disable_old_correction) ... ok
+test_selected_text_is_current_exact_field_plaintext_and_only_a_view (test_property_context.CandidatePropertyGateTests.test_selected_text_is_current_exact_field_plaintext_and_only_a_view) ... ok
+test_stale_selected_text_is_removed_without_retargeting_another_field (test_property_context.CandidatePropertyGateTests.test_stale_selected_text_is_removed_without_retargeting_another_field) ... ok
+test_multiple_different_fields_have_blank_mixed_values_and_reuse_existing_editor_ids (test_property_context.PropertyContextTests.test_multiple_different_fields_have_blank_mixed_values_and_reuse_existing_editor_ids) ... ok
+test_narrow_panel_scroll_keeps_apply_and_conflict_status_reachable (test_property_context.PropertyContextTests.test_narrow_panel_scroll_keeps_apply_and_conflict_status_reachable) ... ok
+test_no_selection_disables_old_values_and_new_frame_uses_legal_original_defaults (test_property_context.PropertyContextTests.test_no_selection_disables_old_values_and_new_frame_uses_legal_original_defaults) ... ok
+test_only_explicit_pin_preference_persists_and_reopened_window_reads_it_without_business_change (test_property_context.PropertyContextTests.test_only_explicit_pin_preference_persists_and_reopened_window_reads_it_without_business_change) ... ok
+test_pinned_text_stays_visible_but_disabled_for_whole_logo_and_never_changes_it (test_property_context.PropertyContextTests.test_pinned_text_stays_visible_but_disabled_for_whole_logo_and_never_changes_it) ... ok
+test_stale_source_clears_active_controls_and_keeps_unapplied_conflict_readonly (test_property_context.PropertyContextTests.test_stale_source_clears_active_controls_and_keeps_unapplied_conflict_readonly) ... ok
+test_text_context_uses_original_fixed_size_and_collapse_does_not_modify_model (test_property_context.PropertyContextTests.test_text_context_uses_original_fixed_size_and_collapse_does_not_modify_model) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 32.219s
+
+OK
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()

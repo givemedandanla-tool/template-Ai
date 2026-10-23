@@ -1,0 +1,105 @@
+{
+  "design_system": {
+    "project_name": "Template AI",
+    "category": "Productivity Tool",
+    "pattern": {
+      "name": "Product Demo + Features",
+      "sections": "Hero > Product video/mockup (center) > Feature breakdown per section > Comparison (optional) > CTA",
+      "cta_placement": "Video center + CTA right/bottom",
+      "color_strategy": "Video surround: Brand color overlay. Features: Icon color #0080FF. Text: Dark #222",
+      "conversion": "Use an interactive demo only when it explains value better than static media. Provide captions, transcript, visible play/pause controls, and a non-video fallback; do not autoplay under reduced motion. Pause media when offscreen or hidden and keep the final product state available as static content."
+    },
+    "style": {
+      "id": "flat-design",
+      "name": "Flat Design",
+      "type": "General",
+      "effects": "No gradients/shadows, simple hover (color/opacity shift), fast loading, clean transitions (150-200ms ease), minimal icons",
+      "keywords": "2D, minimalist, bold colors, no shadows, clean lines, simple shapes, typography-focused, modern, icon-heavy",
+      "best_for": "Web apps, mobile apps, cross-platform, startup MVPs, user-friendly, SaaS, dashboards, corporate",
+      "performance": "cost:low|drivers:none",
+      "accessibility": "risk:low|requires:contrast-text-4.5,keyboard,visible-focus,reduced-motion",
+      "light_mode": "supported",
+      "dark_mode": "supported"
+    },
+    "colors": {
+      "primary": "#0D9488",
+      "on_primary": "#000000",
+      "secondary": "#14B8A6",
+      "on_secondary": "#0F172A",
+      "accent": "#EA580C",
+      "on_accent": "#000000",
+      "background": "#F0FDFA",
+      "foreground": "#134E4A",
+      "card": "#FFFFFF",
+      "card_foreground": "#134E4A",
+      "muted": "#E8F1F4",
+      "muted_foreground": "#475569",
+      "border": "#99F6E4",
+      "destructive": "#DC2626",
+      "on_destructive": "#FFFFFF",
+      "ring": "#0D9488",
+      "notes": "Teal focus + action orange [Accent adjusted from #F97316]",
+      "cta": "#EA580C",
+      "text": "#134E4A",
+      "on_cta": "#000000"
+    },
+    "typography": {
+      "heading": "Plus Jakarta Sans",
+      "body": "Plus Jakarta Sans",
+      "mood": "friendly, modern, saas, clean, approachable, professional",
+      "best_for": "SaaS products, web apps, dashboards, B2B, productivity tools",
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap",
+      "css_import": "@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');"
+    },
+    "key_effects": "No gradients/shadows, simple hover (color/opacity shift), fast loading, clean transitions (150-200ms ease), minimal icons",
+    "anti_patterns": "Complex onboarding + Slow performance",
+    "decision_rules": {
+      "must_have": [
+        "constraint:keyboard-shortcuts"
+      ],
+      "if_collaboration": [
+        "constraint:add-real-time-cursors"
+      ]
+    },
+    "activated_rules": [
+      {
+        "condition": "must_have",
+        "actions": [
+          "constraint:keyboard-shortcuts"
+        ]
+      }
+    ],
+    "constraints": [
+      "keyboard-shortcuts"
+    ],
+    "reasoning_default": false,
+    "source_identities": {
+      "product": "Productivity Tool",
+      "reasoning": "Productivity Tool",
+      "style": "flat-design",
+      "color": "Productivity Tool",
+      "typography": "Friendly SaaS",
+      "landing": "Product Demo + Features"
+    },
+    "source_derivations": {
+      "color_mode": null
+    },
+    "severity": "HIGH",
+    "dials": {
+      "variance": null,
+      "variance_label": null,
+      "motion": null,
+      "motion_label": null,
+      "density": null,
+      "density_label": null
+    },
+    "motion_snippet": {},
+    "spacing_scale": null
+  },
+  "persistence": null,
+  "project_review": {
+    "accepted": "Productivity Tool identity and Flat Design direction",
+    "rejected": "Landing composition,Google Fonts,web code,animation;Qt stack absent",
+    "canonical": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md"
+  }
+}

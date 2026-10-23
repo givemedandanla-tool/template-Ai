@@ -1,0 +1,57 @@
+test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection (test_workbench_navigation.WorkbenchNavigationTests.test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection) ... Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_changed_published_template_and_removed_candidate_do_not_restore_old_position (test_workbench_navigation.WorkbenchNavigationTests.test_changed_published_template_and_removed_candidate_do_not_restore_old_position) ... This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+ERROR
+test_close_recovery_choice_opens_existing_session_and_never_claims_written (test_workbench_navigation.WorkbenchNavigationTests.test_close_recovery_choice_opens_existing_session_and_never_claims_written) ... This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_context_minimizes_personal_details_and_navigation_does_not_schedule_calculation (test_workbench_navigation.WorkbenchNavigationTests.test_context_minimizes_personal_details_and_navigation_does_not_schedule_calculation) ... This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+ok
+test_fake_failed_expired_or_changed_recovery_receipt_never_clears_current_unsaved (test_workbench_navigation.WorkbenchNavigationTests.test_fake_failed_expired_or_changed_recovery_receipt_never_clears_current_unsaved) ... This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+ok
+test_navigation_history_is_bounded_deduplicated_consumed_and_contains_no_business_copy (test_workbench_navigation.WorkbenchNavigationTests.test_navigation_history_is_bounded_deduplicated_consumed_and_contains_no_business_copy) ... This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+ok
+test_new_input_return_is_explicit_fallback_without_restoring_old_manual_or_safe_label (test_workbench_navigation.WorkbenchNavigationTests.test_new_input_return_is_explicit_fallback_without_restoring_old_manual_or_safe_label) ... This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+ok
+test_return_never_overwrites_new_same_geometry_human_review (test_workbench_navigation.WorkbenchNavigationTests.test_return_never_overwrites_new_same_geometry_human_review) ... This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+ok
+test_unsaved_property_form_survives_tab_switch_and_close_stay_without_implicit_apply (test_workbench_navigation.WorkbenchNavigationTests.test_unsaved_property_form_survives_tab_switch_and_close_stay_without_implicit_apply) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+
+======================================================================
+ERROR: test_changed_published_template_and_removed_candidate_do_not_restore_old_position (test_workbench_navigation.WorkbenchNavigationTests.test_changed_published_template_and_removed_candidate_do_not_restore_old_position)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_workbench_navigation.py", line 50, in test_changed_published_template_and_removed_candidate_do_not_restore_old_position
+    template=copy.deepcopy(w.candidates[0].template);template.name='Different published revision';w.library.save_template(template)
+                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/storage.py", line 309, in save_template
+    if expected_revision is None:return self._save_template_data(t)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/storage.py", line 322, in _save_template_data
+    raise ValueError("已發布版本不可覆寫，請建立新版本草稿")
+ValueError: 已發布版本不可覆寫，請建立新版本草稿
+
+----------------------------------------------------------------------
+Ran 9 tests in 7.283s
+
+FAILED (errors=1)

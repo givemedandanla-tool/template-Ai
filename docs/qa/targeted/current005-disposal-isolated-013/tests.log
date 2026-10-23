@@ -1,0 +1,378 @@
+Owned module test_backup_center: exit=1; completed=5/5; healthy=False
+test_actual_background_cancel_keeps_user_files_and_releases_shared_worker (test_backup_center.BackupCenterTests.test_actual_background_cancel_keeps_user_files_and_releases_shared_worker) ... ok
+test_partial_scope_and_shared_database_dependency_never_become_silent_full_success (test_backup_center.BackupCenterTests.test_partial_scope_and_shared_database_dependency_never_become_silent_full_success) ... FAIL
+test_real_gui_backup_receipt_test_restore_and_new_copy_keep_original_customer_and_template (test_backup_center.BackupCenterTests.test_real_gui_backup_receipt_test_restore_and_new_copy_keep_original_customer_and_template) ... FAIL
+test_schedule_waits_for_key_and_idle_runs_one_real_backup_and_stops_before_library_close (test_backup_center.BackupCenterTests.test_schedule_waits_for_key_and_idle_runs_one_real_backup_and_stops_before_library_close) ... ok
+test_wrong_password_attempts_are_bounded_across_tabs_without_writes (test_backup_center.BackupCenterTests.test_wrong_password_attempts_are_bounded_across_tabs_without_writes) ... FAIL
+
+======================================================================
+FAIL: test_partial_scope_and_shared_database_dependency_never_become_silent_full_success (test_backup_center.BackupCenterTests.test_partial_scope_and_shared_database_dependency_never_become_silent_full_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_backup_center.py", line 86, in test_partial_scope_and_shared_database_dependency_never_become_silent_full_success
+    self.data();path=self.create(full=False)
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_backup_center.py", line 58, in create
+    self.dialog.preview_backup();self.wait();self.assertIsNotNone(self.dialog.backup_plan)
+                                 ^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_backup_center.py", line 45, in wait
+    self.fail('Qt background operation did not finish: '+self.dialog.status.text())
+AssertionError: Qt background operation did not finish: 核對已保存資料與所有必要資產
+
+======================================================================
+FAIL: test_real_gui_backup_receipt_test_restore_and_new_copy_keep_original_customer_and_template (test_backup_center.BackupCenterTests.test_real_gui_backup_receipt_test_restore_and_new_copy_keep_original_customer_and_template)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_backup_center.py", line 64, in test_real_gui_backup_receipt_test_restore_and_new_copy_keep_original_customer_and_template
+    customer=self.data();before=self.window.library.template_snapshots();archive=self.create()
+                                                                                 ^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_backup_center.py", line 58, in create
+    self.dialog.preview_backup();self.wait();self.assertIsNotNone(self.dialog.backup_plan)
+                                 ^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_backup_center.py", line 45, in wait
+    self.fail('Qt background operation did not finish: '+self.dialog.status.text())
+AssertionError: Qt background operation did not finish: 核對已保存資料與所有必要資產
+
+======================================================================
+FAIL: test_wrong_password_attempts_are_bounded_across_tabs_without_writes (test_backup_center.BackupCenterTests.test_wrong_password_attempts_are_bounded_across_tabs_without_writes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_backup_center.py", line 123, in test_wrong_password_attempts_are_bounded_across_tabs_without_writes
+    self.dialog.password.setText('wrong password '+str(index));self.dialog.preview_restore();self.wait()
+                                                                                             ^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_backup_center.py", line 45, in wait
+    self.fail('Qt background operation did not finish: '+self.dialog.status.text())
+AssertionError: Qt background operation did not finish: 核對備份來源、加密及現有版本差異
+
+----------------------------------------------------------------------
+Ran 5 tests in 47.443s
+
+FAILED (failures=3)
+Fontconfig error: No writable cache directories
+
+Owned module test_coverage_closure_gui: exit=0; completed=8/8; healthy=True
+test_600_file_gui_pages_search_globally_without_opening_source_models (test_coverage_closure_gui.CoverageClosureGuiTests.test_600_file_gui_pages_search_globally_without_opening_source_models) ... ok
+test_actual_approved_rule_group_gui_labels_automatic_origin_without_human_layer_approval (test_coverage_closure_gui.CoverageClosureGuiTests.test_actual_approved_rule_group_gui_labels_automatic_origin_without_human_layer_approval) ... ok
+test_gui_closure_persists_actual_receipt_without_rules_styles_or_output (test_coverage_closure_gui.CoverageClosureGuiTests.test_gui_closure_persists_actual_receipt_without_rules_styles_or_output) ... ok
+test_one_layer_explicit_preview_and_approval_never_approves_other_layers (test_coverage_closure_gui.CoverageClosureGuiTests.test_one_layer_explicit_preview_and_approval_never_approves_other_layers) ... ok
+test_panel_is_lazy_and_unreviewed_layers_block_close_without_freezing_gui (test_coverage_closure_gui.CoverageClosureGuiTests.test_panel_is_lazy_and_unreviewed_layers_block_close_without_freezing_gui) ... ok
+test_resource_wait_can_be_cancelled_without_launching_child_or_claiming_saved (test_coverage_closure_gui.CoverageClosureGuiTests.test_resource_wait_can_be_cancelled_without_launching_child_or_claiming_saved) ... ok
+test_subprocess_failure_and_unknown_command_do_not_create_success (test_coverage_closure_gui.CoverageClosureGuiTests.test_subprocess_failure_and_unknown_command_do_not_create_success) ... ok
+test_subprocess_timeout_stops_owned_child_and_keeps_no_success_receipt (test_coverage_closure_gui.CoverageClosureGuiTests.test_subprocess_timeout_stops_owned_child_and_keeps_no_success_receipt) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 7.634s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_dataset_learning: exit=0; completed=9/9; healthy=True
+test_actual_changed_scope_confirmation_and_failed_source_controls_recover (test_dataset_learning.DatasetLearningGuiTests.test_actual_changed_scope_confirmation_and_failed_source_controls_recover) ... ok
+test_actual_manifest_cancel_create_explicit_learning_draft_and_usage (test_dataset_learning.DatasetLearningGuiTests.test_actual_manifest_cancel_create_explicit_learning_draft_and_usage) ... ok
+test_learning_result_does_not_save_or_reset_unrelated_dirty_editor (test_dataset_learning.DatasetLearningGuiTests.test_learning_result_does_not_save_or_reset_unrelated_dirty_editor) ... ok
+test_false_source_proof_cannot_confirm_modified_source (test_dataset_learning.DatasetLearningTests.test_false_source_proof_cannot_confirm_modified_source) ... ok
+test_global_whole_source_role_lock_holdout_and_unassigned_not_learned (test_dataset_learning.DatasetLearningTests.test_global_whole_source_role_lock_holdout_and_unassigned_not_learned) ... ok
+test_late_use_audit_failure_atomic_template_clock_usage_rollback (test_dataset_learning.DatasetLearningTests.test_late_use_audit_failure_atomic_template_clock_usage_rollback) ... ok
+test_manifest_reproducible_reopen_and_actual_geometry_draft_no_overwrite (test_dataset_learning.DatasetLearningTests.test_manifest_reproducible_reopen_and_actual_geometry_draft_no_overwrite) ... ok
+test_revocation_blocks_new_learning_draft_publish_and_existing_reference (test_dataset_learning.DatasetLearningTests.test_revocation_blocks_new_learning_draft_publish_and_existing_reference) ... ok
+test_same_content_alias_identity_exact_dedup_and_group_split_prevented (test_dataset_learning.DatasetLearningTests.test_same_content_alias_identity_exact_dedup_and_group_split_prevented) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 5.472s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_noise_authoring: exit=0; completed=8/8; healthy=True
+test_actual_local_confirm_cancel_and_rule_authoring (test_noise_authoring.NoiseAuthorGuiTests.test_actual_local_confirm_cancel_and_rule_authoring) ... ok
+test_actual_stale_wizard_and_entry_recover_without_loss (test_noise_authoring.NoiseAuthorGuiTests.test_actual_stale_wizard_and_entry_recover_without_loss) ... ok
+test_full_unicode_normalization_explicit_zone_and_counterexamples (test_noise_authoring.NoiseAuthorTests.test_full_unicode_normalization_explicit_zone_and_counterexamples) ... ok
+test_local_and_remember_have_different_effects_preserve_source_and_slots (test_noise_authoring.NoiseAuthorTests.test_local_and_remember_have_different_effects_preserve_source_and_slots) ... ok
+test_local_undo_retains_history_and_does_not_activate_pending_rule (test_noise_authoring.NoiseAuthorTests.test_local_undo_retains_history_and_does_not_activate_pending_rule) ... ok
+test_real_fields_logo_unknown_or_missing_confirmation_cannot_be_excluded (test_noise_authoring.NoiseAuthorTests.test_real_fields_logo_unknown_or_missing_confirmation_cannot_be_excluded) ... ok
+test_rule_plus_local_late_audit_failure_rolls_back_both (test_noise_authoring.NoiseAuthorTests.test_rule_plus_local_late_audit_failure_rolls_back_both) ... ok
+test_stale_preview_source_and_local_revision_fail_closed (test_noise_authoring.NoiseAuthorTests.test_stale_preview_source_and_local_revision_fail_closed) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 4.298s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_noise_hits: exit=0; completed=8/8; healthy=True
+test_actual_current_unknown_counts_and_failed_refresh_controls (test_noise_hits.NoiseHitsGuiTests.test_actual_current_unknown_counts_and_failed_refresh_controls) ... ok
+test_actual_future_confirm_one_fact_prompt_no_rule_reapproval_and_hits_navigation (test_noise_hits.NoiseHitsGuiTests.test_actual_future_confirm_one_fact_prompt_no_rule_reapproval_and_hits_navigation) ... ok
+test_exact_literal_type_region_real_fields_logo_unknown_never_broad_exclude (test_noise_hits.NoiseHitsTests.test_exact_literal_type_region_real_fields_logo_unknown_never_broad_exclude) ... ok
+test_idempotent_refresh_and_late_hit_audit_roll_back_fact_confirmation (test_noise_hits.NoiseHitsTests.test_idempotent_refresh_and_late_hit_audit_roll_back_fact_confirmation) ... ok
+test_multiple_active_matching_rules_conflict_keeps_candidate (test_noise_hits.NoiseHitsTests.test_multiple_active_matching_rules_conflict_keeps_candidate) ... ok
+test_once_approved_future_matches_automatically_exclude_and_reopen (test_noise_hits.NoiseHitsTests.test_once_approved_future_matches_automatically_exclude_and_reopen) ... ok
+test_source_changed_or_support_revoked_keeps_and_stale_trace_is_not_current (test_noise_hits.NoiseHitsTests.test_source_changed_or_support_revoked_keeps_and_stale_trace_is_not_current) ... ok
+test_unlinked_annotation_overlapping_confirmed_name_cannot_evade_protection (test_noise_hits.NoiseHitsTests.test_unlinked_annotation_overlapping_confirmed_name_cannot_evade_protection) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 4.572s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_noise_recovery: exit=0; completed=8/8; healthy=True
+test_actual_changed_candidate_preview_and_cancel_source_epoch_stale (test_noise_recovery.NoiseRecoveryGuiTests.test_actual_changed_candidate_preview_and_cancel_source_epoch_stale) ... ok
+test_actual_keep_whitelist_approve_and_disabled_rollback_controls (test_noise_recovery.NoiseRecoveryGuiTests.test_actual_keep_whitelist_approve_and_disabled_rollback_controls) ... ok
+test_change_from_current_manual_source_has_exact_preview_and_pending_activation (test_noise_recovery.NoiseRecoveryTests.test_change_from_current_manual_source_has_exact_preview_and_pending_activation) ... ok
+test_disable_rollback_new_candidate_and_reapproval_keep_history_monotonic (test_noise_recovery.NoiseRecoveryTests.test_disable_rollback_new_candidate_and_reapproval_keep_history_monotonic) ... ok
+test_exact_sample_dependency_invalidation_no_other_sample_or_source_changed (test_noise_recovery.NoiseRecoveryTests.test_exact_sample_dependency_invalidation_no_other_sample_or_source_changed) ... ok
+test_local_keep_and_pending_whitelist_are_different_from_global_approved_keep (test_noise_recovery.NoiseRecoveryTests.test_local_keep_and_pending_whitelist_are_different_from_global_approved_keep) ... ok
+test_stale_plan_tampered_after_and_late_audit_rollback_do_not_partial_apply (test_noise_recovery.NoiseRecoveryTests.test_stale_plan_tampered_after_and_late_audit_rollback_do_not_partial_apply) ... ok
+test_whitelist_requires_noncontradictory_real_refs_and_source_freshness (test_noise_recovery.NoiseRecoveryTests.test_whitelist_requires_noncontradictory_real_refs_and_source_freshness) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 5.044s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_quality_coverage: exit=0; completed=7/7; healthy=True
+test_actual_drilldown_source_locate_readonly_and_stale_guard (test_quality_coverage.CoverageGuiTests.test_actual_drilldown_source_locate_readonly_and_stale_guard) ... ok
+test_actual_failed_statistics_recovery_and_neutral_unknown_detail (test_quality_coverage.CoverageGuiTests.test_actual_failed_statistics_recovery_and_neutral_unknown_detail) ... ok
+test_bounded_scan_no_images_readonly_reproducible_and_bad_limit (test_quality_coverage.CoverageTests.test_bounded_scan_no_images_readonly_reproducible_and_bad_limit) ... ok
+test_empty_inventory_neutral_no_quality_or_supplementation (test_quality_coverage.CoverageTests.test_empty_inventory_neutral_no_quality_or_supplementation) ... ok
+test_file_missing_and_native_logo_unknown_are_not_false_quality_pass (test_quality_coverage.CoverageTests.test_file_missing_and_native_logo_unknown_are_not_false_quality_pass) ... ok
+test_holdout_pending_roles_and_revocation_update_current_counts_keep_saved_history (test_quality_coverage.CoverageTests.test_holdout_pending_roles_and_revocation_update_current_counts_keep_saved_history) ... ok
+test_source_without_artwork_aliases_denominators_and_overlapping_facets (test_quality_coverage.CoverageTests.test_source_without_artwork_aliases_denominators_and_overlapping_facets) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 3.632s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_quality_dispatch: exit=0; completed=4/4; healthy=True
+test_actual_encrypted_backup_restore_clears_eval_owner_and_requires_explicit_resume (test_quality_dispatch.QualityDispatchTests.test_actual_encrypted_backup_restore_clears_eval_owner_and_requires_explicit_resume) ... ok
+test_actual_gui_dispatcher_uses_existing_fifo_worker_and_preserves_quality_boundary (test_quality_dispatch.QualityDispatchTests.test_actual_gui_dispatcher_uses_existing_fifo_worker_and_preserves_quality_boundary) ... ok
+test_actual_pool_launch_failure_releases_eval_lease_without_false_source_result (test_quality_dispatch.QualityDispatchTests.test_actual_pool_launch_failure_releases_eval_lease_without_false_source_result) ... ok
+test_real_owned_stalled_child_kill_rolls_back_then_persists_last_failed_source_receipt (test_quality_dispatch.QualityDispatchTests.test_real_owned_stalled_child_kill_rolls_back_then_persists_last_failed_source_receipt) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 9.918s
+
+OK
+Fontconfig error: No writable cache directories
+
+Owned module test_review_ledger: exit=0; completed=8/8; healthy=True
+test_actual_asynchronous_gui_reads_source_then_works_without_changing_review_or_ownership (test_review_ledger.ReviewLedgerGuiTests.test_actual_asynchronous_gui_reads_source_then_works_without_changing_review_or_ownership) ... ok
+test_closing_project_stops_pending_ledger_query_and_disables_original_context (test_review_ledger.ReviewLedgerGuiTests.test_closing_project_stops_pending_ledger_query_and_disables_original_context) ... ok
+test_actual_source_change_keeps_approval_history_but_is_not_counted_as_current_review (test_review_ledger.ReviewLedgerTests.test_actual_source_change_keeps_approval_history_but_is_not_counted_as_current_review) ... ok
+test_explicit_human_exclusion_is_a_separate_visible_state_and_not_reviewed_or_deleted (test_review_ledger.ReviewLedgerTests.test_explicit_human_exclusion_is_a_separate_visible_state_and_not_reviewed_or_deleted) ... ok
+test_identical_bytes_different_filenames_keep_all_sources_works_and_independent_human_reviews (test_review_ledger.ReviewLedgerTests.test_identical_bytes_different_filenames_keep_all_sources_works_and_independent_human_reviews) ... ok
+test_large_source_scope_pages_before_payload_read_and_preserves_full_denominator (test_review_ledger.ReviewLedgerTests.test_large_source_scope_pages_before_payload_read_and_preserves_full_denominator) ... ok
+test_legacy_import_duplicate_content_stays_visible_as_unregistered_review_scope (test_review_ledger.ReviewLedgerTests.test_legacy_import_duplicate_content_stays_visible_as_unregistered_review_scope) ... ok
+test_preflight_failed_and_unregistered_scopes_are_visible_and_not_counted_as_registered_files (test_review_ledger.ReviewLedgerTests.test_preflight_failed_and_unregistered_scopes_are_visible_and_not_counted_as_registered_files) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 5.232s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_rule_review: exit=0; completed=8/8; healthy=True
+test_actual_filter_details_cancel_approve_and_history (test_rule_review.RuleReviewGuiTests.test_actual_filter_details_cancel_approve_and_history) ... ok
+test_stale_confirm_and_backend_failure_recover_controls (test_rule_review.RuleReviewGuiTests.test_stale_confirm_and_backend_failure_recover_controls) ... ok
+test_batch_late_audit_failure_rolls_back_all_and_CAS (test_rule_review.RuleReviewTests.test_batch_late_audit_failure_rolls_back_all_and_CAS) ... ok
+test_cross_scope_and_high_batch_cannot_bypass (test_rule_review.RuleReviewTests.test_cross_scope_and_high_batch_cannot_bypass) ... ok
+test_known_impact_low_scope_and_explicit_approval_immutable_history (test_rule_review.RuleReviewTests.test_known_impact_low_scope_and_explicit_approval_immutable_history) ... ok
+test_reject_defer_and_reopen_preserve_current_versions (test_rule_review.RuleReviewTests.test_reject_defer_and_reopen_preserve_current_versions) ... ok
+test_same_scope_low_batch_and_high_requires_individual_details (test_rule_review.RuleReviewTests.test_same_scope_low_batch_and_high_requires_individual_details) ... ok
+test_stale_source_missing_evidence_and_bounded_impact_block_approval (test_rule_review.RuleReviewTests.test_stale_source_missing_evidence_and_bounded_impact_block_approval) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 5.937s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_runtime_dispatch: exit=0; completed=8/8; healthy=True
+test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending (test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending) ... ok
+test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop (test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop) ... ok
+test_closed_project_stops_real_timers_and_keeps_pending_backend_scope_unmodified (test_runtime_dispatch.RuntimeDispatchTests.test_closed_project_stops_real_timers_and_keeps_pending_backend_scope_unmodified) ... ok
+test_committed_backend_result_with_failed_queue_receipt_is_recovered_without_repeating_any_analysis (test_runtime_dispatch.RuntimeDispatchTests.test_committed_backend_result_with_failed_queue_receipt_is_recovered_without_repeating_any_analysis) ... ok
+test_deferred_pool_failure_uses_owned_callback_and_restores_controls_without_a_modal (test_runtime_dispatch.RuntimeDispatchTests.test_deferred_pool_failure_uses_owned_callback_and_restores_controls_without_a_modal) ... ok
+test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims (test_runtime_dispatch.RuntimeDispatchTests.test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims) ... ok
+test_recovery_requires_real_successful_audit_commit_and_never_clears_fault_on_write_failure (test_runtime_dispatch.RuntimeDispatchTests.test_recovery_requires_real_successful_audit_commit_and_never_clears_fault_on_write_failure) ... ok
+test_waiting_foreground_launch_can_be_cancelled_without_running_or_losing_the_gui (test_runtime_dispatch.RuntimeDispatchTests.test_waiting_foreground_launch_can_be_cancelled_without_running_or_losing_the_gui) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 10.795s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_source_relink: exit=0; completed=7/7; healthy=True
+test_event_failure_rolls_back_link_and_history (test_source_relink.SourceRelinkTests.test_event_failure_rolls_back_link_and_history) ... ok
+test_gui_background_relink_keeps_selected_work_and_reopens (test_source_relink.SourceRelinkTests.test_gui_background_relink_keeps_selected_work_and_reopens) ... ok
+test_moved_source_reopens_with_original_identity_and_history (test_source_relink.SourceRelinkTests.test_moved_source_reopens_with_original_identity_and_history) ... ok
+test_repeated_current_path_is_idempotent_and_wrong_source_proof_rejected (test_source_relink.SourceRelinkTests.test_repeated_current_path_is_idempotent_and_wrong_source_proof_rejected) ... ok
+test_same_name_different_bytes_and_missing_candidate_rejected (test_source_relink.SourceRelinkTests.test_same_name_different_bytes_and_missing_candidate_rejected) ... ok
+test_stale_revision_and_candidate_changed_after_verification_rejected (test_source_relink.SourceRelinkTests.test_stale_revision_and_candidate_changed_after_verification_rejected) ... ok
+test_status_distinguishes_missing_changed_unreadable_and_ok (test_source_relink.SourceRelinkTests.test_status_distinguishes_missing_changed_unreadable_and_ok) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.862s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+
+Owned module test_source_watch_center: exit=0; completed=8/8; healthy=True
+test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection (test_source_watch_center.SourceWatchCenterTests.test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection) ... ok
+test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts (test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts) ... ok
+test_modified_version_needs_review_and_changed_bytes_during_later_preflight_never_start_a_job (test_source_watch_center.SourceWatchCenterTests.test_modified_version_needs_review_and_changed_bytes_during_later_preflight_never_start_a_job) ... ok
+test_pause_preserves_unsaved_form_and_saves_against_fresh_control_state (test_source_watch_center.SourceWatchCenterTests.test_pause_preserves_unsaved_form_and_saves_against_fresh_control_state) ... ok
+test_real_gui_start_pause_config_and_remove_preserve_customer_styles_sources_and_candidate_history (test_source_watch_center.SourceWatchCenterTests.test_real_gui_start_pause_config_and_remove_preserve_customer_styles_sources_and_candidate_history) ... ok
+test_review_worker_launch_failure_releases_gui_without_losing_review_or_source_data (test_source_watch_center.SourceWatchCenterTests.test_review_worker_launch_failure_releases_gui_without_losing_review_or_source_data) ... ok
+test_stale_project_dialog_never_rebinds_or_writes_another_library (test_source_watch_center.SourceWatchCenterTests.test_stale_project_dialog_never_rebinds_or_writes_another_library) ... ok
+test_unsaved_root_input_survives_reconciliation_and_concurrent_config_is_not_overwritten (test_source_watch_center.SourceWatchCenterTests.test_unsaved_root_input_survives_reconciliation_and_concurrent_config_is_not_overwritten) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 32.512s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+
+Owned module test_training_facts: exit=0; completed=8/8; healthy=True
+test_actual_add_confirm_cancel_revoke_and_entry (test_training_facts.FactsGuiTests.test_actual_add_confirm_cancel_revoke_and_entry) ... ok
+test_stale_scope_during_confirmation_and_failed_worker_controls_recover (test_training_facts.FactsGuiTests.test_stale_scope_during_confirmation_and_failed_worker_controls_recover) ... ok
+test_confirmation_subset_and_unapproved_scope_are_separate (test_training_facts.FactsTests.test_confirmation_subset_and_unapproved_scope_are_separate) ... ok
+test_full_manual_text_unknown_native_and_reopen_history (test_training_facts.FactsTests.test_full_manual_text_unknown_native_and_reopen_history) ... ok
+test_invalid_empty_duplicate_slot_region_and_prediction_fail_closed (test_training_facts.FactsTests.test_invalid_empty_duplicate_slot_region_and_prediction_fail_closed) ... ok
+test_late_audit_failure_atomic_and_revocation_monotonic (test_training_facts.FactsTests.test_late_audit_failure_atomic_and_revocation_monotonic) ... ok
+test_source_changed_after_proof_and_record_CAS_rejected (test_training_facts.FactsTests.test_source_changed_after_proof_and_record_CAS_rejected) ... ok
+test_work_and_source_change_invalidate_confirmation (test_training_facts.FactsTests.test_work_and_source_change_invalidate_confirmation) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 4.612s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_training_pipeline: exit=0; completed=12/12; healthy=True
+test_actual_cancel_during_worker_then_resume_without_duplicate_success (test_training_pipeline.PipelineGuiTests.test_actual_cancel_during_worker_then_resume_without_duplicate_success) ... ok
+test_actual_preflight_confirm_worker_progress_and_controls_restored (test_training_pipeline.PipelineGuiTests.test_actual_preflight_confirm_worker_progress_and_controls_restored) ... ok
+test_actual_stale_confirmation_worker_error_and_close_guard_preserve_results (test_training_pipeline.PipelineGuiTests.test_actual_stale_confirmation_worker_error_and_close_guard_preserve_results) ... ok
+test_actual_worker_start_failure_is_interrupted_and_controls_recover_for_resume (test_training_pipeline.PipelineGuiTests.test_actual_worker_start_failure_is_interrupted_and_controls_recover_for_resume) ... ok
+test_cooperative_cancel_after_actual_item_then_reopen_resume_no_success_rerun (test_training_pipeline.PipelineTests.test_cooperative_cancel_after_actual_item_then_reopen_resume_no_success_rerun) ... ok
+test_dead_owner_is_interrupted_manual_resume_only_preserves_scope (test_training_pipeline.PipelineTests.test_dead_owner_is_interrupted_manual_resume_only_preserves_scope) ... ok
+test_existing_geometric_result_reused_no_duplicate_output_or_use (test_training_pipeline.PipelineTests.test_existing_geometric_result_reused_no_duplicate_output_or_use) ... ok
+test_holdout_revoke_wrong_role_and_caller_after_do_not_train (test_training_pipeline.PipelineTests.test_holdout_revoke_wrong_role_and_caller_after_do_not_train) ... ok
+test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system (test_training_pipeline.PipelineTests.test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system) ... ok
+test_live_owner_cross_window_double_claim_CAS_and_stale_worker_rejected (test_training_pipeline.PipelineTests.test_live_owner_cross_window_double_claim_CAS_and_stale_worker_rejected) ... ok
+test_real_worker_connection_durable_success_exact_use_source_unchanged (test_training_pipeline.PipelineTests.test_real_worker_connection_durable_success_exact_use_source_unchanged) ... ok
+test_source_failure_isolated_other_valid_item_completes_and_failed_retry_explicit (test_training_pipeline.PipelineTests.test_source_failure_isolated_other_valid_item_completes_and_failed_retry_explicit) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 14.842s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_training_quality: exit=0; completed=10/10; healthy=True
+test_actual_readonly_search_filter_navigation_and_stale_recovery (test_training_quality.TrainingQualityGuiTests.test_actual_readonly_search_filter_navigation_and_stale_recovery) ... ok
+test_dirty_main_edit_and_backend_failure_preserve_content (test_training_quality.TrainingQualityGuiTests.test_dirty_main_edit_and_backend_failure_preserve_content) ... ok
+test_paginated_report_and_source_entry_actual_dialog (test_training_quality.TrainingQualityGuiTests.test_paginated_report_and_source_entry_actual_dialog) ... ok
+test_unapplied_coordinate_panel_is_not_saved_by_navigation (test_training_quality.TrainingQualityGuiTests.test_unapplied_coordinate_panel_is_not_saved_by_navigation) ... ok
+test_duplicate_identity_mapping_bounds_and_bad_schema_explained (test_training_quality.TrainingQualityTests.test_duplicate_identity_mapping_bounds_and_bad_schema_explained) ... ok
+test_invalid_dimensions_budget_owner_and_missing_person_name (test_training_quality.TrainingQualityTests.test_invalid_dimensions_budget_owner_and_missing_person_name) ... ok
+test_known_semantics_do_not_invent_optional_email_or_claim_visual (test_training_quality.TrainingQualityTests.test_known_semantics_do_not_invent_optional_email_or_claim_visual) ... ok
+test_large_overlap_set_is_bounded_and_invalid_coordinate_not_crash (test_training_quality.TrainingQualityTests.test_large_overlap_set_is_bounded_and_invalid_coordinate_not_crash) ... ok
+test_logo_containment_is_uncertain_not_automatic_deletion (test_training_quality.TrainingQualityTests.test_logo_containment_is_uncertain_not_automatic_deletion) ... ok
+test_stable_sort_independent_of_slot_order_and_source_bounds (test_training_quality.TrainingQualityTests.test_stable_sort_independent_of_slot_order_and_source_bounds) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 4.036s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_trusted_samples: exit=0; completed=7/7; healthy=True
+test_actual_failed_worker_and_scope_changed_during_confirmation_controls_recover (test_trusted_samples.TrustedSamplesGuiTests.test_actual_failed_worker_and_scope_changed_during_confirmation_controls_recover) ... ok
+test_actual_preview_cancel_admit_and_revoke_without_training (test_trusted_samples.TrustedSamplesGuiTests.test_actual_preview_cancel_admit_and_revoke_without_training) ... ok
+test_admission_preserves_labels_does_not_train_and_reopen_positive_negative_separation (test_trusted_samples.TrustedSamplesTests.test_admission_preserves_labels_does_not_train_and_reopen_positive_negative_separation) ... ok
+test_current_admission_dedup_stale_scope_and_late_audit_rollback (test_trusted_samples.TrustedSamplesTests.test_current_admission_dedup_stale_scope_and_late_audit_rollback) ... ok
+test_quarantine_revoke_exact_usage_impact_preserves_history_and_templates (test_trusted_samples.TrustedSamplesTests.test_quarantine_revoke_exact_usage_impact_preserves_history_and_templates) ... ok
+test_rights_visual_unknown_missing_coverage_and_unapproved_admission_blocked (test_trusted_samples.TrustedSamplesTests.test_rights_visual_unknown_missing_coverage_and_unapproved_admission_blocked) ... ok
+test_source_work_facts_and_cache_changes_invalidate_approved_sample (test_trusted_samples.TrustedSamplesTests.test_source_work_facts_and_cache_changes_invalidate_approved_sample) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 4.170s
+
+OK
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()

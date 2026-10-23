@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "review": "All14 actual PNG individually opened and inspected",
+  "scope": "Controlled authored Linux, no Windows/IME/device/private Illustrator qualification",
+  "screens": [
+    {
+      "file": "canvas-command-01-focused-mm-nudge-current-id.png",
+      "sha256": "0a1ec79f33fe46c20c642c09a58e0234f80ab4d8cea9102bb4218a9bdb7cf2f8",
+      "observation": "CurrentID X8.1 fixed18pt; visible tool label"
+    },
+    {
+      "file": "canvas-command-02-existing-work-undo-redo.png",
+      "sha256": "a6ed62ca50da375f17b20a02258078441267337165686cbd480bc64b39db3c15",
+      "observation": "Original scoped Undo/Redo"
+    },
+    {
+      "file": "canvas-command-03-text-focus-undo-keeps-work.png",
+      "sha256": "8bed5c1761283083f905bc1357d1809356bf6761717b9351c776a67a4ef77497",
+      "observation": "Actual field CtrlZ retains workhistory"
+    },
+    {
+      "file": "canvas-command-04-unapplied-field-blocks-nudge.png",
+      "sha256": "b2a4aa9937978307ca9a1f19e22a20c4802d9689d37a90b61e17a184977adb1c",
+      "observation": "PendingX12 blocks nudge, canonical8.1"
+    },
+    {
+      "file": "canvas-command-05-real-pending-discard-scope.png",
+      "sha256": "f43f45a9235d71ad5644bb8ad0ecf279715bbbea82dc40726c3923dbf8b16984",
+      "observation": "Real explicit pending discard scope"
+    },
+    {
+      "file": "canvas-command-06-real-history-scope-confirmation.png",
+      "sha256": "4ce07b07933526ff89ec79a1d8d4e09974b3c80bf9a9b99f19fa3a62384b699a",
+      "observation": "Real unknownselection Undo exact affectedID confirmation"
+    },
+    {
+      "file": "canvas-command-07-actual-f1-overview-and-mouse-routes.png",
+      "sha256": "73765b13688adcc3fabd734ef962b3639f739f56c8e21792bf9aae8df58eb247",
+      "observation": "Actual F1 overview with mouse alternatives and compatibility limits"
+    },
+    {
+      "file": "canvas-command-08-real-delete-preview-no-write.png",
+      "sha256": "1fc203436068699eabda5ca73bcfa4dff087b6f81966293a891f78c3f9891e15",
+      "observation": "Delete only original preview/difference table, cancel no write"
+    },
+    {
+      "file": "canvas-command-09-locked-delete-remains-blocked.png",
+      "sha256": "4fb4e47c91b0c149308a84e1ef54316a786dd9e71cf32013ea46d19e5896170d",
+      "observation": "Locked Delete refuses plan/apply"
+    },
+    {
+      "file": "canvas-command-10-stale-source-no-old-key-transaction.png",
+      "sha256": "7679e7677df191ab9adbf5d91e353932a9effe5c40b52c45e7523eb46ebee5e4",
+      "observation": "Stale source clears activefields and rejects old transaction"
+    },
+    {
+      "file": "canvas-command-11-real-key-conflict-no-save.png",
+      "sha256": "4ee1814d6fcde8b1926f8bb1a1a7171c26a9a7fa3e3e2a7e01e11595800b1c7a",
+      "observation": "Actual duplicate-key settings rejection before any write"
+    },
+    {
+      "file": "canvas-command-12-explicit-remap-reopens-from-preferences.png",
+      "sha256": "060b48ea2f9cdd55acca4d44ddba2f98a4fe17676775b8d47b12dd33e0baaf44",
+      "observation": "Explicit F7/F8/F9 preferences reopen"
+    },
+    {
+      "file": "canvas-command-13-space-visible-view-only-mode.png",
+      "sha256": "8e656dfdac9f9c81ef7c2f25dee409346eac8b8e22f3a950e50bed646c2bc4a2",
+      "observation": "Space visible view-only mode, locked geometry unchanged"
+    },
+    {
+      "file": "canvas-command-14-release-restores-exact-tool-and-data.png",
+      "sha256": "a4b755dbb4c5ecde622d85990675c1b4a247dd3abad1ba171f40e478e2e180f0",
+      "observation": "Release restores exact edit tool/selection and fixed18pt"
+    }
+  ]
+}

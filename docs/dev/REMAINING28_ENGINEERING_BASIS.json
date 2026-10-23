@@ -1,0 +1,210 @@
+{
+  "scope": "REMAINING28_APPROVED_PARENT_FEATURES",
+  "sources": [
+    {
+      "project": "fontTools",
+      "version": "4.60.1",
+      "url": "https://raw.githubusercontent.com/fonttools/fonttools/4.60.1/Lib/fontTools/ttLib/ttCollection.py",
+      "sha256": "691a61d8c9012b791df7e2422ea849d4437da5f7cdfe5557e965a63934dec1cf",
+      "inspected": "TTCollection.__init__/save; collection face selection and sfnt extraction via mature parser",
+      "reuse": "TTCollection/TTFont parse name/OS2/cmap and extract one explicit face; do not write a binary font parser"
+    },
+    {
+      "project": "Microsoft Dataverse public merge design",
+      "url": "https://raw.githubusercontent.com/MicrosoftDocs/powerapps-docs/main/powerapps-docs/developer/data-platform/webapi/merge-entity-using-web-api.md",
+      "sha256": "9ba13c66be22c0379be760b9643fa8272b35db9288eb84f4038ca6f6788273f3",
+      "inspected": "Merge Target/Subordinate, preserve target data, deactivate subordinate, verify access and parenting relationships",
+      "reuse": "Design reference only; local SQLite/normalized graphs reused, no Dataverse dependency or service call"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Doc/library/sqlite3.rst",
+      "sha256": "ae534aa61fb6ab8d7bff2e7d33ac3f79e3b06e18acf4ec8081250ef7ff542d76",
+      "inspected": "Connection.backup works with concurrent clients; snapshot then verify integrity/FKs, never raw-copy a live WAL database"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pyca/cryptography/46.0.3/docs/hazmat/primitives/aead.rst",
+      "sha256": "73a17ff5e8c4fc824a1ef31c789a530109f74c491c04c1f23db2ca9cc29bee16",
+      "inspected": "AESGCM authenticated encryption, independent random salt and 12-byte nonce, verify tag before unpacking; mature AESGCM/Scrypt reused"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MicrosoftDocs/sql-docs/live/docs/relational-databases/backup-restore/restore-a-database-backup-using-ssms.md",
+      "sha256": "03b5d37793215c56ae2690bfee3ddace118032a4d1b4a340fa693332a258883b",
+      "inspected": "Section C restores Sales to a distinct SalesTest while Sales remains; use isolated destination and compare rather than overwriting newer active data"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.18.0/doc/060_forget.rst",
+      "sha256": "57cb471b45b3a528d2a9a832ace3eb8014241783bd0825a405bfd8a505708e0d",
+      "inspected": "Retention latest-count and within-window use union rather than intersection; preserve last verified complete backup. Our age anchor is wall-clock now, distinct from restic latest-snapshot anchor; reference only, restic executable is not invoked."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/BurntSushi/ripgrep/14.1.1/crates/ignore/src/walk.rs",
+      "sha256": "91e6c323ad22ce7e8a24e31e6b8f42fa410dd034c1f341cf5da535e77f1f15a6",
+      "inspected": "WalkBuilder multiple roots, follow_links/max_filesize/same_file_system controls; adopt explicit scope and traversal bounds via existing stdlib os.scandir rather than adding another scanner engine."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/vscode-docs/main/docs/editing/workspaces/multi-root-workspaces.md",
+      "sha256": "f9a39d1eb62d88355c1e3e38c0e657babf337e0871c81c5b44cfb3be42cb0431",
+      "inspected": "Add Folder to Workspace and Search sections: explicitly selected multiple roots, combined search with per-folder scope. Design reference, not VSCode execution or source-identity approval."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/corelib/io/qfilesystemwatcher.cpp",
+      "sha256": "94af330e6aecae2dda3a57e7da041b22f87790ab71c51aae9223dc4d3664c467",
+      "bytes": 15789,
+      "inspected": "Qt6.8.3 QFileSystemWatcher public source: notifications stop after removal/rename, drive removal and platform watcher limits; use events as hints and reconcile actual files with restart/periodic scans."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/wiki/microsoft/vscode/File-Watcher-Issues.md",
+      "sha256": "5701d8190fbe649a5c43626bb5ae557fb41d5ca3daf1dffed6f806eb9a763a14",
+      "bytes": 3200,
+      "inspected": "VSCode commercial editor File Watcher Issues: recursive watchers can exhaust handles; network/third-party file events are not guaranteed; explicit watcher exclusions. Design reference only, no VSCode execution."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/giampaolo/psutil/release-7.2.2/README.rst",
+      "sha256": "bc120d7d594271416c86eed2a8ee04c0e60d30d6759c2bdde04bcd37621e0fc4",
+      "bytes": 24457,
+      "inspected": "psutil7.2.2 README CPU cpu_percent,virtual_memory and disk_usage examples;cross-platform mature metrics,first sample unknown rather than zero-capacity proof;container clamp and nonblocking sampling added separately"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/vscode/1.105.1/src/vs/base/common/async.ts",
+      "sha256": "e496ee61e3054743947b3436296a2ee21dde1bdc960c8b935702b948267f0b4e",
+      "bytes": 69232,
+      "inspected": "VSCode1.105.1 async.ts Limiter lines691-782:bounded running promises,append requests and shift FIFO,Queue concurrency1;commercial desktop/open-source reference,reuse own SQLite/Qt infrastructure without porting TypeScript"
+    },
+    {
+      "project": "CPython subprocess",
+      "version": "v3.12.14",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.14/Lib/subprocess.py",
+      "sha256": "85d29b2bf0249f5436838298c9a60ee93508b1102e9ac43b001f8a7e7ae8f375",
+      "bytes": 88747,
+      "scope": "Popen stdlib process isolation/pipe/timeout;psutil child-tree termination;reuse SQLite transactional commits and existing engines;bounded metadata protocol rather than original documents",
+      "mathematics": "finite unit deadline120s,cancel grace10s,one worker,bounded command queue1/event queue32/line16KiB;no failed job auto-retry"
+    },
+    {
+      "project": "Great Expectations checkpoint",
+      "version": "0.18.21",
+      "url": "https://raw.githubusercontent.com/great-expectations/great_expectations/0.18.21/great_expectations/checkpoint/checkpoint.py",
+      "bytes": 56138,
+      "sha256": "7b7e802103b8019b7e7abe7a92dc2b45c34de10b401cb6a9f2921ffdcd7bb2cc",
+      "source_file": "/tmp/remaining28-ge-checkpoint.py",
+      "inspected": "checkpoint.run explicit batch_request,expectation suite,run identifier and validation results;reuse existing SQLite/rules/facts instead of installing GE/pandas/Spark",
+      "use": "Exact declared batch and evidence version separate from validation success;retain unexpected/missing records"
+    },
+    {
+      "project": "Microsoft VS Code working-copy file operations",
+      "version": "1.105.1",
+      "url": "https://raw.githubusercontent.com/microsoft/vscode/1.105.1/src/vs/workbench/services/workingCopy/common/workingCopyFileService.ts",
+      "bytes": 21211,
+      "sha256": "9a3f312dffee582af394fa260329f2daf1cd3660de90a1aac699bad4b24cf61d",
+      "source_file": "/tmp/remaining28-vscode-workingcopy.ts",
+      "inspected": "correlationId,working-copy operation participants and will-run/did-run/did-fail events",
+      "use": "Scoped preview/commit/failure receipts and stale working-copy handling;no VS Code dependency/code copy"
+    },
+    {
+      "id": "sklearn-group-split",
+      "url": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/1.7.2/sklearn/model_selection/_split.py",
+      "bytes": 109612,
+      "sha256": "ceb7c6a8e708c15bfab021621954f2d188c29826b4556b8cb4cf8feed90f4dc5",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED",
+      "project": "scikit-learn GroupKFold",
+      "version": "1.7.2",
+      "inspected": "GroupKFold._iter_test_indices groups required;unique whole groups assigned to folds,not random individual rows",
+      "reuse": "Reuse non-overlapping connected group principle with NetworkX/local SQLite;do not install sklearn/Spark"
+    },
+    {
+      "id": "sklearn-classification-metrics",
+      "url": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/1.7.2/sklearn/metrics/_classification.py",
+      "bytes": 139502,
+      "sha256": "6fe88badb690ddf370f8c560a9286f60544ac50862576b33fa47576ab58d9e14",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED",
+      "project": "scikit-learn classification metrics",
+      "version": "1.7.2",
+      "inspected": "precision_recall_fscore_support computes per-class sufficient counts and explicit zero_division behavior",
+      "reuse": "Reuse mathematically defined per-domain TP/FP/FN and None on undefined denominator;never one fake aggregate AI accuracy"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/aws/sagemaker-python-sdk/v2.253.1/src/sagemaker/model_monitor/model_monitoring.py",
+      "bytes": 186974,
+      "sha256": "68432bb552d89ce810799195f03affdf35051c5ca39e47cf9468e6abf4859071",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED",
+      "project": "Amazon SageMaker ModelQualityMonitor public SDK",
+      "version": "2.253.1",
+      "inspected": "ModelQualityMonitor.suggest_baseline separates baseline_dataset/problem_type/predicted label/ground_truth fields and computes versioned baseline artifacts",
+      "reuse": "Design reference only:separate predictions/truth/protocol/constraints;no AWS import/SDK installation/S3/job/service"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/networkx/networkx/networkx-3.5/networkx/algorithms/matching.py",
+      "bytes": 44518,
+      "sha256": "22fdd4ab72cff786e824b11ae816841a279b756e992228249dd297c220f50bc1",
+      "project": "NetworkX maximum-weight matching",
+      "version": "3.5",
+      "inspected": "max_weight_matching maximum-cardinality option,Edmonds blossom primal-dual,O(V^3),integer weights avoid documented float precision issues",
+      "reuse": "Use mature matching and connected_components;do not implement Hungarian/union-find from scratch",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED"
+    },
+    {
+      "project": "Tesseract OCR CLI",
+      "version": "5.5.0",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tesseract/5.5.0/doc/tesseract.1.asc",
+      "sha256": "2b1823fa238b7b3e030b96f916fa2ee948d0194ae47ecf09968e35f71933fd6c",
+      "bytes": 15602,
+      "inspected": "--psm modes6/11, --tessdata-dir, -l and TSV output, option order before CONFIGFILE",
+      "reuse": "Reuse installed Tesseract5.5.0 and existing local language packs; exact runtime/model hashes and bounded adapter, no new OCR engine or paid service"
+    }
+  ],
+  "mathematical_basis": [
+    "SHA256 byte identity is distinct from font name / visual similarity; exact equality cannot infer human/customer identity",
+    "Three-valued evidence: observed derivative attributes / unknown native semantics / explicit user attestation; missing evidence cannot become PASS",
+    "Disjoint graph union preserves stable people/company/field IDs; style scopes preserve the original subset",
+    "Compare-and-swap exact snapshot digests within BEGIN IMMEDIATE; on split partition CURRENT graph rather than replay stale historical values",
+    "Dependency closure: SQLite consistent whole DB plus actual referenced asset bytes; missing or unauthorized references make the bundle PARTIAL",
+    "SHA256 per member and whole encrypted file distinguish data integrity from successful isolated restoration; AEAD tag binds content before extraction",
+    "UI049: streaming SHA256+length matches physical content, never customer identity; bounded root-union removes nested traversals; disjoint persisted source/customer/style IDs stay independent; snapshot-digest and source-revision CAS plus SQLite transaction make stale context or audit failure roll back all location changes.",
+    "UI050: two independent SHA256/stat snapshots are evidence only at verification time; explicit source/root revision checks and later UI003 preflight recheck prevent treating notifications or old stable samples as permanent truth. Deterministic root+path+content candidate keys give idempotent persistence; SQLite transaction rolls back candidate/root audit together."
+  ],
+  "commercial_approach": [
+    "Separate font activation from OS installation, per-face identity and technical embedding constraints from user licence attestation; no download or licence acceptance on behalf of user"
+  ],
+  "not_claimed": [
+    "Windows installation or real Windows validation",
+    "Real private Illustrator special-effect training equivalence",
+    "Host-font licence validation is not yet implemented"
+  ],
+  "unavailable_references": [
+    {
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "result": "HTTP403; not claimed read; SQLite transaction reuse also covered by prior engineering basis"
+    }
+  ],
+  "native_test_isolation_basis": {
+    "references": [
+      {
+        "project": "CPython unittest",
+        "version": "3.12.14",
+        "source": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py",
+        "upstream": "https://github.com/python/cpython/blob/v3.12.14/Lib/unittest/loader.py",
+        "bytes": 21116,
+        "sha256": "7f0af414bfa7fe8612a424b14cfcf8a3c34fcac999d976461beb738ef8b211b8",
+        "status": "ACTUAL_INSTALLED_STDLIB_SOURCE_REVIEWED",
+        "reuse": "Reuse loadTestsFromNames and TextTestRunner/EvidenceResult exactly; owned fresh serial interpreter isolates native Qt lifetime; no pytest/plugin/dependency install"
+      },
+      {
+        "project": "CPython unittest",
+        "version": "3.12.14",
+        "source": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py",
+        "upstream": "https://github.com/python/cpython/blob/v3.12.14/Lib/unittest/runner.py",
+        "bytes": 10368,
+        "sha256": "76d9beb9c21d0d367a1b040a921ad43f90b7971fcc8cacfccd6f9760bedf1ce2",
+        "status": "ACTUAL_INSTALLED_STDLIB_SOURCE_REVIEWED",
+        "reuse": "Reuse loadTestsFromNames and TextTestRunner/EvidenceResult exactly; owned fresh serial interpreter isolates native Qt lifetime; no pytest/plugin/dependency install"
+      }
+    ],
+    "actual_failure": "QUALITY002 exit139 after684PASS; exactrootcauseunconfirmed",
+    "verification": "3actual worker failure/deadline tests plus3-module15PASS actualintegration, nativeabortcore0, stoppedonlyownedsession",
+    "invariants": [
+      "ExactuniqueplannedIDset equals actualPASSIDset before success",
+      "No result for unexecuted tests; missingIDs explicitly block",
+      "Serialmodulechild, actualexit/runtimeexceptions/stacks persisted",
+      "No nativefailure convertedtoPASS or testskip"
+    ]
+  }
+}

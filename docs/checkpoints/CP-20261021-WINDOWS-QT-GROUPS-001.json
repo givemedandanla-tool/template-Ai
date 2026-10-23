@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261021-WINDOWS-QT-GROUPS-001",
+  "kind": "INCREMENTAL_FORMAL",
+  "phase": "PREPARED",
+  "base_commit": "ba8463745d19068ce2e6503ced47200744eb4a80",
+  "created_utc": "2026-10-21T14:47:00.778941+00:00",
+  "summary": "Original Windows176 IDs preserved; bounded4-case owned Qt groups with same180s watchdog. Actual5-case configuration smoke and failure negative control. Prior normal run169PASS remains FAIL; no EXE published.",
+  "source_files": {
+    ".github/build_windows_ci.ps1": {
+      "bytes": 2134,
+      "sha256": "c4c9244b3acf377fb20f60983a71b5d6fba119b5dd944312304ff6b2b72f2ed4",
+      "git_blob_sha1": "17b021ff1cb4fbf58d1cee8bc872a1736269bb67"
+    },
+    ".github/workflows/first-version.yml": {
+      "bytes": 6645,
+      "sha256": "10e5f460a2ae03f2ae9ab0d28562440c690473aa85d8ade8ce2bc02193257fc2",
+      "git_blob_sha1": "b537ab3120fc332e52d6e4033f083275306fda45"
+    },
+    "AGENTS.md": {
+      "bytes": 22147,
+      "sha256": "66f9f570a655f9889a5c8a8147369a33d8dc5f6e11f464e13c5b2f28fee63a15",
+      "git_blob_sha1": "66c4c6f9e22c6ff6ff31af00f55c7ecb4f36a787"
+    },
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 3406,
+      "sha256": "4e9f33a66954ae052d710e18f9f6676ddd1f97107aac10fdf547c425adbe4c6d",
+      "git_blob_sha1": "9e7af465fa4ea4a447d9208adf9416d3ebaafce1"
+    },
+    "docs/dev/CURRENT_PROGRESS.json": {
+      "bytes": 36009,
+      "sha256": "d6dd2387461a1cf7dfd9d146be901a46cc145d0b49eb4a8716bc905311aa5cfa",
+      "git_blob_sha1": "276f6420504c702c91ba7d4201bed42eb07550b8"
+    },
+    "docs/dev/FEATURES.md": {
+      "bytes": 57920,
+      "sha256": "fefbc343f2745e360d8613652aca3ad42fedd570d92f936b4817bc55e65c209a",
+      "git_blob_sha1": "b4c4a7265c1260beb2af137ee83e84c814b46c2d"
+    },
+    "docs/dev/HANDOFF.md": {
+      "bytes": 1037,
+      "sha256": "1533b50245db00d14d401bcefb40ddc2516ef3460cd76332036a4e6bb308a100",
+      "git_blob_sha1": "69939ac3d9f721ad28caa7a980c2186cd029612e"
+    },
+    "docs/dev/PROGRESS.md": {
+      "bytes": 904,
+      "sha256": "c1619cc87267240c3dfa477c14fd8e6e51e2af94ef21fbd951ce8d066cf6018e",
+      "git_blob_sha1": "1dd2ca7e9c78634af5f6bab27ad2ceaad35e14a3"
+    },
+    "docs/dev/PROJECT_ROADMAP.json": {
+      "bytes": 561737,
+      "sha256": "556d23283890115f639f738c988b78ce3b66b1661aee57c37e68e48c6574b6de",
+      "git_blob_sha1": "d234483300907a667fd41c7f54899f31022f2a33"
+    },
+    "docs/dev/PROJECT_ROADMAP.md": {
+      "bytes": 6701,
+      "sha256": "fea5c9721b962bf2236e734fe9fd9019738b835904ac239ab7b89e4a2251c422",
+      "git_blob_sha1": "4717a05b09d724ebcf09d2b20830ce7c3d4ca082"
+    },
+    "docs/dev/REQUIREMENTS.json": {
+      "bytes": 2890594,
+      "sha256": "0c0ecf8da8f62c662965831b181fccbb04ee2aadf3943ba046c54d45bcbba3bb",
+      "git_blob_sha1": "ed21786c71c2590eb6fa4bd56c8d8d21a68a78ff"
+    },
+    "docs/dev/STATE.json": {
+      "bytes": 88141,
+      "sha256": "a3f9e501f2ed9e711defad351e1b5058ca2cbe2ea5145b542937f82d55b0270e",
+      "git_blob_sha1": "f6641b966fc959d7161be5fcba92ca75929cac32"
+    },
+    "docs/dev/WORK_LOG.md": {
+      "bytes": 316982,
+      "sha256": "d90974be88a07eb094b9bcf86b390c214e8da784e4228af5b14905d7198c7bd4",
+      "git_blob_sha1": "d6c7a32f3808f60a35595c957318a97db42573f6"
+    },
+    "docs/dev/releases/run_windows_case_audit.py": {
+      "bytes": 5560,
+      "sha256": "04006983daa3b642056073af2782dce2c7f212b02687ca7f1479787a0d775ea7",
+      "git_blob_sha1": "afee4cc8b4740fbd59c75457dcc6af2c80163d56"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001/README.md": {
+      "bytes": 1624,
+      "sha256": "916e5834144b0dc9de173a89e6511e66bc92d50ba41e1337a8c5edf78452fcea",
+      "git_blob_sha1": "dc9943dd32b27d536683959b4633e7da1f40b7a2"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001/case-group-policy.json": {
+      "bytes": 310,
+      "sha256": "85851b9ae626ffa937cae68d4c3ad71f4b5143f26c762de77ad05031422452a0",
+      "git_blob_sha1": "cf403965d5bd483ad13219d4070f45bf838174f2"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001/case-groups.json": {
+      "bytes": 2251,
+      "sha256": "2332cacbad0f1b23d7ffdc2d6767b55a8f4efe6ff1c174def0288daf8dae80a7",
+      "git_blob_sha1": "4e7cbb160bfe45fab2411c243e64aba5cbed057f"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001/negative-control.json": {
+      "bytes": 2004,
+      "sha256": "b422b41ff03ca91629d351fe205281e89f349e0fb5e74b14f9354911c9733798",
+      "git_blob_sha1": "ebc042c6be3fdc70a0cea564cbf16cfd5a3fd365"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001/smoke-catalog.json": {
+      "bytes": 635,
+      "sha256": "958967c30e9fa5775abdce24d9c2c2f3231fc9243beb9340d9ec837575718b33",
+      "git_blob_sha1": "e213956b22ffe6cf07e88f2c53ef70d0a7ba0665"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001/smoke-runtime-errors.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "git_blob_sha1": "fe51488c7066f6687ef680d6bfaa4f7768ef205c"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001/smoke-source.json": {
+      "bytes": 136386,
+      "sha256": "177f0feaea666e096010b6d8e96350a7aec1e72f5694d76a97fa259361c766e8",
+      "git_blob_sha1": "53da4d4cb8cac1f102fa3b1a8b7a01407be9a04d"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001/smoke-summary.json": {
+      "bytes": 962,
+      "sha256": "804ccb652cca5cb7d907e31ff57b7a08af6643d6d972b3f66db665ba7fff8ec4",
+      "git_blob_sha1": "95d3bd43be0442b2af8e9ee3801ac00bc868f6a1"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001/smoke-tests.json": {
+      "bytes": 1045,
+      "sha256": "a82d256f30bd6adac87bc7c9598f30d8673f424de3c708d2305c94a8f299306a",
+      "git_blob_sha1": "0bbb2b4f2e7d9932a21c6f2e46d23466b23b7057"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001/test-modules.json": {
+      "bytes": 598,
+      "sha256": "688ac66a0d220a371ae68e2bfae32acc2b657aa7c3d94a2d32d3df41f8883579",
+      "git_blob_sha1": "920d8a1859f1a22fbada33124e2aeab6fb2a7de1"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/WINDOWS_RUNTIME.txt": {
+      "bytes": 63,
+      "sha256": "73cddd65f8003a60ca4d3b95a3c7c081e0743307d8b0d99a5455a77126924b06",
+      "git_blob_sha1": "6adf42d351563c33c16d1161dc8a4f8775b47c88"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/failed-modules/test_input_learning_integration-progress.json": {
+      "bytes": 338,
+      "sha256": "d849805a1f427b560ee331d05a788123ce00d184716090bd5e0c11c3ba9445a2",
+      "git_blob_sha1": "2ce344acd7a3f6ff7aba2a7565b55c714d7ea756"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/failed-modules/test_input_learning_integration-stacks.log": {
+      "bytes": 2123,
+      "sha256": "162c72e4986e30f1e730785a7655c8195678b7a30d4c82b61e68e27211a7fc43",
+      "git_blob_sha1": "56b12c4b2b9ddb9d445b1ee2bd97b277d533e5d2"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/failed-modules/test_input_learning_integration-stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/governance-gate.json": {
+      "bytes": 108,
+      "sha256": "4a94fac9fc3b2a01d34fb2fbb915be1949c7a0660b670f3986ccb29a15b1fb57",
+      "git_blob_sha1": "955a9ee6110d86fc18745c011e11e740dfea7c45"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/installed-dependencies.txt": {
+      "bytes": 511,
+      "sha256": "966d8d3399ef3fa3ac3d01d647f3700edb8f145545b355c1a73c562b8ecd59d0",
+      "git_blob_sha1": "2bdc7f94af73f0218394dfe957850e1678039963"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/pyinstaller.log": {
+      "bytes": 10192,
+      "sha256": "38c6c99c7f86c45cfb4938c8b66ec0031c2c3eeed9ca9233e5d85a86cb3c7e05",
+      "git_blob_sha1": "746834c6a6cb423e88131f747f33c48241aea87b"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/source-tests/catalog.json": {
+      "bytes": 20865,
+      "sha256": "8e55ddf8abfed9faf9c2e2e67961eeda72c00c1c835d34a42b6892b0dfecf857",
+      "git_blob_sha1": "9e424d39252b0c5c41a6b5b15d82a0baa896580f"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/source-tests/live/test-modules.json": {
+      "bytes": 9409,
+      "sha256": "58ddb503717d5e47575693cc7b8b41e30b9b610f0fd62d54223fbb2fb5248e3c",
+      "git_blob_sha1": "51354949abfb497cadd2e16069d9b14c062bbb4f"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/source-tests/runtime-errors.json": {
+      "bytes": 205,
+      "sha256": "40926eef86648ac6d70ae462f8255d58de641e5d3378b56c5e21b730fdafb8ee",
+      "git_blob_sha1": "fb1c7ec7f928365fa08a32dd17676697c6ffaa90"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/source-tests/summary.json": {
+      "bytes": 521,
+      "sha256": "3f994b0408b48c7d418c684de46c0629737c34d87bf8e4ba14c1cc5fc2abe8ff",
+      "git_blob_sha1": "a85bfa716817b712477f03ab8bccd668c002f4e8"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/source-tests/tests.json": {
+      "bytes": 34563,
+      "sha256": "c1203bf9f08f6f602fb7fb8237ba27dbaa44031d4fb028da3bb08bdae0a2c1ce",
+      "git_blob_sha1": "8ec333dd8ce6001bfaf88ed96508b5b8f60e0215"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-003-failed/status.json": {
+      "bytes": 360,
+      "sha256": "fad6236b0c8c90bc863c7428400b08dc9ce2dc50260a568be985fa42e70a44e2",
+      "git_blob_sha1": "80b54dfd1f91457111a215648eec41aee034dc3f"
+    }
+  },
+  "source_manifest_sha256": "efa6bd96a5f872013918a151be518f03394cc4422856fcbd75ff869382d870c6",
+  "local_snapshot": {
+    "path": ".checkpoints/CP-20261021-WINDOWS-QT-GROUPS-001/source.zip",
+    "sha256": "79a46e2b90bf0f5141762560ae66eff9ae791f25082f5ce5abbfee60135490e8"
+  },
+  "requirement_ids": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-004"
+  ],
+  "next_step": "Use compact repository handoff; local feedback via manually exported safe support report.",
+  "remote_confirmation": "PENDING_ACTUAL_REMOTE_READBACK",
+  "restore_verification": {
+    "status": "PASS",
+    "kind": "INCREMENTAL_CHANGED_PATH_RESTORE_NOT_STANDALONE_PRODUCT",
+    "files": 37,
+    "base_commit_required": "ba8463745d19068ce2e6503ced47200744eb4a80",
+    "archive_sha256": "79a46e2b90bf0f5141762560ae66eff9ae791f25082f5ce5abbfee60135490e8",
+    "isolated_temporary_restore": true,
+    "all_hashes_match": true,
+    "user_data_included": false
+  }
+}

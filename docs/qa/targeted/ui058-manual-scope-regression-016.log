@@ -1,0 +1,45 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+FAIL: test_new_main_calculation_preserves_preexisting_manual_layout_until_explicit_difference_choice (test_layout_session_extended.LayoutSessionExtendedTests.test_new_main_calculation_preserves_preexisting_manual_layout_until_explicit_difference_choice)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_layout_session_extended.py", line 64, in test_new_main_calculation_preserves_preexisting_manual_layout_until_explicit_difference_choice
+    self.assertEqual(canvas_stamp(self.w),before);self.assertFalse(new.auto_apply);self.assertIn('人工',new.details.toPlainText());self.assertTrue(new.rows);self.assertFalse(self.w.export_button.isEnabled())
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '78f6dfb3b5e6058b6fd65152486ddec9eef4ab09df2af4ddf2240ff50fc608e2' != 'cbef7e2d230468b382541b0c10b5f3667adcbfa31007ded937ded6627333cd58'
+- 78f6dfb3b5e6058b6fd65152486ddec9eef4ab09df2af4ddf2240ff50fc608e2
++ cbef7e2d230468b382541b0c10b5f3667adcbfa31007ded937ded6627333cd58
+
+
+======================================================================
+FAIL: test_actual_gui_encrypted_snapshot_preserves_current_legal_manual_geometry_and_receipt (test_layout_session_extended.LayoutSessionExtendedTests.test_actual_gui_encrypted_snapshot_preserves_current_legal_manual_geometry_and_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_layout_session_extended.py", line 70, in test_actual_gui_encrypted_snapshot_preserves_current_legal_manual_geometry_and_receipt
+    payload=d.recovery.load('synthetic-password-123');rows=d.recovery.validate(self.w.library,payload);self.assertIsNotNone(rows[0]['candidate']);self.assertEqual(rows[0]['candidate'].template.slots[0].rect.x,old_x+1);self.assertIn('manual_edit_receipt',rows[0]['candidate'].risk_context)
+                                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 8 != 9
+
+======================================================================
+FAIL: test_save_after_input_change_never_claims_stale_session_is_current_saved_work (test_layout_session_extended.LayoutSessionExtendedTests.test_save_after_input_change_never_claims_stale_session_is_current_saved_work)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_layout_session_extended.py", line 74, in test_save_after_input_change_never_claims_stale_session_is_current_saved_work
+    self.assertFalse(d.recovery.pending());self.assertIn('未保存',d.status.text())
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 3 tests in 3.357s
+
+FAILED (failures=3)

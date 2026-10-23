@@ -1,0 +1,55 @@
+test_actual_valid_same_file_and_face_remain_separate_from_native_editability (test_font_source_identity.FontSourceIdentityTests.test_actual_valid_same_file_and_face_remain_separate_from_native_editability) ... ERROR
+test_collection_same_file_with_other_face_is_not_same_face (test_font_source_identity.FontSourceIdentityTests.test_collection_same_file_with_other_face_is_not_same_face) ... FAIL
+test_corrupt_matching_bytes_cannot_be_promoted_to_a_font (test_font_source_identity.FontSourceIdentityTests.test_corrupt_matching_bytes_cannot_be_promoted_to_a_font) ... FAIL
+test_matching_declared_hash_without_actual_font_files_is_not_proof (test_font_source_identity.FontSourceIdentityTests.test_matching_declared_hash_without_actual_font_files_is_not_proof) ... FAIL
+test_same_name_or_visual_similarity_only_remains_alias_or_unknown (test_font_source_identity.FontSourceIdentityTests.test_same_name_or_visual_similarity_only_remains_alias_or_unknown) ... ok
+test_source_changed_after_snapshot_cannot_reuse_declared_hash (test_font_source_identity.FontSourceIdentityTests.test_source_changed_after_snapshot_cannot_reuse_declared_hash) ... FAIL
+
+======================================================================
+ERROR: test_actual_valid_same_file_and_face_remain_separate_from_native_editability (test_font_source_identity.FontSourceIdentityTests.test_actual_valid_same_file_and_face_remain_separate_from_native_editability)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_source_identity.py", line 21, in test_actual_valid_same_file_and_face_remain_separate_from_native_editability
+    value=identity_match(*self.refs());self.assertEqual(value['state'],'PROVEN_SAME_BYTES');self.assertEqual(value['editable_source'],'UNKNOWN');self.assertEqual(value['original_ai_font_relation'],'UNVERIFIED')
+                                                                                                                                                                  ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'original_ai_font_relation'
+
+======================================================================
+FAIL: test_collection_same_file_with_other_face_is_not_same_face (test_font_source_identity.FontSourceIdentityTests.test_collection_same_file_with_other_face_is_not_same_face)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_source_identity.py", line 31, in test_collection_same_file_with_other_face_is_not_same_face
+    reference,candidate=self.refs(path);candidate['font_evidence']['index']=1;self.assertNotEqual(identity_match(reference,candidate)['state'],'PROVEN_SAME_BYTES')
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PROVEN_SAME_BYTES' == 'PROVEN_SAME_BYTES'
+
+======================================================================
+FAIL: test_corrupt_matching_bytes_cannot_be_promoted_to_a_font (test_font_source_identity.FontSourceIdentityTests.test_corrupt_matching_bytes_cannot_be_promoted_to_a_font)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_source_identity.py", line 25, in test_corrupt_matching_bytes_cannot_be_promoted_to_a_font
+    self.source.write_bytes(b'authored-corrupt-font');self.target.write_bytes(self.source.read_bytes());self.assertNotEqual(identity_match(*self.refs())['state'],'PROVEN_SAME_BYTES')
+                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PROVEN_SAME_BYTES' == 'PROVEN_SAME_BYTES'
+
+======================================================================
+FAIL: test_matching_declared_hash_without_actual_font_files_is_not_proof (test_font_source_identity.FontSourceIdentityTests.test_matching_declared_hash_without_actual_font_files_is_not_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_source_identity.py", line 19, in test_matching_declared_hash_without_actual_font_files_is_not_proof
+    self.assertNotEqual(value['state'],'PROVEN_SAME_BYTES')
+AssertionError: 'PROVEN_SAME_BYTES' == 'PROVEN_SAME_BYTES'
+
+======================================================================
+FAIL: test_source_changed_after_snapshot_cannot_reuse_declared_hash (test_font_source_identity.FontSourceIdentityTests.test_source_changed_after_snapshot_cannot_reuse_declared_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_source_identity.py", line 23, in test_source_changed_after_snapshot_cannot_reuse_declared_hash
+    reference,candidate=self.refs();shutil.copyfile(MONO,self.source);self.assertNotEqual(identity_match(reference,candidate)['state'],'PROVEN_SAME_BYTES')
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PROVEN_SAME_BYTES' == 'PROVEN_SAME_BYTES'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.038s
+
+FAILED (failures=4, errors=1)

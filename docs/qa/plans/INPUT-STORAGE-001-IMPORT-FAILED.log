@@ -1,0 +1,42 @@
+..EEE
+======================================================================
+ERROR: test_input_learning_integration (unittest.loader._FailedTest.test_input_learning_integration)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_input_learning_integration
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_input_learning_integration.py", line 20, in <module>
+    from gui_wait import wait_for_gui,dispose_main_window
+ModuleNotFoundError: No module named 'gui_wait'
+
+
+======================================================================
+ERROR: test_design_session (unittest.loader._FailedTest.test_design_session)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_design_session
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_design_session.py", line 17, in <module>
+    from authored_font_fixture import bind_authored_fonts
+ModuleNotFoundError: No module named 'authored_font_fixture'
+
+
+======================================================================
+ERROR: test_design_feedback (unittest.loader._FailedTest.test_design_feedback)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_design_feedback
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'tests.test_design_feedback'
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 58.941s
+
+FAILED (errors=3)

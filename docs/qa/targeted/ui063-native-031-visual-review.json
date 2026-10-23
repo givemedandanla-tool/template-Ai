@@ -1,0 +1,77 @@
+{
+  "status": "REVIEWED_WITH_ONE_VISUAL_DEFECT",
+  "scope": "Actual14 PNG individually opened; controlled Linux only",
+  "screens": [
+    {
+      "file": "property-context-01-text-fixed-size.png",
+      "sha256": "e02aff0ab72f91c0ac8da75c7ee7d99e0a77c39e178d6a0d660ce803ad32caff",
+      "observation": "Text18pt fixed; exact selected frame/tree"
+    },
+    {
+      "file": "property-context-02-logo-pinned-text-inapplicable.png",
+      "sha256": "4f9af7c54e2a3c2bfa6a62b19355f24fa5e52dbe08e560bb088f595264677a1f",
+      "observation": "Pinned text disabled on Logo; asset explicitly unverified"
+    },
+    {
+      "file": "property-context-03-all-original-properties.png",
+      "sha256": "fce9a6adc705da607ece5f6442b4f79ffaf4a5f88a3d5cf36a8972c827b4ce9c",
+      "observation": "All properties reuse original groups"
+    },
+    {
+      "file": "property-context-04-mixed-exact-selection.png",
+      "sha256": "f5689ab8b13c89d8265e472b55554ed32658a49f83d2bdddbd810d770f15c2aa",
+      "observation": "Mixed differing size blank; exact two IDs"
+    },
+    {
+      "file": "property-context-05-unapplied-original-object.png",
+      "sha256": "310ff10c486efa6011b32234435ca8349edabc89b5bed5ef28007c1e748b2302",
+      "observation": "Pending X12 separate from storedX8"
+    },
+    {
+      "file": "property-context-06-real-selection-stay.png",
+      "sha256": "f43f45a9235d71ad5644bb8ad0ecf279715bbbea82dc40726c3923dbf8b16984",
+      "observation": "Real Stay/discard modal"
+    },
+    {
+      "file": "property-context-07-narrow-scroll-apply.png",
+      "sha256": "752f1c96bd8babed0e43b788c12ca15b7c3a464c52a7b86506f26665ea2ed85b",
+      "observation": "960x640 scroll reaches apply; header return available"
+    },
+    {
+      "file": "property-context-08-new-source-old-input-retained.png",
+      "sha256": "d6ad69f61b5c3975f622e9463602b27257bf2bc9fa8eaaaa1f97baefae879ef4",
+      "observation": "Current X11 and retained oldinput entry; status explains source change"
+    },
+    {
+      "file": "property-context-09-real-readonly-conflict.png",
+      "sha256": "08c1e898de950e7bf3ec3159f8281f362e86686378d7156a2849e90426d867d9",
+      "observation": "Real readonly conflict keep/discard"
+    },
+    {
+      "file": "property-context-10-existing-mixed-property-editor.png",
+      "sha256": "b889f8c20c98e6b0e26f0b7993c6f4eac84f9451989c8bfad0241a115b37baf2",
+      "observation": "Original common-property editor mixed values"
+    },
+    {
+      "file": "property-context-11-real-editor-close-stay.png",
+      "sha256": "cce84953aef1962b906edec9bf09084a701dd34ff590dd45909b587f35b0333b",
+      "observation": "Real close Stay/discard"
+    },
+    {
+      "file": "property-context-12-stale-editor-retained-patch.png",
+      "sha256": "e804ca5f2b4d18f319ab5bc82ee1c93441291d79bf4321fcf0dd3fc5506b0bae",
+      "observation": "Stale editor controls disabled and patch retained; old selected count is visual defect repaired032"
+    },
+    {
+      "file": "property-context-13-exact-local-problem-blocked.png",
+      "sha256": "6c535578df5704f1c38565aef589238e56336c43a71d789638ab55ca054f0a49",
+      "observation": "Exact local name warning and hardGate"
+    },
+    {
+      "file": "property-context-14-hidden-panel-keeps-formal-gate.png",
+      "sha256": "53b25ddb3b0c7c32f79533dc230dc3f3cb1706bc8f3494c696559c8daed4a779",
+      "observation": "Hidden property pane leaves hardGate visible"
+    }
+  ],
+  "followup": "0327PASS checks count0 and all selection lists empty;033 actual14capturePASS not yet individually reviewed;030 fixture get_template AttributeError not product failure"
+}

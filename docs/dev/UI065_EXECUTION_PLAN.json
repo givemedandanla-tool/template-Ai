@@ -1,0 +1,126 @@
+{
+  "parent": "UI-065",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "original_clauses": [
+    "**同一問題工作台中的精確選取**：沿用 UI-014／015／040／057 已有問題診斷與 UI-034／035／038／039 的物件定位，提供依問題類型、目前工作／來源、畫板／作品 ID、人物／公司、候選 ID、實體尺寸、警告等級、可處理狀態等條件篩選。每個勾選項必須綁定**確切物件／欄位、來源、版本與適用工作範圍**，不可單靠字串相同就將不同人物的電話或不同公司的 Logo 合併修改。顯示真實的「符合篩選 X 筆／實際選取 Y 筆／可安全處理 Z 筆」，不能把未知／尚未載入的項目計入已完成。",
+    "**風險分級，但不把 AI 信心當授權**：\n   - **低風險且可批次**：來源、歸屬、對象、操作方式與每一筆前置條件均已核實，且不更改受保護資訊。例如符合各自固定字級及允許 X 軸縮放邊界的獨立文字框修正；使用者先選定明確範圍及核對差異後批次套用。\n   - **需確認**：可能影響相鄰物件幾何、特殊框位／人工位置、來源版本、已綁定的欄位或需確認套用目標；先顯示精確影響，依風險要求單筆或受控分組確認。\n   - **高風險／阻擋**：人物 ROOT／公司歸屬衝突、公司 Logo 完整性與合法來源、跨作品／跨公司誤映射、已人工鎖定或核心受保護物件、已發布模板、印前硬性 Gate 不符；**必須逐筆人工審核或先解除實際阻擋條件**，不可因同類問題很多、AI 信心高或一鍵批次而自動核准。高風險不等於允許忽略硬性 FAIL。",
+    "**先預檢，再看前後差異，再確認套用**：在執行前列出每個被勾選目標的原值與建議值、文字壓縮比例／固定字級、真實毫米幾何、相鄰與安全區碰撞、人物／公司／Logo 歸屬、所依賴的模板 `style_version_id` 與尺寸。以畫布差異預覽及可展開清單呈現；可排除單筆或整組、取消而不修改內容。預檢若尚未完成則顯示「待驗證」，不得假稱預檢 PASS；來源未知或版本不一致應剔除待處理而非猜測。",
+    "**批次作用範圍與手動鎖定保護**：逐筆核實可編輯性、群組／共享關聯與合法動作，只能變更確切授權集合。跨候選或不同尺寸的版面修正仍走 UI-061 的目標確認／適用差異比對，不能硬複製另一尺寸的絕對座標、完整 Logo 或印前合格狀態。遵守 UI-013 不依字串長度自動改字級、UI-020／025 不拆分複合 Logo；無法在合法 X 軸範圍內適配者保持阻擋，不自動刪字／改人物歸屬／強行外擴安全區。",
+    "**有界、可中止的分批處理與逐項結論**：低配置 Windows 上按 UI-051／058 的保守資源限額分批；沿用當次任務實際進度，允許安全取消尚未執行的項目，不可把已完成項冒稱已撤銷。每個目標給出「未開始／正在處理／成功套用待重驗／成功且重驗完成／因前置條件不符跳過／高風險待人工／失敗／版本過期／取消」等互斥且可核對狀態，顯示實際執行總數與成功、失敗、跳過數。**部分成功可以被明確接受並保留有效結果，但不能顯示整批成功，也不能把整批的部分 PASS 轉成作品印前 PASS**。",
+    "**失敗隔離、可重試而不重複套用**：每筆變更有來源物件 ID、操作 ID、目標版本、寫入結果與必要的重驗憑證，失敗不污染其他已確認目標；再次點選重試時只重新檢查確切仍需要處理、依賴未改變的項目。當已完成或未知是否已完成時，必須先核實目前狀態，**不得盲目再次套用位移、壓縮或批次屬性，導致重複變動**。程式異常或磁碟滿時要顯示「結果待核實／未安全保存」，不得承諾全批永久可恢復。",
+    "**單筆與整批安全回復**：提供「檢視此批紀錄／回復這一筆／回復本次合法批次」等入口；使用 UI-010／034／064 已有 Undo／Redo 和 UI-059 的版本柵欄、UI-061 的跨候選／尺寸回復範圍。回復前對照變更後是否出現更新的人工修改、共用來源改動、模板／Logo／字型變更與正式版本更新；**僅對仍可證明可逆的項目安全回復**，其餘須明示不可直接回復及人工衝突處理，不能無條件把較新人工編輯覆寫。已執行且有合法結果的項目可逐一保留。",
+    "**批次修正不等於發布、輸出或學習**：套用操作只影響**該當次允許編輯的草稿／標記／候選**；不自動更新原始 Illustrator `.ai`、UI-010 已發布模板、UI-043 客戶主檔、各尺寸正式 Logo 庫或 UI-055 學習訓練真值。若欲正式改模板或學習規則，仍走 UI-007／008／010／040／041 與必要核准；正式客戶主檔回寫只走 UI-045。",
+    "**每作品、每候選與每尺寸的重新驗證**：局部計算可按 UI-059 最小依賴重算，但每個受影響作品／候選／尺寸，仍必須按當前來源／版本完成全面適用的語意無損映射、人物容量 `peopleCapacity`、人物／公司／完整 Logo 歸屬、固定字級、允許 X 軸縮放、幾何不重疊、安全區、字型、Logo 尺寸品質與 UI-019／027～030 印前 Gate。其他候選或其他尺寸的 PASS 不能代替本尺寸驗證；未驗證／不合格時不可輸出正式 PDF／AI／PNG／JPG。",
+    "**低干擾透明 UX**：批次總覽能點擊失敗原因直接跳回既有原稿／候選畫布和右側屬性面板，保留 UI-062 返回位置及 UI-063 釘選工具；高風險需審核而非大量重複警告，低風險在同一次確定範圍後不逐項彈出無意義確認。若 AI 算法結果尚未覆蓋全部來源或被 UI-058 暫停，明說「已檢查的局部問題」，不得宣稱全庫問題已全部修復。",
+    "UI-033 已有**字型替代風險分級批次審核**：本題僅提供統一的批次選取／執行／回復 GUI 容器，不替代其來源字型品質與授權 Gate。",
+    "UI-036 已有**多物件對齊與等距**：本題不新增另一套幾何對齊演算法，只處理對同類合法目標套用及逐筆驗證的流程。",
+    "UI-039／040 已有**標記框批次確認與雜訊規則**：已核准且符合規則命中的雜訊仍可依 UI-040 自動剔除；不把一次批次修正默默升格為全域永久規則，亦不干預高風險標記逐筆審核。",
+    "UI-057 已有**草稿／未知／無解安全界線**，UI-058 當次工作進度，UI-059 編輯世代與失效，UI-061 跨尺寸同步，UI-064 快捷與 Undo；本題直接沿用，不新增第二套批次引擎、永久歷史庫或影子資料來源。",
+    "| 30 張名片發現 12 個已核實合法的文字 X 壓縮調整 | 顯示實際 12 筆可選，套用前逐筆有原／新比例、字級不變與全卡影響；只改被明確勾選的項目 |",
+    "| 5 個不同候選的電話框待對齊 | 以每候選版型及幾何基準作合法對齊，**不**複製 A 候選座標到 B 候選 |",
+    "| 3 個不同尺寸 Logo 疑似錯誤 | 顯示所屬公司、各尺寸資產與來源；待逐筆審核，無合法來源者阻擋，不自動替換成其它公司的 Logo |",
+    "| 2 個姓名／公司歸屬不明的框 | 不因其他 18 筆低風險項已完成就自動核准該 2 筆，保留待人工且禁止相關正式輸出 |",
+    "| 批次中 8 筆成功、2 筆失敗、1 筆跳過 | 精確顯示數據與原因；不出現「全部修正成功」，後續可僅重新核實失敗／跳過項 |",
+    "| 批次套用後有人又手動移動其中一個姓名框 | 整批回復前偵測版本衝突，只對可逆的其它項目執行安全回復，不覆寫新人工移動 |",
+    "| 同一批次因當機再次啟動 | 根據每項操作與版本核實狀態，不重複套用位移，也不宣稱未落盤項已完成 |",
+    "| 某物理尺寸修復成功但另一尺寸仍有安全區衝突 | 僅合格尺寸依 UI-027 授權可做部分正式輸出，失敗尺寸仍阻擋 |",
+    "| 含已鎖定框位或不同人物共享公司 | 沒有精確明確核准不得更改；不自動解鎖、不跨人物配錯資料 |",
+    "同類錯誤的可靠自動分組、批次預覽承載數量、實際 Windows 低配限制、逐筆交易持久保存策略與風險門檻需未來研究／實機測試；本次決策不冒稱已選技術或保證效能。",
+    "保持「UI-075 是暫定收斂檢查點，不是固定必答題數」。"
+  ],
+  "normative_clause_count": 25,
+  "clause_count_method": "10 numbered behaviors, risk2 includes all3 nested risk definitions verbatim;4 boundaries;9 acceptance scenes;2 scope/undecided obligations; omit next UI066 interview suggestion and historical no-development footer",
+  "references": [
+    {
+      "name": "qt-itemselection-6.8.3",
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/corelib/itemmodels/qitemselectionmodel.cpp",
+      "bytes": 69537,
+      "sha256": "372589d263c50ef18a8db74257a98dc236544a0262313dabce456664b4e5b68a",
+      "local": "/tmp/ui065-reference-review/qt-itemselection-6.8.3.txt"
+    },
+    {
+      "name": "microsoft-efcore-transactions",
+      "url": "https://raw.githubusercontent.com/dotnet/EntityFramework.Docs/main/entity-framework/core/saving/transactions.md",
+      "bytes": 8951,
+      "sha256": "a511b1b2090890121173bce0e6c900ba83b9c1f7490d3da9cbe6236e57c8d1d3",
+      "local": "/tmp/ui065-reference-review/microsoft-efcore-transactions.txt"
+    }
+  ],
+  "actually_reviewed": [
+    "Qt6.8.3 QItemSelectionModel model insertion/removal/move connections, reset uses signalblock+clear; currentItem is independent of actual selected items. Preserve exact typed IDs through filter/reset, not visual row cursor or string equality",
+    "Microsoft EFCore transactions public commercial .NET design: per-save atomic commit/rollback, savepoint isolation, manual transaction vs implicit retry incompatibility and unknown-state warning. Reuse existing SQLite BEGIN IMMEDIATE/CAS/object_edits operation IDs, do not add EF or a second transaction engine"
+  ],
+  "math": [
+    "Targets identified by Library/root + source/entity/candidate/size/slot IDs + source/manual/dependency pins, never label/text equality",
+    "Checked set is explicit finite target set; eligible count is intersection of exact current type/owner/lock/source/permission and completed preflight; unknown/highrisk never counted as success",
+    "Per-item state machine is mutually exclusive; batch aggregate is vector of counts, PARTIAL not ALLPASS; formal eligibility independently derives from current full-card assessment",
+    "Exactly-once retry is existing operation-ID/preimage/version/result reconciliation, not blindly rerunning relative edits. Already applied old history does not prove current layout/print validity",
+    "Undo is partial inverse only where existing after-revision/metadata/source/dependency invariants still hold; protect newer manual edits and locked/core info"
+  ],
+  "reuse": [
+    "Extend template_ai/batch_objects.py batch_plan/apply_batch/BatchObjectDialog and actual existing problem/canvas/cross-size navigation",
+    "Library.apply_object_edit already has deterministic batch operationID replay and CAS immutable history; use original object_history_action for safe inverse, no new history database",
+    "Candidate plan_operation/prepare_edit/calculate_edit/install_edit and existing Main single shared worker / SizeEditAdapter for target-local proposals; UI061 compatible cross-size requests only",
+    "Existing LayoutRecovery AESGCM atomic byte-readback/TTL/root/engine fences for optional explicit saved stopped batch-scope recipe; typed payload discrimination, never claim unpersisted candidate results survived a crash",
+    "Existing candidate_results/current assessment, shaping/rendering and diagnostics for full per-candidate/size validation; preserve actual fixed font/floor/logo gates"
+  ],
+  "packages": [
+    {
+      "id": "UI065-A",
+      "acceptance": "Extend original source batch exact typed units, low/confirm/high risk preflight, legal selected operations, immutable scope fingerprints, granular exclusive states, idempotent result reconciliation and safe partial undo",
+      "tests": "12 legal selected of30 authored objects, exact IDs/shared strings remain separate; locked/unknown/Logo high risk skip;8success2fail1skip;cancel before next; operation replay and newer manual inverse refusal",
+      "checkpoint": "Save plan before code; each recoverable package and10min"
+    },
+    {
+      "id": "UI065-B",
+      "acceptance": "Current Main and per-size candidate adapters reuse original geometry/proposals/render/Gate and shared worker; no absolute cross-size copying; same problem workbench and exact issue selection/difference preview",
+      "tests": "Five independent candidate phone alignment; current legal fixed-font X fit widths; three Logos different sizes stay percompany/manual; hard blocked one size does not inherit another PASS; stale worker/cancel/resource-pause and retry preserve human changes"
+    },
+    {
+      "id": "UI065-C",
+      "acceptance": "Truthful stopped-scope recovery with original encrypted recovery/histories; actual GUI filters/counts/partial results/retry/undo/location/back; exact25 mapping and immutable verification",
+      "tests": "Actual crash/reopen recipe reconciles persisted object opIDs and unpersisted candidate outcomes before replay; real disk failure no safe-save claim; changed Library/source/style/Logo fences; native screenshots reviewed, external device/corpus qualification explicit"
+    }
+  ],
+  "limits": [
+    "Existing max50 selected source units and at most200 loaded sources are provisional finite bounds, not measured Windows throughput; distinguish loaded coverage and remaining unknown",
+    "No new batch engine/history DB, customer-write/source Illustrator mutation, auto publish/output/training, agents/EXE/main merge or paid APIs",
+    "Windows low-resource/IME/device and authorized nonempty native Illustrator corpus remain external verification gaps; no formal parent promotion from targeted tests/native alone"
+  ],
+  "package_A_service": "Original batch functions now immutable exact Library/kind/entity scope seals, typed original proposals for source/template draft units, LOW/CONFIRM/HIGH and explicit pending-full-validation outcomes, no-repeat existing persisted opID reconciliation, cancellation preserving already-applied, source-readback after failure, partial original-history inverse with newer-version refusal; UI/controller/candidate/recovery still pending",
+  "new_tests": 20,
+  "target_evidence": [
+    "docs/qa/targeted/ui065-source-smoke-002.log",
+    "docs/qa/targeted/ui065-source-smoke-003.log",
+    "docs/qa/targeted/ui065-source-004.log",
+    "docs/qa/targeted/ui065-source-005.log",
+    "docs/qa/targeted/ui065-source-ui-smoke-007.log",
+    "docs/qa/targeted/ui065-source-ui-smoke-008.log",
+    "docs/qa/targeted/ui065-source-ui-smoke-009.log",
+    "docs/qa/targeted/ui065-source-ui-010.log",
+    "docs/qa/targeted/ui065-source-ui-011.log",
+    "docs/qa/targeted/ui065-source-pan-013.log",
+    "docs/qa/targeted/ui065-source-pan-fixed-014.log",
+    "docs/qa/targeted/ui065-broader-015/summary.json",
+    "docs/qa/targeted/ui065-source-layout-018.log",
+    "docs/qa/targeted/ui065-readable-ui-019.log"
+  ],
+  "actual_failures": "002 loader1error wrong method name no product tests;0032PASS oldbatch;00412tests11PASS1FAIL no-op misclassifiedmanual; original propose now raises typed NoObjectChange(ValueError), batch skips zero-diff without revision/history;00514PASS including legacy2.",
+  "package_A_GUI": "Existing workbench now bounded per-object UserRole identity through sorting/filtering, hidden checked/eligible counts, readable diffs, source/template scopes, fixed post-confirm plan/root/selection guard, original run_job/shared max1 worker with worker-owned Library, queued ticketed progress/cancel/close-waits-terminal, existing atomic-group partial Undo, exact typed navigation/pins",
+  "ui_failures": "007 legacy test assumed synchronous execution/raw enum text;008 actual SQLite main-connection-in-worker failure RESULT_UNVERIFIED; use existing candidate dispatcher worker-owned Library pattern0091PASS.0106tests4PASS1FAIL(undo counts)1ERROR(exact source locator lacked selectable frame in pan);0116PASS after explicit inverse summary and programmatic selectability without changing movement permission. Broader/current-source/native/candidate/recovery still pending.",
+  "source_pan_failure": "013 actual pan after exact issue location created empty content Undo; native Qt setInteractive false in pan and before_move callback only movable; ObjectCanvas fresh reload resets interactive true.01435PASS;015bounded broader all10modules PASS",
+  "source_native_evidence": "docs/qa/targeted/ui065-native-source-020-visual-review.json",
+  "source_native_notes": "02012actualPASS/0Qt/all12 individuallyreviewed;017 had clipped columns and early capture layout,0181PASS proves real Qt settle before proper controls,0198GUI PASS; fixed presentation uses original model key search and cached readonly diff/results.",
+  "package_B_GUI": "Original BatchObjectDialog Main/per-size candidate scopes; staged original engine/current whole-card Gate, exact sealed pre/post confirmation, per-target coordinate/reference/receipt replay and explicit selected inverse, original shared worker/owned Library, no Main.invalidate after current results",
+  "package_C": "Original LayoutRecovery fixed typed batch slot, aggregate4MiB AESGCM/TTL, source durable operation readback, exact still-existing runtime candidate receipts only; lost RAM remains unverified, no blind relative replay, no generic whole-work saved claim",
+  "new_test_total": 58,
+  "coherent_target_evidence": "docs/qa/targeted/ui065-coherent-035/summary.json",
+  "coherent_test_count": 110,
+  "next": "UI052-REVIEW exact contract; later immutable full current-source batch/publication Gate",
+  "clause_coverage": "docs/dev/UI065_CLAUSE_COVERAGE.json",
+  "native_evidence": "docs/qa/targeted/ui065-native-full-043/batch-correction-metadata.json",
+  "native_visual_review": "docs/qa/targeted/ui065-native-full-043-visual-review.json",
+  "final_targeted_evidence": "docs/qa/targeted/ui065-results-042.log"
+}

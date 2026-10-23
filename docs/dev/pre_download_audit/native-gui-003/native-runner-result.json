@@ -1,0 +1,157 @@
+{
+  "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+  "source_head_at_finish": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+  "source_manifest_before": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+  "source_manifest_after": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+  "source_unchanged": true,
+  "qt_platform": "xcb",
+  "outer_timeout_seconds": 600,
+  "elapsed_seconds": 345.944,
+  "isolated_xvfb_tcp_disabled": true,
+  "jobs": [
+    {
+      "name": "desktop",
+      "command": [
+        "/workspace/template-Ai/.venv/bin/python",
+        "tools/capture_desktop_workspace.py",
+        "--folder",
+        "/workspace/template-Ai/docs/dev/pre_download_audit/native-gui-003"
+      ],
+      "qt_platform": "xcb",
+      "PYTHONPATH": "tests:.",
+      "exit_code": 0,
+      "test_ids": [
+        "test_desktop_workspace.DesktopNavigationTests.test_deleted_property_timer_ignores_real_pending_shutdown_signal",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_background_job_records_duration_without_private_message",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_guidance_navigation_opens_four_task_pages",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_navigation_keeps_three_modes_and_original_commands",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_support_navigation_exports_local_safe_report",
+        "test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling",
+        "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data",
+        "test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview",
+        "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation",
+        "test_desktop_workspace.DesktopProductionTests.test_real_background_cancel_stays_enabled_and_close_waits_for_worker",
+        "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+        "test_desktop_workspace.DesktopProductionTests.test_resume_selector_updates_main_graph_dimensions_and_embedded_session"
+      ],
+      "expected_test_count": 12,
+      "tests_run": 12,
+      "unittest_seconds": 244.109,
+      "elapsed_seconds": 245.124,
+      "source_manifest_before": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+      "source_manifest_after": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+      "source_unchanged": true,
+      "runtime_error_lines": [],
+      "log": "desktop.log",
+      "status": "PASS"
+    },
+    {
+      "name": "parent-navigation",
+      "command": [
+        "/workspace/template-Ai/.venv/bin/python",
+        "-m",
+        "unittest",
+        "test_parent_navigation",
+        "-v"
+      ],
+      "qt_platform": "xcb",
+      "PYTHONPATH": "tests:.",
+      "exit_code": 0,
+      "test_ids": [
+        "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
+        "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+        "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once"
+      ],
+      "expected_test_count": 3,
+      "tests_run": 3,
+      "unittest_seconds": 31.962,
+      "elapsed_seconds": 32.467,
+      "source_manifest_before": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+      "source_manifest_after": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+      "source_unchanged": true,
+      "runtime_error_lines": [],
+      "log": "parent-navigation.log",
+      "status": "PASS"
+    },
+    {
+      "name": "qt-event",
+      "command": [
+        "/workspace/template-Ai/.venv/bin/python",
+        "-m",
+        "unittest",
+        "test_qt_event_contract",
+        "-v"
+      ],
+      "qt_platform": "xcb",
+      "PYTHONPATH": "tests:.",
+      "exit_code": 0,
+      "test_ids": [
+        "test_qt_event_contract.QtEventContractTests.test_actual_qt_event_delivery_has_no_python_callback_error",
+        "test_qt_event_contract.QtEventContractTests.test_real_size_controller_accepts_native_events_and_retains_cancel_guard"
+      ],
+      "expected_test_count": 2,
+      "tests_run": 2,
+      "unittest_seconds": 4.498,
+      "elapsed_seconds": 4.877,
+      "source_manifest_before": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+      "source_manifest_after": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+      "source_unchanged": true,
+      "runtime_error_lines": [],
+      "log": "qt-event.log",
+      "status": "PASS"
+    },
+    {
+      "name": "report-regression",
+      "command": [
+        "/workspace/template-Ai/.venv/bin/python",
+        "-m",
+        "unittest",
+        "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+        "-v"
+      ],
+      "qt_platform": "xcb",
+      "PYTHONPATH": "tests:.",
+      "exit_code": 0,
+      "test_ids": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success"
+      ],
+      "expected_test_count": 1,
+      "tests_run": 1,
+      "unittest_seconds": 4.147,
+      "elapsed_seconds": 4.595,
+      "source_manifest_before": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+      "source_manifest_after": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+      "source_unchanged": true,
+      "runtime_error_lines": [],
+      "log": "report-regression.log",
+      "status": "PASS"
+    },
+    {
+      "name": "recovery-regression",
+      "command": [
+        "/workspace/template-Ai/.venv/bin/python",
+        "-m",
+        "unittest",
+        "test_batch_recovery.BatchRecoveryCandidateTests.test_actual_gui_restore_then_selected_inverse_keeps_same_stable_field_identity",
+        "-v"
+      ],
+      "qt_platform": "xcb",
+      "PYTHONPATH": "tests:.",
+      "exit_code": 0,
+      "test_ids": [
+        "test_batch_recovery.BatchRecoveryCandidateTests.test_actual_gui_restore_then_selected_inverse_keeps_same_stable_field_identity"
+      ],
+      "expected_test_count": 1,
+      "tests_run": 1,
+      "unittest_seconds": 56.97,
+      "elapsed_seconds": 57.619,
+      "source_manifest_before": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+      "source_manifest_after": "f28e12aa44c1dbb654d460584f1c57f498883c1b24c578fcd31fab8ab3c93be4",
+      "source_unchanged": true,
+      "runtime_error_lines": [],
+      "log": "recovery-regression.log",
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS"
+}

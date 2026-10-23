@@ -1,0 +1,275 @@
+{
+  "parent": "UI-062",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "d3fc1231c68d3fb0d18eaa2ebb423efd6b7bb9c0fb30e0cb64c92fd4e88908a7",
+  "normative_clause_count": 26,
+  "clauses": [
+    {
+      "id": "UI-062-CLAUSE-1",
+      "expected": "**清楚可見的主導覽**：左側保留穩定且名稱一致的功能導覽，讓使用者可以直接進入既有相關功能；可用性／必要前置條件以狀態提示呈現，而非強迫依固定順序走訪。導覽與工作操作可分層顯示，避免在低解析度視窗擠掉實際畫布。",
+      "tests": [
+        "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_mode_back_consumes_history_and_preserves_unstarted_input_without_recalculation"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-2",
+      "expected": "**工作上下文條**：上方顯示「目前位於哪一功能／哪個當次候選／哪個物理尺寸／是否有未完成檢查」等與當前操作直接相關的資訊。不得以未核對的客戶 ID 或舊候選狀態假裝正式案件；涉及個資時以最小必要資訊展示，敏感內容不無條件曝光。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_context_minimizes_personal_details_and_navigation_does_not_schedule_calculation",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-3",
+      "expected": "**上下文導向切換與返回**：從缺少 Logo、字型或來源等問題進入既有修正介面時，保留原功能入口、候選 ID、尺寸、畫布位置／縮放、當次選取物件／問題定位與相關版本資訊；完成或取消處理後提供「返回原工作」入口。僅在原工作／物件／版本**仍存在且有效**時精確還原；否則顯示原因、定位到安全的最近有效層級（如候選列表或來源欄位），**不假裝恢復到不存在或已過期的物件**。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_changed_published_template_and_removed_candidate_do_not_restore_old_position",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_new_input_return_is_explicit_fallback_without_restoring_old_manual_or_safe_label",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_source_change_returns_explicit_stale_without_erasing_manual_instance",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_same_named_company_binding_removal_invalidates_return_without_global_generation_change"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-4",
+      "expected": "**分辨不同保存狀態**：GUI 必須區分「尚未保存的當次操作」、「已安全保存的短期恢復資料」、「正式客戶主檔／已發布模板已核准保存」、「保存失敗」、「需重新驗證」，不可用單一籠統的『已保存』混淆。保留 UI-058 的安全恢復及 UI-045 的正式客戶主檔逐項受控回寫界線。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_encrypted_save_failure_success_later_edit_and_clear_are_distinct",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_official_save_failure_does_not_close_or_claim_safe_saved",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_removed_actual_encrypted_file_revokes_current_recovery_before_close",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_fake_failed_expired_or_changed_recovery_receipt_never_clears_current_unsaved"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-5",
+      "expected": "**離開與返回不造成無聲資料遺失**：切換功能、返回上一頁、關閉工作或離開程式時，若存在尚未安全保存的有效編輯、尚未解決的版本衝突或正在進行不可安全即停的操作，顯示實際影響與清楚選擇（例如返回繼續編輯、依既有機制安全保存／暫存、明確放棄）；不得以切換路徑為由自動刪除或覆寫人工內容，亦不得宣稱在磁碟滿／寫入失敗時已安全保存。非必要時不每次切換都彈窗，減少干擾。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_back_with_selected_frame_keeps_unapplied_property_value",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_unsaved_property_form_survives_tab_switch_and_close_stay_without_implicit_apply",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_close_recovery_choice_opens_existing_session_and_never_claims_written",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_encrypted_save_failure_success_later_edit_and_clear_are_distinct",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_official_save_failure_does_not_close_or_claim_safe_saved",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_removed_actual_encrypted_file_revokes_current_recovery_before_close",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_fake_failed_expired_or_changed_recovery_receipt_never_clears_current_unsaved"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-6",
+      "expected": "**未完成事項與操作順序**：對當前工作清楚顯示實際缺口（如尚缺公司 Logo、模型低把握待確認、候選過期需重算、某實體尺寸印前 Gate 失敗），可點擊跳往既有修正介面；允許先處理其他可獨立操作的事項，但**正式印前輸出仍必須滿足所有硬性 Gate**。不同尺寸個別標示狀態，不能以已核准尺寸帶過未核准尺寸。",
+      "tests": [
+        "test_candidate_results.CandidateResultsTests.test_old_size_recheck_cannot_open_formal_output_for_new_requested_size",
+        "test_candidate_results.CandidateResultsTests.test_input_change_inside_save_dialog_never_writes_old_formal_file",
+        "test_multi_size.MultiSizeTests.test_partial_confirmation_is_required_and_real_final_preview_three_formats_are_separate",
+        "test_candidate_results.CandidateResultsTests.test_actual_problem_click_opens_existing_candidate_fix_entry"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-7",
+      "expected": "**不干擾已有人工編輯／AI 狀態**：導航本身不觸發來源資料改寫、跨候選同步、AI 重算或輸出；只在使用者完成實際資料變更時遵守 UI-059 局部失效／版本柵欄和 UI-061 跨候選／尺寸作用範圍。晚到 AI 計算或返回過期畫面不得覆蓋更新後的人工修改。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_context_minimizes_personal_details_and_navigation_does_not_schedule_calculation",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_return_never_overwrites_new_same_geometry_human_review",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_old_worker_cannot_overwrite_current_manual_geometry_even_after_reconfirmation"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-8",
+      "expected": "**低配置 Windows 支援**：導航／狀態列為輕量資料，不因切換模式一次讀取整批 .ai、整個訓練資料庫或數百預覽。保護前景操作可用，遵守 UI-051／058 低負載限制。若需重新載入資料，先顯示真實狀態，不偽裝瞬間恢復。",
+      "tests": [
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_navigation_capture_reads_only_existing_metadata_without_rehashing_logo_corpus",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_real_active_worker_is_not_restarted_cancelled_or_duplicated_by_mode_back",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_small_window_keeps_visible_canvas_and_reachable_existing_controls"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-9",
+      "expected": "**優先重用既有 GUI**：左側功能選單、UI-034 畫布物件面板、UI-014／015 問題定位、UI-018 候選比較、UI-027 印前狀態、UI-047 既有持久化與 UI-058 工作階段恢復均應優先擴充，不另外建立影子工作台。",
+      "tests": [
+        "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_mode_back_consumes_history_and_preserves_unstarted_input_without_recalculation",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_source_button_supplies_multi_origin_and_unmodified_cancel_keeps_source"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-10",
+      "expected": "| 正常從候選畫布跳往 Logo 管理再返回 | 恢復原候選與尺寸、原畫布位置；已受影響項標「待重驗」 |",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-11",
+      "expected": "| 原候選在切換期間被刪除、範本改版或工作取消 | 顯示原入口失效理由，返回候選列表或安全入口；不套用舊狀態 |",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_changed_published_template_and_removed_candidate_do_not_restore_old_position",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_new_input_return_is_explicit_fallback_without_restoring_old_manual_or_safe_label",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_source_change_returns_explicit_stale_without_erasing_manual_instance",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_same_named_company_binding_removal_invalidates_return_without_global_generation_change"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-12",
+      "expected": "| 離開時有未保存的手動框位修改 | 提示真實可行的保留／放棄選項，放棄需明確確認 |",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_back_with_selected_frame_keeps_unapplied_property_value",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_unsaved_property_form_survives_tab_switch_and_close_stay_without_implicit_apply",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_close_recovery_choice_opens_existing_session_and_never_claims_written"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-13",
+      "expected": "| 暫存寫入失敗、磁碟空間不足 | 顯示保存失敗和目前狀態，不標記為『已保存』 |",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_encrypted_save_failure_success_later_edit_and_clear_are_distinct",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_official_save_failure_does_not_close_or_claim_safe_saved",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_removed_actual_encrypted_file_revokes_current_recovery_before_close",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_fake_failed_expired_or_changed_recovery_receipt_never_clears_current_unsaved"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-14",
+      "expected": "| 同一人物資料改動後返回另一尺寸候選 | 畫面顯示同步後來源版本與尚待分尺寸驗證，不借用舊 PASS |",
+      "tests": [
+        "test_sync_workflow.SyncWorkflowTests.test_phone_a_updates_all_true_consumers_and_same_string_b_is_unchanged",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_changed_published_template_and_removed_candidate_do_not_restore_old_position",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_new_input_return_is_explicit_fallback_without_restoring_old_manual_or_safe_label",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_source_change_returns_explicit_stale_without_erasing_manual_instance",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_same_named_company_binding_removal_invalidates_return_without_global_generation_change"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-15",
+      "expected": "| 使用者跳過必要印前檢查 | 保留自由操作，但正式輸出保持阻擋與原因 |",
+      "tests": [
+        "test_candidate_results.CandidateResultsTests.test_old_size_recheck_cannot_open_formal_output_for_new_requested_size",
+        "test_candidate_results.CandidateResultsTests.test_input_change_inside_save_dialog_never_writes_old_formal_file",
+        "test_multi_size.MultiSizeTests.test_partial_confirmation_is_required_and_real_final_preview_three_formats_are_separate"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-16",
+      "expected": "| 多次跨模式跳轉或從問題清單開啟修正頁 | 返回來源明確、避免循環導航、錯誤候選或跨人物定位 |",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_navigation_history_is_bounded_deduplicated_consumed_and_contains_no_business_copy",
+        "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_mode_back_consumes_history_and_preserves_unstarted_input_without_recalculation"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-17",
+      "expected": "| 小尺寸視窗或效能緊張 | 保留關鍵操作與狀態；逐步載入，不能讓主 GUI 卡死 |",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_small_window_keeps_visible_canvas_and_reachable_existing_controls",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_navigation_capture_reads_only_existing_metadata_without_rehashing_logo_corpus",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_real_active_worker_is_not_restarted_cancelled_or_duplicated_by_mode_back"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-18",
+      "expected": "**一致性**：不同功能入口看到的是當次同一版本的合法人物／公司／候選 ID，切換不導致資料複製成平行正式主檔。",
+      "tests": [
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_source_button_supplies_multi_origin_and_unmodified_cancel_keeps_source",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_context_minimizes_personal_details_and_navigation_does_not_schedule_calculation"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-19",
+      "expected": "**可復原性**：在版本未變且工作尚有效時，跳出至 Logo 修正後可回到原候選、原尺寸、原畫布縮放與選取位置；不相容時安全降級並說明。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_changed_published_template_and_removed_candidate_do_not_restore_old_position",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_new_input_return_is_explicit_fallback_without_restoring_old_manual_or_safe_label",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_source_change_returns_explicit_stale_without_erasing_manual_instance",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_same_named_company_binding_removal_invalidates_return_without_global_generation_change"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-20",
+      "expected": "**真實保存**：若操作未落盤或保存失敗，切換與關閉介面都不假稱安全已保存。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_encrypted_save_failure_success_later_edit_and_clear_are_distinct",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_official_save_failure_does_not_close_or_claim_safe_saved",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_removed_actual_encrypted_file_revokes_current_recovery_before_close",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_fake_failed_expired_or_changed_recovery_receipt_never_clears_current_unsaved"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-21",
+      "expected": "**防誤輸出**：跳步完成其他工作，仍不能繞過 UI-019／027 印前硬性條件。",
+      "tests": [
+        "test_candidate_results.CandidateResultsTests.test_old_size_recheck_cannot_open_formal_output_for_new_requested_size",
+        "test_candidate_results.CandidateResultsTests.test_input_change_inside_save_dialog_never_writes_old_formal_file",
+        "test_multi_size.MultiSizeTests.test_partial_confirmation_is_required_and_real_final_preview_three_formats_are_separate"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-22",
+      "expected": "**人工編輯保護**：導航與恢復不覆寫人工鎖定物件，不接收舊世代計算結果作為新版本。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_return_never_overwrites_new_same_geometry_human_review",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_old_worker_cannot_overwrite_current_manual_geometry_even_after_reconfirmation",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_back_with_selected_frame_keeps_unapplied_property_value",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_unsaved_property_form_survives_tab_switch_and_close_stay_without_implicit_apply",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_close_recovery_choice_opens_existing_session_and_never_claims_written"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-23",
+      "expected": "**可用性**：使用者不需要知道內部模板、模型或 GitHub 工程術語，即可找到目前工作、必需修正及返回入口；低配效能數值留未來 Windows 實機驗證。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_small_window_keeps_visible_canvas_and_reachable_existing_controls",
+        "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_mode_back_consumes_history_and_preserves_unstarted_input_without_recalculation",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_context_minimizes_personal_details_and_navigation_does_not_schedule_calculation"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-24",
+      "expected": "不新增永久草稿、客戶訂單系統、影子資料庫、跨裝置雲端同步或額外權限中心。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_context_minimizes_personal_details_and_navigation_does_not_schedule_calculation",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_navigation_history_is_bounded_deduplicated_consumed_and_contains_no_business_copy"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-25",
+      "expected": "不改 UI-043 正式客戶分類，不自行回寫 UI-045 客戶主檔，不改原始 .ai、UI-010 已發布模板、UI-020～026 Logo 庫或 UI-055 訓練資料。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_context_minimizes_personal_details_and_navigation_does_not_schedule_calculation",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_source_button_supplies_multi_origin_and_unmodified_cancel_keeps_source",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block"
+      ]
+    },
+    {
+      "id": "UI-062-CLAUSE-26",
+      "expected": "UI-048 完整登入權限介面仍保留原定實作順位；UI-056 D 只作日後低優先級候選。",
+      "tests": [
+        "test_workbench_navigation.WorkbenchNavigationTests.test_context_minimizes_personal_details_and_navigation_does_not_schedule_calculation",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_navigation_capture_reads_only_existing_metadata_without_rehashing_logo_corpus",
+        "test_workbench_navigation.WorkbenchNavigationTests.test_real_active_worker_is_not_restarted_cancelled_or_duplicated_by_mode_back"
+      ]
+    }
+  ],
+  "native_capture": "tools/capture_workbench_navigation.py",
+  "architecture_audit": [
+    "Only existing Main/Multi dialogs/Canvas are extended; bounded in-memory IDs/version/view locations, no shadow work/customer/order DB, new worker or training mechanism",
+    "Navigation changes view only; actual source edits use existing inputadoption and per-size/current output gates",
+    "Last3 clauses are boundary guarantees: changed code has no new customerwrite/training/login/EXE route; tests assert no businessDB change/no automatic jobs"
+  ],
+  "limits": [
+    "Controlled authored Linux; no reference Windows performance or private Illustrator qualification",
+    "Target checks/native captures do not replace immutable full-source regression and ordinary GitHub evidence publication Gate"
+  ],
+  "previous_source_pin": {
+    "sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+    "scope": "HISTORICAL_WHOLE_FILE"
+  },
+  "source_hash_scope": "ORIGINAL_PARENT_SECTION"
+}

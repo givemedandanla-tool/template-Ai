@@ -1,0 +1,22 @@
+test_session_partial_cancel_failed_and_unstarted_counts_are_real (session_report_fixture_before.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real) ... FAIL
+
+======================================================================
+FAIL: test_session_partial_cancel_failed_and_unstarted_counts_are_real (session_report_fixture_before.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_diagnostic_reports_scope_before.py.txt", line 181, in test_session_partial_cancel_failed_and_unstarted_counts_are_real
+    s=make_snapshot(self.w,'session',session=d);self.assertEqual((s.data['scope']['width_mm'],s.data['scope']['height_mm']),(90,54));self.assertTrue(callable(d.size));p=s.data['progress'];self.assertEqual((p['total'],p['checked'],p['calculated'],p['failed'],p['unstarted']),(3,2,1,1,1));self.assertEqual(p['state'],'CANCELLED');self.assertNotIn(b'FORBIDDEN_SYNTHETIC_EXCEPTION',build_bundle(s.data))
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: (None, None) != (90, 54)
+
+First differing element 0:
+None
+90
+
+- (None, None)
++ (90, 54)
+
+----------------------------------------------------------------------
+Ran 1 test in 0.987s
+
+FAILED (failures=1)

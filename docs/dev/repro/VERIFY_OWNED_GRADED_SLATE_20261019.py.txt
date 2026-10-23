@@ -1,0 +1,75 @@
+import sys,json,hashlib
+from pathlib import Path
+root=Path('/workspace/template-Ai');sys.path[:0]=[str(root),str(root/'tests'),str(root/'tools')]
+from PySide6.QtWidgets import QApplication
+from template_ai.storage import Library
+from template_ai.training_store import TrainingStore
+from template_ai.fonts import FontManager
+from template_ai.demo import demo_template
+from template_ai.design_source_binding import SourceTypographyReview
+from template_ai.design_learning import CrossWorkLearning,USE
+from template_ai.design_rank_evaluation import RankingEvaluation
+from template_ai.design_jobs import run_design_job
+from template_ai.input_graph import InputGraph
+from template_ai.importer import import_file
+from authored_font_fixture import bind_authored_fonts
+from training_fixture import source_work
+from test_noise_authoring import confirmed
+from test_trusted_samples import admitted
+from dev_common import manifest,manifest_digest
+app=QApplication.instance() or QApplication([])
+data=Path('/tmp/ai-all8-graded-slate-owned-002-20261019')
+if data.exists():raise RuntimeError('Do not overwrite an existing owned evidence root')
+data.mkdir();library=Library(data/'data');store=TrainingStore(library)
+asset=bind_authored_fonts(demo_template(),FontManager(library)).slots[0].font_asset
+samples=[];reviewer=SourceTypographyReview(library)
+for i in range(14):
+ source,work=source_work(library,data,name=f'authored-style-{i}.svg',note_text=f'Authored independently indexed fixture {i}')
+ if i%2:
+  path=data/f'authored-small-{i}.svg';raw=(data/f'authored-style-{i}.svg').read_text().replace('font-size="6.35"','font-size="4.233333333333333"')
+  path.write_text(raw);source=library.add_source(path,import_file(path,library.assets))
+  work=library.create_artwork(source['id'],'Authored small-font style',work['payload'])
+ confirmed(store,work);sample=admitted(store,work);samples.append(sample)
+ original=store._design_observation_document(work['id'])['original_text_evidence']
+ for slot,run in zip(work['payload']['slots'],original['runs']):
+  review=dict(source_identity_confirmed=True,basis='Authored fixture correspondence,not real Illustrator font identity',
+   horizontal_scale=1.,tracking=0.,word_spacing=0.,parameter_measurement_refs=['Authored zero extra word spacing'],
+   source_alignment='left',label_binding=dict(status='CONFIRMED',kind='NO_FIXED_LABEL',evidence_refs=['Authored label inspection']))
+  reviewer.confirm(reviewer.plan(work['id'],slot['id'],run['id'],asset,review),'Authored source oracle',True)
+learning=CrossWorkLearning(library);roles={s['id']:'TRAIN' if i<12 else 'HOLDOUT' for i,s in enumerate(samples)}
+dataset=learning.freeze_dataset(learning.dataset_plan(roles,dict(use=USE,actor='Authored owner',basis='Anonymous owned local engineering verification only')),'Authored owner',True)
+model=learning.train(dataset['id'],'Authored owner',approved=True);weights=model['weights_digest']
+graph=InputGraph.from_legacy([dict(name='Alex Example',title='Designer',phone='+1 202 555 0100',email='alex@example.test')],[])
+cases=[dict(id=f'authored-query-{i}',sample_id=samples[12+i]['id'],input_graph=graph.data,width_mm=90.,height_mm=54.,truth_refs=['Authored input/source correspondence']) for i in range(2)]
+service=RankingEvaluation(library);job=service.create(model['id'],cases,dict(version='owned-slate-verification-1',approved=True,candidate_budget=32),'Authored oracle',origin='AUTHORED_SYNTHETIC',review_refs=['Owned synthetic independence only,not real lineage proof'],approved=True)
+claimed=service.jobs.claim(job['id'],job['revision']);finished=run_design_job(library.root,job['id'],claimed['owner']['token'])
+assert finished['phase']=='COMPLETE',finished.get('error')
+rows=service.jobs.results(job['id']);observations=[]
+for i,row in enumerate(rows):
+ slate=row['learned']['ranking_slate'];assert len(slate)>=2,('Need two actual distinct source styles',len(slate))
+ grades={};points={}
+ for candidate in slate:
+  first=next(slot for slot in candidate['serialized']['template']['slots'] if slot['kind']=='name')
+  point=first['size_pt'];points[candidate['id']]=point
+  # Goal fixed independently of rank score: query0 prefers authored12pt,
+  # query1 authored18pt. Deliberately conflicting order-scoped test oracles.
+  grades[candidate['id']]=3 if (point<15.)==(i==0) else 0
+ assert set(grades.values())=={0,3}
+ service.review(job['id'],i,grades,'Authored controlled grading oracle',
+  'Predeclared order-scoped small/large authored style target;not real human aesthetic judgement',True)
+ observations.append(dict(case_id=row['case_id'],actual_candidates=len(slate),source_name_points=list(points.values()),
+  expected_top1=int(grades[slate[0]['id']]>0)))
+report=service.report(job['id'],k=1)
+assert report['known_queries']==2 and report['independent_groups']==2
+assert abs(report['group_macro_ndcg_at_k']-.5)<1e-9,report
+assert report['group_macro_top_k_best_hit']==.5
+assert report['baseline_group_macro_ndcg_at_k']==.5
+assert learning.checked_model(model['id'])[0]['weights_digest']==weights
+output=dict(scope='ACTUAL_API_OWNED_MULTI_SOURCE_STYLES_AND_GRADED_SLATE_ENGINEERING_ONLY',
+ source_commit='851ef2ac62a49f865bac52b524c66c31371d0942',code_manifest_sha256=manifest_digest(manifest(root,code_only=True)),
+ training_sources=12,heldout_source_groups=2,source_families=len(model['artifact']['profile_model']['families']),
+ observations=observations,report=report,weights_unchanged=True,
+ label_scope='PREDECLARED_CONTRADICTORY_ORDER_SCOPED_TEST_ORACLES_NOT_REAL_HUMAN_PREFERENCES',
+ actual_user_corpus='NOT_PROVIDED',production_qualification='NOT_GRANTED')
+(root/'docs/qa/targeted/AI-OWNED-GRADED-SLATE-20261019.json').write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n')
+library.close();print(json.dumps({k:output[k] for k in ['source_families','training_sources','heldout_source_groups','weights_unchanged']}));print('NDCG@1=.5;top1=.5;baseline=.5;actual distinct styles;no qualification')

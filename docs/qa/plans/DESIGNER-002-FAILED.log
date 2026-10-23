@@ -1,0 +1,16 @@
+Attribute Qt::AA_ShareOpenGLContexts must be set before QCoreApplication is created.
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/gui_tooling/preview.py", line 80, in <module>
+    main()
+  File "/workspace/template-Ai/docs/dev/gui_tooling/preview.py", line 62, in main
+    assert name.hasFocus()
+           ^^^^^^^^^^^^^^^
+AssertionError
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/gui_tooling/verify_designer.py", line 107, in <module>
+    main()
+  File "/workspace/template-Ai/docs/dev/gui_tooling/verify_designer.py", line 81, in main
+    subprocess.run([str(repository / '.venv/bin/python'), str(here / 'preview.py'),
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/workspace/template-Ai/.venv/bin/python', '/workspace/template-Ai/docs/dev/gui_tooling/preview.py', '--capture', '/tmp/template-ai-designer-validation-002/native-preview']' returned non-zero exit status 1.

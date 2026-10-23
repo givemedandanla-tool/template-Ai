@@ -1,0 +1,39 @@
+{
+  "status": "PASS_MODEL_REQUIREMENTS_DESIGN_ONLY",
+  "executed_at": "2026-10-18T09:58:35.080566+00:00",
+  "baseline_commit": "fbb39e946520cb3f3fc4d2cc7a8194c2be75c437",
+  "decision": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
+  "work_packages": 8,
+  "retained_acceptance": 50,
+  "implemented": 0,
+  "verified": 0,
+  "all_original_criteria_and_statuses_unchanged": true,
+  "model_output_groups": [
+    "typed_field_group_graph",
+    "equivalent_field_groups",
+    "conditional_substitution_relations",
+    "relative_relation_graph",
+    "style_regions",
+    "joint_capacity_profile",
+    "variable_grammar",
+    "evidence_and_versions"
+  ],
+  "dependency_change": {
+    "AI-LEARN-08": {
+      "before": [
+        "AI-LEARN-07"
+      ],
+      "after": [
+        "AI-LEARN-06"
+      ],
+      "reason": "Core model validation independent of interaction integration"
+    }
+  },
+  "DAG_acyclic": true,
+  "body_goal_and_qualified_style_definition_and_hard_policies_preserved": true,
+  "same_type_vs_cross_type_question_unanswered": true,
+  "local_links_checked": 19,
+  "core_tests_tools_dependencies_changed": false,
+  "legacy_registry_unchanged": true,
+  "validation_scope": "Document/model-output/dependency/schema consistency; no code/model training/GUI or feature tests"
+}

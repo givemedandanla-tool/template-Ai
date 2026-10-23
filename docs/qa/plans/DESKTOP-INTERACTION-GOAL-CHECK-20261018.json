@@ -1,0 +1,32 @@
+{
+  "status": "PASS_DOCUMENT_DELIVERY_GOAL_ONLY",
+  "executed_at": "2026-10-18T07:51:23.074725+00:00",
+  "baseline_commit": "a99e64d0f8776fc0ebb19a9f47fe7de855fc46ef",
+  "decision": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
+  "work_packages": 8,
+  "retained_acceptance": 50,
+  "implementation": 0,
+  "verified": 0,
+  "planned_body_scenarios": 4,
+  "scenarios_are_not_new_criterion_or_test_completion": true,
+  "original_criterion_ids_text_statuses_unchanged": true,
+  "new_scope_counts": {
+    "CURRENT_CORE": 46,
+    "CORE_PREPARATION_AND_DEFERRED_FRONTEND": 4
+  },
+  "A05_scope_clarification": "Previously fully frontend-deferred; desktop workflow is now explicitly current scope,independent frontend remains deferred",
+  "A06_A07_scope_clarification": "Actual desktop interaction and version-bound result review required; contracts alone insufficient",
+  "independent_frontend_deferral_retained": true,
+  "local_links_checked": 26,
+  "core_tests_tools_dependencies_changed": false,
+  "old_registry_unchanged": true,
+  "legacy_progress": {
+    "topics": 75,
+    "verified": 69,
+    "partial": 3,
+    "deferred": 3,
+    "CORE_verified": 87,
+    "GOV_verified": 7
+  },
+  "checks": "Document/JSON/reference/scope consistency only; no GUI/runtime/feature tests/model training"
+}

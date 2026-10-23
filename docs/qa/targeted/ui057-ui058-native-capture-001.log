@@ -1,0 +1,13 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/capture_layout_risk_session.py", line 53, in <module>
+    parser=argparse.ArgumentParser();parser.add_argument('--folder',required=True);args=parser.parse_args();result=capture(args.folder);print(json.dumps({k:v for k,v in result.items() if k!='screens'},ensure_ascii=False))
+                                                                                                                   ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/capture_layout_risk_session.py", line 28, in capture
+    unknown=demo_template();unknown.name='Synthetic font source missing';unknown.state='published';unknown.slots[0].font='Missing Synthetic Native Font';w.library.publish(unknown);w.candidates.append(generate(unknown,*w.input_data(),w.generation));w.candidate_list.addItem('Synthetic source unknown');w.candidate_list.setCurrentRow(len(w.candidates)-1);assert w.candidates[-1].risk['state']=='EVIDENCE_REQUIRED';shot(w,'04-evidence-required')
+                                                                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/storage.py", line 352, in publish
+    raise ValueError("\n".join(errors))
+ValueError: b63dceecb8444275a54a83827cdfb27b：指定字型未安裝，不可發布

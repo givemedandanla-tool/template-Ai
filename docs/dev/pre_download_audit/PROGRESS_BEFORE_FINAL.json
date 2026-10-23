@@ -1,0 +1,212 @@
+{
+  "status": "RUNNING",
+  "source_base": "83908944a907804a18a1d85feadddbc780644e4a",
+  "phase": "Full0101921PASS/252healthy/0runtime; same-code stock003/native006 running; package pending",
+  "original_diagnostics": 11798,
+  "classified_tool_limitations": 1824,
+  "unreviewed": 0,
+  "confirmed_defects": 10,
+  "fixed_defects": 10,
+  "new_test_execution": null,
+  "original_1850_rerun": "Preserved and all PASS in source65f75f37",
+  "next": "Finish stock003/native006; refresh current screenshots; final governance/report/checkpoint; commit+actual isolated restore ZIP",
+  "provenance": "LOCAL_ONLY",
+  "remote_write": "NOT_PERFORMED_COST_UNKNOWN",
+  "root_fix": "Qt native QWidget/QDialog APIs restored, fail-first 4 cases now PASS; broad regression pending",
+  "diagnostic_statuses": {
+    "TYPE_CONTRACT_GAP": 9187,
+    "TOOL_LIMITATION": 1856,
+    "FIXED_AND_VERIFIED": 740,
+    "BLOCKED_EXTERNAL": 15
+  },
+  "fixed_defects_pending_full_regression": 3,
+  "new_targeted_tests": {
+    "PASS": 6
+  },
+  "source_fix_commit": "045517e",
+  "additional_confirmed_root_component": "QObject.event cancellation-flag collision; repaired with real event delivery regression",
+  "introduced_and_repaired_regression": "Diagnostic session size reader missed during namespace rename; original failing test now PASS",
+  "targeted_after_all_fixes": {
+    "PASS": 47,
+    "runtime_errors": 0
+  },
+  "independent_oracles": {
+    "PASS": 7
+  },
+  "native_gui": {
+    "desktop": 12,
+    "parent_navigation": 3,
+    "owned_workspace_pages": 3,
+    "status": "PASS"
+  },
+  "open_confirmed_defects": [],
+  "final_regression_003": "RUNNING_ON_EFA1E958_NO_PRODUCT_CHANGES_DURING_RUN",
+  "native_gui_latest": {
+    "source": "92977b77",
+    "status": "PASS",
+    "tests": 19,
+    "images": 11,
+    "source_unchanged": true
+  },
+  "full_regression_003": {
+    "source": "efa1e958",
+    "PASS": 1865,
+    "healthy_modules": 240,
+    "runtime_errors": 0,
+    "original1850_preserved": true
+  },
+  "full_regression_004": {
+    "source": "6258f781",
+    "PASS": 1877,
+    "healthy_modules": 240,
+    "modules": 241,
+    "runtime_errors": 1,
+    "status": "FAIL_EXECUTION"
+  },
+  "callback_root": {
+    "status": "FIX_IMPLEMENTED_TARGETED6PASS_FULL_PENDING",
+    "proof": "solve-callback-before-summary.json"
+  },
+  "new_static_findings": {
+    "total": 38,
+    "reviewed": 38,
+    "confirmed_pending_root7": 2
+  },
+  "clones": {
+    "status": "REVIEWED_ALL81",
+    "counts": {
+      "application": 9,
+      "tools": 7,
+      "tests": 65
+    },
+    "new_candidates_reviewed": 5
+  },
+  "coordinate_evidence_correction": "297 draft inner-container proofs rejected; 1189 retained with exact ranges; additional99 valid dict overload occurrences linked",
+  "full_regression_005": {
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+    "software_execution": "PASS",
+    "planned": 1886,
+    "completed": 1886,
+    "statuses": {
+      "PASS": 1886
+    },
+    "modules": 243,
+    "healthy_modules": 243,
+    "runtime_errors": 0,
+    "source_unchanged_during_run": true,
+    "original_test_ids_preserved": true,
+    "remote_gate": "NOT_EXECUTED_REMOTE_PROVENANCE_UNAVAILABLE",
+    "windows_private_corpus_physical_print": "NOT_QUALIFIED_BY_THIS_RUN"
+  },
+  "draft_context_latest": {
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "source_commit": "afa0e33f90f53cf8b37d58d25c218bf2416e9d03",
+    "software_execution": "PASS",
+    "planned": 33,
+    "completed": 33,
+    "statuses": {
+      "PASS": 33
+    },
+    "modules": 4,
+    "healthy_modules": 4,
+    "runtime_errors": 0,
+    "source_unchanged_during_run": true,
+    "original_test_ids_preserved": null,
+    "remote_gate": "NOT_EXECUTED_REMOTE_PROVENANCE_UNAVAILABLE",
+    "windows_private_corpus_physical_print": "NOT_QUALIFIED_BY_THIS_RUN"
+  },
+  "precise_ast_observation_001": {
+    "PASS": 387,
+    "healthy_modules": 141,
+    "runtime_errors": 0,
+    "observer_errors": 0,
+    "observed_original_occurrences": 1640,
+    "business_ast_equivalence_verified": true
+  },
+  "typed_contracts_newly_linked": 1220,
+  "active_supplement": "runtime-ast-observations-003:1502 remaining tests, worker1, immutable worker/points copies and per-worker SHA. 002 partial rejected because original helper edited mid-run.",
+  "gui_capture": {
+    "passed_jobs": 26,
+    "pending_exact_helper_fix": 1,
+    "source_unchanged": true,
+    "private_authored_workspaces": "Ignored .cache only"
+  },
+  "governance": {
+    "current": "BLOCKED_SOURCE_PROVENANCE",
+    "reason": "Historical evidence stale after actual fixes; new formal evidence requires genuine remote-read source JSON; cannot fabricate or trigger unknown-cost workflows"
+  },
+  "snapshot_commit": "ac49a1050adc0e0718ea1dbf0e43d62710582dcc",
+  "current_code_commit": "3a2ef14207ca117624738e4d765b78162288a3fd",
+  "gui_stock_final_001": {
+    "planned": 27,
+    "completed": 27,
+    "passed": 27,
+    "failed": [],
+    "source_unchanged": true,
+    "instrumented": false,
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "not_executed": [],
+    "status": "PASS"
+  },
+  "roots8_9": {
+    "PASS": 23,
+    "source": "281b53af",
+    "proof": "roots8-9-proof.json"
+  },
+  "major_snapshot_extension": {
+    "before": "4 cases:2ERROR2FAIL on real SQLite; initial missing-table fixture rejected",
+    "after": "37PASS/5healthy/0runtime; source1cef015a"
+  },
+  "work_load_root10": {
+    "before": "Corrected4 exact tests:4FAIL on isolated1cef015a. Initial third persistence premise corrected and not admitted.",
+    "fix_source": "3a2ef142",
+    "after": "work-load-after-002 running"
+  },
+  "full006": "INTERRUPTED_NOT_FULL_PASS:273 cases completed before additional SQL snapshot fixes; source281b53af. Preserve receipts; final1901 not run yet",
+  "latest_source": "392fd99e5217af41fa71e5f12d0228fa4b963615",
+  "modal_context": {
+    "before": "7FAIL/1PASS; eighth learn path already refused in old core",
+    "after": "100PASS/7healthy/0runtime/source unchanged"
+  },
+  "expected_final_catalog": 1921,
+  "final_regression_status": "PASS_FULL010_CURRENT_CODE",
+  "source_read_view_fix": "20e347c401584286c58b6909e039713cae510e35",
+  "read_view_related": "93PASS/7healthy/0runtime",
+  "native_gui_final004": "19PASS/source unchanged on62b2 before read-view fix; current final repeat pending",
+  "stock_gui_final": "gui-stock-captures-final-002:27/27PASS,0runtimeflags,source unchanged, no instrumentation",
+  "latest_new_review": {
+    "union": 11335,
+    "new_or_variant": 397,
+    "unreviewed": 0
+  },
+  "clones_final": {
+    "exact": 7,
+    "new_exact": 0,
+    "near": 83,
+    "unreviewed": 0
+  },
+  "ledger_integrity": "Original11798 fingerprint multiplicities preserved, evidence files/fragments all resolved, fix commits present",
+  "native_final_status": "00519PASS and stock00227PASS on previous source; final current source006/003 scheduled after full010",
+  "decorator_type_check": "snapshot-signature-proof.json: isolated wrong-type call rejected; ParamSpec preserves public signature",
+  "requirements_gap_disposition": "825 clauses:817 case-linked,8 prior partial/deferred external clauses separately justified;0unreviewed gaps",
+  "last_full009": "INTERRUPTED_NOT_FULL_PASS848 completed; introduced rule savepoint error transport fixed before final qualification",
+  "root4_last_integration": "read-view-close-callback-proof.json: actual after-close queued callback1FAIL before,7PASS after;94relatedPASS",
+  "final_regression": {
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "source_commit": "65f75f37aa771219ea42709b7c2afeed4f5984aa",
+    "software_execution": "PASS",
+    "planned": 1921,
+    "completed": 1921,
+    "statuses": {
+      "PASS": 1921
+    },
+    "modules": 252,
+    "healthy_modules": 252,
+    "runtime_errors": 0,
+    "source_unchanged_during_run": true,
+    "original_test_ids_preserved": true,
+    "remote_gate": "NOT_EXECUTED_REMOTE_PROVENANCE_UNAVAILABLE",
+    "windows_private_corpus_physical_print": "NOT_QUALIFIED_BY_THIS_RUN"
+  }
+}

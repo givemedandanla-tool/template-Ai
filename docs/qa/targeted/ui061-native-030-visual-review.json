@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "reviewer": "SELF_VISUAL_REVIEW",
+  "reviewed_utc": "2026-10-16T14:42:45.110327+00:00",
+  "scope": "All13 final-display native030 views individually opened; authored synthetic Linux, no reference hardware/private Illustrator qualification",
+  "screens": [
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-01-two-people-companies-three-candidates-two-sizes.png",
+      "sha256": "77bc1404c6ab7c0754c7e6ca0440738feba2025f310c0ff35b64ba9436744206",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-02-manual-a-only-actual-difference.png",
+      "sha256": "d520420739bb2549b676bf4abd6a1e66a365c41730c8f52d874cbb46253f0447",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-03-exact-person-a-phone-consumers-before-adoption.png",
+      "sha256": "73f6d742c42efa6d0f6867526b46b039dcec072050ebdf5c4296868e06e7979b",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-04-shared-source-stale-no-new-pass.png",
+      "sha256": "f8e412cd458d9a4484fc1eea32f86a89cde6663d1656aa1805d8a78058e05d75",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-05-synced-phones-preserved-manual-a-and-logos.png",
+      "sha256": "416ccce7cc49fb1ebae6dd10c543194ba128b986b6a44104191cc9a11ef8f7de",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-06-missing-beta-size-logo-stays-marked-preview.png",
+      "sha256": "c2c588031bd7846a7b22fc45c7cf2faf38343e038c12dc4486ad8102a3f90830",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-07-explicit-cross-target-differences-and-current-risks.png",
+      "sha256": "4ac3d25952c74095bfaabec0f3f0b094844ce6564d8d11374c2b30006db78605",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-08-safe-b90-only-failed100-keeps-old-version.png",
+      "sha256": "8fe0ddb5c8c0b1556504ab7d07f38951cd7fe6efc67b6e2a2ccab15bfcb3ac43",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-09-explicit-alpha90-logo-beta90-unchanged-alpha100-independent.png",
+      "sha256": "376d4e2a0aca8ea5d9c0b2b8393452016833c8ec7600eb2dee031913bc87f15d",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-10-source-undo-all-true-consumers-confirmation.png",
+      "sha256": "35f29daf34c48589def56acd6aa6ce65a3a12f34fc815da51c10251173562d59",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-11-source-undo-remains-draft-until-adopted.png",
+      "sha256": "c927aa540fff8d90f5792f01833d177e7be29e6ed9d43841da391ed369abb57d",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-12-single-target-undo-keeps-source-and-other-manual.png",
+      "sha256": "5153b2810fd716aaf87099bbde006597251c7ec61f9c13080db902de51348ffa",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui061-native-030/sync-workflow-13-actual-qualified90-final-and-failed100-separate-preview.png",
+      "sha256": "3c6fd1129f5bb8f6714f5bf53025df032a323853fd998f28fa86974bb2c9db02",
+      "status": "VISUALLY_REVIEWED"
+    }
+  ],
+  "findings": [
+    "Per-size stale markers/historyprefix/outputdisabled and actualcombo selection consistent",
+    "Explicit companyname text and complete authored Logo marks, no source-field warning",
+    "PhoneAonly/Bsamephoneunchanged and manualAx4/Bx5/Cx6 preserved",
+    "Cross target full names/current risks visible; safe90only adopted, failed100 preserved",
+    "ApprovedAlpha90green mark replacesonlyexplicit90version; Beta90/Alpha100 unchanged andBeta100missing",
+    "Sourceundoall3consumer modal anddraftonly untilseparateadopt",
+    "SingleBpropertyundo preservesSourceA/manualposition/currentphone",
+    "Real90FINAL and100separatePREVIEW receipts"
+  ],
+  "limits": [
+    "Preformal native source; subsequent Logo identity hardening031/032 requires fresh immutable batch recapture"
+  ]
+}

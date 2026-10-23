@@ -1,0 +1,93 @@
+{
+  "id": "UI057-EXACT9-GRADED-RISK-SAFE-DRAFT",
+  "status": "DESIGN_BEFORE_IMPLEMENTATION",
+  "original_parent_sha256": "e2701cc05f048356b1be34712fe3af9973a456af94787d36fb350442714d4fa7",
+  "original_clauses": [
+    "**使用者正式選擇 D｜分級風險提示＋安全草稿＋人工修正＋硬性無解阻擋**。本項專注 **「正式使用者在自動排版時遇到模型／版型未涵蓋情境，GUI 應如何呈現候選、限制與下一步」**，沿用 UI-018 排版候選、UI-014／UI-015 密度與輸入警告、UI-016／UI-017 人物 ROOT／公司歸屬、UI-013 固定字級、UI-020～UI-026 尺寸專用完整 Logo、UI-027 印前分尺寸驗證、UI-052～UI-055 審核／品質與修復機制。**缺少足夠已驗證經驗≠已有證據證明排版無解，AI 高信心≠符合硬性輸出條件**；不得混為同一個「成功／失敗」狀態。",
+    "**三個明確且各有證據的結果類型**：①「**安全候選／可正常推薦**」＝現有已核准模板、人物容量與來源語意、卡片物理尺寸、公司／Logo 及所有已輸入欄位的無損對應等均符合已確認的適用條件，生成仍要通過每項印前 Gate；②「**低把握／待確認草稿**」＝有具體已核准的模板或排版候選可在不破壞硬性條件前提下提出，**但缺乏充足涵蓋、歸屬或版型外推證據**，需要明確人工審核，不能標記正式合格；③「**硬性條件無解／安全阻擋**」＝依已明確證實的當前組合，所有可選候選均無法完成必要人物／公司語意無損配對、框位合法位置／不重疊／安全區、固定字級約束、可接受的文字 X 軸壓縮界線、完整 Logo／尺寸庫及正式印前驗證，須展示無解理由及修正選項，**不能因點選繼續、忽略警告、信心值高或缺樣本就強行輸出**。模型不確定時，若硬條件尚未可核實，也不能假裝草稿「已通過硬條件」；應列為需補證據／阻擋正式輸出的草稿候選。",
+    "**來源條件與限制透明**：候選卡沿用 UI-018 的現有模板清單、容量 `peopleCapacity`、人物與各公司／聯絡歸屬鏈、全部輸入欄位一一映射、實際物理尺寸、尺寸專用 Logo、文字框固定字級及 X 壓縮警告、公司與 Logo 的強綁關係；顯示「**依據：哪些既有已核准模板／規則／模型版本**」「**本次缺少的驗證證據或資料覆蓋不足**」「**已經失敗的硬條件**」「**可由人補齊哪些資訊**」。AI 的置信度或 UI-056 C 的類別缺口提醒僅是風險線索，不可將樣本少自動解釋為正式無解、也不可在 UI-057 偷偷加入 UI-056 D（未來低優先級待重新核准）的系統化補樣建議。",
+    "**不中斷工作之安全草稿**：對尚未違反已知硬條件且存在合理來源依據、但有非硬性證據缺口的候選，GUI 可提供**清楚標記「待確認草稿／不可當正式成品」**的本次臨時工作階段與現有畫布編輯入口，允許人工校正人物／欄位歸屬、選擇已核准尺寸 Logo、改選合法模板或回到輸入修改；不因草稿操作就改動原始 `.ai`、UI-010 已發布模板、UI-043 客戶正式主檔、既有 `style_version_id` 或 UI-055 訓練集。若任何必備資訊仍不明或違反安全規則，草稿仍可保留為工作中狀態，但**不得生成未標記且看似正式的 PDF／AI／PNG／JPG 印刷成品**；UI-028 已確認的非正式預覽格式與占位標示可在適用情況重用，而不是建立另一個未受控的正式輸出捷徑。",
+    "**人工修正與最小必要確認**：對低把握原因提供連到既有 UI-038／UI-039 AI 標記、UI-014／UI-015 輸入問題、UI-016／UI-017 人物及公司資料、UI-020／UI-026 Logo 匯入／配對、UI-011～UI-013 物件框位及 UI-018 模板切換的導引。若人工可提供可核對證據，則**重新執行該候選所有必要語意／幾何／圖文 Logo／字型與印前檢查**，不能只按「我接受風險」就把 FAIL 變 PASS。人工決策是這次工作允許的明確校正，不自動演化成全庫訓練規則或已核准模板；真正主檔回寫走 UI-045，學習樣本候選走 UI-055。",
+    "**無安全候選時的診斷**：在 UI-014 已決定的「無解」診斷中，呈現實際輸入資料、已測試候選與淘汰原因（如現有模板人數容量不足、聯絡資訊無法唯一映射、兩人公司欄歸屬衝突、框位必然重疊、安全區違反、X 軸壓縮超限、缺合法 Logo 尺寸資產、必要字型缺失或不能證實印前品質），區分**已證實無解**與**受來源缺失／未知條件所致的無法判定**；讓使用者選擇修正輸入、合法調整草稿、補足 Logo／字型來源或另選其他可用已核准模板。**不自行發明不存在的資料或強行擴展模板容量**，特製排版若需新增框位仍必須受先前已核准的可驗證邊界約束。",
+    "**分尺寸及輸出雙重保護**：一張卡存在多種實體尺寸時，依 UI-027 **每一尺寸單獨驗證／出具狀態**。某一尺寸已有安全候選，不代表其他尺寸自動合格；部分尺寸通過時可依 UI-027 已核准的部分正式輸出流程僅輸出合格尺寸，其他僅提供符合 UI-028 非正式標示的預覽。**「模型／資料涵蓋不足」提示不是可繞過實體印前 Gate 的授權**，任何必需字型、Logo 或來源不明都要真正核查。",
+    "**版本與不確定性追溯**：為當次臨時候選記錄輸入快照、模板與尺寸 `style_version_id`、已核准 Logo 來源、排版匹配與模型／規則版本、信心不足的實際原因、人工修正及逐項 Gate 結論；若來源檔、客戶資料或模型／規則版本更新，候選過去的安全或草稿標籤不可無條件沿用，需依受影響依賴重新檢查。UI-053 品質不合格／UI-052 重大共通誤判影響的模型或規則不得被當作安全推薦依據。",
+    "**低配置 GUI 與功能範圍**：優先重用 UI-018 候選對照、UI-014／UI-015 風險面板與既有例外中心；不增設另一套任務／訓練中心，也不自動蒐集新樣本或訓練模型。候選估計與預覽受 UI-051 的低負載保護，避免大量候選阻塞前景操作；UI-048 完整權限 GUI 依使用者決議留最後實作，前期只用合成／去識別資料進行後續技術試驗。UI-043 的客戶主檔不使用「曾設計／已確認購買」分類不變。"
+  ],
+  "historical_status_footer": "**狀態**：本次僅核准 UI-057 D 的 GUI 分級、草稿與禁止正式輸出的規格；**尚未開始任何程式開發、實際 AI 推薦、草稿建立、輸出或功能／品質測試**。",
+  "historical_footer_is_not_functional_acceptance": true,
+  "reuse": [
+    "layout.generate/match existing lossless field/capacity/company/font/X-scale/Logo checks",
+    "render.export/preview_footer existing final vs watermarked preview gates",
+    "Library._template_provenance and current quality/source trust checks",
+    "CustomLayout existing bounded Cassowary/kiwisolver repair and approved baseline",
+    "Existing MainWindow candidate/input-risk views and output_batch per-size gates",
+    "Existing LayoutSession worker, to finish shared low-load integration with UI058"
+  ],
+  "math": [
+    "Kleene-style PASS/FAIL/UNKNOWN conjunction: insufficient evidence is not a proven hard violation",
+    "Finite-catalog unsatisfiability only when an explicit fully checked nonempty candidate scope has definite hard failures for every option; empty/missing/unstarted/cancelled scope stays unproven",
+    "Score is rule fitness, never calibrated probability or permission; no threshold based on UI056 sample counts",
+    "Reuse Cassowary bounded geometry; no new solver/parallel engine/database"
+  ],
+  "references": [
+    {
+      "name": "Kubernetes/apimachinery ConditionStatus and observedGeneration/reason",
+      "version": "v0.33.4",
+      "url": "https://raw.githubusercontent.com/kubernetes/apimachinery/v0.33.4/pkg/apis/meta/v1/types.go",
+      "bytes": 84953,
+      "sha256": "1288e296b31cd87faad841a81a712cd7dbde4d72b877c39f136dad9373e5692f",
+      "reviewed": "/tmp/ui057-kubernetes-types-v0.33.4.go ConditionStatus True/False/Unknown and Condition metadata; public design only, no Kubernetes dependency/service"
+    },
+    {
+      "name": "Existing installed kiwisolver/Cassowary",
+      "version": "1.4.9",
+      "reviewed": "template_ai/custom_layout.py actual existing solver constraints; reuse without new installation"
+    },
+    {
+      "name": "Existing reviewed MLflow/NetworkX/source-pinning basis",
+      "reference": "docs/dev/REMAINING28_ENGINEERING_BASIS.json"
+    }
+  ],
+  "packages": [
+    {
+      "order": 1,
+      "scope": "Typed candidate/search tri-state risk and exact input/template/dependency evidence; classify hard blockers vs unknown approval/source/font/Logo conditions",
+      "checks": [
+        "High score/accept-risk flag cannot clear engine hard failures",
+        "Empty/partial scope cannot claim global unsatisfiable",
+        "Known manual approved template can be safe without arbitrary sample minimums"
+      ]
+    },
+    {
+      "order": 2,
+      "scope": "Source-bound transient review draft and existing watermarked preview; explicit human correction reruns all gates",
+      "checks": [
+        "No original/customer/template/training writes from temporary draft",
+        "Unknown hard conditions never labelled passed",
+        "Formal export cannot ignore review/source blockers"
+      ]
+    },
+    {
+      "order": 3,
+      "scope": "Three native candidate groups/reasons/action routes/per-size status and stale-version protection",
+      "checks": [
+        "Actual GUI selection/preview/final export rejection/correction/source change",
+        "Reuse current input/company/Logo/template and custom draft routes"
+      ]
+    },
+    {
+      "order": 4,
+      "scope": "Complete low-load shared foreground worker with UI058 before full9 registration and batch formal",
+      "checks": [
+        "No third task/training center",
+        "Real stage/cancel/generation/resource admission, not fake progress"
+      ]
+    }
+  ],
+  "limits": [
+    "No new paid service, model API, background sampling, automatic training, template publication or customer save",
+    "No production/native Illustrator/Windows reference hardware claims without actual evidence",
+    "Do not mark UI057 full complete before shared UI058 low-load path is implemented and tested"
+  ],
+  "next_action": "Implement risk policy with actual diagnostic codes and render gate first, then native transient draft; persist checkpoints and integrate shared UI058 worker before batch frozen formal"
+}

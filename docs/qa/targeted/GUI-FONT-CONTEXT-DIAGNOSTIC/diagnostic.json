@@ -1,0 +1,183 @@
+{
+  "schema": 1,
+  "id": "GUI-PARENT-QT-FONT-LIFECYCLE-DIAGNOSTIC",
+  "git_head": "1d65dbe",
+  "scope": "TARGETED_SYNTHETIC_DIAGNOSTIC_NOT_FULL_REGRESSION_NOT_WINDOWS",
+  "attempts": [
+    {
+      "id": "GUI-PARENT-READONLY-001",
+      "command_template": "QT_QPA_PLATFORM=offscreen PYTHONPATH=tests .venv/bin/python <TMP>/diagnose_gui_parent.py test_desktop_workspace test_parent_navigation",
+      "original_test_ids": [
+        {
+          "id": "test_desktop_workspace.DesktopNavigationTests.test_deleted_property_timer_ignores_real_pending_shutdown_signal",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopNavigationTests.test_real_background_job_records_duration_without_private_message",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopNavigationTests.test_real_guidance_navigation_opens_four_task_pages",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopNavigationTests.test_real_navigation_keeps_three_modes_and_original_commands",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopNavigationTests.test_real_support_navigation_exports_local_safe_report",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_real_background_cancel_stays_enabled_and_close_waits_for_worker",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_resume_selector_updates_main_graph_dimensions_and_embedded_session",
+          "status": "PASS"
+        },
+        {
+          "id": "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
+          "status": "PASS"
+        },
+        {
+          "id": "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+          "status": "FAIL"
+        },
+        {
+          "id": "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once",
+          "status": "PASS"
+        }
+      ],
+      "tests": 15,
+      "passed": 14,
+      "failed": 1,
+      "errors": 0,
+      "actual_exit": 1,
+      "elapsed_seconds": 81.826,
+      "outer_timeout_seconds": 180,
+      "original_assertions_unchanged": true
+    },
+    {
+      "id": "GUI-PARENT-READONLY-002",
+      "command_template": "QT_QPA_PLATFORM=offscreen PYTHONPATH=tests .venv/bin/python <TMP>/diagnose_gui_parent2.py test_desktop_workspace.DesktopProductionTests test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+      "original_test_ids": [
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_real_background_cancel_stays_enabled_and_close_waits_for_worker",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+          "status": "PASS"
+        },
+        {
+          "id": "test_desktop_workspace.DesktopProductionTests.test_resume_selector_updates_main_graph_dimensions_and_embedded_session",
+          "status": "PASS"
+        },
+        {
+          "id": "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+          "status": "FAIL"
+        }
+      ],
+      "tests": 7,
+      "passed": 6,
+      "failed": 1,
+      "errors": 0,
+      "actual_exit": 1,
+      "elapsed_seconds": 66.31,
+      "outer_timeout_seconds": 180,
+      "original_assertions_unchanged": true
+    }
+  ],
+  "observed": {
+    "candidate_count": 2,
+    "qualified_count": 0,
+    "review_count": 1,
+    "blocked_count": 1,
+    "generation": 9,
+    "foreground_state": "COMPLETED",
+    "good_candidate": {
+      "valid": true,
+      "issues": [],
+      "font_asset_bound": false,
+      "generation": 9,
+      "formal_allowed": false,
+      "blocking_condition": {
+        "id": "SNAPSHOT_FRESHNESS",
+        "status": "UNKNOWN",
+        "reason": "Actual font dependency stamp differs between GUI and background computation"
+      }
+    },
+    "original_worker_dependency_sha256": "56ba3a98c7c6f7ca0b5490384caaac4849ee3bea23f99a1d2cf6c130a35320a0",
+    "gui_dependency_sha256": "a54fb79599b4e911981138e994c077f1b303b0cf5a06782b11d31e43e938b613",
+    "gui_font": {
+      "requested_family": "Noto Sans CJK TC",
+      "actual_family": "Noto Sans CJK TC",
+      "actual_style": "Regular",
+      "face_fingerprint_sha256": "45d67b018d5cacae129ad4559c27b62452da2041837440cd2adf69c5c7d439e0"
+    },
+    "worker_equivalent_fresh_thread": {
+      "requested_family": "Noto Sans CJK TC",
+      "actual_family": "OpenAI Sans",
+      "actual_style": "Regular",
+      "face_fingerprint_sha256": "768bddc85a398ed1e3f91ee7a80c409af21e1d82c80c0d8b104e0d8e70c2021e",
+      "dependency_sha256": "56ba3a98c7c6f7ca0b5490384caaac4849ee3bea23f99a1d2cf6c130a35320a0",
+      "matches_original_worker_dependency": true
+    }
+  },
+  "conclusion": "After the DesktopProduction multi-Library fixture lifecycle in one Qt application, GUI and worker-equivalent font lookups resolve different actual faces for the same unbound requested family. The formal output freshness gate correctly blocks this mismatch. This reproduces without DesktopNavigation tests and without invoking added zoom controls.",
+  "confirmed": [
+    "Actual candidates exist; foreground calculation completed.",
+    "The good candidate remains geometrically valid with no layout issues.",
+    "The observed output block is exclusively the actual dependency mismatch.",
+    "Fresh-thread dependency exactly matches the original worker stored dependency.",
+    "Source, tests, tools and registry were not changed by this diagnosis."
+  ],
+  "limits": [
+    "Exact originating Qt registration/cache lifetime sequence was not minimized further; only two allowed diagnostic runs were performed.",
+    "This is not proof that all normal single-workspace usage reproduces, or that all Windows/system-font environments are repaired.",
+    "The original worker raw face was not instrumented; the fresh diagnostic thread resolved the alternate face and reproduced its exact stored dependency.",
+    "Fresh-module target006 remains separate evidence and is not rewritten or added to unique full-test counts.",
+    "No gate, font asset requirement or original assertion was weakened."
+  ],
+  "privacy": {
+    "font_bytes_included": false,
+    "full_font_inventory_included": false,
+    "customer_input_included": false,
+    "source_attachments_included": false,
+    "sensitive_absolute_paths_included": false
+  },
+  "source_mutations_by_this_diagnosis": 0
+}

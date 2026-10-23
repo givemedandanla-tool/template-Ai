@@ -1,0 +1,60 @@
+/* Connector orchestration for functions.exec. No credentials or binary uploads.
+ * Load this file with exec_command, eval its returned output, then syncTA/cpTA.
+ * Durable current API JSON lives in /tmp; recover by fetching branch first.
+ */
+globalThis.taQuote = s => "'"+s.replace(/'/g,"'\\''")+"'";
+globalThis.taUnwrap = r => {
+  if (r.isError) throw Error(JSON.stringify(r).slice(0,2000));
+  if (r.structuredContent?.sha || r.structuredContent?.success) return r.structuredContent;
+  if (r.structuredContent?.content) return JSON.parse(r.structuredContent.content);
+  for (const x of r.content??[]) if(x.type==='text') {try{return JSON.parse(x.text);}catch{}}
+  throw Error('Unknown connector result');
+};
+globalThis.taCall = async (name,args) => {let timer;try{return await Promise.race([tools[name](args),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('60s connector timeout: '+name)),60000);})]);}finally{clearTimeout(timer);}};
+globalThis.taShell = async cmd => {
+  let r=await tools.exec_command({cmd,workdir:'/workspace/template-Ai',yield_time_ms:1000,max_output_tokens:60000});
+  let output=r.output;while(r.session_id){r=await tools.write_stdin({session_id:r.session_id,chars:'',yield_time_ms:1000,max_output_tokens:60000});output+=r.output;}
+  if(r.exit_code)throw Error(output.slice(0,2000));return output;
+};
+globalThis.taRead = async path => JSON.parse(await taShell('/workspace/bcoe-dev-venv/bin/python -c '+taQuote('from pathlib import Path\nprint(Path('+JSON.stringify(path)+').read_text())')));
+globalThis.taWrite = async (path,value) => {await tools.apply_patch('*** Begin Patch\n*** Add File: '+path+'\n+'+JSON.stringify(value)+'\n*** End Patch');};
+globalThis.taRecover = async () => {
+  const repo='givemedandanla-tool/template-Ai',ref=taUnwrap(await taCall('mcp__codex_apps__github_fetch',{url:'https://api.github.com/repos/'+repo+'/git/ref/heads/dev/v0.1-first-version'}));
+  const c=taUnwrap(await taCall('mcp__codex_apps__github_fetch',{url:'https://api.github.com/repos/'+repo+'/git/commits/'+ref.object.sha}));
+  const t=taUnwrap(await taCall('mcp__codex_apps__github_fetch',{url:'https://api.github.com/repos/'+repo+'/git/trees/'+c.tree.sha+'?recursive=1'}));
+  if(t.truncated)throw Error('Recursive tree truncated');
+  await taWrite('/tmp/template-ai-current-commit.json',c);await taWrite('/tmp/template-ai-current-tree.json',t);return {c,t};
+};
+globalThis.syncTA = async message => {
+  const {c,t}=await taRecover(),repo='givemedandanla-tool/template-Ai';
+  const length=Number(await taShell('/workspace/bcoe-dev-venv/bin/python -c '+taQuote('import sys,json\nfrom pathlib import Path\nsys.path.insert(0,"tools")\nfrom dev_common import manifest\ns=json.dumps(manifest());Path("/tmp/ta-sync-manifest.json").write_text(s);print(len(s))')));
+  if(!Number.isFinite(length)||length<=0)throw Error('Manifest length missing');let raw='';
+  for(let off=0;off<length;off+=12000)raw+=await taShell('/workspace/bcoe-dev-venv/bin/python -c '+taQuote('from pathlib import Path\ns=Path("/tmp/ta-sync-manifest.json").read_text();print(s['+off+':'+(off+12000)+'],end="")'));
+  const files=JSON.parse(raw);
+  const remote=new Map(t.tree.filter(x=>x.type==='blob').map(x=>[x.path,x.sha]));
+  const allowed=Object.entries(files).filter(([p,r])=>!(/\.(png|jpg|pdf)$/.test(p)) || remote.get(p)===r.git_blob_sha1);
+  const changed=allowed.filter(([p,r])=>remote.get(p)!==r.git_blob_sha1),elements=[];
+  for(const [path,row] of changed){
+    if(/\.(png|jpg|pdf)$/.test(path)){elements.push({path,mode:'100644',type:'blob',sha:row.git_blob_sha1});continue;}
+    let content='';for(let off=0;off<row.bytes;off+=8000){content+=await taShell('/workspace/bcoe-dev-venv/bin/python -c '+taQuote('from pathlib import Path\ns=Path('+JSON.stringify(path)+').read_text()\nprint(s['+off+':'+(off+8000)+'],end="")'));}
+    elements.push({path,mode:'100644',type:'blob',content});
+  }
+  if(!elements.length)return {sha:c.sha,tree:t.sha,changed:0,verified_files:allowed.length};
+  let base=t.sha,tree;let groups=[],group=[],size=0;
+  for(const e of elements){const n=(e.content??'').length;if(group.length&&(size+n>180000||group.length>=8)){groups.push(group);group=[];size=0;}group.push(e);size+=n;}if(group.length)groups.push(group);
+  for(let i=0;i<groups.length;i++){tree=taUnwrap(await taCall('mcp__codex_apps__github_create_tree',{repository_full_name:repo,base_tree_sha:base,tree_elements:groups[i]}));base=tree.sha;await taWrite('/tmp/template-ai-partial-tree.json',{tree:base,batch:i+1,total:groups.length});notify({metadata_tree_batch:i+1,total:groups.length});}
+  const created=taUnwrap(await taCall('mcp__codex_apps__github_create_commit',{repository_full_name:repo,parent_sha:c.sha,tree_sha:tree.sha,message}));
+  await taWrite('/tmp/template-ai-pending-commit.json',{sha:created.sha,parent:c.sha,tree:tree.sha,message});
+  taUnwrap(await taCall('mcp__codex_apps__github_update_ref',{repository_full_name:repo,branch_name:'dev/v0.1-first-version',expected_sha:c.sha,sha:created.sha,force:false}));
+  const actual=await taRecover();if(actual.c.sha!==created.sha)throw Error('Branch advanced concurrently; inspect without force');
+  const map=new Map(actual.t.tree.filter(x=>x.type==='blob').map(x=>[x.path,x.sha]));const bad=allowed.filter(([p,r])=>map.get(p)!==r.git_blob_sha1);
+  if(bad.length)throw Error('Readback mismatch '+bad.map(x=>x[0]).join(','));
+  return {sha:created.sha,tree:tree.sha,changed:elements.length,verified_files:allowed.length};
+};
+globalThis.cpTA = async (id,ids,summary,next) => {
+  const remote=await taRecover();await taWrite('/tmp/template-ai-publication-known-blobs.json',remote.t.tree.filter(x=>x.type==='blob').map(x=>x.sha));
+  const code='import sys,json,shutil\nfrom pathlib import Path\nsys.path.insert(0,"tools")\nfrom dev_common import manifest,write_json\nfrom dev_checkpoint import prepare\nroot=Path.cwd();stage=Path("/tmp/ta-cp-'+id+'");assert not stage.exists()\nknown=set(json.loads(Path("/tmp/template-ai-publication-known-blobs.json").read_text()));files=manifest(root)\nexcluded={p:r for p,r in files.items() if p.startswith("docs/evidence/runs/") and p.endswith((".png",".jpg",".pdf"))}\nfor p in files:\n if p in excluded:continue\n target=stage/p;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(root/p,target)\nid='+JSON.stringify(id)+'\ncp=prepare(stage,id,'+JSON.stringify(remote.c.sha)+','+JSON.stringify(summary)+','+JSON.stringify(next)+','+JSON.stringify(ids)+')\ncp["snapshot_scope"]={"policy":"USER_AUTHORIZED_METADATA_FIRST_TEN_PACKAGES","contract":json.loads((root/"docs/dev/STATE.json").read_text())["active_contract"],"all_code_tests_docs_included":True,"excluded_proof_attachments":excluded,"full_attachment_publication_claim":False}\nwrite_json(stage/"docs/checkpoints"/f"{id}.json",cp)\nshutil.copyfile(stage/"docs/dev/STATE.json",root/"docs/dev/STATE.json");shutil.copyfile(stage/"docs/checkpoints"/f"{id}.json",root/"docs/checkpoints"/f"{id}.json");shutil.copytree(stage/".checkpoints"/id,root/".checkpoints"/id)\nprint(json.dumps({"id":id,"phase":"PREPARED","files":len(cp["source_files"])+1,"proof_excluded":len(excluded)}))';
+  text(await taShell('/workspace/bcoe-dev-venv/bin/python -c '+taQuote(code)));const saved=await syncTA(summary);text(saved);
+  text(await taShell('/workspace/bcoe-dev-venv/bin/python tools/dev_checkpoint.py acknowledge --id '+taQuote(id)+' --commit-json /tmp/template-ai-current-commit.json --tree-json /tmp/template-ai-current-tree.json'));
+  text(await syncTA('保存 '+id+' 收據與進度'));return saved;
+};

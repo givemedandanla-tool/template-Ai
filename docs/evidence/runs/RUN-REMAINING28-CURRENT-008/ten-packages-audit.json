@@ -1,0 +1,4145 @@
+{
+  "package": 1,
+  "actual_qt": true,
+  "rows": [
+    {
+      "id": "36099d66e2583fc5c3ab2992a2baca5cb815708de361249bcfc985eec29d99fb",
+      "code": "BOUNDS",
+      "severity": "BLOCK",
+      "reason": "欄位超出作品或框位無效",
+      "slot_ids": [
+        "c372de27bc8341a29a50451225c02a5e"
+      ],
+      "work_id": "076af8acae8c4092a84a5c73a14c8745",
+      "source_id": "cf3b2afb64cf468aa066e80736bc79fb",
+      "work_revision": 2,
+      "work_name": "Synthetic Example",
+      "locatable": true,
+      "source_text_identity": "UNKNOWN",
+      "native_mapping": "UNKNOWN"
+    },
+    {
+      "id": "82e171ec4f9ead297a0ddb423a757711593d83f6af7759f6b6c1c2374d51c2c2",
+      "code": "VISUAL_PENDING",
+      "severity": "REVIEW",
+      "reason": "目前作品尚未人工核對可信原稿，不能宣稱視覺一致",
+      "slot_ids": [],
+      "work_id": "076af8acae8c4092a84a5c73a14c8745",
+      "source_id": "cf3b2afb64cf468aa066e80736bc79fb",
+      "work_revision": 2,
+      "work_name": "Synthetic Example",
+      "locatable": false,
+      "source_text_identity": "UNKNOWN",
+      "native_mapping": "UNKNOWN"
+    },
+    {
+      "id": "35a6f1e7cb317fca207480e45d06023f2e10aea74985993b09a769b9f757b4c2",
+      "code": "SOURCE_IDENTITY_UNKNOWN",
+      "severity": "INFO",
+      "reason": "原生文字／語意↔SVG對應UNKNOWN；只檢查已保存標記的已知事實",
+      "slot_ids": [],
+      "work_id": "076af8acae8c4092a84a5c73a14c8745",
+      "source_id": "cf3b2afb64cf468aa066e80736bc79fb",
+      "work_revision": 2,
+      "work_name": "Synthetic Example",
+      "locatable": false,
+      "source_text_identity": "UNKNOWN",
+      "native_mapping": "UNKNOWN"
+    }
+  ],
+  "selected": {
+    "id": "36099d66e2583fc5c3ab2992a2baca5cb815708de361249bcfc985eec29d99fb",
+    "code": "BOUNDS",
+    "severity": "BLOCK",
+    "reason": "欄位超出作品或框位無效",
+    "slot_ids": [
+      "c372de27bc8341a29a50451225c02a5e"
+    ],
+    "work_id": "076af8acae8c4092a84a5c73a14c8745",
+    "source_id": "cf3b2afb64cf468aa066e80736bc79fb",
+    "work_revision": 2,
+    "work_name": "Synthetic Example",
+    "locatable": true,
+    "source_text_identity": "UNKNOWN",
+    "native_mapping": "UNKNOWN"
+  },
+  "located_work": "076af8acae8c4092a84a5c73a14c8745",
+  "located_slot": "c372de27bc8341a29a50451225c02a5e",
+  "db_markings_unchanged": true,
+  "source_mapping": "UNKNOWN",
+  "full_quality_pass": false,
+  "scope": "Anonymous source SVG, saved labels, actual Qt view; no native AI/visual equivalence claim",
+  "facts": {
+    "actual_qt": true,
+    "confirmed": {
+      "id": "c734dc63077a45ea92b41e01b3230881",
+      "revision": 2,
+      "confirmation": {
+        "actor": "Synthetic Reviewer",
+        "observation_ids": [
+          "note",
+          "observation-0",
+          "observation-1",
+          "observation-2",
+          "observation-3"
+        ],
+        "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+        "pins": {
+          "link_revision": 0,
+          "page": 1,
+          "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "source_id": "acdfb813dd7b4c5a93714d0789109663",
+          "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+          "work_id": "c734dc63077a45ea92b41e01b3230881",
+          "work_revision": 1
+        },
+        "scope": "EXACT_WORK_FACTS_ONLY; NOT_SAMPLE_OR_RULE_APPROVAL",
+        "source_stat": [
+          27,
+          796945,
+          454,
+          1792212091362533440,
+          1792212091362533440
+        ],
+        "timestamp": 1792212091.4061265
+      },
+      "observations": [
+        {
+          "classification": "ANNOTATION",
+          "evidence": "USER_OBSERVATION",
+          "id": "note",
+          "native_mapping": "UNKNOWN",
+          "object_type": "ANNOTATION",
+          "owner": null,
+          "prior_prediction": null,
+          "region": {
+            "h": 5,
+            "w": 20,
+            "x": 8,
+            "y": 48
+          },
+          "semantic": null,
+          "slot_id": null,
+          "slot_kind": null,
+          "text": "已校稿"
+        },
+        {
+          "classification": "FIELD",
+          "evidence": "USER_OBSERVATION",
+          "id": "observation-0",
+          "native_mapping": "UNKNOWN",
+          "object_type": "TEXT",
+          "owner": "p1",
+          "prior_prediction": null,
+          "region": {
+            "h": 11,
+            "w": 70,
+            "x": 8,
+            "y": 6
+          },
+          "semantic": {
+            "candidates": [],
+            "confidence": "UNCALIBRATED_CANDIDATE",
+            "model": null,
+            "normalized": "Alex Example",
+            "platform": null,
+            "raw": "Alex Example",
+            "region": "TW",
+            "semantic_type": "unknown",
+            "signals": [
+              "證據不足；保留未知，不從位置推定人物或職稱"
+            ],
+            "slot_kind": null,
+            "state": "PENDING_REVIEW",
+            "version": "semantic-fields-1/phonenumbers-9.0.16"
+          },
+          "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+          "slot_kind": "name",
+          "text": "Alex Example"
+        },
+        {
+          "classification": "FIELD",
+          "evidence": "USER_OBSERVATION",
+          "id": "observation-1",
+          "native_mapping": "UNKNOWN",
+          "object_type": "TEXT",
+          "owner": "p1",
+          "prior_prediction": null,
+          "region": {
+            "h": 7,
+            "w": 70,
+            "x": 8,
+            "y": 19
+          },
+          "semantic": {
+            "candidates": [
+              "title"
+            ],
+            "confidence": "UNCALIBRATED_CANDIDATE",
+            "model": null,
+            "normalized": "Designer",
+            "platform": null,
+            "raw": "Designer",
+            "region": "TW",
+            "semantic_type": "title",
+            "signals": [
+              "明確職稱標籤或中英文職務詞彙"
+            ],
+            "slot_kind": "title",
+            "state": "PENDING_REVIEW",
+            "version": "semantic-fields-1/phonenumbers-9.0.16"
+          },
+          "slot_id": "b30ab8de665f462780370e0a1f5ad459",
+          "slot_kind": "title",
+          "text": "Designer"
+        },
+        {
+          "classification": "FIELD",
+          "evidence": "USER_OBSERVATION",
+          "id": "observation-2",
+          "native_mapping": "UNKNOWN",
+          "object_type": "TEXT",
+          "owner": "p1",
+          "prior_prediction": null,
+          "region": {
+            "h": 7,
+            "w": 70,
+            "x": 8,
+            "y": 31
+          },
+          "semantic": {
+            "candidates": [
+              "phone"
+            ],
+            "confidence": "UNCALIBRATED_CANDIDATE",
+            "model": null,
+            "normalized": "+12025550100",
+            "platform": null,
+            "raw": "+1 202 555 0100",
+            "region": "TW",
+            "semantic_type": "phone",
+            "signals": [
+              "libphonenumber有效號碼／類型：2；預設地區：TW"
+            ],
+            "slot_kind": "phone",
+            "state": "PENDING_REVIEW",
+            "version": "semantic-fields-1/phonenumbers-9.0.16"
+          },
+          "slot_id": "9cbb9fefadf241f48304e5063674a206",
+          "slot_kind": "phone",
+          "text": "+1 202 555 0100"
+        },
+        {
+          "classification": "FIELD",
+          "evidence": "USER_OBSERVATION",
+          "id": "observation-3",
+          "native_mapping": "UNKNOWN",
+          "object_type": "TEXT",
+          "owner": "p1",
+          "prior_prediction": null,
+          "region": {
+            "h": 7,
+            "w": 70,
+            "x": 8,
+            "y": 40
+          },
+          "semantic": {
+            "candidates": [
+              "email"
+            ],
+            "confidence": "UNCALIBRATED_CANDIDATE",
+            "model": null,
+            "normalized": "alex@example.test",
+            "platform": null,
+            "raw": "alex@example.test",
+            "region": "TW",
+            "semantic_type": "email",
+            "signals": [
+              "完整郵件帳號與網域結構"
+            ],
+            "slot_kind": "email",
+            "state": "PENDING_REVIEW",
+            "version": "semantic-fields-1/phonenumbers-9.0.16"
+          },
+          "slot_id": "f83b50742e6940678ea09b6af53b6a9c",
+          "slot_kind": "email",
+          "text": "alex@example.test"
+        }
+      ],
+      "pins": {
+        "link_revision": 0,
+        "page": 1,
+        "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+        "source_id": "acdfb813dd7b4c5a93714d0789109663",
+        "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+        "work_id": "c734dc63077a45ea92b41e01b3230881",
+        "work_revision": 1
+      },
+      "state": "CONFIRMED"
+    },
+    "history": [
+      {
+        "revision": 2,
+        "action": "facts_confirmed",
+        "before": {
+          "id": "c734dc63077a45ea92b41e01b3230881",
+          "revision": 1,
+          "confirmation": null,
+          "observations": [
+            {
+              "classification": "ANNOTATION",
+              "evidence": "USER_OBSERVATION",
+              "id": "note",
+              "native_mapping": "UNKNOWN",
+              "object_type": "ANNOTATION",
+              "owner": null,
+              "prior_prediction": null,
+              "region": {
+                "h": 5,
+                "w": 20,
+                "x": 8,
+                "y": 48
+              },
+              "semantic": null,
+              "slot_id": null,
+              "slot_kind": null,
+              "text": "已校稿"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-0",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 11,
+                "w": 70,
+                "x": 8,
+                "y": 6
+              },
+              "semantic": {
+                "candidates": [],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "Alex Example",
+                "platform": null,
+                "raw": "Alex Example",
+                "region": "TW",
+                "semantic_type": "unknown",
+                "signals": [
+                  "證據不足；保留未知，不從位置推定人物或職稱"
+                ],
+                "slot_kind": null,
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+              "slot_kind": "name",
+              "text": "Alex Example"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-1",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 7,
+                "w": 70,
+                "x": 8,
+                "y": 19
+              },
+              "semantic": {
+                "candidates": [
+                  "title"
+                ],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "Designer",
+                "platform": null,
+                "raw": "Designer",
+                "region": "TW",
+                "semantic_type": "title",
+                "signals": [
+                  "明確職稱標籤或中英文職務詞彙"
+                ],
+                "slot_kind": "title",
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "b30ab8de665f462780370e0a1f5ad459",
+              "slot_kind": "title",
+              "text": "Designer"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-2",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 7,
+                "w": 70,
+                "x": 8,
+                "y": 31
+              },
+              "semantic": {
+                "candidates": [
+                  "phone"
+                ],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "+12025550100",
+                "platform": null,
+                "raw": "+1 202 555 0100",
+                "region": "TW",
+                "semantic_type": "phone",
+                "signals": [
+                  "libphonenumber有效號碼／類型：2；預設地區：TW"
+                ],
+                "slot_kind": "phone",
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "9cbb9fefadf241f48304e5063674a206",
+              "slot_kind": "phone",
+              "text": "+1 202 555 0100"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-3",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 7,
+                "w": 70,
+                "x": 8,
+                "y": 40
+              },
+              "semantic": {
+                "candidates": [
+                  "email"
+                ],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "alex@example.test",
+                "platform": null,
+                "raw": "alex@example.test",
+                "region": "TW",
+                "semantic_type": "email",
+                "signals": [
+                  "完整郵件帳號與網域結構"
+                ],
+                "slot_kind": "email",
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "f83b50742e6940678ea09b6af53b6a9c",
+              "slot_kind": "email",
+              "text": "alex@example.test"
+            }
+          ],
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          },
+          "state": "PENDING"
+        },
+        "after": {
+          "confirmation": {
+            "actor": "Synthetic Reviewer",
+            "observation_ids": [
+              "note",
+              "observation-0",
+              "observation-1",
+              "observation-2",
+              "observation-3"
+            ],
+            "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+            "pins": {
+              "link_revision": 0,
+              "page": 1,
+              "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+              "source_id": "acdfb813dd7b4c5a93714d0789109663",
+              "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+              "work_id": "c734dc63077a45ea92b41e01b3230881",
+              "work_revision": 1
+            },
+            "scope": "EXACT_WORK_FACTS_ONLY; NOT_SAMPLE_OR_RULE_APPROVAL",
+            "source_stat": [
+              27,
+              796945,
+              454,
+              1792212091362533440,
+              1792212091362533440
+            ],
+            "timestamp": 1792212091.4061265
+          },
+          "observations": [
+            {
+              "classification": "ANNOTATION",
+              "evidence": "USER_OBSERVATION",
+              "id": "note",
+              "native_mapping": "UNKNOWN",
+              "object_type": "ANNOTATION",
+              "owner": null,
+              "prior_prediction": null,
+              "region": {
+                "h": 5,
+                "w": 20,
+                "x": 8,
+                "y": 48
+              },
+              "semantic": null,
+              "slot_id": null,
+              "slot_kind": null,
+              "text": "已校稿"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-0",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 11,
+                "w": 70,
+                "x": 8,
+                "y": 6
+              },
+              "semantic": {
+                "candidates": [],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "Alex Example",
+                "platform": null,
+                "raw": "Alex Example",
+                "region": "TW",
+                "semantic_type": "unknown",
+                "signals": [
+                  "證據不足；保留未知，不從位置推定人物或職稱"
+                ],
+                "slot_kind": null,
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+              "slot_kind": "name",
+              "text": "Alex Example"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-1",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 7,
+                "w": 70,
+                "x": 8,
+                "y": 19
+              },
+              "semantic": {
+                "candidates": [
+                  "title"
+                ],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "Designer",
+                "platform": null,
+                "raw": "Designer",
+                "region": "TW",
+                "semantic_type": "title",
+                "signals": [
+                  "明確職稱標籤或中英文職務詞彙"
+                ],
+                "slot_kind": "title",
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "b30ab8de665f462780370e0a1f5ad459",
+              "slot_kind": "title",
+              "text": "Designer"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-2",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 7,
+                "w": 70,
+                "x": 8,
+                "y": 31
+              },
+              "semantic": {
+                "candidates": [
+                  "phone"
+                ],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "+12025550100",
+                "platform": null,
+                "raw": "+1 202 555 0100",
+                "region": "TW",
+                "semantic_type": "phone",
+                "signals": [
+                  "libphonenumber有效號碼／類型：2；預設地區：TW"
+                ],
+                "slot_kind": "phone",
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "9cbb9fefadf241f48304e5063674a206",
+              "slot_kind": "phone",
+              "text": "+1 202 555 0100"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-3",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 7,
+                "w": 70,
+                "x": 8,
+                "y": 40
+              },
+              "semantic": {
+                "candidates": [
+                  "email"
+                ],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "alex@example.test",
+                "platform": null,
+                "raw": "alex@example.test",
+                "region": "TW",
+                "semantic_type": "email",
+                "signals": [
+                  "完整郵件帳號與網域結構"
+                ],
+                "slot_kind": "email",
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "f83b50742e6940678ea09b6af53b6a9c",
+              "slot_kind": "email",
+              "text": "alex@example.test"
+            }
+          ],
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          },
+          "state": "CONFIRMED"
+        },
+        "created": 1792212091.406353
+      },
+      {
+        "revision": 1,
+        "action": "facts_saved",
+        "before": null,
+        "after": {
+          "confirmation": null,
+          "observations": [
+            {
+              "classification": "ANNOTATION",
+              "evidence": "USER_OBSERVATION",
+              "id": "note",
+              "native_mapping": "UNKNOWN",
+              "object_type": "ANNOTATION",
+              "owner": null,
+              "prior_prediction": null,
+              "region": {
+                "h": 5,
+                "w": 20,
+                "x": 8,
+                "y": 48
+              },
+              "semantic": null,
+              "slot_id": null,
+              "slot_kind": null,
+              "text": "已校稿"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-0",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 11,
+                "w": 70,
+                "x": 8,
+                "y": 6
+              },
+              "semantic": {
+                "candidates": [],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "Alex Example",
+                "platform": null,
+                "raw": "Alex Example",
+                "region": "TW",
+                "semantic_type": "unknown",
+                "signals": [
+                  "證據不足；保留未知，不從位置推定人物或職稱"
+                ],
+                "slot_kind": null,
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+              "slot_kind": "name",
+              "text": "Alex Example"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-1",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 7,
+                "w": 70,
+                "x": 8,
+                "y": 19
+              },
+              "semantic": {
+                "candidates": [
+                  "title"
+                ],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "Designer",
+                "platform": null,
+                "raw": "Designer",
+                "region": "TW",
+                "semantic_type": "title",
+                "signals": [
+                  "明確職稱標籤或中英文職務詞彙"
+                ],
+                "slot_kind": "title",
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "b30ab8de665f462780370e0a1f5ad459",
+              "slot_kind": "title",
+              "text": "Designer"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-2",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 7,
+                "w": 70,
+                "x": 8,
+                "y": 31
+              },
+              "semantic": {
+                "candidates": [
+                  "phone"
+                ],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "+12025550100",
+                "platform": null,
+                "raw": "+1 202 555 0100",
+                "region": "TW",
+                "semantic_type": "phone",
+                "signals": [
+                  "libphonenumber有效號碼／類型：2；預設地區：TW"
+                ],
+                "slot_kind": "phone",
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "9cbb9fefadf241f48304e5063674a206",
+              "slot_kind": "phone",
+              "text": "+1 202 555 0100"
+            },
+            {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-3",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 7,
+                "w": 70,
+                "x": 8,
+                "y": 40
+              },
+              "semantic": {
+                "candidates": [
+                  "email"
+                ],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "alex@example.test",
+                "platform": null,
+                "raw": "alex@example.test",
+                "region": "TW",
+                "semantic_type": "email",
+                "signals": [
+                  "完整郵件帳號與網域結構"
+                ],
+                "slot_kind": "email",
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "f83b50742e6940678ea09b6af53b6a9c",
+              "slot_kind": "email",
+              "text": "alex@example.test"
+            }
+          ],
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          },
+          "state": "PENDING"
+        },
+        "created": 1792212091.3704064
+      }
+    ],
+    "source_and_slots_unchanged": true,
+    "sample_count": 0,
+    "rule_count": 0
+  },
+  "noise_authoring": {
+    "actual_qt": true,
+    "rule": {
+      "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+      "revision": 1,
+      "action": "EXCLUDE",
+      "author": "Synthetic Reviewer",
+      "counterexamples": [
+        {
+          "confirmed_at": 1792212091.4061265,
+          "facts_revision": 2,
+          "observation": {
+            "classification": "FIELD",
+            "evidence": "USER_OBSERVATION",
+            "id": "observation-0",
+            "native_mapping": "UNKNOWN",
+            "object_type": "TEXT",
+            "owner": "p1",
+            "prior_prediction": null,
+            "region": {
+              "h": 11,
+              "w": 70,
+              "x": 8,
+              "y": 6
+            },
+            "semantic": {
+              "candidates": [],
+              "confidence": "UNCALIBRATED_CANDIDATE",
+              "model": null,
+              "normalized": "Alex Example",
+              "platform": null,
+              "raw": "Alex Example",
+              "region": "TW",
+              "semantic_type": "unknown",
+              "signals": [
+                "證據不足；保留未知，不從位置推定人物或職稱"
+              ],
+              "slot_kind": null,
+              "state": "PENDING_REVIEW",
+              "version": "semantic-fields-1/phonenumbers-9.0.16"
+            },
+            "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+            "slot_kind": "name",
+            "text": "Alex Example"
+          },
+          "observation_id": "observation-0",
+          "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          },
+          "work_id": "c734dc63077a45ea92b41e01b3230881"
+        }
+      ],
+      "created": 1792212091.5380425,
+      "literal": "已校稿",
+      "normalization": "NONE",
+      "normalization_approved": false,
+      "positive_examples": [
+        {
+          "confirmed_at": 1792212091.4061265,
+          "facts_revision": 2,
+          "observation": {
+            "classification": "ANNOTATION",
+            "evidence": "USER_OBSERVATION",
+            "id": "note",
+            "native_mapping": "UNKNOWN",
+            "object_type": "ANNOTATION",
+            "owner": null,
+            "prior_prediction": null,
+            "region": {
+              "h": 5,
+              "w": 20,
+              "x": 8,
+              "y": 48
+            },
+            "semantic": null,
+            "slot_id": null,
+            "slot_kind": null,
+            "text": "已校稿"
+          },
+          "observation_id": "note",
+          "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          },
+          "work_id": "c734dc63077a45ea92b41e01b3230881"
+        }
+      ],
+      "review": null,
+      "scope": {
+        "classification": "ANNOTATION",
+        "object_type": "ANNOTATION",
+        "source_extension": ".svg",
+        "zone": {
+          "h": 0.092593,
+          "w": 0.222222,
+          "x": 0.088889,
+          "y": 0.888889
+        }
+      },
+      "state": "PENDING"
+    },
+    "candidates": [
+      {
+        "work_id": "c734dc63077a45ea92b41e01b3230881",
+        "source_id": "acdfb813dd7b4c5a93714d0789109663",
+        "observation_id": "note",
+        "text": "已校稿",
+        "state": "EXCLUDED_LOCAL",
+        "reason": "人工只排除此作品／觀察",
+        "protected": false,
+        "facts_revision": 2,
+        "pins": {
+          "work_id": "c734dc63077a45ea92b41e01b3230881",
+          "work_revision": 1,
+          "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+          "source_id": "acdfb813dd7b4c5a93714d0789109663",
+          "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "page": 1,
+          "link_revision": 0
+        },
+        "observation_digest": "510d2a0585f47d4f4bac17ab76d9e9c9fda903072026e5b355eef0ef9ee89c7d",
+        "local_revision": 2,
+        "rule_matches": [],
+        "invalid_rule_ids": [],
+        "source_and_formal_slots_modified": false,
+        "native_mapping": "UNKNOWN"
+      },
+      {
+        "work_id": "c734dc63077a45ea92b41e01b3230881",
+        "source_id": "acdfb813dd7b4c5a93714d0789109663",
+        "observation_id": "observation-0",
+        "text": "Alex Example",
+        "state": "KEPT_PROTECTED",
+        "reason": "真實欄位、Logo或未知分類保留",
+        "protected": true,
+        "facts_revision": 2,
+        "pins": {
+          "work_id": "c734dc63077a45ea92b41e01b3230881",
+          "work_revision": 1,
+          "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+          "source_id": "acdfb813dd7b4c5a93714d0789109663",
+          "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "page": 1,
+          "link_revision": 0
+        },
+        "observation_digest": "589cd5aeabafe9a87d7ebcebc7d5231695f4319fb95380531de4dff76a748ea0",
+        "local_revision": 2,
+        "rule_matches": [],
+        "invalid_rule_ids": [],
+        "source_and_formal_slots_modified": false,
+        "native_mapping": "UNKNOWN"
+      },
+      {
+        "work_id": "c734dc63077a45ea92b41e01b3230881",
+        "source_id": "acdfb813dd7b4c5a93714d0789109663",
+        "observation_id": "observation-1",
+        "text": "Designer",
+        "state": "KEPT_PROTECTED",
+        "reason": "真實欄位、Logo或未知分類保留",
+        "protected": true,
+        "facts_revision": 2,
+        "pins": {
+          "work_id": "c734dc63077a45ea92b41e01b3230881",
+          "work_revision": 1,
+          "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+          "source_id": "acdfb813dd7b4c5a93714d0789109663",
+          "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "page": 1,
+          "link_revision": 0
+        },
+        "observation_digest": "959ac8425e2805f7e17ef9088f19d80ca39155bef97cca95d30514605aae7b10",
+        "local_revision": 2,
+        "rule_matches": [],
+        "invalid_rule_ids": [],
+        "source_and_formal_slots_modified": false,
+        "native_mapping": "UNKNOWN"
+      },
+      {
+        "work_id": "c734dc63077a45ea92b41e01b3230881",
+        "source_id": "acdfb813dd7b4c5a93714d0789109663",
+        "observation_id": "observation-2",
+        "text": "+1 202 555 0100",
+        "state": "KEPT_PROTECTED",
+        "reason": "真實欄位、Logo或未知分類保留",
+        "protected": true,
+        "facts_revision": 2,
+        "pins": {
+          "work_id": "c734dc63077a45ea92b41e01b3230881",
+          "work_revision": 1,
+          "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+          "source_id": "acdfb813dd7b4c5a93714d0789109663",
+          "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "page": 1,
+          "link_revision": 0
+        },
+        "observation_digest": "237872abaff318c68f9e92cd78d7e9af026463f2a4b119c8b80630a5bedfc650",
+        "local_revision": 2,
+        "rule_matches": [],
+        "invalid_rule_ids": [],
+        "source_and_formal_slots_modified": false,
+        "native_mapping": "UNKNOWN"
+      },
+      {
+        "work_id": "c734dc63077a45ea92b41e01b3230881",
+        "source_id": "acdfb813dd7b4c5a93714d0789109663",
+        "observation_id": "observation-3",
+        "text": "alex@example.test",
+        "state": "KEPT_PROTECTED",
+        "reason": "真實欄位、Logo或未知分類保留",
+        "protected": true,
+        "facts_revision": 2,
+        "pins": {
+          "work_id": "c734dc63077a45ea92b41e01b3230881",
+          "work_revision": 1,
+          "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+          "source_id": "acdfb813dd7b4c5a93714d0789109663",
+          "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "page": 1,
+          "link_revision": 0
+        },
+        "observation_digest": "427cfe60093cb628b76a718b6745489ad8889426deb2b626a3de1bcf6fd29773",
+        "local_revision": 2,
+        "rule_matches": [],
+        "invalid_rule_ids": [],
+        "source_and_formal_slots_modified": false,
+        "native_mapping": "UNKNOWN"
+      }
+    ],
+    "source_and_slots_unchanged": true,
+    "no_rule_activation": true
+  },
+  "rule_review": {
+    "actual_qt": true,
+    "active_rule": {
+      "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+      "revision": 2,
+      "action": "EXCLUDE",
+      "author": "Synthetic Reviewer",
+      "counterexamples": [
+        {
+          "confirmed_at": 1792212091.4061265,
+          "facts_revision": 2,
+          "observation": {
+            "classification": "FIELD",
+            "evidence": "USER_OBSERVATION",
+            "id": "observation-0",
+            "native_mapping": "UNKNOWN",
+            "object_type": "TEXT",
+            "owner": "p1",
+            "prior_prediction": null,
+            "region": {
+              "h": 11,
+              "w": 70,
+              "x": 8,
+              "y": 6
+            },
+            "semantic": {
+              "candidates": [],
+              "confidence": "UNCALIBRATED_CANDIDATE",
+              "model": null,
+              "normalized": "Alex Example",
+              "platform": null,
+              "raw": "Alex Example",
+              "region": "TW",
+              "semantic_type": "unknown",
+              "signals": [
+                "證據不足；保留未知，不從位置推定人物或職稱"
+              ],
+              "slot_kind": null,
+              "state": "PENDING_REVIEW",
+              "version": "semantic-fields-1/phonenumbers-9.0.16"
+            },
+            "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+            "slot_kind": "name",
+            "text": "Alex Example"
+          },
+          "observation_id": "observation-0",
+          "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          },
+          "work_id": "c734dc63077a45ea92b41e01b3230881"
+        }
+      ],
+      "created": 1792212091.5380425,
+      "literal": "已校稿",
+      "normalization": "NONE",
+      "normalization_approved": false,
+      "positive_examples": [
+        {
+          "confirmed_at": 1792212091.4061265,
+          "facts_revision": 2,
+          "observation": {
+            "classification": "ANNOTATION",
+            "evidence": "USER_OBSERVATION",
+            "id": "note",
+            "native_mapping": "UNKNOWN",
+            "object_type": "ANNOTATION",
+            "owner": null,
+            "prior_prediction": null,
+            "region": {
+              "h": 5,
+              "w": 20,
+              "x": 8,
+              "y": 48
+            },
+            "semantic": null,
+            "slot_id": null,
+            "slot_kind": null,
+            "text": "已校稿"
+          },
+          "observation_id": "note",
+          "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          },
+          "work_id": "c734dc63077a45ea92b41e01b3230881"
+        }
+      ],
+      "review": {
+        "actor": "Synthetic Reviewer",
+        "decision": "APPROVE",
+        "detail_reviewed": false,
+        "impact": [
+          {
+            "confirmed": true,
+            "decision_if_active": "EXCLUDED_RULE",
+            "facts_revision": 2,
+            "observation_id": "note",
+            "protected": false,
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "text": "已校稿",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          }
+        ],
+        "plan_digest": "677a66d8e04e42c3176697f9f2c23fe041569fffa1424ca2b639624b10304566",
+        "reason": "exact scope and source examples checked",
+        "reviewed_revision": 1,
+        "risk": "LOW",
+        "timestamp": 1792212091.600982
+      },
+      "scope": {
+        "classification": "ANNOTATION",
+        "object_type": "ANNOTATION",
+        "source_extension": ".svg",
+        "zone": {
+          "h": 0.092593,
+          "w": 0.222222,
+          "x": 0.088889,
+          "y": 0.888889
+        }
+      },
+      "state": "ACTIVE"
+    },
+    "inspection": {
+      "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+      "revision": 2,
+      "state": "ACTIVE",
+      "risk": "LOW",
+      "errors": [],
+      "risk_reasons": [],
+      "scope_group": "f5c564099e1e20e9838faaf6fd4bff005f1c4f46df91051a12017c06d462f434",
+      "rule": {
+        "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+        "revision": 2,
+        "action": "EXCLUDE",
+        "author": "Synthetic Reviewer",
+        "counterexamples": [
+          {
+            "confirmed_at": 1792212091.4061265,
+            "facts_revision": 2,
+            "observation": {
+              "classification": "FIELD",
+              "evidence": "USER_OBSERVATION",
+              "id": "observation-0",
+              "native_mapping": "UNKNOWN",
+              "object_type": "TEXT",
+              "owner": "p1",
+              "prior_prediction": null,
+              "region": {
+                "h": 11,
+                "w": 70,
+                "x": 8,
+                "y": 6
+              },
+              "semantic": {
+                "candidates": [],
+                "confidence": "UNCALIBRATED_CANDIDATE",
+                "model": null,
+                "normalized": "Alex Example",
+                "platform": null,
+                "raw": "Alex Example",
+                "region": "TW",
+                "semantic_type": "unknown",
+                "signals": [
+                  "證據不足；保留未知，不從位置推定人物或職稱"
+                ],
+                "slot_kind": null,
+                "state": "PENDING_REVIEW",
+                "version": "semantic-fields-1/phonenumbers-9.0.16"
+              },
+              "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+              "slot_kind": "name",
+              "text": "Alex Example"
+            },
+            "observation_id": "observation-0",
+            "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+            "pins": {
+              "link_revision": 0,
+              "page": 1,
+              "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+              "source_id": "acdfb813dd7b4c5a93714d0789109663",
+              "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+              "work_id": "c734dc63077a45ea92b41e01b3230881",
+              "work_revision": 1
+            },
+            "work_id": "c734dc63077a45ea92b41e01b3230881"
+          }
+        ],
+        "created": 1792212091.5380425,
+        "literal": "已校稿",
+        "normalization": "NONE",
+        "normalization_approved": false,
+        "positive_examples": [
+          {
+            "confirmed_at": 1792212091.4061265,
+            "facts_revision": 2,
+            "observation": {
+              "classification": "ANNOTATION",
+              "evidence": "USER_OBSERVATION",
+              "id": "note",
+              "native_mapping": "UNKNOWN",
+              "object_type": "ANNOTATION",
+              "owner": null,
+              "prior_prediction": null,
+              "region": {
+                "h": 5,
+                "w": 20,
+                "x": 8,
+                "y": 48
+              },
+              "semantic": null,
+              "slot_id": null,
+              "slot_kind": null,
+              "text": "已校稿"
+            },
+            "observation_id": "note",
+            "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+            "pins": {
+              "link_revision": 0,
+              "page": 1,
+              "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+              "source_id": "acdfb813dd7b4c5a93714d0789109663",
+              "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+              "work_id": "c734dc63077a45ea92b41e01b3230881",
+              "work_revision": 1
+            },
+            "work_id": "c734dc63077a45ea92b41e01b3230881"
+          }
+        ],
+        "review": {
+          "actor": "Synthetic Reviewer",
+          "decision": "APPROVE",
+          "detail_reviewed": false,
+          "impact": [
+            {
+              "confirmed": true,
+              "decision_if_active": "EXCLUDED_RULE",
+              "facts_revision": 2,
+              "observation_id": "note",
+              "protected": false,
+              "source_id": "acdfb813dd7b4c5a93714d0789109663",
+              "text": "已校稿",
+              "work_id": "c734dc63077a45ea92b41e01b3230881",
+              "work_revision": 1
+            }
+          ],
+          "plan_digest": "677a66d8e04e42c3176697f9f2c23fe041569fffa1424ca2b639624b10304566",
+          "reason": "exact scope and source examples checked",
+          "reviewed_revision": 1,
+          "risk": "LOW",
+          "timestamp": 1792212091.600982
+        },
+        "scope": {
+          "classification": "ANNOTATION",
+          "object_type": "ANNOTATION",
+          "source_extension": ".svg",
+          "zone": {
+            "h": 0.092593,
+            "w": 0.222222,
+            "x": 0.088889,
+            "y": 0.888889
+          }
+        },
+        "state": "ACTIVE"
+      },
+      "matches": [
+        {
+          "work_id": "c734dc63077a45ea92b41e01b3230881",
+          "source_id": "acdfb813dd7b4c5a93714d0789109663",
+          "observation_id": "note",
+          "text": "已校稿",
+          "protected": false,
+          "confirmed": true,
+          "decision_if_active": "EXCLUDED_RULE",
+          "work_revision": 1,
+          "facts_revision": 2
+        }
+      ],
+      "affected_work_ids": [
+        "c734dc63077a45ea92b41e01b3230881"
+      ],
+      "linked_template_ids": [],
+      "impact_complete": true,
+      "scanned_observations": 5,
+      "customer_identity": "UNKNOWN",
+      "templates_rewritten": false,
+      "history": [
+        {
+          "revision": 2,
+          "action": "rule_approve",
+          "before": {
+            "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+            "revision": 1,
+            "action": "EXCLUDE",
+            "author": "Synthetic Reviewer",
+            "counterexamples": [
+              {
+                "confirmed_at": 1792212091.4061265,
+                "facts_revision": 2,
+                "observation": {
+                  "classification": "FIELD",
+                  "evidence": "USER_OBSERVATION",
+                  "id": "observation-0",
+                  "native_mapping": "UNKNOWN",
+                  "object_type": "TEXT",
+                  "owner": "p1",
+                  "prior_prediction": null,
+                  "region": {
+                    "h": 11,
+                    "w": 70,
+                    "x": 8,
+                    "y": 6
+                  },
+                  "semantic": {
+                    "candidates": [],
+                    "confidence": "UNCALIBRATED_CANDIDATE",
+                    "model": null,
+                    "normalized": "Alex Example",
+                    "platform": null,
+                    "raw": "Alex Example",
+                    "region": "TW",
+                    "semantic_type": "unknown",
+                    "signals": [
+                      "證據不足；保留未知，不從位置推定人物或職稱"
+                    ],
+                    "slot_kind": null,
+                    "state": "PENDING_REVIEW",
+                    "version": "semantic-fields-1/phonenumbers-9.0.16"
+                  },
+                  "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+                  "slot_kind": "name",
+                  "text": "Alex Example"
+                },
+                "observation_id": "observation-0",
+                "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+                "pins": {
+                  "link_revision": 0,
+                  "page": 1,
+                  "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                  "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                  "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                  "work_id": "c734dc63077a45ea92b41e01b3230881",
+                  "work_revision": 1
+                },
+                "work_id": "c734dc63077a45ea92b41e01b3230881"
+              }
+            ],
+            "created": 1792212091.5380425,
+            "literal": "已校稿",
+            "normalization": "NONE",
+            "normalization_approved": false,
+            "positive_examples": [
+              {
+                "confirmed_at": 1792212091.4061265,
+                "facts_revision": 2,
+                "observation": {
+                  "classification": "ANNOTATION",
+                  "evidence": "USER_OBSERVATION",
+                  "id": "note",
+                  "native_mapping": "UNKNOWN",
+                  "object_type": "ANNOTATION",
+                  "owner": null,
+                  "prior_prediction": null,
+                  "region": {
+                    "h": 5,
+                    "w": 20,
+                    "x": 8,
+                    "y": 48
+                  },
+                  "semantic": null,
+                  "slot_id": null,
+                  "slot_kind": null,
+                  "text": "已校稿"
+                },
+                "observation_id": "note",
+                "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+                "pins": {
+                  "link_revision": 0,
+                  "page": 1,
+                  "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                  "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                  "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                  "work_id": "c734dc63077a45ea92b41e01b3230881",
+                  "work_revision": 1
+                },
+                "work_id": "c734dc63077a45ea92b41e01b3230881"
+              }
+            ],
+            "review": null,
+            "scope": {
+              "classification": "ANNOTATION",
+              "object_type": "ANNOTATION",
+              "source_extension": ".svg",
+              "zone": {
+                "h": 0.092593,
+                "w": 0.222222,
+                "x": 0.088889,
+                "y": 0.888889
+              }
+            },
+            "state": "PENDING"
+          },
+          "after": {
+            "action": "EXCLUDE",
+            "author": "Synthetic Reviewer",
+            "counterexamples": [
+              {
+                "confirmed_at": 1792212091.4061265,
+                "facts_revision": 2,
+                "observation": {
+                  "classification": "FIELD",
+                  "evidence": "USER_OBSERVATION",
+                  "id": "observation-0",
+                  "native_mapping": "UNKNOWN",
+                  "object_type": "TEXT",
+                  "owner": "p1",
+                  "prior_prediction": null,
+                  "region": {
+                    "h": 11,
+                    "w": 70,
+                    "x": 8,
+                    "y": 6
+                  },
+                  "semantic": {
+                    "candidates": [],
+                    "confidence": "UNCALIBRATED_CANDIDATE",
+                    "model": null,
+                    "normalized": "Alex Example",
+                    "platform": null,
+                    "raw": "Alex Example",
+                    "region": "TW",
+                    "semantic_type": "unknown",
+                    "signals": [
+                      "證據不足；保留未知，不從位置推定人物或職稱"
+                    ],
+                    "slot_kind": null,
+                    "state": "PENDING_REVIEW",
+                    "version": "semantic-fields-1/phonenumbers-9.0.16"
+                  },
+                  "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+                  "slot_kind": "name",
+                  "text": "Alex Example"
+                },
+                "observation_id": "observation-0",
+                "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+                "pins": {
+                  "link_revision": 0,
+                  "page": 1,
+                  "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                  "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                  "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                  "work_id": "c734dc63077a45ea92b41e01b3230881",
+                  "work_revision": 1
+                },
+                "work_id": "c734dc63077a45ea92b41e01b3230881"
+              }
+            ],
+            "created": 1792212091.5380425,
+            "literal": "已校稿",
+            "normalization": "NONE",
+            "normalization_approved": false,
+            "positive_examples": [
+              {
+                "confirmed_at": 1792212091.4061265,
+                "facts_revision": 2,
+                "observation": {
+                  "classification": "ANNOTATION",
+                  "evidence": "USER_OBSERVATION",
+                  "id": "note",
+                  "native_mapping": "UNKNOWN",
+                  "object_type": "ANNOTATION",
+                  "owner": null,
+                  "prior_prediction": null,
+                  "region": {
+                    "h": 5,
+                    "w": 20,
+                    "x": 8,
+                    "y": 48
+                  },
+                  "semantic": null,
+                  "slot_id": null,
+                  "slot_kind": null,
+                  "text": "已校稿"
+                },
+                "observation_id": "note",
+                "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+                "pins": {
+                  "link_revision": 0,
+                  "page": 1,
+                  "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                  "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                  "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                  "work_id": "c734dc63077a45ea92b41e01b3230881",
+                  "work_revision": 1
+                },
+                "work_id": "c734dc63077a45ea92b41e01b3230881"
+              }
+            ],
+            "review": {
+              "actor": "Synthetic Reviewer",
+              "decision": "APPROVE",
+              "detail_reviewed": false,
+              "impact": [
+                {
+                  "confirmed": true,
+                  "decision_if_active": "EXCLUDED_RULE",
+                  "facts_revision": 2,
+                  "observation_id": "note",
+                  "protected": false,
+                  "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                  "text": "已校稿",
+                  "work_id": "c734dc63077a45ea92b41e01b3230881",
+                  "work_revision": 1
+                }
+              ],
+              "plan_digest": "677a66d8e04e42c3176697f9f2c23fe041569fffa1424ca2b639624b10304566",
+              "reason": "exact scope and source examples checked",
+              "reviewed_revision": 1,
+              "risk": "LOW",
+              "timestamp": 1792212091.600982
+            },
+            "scope": {
+              "classification": "ANNOTATION",
+              "object_type": "ANNOTATION",
+              "source_extension": ".svg",
+              "zone": {
+                "h": 0.092593,
+                "w": 0.222222,
+                "x": 0.088889,
+                "y": 0.888889
+              }
+            },
+            "state": "ACTIVE"
+          },
+          "created": 1792212091.6011498
+        },
+        {
+          "revision": 1,
+          "action": "noise_rule_proposed",
+          "before": null,
+          "after": {
+            "action": "EXCLUDE",
+            "author": "Synthetic Reviewer",
+            "counterexamples": [
+              {
+                "confirmed_at": 1792212091.4061265,
+                "facts_revision": 2,
+                "observation": {
+                  "classification": "FIELD",
+                  "evidence": "USER_OBSERVATION",
+                  "id": "observation-0",
+                  "native_mapping": "UNKNOWN",
+                  "object_type": "TEXT",
+                  "owner": "p1",
+                  "prior_prediction": null,
+                  "region": {
+                    "h": 11,
+                    "w": 70,
+                    "x": 8,
+                    "y": 6
+                  },
+                  "semantic": {
+                    "candidates": [],
+                    "confidence": "UNCALIBRATED_CANDIDATE",
+                    "model": null,
+                    "normalized": "Alex Example",
+                    "platform": null,
+                    "raw": "Alex Example",
+                    "region": "TW",
+                    "semantic_type": "unknown",
+                    "signals": [
+                      "證據不足；保留未知，不從位置推定人物或職稱"
+                    ],
+                    "slot_kind": null,
+                    "state": "PENDING_REVIEW",
+                    "version": "semantic-fields-1/phonenumbers-9.0.16"
+                  },
+                  "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+                  "slot_kind": "name",
+                  "text": "Alex Example"
+                },
+                "observation_id": "observation-0",
+                "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+                "pins": {
+                  "link_revision": 0,
+                  "page": 1,
+                  "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                  "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                  "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                  "work_id": "c734dc63077a45ea92b41e01b3230881",
+                  "work_revision": 1
+                },
+                "work_id": "c734dc63077a45ea92b41e01b3230881"
+              }
+            ],
+            "created": 1792212091.5380425,
+            "literal": "已校稿",
+            "normalization": "NONE",
+            "normalization_approved": false,
+            "positive_examples": [
+              {
+                "confirmed_at": 1792212091.4061265,
+                "facts_revision": 2,
+                "observation": {
+                  "classification": "ANNOTATION",
+                  "evidence": "USER_OBSERVATION",
+                  "id": "note",
+                  "native_mapping": "UNKNOWN",
+                  "object_type": "ANNOTATION",
+                  "owner": null,
+                  "prior_prediction": null,
+                  "region": {
+                    "h": 5,
+                    "w": 20,
+                    "x": 8,
+                    "y": 48
+                  },
+                  "semantic": null,
+                  "slot_id": null,
+                  "slot_kind": null,
+                  "text": "已校稿"
+                },
+                "observation_id": "note",
+                "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+                "pins": {
+                  "link_revision": 0,
+                  "page": 1,
+                  "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                  "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                  "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                  "work_id": "c734dc63077a45ea92b41e01b3230881",
+                  "work_revision": 1
+                },
+                "work_id": "c734dc63077a45ea92b41e01b3230881"
+              }
+            ],
+            "review": null,
+            "scope": {
+              "classification": "ANNOTATION",
+              "object_type": "ANNOTATION",
+              "source_extension": ".svg",
+              "zone": {
+                "h": 0.092593,
+                "w": 0.222222,
+                "x": 0.088889,
+                "y": 0.888889
+              }
+            },
+            "state": "PENDING"
+          },
+          "created": 1792212091.5382113
+        }
+      ]
+    },
+    "source_and_slots_unchanged": true
+  },
+  "auto_hits": {
+    "actual_qt": true,
+    "future_work": {
+      "id": "18faf62208ab47a9ac6c4c61924e3840",
+      "source_id": "5e9526f28d79456480ed6d662d631abf",
+      "name": "Synthetic Example",
+      "revision": 1,
+      "payload": {
+        "crop": {
+          "h": 54,
+          "w": 90,
+          "x": 0,
+          "y": 0
+        },
+        "slots": [
+          {
+            "align": "left",
+            "color": "#111827",
+            "distribution_approval": null,
+            "font": "Noto Sans CJK TC",
+            "font_asset": null,
+            "font_style": "",
+            "id": "29dbc18ba97c4830834de48380a06bd6",
+            "index": 0,
+            "kind": "name",
+            "locked": false,
+            "min_scale": 0.85,
+            "owner": "p1",
+            "rect": {
+              "h": 11,
+              "w": 70,
+              "x": 8,
+              "y": 6
+            },
+            "required": true,
+            "size_pt": 18,
+            "tracking_max_mm": 0.0,
+            "tracking_min_mm": 0.0,
+            "tracking_mm": 0.0
+          },
+          {
+            "align": "left",
+            "color": "#111827",
+            "distribution_approval": null,
+            "font": "Noto Sans CJK TC",
+            "font_asset": null,
+            "font_style": "",
+            "id": "b1104cabd5fc4b92b013a764c7e671cf",
+            "index": 0,
+            "kind": "title",
+            "locked": false,
+            "min_scale": 0.85,
+            "owner": "p1",
+            "rect": {
+              "h": 7,
+              "w": 70,
+              "x": 8,
+              "y": 19
+            },
+            "required": true,
+            "size_pt": 11,
+            "tracking_max_mm": 0.0,
+            "tracking_min_mm": 0.0,
+            "tracking_mm": 0.0
+          },
+          {
+            "align": "left",
+            "color": "#111827",
+            "distribution_approval": null,
+            "font": "Noto Sans CJK TC",
+            "font_asset": null,
+            "font_style": "",
+            "id": "8d6c8c2e7e0747c9bd6717f1ac87dcd4",
+            "index": 0,
+            "kind": "phone",
+            "locked": false,
+            "min_scale": 0.85,
+            "owner": "p1",
+            "rect": {
+              "h": 7,
+              "w": 70,
+              "x": 8,
+              "y": 31
+            },
+            "required": true,
+            "size_pt": 10,
+            "tracking_max_mm": 0.0,
+            "tracking_min_mm": 0.0,
+            "tracking_mm": 0.0
+          },
+          {
+            "align": "left",
+            "color": "#111827",
+            "distribution_approval": null,
+            "font": "Noto Sans CJK TC",
+            "font_asset": null,
+            "font_style": "",
+            "id": "f7c9af1440ed4b1a99956f8da4a3b0bd",
+            "index": 0,
+            "kind": "email",
+            "locked": false,
+            "min_scale": 0.85,
+            "owner": "p1",
+            "rect": {
+              "h": 7,
+              "w": 70,
+              "x": 8,
+              "y": 40
+            },
+            "required": true,
+            "size_pt": 10,
+            "tracking_max_mm": 0.0,
+            "tracking_min_mm": 0.0,
+            "tracking_mm": 0.0
+          }
+        ],
+        "visual_confirmed": true,
+        "work_height": 54,
+        "work_width": 90
+      }
+    },
+    "hit": {
+      "id": "7b8b8d3a62a5ca3919ea6e6e57af66e39f9f2e146a195168f88b09762c0e7f23",
+      "stored": {
+        "id": "7b8b8d3a62a5ca3919ea6e6e57af66e39f9f2e146a195168f88b09762c0e7f23",
+        "revision": 2,
+        "facts_revision": 2,
+        "invalid_rule_ids": [],
+        "local_revision": 0,
+        "native_mapping": "UNKNOWN",
+        "observation_digest": "510d2a0585f47d4f4bac17ab76d9e9c9fda903072026e5b355eef0ef9ee89c7d",
+        "observation_id": "note",
+        "pins": {
+          "link_revision": 0,
+          "page": 1,
+          "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "source_id": "5e9526f28d79456480ed6d662d631abf",
+          "work_digest": "0c7587e9fcf4b61de85d0641c1b2a4867342e5855cf769650de4567235c07905",
+          "work_id": "18faf62208ab47a9ac6c4c61924e3840",
+          "work_revision": 1
+        },
+        "protected": false,
+        "reason": "已核准完整literal／type／zone／人工語境命中，無需重複詢問",
+        "rule_matches": [
+          {
+            "action": "EXCLUDE",
+            "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+            "revision": 2,
+            "scope": {
+              "classification": "ANNOTATION",
+              "object_type": "ANNOTATION",
+              "source_extension": ".svg",
+              "zone": {
+                "h": 0.092593,
+                "w": 0.222222,
+                "x": 0.088889,
+                "y": 0.888889
+              }
+            }
+          }
+        ],
+        "source_and_formal_slots_modified": false,
+        "source_id": "5e9526f28d79456480ed6d662d631abf",
+        "state": "EXCLUDED_RULE",
+        "text": "已校稿",
+        "work_id": "18faf62208ab47a9ac6c4c61924e3840"
+      },
+      "current": {
+        "work_id": "18faf62208ab47a9ac6c4c61924e3840",
+        "source_id": "5e9526f28d79456480ed6d662d631abf",
+        "observation_id": "note",
+        "text": "已校稿",
+        "state": "EXCLUDED_RULE",
+        "reason": "已核准完整literal／type／zone／人工語境命中，無需重複詢問",
+        "protected": false,
+        "facts_revision": 2,
+        "pins": {
+          "work_id": "18faf62208ab47a9ac6c4c61924e3840",
+          "work_revision": 1,
+          "work_digest": "0c7587e9fcf4b61de85d0641c1b2a4867342e5855cf769650de4567235c07905",
+          "source_id": "5e9526f28d79456480ed6d662d631abf",
+          "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "page": 1,
+          "link_revision": 0
+        },
+        "observation_digest": "510d2a0585f47d4f4bac17ab76d9e9c9fda903072026e5b355eef0ef9ee89c7d",
+        "local_revision": 0,
+        "rule_matches": [
+          {
+            "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+            "revision": 2,
+            "action": "EXCLUDE",
+            "scope": {
+              "classification": "ANNOTATION",
+              "object_type": "ANNOTATION",
+              "source_extension": ".svg",
+              "zone": {
+                "h": 0.092593,
+                "w": 0.222222,
+                "x": 0.088889,
+                "y": 0.888889
+              }
+            }
+          }
+        ],
+        "invalid_rule_ids": [],
+        "source_and_formal_slots_modified": false,
+        "native_mapping": "UNKNOWN"
+      },
+      "trace_current": true
+    },
+    "counts": "本頁目前排除1／保留0／疑義或歷史0；本頁1／搜尋保存記錄1／全保存記錄10。未掃其他頁，不冒當全庫目前計數。",
+    "rule_reapproval_prompts": 0,
+    "source_and_slots_unchanged": true
+  },
+  "noise_recovery": {
+    "actual_qt": true,
+    "local_keep": {
+      "id": "18faf62208ab47a9ac6c4c61924e3840",
+      "revision": 1,
+      "items": {
+        "note": {
+          "created": 1792212091.6711693,
+          "intent": "KEEP",
+          "observation_digest": "510d2a0585f47d4f4bac17ab76d9e9c9fda903072026e5b355eef0ef9ee89c7d",
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "5e9526f28d79456480ed6d662d631abf",
+            "work_digest": "0c7587e9fcf4b61de85d0641c1b2a4867342e5855cf769650de4567235c07905",
+            "work_id": "18faf62208ab47a9ac6c4c61924e3840",
+            "work_revision": 1
+          }
+        }
+      }
+    },
+    "disabled": {
+      "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+      "revision": 3,
+      "action": "EXCLUDE",
+      "author": "Synthetic Reviewer",
+      "counterexamples": [
+        {
+          "confirmed_at": 1792212091.4061265,
+          "facts_revision": 2,
+          "observation": {
+            "classification": "FIELD",
+            "evidence": "USER_OBSERVATION",
+            "id": "observation-0",
+            "native_mapping": "UNKNOWN",
+            "object_type": "TEXT",
+            "owner": "p1",
+            "prior_prediction": null,
+            "region": {
+              "h": 11,
+              "w": 70,
+              "x": 8,
+              "y": 6
+            },
+            "semantic": {
+              "candidates": [],
+              "confidence": "UNCALIBRATED_CANDIDATE",
+              "model": null,
+              "normalized": "Alex Example",
+              "platform": null,
+              "raw": "Alex Example",
+              "region": "TW",
+              "semantic_type": "unknown",
+              "signals": [
+                "證據不足；保留未知，不從位置推定人物或職稱"
+              ],
+              "slot_kind": null,
+              "state": "PENDING_REVIEW",
+              "version": "semantic-fields-1/phonenumbers-9.0.16"
+            },
+            "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+            "slot_kind": "name",
+            "text": "Alex Example"
+          },
+          "observation_id": "observation-0",
+          "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          },
+          "work_id": "c734dc63077a45ea92b41e01b3230881"
+        }
+      ],
+      "created": 1792212091.5380425,
+      "literal": "已校稿",
+      "normalization": "NONE",
+      "normalization_approved": false,
+      "positive_examples": [
+        {
+          "confirmed_at": 1792212091.4061265,
+          "facts_revision": 2,
+          "observation": {
+            "classification": "ANNOTATION",
+            "evidence": "USER_OBSERVATION",
+            "id": "note",
+            "native_mapping": "UNKNOWN",
+            "object_type": "ANNOTATION",
+            "owner": null,
+            "prior_prediction": null,
+            "region": {
+              "h": 5,
+              "w": 20,
+              "x": 8,
+              "y": 48
+            },
+            "semantic": null,
+            "slot_id": null,
+            "slot_kind": null,
+            "text": "已校稿"
+          },
+          "observation_id": "note",
+          "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          },
+          "work_id": "c734dc63077a45ea92b41e01b3230881"
+        }
+      ],
+      "review": null,
+      "scope": {
+        "classification": "ANNOTATION",
+        "object_type": "ANNOTATION",
+        "source_extension": ".svg",
+        "zone": {
+          "h": 0.092593,
+          "w": 0.222222,
+          "x": 0.088889,
+          "y": 0.888889
+        }
+      },
+      "state": "DISABLED",
+      "version_action": {
+        "actor": "Synthetic Reviewer",
+        "operation": "DISABLE",
+        "plan_digest": "1144973cd13298e12bfa59666a3cf569b8a674f2ce547410f1f5e6e311d2d740",
+        "reason": "exact scope and source examples checked",
+        "timestamp": 1792212091.6948483
+      }
+    },
+    "restored_pending": {
+      "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+      "revision": 4,
+      "action": "EXCLUDE",
+      "author": "Synthetic Reviewer",
+      "counterexamples": [
+        {
+          "confirmed_at": 1792212091.4061265,
+          "facts_revision": 2,
+          "observation": {
+            "classification": "FIELD",
+            "evidence": "USER_OBSERVATION",
+            "id": "observation-0",
+            "native_mapping": "UNKNOWN",
+            "object_type": "TEXT",
+            "owner": "p1",
+            "prior_prediction": null,
+            "region": {
+              "h": 11,
+              "w": 70,
+              "x": 8,
+              "y": 6
+            },
+            "semantic": {
+              "candidates": [],
+              "confidence": "UNCALIBRATED_CANDIDATE",
+              "model": null,
+              "normalized": "Alex Example",
+              "platform": null,
+              "raw": "Alex Example",
+              "region": "TW",
+              "semantic_type": "unknown",
+              "signals": [
+                "證據不足；保留未知，不從位置推定人物或職稱"
+              ],
+              "slot_kind": null,
+              "state": "PENDING_REVIEW",
+              "version": "semantic-fields-1/phonenumbers-9.0.16"
+            },
+            "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+            "slot_kind": "name",
+            "text": "Alex Example"
+          },
+          "observation_id": "observation-0",
+          "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          },
+          "work_id": "c734dc63077a45ea92b41e01b3230881"
+        }
+      ],
+      "created": 1792212091.5380425,
+      "literal": "已校稿",
+      "normalization": "NONE",
+      "normalization_approved": false,
+      "positive_examples": [
+        {
+          "confirmed_at": 1792212091.4061265,
+          "facts_revision": 2,
+          "observation": {
+            "classification": "ANNOTATION",
+            "evidence": "USER_OBSERVATION",
+            "id": "note",
+            "native_mapping": "UNKNOWN",
+            "object_type": "ANNOTATION",
+            "owner": null,
+            "prior_prediction": null,
+            "region": {
+              "h": 5,
+              "w": 20,
+              "x": 8,
+              "y": 48
+            },
+            "semantic": null,
+            "slot_id": null,
+            "slot_kind": null,
+            "text": "已校稿"
+          },
+          "observation_id": "note",
+          "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+          "pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "acdfb813dd7b4c5a93714d0789109663",
+            "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+            "work_id": "c734dc63077a45ea92b41e01b3230881",
+            "work_revision": 1
+          },
+          "work_id": "c734dc63077a45ea92b41e01b3230881"
+        }
+      ],
+      "review": null,
+      "rollback_from_revision": 2,
+      "scope": {
+        "classification": "ANNOTATION",
+        "object_type": "ANNOTATION",
+        "source_extension": ".svg",
+        "zone": {
+          "h": 0.092593,
+          "w": 0.222222,
+          "x": 0.088889,
+          "y": 0.888889
+        }
+      },
+      "state": "PENDING",
+      "version_action": {
+        "actor": "Synthetic Reviewer",
+        "operation": "ROLLBACK",
+        "plan_digest": "ab5b98534bbbb81381842cd187c4aae97585fde1d5c8989e8bf3c626931bb441",
+        "reason": "exact scope and source examples checked",
+        "timestamp": 1792212091.7125895
+      }
+    },
+    "history": [
+      {
+        "revision": 4,
+        "action": "rule_version_rollback",
+        "before": {
+          "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+          "revision": 3,
+          "action": "EXCLUDE",
+          "author": "Synthetic Reviewer",
+          "counterexamples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "FIELD",
+                "evidence": "USER_OBSERVATION",
+                "id": "observation-0",
+                "native_mapping": "UNKNOWN",
+                "object_type": "TEXT",
+                "owner": "p1",
+                "prior_prediction": null,
+                "region": {
+                  "h": 11,
+                  "w": 70,
+                  "x": 8,
+                  "y": 6
+                },
+                "semantic": {
+                  "candidates": [],
+                  "confidence": "UNCALIBRATED_CANDIDATE",
+                  "model": null,
+                  "normalized": "Alex Example",
+                  "platform": null,
+                  "raw": "Alex Example",
+                  "region": "TW",
+                  "semantic_type": "unknown",
+                  "signals": [
+                    "證據不足；保留未知，不從位置推定人物或職稱"
+                  ],
+                  "slot_kind": null,
+                  "state": "PENDING_REVIEW",
+                  "version": "semantic-fields-1/phonenumbers-9.0.16"
+                },
+                "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+                "slot_kind": "name",
+                "text": "Alex Example"
+              },
+              "observation_id": "observation-0",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "created": 1792212091.5380425,
+          "literal": "已校稿",
+          "normalization": "NONE",
+          "normalization_approved": false,
+          "positive_examples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "ANNOTATION",
+                "evidence": "USER_OBSERVATION",
+                "id": "note",
+                "native_mapping": "UNKNOWN",
+                "object_type": "ANNOTATION",
+                "owner": null,
+                "prior_prediction": null,
+                "region": {
+                  "h": 5,
+                  "w": 20,
+                  "x": 8,
+                  "y": 48
+                },
+                "semantic": null,
+                "slot_id": null,
+                "slot_kind": null,
+                "text": "已校稿"
+              },
+              "observation_id": "note",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "review": null,
+          "scope": {
+            "classification": "ANNOTATION",
+            "object_type": "ANNOTATION",
+            "source_extension": ".svg",
+            "zone": {
+              "h": 0.092593,
+              "w": 0.222222,
+              "x": 0.088889,
+              "y": 0.888889
+            }
+          },
+          "state": "DISABLED",
+          "version_action": {
+            "actor": "Synthetic Reviewer",
+            "operation": "DISABLE",
+            "plan_digest": "1144973cd13298e12bfa59666a3cf569b8a674f2ce547410f1f5e6e311d2d740",
+            "reason": "exact scope and source examples checked",
+            "timestamp": 1792212091.6948483
+          }
+        },
+        "after": {
+          "action": "EXCLUDE",
+          "author": "Synthetic Reviewer",
+          "counterexamples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "FIELD",
+                "evidence": "USER_OBSERVATION",
+                "id": "observation-0",
+                "native_mapping": "UNKNOWN",
+                "object_type": "TEXT",
+                "owner": "p1",
+                "prior_prediction": null,
+                "region": {
+                  "h": 11,
+                  "w": 70,
+                  "x": 8,
+                  "y": 6
+                },
+                "semantic": {
+                  "candidates": [],
+                  "confidence": "UNCALIBRATED_CANDIDATE",
+                  "model": null,
+                  "normalized": "Alex Example",
+                  "platform": null,
+                  "raw": "Alex Example",
+                  "region": "TW",
+                  "semantic_type": "unknown",
+                  "signals": [
+                    "證據不足；保留未知，不從位置推定人物或職稱"
+                  ],
+                  "slot_kind": null,
+                  "state": "PENDING_REVIEW",
+                  "version": "semantic-fields-1/phonenumbers-9.0.16"
+                },
+                "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+                "slot_kind": "name",
+                "text": "Alex Example"
+              },
+              "observation_id": "observation-0",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "created": 1792212091.5380425,
+          "literal": "已校稿",
+          "normalization": "NONE",
+          "normalization_approved": false,
+          "positive_examples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "ANNOTATION",
+                "evidence": "USER_OBSERVATION",
+                "id": "note",
+                "native_mapping": "UNKNOWN",
+                "object_type": "ANNOTATION",
+                "owner": null,
+                "prior_prediction": null,
+                "region": {
+                  "h": 5,
+                  "w": 20,
+                  "x": 8,
+                  "y": 48
+                },
+                "semantic": null,
+                "slot_id": null,
+                "slot_kind": null,
+                "text": "已校稿"
+              },
+              "observation_id": "note",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "review": null,
+          "rollback_from_revision": 2,
+          "scope": {
+            "classification": "ANNOTATION",
+            "object_type": "ANNOTATION",
+            "source_extension": ".svg",
+            "zone": {
+              "h": 0.092593,
+              "w": 0.222222,
+              "x": 0.088889,
+              "y": 0.888889
+            }
+          },
+          "state": "PENDING",
+          "version_action": {
+            "actor": "Synthetic Reviewer",
+            "operation": "ROLLBACK",
+            "plan_digest": "ab5b98534bbbb81381842cd187c4aae97585fde1d5c8989e8bf3c626931bb441",
+            "reason": "exact scope and source examples checked",
+            "timestamp": 1792212091.7125895
+          }
+        },
+        "created": 1792212091.7127528
+      },
+      {
+        "revision": 3,
+        "action": "rule_version_disable",
+        "before": {
+          "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+          "revision": 2,
+          "action": "EXCLUDE",
+          "author": "Synthetic Reviewer",
+          "counterexamples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "FIELD",
+                "evidence": "USER_OBSERVATION",
+                "id": "observation-0",
+                "native_mapping": "UNKNOWN",
+                "object_type": "TEXT",
+                "owner": "p1",
+                "prior_prediction": null,
+                "region": {
+                  "h": 11,
+                  "w": 70,
+                  "x": 8,
+                  "y": 6
+                },
+                "semantic": {
+                  "candidates": [],
+                  "confidence": "UNCALIBRATED_CANDIDATE",
+                  "model": null,
+                  "normalized": "Alex Example",
+                  "platform": null,
+                  "raw": "Alex Example",
+                  "region": "TW",
+                  "semantic_type": "unknown",
+                  "signals": [
+                    "證據不足；保留未知，不從位置推定人物或職稱"
+                  ],
+                  "slot_kind": null,
+                  "state": "PENDING_REVIEW",
+                  "version": "semantic-fields-1/phonenumbers-9.0.16"
+                },
+                "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+                "slot_kind": "name",
+                "text": "Alex Example"
+              },
+              "observation_id": "observation-0",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "created": 1792212091.5380425,
+          "literal": "已校稿",
+          "normalization": "NONE",
+          "normalization_approved": false,
+          "positive_examples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "ANNOTATION",
+                "evidence": "USER_OBSERVATION",
+                "id": "note",
+                "native_mapping": "UNKNOWN",
+                "object_type": "ANNOTATION",
+                "owner": null,
+                "prior_prediction": null,
+                "region": {
+                  "h": 5,
+                  "w": 20,
+                  "x": 8,
+                  "y": 48
+                },
+                "semantic": null,
+                "slot_id": null,
+                "slot_kind": null,
+                "text": "已校稿"
+              },
+              "observation_id": "note",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "review": {
+            "actor": "Synthetic Reviewer",
+            "decision": "APPROVE",
+            "detail_reviewed": false,
+            "impact": [
+              {
+                "confirmed": true,
+                "decision_if_active": "EXCLUDED_RULE",
+                "facts_revision": 2,
+                "observation_id": "note",
+                "protected": false,
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "text": "已校稿",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              }
+            ],
+            "plan_digest": "677a66d8e04e42c3176697f9f2c23fe041569fffa1424ca2b639624b10304566",
+            "reason": "exact scope and source examples checked",
+            "reviewed_revision": 1,
+            "risk": "LOW",
+            "timestamp": 1792212091.600982
+          },
+          "scope": {
+            "classification": "ANNOTATION",
+            "object_type": "ANNOTATION",
+            "source_extension": ".svg",
+            "zone": {
+              "h": 0.092593,
+              "w": 0.222222,
+              "x": 0.088889,
+              "y": 0.888889
+            }
+          },
+          "state": "ACTIVE"
+        },
+        "after": {
+          "action": "EXCLUDE",
+          "author": "Synthetic Reviewer",
+          "counterexamples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "FIELD",
+                "evidence": "USER_OBSERVATION",
+                "id": "observation-0",
+                "native_mapping": "UNKNOWN",
+                "object_type": "TEXT",
+                "owner": "p1",
+                "prior_prediction": null,
+                "region": {
+                  "h": 11,
+                  "w": 70,
+                  "x": 8,
+                  "y": 6
+                },
+                "semantic": {
+                  "candidates": [],
+                  "confidence": "UNCALIBRATED_CANDIDATE",
+                  "model": null,
+                  "normalized": "Alex Example",
+                  "platform": null,
+                  "raw": "Alex Example",
+                  "region": "TW",
+                  "semantic_type": "unknown",
+                  "signals": [
+                    "證據不足；保留未知，不從位置推定人物或職稱"
+                  ],
+                  "slot_kind": null,
+                  "state": "PENDING_REVIEW",
+                  "version": "semantic-fields-1/phonenumbers-9.0.16"
+                },
+                "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+                "slot_kind": "name",
+                "text": "Alex Example"
+              },
+              "observation_id": "observation-0",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "created": 1792212091.5380425,
+          "literal": "已校稿",
+          "normalization": "NONE",
+          "normalization_approved": false,
+          "positive_examples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "ANNOTATION",
+                "evidence": "USER_OBSERVATION",
+                "id": "note",
+                "native_mapping": "UNKNOWN",
+                "object_type": "ANNOTATION",
+                "owner": null,
+                "prior_prediction": null,
+                "region": {
+                  "h": 5,
+                  "w": 20,
+                  "x": 8,
+                  "y": 48
+                },
+                "semantic": null,
+                "slot_id": null,
+                "slot_kind": null,
+                "text": "已校稿"
+              },
+              "observation_id": "note",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "review": null,
+          "scope": {
+            "classification": "ANNOTATION",
+            "object_type": "ANNOTATION",
+            "source_extension": ".svg",
+            "zone": {
+              "h": 0.092593,
+              "w": 0.222222,
+              "x": 0.088889,
+              "y": 0.888889
+            }
+          },
+          "state": "DISABLED",
+          "version_action": {
+            "actor": "Synthetic Reviewer",
+            "operation": "DISABLE",
+            "plan_digest": "1144973cd13298e12bfa59666a3cf569b8a674f2ce547410f1f5e6e311d2d740",
+            "reason": "exact scope and source examples checked",
+            "timestamp": 1792212091.6948483
+          }
+        },
+        "created": 1792212091.6949956
+      },
+      {
+        "revision": 2,
+        "action": "rule_approve",
+        "before": {
+          "id": "e9d966ba8f9045368a7a9ec6b65dfe89",
+          "revision": 1,
+          "action": "EXCLUDE",
+          "author": "Synthetic Reviewer",
+          "counterexamples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "FIELD",
+                "evidence": "USER_OBSERVATION",
+                "id": "observation-0",
+                "native_mapping": "UNKNOWN",
+                "object_type": "TEXT",
+                "owner": "p1",
+                "prior_prediction": null,
+                "region": {
+                  "h": 11,
+                  "w": 70,
+                  "x": 8,
+                  "y": 6
+                },
+                "semantic": {
+                  "candidates": [],
+                  "confidence": "UNCALIBRATED_CANDIDATE",
+                  "model": null,
+                  "normalized": "Alex Example",
+                  "platform": null,
+                  "raw": "Alex Example",
+                  "region": "TW",
+                  "semantic_type": "unknown",
+                  "signals": [
+                    "證據不足；保留未知，不從位置推定人物或職稱"
+                  ],
+                  "slot_kind": null,
+                  "state": "PENDING_REVIEW",
+                  "version": "semantic-fields-1/phonenumbers-9.0.16"
+                },
+                "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+                "slot_kind": "name",
+                "text": "Alex Example"
+              },
+              "observation_id": "observation-0",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "created": 1792212091.5380425,
+          "literal": "已校稿",
+          "normalization": "NONE",
+          "normalization_approved": false,
+          "positive_examples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "ANNOTATION",
+                "evidence": "USER_OBSERVATION",
+                "id": "note",
+                "native_mapping": "UNKNOWN",
+                "object_type": "ANNOTATION",
+                "owner": null,
+                "prior_prediction": null,
+                "region": {
+                  "h": 5,
+                  "w": 20,
+                  "x": 8,
+                  "y": 48
+                },
+                "semantic": null,
+                "slot_id": null,
+                "slot_kind": null,
+                "text": "已校稿"
+              },
+              "observation_id": "note",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "review": null,
+          "scope": {
+            "classification": "ANNOTATION",
+            "object_type": "ANNOTATION",
+            "source_extension": ".svg",
+            "zone": {
+              "h": 0.092593,
+              "w": 0.222222,
+              "x": 0.088889,
+              "y": 0.888889
+            }
+          },
+          "state": "PENDING"
+        },
+        "after": {
+          "action": "EXCLUDE",
+          "author": "Synthetic Reviewer",
+          "counterexamples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "FIELD",
+                "evidence": "USER_OBSERVATION",
+                "id": "observation-0",
+                "native_mapping": "UNKNOWN",
+                "object_type": "TEXT",
+                "owner": "p1",
+                "prior_prediction": null,
+                "region": {
+                  "h": 11,
+                  "w": 70,
+                  "x": 8,
+                  "y": 6
+                },
+                "semantic": {
+                  "candidates": [],
+                  "confidence": "UNCALIBRATED_CANDIDATE",
+                  "model": null,
+                  "normalized": "Alex Example",
+                  "platform": null,
+                  "raw": "Alex Example",
+                  "region": "TW",
+                  "semantic_type": "unknown",
+                  "signals": [
+                    "證據不足；保留未知，不從位置推定人物或職稱"
+                  ],
+                  "slot_kind": null,
+                  "state": "PENDING_REVIEW",
+                  "version": "semantic-fields-1/phonenumbers-9.0.16"
+                },
+                "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+                "slot_kind": "name",
+                "text": "Alex Example"
+              },
+              "observation_id": "observation-0",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "created": 1792212091.5380425,
+          "literal": "已校稿",
+          "normalization": "NONE",
+          "normalization_approved": false,
+          "positive_examples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "ANNOTATION",
+                "evidence": "USER_OBSERVATION",
+                "id": "note",
+                "native_mapping": "UNKNOWN",
+                "object_type": "ANNOTATION",
+                "owner": null,
+                "prior_prediction": null,
+                "region": {
+                  "h": 5,
+                  "w": 20,
+                  "x": 8,
+                  "y": 48
+                },
+                "semantic": null,
+                "slot_id": null,
+                "slot_kind": null,
+                "text": "已校稿"
+              },
+              "observation_id": "note",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "review": {
+            "actor": "Synthetic Reviewer",
+            "decision": "APPROVE",
+            "detail_reviewed": false,
+            "impact": [
+              {
+                "confirmed": true,
+                "decision_if_active": "EXCLUDED_RULE",
+                "facts_revision": 2,
+                "observation_id": "note",
+                "protected": false,
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "text": "已校稿",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              }
+            ],
+            "plan_digest": "677a66d8e04e42c3176697f9f2c23fe041569fffa1424ca2b639624b10304566",
+            "reason": "exact scope and source examples checked",
+            "reviewed_revision": 1,
+            "risk": "LOW",
+            "timestamp": 1792212091.600982
+          },
+          "scope": {
+            "classification": "ANNOTATION",
+            "object_type": "ANNOTATION",
+            "source_extension": ".svg",
+            "zone": {
+              "h": 0.092593,
+              "w": 0.222222,
+              "x": 0.088889,
+              "y": 0.888889
+            }
+          },
+          "state": "ACTIVE"
+        },
+        "created": 1792212091.6011498
+      },
+      {
+        "revision": 1,
+        "action": "noise_rule_proposed",
+        "before": null,
+        "after": {
+          "action": "EXCLUDE",
+          "author": "Synthetic Reviewer",
+          "counterexamples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "FIELD",
+                "evidence": "USER_OBSERVATION",
+                "id": "observation-0",
+                "native_mapping": "UNKNOWN",
+                "object_type": "TEXT",
+                "owner": "p1",
+                "prior_prediction": null,
+                "region": {
+                  "h": 11,
+                  "w": 70,
+                  "x": 8,
+                  "y": 6
+                },
+                "semantic": {
+                  "candidates": [],
+                  "confidence": "UNCALIBRATED_CANDIDATE",
+                  "model": null,
+                  "normalized": "Alex Example",
+                  "platform": null,
+                  "raw": "Alex Example",
+                  "region": "TW",
+                  "semantic_type": "unknown",
+                  "signals": [
+                    "證據不足；保留未知，不從位置推定人物或職稱"
+                  ],
+                  "slot_kind": null,
+                  "state": "PENDING_REVIEW",
+                  "version": "semantic-fields-1/phonenumbers-9.0.16"
+                },
+                "slot_id": "8cbc99df662a4740b4e8b36f485f4d79",
+                "slot_kind": "name",
+                "text": "Alex Example"
+              },
+              "observation_id": "observation-0",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "created": 1792212091.5380425,
+          "literal": "已校稿",
+          "normalization": "NONE",
+          "normalization_approved": false,
+          "positive_examples": [
+            {
+              "confirmed_at": 1792212091.4061265,
+              "facts_revision": 2,
+              "observation": {
+                "classification": "ANNOTATION",
+                "evidence": "USER_OBSERVATION",
+                "id": "note",
+                "native_mapping": "UNKNOWN",
+                "object_type": "ANNOTATION",
+                "owner": null,
+                "prior_prediction": null,
+                "region": {
+                  "h": 5,
+                  "w": 20,
+                  "x": 8,
+                  "y": 48
+                },
+                "semantic": null,
+                "slot_id": null,
+                "slot_kind": null,
+                "text": "已校稿"
+              },
+              "observation_id": "note",
+              "observations_digest": "83fd7fa40bbcd0dbf0ef23231473af67efbb2bdc34bbda34cd6a19732be4d68f",
+              "pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+                "source_id": "acdfb813dd7b4c5a93714d0789109663",
+                "work_digest": "8bb602caa2caa5f33281ebaae3ee1db3a6ce9488190ac65c6f258d4d7402742d",
+                "work_id": "c734dc63077a45ea92b41e01b3230881",
+                "work_revision": 1
+              },
+              "work_id": "c734dc63077a45ea92b41e01b3230881"
+            }
+          ],
+          "review": null,
+          "scope": {
+            "classification": "ANNOTATION",
+            "object_type": "ANNOTATION",
+            "source_extension": ".svg",
+            "zone": {
+              "h": 0.092593,
+              "w": 0.222222,
+              "x": 0.088889,
+              "y": 0.888889
+            }
+          },
+          "state": "PENDING"
+        },
+        "created": 1792212091.5382113
+      }
+    ],
+    "published_templates_unchanged": true,
+    "model_decontamination_claim": false
+  },
+  "trusted_sample": {
+    "actual_qt": true,
+    "sample": {
+      "id": "04d00134afd947689c9aa178d3a67d89",
+      "revision": 1,
+      "actor": "Synthetic Reviewer",
+      "admission_digest": "b55cbc1fc69abc474b1e89f81c353c7201b5630e690428c5790e2af35a7f6c6d",
+      "admitted": 1792212091.7917185,
+      "bindings": {},
+      "cache_stamps": {
+        "/workspace/template-Ai/.checkpoints/evidence-workspaces/RUN-REMAINING28-CURRENT-008/ten-package-data/assets/2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3-p1-visual-import-0.1.3/metadata.json": [
+          27,
+          796943,
+          980,
+          1792212090850930432,
+          1792212090850930432
+        ],
+        "/workspace/template-Ai/.checkpoints/evidence-workspaces/RUN-REMAINING28-CURRENT-008/ten-package-data/assets/2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3-p1-visual-import-0.1.3/preview.png": [
+          27,
+          796942,
+          62842,
+          1792212090819767337,
+          1792212090819767337
+        ],
+        "/workspace/template-Ai/.checkpoints/evidence-workspaces/RUN-REMAINING28-CURRENT-008/ten-package-data/assets/2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3-p1-visual-import-0.1.3/source.svg": [
+          27,
+          796941,
+          27642,
+          1792212090598820824,
+          1792212090598820824
+        ]
+      },
+      "crop": {
+        "h": 54,
+        "w": 90,
+        "x": 0,
+        "y": 0
+      },
+      "facts_revision": 2,
+      "height_mm": 54,
+      "invalidations": [],
+      "label_slots": [
+        {
+          "align": "left",
+          "color": "#111827",
+          "distribution_approval": null,
+          "font": "Noto Sans CJK TC",
+          "font_asset": null,
+          "font_style": "",
+          "id": "29dbc18ba97c4830834de48380a06bd6",
+          "index": 0,
+          "kind": "name",
+          "locked": false,
+          "min_scale": 0.85,
+          "owner": "p1",
+          "rect": {
+            "h": 11,
+            "w": 70,
+            "x": 8,
+            "y": 6
+          },
+          "required": true,
+          "size_pt": 18,
+          "tracking_max_mm": 0.0,
+          "tracking_min_mm": 0.0,
+          "tracking_mm": 0.0
+        },
+        {
+          "align": "left",
+          "color": "#111827",
+          "distribution_approval": null,
+          "font": "Noto Sans CJK TC",
+          "font_asset": null,
+          "font_style": "",
+          "id": "b1104cabd5fc4b92b013a764c7e671cf",
+          "index": 0,
+          "kind": "title",
+          "locked": false,
+          "min_scale": 0.85,
+          "owner": "p1",
+          "rect": {
+            "h": 7,
+            "w": 70,
+            "x": 8,
+            "y": 19
+          },
+          "required": true,
+          "size_pt": 11,
+          "tracking_max_mm": 0.0,
+          "tracking_min_mm": 0.0,
+          "tracking_mm": 0.0
+        },
+        {
+          "align": "left",
+          "color": "#111827",
+          "distribution_approval": null,
+          "font": "Noto Sans CJK TC",
+          "font_asset": null,
+          "font_style": "",
+          "id": "8d6c8c2e7e0747c9bd6717f1ac87dcd4",
+          "index": 0,
+          "kind": "phone",
+          "locked": false,
+          "min_scale": 0.85,
+          "owner": "p1",
+          "rect": {
+            "h": 7,
+            "w": 70,
+            "x": 8,
+            "y": 31
+          },
+          "required": true,
+          "size_pt": 10,
+          "tracking_max_mm": 0.0,
+          "tracking_min_mm": 0.0,
+          "tracking_mm": 0.0
+        },
+        {
+          "align": "left",
+          "color": "#111827",
+          "distribution_approval": null,
+          "font": "Noto Sans CJK TC",
+          "font_asset": null,
+          "font_style": "",
+          "id": "f7c9af1440ed4b1a99956f8da4a3b0bd",
+          "index": 0,
+          "kind": "email",
+          "locked": false,
+          "min_scale": 0.85,
+          "owner": "p1",
+          "rect": {
+            "h": 7,
+            "w": 70,
+            "x": 8,
+            "y": 40
+          },
+          "required": true,
+          "size_pt": 10,
+          "tracking_max_mm": 0.0,
+          "tracking_min_mm": 0.0,
+          "tracking_mm": 0.0
+        }
+      ],
+      "native_mapping": "UNKNOWN",
+      "negative_predictions": [],
+      "noise_signature": "ff6b0049c9d127318a33fffdeb6bd8df3791e6a28aece40ebf83844799c6e87d",
+      "observations_digest": "6f75c09f633195e55df41df16c8bb67d7b389e519aa1f51e84ef2b1c20177c94",
+      "pins": {
+        "link_revision": 0,
+        "page": 1,
+        "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+        "source_id": "5e9526f28d79456480ed6d662d631abf",
+        "work_digest": "0c7587e9fcf4b61de85d0641c1b2a4867342e5855cf769650de4567235c07905",
+        "work_id": "18faf62208ab47a9ac6c4c61924e3840",
+        "work_revision": 1
+      },
+      "positive_labels": [
+        {
+          "evidence": "USER_CONFIRMED_CURRENT_SOURCE",
+          "index": 0,
+          "kind": "name",
+          "observation_id": "observation-0",
+          "owner": "p1",
+          "slot_id": "29dbc18ba97c4830834de48380a06bd6",
+          "text": "Alex Example"
+        },
+        {
+          "evidence": "USER_CONFIRMED_CURRENT_SOURCE",
+          "index": 0,
+          "kind": "phone",
+          "observation_id": "observation-2",
+          "owner": "p1",
+          "slot_id": "8d6c8c2e7e0747c9bd6717f1ac87dcd4",
+          "text": "+1 202 555 0100"
+        },
+        {
+          "evidence": "USER_CONFIRMED_CURRENT_SOURCE",
+          "index": 0,
+          "kind": "title",
+          "observation_id": "observation-1",
+          "owner": "p1",
+          "slot_id": "b1104cabd5fc4b92b013a764c7e671cf",
+          "text": "Designer"
+        },
+        {
+          "evidence": "USER_CONFIRMED_CURRENT_SOURCE",
+          "index": 0,
+          "kind": "email",
+          "observation_id": "observation-3",
+          "owner": "p1",
+          "slot_id": "f7c9af1440ed4b1a99956f8da4a3b0bd",
+          "text": "alex@example.test"
+        }
+      ],
+      "rights": {
+        "basis": "OWNED",
+        "reference": "Anonymous synthetic SVG author record",
+        "use": "GEOMETRY_TRAINING_LOCAL"
+      },
+      "rule_dependencies": [],
+      "scope_digest": "b55cbc1fc69abc474b1e89f81c353c7201b5630e690428c5790e2af35a7f6c6d",
+      "source_byte_size": 454,
+      "source_stat": [
+        27,
+        796949,
+        454,
+        1792212091607786414,
+        1792212091607786414
+      ],
+      "state": "APPROVED",
+      "training_scope": "GEOMETRY_ONLY; NO_NEURAL_OR_INDEPENDENT_VISUAL_CLAIM",
+      "used_for_training": false,
+      "width_mm": 90,
+      "work_id": "18faf62208ab47a9ac6c4c61924e3840"
+    },
+    "positive_negative_separated": true,
+    "not_trained": true,
+    "state": "APPROVED",
+    "source_and_slots_unchanged": true
+  },
+  "dataset_geometry": {
+    "actual_qt": true,
+    "dataset": {
+      "id": "b5e3e0173f8548f198a01773bb96e86d",
+      "revision": 1,
+      "actor": "Synthetic Reviewer",
+      "created": 1792212091.8678746,
+      "entries": [
+        {
+          "crop": {
+            "h": 54,
+            "w": 90,
+            "x": 0,
+            "y": 0
+          },
+          "exact_label_signature": "6e9f9e159b45fc6e887e9e3ac7d446510ea2c3a4f2a1502f7903d6270d4606cf",
+          "facts_revision": 2,
+          "height_mm": 54,
+          "noise_signature": "ff6b0049c9d127318a33fffdeb6bd8df3791e6a28aece40ebf83844799c6e87d",
+          "page": 1,
+          "role": "TRAIN",
+          "rule_dependencies": [],
+          "sample_id": "04d00134afd947689c9aa178d3a67d89",
+          "sample_revision": 1,
+          "scope_digest": "b55cbc1fc69abc474b1e89f81c353c7201b5630e690428c5790e2af35a7f6c6d",
+          "source_group": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "source_id": "5e9526f28d79456480ed6d662d631abf",
+          "use": "GEOMETRY_TRAINING_LOCAL",
+          "width_mm": 90
+        }
+      ],
+      "manifest": {
+        "customer_identity": "UNKNOWN",
+        "entries": [
+          {
+            "crop": {
+              "h": 54,
+              "w": 90,
+              "x": 0,
+              "y": 0
+            },
+            "exact_label_signature": "6e9f9e159b45fc6e887e9e3ac7d446510ea2c3a4f2a1502f7903d6270d4606cf",
+            "facts_revision": 2,
+            "height_mm": 54,
+            "noise_signature": "ff6b0049c9d127318a33fffdeb6bd8df3791e6a28aece40ebf83844799c6e87d",
+            "page": 1,
+            "role": "TRAIN",
+            "rule_dependencies": [],
+            "sample_id": "04d00134afd947689c9aa178d3a67d89",
+            "sample_revision": 1,
+            "scope_digest": "b55cbc1fc69abc474b1e89f81c353c7201b5630e690428c5790e2af35a7f6c6d",
+            "source_group": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_hash": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+            "source_id": "5e9526f28d79456480ed6d662d631abf",
+            "use": "GEOMETRY_TRAINING_LOCAL",
+            "width_mm": 90
+          }
+        ],
+        "exact_duplicates": {},
+        "name": "Synthetic TRAIN geometry dataset",
+        "near_similarity": "UNKNOWN",
+        "purpose": "GEOMETRY_TRAINING_LOCAL",
+        "schema_version": 1,
+        "source_identities_merged": false,
+        "whole_source_groups": [
+          "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3"
+        ]
+      },
+      "manifest_digest": "f2bdf857f41c4f7109efff735d79a78bacfeae8a1097b5dc57070e813e58c7c7",
+      "state": "FROZEN",
+      "training_started": false,
+      "training_started_scope": "AT_MANIFEST_FREEZE; current exact uses in USE_LEDGER"
+    },
+    "draft": {
+      "name": "Synthetic Geometry Draft",
+      "width_mm": 90,
+      "height_mm": 54,
+      "slots": [
+        {
+          "kind": "name",
+          "owner": "p1",
+          "rect": {
+            "x": 8,
+            "y": 6,
+            "w": 70,
+            "h": 11
+          },
+          "index": 0,
+          "font": "Noto Sans CJK TC",
+          "size_pt": 18,
+          "min_scale": 0.85,
+          "align": "left",
+          "required": true,
+          "id": "29dbc18ba97c4830834de48380a06bd6",
+          "color": "#111827",
+          "font_asset": null,
+          "font_style": "",
+          "locked": false,
+          "tracking_mm": 0.0,
+          "tracking_min_mm": 0.0,
+          "tracking_max_mm": 0.0,
+          "distribution_approval": null
+        },
+        {
+          "kind": "title",
+          "owner": "p1",
+          "rect": {
+            "x": 8,
+            "y": 19,
+            "w": 70,
+            "h": 7
+          },
+          "index": 0,
+          "font": "Noto Sans CJK TC",
+          "size_pt": 11,
+          "min_scale": 0.85,
+          "align": "left",
+          "required": true,
+          "id": "b1104cabd5fc4b92b013a764c7e671cf",
+          "color": "#111827",
+          "font_asset": null,
+          "font_style": "",
+          "locked": false,
+          "tracking_mm": 0.0,
+          "tracking_min_mm": 0.0,
+          "tracking_max_mm": 0.0,
+          "distribution_approval": null
+        },
+        {
+          "kind": "phone",
+          "owner": "p1",
+          "rect": {
+            "x": 8,
+            "y": 31,
+            "w": 70,
+            "h": 7
+          },
+          "index": 0,
+          "font": "Noto Sans CJK TC",
+          "size_pt": 10,
+          "min_scale": 0.85,
+          "align": "left",
+          "required": true,
+          "id": "8d6c8c2e7e0747c9bd6717f1ac87dcd4",
+          "color": "#111827",
+          "font_asset": null,
+          "font_style": "",
+          "locked": false,
+          "tracking_mm": 0.0,
+          "tracking_min_mm": 0.0,
+          "tracking_max_mm": 0.0,
+          "distribution_approval": null
+        },
+        {
+          "kind": "email",
+          "owner": "p1",
+          "rect": {
+            "x": 8,
+            "y": 40,
+            "w": 70,
+            "h": 7
+          },
+          "index": 0,
+          "font": "Noto Sans CJK TC",
+          "size_pt": 10,
+          "min_scale": 0.85,
+          "align": "left",
+          "required": true,
+          "id": "f7c9af1440ed4b1a99956f8da4a3b0bd",
+          "color": "#111827",
+          "font_asset": null,
+          "font_style": "",
+          "locked": false,
+          "tracking_mm": 0.0,
+          "tracking_min_mm": 0.0,
+          "tracking_max_mm": 0.0,
+          "distribution_approval": null
+        }
+      ],
+      "capacity": 1,
+      "source_id": "5e9526f28d79456480ed6d662d631abf",
+      "artwork": {
+        "x": 0,
+        "y": 0,
+        "w": 90,
+        "h": 54
+      },
+      "id": "1fbd9efae80a4d7a98638d6ef69606f6",
+      "family_id": "aea3a47680c348b48f9056b6900b6d32",
+      "version": 1,
+      "state": "draft",
+      "reasons": [
+        "框位來自人工確認作品標記",
+        "保留人物／公司歸屬及固定欄位字級",
+        "依實體矩形尺寸分類；不直接跨尺寸套用",
+        "本版學習方法：標記幾何與明確對齊規則內化"
+      ],
+      "company_bindings": {},
+      "background": null,
+      "source_work_id": "18faf62208ab47a9ac6c4c61924e3840",
+      "source_work_revision": 1,
+      "training_reference": {
+        "dataset_id": "b5e3e0173f8548f198a01773bb96e86d",
+        "manifest_digest": "f2bdf857f41c4f7109efff735d79a78bacfeae8a1097b5dc57070e813e58c7c7",
+        "sample_id": "04d00134afd947689c9aa178d3a67d89",
+        "sample_revision": 1,
+        "purpose": "GEOMETRY_DRAFT_ONLY"
+      },
+      "safe_margin_mm": 0.0
+    },
+    "use": [
+      {
+        "id": "97cb3cd3e65c498f93bbcc91fcf5a4ad",
+        "revision": 1,
+        "actor": "Synthetic Reviewer",
+        "created": 1792212091.8964493,
+        "dataset_id": "b5e3e0173f8548f198a01773bb96e86d",
+        "job_id": null,
+        "manifest_digest": "f2bdf857f41c4f7109efff735d79a78bacfeae8a1097b5dc57070e813e58c7c7",
+        "purpose": "GEOMETRY_DRAFT_ONLY",
+        "sample_id": "04d00134afd947689c9aa178d3a67d89",
+        "sample_revision": 1,
+        "template_id": "1fbd9efae80a4d7a98638d6ef69606f6"
+      }
+    ],
+    "not_published": true,
+    "source_and_slots_unchanged": true,
+    "neural_training_claim": false
+  },
+  "coverage": {
+    "actual_qt": true,
+    "report": {
+      "totals": {
+        "sources": 3,
+        "artworks": 3,
+        "sources_without_artworks": 0,
+        "fact_records": 2,
+        "stored_samples": 1,
+        "datasets": 1
+      },
+      "scan": {
+        "offset": 0,
+        "limit": 200,
+        "sources": 3,
+        "artworks": 3,
+        "samples": 1,
+        "datasets": 1,
+        "complete_inventory": true
+      },
+      "sources": [
+        {
+          "source_id": "5e9526f28d79456480ed6d662d631abf",
+          "registered_content_group": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "health": "CONTENT_VERIFIED_BY_CURRENT_FACTS",
+          "derivative_health": "UNKNOWN_AT_INVENTORY; no pixels loaded",
+          "artwork_count": 1
+        },
+        {
+          "source_id": "acdfb813dd7b4c5a93714d0789109663",
+          "registered_content_group": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "health": "CONTENT_VERIFIED_BY_CURRENT_FACTS",
+          "derivative_health": "UNKNOWN_AT_INVENTORY; no pixels loaded",
+          "artwork_count": 1
+        },
+        {
+          "source_id": "cf3b2afb64cf468aa066e80736bc79fb",
+          "registered_content_group": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "health": "CURRENT_HEALTH_UNKNOWN",
+          "derivative_health": "UNKNOWN_AT_INVENTORY; no pixels loaded",
+          "artwork_count": 1
+        }
+      ],
+      "artworks": [
+        {
+          "work_id": "076af8acae8c4092a84a5c73a14c8745",
+          "source_id": "cf3b2afb64cf468aa066e80736bc79fb",
+          "work_revision": 2,
+          "registered_content_group": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "size": "90×54mm",
+          "people_count": 1,
+          "company_count": 0,
+          "logo_class": "NO_LOGO_LABEL; SOURCE_CONTENT_UNKNOWN",
+          "native_effects": "UNKNOWN",
+          "facts_state": "PENDING",
+          "customer_identity": "UNKNOWN"
+        },
+        {
+          "work_id": "18faf62208ab47a9ac6c4c61924e3840",
+          "source_id": "5e9526f28d79456480ed6d662d631abf",
+          "work_revision": 1,
+          "registered_content_group": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "size": "90×54mm",
+          "people_count": 1,
+          "company_count": 0,
+          "logo_class": "NO_LOGO_LABEL; SOURCE_CONTENT_UNKNOWN",
+          "native_effects": "UNKNOWN",
+          "facts_state": "CONFIRMED",
+          "customer_identity": "UNKNOWN"
+        },
+        {
+          "work_id": "c734dc63077a45ea92b41e01b3230881",
+          "source_id": "acdfb813dd7b4c5a93714d0789109663",
+          "work_revision": 1,
+          "registered_content_group": "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3",
+          "size": "90×54mm",
+          "people_count": 1,
+          "company_count": 0,
+          "logo_class": "NO_LOGO_LABEL; SOURCE_CONTENT_UNKNOWN",
+          "native_effects": "UNKNOWN",
+          "facts_state": "CONFIRMED",
+          "customer_identity": "UNKNOWN"
+        }
+      ],
+      "sample_states": {
+        "APPROVED": 1
+      },
+      "sample_rows": [
+        {
+          "sample_id": "04d00134afd947689c9aa178d3a67d89",
+          "work_id": "18faf62208ab47a9ac6c4c61924e3840",
+          "state": "APPROVED"
+        }
+      ],
+      "saved_dataset_role_occurrences": {
+        "TRAIN": 1
+      },
+      "current_role_occurrences_in_scanned_scope": {
+        "TRAIN": 1
+      },
+      "unvalidated_role_occurrences_in_scanned_datasets": 0,
+      "facets": {
+        "companies": {
+          "0": [
+            "076af8acae8c4092a84a5c73a14c8745",
+            "18faf62208ab47a9ac6c4c61924e3840",
+            "c734dc63077a45ea92b41e01b3230881"
+          ]
+        },
+        "content_group": {
+          "2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3": [
+            "076af8acae8c4092a84a5c73a14c8745",
+            "18faf62208ab47a9ac6c4c61924e3840",
+            "c734dc63077a45ea92b41e01b3230881"
+          ]
+        },
+        "logo": {
+          "NO_LOGO_LABEL; SOURCE_CONTENT_UNKNOWN": [
+            "076af8acae8c4092a84a5c73a14c8745",
+            "18faf62208ab47a9ac6c4c61924e3840",
+            "c734dc63077a45ea92b41e01b3230881"
+          ]
+        },
+        "native_effects": {
+          "UNKNOWN": [
+            "076af8acae8c4092a84a5c73a14c8745",
+            "18faf62208ab47a9ac6c4c61924e3840",
+            "c734dc63077a45ea92b41e01b3230881"
+          ]
+        },
+        "people": {
+          "1": [
+            "076af8acae8c4092a84a5c73a14c8745",
+            "18faf62208ab47a9ac6c4c61924e3840",
+            "c734dc63077a45ea92b41e01b3230881"
+          ]
+        },
+        "size": {
+          "90×54mm": [
+            "076af8acae8c4092a84a5c73a14c8745",
+            "18faf62208ab47a9ac6c4c61924e3840",
+            "c734dc63077a45ea92b41e01b3230881"
+          ]
+        }
+      },
+      "facet_denominator": "SCANNED_ARTWORKS; axes overlap, never sum as distinct classes",
+      "role_denominator": "MANIFEST_ENTRY_OCCURRENCES; same sample may appear in multiple frozen datasets",
+      "notices": [
+        "原生Logo／效果、客戶歸屬与代表性未知，不能用數量當品質驗收"
+      ],
+      "supplementation": false,
+      "quality_pass_claim": false,
+      "images_loaded": false,
+      "snapshot_digest": "3e9c66f9e373e1e7e6791387b05a4e2482636f3785ee3b63534edf12dfda419b"
+    },
+    "read_only": true,
+    "no_quality_threshold_or_supplementation": true
+  },
+  "training_queue": {
+    "actual_qt": true,
+    "real_worker_own_sqlite_connection": true,
+    "job": {
+      "id": "cfde1ae91c694822a4bc85b5bbc7ab50",
+      "revision": 5,
+      "actor": "Synthetic Reviewer",
+      "cancel_requested": false,
+      "created": 1792212092.4518666,
+      "dataset_id": "6a86b145400b447d98d1756743a9e653",
+      "dataset_revision": 1,
+      "finished": 1792212099.4282856,
+      "items": [
+        {
+          "attempts": 1,
+          "error": null,
+          "finished": 1792212099.4272566,
+          "name": "Synthetic Queue Draft 1",
+          "preexisting_template_id": null,
+          "sample_id": "91fb193f70154a1a9f927819857a10ce",
+          "sample_revision": 1,
+          "scope_digest": "1504264ee9bbec94037dd3e78145c092c14e27f931e66d309a92860e20f3e987",
+          "source_pins": {
+            "link_revision": 0,
+            "page": 1,
+            "source_hash": "978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414",
+            "source_id": "0c0b53b6eb6c4ef89fc91dd12c36e31a",
+            "work_digest": "ef30aa100f37154252eeb5752b63f7951b50b8ae73799274d92d77ce6105cb15",
+            "work_id": "8f51320c58a3464f98ca86bacb105e87",
+            "work_revision": 1
+          },
+          "state": "SUCCESS",
+          "template_id": "8589bbf3917c44f480e63739c78054da"
+        }
+      ],
+      "last_error": null,
+      "manifest_digest": "611e5b403665d83deed8ae59dd2e13f16c08b18435a2e1e96b06bafb1a9a1044",
+      "owner": {
+        "pid": 853100,
+        "started": 1792212099.0891232,
+        "local_lease_identifier_omitted": true
+      },
+      "phase": "COMPLETED",
+      "purpose": "GEOMETRY_DRAFT_ONLY"
+    },
+    "history": [
+      {
+        "revision": 5,
+        "action": "training_job_completed",
+        "before": {
+          "id": "cfde1ae91c694822a4bc85b5bbc7ab50",
+          "revision": 4,
+          "actor": "Synthetic Reviewer",
+          "cancel_requested": false,
+          "created": 1792212092.4518666,
+          "dataset_id": "6a86b145400b447d98d1756743a9e653",
+          "dataset_revision": 1,
+          "items": [
+            {
+              "attempts": 1,
+              "error": null,
+              "finished": 1792212099.4272566,
+              "name": "Synthetic Queue Draft 1",
+              "preexisting_template_id": null,
+              "sample_id": "91fb193f70154a1a9f927819857a10ce",
+              "sample_revision": 1,
+              "scope_digest": "1504264ee9bbec94037dd3e78145c092c14e27f931e66d309a92860e20f3e987",
+              "source_pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414",
+                "source_id": "0c0b53b6eb6c4ef89fc91dd12c36e31a",
+                "work_digest": "ef30aa100f37154252eeb5752b63f7951b50b8ae73799274d92d77ce6105cb15",
+                "work_id": "8f51320c58a3464f98ca86bacb105e87",
+                "work_revision": 1
+              },
+              "state": "SUCCESS",
+              "template_id": "8589bbf3917c44f480e63739c78054da"
+            }
+          ],
+          "last_error": null,
+          "manifest_digest": "611e5b403665d83deed8ae59dd2e13f16c08b18435a2e1e96b06bafb1a9a1044",
+          "owner": {
+            "pid": 853100,
+            "started": 1792212099.0891232,
+            "local_lease_identifier_omitted": true
+          },
+          "phase": "RUNNING",
+          "purpose": "GEOMETRY_DRAFT_ONLY"
+        },
+        "after": {
+          "actor": "Synthetic Reviewer",
+          "cancel_requested": false,
+          "created": 1792212092.4518666,
+          "dataset_id": "6a86b145400b447d98d1756743a9e653",
+          "dataset_revision": 1,
+          "finished": 1792212099.4282856,
+          "items": [
+            {
+              "attempts": 1,
+              "error": null,
+              "finished": 1792212099.4272566,
+              "name": "Synthetic Queue Draft 1",
+              "preexisting_template_id": null,
+              "sample_id": "91fb193f70154a1a9f927819857a10ce",
+              "sample_revision": 1,
+              "scope_digest": "1504264ee9bbec94037dd3e78145c092c14e27f931e66d309a92860e20f3e987",
+              "source_pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414",
+                "source_id": "0c0b53b6eb6c4ef89fc91dd12c36e31a",
+                "work_digest": "ef30aa100f37154252eeb5752b63f7951b50b8ae73799274d92d77ce6105cb15",
+                "work_id": "8f51320c58a3464f98ca86bacb105e87",
+                "work_revision": 1
+              },
+              "state": "SUCCESS",
+              "template_id": "8589bbf3917c44f480e63739c78054da"
+            }
+          ],
+          "last_error": null,
+          "manifest_digest": "611e5b403665d83deed8ae59dd2e13f16c08b18435a2e1e96b06bafb1a9a1044",
+          "owner": {
+            "pid": 853100,
+            "started": 1792212099.0891232,
+            "local_lease_identifier_omitted": true
+          },
+          "phase": "COMPLETED",
+          "purpose": "GEOMETRY_DRAFT_ONLY"
+        },
+        "created": 1792212099.4283574
+      },
+      {
+        "revision": 4,
+        "action": "training_item_success",
+        "before": {
+          "id": "cfde1ae91c694822a4bc85b5bbc7ab50",
+          "revision": 3,
+          "actor": "Synthetic Reviewer",
+          "cancel_requested": false,
+          "created": 1792212092.4518666,
+          "dataset_id": "6a86b145400b447d98d1756743a9e653",
+          "dataset_revision": 1,
+          "items": [
+            {
+              "attempts": 0,
+              "error": null,
+              "name": "Synthetic Queue Draft 1",
+              "preexisting_template_id": null,
+              "sample_id": "91fb193f70154a1a9f927819857a10ce",
+              "sample_revision": 1,
+              "scope_digest": "1504264ee9bbec94037dd3e78145c092c14e27f931e66d309a92860e20f3e987",
+              "source_pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414",
+                "source_id": "0c0b53b6eb6c4ef89fc91dd12c36e31a",
+                "work_digest": "ef30aa100f37154252eeb5752b63f7951b50b8ae73799274d92d77ce6105cb15",
+                "work_id": "8f51320c58a3464f98ca86bacb105e87",
+                "work_revision": 1
+              },
+              "state": "RUNNING",
+              "template_id": null
+            }
+          ],
+          "last_error": null,
+          "manifest_digest": "611e5b403665d83deed8ae59dd2e13f16c08b18435a2e1e96b06bafb1a9a1044",
+          "owner": {
+            "pid": 853100,
+            "started": 1792212099.0891232,
+            "local_lease_identifier_omitted": true
+          },
+          "phase": "RUNNING",
+          "purpose": "GEOMETRY_DRAFT_ONLY"
+        },
+        "after": {
+          "actor": "Synthetic Reviewer",
+          "cancel_requested": false,
+          "created": 1792212092.4518666,
+          "dataset_id": "6a86b145400b447d98d1756743a9e653",
+          "dataset_revision": 1,
+          "items": [
+            {
+              "attempts": 1,
+              "error": null,
+              "finished": 1792212099.4272566,
+              "name": "Synthetic Queue Draft 1",
+              "preexisting_template_id": null,
+              "sample_id": "91fb193f70154a1a9f927819857a10ce",
+              "sample_revision": 1,
+              "scope_digest": "1504264ee9bbec94037dd3e78145c092c14e27f931e66d309a92860e20f3e987",
+              "source_pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414",
+                "source_id": "0c0b53b6eb6c4ef89fc91dd12c36e31a",
+                "work_digest": "ef30aa100f37154252eeb5752b63f7951b50b8ae73799274d92d77ce6105cb15",
+                "work_id": "8f51320c58a3464f98ca86bacb105e87",
+                "work_revision": 1
+              },
+              "state": "SUCCESS",
+              "template_id": "8589bbf3917c44f480e63739c78054da"
+            }
+          ],
+          "last_error": null,
+          "manifest_digest": "611e5b403665d83deed8ae59dd2e13f16c08b18435a2e1e96b06bafb1a9a1044",
+          "owner": {
+            "pid": 853100,
+            "started": 1792212099.0891232,
+            "local_lease_identifier_omitted": true
+          },
+          "phase": "RUNNING",
+          "purpose": "GEOMETRY_DRAFT_ONLY"
+        },
+        "created": 1792212099.4273245
+      },
+      {
+        "revision": 3,
+        "action": "training_item_started_not_completed",
+        "before": {
+          "id": "cfde1ae91c694822a4bc85b5bbc7ab50",
+          "revision": 2,
+          "actor": "Synthetic Reviewer",
+          "cancel_requested": false,
+          "created": 1792212092.4518666,
+          "dataset_id": "6a86b145400b447d98d1756743a9e653",
+          "dataset_revision": 1,
+          "items": [
+            {
+              "attempts": 0,
+              "error": null,
+              "name": "Synthetic Queue Draft 1",
+              "preexisting_template_id": null,
+              "sample_id": "91fb193f70154a1a9f927819857a10ce",
+              "sample_revision": 1,
+              "scope_digest": "1504264ee9bbec94037dd3e78145c092c14e27f931e66d309a92860e20f3e987",
+              "source_pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414",
+                "source_id": "0c0b53b6eb6c4ef89fc91dd12c36e31a",
+                "work_digest": "ef30aa100f37154252eeb5752b63f7951b50b8ae73799274d92d77ce6105cb15",
+                "work_id": "8f51320c58a3464f98ca86bacb105e87",
+                "work_revision": 1
+              },
+              "state": "READY",
+              "template_id": null
+            }
+          ],
+          "last_error": null,
+          "manifest_digest": "611e5b403665d83deed8ae59dd2e13f16c08b18435a2e1e96b06bafb1a9a1044",
+          "owner": {
+            "pid": 853100,
+            "started": 1792212099.0891232,
+            "local_lease_identifier_omitted": true
+          },
+          "phase": "RUNNING",
+          "purpose": "GEOMETRY_DRAFT_ONLY"
+        },
+        "after": {
+          "actor": "Synthetic Reviewer",
+          "cancel_requested": false,
+          "created": 1792212092.4518666,
+          "dataset_id": "6a86b145400b447d98d1756743a9e653",
+          "dataset_revision": 1,
+          "items": [
+            {
+              "attempts": 0,
+              "error": null,
+              "name": "Synthetic Queue Draft 1",
+              "preexisting_template_id": null,
+              "sample_id": "91fb193f70154a1a9f927819857a10ce",
+              "sample_revision": 1,
+              "scope_digest": "1504264ee9bbec94037dd3e78145c092c14e27f931e66d309a92860e20f3e987",
+              "source_pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414",
+                "source_id": "0c0b53b6eb6c4ef89fc91dd12c36e31a",
+                "work_digest": "ef30aa100f37154252eeb5752b63f7951b50b8ae73799274d92d77ce6105cb15",
+                "work_id": "8f51320c58a3464f98ca86bacb105e87",
+                "work_revision": 1
+              },
+              "state": "RUNNING",
+              "template_id": null
+            }
+          ],
+          "last_error": null,
+          "manifest_digest": "611e5b403665d83deed8ae59dd2e13f16c08b18435a2e1e96b06bafb1a9a1044",
+          "owner": {
+            "pid": 853100,
+            "started": 1792212099.0891232,
+            "local_lease_identifier_omitted": true
+          },
+          "phase": "RUNNING",
+          "purpose": "GEOMETRY_DRAFT_ONLY"
+        },
+        "created": 1792212099.3250785
+      },
+      {
+        "revision": 2,
+        "action": "training_job_claimed",
+        "before": {
+          "id": "cfde1ae91c694822a4bc85b5bbc7ab50",
+          "revision": 1,
+          "actor": "Synthetic Reviewer",
+          "cancel_requested": false,
+          "created": 1792212092.4518666,
+          "dataset_id": "6a86b145400b447d98d1756743a9e653",
+          "dataset_revision": 1,
+          "items": [
+            {
+              "attempts": 0,
+              "error": null,
+              "name": "Synthetic Queue Draft 1",
+              "preexisting_template_id": null,
+              "sample_id": "91fb193f70154a1a9f927819857a10ce",
+              "sample_revision": 1,
+              "scope_digest": "1504264ee9bbec94037dd3e78145c092c14e27f931e66d309a92860e20f3e987",
+              "source_pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414",
+                "source_id": "0c0b53b6eb6c4ef89fc91dd12c36e31a",
+                "work_digest": "ef30aa100f37154252eeb5752b63f7951b50b8ae73799274d92d77ce6105cb15",
+                "work_id": "8f51320c58a3464f98ca86bacb105e87",
+                "work_revision": 1
+              },
+              "state": "READY",
+              "template_id": null
+            }
+          ],
+          "last_error": null,
+          "manifest_digest": "611e5b403665d83deed8ae59dd2e13f16c08b18435a2e1e96b06bafb1a9a1044",
+          "owner": null,
+          "phase": "PENDING",
+          "purpose": "GEOMETRY_DRAFT_ONLY"
+        },
+        "after": {
+          "actor": "Synthetic Reviewer",
+          "cancel_requested": false,
+          "created": 1792212092.4518666,
+          "dataset_id": "6a86b145400b447d98d1756743a9e653",
+          "dataset_revision": 1,
+          "items": [
+            {
+              "attempts": 0,
+              "error": null,
+              "name": "Synthetic Queue Draft 1",
+              "preexisting_template_id": null,
+              "sample_id": "91fb193f70154a1a9f927819857a10ce",
+              "sample_revision": 1,
+              "scope_digest": "1504264ee9bbec94037dd3e78145c092c14e27f931e66d309a92860e20f3e987",
+              "source_pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414",
+                "source_id": "0c0b53b6eb6c4ef89fc91dd12c36e31a",
+                "work_digest": "ef30aa100f37154252eeb5752b63f7951b50b8ae73799274d92d77ce6105cb15",
+                "work_id": "8f51320c58a3464f98ca86bacb105e87",
+                "work_revision": 1
+              },
+              "state": "READY",
+              "template_id": null
+            }
+          ],
+          "last_error": null,
+          "manifest_digest": "611e5b403665d83deed8ae59dd2e13f16c08b18435a2e1e96b06bafb1a9a1044",
+          "owner": {
+            "pid": 853100,
+            "started": 1792212099.0891232,
+            "local_lease_identifier_omitted": true
+          },
+          "phase": "RUNNING",
+          "purpose": "GEOMETRY_DRAFT_ONLY"
+        },
+        "created": 1792212099.0893865
+      },
+      {
+        "revision": 1,
+        "action": "training_job_created",
+        "before": null,
+        "after": {
+          "actor": "Synthetic Reviewer",
+          "cancel_requested": false,
+          "created": 1792212092.4518666,
+          "dataset_id": "6a86b145400b447d98d1756743a9e653",
+          "dataset_revision": 1,
+          "items": [
+            {
+              "attempts": 0,
+              "error": null,
+              "name": "Synthetic Queue Draft 1",
+              "preexisting_template_id": null,
+              "sample_id": "91fb193f70154a1a9f927819857a10ce",
+              "sample_revision": 1,
+              "scope_digest": "1504264ee9bbec94037dd3e78145c092c14e27f931e66d309a92860e20f3e987",
+              "source_pins": {
+                "link_revision": 0,
+                "page": 1,
+                "source_hash": "978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414",
+                "source_id": "0c0b53b6eb6c4ef89fc91dd12c36e31a",
+                "work_digest": "ef30aa100f37154252eeb5752b63f7951b50b8ae73799274d92d77ce6105cb15",
+                "work_id": "8f51320c58a3464f98ca86bacb105e87",
+                "work_revision": 1
+              },
+              "state": "READY",
+              "template_id": null
+            }
+          ],
+          "last_error": null,
+          "manifest_digest": "611e5b403665d83deed8ae59dd2e13f16c08b18435a2e1e96b06bafb1a9a1044",
+          "owner": null,
+          "phase": "PENDING",
+          "purpose": "GEOMETRY_DRAFT_ONLY"
+        },
+        "created": 1792212092.4519246
+      }
+    ],
+    "progress": "COMPLETED／實際SUCCESS1／REUSED0／FAILED0／READY0／全部1／保存r5",
+    "controls_restored": true,
+    "source_and_slots_unchanged": true,
+    "all_ten_workflows_integrated": true,
+    "only_draft_geometry": true
+  }
+}

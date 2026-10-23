@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "scope": "TARGETED_DEVELOPMENT_TESTS_NOT_FULL_RELEASE_ACCEPTANCE",
+  "attempts": [
+    {
+      "id": "OFFLINE-SUPPORT-001",
+      "command": "QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -p test_offline_support.py -v",
+      "completed": 17,
+      "passed": 10,
+      "failures": 2,
+      "errors": 5,
+      "seconds": 0.929,
+      "adopted": false,
+      "diagnosis": "HTML dictionary ordering differed after canonical JSON roundtrip; pending stage events were recorded after the user's explicit problem marker.",
+      "correction": "Canonicalize data before HTML generation; flush prior GUI events before recording the explicit marker. No assertion or budget relaxed."
+    },
+    {
+      "id": "OFFLINE-SUPPORT-002",
+      "completed": 17,
+      "passed": 17,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 0.861,
+      "adopted": "EARLIER_TARGETED_SCOPE_ONLY"
+    },
+    {
+      "id": "OFFLINE-AFFECTED-001",
+      "command": "QT_QPA_PLATFORM=offscreen PYTHONPATH=tests .venv/bin/python -m unittest test_import_pages test_import_exceptions test_source_cache test_visual_background test_quality_logo test_design_components test_logo_output_proof test_logo_lifecycle test_qualified_coverage -q",
+      "completed": 71,
+      "passed": 70,
+      "failures": 1,
+      "errors": 0,
+      "seconds": 68.797,
+      "adopted": false,
+      "failed_test": "test_import_pages.ImportPageTests.test_raster_budget_checks_header_before_decoding",
+      "diagnosis": "Early raster signature checking changed the existing header pixel-budget error priority.",
+      "correction": "Pin QImageReader to PNG/JPEG with content auto-detection disabled, retain header pixel-budget checking first, then verify raster signature before decoding. Original test unchanged."
+    },
+    {
+      "id": "OFFLINE-SUPPORT-003",
+      "command": "QT_QPA_PLATFORM=offscreen PYTHONPATH=tests .venv/bin/python -m unittest test_import_pages test_offline_support -q",
+      "completed": 27,
+      "passed": 27,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 2.547,
+      "adopted": "TARGETED_SOFTWARE_SCOPE_ONLY",
+      "scope_detail": "6 original import-page tests and 21 new offline-support tests, including actual Qt warning/fatal child processes. Expected qFatal termination is asserted, not suppressed. Headless report export also executes under python -S without Qt/site-packages."
+    },
+    {
+      "id": "OFFLINE-SUPPORT-004",
+      "command": "QT_QPA_PLATFORM=offscreen PYTHONPATH=tests .venv/bin/python -m unittest test_import_pages test_offline_support -q",
+      "completed": 27,
+      "passed": 27,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 2.586,
+      "adopted": "LATEST_TARGETED_SOFTWARE_SCOPE_ONLY",
+      "scope_detail": "Same original6 plus new21 test IDs. Existing dependency-closure test strengthened with xml:base, escaped CSS url() and protocol-relative src. Literal displayed @import/url()/SYSTEM text stays legal. Additional manual real JPEG import smoke passed."
+    }
+  ],
+  "not_claimed": ["Full application regression", "Windows native qualification", "OS-wide network isolation", "Private artwork learning quality", "Physical printing qualification"]
+}

@@ -1,0 +1,34 @@
+{
+  "status": "INTERRUPTED_AFTER_CONFIRMED_FAILURE_NOT_COMPLETE",
+  "planned": 1856,
+  "persisted_completed_records": 706,
+  "statuses": {
+    "PASS": 705,
+    "ERROR": 1
+  },
+  "remaining_owned_worker_pids": [],
+  "reason": "Known missed diagnostic report reader and independently reproduced native event collision; repair before final full run",
+  "source": "045517e code manifest retained in source.json",
+  "unhealthy_modules": [
+    {
+      "module": "test_batch_recovery",
+      "exit_code": 0,
+      "timed_out": true,
+      "expected": 16,
+      "completed": 0,
+      "failure": "MODULE_DEADLINE_EXCEEDED"
+    },
+    {
+      "module": "test_diagnostic_reports",
+      "exit_code": 1,
+      "timed_out": false,
+      "expected": 31,
+      "completed": 31,
+      "failure": null
+    }
+  ],
+  "known_repairs": {
+    "test_diagnostic_reports": "diagnostic_snapshot now reads output_size_mm; targeted report suite PASS",
+    "test_batch_recovery": "batch_recovery now restores width_input/height_input; bounded probe exposed old native methods; full 16-case module rerun pending"
+  }
+}

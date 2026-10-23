@@ -1,0 +1,17 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+F..This plugin does not support propagateSizeHints()
+.
+======================================================================
+FAIL: test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data (test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_input_learning_integration.py", line 318, in test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data
+    self.assertIn('學習稿已保存',w.work_context.text());self.assertNotIn('尚未產生候選',w.work_context.text())
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '學習稿已保存' not found in '本次稿件已儲存 · 90×54 mm · 已確認'
+
+----------------------------------------------------------------------
+Ran 4 tests in 19.523s
+
+FAILED (failures=1)

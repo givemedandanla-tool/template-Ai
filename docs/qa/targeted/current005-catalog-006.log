@@ -1,0 +1,9 @@
+Fontconfig error: No writable cache directories
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/capture_catalog.py", line 48, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--artifacts-dir',required=True);capture(p.parse_args().artifacts_dir)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/capture_catalog.py", line 31, in capture
+    w.refresh_templates();w.tabs.setCurrentIndex(1);w.show();c=w.template_catalog;c.selected_ids={templates[0].id};c.primary_id=templates[0].id;c.rebuild();app.processEvents();assert w.template_stack.currentIndex()==0;assert not w.property_panel.isEnabled();assert w.grab().save(str(root/'catalog-template-icons.png'))
+                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,41 @@
+{
+  "kind": "LIVE_PROGRESS_SNAPSHOT_NOT_FINAL_TEST_RESULT",
+  "captured_utc": "2026-10-19T17:07:11.662821+00:00",
+  "source_commit": "dd6dcfe5d772fd30311428a20c94b7ebcf6e40ca",
+  "source_unchanged": true,
+  "progress": {
+    "phase": "RUNNING_OWNED_TEST_MODULES",
+    "current_test": "test_quality_repair_releases.QualityRepairReleaseTests.test_actual_critical_recheck_quarantines_same_parser_and_no_old_fallback_is_assumed_safe, test_quality_repair_replay.QualityRepairReplayTests.test_bound_replay_keeps_actual_holdout_exposure_roles_and_original_consumption",
+    "started": 1382,
+    "completed": 1380,
+    "passed": 1380,
+    "failed_ids": [],
+    "planned_tests": 1779,
+    "formal_complete": false,
+    "updated_at": "2026-10-19T17:07:11.549396+00:00"
+  },
+  "completed_modules": 168,
+  "unhealthy_modules": [
+    {
+      "module": "test_local_acceptance",
+      "owned_pid": 568312,
+      "exit_code": -11,
+      "seconds": 60.096974,
+      "expected": 2,
+      "completed": 1,
+      "missing_test_ids": [
+        "test_local_acceptance.LocalSyntheticAcceptanceTests.test_actual_source_learning_capacity_novel_input_preview_and_stable_output"
+      ],
+      "unexpected_test_ids": [],
+      "duplicate_ids": false,
+      "parse_error": null,
+      "timed_out": false,
+      "failure": null,
+      "remaining_owned_pids": [],
+      "healthy": false,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "formal_complete": false
+}

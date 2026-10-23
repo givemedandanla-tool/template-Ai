@@ -1,0 +1,29 @@
+This plugin does not support propagateSizeHints()
+======================================================================
+ERROR: test_no_new_human_fact_review_cannot_clear_quarantine_or_restore_safe_model (test_quality_rechecks.QualityRecheckTests.test_no_new_human_fact_review_cannot_clear_quarantine_or_restore_safe_model)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_rechecks.py", line 63, in test_no_new_human_fact_review_cannot_clear_quarantine_or_restore_safe_model
+    q=self.store.records('QUALITY_WORK_QUARANTINE',0,50)[0]
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+FAIL: test_actual_critical_result_finds_closed_historical_batch_and_quarantines_it (test_quality_rechecks.QualityRecheckTests.test_actual_critical_result_finds_closed_historical_batch_and_quarantines_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_rechecks.py", line 40, in test_actual_critical_result_finds_closed_historical_batch_and_quarantines_it
+    self.assertEqual([r['work_id'] for r in plan['rows']],[self.work['id']])
+AssertionError: Lists differ: [] != ['0d467855a9694bd59becd18e6e1e6d16']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'0d467855a9694bd59becd18e6e1e6d16'
+
+- []
++ ['0d467855a9694bd59becd18e6e1e6d16']
+
+----------------------------------------------------------------------
+Ran 57 tests in 21.990s
+
+FAILED (failures=1, errors=1)

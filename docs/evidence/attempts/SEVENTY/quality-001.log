@@ -1,0 +1,29 @@
+test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck (test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck) ... ok
+test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure (test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure) ... ok
+test_fair_AB_repair_isolation_exposed_holdout_and_two_bad_versions_never_safe (test_quality_operations.QualityOperationsTests.test_fair_AB_repair_isolation_exposed_holdout_and_two_bad_versions_never_safe) ... ok
+test_fixed_holdout_confusion_denominators_zero_classes_unknown_and_critical_owners (test_quality_operations.QualityOperationsTests.test_fixed_holdout_confusion_denominators_zero_classes_unknown_and_critical_owners) ... ok
+test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate (test_quality_operations.QualityOperationsTests.test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate) ... ERROR
+test_major_recheck_stale_plan_and_late_audit_rollback_entire_scope (test_quality_operations.QualityOperationsTests.test_major_recheck_stale_plan_and_late_audit_rollback_entire_scope) ... ok
+test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected (test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected) ... ok
+test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline (test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline) ... ok
+test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected (test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected) ... ok
+
+======================================================================
+ERROR: test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate (test_quality_operations.QualityOperationsTests.test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_operations.py", line 57, in test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate
+    rule,sample=self.rule_sample();ds=frozen(self.store,[sample],'TRAIN','historical training');p=recheck_plan(self.store,rule['id']);self.assertEqual(p['direct_total'],1);self.assertTrue(p['complete']);old=copy.deepcopy(sample);case=start_recheck(self.store,p,[sample['id']],'Confirmed severe rule counterexample','Reviewer',True)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_dataset_learning.py", line 22, in frozen
+    plan=store.dataset_plan(name,[{'sample_id':s['id'],'role':role} for s in samples]);return store.create_dataset(plan,'Synthetic Reviewer',True)
+                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/datasets.py", line 43, in create_dataset
+    if current['digest']!=plan.get('digest') or current['errors']:raise ValueError('資料集範圍已變更或角色／樣本不合法：'+'；'.join(current['errors']))
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 資料集範圍已變更或角色／樣本不合法：同內容／同源整檔group已有不同角色：2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3
+
+----------------------------------------------------------------------
+Ran 9 tests in 6.817s
+
+FAILED (errors=1)

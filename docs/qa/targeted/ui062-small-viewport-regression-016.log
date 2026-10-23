@@ -1,0 +1,19 @@
+test_small_window_keeps_visible_canvas_and_reachable_existing_controls (test_workbench_navigation.WorkbenchNavigationTests.test_small_window_keeps_visible_canvas_and_reachable_existing_controls) ... Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+FAIL
+
+======================================================================
+FAIL: test_small_window_keeps_visible_canvas_and_reachable_existing_controls (test_workbench_navigation.WorkbenchNavigationTests.test_small_window_keeps_visible_canvas_and_reachable_existing_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_workbench_navigation.py", line 173, in test_small_window_keeps_visible_canvas_and_reachable_existing_controls
+    self.assertGreaterEqual(visible.height(),180);self.assertGreaterEqual(visible.width(),240)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 35 not greater than or equal to 180
+
+----------------------------------------------------------------------
+Ran 1 test in 1.048s
+
+FAILED (failures=1)

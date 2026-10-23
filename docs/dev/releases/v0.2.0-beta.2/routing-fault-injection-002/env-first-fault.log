@@ -1,0 +1,24 @@
+test_frozen_prefers_bundle_even_when_external_setting_and_path_exist (test_bundled_inkscape.BundledInkscapeTests.test_frozen_prefers_bundle_even_when_external_setting_and_path_exist) ... FAIL
+test_missing_bundle_does_not_fall_back_to_installed_engine (test_bundled_inkscape.BundledInkscapeTests.test_missing_bundle_does_not_fall_back_to_installed_engine) ... FAIL
+
+======================================================================
+FAIL: test_frozen_prefers_bundle_even_when_external_setting_and_path_exist (test_bundled_inkscape.BundledInkscapeTests.test_frozen_prefers_bundle_even_when_external_setting_and_path_exist)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_bundled_inkscape.py", line 45, in test_frozen_prefers_bundle_even_when_external_setting_and_path_exist
+    self.assertEqual(Path(inkscape_path()).resolve(), self.bundle.resolve())
+AssertionError: Posix[20 chars]e space 3as_rqj9/system installed/inkscape.exe') != Posix[20 chars]e space 3as_rqj9/TemplateAI/engines/inkscape/bin/inkscape.exe')
+
+======================================================================
+FAIL: test_missing_bundle_does_not_fall_back_to_installed_engine (test_bundled_inkscape.BundledInkscapeTests.test_missing_bundle_does_not_fall_back_to_installed_engine)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_bundled_inkscape.py", line 50, in test_missing_bundle_does_not_fall_back_to_installed_engine
+    with self.assertRaisesRegex(ValueError, '內附|bundled'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.004s
+
+FAILED (failures=2)

@@ -1,0 +1,98 @@
+"""Measured runtime state; pausing background work never approves analysis results."""
+import json
+from PySide6.QtCore import QTimer,Qt
+from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPlainTextEdit,QPushButton,QTableWidget,QTableWidgetItem,QLineEdit,QCheckBox,QMessageBox,QHeaderView
+from .runtime_labels import label
+from shiboken6 import isValid
+
+
+class RuntimePanel(QDialog):
+    def __init__(self,window):
+        super().__init__(window);self.supervisor=window.runtime;self.dispatcher=window.execution_queue;self.offset=0;self.rows=[];self.setWindowTitle('低負載執行／持久佇列／安全恢復');self.resize(1000,760)
+        layout=QVBoxLayout(self);self.status=QLabel();self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText);layout.addWidget(self.status)
+        layout.addWidget(QLabel('單一重型工作；先讓介面回應。分析完成與人工審核分開，暫停不變更客戶、模板或核准。'))
+        bar=QHBoxLayout();self.pause=QPushButton('保存背景暫停');self.resume=QPushButton('保存背景恢復');bar.addWidget(self.pause);bar.addWidget(self.resume);layout.addLayout(bar)
+        self.pause.clicked.connect(lambda:self.change(True));self.resume.clicked.connect(lambda:self.change(False));self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details)
+        self.cancel_foreground=QPushButton('取消尚未啟動的前景工作');self.cancel_foreground.clicked.connect(window.cancel_waiting_jobs);bar.addWidget(self.cancel_foreground)
+        self.ledger=QPushButton('逐來源／作品審核清單');self.ledger.clicked.connect(self.open_ledger);bar.addWidget(self.ledger)
+        self.recover=QPushButton('核對寫入後恢復排程');self.recover.clicked.connect(self.recover_scheduler);bar.addWidget(self.recover)
+        metrics=QHBoxLayout();self.measurements=QLabel();self.measurements.setWordWrap(True);metrics.addWidget(self.measurements,1);toggle=QPushButton('展開／收合診斷數據');toggle.clicked.connect(lambda:self.details.setVisible(not self.details.isVisible()));metrics.addWidget(toggle);layout.insertLayout(3,metrics);self.details.setVisible(False);self.details.setMaximumHeight(200)
+        self.summary=QLabel();self.summary.setWordWrap(True);layout.addWidget(self.summary);self.queue_table=QTableWidget(0,5);self.queue_table.setHorizontalHeaderLabels(['到達序','執行狀態／結果','工作種類／ID','確認範圍','訊息']);self.queue_table.setEditTriggers(QTableWidget.NoEditTriggers);self.queue_table.setSelectionBehavior(QTableWidget.SelectRows);self.queue_table.setSelectionMode(QTableWidget.SingleSelection);layout.addWidget(self.queue_table,2)
+        bar=QHBoxLayout();self.actor=QLineEdit();self.actor.setMaxLength(120);self.actor.setPlaceholderText('本次恢復操作者');bar.addWidget(self.actor);self.retry=QCheckBox('明確重試FAILED');bar.addWidget(self.retry)
+        self.previous=QPushButton('上頁請求');self.next=QPushButton('下頁請求');self.restore=QPushButton('核對後恢復選中範圍');self.cancel=QPushButton('安全取消選中請求')
+        for button in (self.previous,self.next,self.restore,self.cancel):bar.addWidget(button)
+        self.previous.clicked.connect(lambda:self.page(-50));self.next.clicked.connect(lambda:self.page(50));self.restore.clicked.connect(self.resume_selected);self.cancel.clicked.connect(self.cancel_selected);layout.addLayout(bar)
+        self.queue_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.timer=QTimer(self);self.timer.setInterval(500);self.timer.timeout.connect(self.refresh);self.timer.start();self.refresh()
+        window.library.observe_close(self.context_closed)
+
+    def change(self,paused):
+        try:self.supervisor.set_paused(paused);self.status.setText('已寫入並提交背景'+('暫停' if paused else '恢復')+'策略；執行中工作於安全單位邊界停止。')
+        except Exception as error:self.status.setText('未保存成功：'+str(error))
+        self.refresh()
+
+    def open_ledger(self):
+        from .review_ledger_dialog import ReviewLedgerDialog
+        panel=ReviewLedgerDialog(self.parentWidget());panel.setAttribute(Qt.WA_DeleteOnClose);panel.show();return panel
+
+    def recover_scheduler(self):
+        try:self.dispatcher.recover_scheduler();self.status.setText('已核對可讀寫並讀回原工作收據；待恢復範圍仍需明確確認')
+        except Exception as error:self.status.setText('尚未解除排程故障：'+str(error))
+        self.refresh()
+
+    def refresh(self):
+        state=self.supervisor.state();self.details.setPlainText(json.dumps(state,ensure_ascii=False,indent=2))
+        sample=state['snapshot']
+        if sample:
+            def amount(value,unit=1,suffix=''):return f'{value/unit:.1f}{suffix}' if value is not None else '未知'
+            basis='測試情境數值' if sample['basis'].startswith('SYNTHETIC') else '目前環境取樣'
+            self.measurements.setText(basis+'：記憶體可用 '+amount(sample['memory_available'],1024**3,' GiB')+'／'+amount(sample['memory_total'],1024**3,' GiB')+'；CPU '+amount(sample['cpu_percent'],1,'%')+'；I/O等待 '+amount(sample.get('io_wait_percent'),1,'%')+'；磁碟可用 '+amount(sample['disk_free'],1024**3,' GiB')+f"；介面延遲 {state['gui_lag_seconds']*1000:.0f} ms。參考硬體驗證：未執行。")
+        else:self.measurements.setText('資源尚待取樣；保留待辦，尚未領取新背景工作')
+        self.pause.setEnabled(not state['closed']);self.resume.setEnabled(not state['closed'] and not state['policy_error'])
+        if state['closed']:self.context_closed();return
+        if self.dispatcher.library is not self.supervisor.library:self.context_closed();return
+        try:
+            old=self.selected();selected_id=old['id'] if old else None;self.rows=self.dispatcher.queue.page(self.offset,50)
+            total=self.dispatcher.library.db.execute('SELECT count(*) FROM runtime_requests').fetchone()[0];self.queue_table.setRowCount(len(self.rows))
+            for index,row in enumerate(self.rows):
+                consent='本次範圍已確認' if row['consent_session']==self.dispatcher.session else '重啟／其他作用域：需明確恢復' if row['state'] in ('WAITING','PAUSED_RESOURCES','INTERRUPTED') else '此請求已結束／人工處理'
+                for column,value in enumerate((row['seq'],label(row['state'])+' / '+label(row.get('result_phase','')),('幾何學習' if row['kind']=='JOB' else '品質評估' if row['kind']=='EVAL_JOB' else '來源分析')+' / '+row['job_id'],consent,row.get('message') or '')):
+                    item=QTableWidgetItem(str(value));item.setToolTip(str(value));self.queue_table.setItem(index,column,item)
+                self.queue_table.setRowHeight(index,54)
+                if row['id']==selected_id:self.queue_table.selectRow(index)
+            self.previous.setEnabled(self.offset>0);self.next.setEnabled(self.offset+50<total);self.summary.setText(f'執行請求 {self.offset+1 if total else 0}–{self.offset+len(self.rows)}／{total}；單一重型工作；等待人工審核與失敗不占執行權。'+label(self.dispatcher.error or self.dispatcher.last_wait or ''))
+        except Exception as error:self.status.setText('佇列未能讀取，未宣稱工作成功：'+str(error))
+
+    def selected(self):
+        selected=self.queue_table.selectionModel().selectedRows()
+        return self.rows[selected[0].row()] if selected and selected[0].row()<len(self.rows) else None
+
+    def page(self,delta):self.offset=max(0,self.offset+delta);self.refresh()
+
+    def resume_selected(self):
+        try:
+            row=self.selected()
+            if not row or not self.actor.text().strip():raise ValueError('先選執行請求並填本次操作者')
+            job=self.dispatcher.queue.store.get(row['kind'],row['job_id'])
+            if not job:raise ValueError('原工作失聯，先到來源／品質中心診斷')
+            preview=dict(kind=row['kind'],job_id=job['id'],scope_digest=row['scope_digest'],source_or_sample_count=len(job['items']),items=[{k:item.get(k) for k in ('path','page','source_hash','sample_id','work_scope','state')} for item in job['items']])
+            if QMessageBox.question(self,'確認原範圍續跑',json.dumps(preview,ensure_ascii=False,indent=2)+'\n已有效保存的單位不重做；FAILED只在勾選時重試。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
+            self.dispatcher.submit(row['kind'],job,self.actor.text(),self.retry.isChecked());self.status.setText('已保存明確恢復請求；尚未宣稱執行或人工審核完成')
+        except Exception as error:self.status.setText('未恢復：'+str(error))
+        self.refresh()
+
+    def cancel_selected(self):
+        try:
+            row=self.selected()
+            if not row:raise ValueError('先選執行請求')
+            self.dispatcher.cancel(row['id']);self.status.setText('已請求安全取消；保留有效成果及工作歷史')
+        except Exception as error:self.status.setText('未保存取消：'+str(error))
+        self.refresh()
+
+    def context_closed(self):
+        if not isValid(self):return
+        self.timer.stop()
+        for button in (self.pause,self.resume,self.restore,self.cancel,self.previous,self.next,self.cancel_foreground,self.ledger,self.recover):button.setEnabled(False)
+        self.status.setText('原專案已關閉；不讀寫其他專案。')
+
+    def closeEvent(self,event):self.timer.stop();super().closeEvent(event)

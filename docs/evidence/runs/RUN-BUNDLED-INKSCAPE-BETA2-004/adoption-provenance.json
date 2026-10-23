@@ -1,0 +1,34 @@
+{
+  "kind": "ADOPT_ACTUAL_COMPLETED_EXECUTION_NO_TEST_RERUN",
+  "command": [
+    "docs/dev/non_code_audit/adopt_verified_execution.py",
+    "--execution",
+    "docs/dev/releases/v0.2.0-beta.2/linux-qualified-001",
+    "--stock",
+    "docs/dev/releases/v0.2.0-beta.2/original-gui-001",
+    "--readback",
+    ".checkpoints/CP-20261022-BETA2-REVALIDATED-SOURCE-004/native-readback",
+    "--run-id",
+    "RUN-BUNDLED-INKSCAPE-BETA2-004"
+  ],
+  "driver_sha256": "2fab8b8ad46316265413a52f5880abdfe23a85f8189557d8ca16d1e7d9e17eb8",
+  "execution": "docs/dev/releases/v0.2.0-beta.2/linux-qualified-001",
+  "captures": "docs/dev/releases/v0.2.0-beta.2/original-gui-001",
+  "actual_execution_commit": "42eb60fa1596282e11b1c329dd78918dd9b169ee",
+  "remote_snapshot": "42eb60fa1596282e11b1c329dd78918dd9b169ee",
+  "equivalent_source_basis": "Exact per-path content/blob manifest equality; documentation-only commit difference allowed.",
+  "original_claim_generator_sha256": "4d2713e11b5d36c32680904a39505bb0bc070268484c141295b7ff0676fe964f",
+  "original_overall_status_preserved": "FAIL",
+  "original_not_verified": 5,
+  "module_execution_inputs": [
+    {
+      "original": "docs/dev/releases/v0.2.0-beta.2/linux-full-003-input",
+      "archive": "module-inputs/0"
+    },
+    {
+      "original": "docs/dev/releases/v0.2.0-beta.2/linux-environment-retry-001",
+      "archive": "module-inputs/1"
+    }
+  ],
+  "qualification_strategy": "Explicit same-source module revalidation; initial timeout retained, not a single fresh full attempt."
+}

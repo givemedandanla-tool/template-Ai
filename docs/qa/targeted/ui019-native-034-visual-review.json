@@ -1,0 +1,25 @@
+{
+  "status": "CHANGES_REQUIRED",
+  "actual_process_exit": 0,
+  "individually_viewed": [
+    {
+      "file": "digital-preflight-01-original-canvas-unchecked-guides.png",
+      "sha256": "b5fab344165ce4a34e48e60abc74123f82df1ec1ba383dfecb733d340f949549"
+    },
+    {
+      "file": "digital-preflight-02-actual-pdf-checklist-no-consent.png",
+      "sha256": "36ead04e0015deeef74f49ac5d31000d26bf252a98c5d3b3f3a5f173addbb1ac"
+    },
+    {
+      "file": "digital-preflight-10-exact-logo-locator.png",
+      "sha256": "5b1dd3802ec10c7244095405857cf794584e15e407f7db1e592bfa4919b8b48b"
+    }
+  ],
+  "remaining_screens_not_reviewed_because_known_failure": true,
+  "findings": [
+    "Original parent minimum layout fixed overlap; reason column and explicit consent now have usable width",
+    "Opening oversized panel centers scroll and hides status/format; fix to scroll to top",
+    "Central controls retain original horizontal scroll at small widths; full-canvas capture/reflow remains to verify"
+  ],
+  "next": "Recapture top position and full canvas at usable width; preserve current small viewport limitation for UI067"
+}

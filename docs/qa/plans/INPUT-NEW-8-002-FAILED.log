@@ -1,0 +1,40 @@
+test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure (test_input_learning_integration.InputLearningIntegrationTests.test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure) ... This plugin does not support propagateSizeHints()
+ok
+test_background_cancel_retains_new_data_and_cannot_install_old_confirmation (test_input_learning_integration.InputLearningIntegrationTests.test_background_cancel_retains_new_data_and_cannot_install_old_confirmation) ... This plugin does not support propagateSizeHints()
+ok
+test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation (test_input_learning_integration.InputLearningIntegrationTests.test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation) ... This plugin does not support propagateSizeHints()
+ok
+test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data (test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ERROR
+test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss (test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner (test_input_learning_integration.InputLearningIntegrationTests.test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates (test_input_learning_integration.InputLearningIntegrationTests.test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter (test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter) ... This plugin does not support propagateSizeHints()
+ok
+
+======================================================================
+ERROR: test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data (test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_input_learning_integration.py", line 156, in test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data
+    with patch('PySide6.QtWidgets.QFileDialog.getSaveFileName',return_value=(str(target),'PNG')):artifact=export_current(w,True)
+                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/production_bridge.py", line 90, in export_current
+    sessions=DesignSessions(window.library);row,_,candidate=sessions.checked_result(window.production_session_id)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_session.py", line 243, in checked_result
+    if candidate.dependency_stamp!=layout_dependency(candidate.template,logos):raise ValueError('Font/asset/engine dependencies changed')
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Font/asset/engine dependencies changed
+
+----------------------------------------------------------------------
+Ran 8 tests in 47.079s
+
+FAILED (errors=1)

@@ -1,0 +1,16 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+======================================================================
+FAIL: test_new_manual_review_during_worker_is_not_erased_by_late_result (test_candidate_edit_dispatch.CandidateEditDispatchTests.test_new_manual_review_during_worker_is_not_erased_by_late_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_candidate_edit_dispatch.py", line 114, in test_new_manual_review_during_worker_is_not_erased_by_late_result
+    self.assertTrue(any(row['reason']==reason for row in self.w.candidates[0].risk_context['conditions']));self.assertFalse(self.w.candidates[0].formal_eligible)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 1.679s
+
+FAILED (failures=1)

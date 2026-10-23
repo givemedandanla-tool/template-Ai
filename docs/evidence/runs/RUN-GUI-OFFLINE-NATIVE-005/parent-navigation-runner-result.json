@@ -1,0 +1,28 @@
+{
+  "name": "parent-navigation",
+  "command": [
+    "/workspace/template-Ai/.venv/bin/python",
+    "-m",
+    "unittest",
+    "test_parent_navigation",
+    "-v"
+  ],
+  "qt_platform": "xcb",
+  "PYTHONPATH": "tests:.",
+  "exit_code": 0,
+  "test_ids": [
+    "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
+    "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+    "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once"
+  ],
+  "expected_test_count": 3,
+  "tests_run": 3,
+  "unittest_seconds": 31.512,
+  "elapsed_seconds": 31.912,
+  "source_manifest_before": "30ac2af0c791906198687628b70df2e6ed0ebed459ffdbb1409820dc94eb1f35",
+  "source_manifest_after": "30ac2af0c791906198687628b70df2e6ed0ebed459ffdbb1409820dc94eb1f35",
+  "source_unchanged": true,
+  "runtime_error_lines": [],
+  "log": "parent-navigation.log",
+  "status": "PASS"
+}

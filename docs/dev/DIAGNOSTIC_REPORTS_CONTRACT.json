@@ -1,0 +1,248 @@
+{
+  "id": "DIAGNOSTIC-REPORTS",
+  "status": "COMPLETED_SAVED_SCOPE",
+  "decision": "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md",
+  "baseline_parent_partial_ids": [
+    "UI-001",
+    "UI-002",
+    "UI-003",
+    "UI-004",
+    "UI-005",
+    "UI-006",
+    "UI-007",
+    "UI-008",
+    "UI-009",
+    "UI-010",
+    "UI-011",
+    "UI-012",
+    "UI-013",
+    "UI-014",
+    "UI-015",
+    "UI-016",
+    "UI-017",
+    "UI-018",
+    "UI-019",
+    "UI-020",
+    "UI-021",
+    "UI-022",
+    "UI-023",
+    "UI-024",
+    "UI-025",
+    "UI-026",
+    "UI-027",
+    "UI-028",
+    "UI-029",
+    "UI-030",
+    "UI-031",
+    "UI-032",
+    "UI-033",
+    "UI-034",
+    "UI-035",
+    "UI-036",
+    "UI-037",
+    "UI-038",
+    "UI-039",
+    "UI-040",
+    "UI-041",
+    "UI-042",
+    "UI-043",
+    "UI-044",
+    "UI-045",
+    "UI-046",
+    "UI-047",
+    "UI-049",
+    "UI-050",
+    "UI-051",
+    "UI-052",
+    "UI-053",
+    "UI-054",
+    "UI-055",
+    "UI-056",
+    "UI-057",
+    "UI-058",
+    "UI-059",
+    "UI-060A",
+    "UI-061",
+    "UI-062",
+    "UI-063",
+    "UI-064",
+    "UI-065",
+    "UI-066",
+    "UI-067",
+    "UI-052-REVIEW",
+    "REV-01",
+    "REV-02",
+    "REV-04"
+  ],
+  "requirements": [
+    "UI-066-R1",
+    "UI-066-R2",
+    "CORE-082",
+    "CORE-083"
+  ],
+  "scope": "共用typed快照、原問題入口GUI、HTML/JSON/manifest ZIP、安全保存／重開／exact歷史定位；保留原提案12條驗收",
+  "acceptance": [
+    {
+      "id": "DIAG-A02",
+      "expected": "同一快照的GUI／HTML／JSON在問題code、嚴重度、尺寸、證據範圍與版本一致，報告不得重新猜測判定。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+        "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    },
+    {
+      "id": "DIAG-A03",
+      "expected": "固定字級適配失敗、缺字型／無法量測、缺Logo、無模板、部分搜尋、取消與來源過期分別呈現；不出現無證據的全域無解／假PASS。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+        "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    },
+    {
+      "id": "DIAG-A04",
+      "expected": "來源、人物／公司同名或同電話仍按既有exact實體分離；報告內代號不造成跨人定位。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation",
+        "test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    },
+    {
+      "id": "DIAG-A05",
+      "expected": "實際編碼的多個尺寸只有合格尺寸保留原Gate；報告生成／閱讀／返回不改任何正式輸出可用性。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+        "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    },
+    {
+      "id": "DIAG-A06",
+      "expected": "注入合成姓名／電話／Email／路徑／備註／例外訊息及lease值，檢查整個ZIP和解壓內容、HTML、JSON、manifest、檔名與中介資料，不得殘留禁止值；未知欄位拒絕帶出。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+        "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+        "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    },
+    {
+      "id": "DIAG-A07",
+      "expected": "本機索引存在且全部版本相符才定位；修改資料／重連來源／變更模板字型Logo／換Library／索引到期時不誤定位，仍能閱讀歷史內容。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected",
+        "test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input",
+        "test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear",
+        "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    },
+    {
+      "id": "DIAG-A08",
+      "expected": "預覽後版本異動、取消、磁碟滿、權限失敗與撞名保持真實失敗；原稿、舊報告與成功成品不受損。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+        "test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup",
+        "test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    },
+    {
+      "id": "DIAG-A09",
+      "expected": "無可用原稿、字型或候選時仍可生成安全的「缺證據」文字報告，不強制先渲染原稿／原字型而卡死。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+        "test_diagnostic_reports.DiagnosticReportTests.test_missing_model_or_source_does_not_prevent_safe_text_report",
+        "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    },
+    {
+      "id": "DIAG-A10",
+      "expected": "非法schema、額外ZIP條目、路徑穿越、重複條目、symlink、超額／高壓縮檔、腳本與外部URL不執行／不解壓到任意位置。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+        "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+        "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    },
+    {
+      "id": "DIAG-A11",
+      "expected": "上限／截斷情況明示真實已檢查分母及未納入項，不默默刪失敗資料；GUI背景任務失敗後恢復控制並保留既有工作。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls",
+        "test_diagnostic_reports.DiagnosticReportTests.test_large_library_scope_and_bad_source_schema_fail_truthfully_recover",
+        "test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    },
+    {
+      "id": "DIAG-A12",
+      "expected": "實際Qt流程從原問題面板建立→預覽→取消／保存→離線閱讀→合法定位／過期拒絕均可操作；不用文件或schema代替介面實作。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls",
+        "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    },
+    {
+      "id": "DIAG-A13",
+      "expected": "新source固定GitHub後完整相關回歸、來源未異動、逐條證據／功能清單／checkpoint／交接/API讀回，才可標R1/R2完成；不自動打包EXE、不合併main。",
+      "status": "SELF_VERIFIED",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+        "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope"
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+    }
+  ],
+  "phases": [
+    "typed原驗證器與快照",
+    "安全封裝與本機定位",
+    "既有GUI流程與故障恢復",
+    "實際Qt及完整回歸",
+    "70原父題逐條缺口報告與GitHub讀回"
+  ],
+  "not_in_scope": [
+    "EXE",
+    "PDF診斷報告",
+    "完整個資包",
+    "自動外傳",
+    "印刷／UI048／UI056D前移"
+  ],
+  "remaining_parent_report": "docs/dev/PARTIAL_70_GAP_REPORT.md",
+  "evidence_scope": "SELF／Linux／匿名合成，Windows硬體及真AI視覺不冒稱驗證",
+  "source_commit": "fc5956bcbff2a068f36c4bbc440f938ca177d7e1",
+  "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+  "tests": 378,
+  "full_parent_completion_ids": [
+    "UI-066-R1",
+    "UI-066-R2"
+  ],
+  "snapshot_commit": "7889de735985fbb12c62e6d3981df6292a820c28",
+  "checkpoint": "docs/checkpoints/CP-20261015-DIAG-VERIFIED.receipt.json"
+}

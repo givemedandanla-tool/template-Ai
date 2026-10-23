@@ -1,0 +1,238 @@
+{
+  "parent": "UI-032",
+  "status": "IMPLEMENTED_SOFTWARE_TARGETED_NATIVE_REVIEWED_PENDING_IMMUTABLE_AND_EXTERNAL_QUALIFICATION",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "814e6d8bfc7943757c01477c2e8b107389fd9a0952eb718eb296b9ee6678480e",
+  "normative_clause_count": 10,
+  "clauses": [
+    {
+      "id": "UI-032-CLAUSE-1",
+      "expected": "使用者選擇 **D｜字型管理中心＋智慧匹配＋受控安裝**。",
+      "tests": [
+        "test_font_center.FontCenterGuiTests.test_background_snapshot_and_selection_show_references_without_mutating_templates",
+        "test_font_center.FontCenterGuiTests.test_gui_measures_selected_asset_without_modifying_published_pin",
+        "test_font_center.FontCenterGuiTests.test_real_background_inventory_and_diagnosis_return_plain_data",
+        "test_font_source_context_gui.FontSourceContextGuiTests.test_real_source_reference_and_current_face_match_do_not_rewrite_template_or_install"
+      ],
+      "external_requirement": null
+    },
+    {
+      "id": "UI-032-CLAUSE-2",
+      "expected": "**共用字型管理中心**：訓練、模板修正與當次排版／輸出可從同一 GUI 查看「Windows 已安裝字型」「程式可用的使用者匯入字型」「原稿缺失／未知字型與待審核替代候選」。可依來源字型名稱、字型家族／樣式、可用性、來源類型、是否缺字、授權或使用限制與處理狀態搜尋及篩選；不混淆「來源字型」「候選替代字型」與「實際已選用字型」。",
+      "tests": [
+        "test_windows_font_sources.WindowsFontSourceTests.test_actual_registered_source_file_does_not_prove_current_qt_face_or_licence",
+        "test_windows_font_sources.WindowsFontSourceTests.test_source_outside_known_directory_or_network_is_rejected_before_font_read",
+        "test_windows_font_sources.WindowsFontSourceTests.test_budget_exhaustion_is_partial_not_empty_complete_source_proof",
+        "test_windows_font_sources.WindowsFontSourceTests.test_mutated_during_actual_parse_is_not_retained_as_current_source",
+        "test_windows_font_sources.WindowsFontSourceTests.test_duplicate_registry_entries_share_byte_budget_without_losing_scopes",
+        "test_windows_font_sources.WindowsFontSourceTests.test_nonwindows_source_catalog_is_explicitly_unavailable_without_native_io",
+        "test_windows_font_sources.WindowsFontSourceTests.test_original_inventory_distinguishes_registered_file_qt_candidate_and_use_rights",
+        "test_font_center_filters.FontCenterFilterTests.test_import_or_system_availability_does_not_imply_recorded_use_rights",
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_actual_missing_glyph_and_covered_glyph_filters_keep_unmeasured_unknown",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font",
+        "test_font_source_context_gui.FontSourceContextGuiTests.test_current_text_glyph_filter_resets_old_coverage_then_lists_real_missing"
+      ],
+      "external_requirement": "Actual native Windows registered/active font and OS installation/elevation/undo qualification remains NOT_VERIFIED"
+    },
+    {
+      "id": "UI-032-CLAUSE-3",
+      "expected": "**優先找回原始字型**：根據 UI-031 的 Illustrator 原生文字／效果證據與字型識別資訊，優先比對原字型的真實身分和 Windows／程式字型來源，標明匹配是「已證實相同」「可能別名」「僅外觀近似」「未識別」，不能用名稱或畫面相似就宣告找回原字型。",
+      "tests": [
+        "test_font_source_identity.FontSourceIdentityTests.test_matching_declared_hash_without_actual_font_files_is_not_proof",
+        "test_font_source_identity.FontSourceIdentityTests.test_actual_valid_same_file_and_face_remain_separate_from_native_editability",
+        "test_font_source_identity.FontSourceIdentityTests.test_source_changed_after_snapshot_cannot_reuse_declared_hash",
+        "test_font_source_identity.FontSourceIdentityTests.test_corrupt_matching_bytes_cannot_be_promoted_to_a_font",
+        "test_font_source_identity.FontSourceIdentityTests.test_collection_same_file_with_other_face_is_not_same_face",
+        "test_font_source_identity.FontSourceIdentityTests.test_same_name_or_visual_similarity_only_remains_alias_or_unknown",
+        "test_font_source_identity.FontSourceIdentityTests.test_extracted_current_face_is_proved_from_exact_source_collection_index",
+        "test_font_source_context_gui.FontSourceContextGuiTests.test_real_source_reference_and_current_face_match_do_not_rewrite_template_or_install",
+        "test_font_source_context_gui.FontSourceContextGuiTests.test_registered_source_file_comparison_is_separate_from_current_qt_selected_face"
+      ],
+      "external_requirement": "Actual native Windows registered/active font and OS installation/elevation/undo qualification remains NOT_VERIFIED"
+    },
+    {
+      "id": "UI-032-CLAUSE-4",
+      "expected": "**人工匯入字型檔**：提供使用者自本機選取其有權使用的字型來源，先檢查可解析格式、來源完整性、家族／款式、必要中文字／數字／符號覆蓋、字寬量測、授權及可能的安全風險；可讓使用者確認後在**程式自身可使用的範圍內**使用字型，**不應預設需要 Windows 系統安裝**。程式內字型載入能力、支援字型格式及 PDF 嵌入／轉出合法性仍待實作可行性驗證，不能將尚未核實的格式宣告為必然可用。",
+      "tests": [
+        "test_font_center.FontCatalogTests.test_asset_identity_and_draft_published_template_impacts_preserved",
+        "test_font_center.FontCatalogTests.test_coverage_counts_unique_codepoints_and_missing_nonbmp_without_fallback",
+        "test_font_collection_shaping.FontCollectionShapingTests.test_actual_extracted_collection_face_measures_and_renders_with_same_shaped_face",
+        "test_font_collection_shaping.FontCollectionShapingTests.test_actual_same_family_with_changed_metric_table_is_still_rejected_for_shaping",
+        "test_font_evidence.FontEvidenceTests.test_collection_requires_face_then_persists_actual_selected_family_and_source_hash",
+        "test_font_evidence.FontEvidenceTests.test_font_change_after_attestation_is_still_rejected_by_health_gate"
+      ],
+      "external_requirement": null
+    },
+    {
+      "id": "UI-032-CLAUSE-5",
+      "expected": "**Windows 系統安裝需要獨立明確授權**：只有使用者主動選擇「安裝至 Windows」並確認字型來源、授權、影響範圍（例如目前使用者／全系統）、可能管理員權限及可回復方法，才可嘗試操作；禁止匯入時自動安裝、因修復而靜默變更 Windows 字型、擅自搜尋下載未授權字型或替使用者接受使用條款。程式內使用與系統安裝在畫面上必須是**不同動作和狀態**。",
+      "tests": [
+        "test_windows_font_workflow.WindowsFontWorkflowTests.test_import_approval_never_supplies_nonliteral_or_missing_windows_consent",
+        "test_windows_font_workflow.WindowsFontWorkflowTests.test_nonwindows_refuses_even_with_explicit_consent",
+        "test_windows_font_workflow.WindowsFontWorkflowTests.test_confirmed_exact_current_font_opens_only_viewer_and_never_claims_installation",
+        "test_windows_font_workflow.WindowsFontWorkflowTests.test_changed_source_is_not_opened_under_old_authorization",
+        "test_windows_font_workflow.WindowsFontWorkflowTests.test_mutation_after_inspection_is_rejected_before_os_action",
+        "test_windows_font_workflow.WindowsFontWorkflowTests.test_blank_or_control_character_actor_and_permission_are_rejected",
+        "test_windows_font_workflow_gui.WindowsFontWorkflowGuiTests.test_current_linux_action_stays_disabled_and_direct_call_does_not_launch",
+        "test_windows_font_workflow_gui.WindowsFontWorkflowGuiTests.test_independent_default_no_and_final_decline_never_start_backend",
+        "test_windows_font_workflow_gui.WindowsFontWorkflowGuiTests.test_confirmed_mock_os_handoff_keeps_pending_state_and_restores_owned_controls"
+      ],
+      "external_requirement": "Actual native Windows registered/active font and OS installation/elevation/undo qualification remains NOT_VERIFIED"
+    },
+    {
+      "id": "UI-032-CLAUSE-6",
+      "expected": "**智慧匹配僅提供候選**：原字型確實不可用時，顯示候選字型與原稿視覺、已知文字內容的**字形、字寬、字距、中文字形覆蓋、實體字級及溢出風險**比較。候選按可核實的來源與品質顯示理由和不確定性；不得假稱候選等於原稿字型、不得無聲替換來源檔或批次修改所有欄位。",
+      "tests": [
+        "test_font_candidates.FontCandidateTests.test_hard_filter_missing_glyph_never_produces_fallback_width",
+        "test_font_candidates.FontCandidateTests.test_unapproved_missing_modified_unknown_are_excluded_with_reasons",
+        "test_font_candidates.FontCandidateTests.test_exact_horizontal_boundary_preserves_size_and_full_text",
+        "test_font_candidates.FontCandidateTests.test_source_identity_precedes_width_rank_and_unknown_reference_has_no_score",
+        "test_font_candidates.FontCandidateTests.test_reference_width_is_measured_and_missing_reference_stays_unknown",
+        "test_font_candidates.FontCandidateTests.test_reference_delta_orders_actual_different_widths",
+        "test_font_candidates.FontCandidateTests.test_reference_modified_during_measurement_does_not_publish_width",
+        "test_font_candidates.FontCandidateTests.test_reference_can_measure_width_even_if_frame_fit_fails",
+        "test_font_candidates.FontCandidateTests.test_permutation_and_duplicate_identity_do_not_change_rank_or_measure_twice",
+        "test_font_candidates.FontCandidateTests.test_face_bytes_and_inventory_limits_are_explicit_partial",
+        "test_font_candidates.FontCandidateTests.test_empty_invalid_and_over_budget_requests_do_not_claim_success",
+        "test_font_candidates.FontCandidateTests.test_preview_real_png_fixed_point_size_and_bounded_frame",
+        "test_font_candidates.FontCandidateTests.test_preview_rejects_modified_file_and_same_width_changed_text",
+        "test_font_candidates.FontCandidateTests.test_changed_shaping_identity_blocks_candidate_and_preview",
+        "test_font_candidates.FontCandidateTests.test_search_preview_leave_published_pin_registry_and_source_bytes_unchanged",
+        "test_font_candidates.FontCandidateGuiTests.test_shared_center_entry_has_explicit_unchecked_reference_and_no_auto_selection",
+        "test_font_candidates.FontCandidateGuiTests.test_real_worker_search_selection_preview_and_readonly_state",
+        "test_font_candidates.FontCandidateGuiTests.test_input_changes_reject_late_search_and_preview_results",
+        "test_font_candidates.FontCandidateGuiTests.test_real_worker_failure_restores_controls_and_retry_succeeds",
+        "test_font_candidates.FontCandidateGuiTests.test_modified_preview_clears_old_image_and_can_requery",
+        "test_font_candidates.FontCandidateGuiTests.test_empty_missing_glyph_and_no_candidate_are_visible_not_success",
+        "test_font_candidates.FontCandidateGuiTests.test_callback_error_still_restores_dialog_controls",
+        "test_font_candidates.FontCandidateGuiTests.test_partial_search_warning_remains_visible_after_preview"
+      ],
+      "external_requirement": null
+    },
+    {
+      "id": "UI-032-CLAUSE-7",
+      "expected": "**可見的審核／影響範圍**：使用者核准某個字型的本次使用或高風險替代時，清楚顯示會影響的模板、人物／公司文字框、版面預覽與可否正式輸出；符合 UI-008 的單例修正與全球學習規則審核分離，不自動將單一替代候選擴大成全部模板的永久對映。更細的「替代套用範圍／差異比較與批次確認」介面留 UI-033。",
+      "tests": [
+        "test_font_review.FontReviewTests.test_high_risk_unreviewed_unselected_duplicate_and_forged_ticket_rejected",
+        "test_font_review.FontReviewTests.test_selected_only_new_draft_preserves_publication_geometry_and_no_raw_text",
+        "test_font_review.FontReviewTests.test_undo_redo_persist_after_reopen_and_reject_later_editor_change",
+        "test_font_review.FontReviewTests.test_undo_publish_aba_and_late_failure_do_not_overwrite",
+        "test_font_review.FontReviewTests.test_modified_target_blocks_prepare_and_redo_while_undo_keeps_draft_gate",
+        "test_font_review.FontReviewTests.test_multi_draft_undo_late_failure_rolls_back_scope_and_can_retry",
+        "test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow",
+        "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write"
+      ],
+      "external_requirement": null
+    },
+    {
+      "id": "UI-032-CLAUSE-8",
+      "expected": "**遵守字級與 Logo 既定規則**：UI-013 先定案的欄位字級不得因字串長度或換字型而由系統偷偷更動；字型變更後須重新測量真實文字寬度、可允許的水平縮放／字距、中文字形與安全區、完整性／重疊／可讀性。UI-020 複合 Logo 內圖文仍須作為一個 Logo 資產保護，不能擅自替換 Logo 內的字型或拆字。",
+      "tests": [
+        "test_first_version.FirstVersionTests.test_fixed_size_long_text_is_blocked_without_mutation",
+        "test_font_center.FontCatalogTests.test_changed_asset_and_different_shaping_face_block_even_if_system_family_exists",
+        "test_font_center.FontCatalogTests.test_horizontal_fit_boundary_does_not_change_size_or_drop_text",
+        "test_font_center.FontCatalogTests.test_real_shaping_mm_scales_linearly_and_matches_independent_font_metrics",
+        "test_font_collection_shaping.FontCollectionShapingTests.test_actual_extracted_collection_face_measures_and_renders_with_same_shaped_face",
+        "test_font_collection_shaping.FontCollectionShapingTests.test_actual_same_family_with_changed_metric_table_is_still_rejected_for_shaping"
+      ],
+      "external_requirement": null
+    },
+    {
+      "id": "UI-032-CLAUSE-9",
+      "expected": "**輸出與授權 Gate**：正式 PDF／PNG／JPG 需依實際輸出格式、字型來源、字形涵蓋、授權／可嵌入性（適用時）、列印品質及最新驗證結果判定；即使程式內可預覽，亦不表示可合法嵌入 PDF 或正式印製。不足或未知時須明示原因並限制正式輸出，仍可在 UI-027／UI-028 規則下提供清楚標記問題的非正式診斷預覽。",
+      "tests": [
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_candidate_mutation_during_encoding_cannot_publish_stale_approval",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_codec_success_flag_with_corrupt_png_bytes_does_not_publish",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_corrupt_pdf_after_page_box_writer_cannot_publish",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_current_source_pixel_shortfall_blocks_final_but_retains_marked_preview",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_pdf_boolean_sampling_setting_is_not_silently_ignored",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_sufficient_actual_pixels_and_original_gate_can_publish_exact_png",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_png_wrong_pixels_cannot_publish_on_dimensions_alone",
+        "test_font_collection_shaping.FontCollectionShapingTests.test_actual_extracted_collection_face_measures_and_renders_with_same_shaped_face",
+        "test_font_collection_shaping.FontCollectionShapingTests.test_actual_same_family_with_changed_metric_table_is_still_rejected_for_shaping",
+        "test_font_evidence.FontEvidenceTests.test_actual_export_blocks_unknown_rights_allows_labelled_preview_and_only_new_explicit_binding_gets_rights",
+        "test_font_evidence.FontEvidenceTests.test_approval_is_per_face_does_not_install_or_modify_templates_and_invalid_font_never_registers",
+        "test_font_evidence.FontEvidenceTests.test_collection_requires_face_then_persists_actual_selected_family_and_source_hash",
+        "test_font_evidence.FontEvidenceTests.test_font_change_after_attestation_is_still_rejected_by_health_gate",
+        "test_font_evidence.FontEvidenceTests.test_technical_embedding_flags_never_supply_legal_rights_and_pdf_restrictions_are_stricter",
+        "test_host_font_source_rights.HostFontSourceRightsTests.test_actual_host_font_without_record_cannot_publish_but_can_mark_preview",
+        "test_host_font_source_rights.HostFontSourceRightsTests.test_original_named_checklist_blocks_unknown_font_source_and_points_to_fields",
+        "test_host_font_source_rights.HostFontSourceRightsTests.test_unknown_host_rights_are_not_empty_success_for_any_formal_format"
+      ],
+      "external_requirement": null
+    },
+    {
+      "id": "UI-032-CLAUSE-10",
+      "expected": "**隱私與資產保護**：字型檔與任何需授權的 Illustrator 來源由本機受控管理；未經允許不可上傳 GitHub、公開存放或透過網路傳輸，不能誤認字型檔來源的授權為自動授權公開散布。字型管理資產與不持久保存的當次客戶案件資料分離。",
+      "tests": [
+        "test_font_capture_privacy.FontCapturePrivacyTests.test_raw_font_formats_and_private_capture_libraries_are_ignored_by_actual_git",
+        "test_dev_framework.DevFrameworkTests.test_checkpoint_manifest_excludes_private_capture_libraries_but_keeps_public_report"
+      ],
+      "external_requirement": null
+    }
+  ],
+  "native_review": "docs/qa/targeted/ui032-native-025-visual-review.json",
+  "targeted_evidence": [
+    "docs/qa/targeted/ui032-font-source-coherent-022.log",
+    "docs/qa/targeted/ui032-font-privacy-coherent-023.log",
+    "docs/qa/targeted/ui032-font-ignore-024.log"
+  ],
+  "scope": "Actual fontTools/Qt on Linux plus explicit fake OS launcher/source records, not Windows/native Illustrator qualification or real source-user legal licence audit. Physical printing deferred perREV03, digital source/rights/Gate tested. Unknown host source blocks formal; original source parser/centre/review/export reused.",
+  "digital_native_review": "docs/qa/targeted/ui032-digital-native-028-visual-review.json",
+  "targeted_results": {
+    "coherent_022": {
+      "tests": 105,
+      "pass": 105,
+      "actual_exit": 0
+    },
+    "privacy_core_023": {
+      "tests": 51,
+      "pass": 51,
+      "actual_exit": 0
+    },
+    "font_ignore_024": {
+      "tests": 1,
+      "pass": 1,
+      "actual_exit": 0
+    },
+    "native_025": {
+      "screens": 10,
+      "individually_viewed": 10,
+      "actual_exit": 0
+    },
+    "legacy_smoke_027": {
+      "screens": 49,
+      "exports": 6,
+      "individually_viewed": 0,
+      "actual_exit": 0
+    },
+    "digital_native_028": {
+      "screens": 17,
+      "individually_viewed": 17,
+      "actual_exit": 0
+    },
+    "wide_016": {
+      "tests": 245,
+      "pass": 243,
+      "errors": 2,
+      "actual_exit": 1,
+      "fixture_correction_018_tests": 9,
+      "fixture_correction_018_exit": 0,
+      "whole245_rerun": false
+    }
+  },
+  "previous_source_pin": {
+    "sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+    "scope": "HISTORICAL_WHOLE_FILE"
+  },
+  "source_hash_scope": "ORIGINAL_PARENT_SECTION",
+  "current004_repair_evidence": {
+    "isolated_004": "docs/qa/targeted/current004-isolated-004/summary.json",
+    "governance_005": "docs/qa/targeted/current004-governance-005.log",
+    "native_smoke_011": "docs/qa/targeted/current005-native-smoke-011.json",
+    "full_current_source": "PENDING_CURRENT005"
+  }
+}

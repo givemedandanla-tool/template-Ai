@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "screens": [
+    "batch-correction-01-loaded-coverage-no-global-claim.png",
+    "batch-correction-02-filtered-hidden-explicit-selection.png",
+    "batch-correction-03-real-preflight-fixed-font-differences.png",
+    "batch-correction-04-real-cancel-scope-confirmation.png",
+    "batch-correction-05-real-approved-fixed-scope.png",
+    "batch-correction-06-real-shared-worker-processing.png",
+    "batch-correction-07-partial-results-no-full-pass.png",
+    "batch-correction-08-real-safe-retry-confirmation.png",
+    "batch-correction-09-operation-readback-no-duplicate-write.png",
+    "batch-correction-10-real-single-transaction-inverse-scope.png",
+    "batch-correction-11-single-inverse-retains-other-success.png",
+    "batch-correction-12-exact-locked-source-existing-location.png"
+  ],
+  "actual_gui": true,
+  "qt_errors": [],
+  "scope": "UI065 source-stage only: authored controlled Linux actual Qt dialogs, existing shared worker/owned SQLite, source transactions and exact original history; no complete UI065/candidate/recovery/Windows/private Illustrator qualification",
+  "fixture_preparation": [
+    "Three authored SVG source works; one explicit locked metadata setup",
+    "Actual Library.apply_object_edit temporarily waits on owned Event to expose processing; original write executes after release, not a simulated outcome"
+  ],
+  "paid_services": false,
+  "automatic_training": false
+}

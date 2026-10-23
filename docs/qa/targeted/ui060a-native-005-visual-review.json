@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "reviewer": "SELF_VISUAL_REVIEW",
+  "reviewed_utc": "2026-10-16T13:09:08.630491+00:00",
+  "scope": "All8 native005 views individually opened/inspected; synthetic Linux only",
+  "screens": [
+    {
+      "path": "docs/qa/targeted/ui060a-native-005/candidate-results-01-current-qualified-finite-recommendation.png",
+      "sha256": "897d30a03df2865fc201ad1b33e4c309d3c2bd69b333f2e2aa25939f446ea295",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui060a-native-005/candidate-results-02-nonformal-gate-differences.png",
+      "sha256": "6e37a30a392a63d6a71f8a507af204e8e7b6f9adcb407732f528dbbdc6299d69",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui060a-native-005/candidate-results-03-blocked-selection-retains-qualified-recommendation.png",
+      "sha256": "dfc9ce5f3bbee62e7e26854e9c4c61585251ef6cf2af6d581ec19a63f1ed1198",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui060a-native-005/candidate-results-04-typed-name-field-and-frame-location.png",
+      "sha256": "edb1505fa27c28d8d8c05af7911cc2692f18a5b13f6a13dad3b937c919f3c723",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui060a-native-005/candidate-results-05-stale-comparison-not-selected.png",
+      "sha256": "8940c9533c351f4e64208009df199bc6df478282423f689d670d778316f05e58",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui060a-native-005/candidate-results-06-long-phone-no-safe-recommendation.png",
+      "sha256": "824c56c154e7fb5cc49c1eed21f3b2e922452ca4f6599fd6360fde5935548f82",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui060a-native-005/candidate-results-07-stable-field-in-actual-person-card.png",
+      "sha256": "fb95e412d2b300f1a2837f0bf8b7ac6789b059fb10d8c5ab07efa02fbf94a4c1",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui060a-native-005/candidate-results-08-partial-scope-not-global-optimum.png",
+      "sha256": "d8eaf3831324f5aacb6a65ffd8b4627b0a9004c22cdc12a25bb834e58fce1aad",
+      "status": "VISUALLY_REVIEWED"
+    }
+  ],
+  "findings": [
+    "Finite qualified recommendation and exact declared scope counts visible; no global optimality/confidence claim",
+    "Marked nonformal side-by-side views show actual fixed-font width failure and named Gate difference",
+    "Blocked selection retains safe alternative and formal output stays disabled",
+    "Legacy source field row is actually visible and highlighted with corresponding frame; no geometry writes",
+    "Outdated comparison visibly disabled; no selection overwrite",
+    "Long phone yields no safe recommendation; structured card opens exact stable field ID with actual validation warning",
+    "Partial scope2of3/unstarted1 visibly distinct from complete search"
+  ],
+  "limits": [
+    "Preformal capture source; subsequent strict current-dimension gate hardening covered by regression007/combined008; formal batch must recapture current source"
+  ]
+}

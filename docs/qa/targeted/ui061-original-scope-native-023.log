@@ -1,0 +1,41 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+FAIL: test_actual_three_target_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100 (test_sync_workflow.SyncWorkflowTests.test_actual_three_target_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_sync_workflow.py", line 32, in test_actual_three_target_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100
+    f.wait();self.assertEqual([r['state'] for r in dialog.results],['APPLIED_VERIFIED','VALIDATION_FAILED']);self.assertEqual(f.candidate('B90').template.slots[0].rect.x,before_b['slots'][0]['rect']['x']);self.assertEqual(f.candidate('B90').template.slots[0].align,'center');self.assertEqual(f.candidate('C100').template.to_dict(),before_c)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['VALIDATION_FAILED', 'VALIDATION_FAILED'] != ['APPLIED_VERIFIED', 'VALIDATION_FAILED']
+
+First differing element 0:
+'VALIDATION_FAILED'
+'APPLIED_VERIFIED'
+
+- ['VALIDATION_FAILED', 'VALIDATION_FAILED']
+?   -    ^^ --- - -
+
++ ['APPLIED_VERIFIED', 'VALIDATION_FAILED']
+?    ++  + ^^^^
+
+
+======================================================================
+FAIL: test_authored_scope_has_two_real_qualified90_candidates_and_failed100_specific_logo (test_sync_workflow.SyncWorkflowTests.test_authored_scope_has_two_real_qualified90_candidates_and_failed100_specific_logo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_sync_workflow.py", line 18, in test_authored_scope_has_two_real_qualified90_candidates_and_failed100_specific_logo
+    f=self.fx;self.assertEqual(len(f.w.active_input_graph.data['people']),2);self.assertEqual(len(f.w.active_input_graph.data['companies']),2);self.assertEqual(sum(len(e['candidates']) for e in f.d.service.entries),3);self.assertTrue(f.candidate('A90').formal_eligible);self.assertTrue(f.candidate('B90').formal_eligible);self.assertFalse(f.candidate('C100').formal_eligible);self.assertTrue(any(r['code']=='LOGO_MISSING' and r['owner']=='c2' for r in f.candidate('C100').diagnostics))
+                                                                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 6 tests in 10.761s
+
+FAILED (failures=2)

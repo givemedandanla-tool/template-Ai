@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "checked_utc": "2026-10-22T16:33:32.630683+00:00",
+  "tag": "v0.2.0-beta.2",
+  "source_commit": "af97b108b3a19c0d4eab3a6741ab716c732e0aea",
+  "public_release_url": "https://github.com/givemedandanla-tool/template-Ai/releases/tag/v0.2.0-beta.2",
+  "checks": [
+    {
+      "asset": "release-manifest.json",
+      "method": "ACTUAL_PUBLIC_GET_BYTE_FOR_BYTE_NATIVE_EVIDENCE_MATCH",
+      "bytes": 2768756,
+      "sha256": "a13e654945e685ec8436df4d001c1ddfff4fb184b8a236786c1507ac0bbaf99b",
+      "status": "PASS"
+    },
+    {
+      "asset": "SHA256SUMS.txt",
+      "method": "ACTUAL_PUBLIC_GET_BYTE_FOR_BYTE_NATIVE_EVIDENCE_MATCH",
+      "bytes": 305,
+      "sha256": "aaee9200fa6a17a43182f10d4dde9d3d5cfc496799057666f3e92c3191f28975",
+      "status": "PASS"
+    },
+    {
+      "asset": "TemplateAI-v0.2.0-beta.2-windows-x64.zip",
+      "method": "PUBLIC_HEAD_NOT_FULL_CLOUD_DOWNLOAD",
+      "http_status": 200,
+      "content_length": "316795056",
+      "expected_bytes": 316795056,
+      "status": "PASS"
+    },
+    {
+      "asset": "inkscape-1.4.2-corresponding-sources.zip",
+      "method": "PUBLIC_HEAD_NOT_FULL_CLOUD_DOWNLOAD",
+      "http_status": 200,
+      "content_length": "908375828",
+      "expected_bytes": 908375828,
+      "status": "PASS"
+    }
+  ],
+  "full_archives_downloaded_and_verified_on": "ACTUAL_WINDOWS_GITHUB_RUNNER_SEE_windows-native-004/download/download-verification.json",
+  "no_large_archives_downloaded_to_cloud_workspace": true
+}

@@ -1,0 +1,34 @@
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/capture_batch_correction.py", line 112, in <module>
+    parser=argparse.ArgumentParser();parser.add_argument('--folder',required=True);args=parser.parse_args();r=capture(args.folder);print(json.dumps({k:v for k,v in r.items() if k!='screens'},ensure_ascii=False))
+                                                                                                              ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/capture_batch_correction.py", line 106, in capture
+    source=capture_source(folder);candidate=capture_candidate(folder);folder=Path(folder)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/capture_batch_correction.py", line 97, in capture_candidate
+    confirm('27-selected-original-transaction-inverse');d.undo();case.wait();assert f.candidate('B90').template.to_dict()==b;assert next(s for s in f.candidate('A90').template.slots if s.id==ids['A90']).align=='left';shot(d,'28-partial-inverse-retains-other-candidate')
+                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

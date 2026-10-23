@@ -1,0 +1,215 @@
+"""驗證要求／證據／交接的一致性；機器清單生成 Human 視圖，不反向猜狀態。"""
+import argparse
+import ast
+import json
+from pathlib import Path
+import re
+
+from dev_common import ROOT, contract_digest, digest, manifest, manifest_digest, read_json, safe_path
+
+
+def verify_exe_authorization(root, state):
+    """Preserve manual-only history; allow only the explicitly requested beta ref."""
+    workflow = (Path(root) / '.github/workflows/first-version.yml').read_text(encoding='utf-8')
+    if state['exe_policy'] == 'DEFERRED_NO_AUTOMATIC_BUILD':
+        if re.search(r'^  (push|pull_request):', workflow, re.MULTILINE):
+            raise ValueError('EXE 工作流程仍會自動觸發')
+        return
+    pending = state.get('pending_release', {})
+    release = pending if pending.get('version') == '0.2.0-beta.2' else state.get('windows_release', {})
+    version = release.get('version')
+    authorization = release.get('authorization', {})
+    allowed = {
+        '0.2.0-beta.1': ('EXPLICIT_V0_2_0_BETA_1_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD',
+                       '好，現在我要你在github發佈程式本體exe，讓我投入實機測試'),
+        '0.2.0-beta.2': ('EXPLICIT_V0_2_0_BETA_2_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD',
+                       '參用隨包附帶方案，完善代碼後，打包成exe發佈到release'),
+    }
+    if (version not in allowed or state['exe_policy'] != allowed[version][0]
+            or authorization.get('scope') != 'PUBLISH_WINDOWS_INTERNAL_BETA'
+            or authorization.get('user_request') != allowed[version][1]):
+        raise ValueError('EXE 發佈缺少本次明確授權')
+    expected = ['  workflow_dispatch:', '  push:', "    branches: ['release-request/v"+version+"']"]
+    if workflow.count('\non:\n') != 1:
+        raise ValueError('EXE 觸發條件必須唯一且明確')
+    section = workflow.split('\non:\n', 1)[1].split('\npermissions:', 1)[0]
+    lines = [line for line in section.splitlines() if line.strip() and not line.lstrip().startswith('#')]
+    if lines != expected:
+        raise ValueError('只允許人工啟動或本次明確發佈分支，禁止一般push／PR自動打包')
+
+
+def test_ids(root):
+    ids = set()
+    for path in (Path(root) / "tests").glob("test_*.py"):
+        for node in ast.parse(path.read_text(encoding="utf-8")).body:
+            if isinstance(node, ast.ClassDef):
+                for method in node.body:
+                    if isinstance(method, ast.FunctionDef) and method.name.startswith("test_"):
+                        ids.add(f"{path.stem}.{node.name}.{method.name}")
+    return ids
+
+
+def verify_run(root, run_path, current=True):
+    root = Path(root)
+    run_file = safe_path(root, run_path)
+    run = read_json(run_file)
+    folder = run_file.parent
+    files = read_json(folder / "source-manifest.json")
+    if manifest_digest(files) != run["source_manifest_sha256"]:
+        raise ValueError("證據的來源 manifest 已变更")
+    if current and manifest_digest(manifest(root, code_only=True)) != run["source_manifest_sha256"]:
+        raise ValueError("證據已過期：程式／測試／fixture 已變更，需重新驗證")
+    commit, tree = read_json(folder / "commit.json"), read_json(folder / "tree.json")
+    if commit["sha"] != run["source_commit"] or commit["tree"]["sha"] != tree["sha"] or tree.get("truncated"):
+        raise ValueError("證據來源 commit／tree 不符")
+    remote = {item["path"]: item["sha"] for item in tree["tree"] if item["type"] == "blob"}
+    if any(remote.get(path) != item["git_blob_sha1"] for path, item in files.items()):
+        raise ValueError("證據來源與 GitHub 讀回 tree 不一致")
+    from evidence_publication import waived_attachments
+    waived, _ = waived_attachments(root, run_path, run)
+    for name, item in run["attachments"].items():
+        path = safe_path(folder, name)
+        if not path.is_file() and str(path.relative_to(root)).replace('\\', '/') in waived:
+            continue  # Existing-but-corrupt originals never qualify for a publication waiver.
+        if not path.is_file() or path.stat().st_size != item["bytes"] or digest(path.read_bytes()) != item["sha256"]:
+            raise ValueError("證據附件失聯或内容變更：" + name)
+    tests = read_json(folder / "tests.json")
+    if digest((folder / "tests.json").read_bytes()) != run["tests_sha256"]:
+        raise ValueError("個別測試結果已變更")
+    ids = [test["id"] for test in tests]
+    if len(ids) != len(set(ids)) or not ids:
+        raise ValueError("測試結果重複或沒有實際測試")
+    return run, {test["id"]: test for test in tests}
+
+
+def execution_passed(run, results):
+    """Independent scope evidence requires a complete, clean software execution.
+
+    A different parent's external qualification may keep the overall goal FAIL;
+    it cannot turn failed/skipped/incomplete execution into usable evidence.
+    """
+    if not results or any(row.get('status')!='PASS' for row in results.values()):return False
+    if 'software_execution_status' not in run:return run.get('status')=='PASS'
+    if run.get('status') not in ('PASS','FAIL') or run.get('software_execution_status')!='PASS':return False
+    count=len(results)
+    for key,expected in [('test_count',count),('planned_test_count',count),('passed',count),('not_completed_test_count',0),('unhandled_runtime_errors',0),('capture_exit_code',0)]:
+        if type(run.get(key)) is not int or run[key]!=expected:return False
+    return run.get('source_unchanged') is True
+
+
+def verify_acceptance(row,run,results,claims):
+    acceptance=row['acceptance'];matching=[c for c in claims if c['requirement_id']==row['id']]
+    expected=[a['id'] for a in acceptance];actual=[c['acceptance_id'] for c in matching]
+    if not acceptance or len(actual)!=len(set(actual)) or sorted(actual)!=sorted(expected):raise ValueError('完整要求驗收證據不齊全：'+row['id'])
+    if any(c.get('contract_sha256')!=contract_digest(row) for c in matching):raise ValueError('要求驗收範圍已變更，舊證據不可沿用：'+row['id'])
+    if not execution_passed(run,results):raise ValueError('軟體執行未完整逐項 PASS，不能完成任何要求')
+    for clause in acceptance:
+        claim=next(c for c in matching if c['acceptance_id']==clause['id'])
+        if claim.get('status')!='PASS' or not clause['tests'] or any(results.get(t,{}).get('status')!='PASS' for t in clause['tests']):raise ValueError('驗收尚未逐項 PASS：'+row['id'])
+
+
+def check(root=ROOT, require_evidence=False, publication_scope=False):
+    require_evidence = require_evidence or publication_scope
+    root = Path(root)
+    for path in ("AGENTS.md", ".github/copilot-instructions.md", "docs/dev/STATE.json", "docs/dev/HANDOFF.md",
+                 "docs/dev/WORK_LOG.md", "docs/dev/REQUIREMENTS.json", "docs/dev/DEVELOPMENT_PROTOCOL.md", "docs/dev/EVIDENCE_DESIGN.md"):
+        if not (root / path).is_file():
+            raise ValueError("缺少開工入口或交接檔：" + path)
+    state = read_json(root / "docs/dev/STATE.json")
+    registry = read_json(root / "docs/dev/REQUIREMENTS.json")
+    rows = registry["requirements"]
+    ids = [row["id"] for row in rows]
+    if len(ids) != len(set(ids)):
+        raise ValueError("要求 ID 重複")
+    remaining_contract = root / "docs/dev/FIXED70_REMAINING28_CONTRACT.json"
+    if remaining_contract.is_file():
+        contract = read_json(remaining_contract)
+        indexed = contract.get("acceptance", [])
+        for row in rows:
+            if row["id"] in contract.get("target_parent_ids", []) and row.get("full_acceptance_registered"):
+                entry = next((item for item in indexed if item.get("parent") == row["id"]), {})
+                if not row["acceptance"] or entry.get("clause_count") != len(row["acceptance"]):
+                    raise ValueError("完整父題條款數與索引不符：" + row["id"])
+    tests = test_ids(root)
+    runs = {}
+    for row in rows:
+        if not isinstance(row["completed"], bool):
+            raise ValueError("要求需有明確 completed 布林")
+        for parent in row.get("parents", []):
+            if parent not in ids:
+                raise ValueError("父要求不存在：" + parent)
+        for acceptance in row["acceptance"]:
+            if any(test not in tests for test in acceptance["tests"]):
+                raise ValueError("驗收引用不存在的測試：" + row["id"])
+        if not row["completed"]:
+            continue
+        if row["status"] != "VERIFIED" or row["review_level"] != "SELF_VERIFIED":
+            raise ValueError("完成要求沒有合法驗證狀態：" + row["id"])
+        run_path = row.get("evidence_run")
+        if not run_path:
+            raise ValueError("完成要求缺少證據 run：" + row["id"])
+        if run_path not in runs:
+            runs[run_path] = verify_run(root, run_path)
+        run, results = runs[run_path]
+        claims = read_json(safe_path(root, run_path).parent / "claims.json")
+        verify_acceptance(row,run,results,claims)
+    verify_exe_authorization(root, state)
+    if "GOV-006" in ids:
+        from dev_progress import validate
+        validate(root)
+    receipt = read_json(safe_path(root, state["last_confirmed_checkpoint"]))
+    if receipt["phase"] != "REMOTE_VERIFIED":
+        raise ValueError("交接沒有已確認 GitHub checkpoint")
+    checkpoint = read_json(root / "docs/checkpoints" / (receipt["checkpoint_id"] + ".json"))
+    if receipt["source_manifest_sha256"] != manifest_digest(checkpoint["source_files"]):
+        raise ValueError("checkpoint 收據與原快照 manifest 不符")
+    if require_evidence and not state.get("latest_evidence_run"):
+        raise ValueError("框架尚未有最新實際證據")
+    if state.get("latest_evidence_run"):
+        latest, _ = verify_run(root, state["latest_evidence_run"])
+        if require_evidence:
+            folder = str(Path(state["latest_evidence_run"]).parent).replace("\\", "/")
+            required = [state["latest_evidence_run"], *[folder + "/" + name for name in latest["attachments"]]]
+            if publication_scope:
+                from evidence_publication import waived_attachments
+                waived, policies = waived_attachments(root, state['latest_evidence_run'], latest)
+                required = [path for path in required if path not in waived] + policies
+                for policy in policies:
+                    recorded = checkpoint['source_files'].get(policy)
+                    if not recorded or recorded['sha256'] != digest(safe_path(root, policy).read_bytes()):
+                        raise ValueError('證據保存例外policy未在該checkpoint核對，不能略過')
+            if any(path not in checkpoint["source_files"] for path in required):
+                raise ValueError("證據還未全部納入已確認的遠端 checkpoint，不能當作永久保存完成")
+    return {"status": "PASS", "requirements": len(rows), "completed_scoped": sum(row["completed"] for row in rows),
+            "parent_topics": sum(row["kind"] == "topic" for row in rows), "tests_known": len(tests)}
+
+
+def render(root=ROOT):
+    root = Path(root)
+    rows = read_json(root / "docs/dev/REQUIREMENTS.json")["requirements"]
+    lines = ["# 程式要求與功能清單", "", "本檔由 REQUIREMENTS.json 生成；完整 UI 主題與具明確驗收範圍的 CORE 分開。完成只表示該列的驗收範圍，不代表全產品或 Windows／真實 AI 已驗證。", "",
+             "| ID | 功能／要求 | 實作狀態 | 完成 | 範圍／延後條件 | 證據 |", "| --- | --- | --- | --- | --- | --- |"]
+    for row in rows:
+        evidence = f"[run](../../{row['evidence_run']})" if row.get("evidence_run") else "無有效新版證據"
+        name = row["title"].replace("|", "／")
+        scope = row["scope"].replace("|", "／")
+        lines.append(f"| {row['id']} | {name} | {row['status']} | {'是' if row['completed'] else '否'} | {scope} | {evidence} |")
+    lines += ["", "驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。"]
+    (root / "docs/dev/FEATURES.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    from dev_progress import render as render_progress
+    render_progress(root)
+    return {"rendered": len(rows)}
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("command", choices=("check", "render"))
+    parser.add_argument("--require-evidence", action="store_true")
+    parser.add_argument("--publication-scope", action="store_true", help="核對已核准保存範圍；不等於全附件永久保存")
+    args = parser.parse_args()
+    result = render() if args.command == "render" else check(require_evidence=args.require_evidence, publication_scope=args.publication_scope)
+    print(json.dumps(result))
+
+
+if __name__ == "__main__":
+    main()

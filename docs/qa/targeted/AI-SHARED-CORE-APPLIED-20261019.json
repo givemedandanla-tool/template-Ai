@@ -1,0 +1,38 @@
+{
+  "id": "AI-SHARED-CORE-APPLIED-20261019",
+  "executed_utc": "2026-10-19T06:20:10.087746+00:00",
+  "status": "36_CURRENT_PRODUCT_TARGETED_MECHANICS_PASS_FULL_REGRESSION_PENDING",
+  "tests": 36,
+  "passed": 36,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 59.184,
+  "command": "QT_QPA_PLATFORM=offscreen OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONPATH=tests .venv/bin/python -m unittest test_design_family test_design_learning test_design_source_binding test_design_synthesis test_design_ranking test_design_session -q",
+  "scope": "Actual installed product modules/dependencies;authored source fixtures and ephemeral synthetic trained models only;no real user corpus/deployment",
+  "files": {
+    "tests/test_design_family.py": "92c8c888face73847ff61bfbe8167a9b0e041c9cb951c5c77a4e8fc0a1318d3b",
+    "tests/test_design_learning.py": "26f954ee0bd1fbc0cedaab13bb5dab8ce18d1ff1d2f7b7e3dd1a0560f37debad",
+    "template_ai/design_session.py": "e93622c7069a4bda3033e1d790ce372d8508611ac24a8a0624a81d08f29aae9b",
+    "template_ai/design_family.py": "f7195c8e570dc5360dc21a88e36cf1abad1eaafbc64b05ca41c3c602de2b7b11",
+    "tests/test_design_session.py": "25e34754fb6828fb0c8237489e051034243bf8e096c56ba4af1fccf150bde8ed",
+    "template_ai/design_ranking.py": "8c7a4b2338d8718a9e2d8dd9dc7b6ee6d2ffef5589e6314ab9e24f22d7177264",
+    "template_ai/design_source_binding.py": "9fb7f44760a9ba5d0c8e61c32de38c52c474ab5e0407e9b42a885c56d07c935b",
+    "tests/test_design_source_binding.py": "db536322b6a020def2b37b45737fe211132722e0f704f6faf353147ef66ada2c",
+    "tests/test_design_ranking.py": "ba634bc589e44a354a1900bae80ebd81eca2b8f4493ba15e72d871972148e268",
+    "template_ai/design_synthesis.py": "8641474eff2b89d37be8db7f63fcfdabe41f20e683166a30a241c400035a3767",
+    "template_ai/design_profiles.py": "7172b311d53865a14f3b82e2e918776bdc8096ae9a534764bc91c58cfc2b15e1",
+    "tests/test_design_synthesis.py": "713b9be15e73b5aeff969931f92f9e0ea2fdd9fd4975be80ec522bef0e6ed877",
+    "template_ai/design_learning.py": "15ef1b3708691e94d4fcfa7a8198244f2a686ece2c257f2783aba4c93be7a922",
+    "requirements.txt": "4a60085d2e945cb0abcbad0d4f33b3671cadff780564891a872cb391f09e9873",
+    "requirements-lock.txt": "fc77791074d9b4bf657a3434e6faf4ebb785ca1319219f274c01ab93694108cd"
+  },
+  "known_limits": [
+    "Original PDF exact glyph provenance and native work segmentation still pending",
+    "Whole size-specific Logo synthesis explicitly abstains",
+    "Multiline shared measurement/render and joint conditional regression pending",
+    "Production generated-instance provenance/qualification not implemented;preview cannot bypass Gate",
+    "Desktop actual operation dialog pending",
+    "Real corpus and hardware qualification pending"
+  ]
+}

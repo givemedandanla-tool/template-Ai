@@ -1,0 +1,30 @@
+E
+======================================================================
+ERROR: test_noncode_capacity_semantics (unittest.loader._FailedTest.test_noncode_capacity_semantics)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_noncode_capacity_semantics
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/template-Ai/tests/test_noncode_capacity_semantics.py", line 9, in <module>
+    from template_ai.design_capacity import fit_capacity, capacity_advice
+  File "/workspace/template-Ai/template_ai/design_capacity.py", line 13, in <module>
+    from .training_store import digest, text
+  File "/workspace/template-Ai/template_ai/training_store.py", line 16, in <module>
+    from .trusted_samples import TrustedSampleMixin
+  File "/workspace/template-Ai/template_ai/trusted_samples.py", line 6, in <module>
+    from .batch_import import healthy_source
+  File "/workspace/template-Ai/template_ai/batch_import.py", line 10, in <module>
+    from .importer import import_file,cache_matches,MAX_PIXELS
+  File "/workspace/template-Ai/template_ai/importer.py", line 14, in <module>
+    from PySide6.QtCore import QSize
+ModuleNotFoundError: No module named 'PySide6'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

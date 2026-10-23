@@ -1,0 +1,134 @@
+{
+  "parent": "UI-032",
+  "status": "CORE_IDENTITY_FILTERS_WINDOWS_WORKFLOW_WIP",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "original_clauses": [
+    "使用者選擇 **D｜字型管理中心＋智慧匹配＋受控安裝**。",
+    "**共用字型管理中心**：訓練、模板修正與當次排版／輸出可從同一 GUI 查看「Windows 已安裝字型」「程式可用的使用者匯入字型」「原稿缺失／未知字型與待審核替代候選」。可依來源字型名稱、字型家族／樣式、可用性、來源類型、是否缺字、授權或使用限制與處理狀態搜尋及篩選；不混淆「來源字型」「候選替代字型」與「實際已選用字型」。",
+    "**優先找回原始字型**：根據 UI-031 的 Illustrator 原生文字／效果證據與字型識別資訊，優先比對原字型的真實身分和 Windows／程式字型來源，標明匹配是「已證實相同」「可能別名」「僅外觀近似」「未識別」，不能用名稱或畫面相似就宣告找回原字型。",
+    "**人工匯入字型檔**：提供使用者自本機選取其有權使用的字型來源，先檢查可解析格式、來源完整性、家族／款式、必要中文字／數字／符號覆蓋、字寬量測、授權及可能的安全風險；可讓使用者確認後在**程式自身可使用的範圍內**使用字型，**不應預設需要 Windows 系統安裝**。程式內字型載入能力、支援字型格式及 PDF 嵌入／轉出合法性仍待實作可行性驗證，不能將尚未核實的格式宣告為必然可用。",
+    "**Windows 系統安裝需要獨立明確授權**：只有使用者主動選擇「安裝至 Windows」並確認字型來源、授權、影響範圍（例如目前使用者／全系統）、可能管理員權限及可回復方法，才可嘗試操作；禁止匯入時自動安裝、因修復而靜默變更 Windows 字型、擅自搜尋下載未授權字型或替使用者接受使用條款。程式內使用與系統安裝在畫面上必須是**不同動作和狀態**。",
+    "**智慧匹配僅提供候選**：原字型確實不可用時，顯示候選字型與原稿視覺、已知文字內容的**字形、字寬、字距、中文字形覆蓋、實體字級及溢出風險**比較。候選按可核實的來源與品質顯示理由和不確定性；不得假稱候選等於原稿字型、不得無聲替換來源檔或批次修改所有欄位。",
+    "**可見的審核／影響範圍**：使用者核准某個字型的本次使用或高風險替代時，清楚顯示會影響的模板、人物／公司文字框、版面預覽與可否正式輸出；符合 UI-008 的單例修正與全球學習規則審核分離，不自動將單一替代候選擴大成全部模板的永久對映。更細的「替代套用範圍／差異比較與批次確認」介面留 UI-033。",
+    "**遵守字級與 Logo 既定規則**：UI-013 先定案的欄位字級不得因字串長度或換字型而由系統偷偷更動；字型變更後須重新測量真實文字寬度、可允許的水平縮放／字距、中文字形與安全區、完整性／重疊／可讀性。UI-020 複合 Logo 內圖文仍須作為一個 Logo 資產保護，不能擅自替換 Logo 內的字型或拆字。",
+    "**輸出與授權 Gate**：正式 PDF／PNG／JPG 需依實際輸出格式、字型來源、字形涵蓋、授權／可嵌入性（適用時）、列印品質及最新驗證結果判定；即使程式內可預覽，亦不表示可合法嵌入 PDF 或正式印製。不足或未知時須明示原因並限制正式輸出，仍可在 UI-027／UI-028 規則下提供清楚標記問題的非正式診斷預覽。",
+    "**隱私與資產保護**：字型檔與任何需授權的 Illustrator 來源由本機受控管理；未經允許不可上傳 GitHub、公開存放或透過網路傳輸，不能誤認字型檔來源的授權為自動授權公開散布。字型管理資產與不持久保存的當次客戶案件資料分離。"
+  ],
+  "normative_clause_count": 10,
+  "clause_count_method": "All10 approved normative bullets including selectedD; exclude historical no-development status only",
+  "references": [
+    {
+      "source": "fontTools4.60.1 TTFont.getBestCmap actual installed source",
+      "bytes": 1392,
+      "sha256": "8a51ef5611ee5d6747754eaf32dc1baff598429dee00f1885a1b072f51c0441c",
+      "reuse": "Existing FontManager/font_evidence/font_catalog parses bounded faces, real cmap and original Qt shaping; no new font parser"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/v3.4.0/install.ps1",
+      "bytes": 2150,
+      "sha256": "c53e05cd485c68f571e86fa30dc96f12e12cffb84ccc97c40e6ad13e43a2af5f",
+      "actually_read": "Lines18-64: existing Windows Shell namespace0x14/CopyHere and ShouldProcess",
+      "decision": "Do not run script or build silent registry/file installer. Reuse Windows original font viewer workflow behind separate explicit defaultNo consent; OS final scope/elevation/install remains independent and not claimed successful without evidence."
+    },
+    {
+      "commercial_idea": "Windows original Font Viewer and InDesign Find/Replace Font source/candidate/used distinction",
+      "existing_design": "docs/dev/FONT_CENTER_DESIGN.md",
+      "limit": "Public commercial UX idea only; no newly fetched commercial article claimed read, no installer download/service/payment"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MicrosoftDocs/win32/docs/desktop-src/gdi/font-installation-and-deletion.md",
+      "bytes": 3941,
+      "sha256": "50107384086584e5303a442990f2cd7662e5d2320f52bb3a8347965e00f0b7a7",
+      "actually_read": "Full official Font Installation and Deletion article; OS/device font table, temporary vs persistent loading, source file/registry/session lifecycle and WM_FONTCHANGE",
+      "reuse": "Continue original OS viewer handoff, no custom installer; read-only native registered-file source catalog must not equate registry/name availability with actual selected Qt face or licensing."
+    }
+  ],
+  "math": [
+    "Source file+face identity requires actual current bytes and observed source provenance; family names only aliases, rendering closeness only candidate",
+    "Reuse cmap coverage and real Qt shaping: fixed point size, ink width in millimetres and existing constrained horizontal ratio; no automatic font-size change",
+    "Current-input evidence cache and bounded current selected analyses; unknown glyph/license state never treated as complete coverage or rights"
+  ],
+  "reuse": [
+    "Original FontCenterDialog shared training/template/current output routes",
+    "Original FontManager app-local import/repair, font_catalog inventory/analyze_font, font_candidates ranking and font_review exact scope/version drafts",
+    "Original whole-card/digital_final output guards (UI019 now173 coherentPASS) and source_text_evidence; no duplicate font/learning DB or worker pool"
+  ],
+  "audit_findings": [
+    "Original identity_match trusts matching arbitrary declared hashes, no actual byte check and helper not connected to centre source evidence",
+    "Original centre supports kind/health/text query but lacks explicit current measured glyph/rights filters and source-vs-selected identity view",
+    "App-local font import is separate but no explicit Windows installation handoff/action/status; do not silently write system font directories or registry",
+    "Local manual QA capture can leave fonts/private working libraries beneath targeted evidence; .gitignore now excludes them before staging",
+    "008actual3FAIL: output_rights_errors(None) returns empty and render.export skips assetNone; system-host availability wrongly bypasses source/use-rights for formal PNG/PDF/JPG. Need block unknown host sources, keep marked preview, named rights checklist/slot routes and explicit real-font-positive fixture migration, no fixture-only production bypass.",
+    "TTC asset font_evidence.index is original source face index, not physical index of the extracted single-face app copy. Need exact current source face_bytes proof via original fontTools extractor; do not conflate or infer original AI font relationship.",
+    "Original host_candidates only Qt family list, which can include app-private faces; actual Windows registered-font source provenance is still missing software, not satisfied by a Linux/fake Windows branch. Add optional bounded registry/file catalog on original worker, explicit unavailable/partial and no original-AI/actual-selected-face/license inference."
+  ],
+  "packages": [
+    "A actual source/current selected face identity evidence and source-context UI; alias/unknown truthful if actual native source unavailable",
+    "B current-input measured glyph and use-rights filters, reason/coverage/impact labels through original centre, stale analysis fences",
+    "C separate explicit Windows original font-viewer handoff with literal consent, pinned source/family/license/recovery instructions; no app automatic installation, current Linux cannot qualify Windows installation outcome",
+    "D original GUI/native individual review, full10 mapping and coherent source tests; Windows install/hardware qualification external gap retained",
+    "E original shared-centre bounded read-only Windows registered font-file sources via native registry/known font directories + existing fontTools; distinguish registered source, actual Qt face and app asset. Unavailable/current Linux remains explicit; no registry/file writes/install/download."
+  ],
+  "planned_tests": [
+    "Forged or absent reference file cannot prove original font identity; exact actual bytes can prove byte match only with current source evidence, not native editability",
+    "Current source/template/face/style/input changes invalidate identity/glyph results; names/visual-only never original proof",
+    "Explicit glyph/license filters retain UNKNOWN and include exact impacted non-Logo slots only",
+    "Import/repair/candidate review never launches Windows action; defaultNo/nonliteral consent/stale bytes/nonWindows launch blocked; accepted Windows workflow uses fixed original viewer only, receipt remains PENDING_OS_ACTION",
+    "Real source/FontManager/font centre/approved-asset/old font review regressions and actual GUI captures; no font/private assets published",
+    "Read-only registered font sources: real local file/face hash, bounded budget/partial, path escape/remote/unsupported/corrupt or mutated source fail closed; Linux unavailable and original centre displays source versus actual selected face distinctly. Native Windows scan outcome remains external qualification."
+  ],
+  "external_limits": [
+    "Windows installed-font scan/install/undo/elevation actual behavior and IME/accessibility require a real authorized Windows machine; current Linux tests and fake adapters are not that qualification",
+    "Authorized nonempty native Illustrator/reference corpus remains external; derivative text/effects/names do not become native source evidence"
+  ],
+  "next": "Implement packagesA/B/C in original centre, current-source targeted tests/native, full10 map. Continue UI031/UI066/UI067/REV01/REV02/REV04; no routine questions.",
+  "core_WIP": {
+    "new_tests": 26,
+    "catalog_tests": 1522,
+    "identity_counterexamples": "docs/qa/targeted/ui032-identity-counterexamples-001.log",
+    "identity_api": "docs/qa/targeted/ui032-identity-api-002.log",
+    "core_filters": "docs/qa/targeted/ui032-core-filters-003.log",
+    "gui_failure": "docs/qa/targeted/ui032-context-gui-005.log",
+    "coherent_failure": "docs/qa/targeted/ui032-context-coherent-006.log",
+    "coherent_pass": "docs/qa/targeted/ui032-font-workflow-007.log",
+    "coherent_tests": 94,
+    "coherent_actual_exit": 0,
+    "host_rights_counterexamples": "docs/qa/targeted/ui032-host-font-counterexamples-008.log",
+    "host_rights_tests": 3,
+    "host_rights_actual_exit": 1,
+    "remaining": "Guard actual unknown host source/rights + explicit positive fixture source approval; TTC origin-vs-physical face identity; original Linux native/screens/full10 mapping; real Windows OS scan/install/undo external qualification. No completed parent promotion."
+  },
+  "host_source_guard_WIP": {
+    "new_tests": 27,
+    "catalog_tests": 1523,
+    "counterexample": "docs/qa/targeted/ui032-host-font-counterexamples-008.log",
+    "extracted_counterexample": "docs/qa/targeted/ui032-extracted-face-counterexample-010.log",
+    "guard_evidence": "docs/qa/targeted/ui032-host-source-guards-011.log",
+    "guard_actual_exit": 0,
+    "guard_tests": 10,
+    "fixture_migration": "docs/qa/targeted/ui032-explicit-font-fixtures-012.log",
+    "fixture_result": "48tests47PASS1FAIL intended missing-host-font test retained old asset and got correct family mismatch, fix removes its asset to preserve old missing-host cause",
+    "fixture_recheck": "docs/qa/targeted/ui032-source-guard-coherent-013.log",
+    "fixture_recheck_tests": 20,
+    "fixture_recheck_actual_exit": 0,
+    "native": "docs/qa/targeted/ui032-native-014-visual-review.json",
+    "native_actual_exit": 0,
+    "native_individually_reviewed": 10,
+    "result": "Shared font_rights_diagnostics in original render.export and named preflight FONT_USE_RIGHTS with exact fields; None/unknown source now blocks every formal format, marked preview lists reasons. Positive fixtures explicit real source/face/usage records via original FontManager; no production test bypass. Original source face_bytes proves extracted TC face, physical index0 distinct from source collection index. Rights GUI explicit defaultNo both questions. Font/source/multi-size/context/visual fixtures migrated, legacy fullcapture positive source migration pending actual smoke.",
+    "remaining": "Current all related coherent regression after real source binding, native/font/digital capture recapture and immutable Gate; full10 map including actual Windows origins/provenance still pending. Windows native install/scan actual qualification external."
+  },
+  "current_coherent_WIP": {
+    "batch": "docs/qa/targeted/ui032-font-digital-coherent-016.log",
+    "actual_exit": 1,
+    "tests": 245,
+    "passed": 243,
+    "errors": 2,
+    "failed_fixture_recheck": "docs/qa/targeted/ui032-final-fixture-recheck-017.log",
+    "recheck": "docs/qa/targeted/ui032-final-fixture-recheck-018.log",
+    "recheck_actual_exit": 0,
+    "recheck_tests": 9,
+    "reason": "Added company text needed same explicit source font binding;017 replacement did not match, preserved source-PPI assertion caught wrong reason,018 exact fix all9PASS. No production code changed versus tested0e5ec89; whole245 not rerun or labelled PASS.",
+    "remaining": "Read-only Windows registered-source software, current original capture/digital native verification/full10 mapping. Real Windows installed/active font and OS install outcome external."
+  }
+}

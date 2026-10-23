@@ -1,0 +1,20 @@
+..........EThis plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+...This plugin does not support propagateSizeHints()
+.......................................
+======================================================================
+ERROR: test_unapproved_invalid_and_duplicate_font_protect_catalog (test_persistent_fonts.PersistentFontTests.test_unapproved_invalid_and_duplicate_font_protect_catalog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_persistent_fonts.py", line 74, in test_unapproved_invalid_and_duplicate_font_protect_catalog
+    self.assertEqual(list((self.library.assets / "fonts").iterdir()), [])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1056, in iterdir
+    for name in os.listdir(self):
+                ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpb2d04ffr/data/assets/fonts'
+
+----------------------------------------------------------------------
+Ran 54 tests in 30.791s
+
+FAILED (errors=1)

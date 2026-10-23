@@ -1,0 +1,66 @@
+======================================================================
+ERROR: test_all_individually_reviewed_layers_have_traceable_current_evidence (test_coverage_batches.CoverageBatchTests.test_all_individually_reviewed_layers_have_traceable_current_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_coverage_batches.py", line 120, in test_all_individually_reviewed_layers_have_traceable_current_evidence
+    source,work,batch,member = self.work_member(); self.review_all(member,work)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_coverage_batches.py", line 42, in review_all
+    plan = self.service.layer_plan(member['id'],work['id'],layer,'CONFIRMED','Individually inspected this source layer','Page1 source visual / exact selected work')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/coverage_review.py", line 79, in layer_plan
+    context = work_context(self,work_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/coverage_evidence.py", line 40, in work_context
+    from .automatic_training import ANALYSER_VERSION
+ImportError: cannot import name 'ANALYSER_VERSION' from 'template_ai.automatic_training' (/workspace/template-Ai/template_ai/automatic_training.py)
+
+======================================================================
+ERROR: test_manual_review_needs_explicit_approval_and_failed_audit_saves_nothing (test_coverage_batches.CoverageBatchTests.test_manual_review_needs_explicit_approval_and_failed_audit_saves_nothing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_coverage_batches.py", line 129, in test_manual_review_needs_explicit_approval_and_failed_audit_saves_nothing
+    plan=self.service.layer_plan(member['id'],work['id'],'people','VERIFIED_ABSENT','No person on inspected source','Full page1')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/coverage_review.py", line 79, in layer_plan
+    context = work_context(self,work_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/coverage_evidence.py", line 40, in work_context
+    from .automatic_training import ANALYSER_VERSION
+ImportError: cannot import name 'ANALYSER_VERSION' from 'template_ai.automatic_training' (/workspace/template-Ai/template_ai/automatic_training.py)
+
+======================================================================
+ERROR: test_model_or_rule_version_change_invalidates_prior_review_without_deleting_it (test_coverage_batches.CoverageBatchTests.test_model_or_rule_version_change_invalidates_prior_review_without_deleting_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_coverage_batches.py", line 141, in test_model_or_rule_version_change_invalidates_prior_review_without_deleting_it
+    source,work,batch,member=self.work_member();self.review_all(member,work)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_coverage_batches.py", line 42, in review_all
+    plan = self.service.layer_plan(member['id'],work['id'],layer,'CONFIRMED','Individually inspected this source layer','Page1 source visual / exact selected work')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/coverage_review.py", line 79, in layer_plan
+    context = work_context(self,work_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/coverage_evidence.py", line 40, in work_context
+    from .automatic_training import ANALYSER_VERSION
+ImportError: cannot import name 'ANALYSER_VERSION' from 'template_ai.automatic_training' (/workspace/template-Ai/template_ai/automatic_training.py)
+
+======================================================================
+ERROR: test_segmentation_does_not_complete_seven_semantic_layers (test_coverage_batches.CoverageBatchTests.test_segmentation_does_not_complete_seven_semantic_layers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_coverage_batches.py", line 115, in test_segmentation_does_not_complete_seven_semantic_layers
+    evidence = self.service.member_evidence(member['id'])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/coverage_review.py", line 130, in member_evidence
+    context=work_context(self,work['id']);layers={}
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/coverage_evidence.py", line 40, in work_context
+    from .automatic_training import ANALYSER_VERSION
+ImportError: cannot import name 'ANALYSER_VERSION' from 'template_ai.automatic_training' (/workspace/template-Ai/template_ai/automatic_training.py)
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.163s
+
+FAILED (errors=4)

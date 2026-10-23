@@ -1,0 +1,13 @@
+======================================================================
+FAIL: test_company_rebind_reaches_person_and_old_new_company_not_unrelated_company (test_candidate_changes.CandidateChangeTests.test_company_rebind_reaches_person_and_old_new_company_not_unrelated_company)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_candidate_changes.py", line 25, in test_company_rebind_reaches_person_and_old_new_company_not_unrelated_company
+    logos=[Slot('logo',f'c{i}',Rect(60,i*12,10,10)) for i in (1,2,3)];self.template.slots+=logos;old=self.people();old[0]['company']=1;new=copy.deepcopy(old);new[0]['company']=2;companies=[dict(name='Synthetic '+str(i)) for i in (1,2,3)];r=affected(self.template,old,companies,new,companies);self.assertIn(logos[0].id,r['affected_slot_ids']);self.assertIn(logos[1].id,r['affected_slot_ids']);self.assertNotIn(logos[2].id,r['affected_slot_ids']);self.assertTrue(set(self.ids('name'))<=set(r['affected_slot_ids']))
+                                                                                                                                                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'a996fe2250d84f1d845daf311161d6d3' not found in ['56ee5b62d1fe42caa1d3da508b3b4f90', 'aff3f3f73d154d98898499bda1d8af37', 'bc1a8dc5ebb0409188ef5865e7852d45', 'bd8148bcda6a445e9584dc83f71e8541']
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.253s
+
+FAILED (failures=1)

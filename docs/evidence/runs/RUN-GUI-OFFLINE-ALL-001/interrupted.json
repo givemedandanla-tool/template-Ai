@@ -1,0 +1,22 @@
+{
+  "run_id": "RUN-GUI-OFFLINE-ALL-001",
+  "status": "INTERRUPTED_CONFIRMED_GUI_REGRESSION",
+  "adopted": false,
+  "source_commit": "f519007a26d4ec215a57e826aadf54594560c787",
+  "progress": {
+    "phase": "RUNNING_OWNED_TEST_MODULES",
+    "current_test": "test_candidate_results.CandidateResultsTests.test_finite_score_tie_is_deterministic_without_mutating_candidates, test_candidate_source_versions.CandidateSourceVersionTests.test_missing_actual_source_proof_is_unknown_and_real_sha_proof_turns_current_manual_template_safe, test_candidate_sync_batch.CandidateSyncBatchTests.test_cancelled_batch_does_not_install_any_generated_result",
+    "started": 244,
+    "completed": 241,
+    "passed": 239,
+    "failed_ids": [
+      "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_locked_source_properties_settle_without_overlapping_controls",
+      "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_stale_groups_are_inspectable_after_debounce_but_never_exportable"
+    ],
+    "planned_tests": 1849,
+    "formal_complete": false,
+    "updated_at": "2026-10-20T09:06:18.222317+00:00"
+  },
+  "reason": "Located locked artwork properties remain hidden/unlaid out after shell simplification; preserve old regression and fix explicit selection visibility",
+  "owned_processes_stopped": 4
+}

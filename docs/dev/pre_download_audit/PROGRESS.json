@@ -1,0 +1,69 @@
+{
+  "historical_progress_snapshot": "PROGRESS_BEFORE_FINAL.json",
+  "source_base": "83908944a907804a18a1d85feadddbc780644e4a",
+  "provenance": "LOCAL_ONLY",
+  "source_fix_commit": "65f75f37aa771219ea42709b7c2afeed4f5984aa",
+  "fixed_defects_pending_full_regression": 0,
+  "requirements_qualifications_unchanged": true,
+  "human_summary": "本機範圍查證及最終測試完成；10類問題已修，私人作品與Windows等實機資格保持原延後狀態。遠端未推送，請保留還原包與收據。",
+  "status": "LOCAL_SCOPE_COMPLETE_REMOTE_SNAPSHOT_VERIFIED",
+  "phase": "All local software verification complete. Delivery completion is attested by the post-commit receipt or ZIP RESTORE_RECEIPT.",
+  "completed_at": "2026-10-21T00:01:06.689343+00:00",
+  "original_diagnostics": 11798,
+  "diagnostic_statuses": {
+    "TYPE_CONTRACT_GAP": 9187,
+    "TOOL_LIMITATION": 1856,
+    "FIXED_AND_VERIFIED": 740,
+    "BLOCKED_EXTERNAL": 15
+  },
+  "unreviewed": 0,
+  "confirmed_defects": 10,
+  "fixed_defects": 10,
+  "open_confirmed_defects": [],
+  "final_regression": {
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "source_commit": "65f75f37aa771219ea42709b7c2afeed4f5984aa",
+    "software_execution": "PASS",
+    "planned": 1921,
+    "completed": 1921,
+    "statuses": {
+      "PASS": 1921
+    },
+    "modules": 252,
+    "healthy_modules": 252,
+    "runtime_errors": 0,
+    "source_unchanged_during_run": true,
+    "original_test_ids_preserved": true,
+    "remote_gate": "NOT_EXECUTED_REMOTE_PROVENANCE_UNAVAILABLE",
+    "windows_private_corpus_physical_print": "NOT_QUALIFIED_BY_THIS_RUN"
+  },
+  "stock_gui_final": {
+    "planned": 27,
+    "completed": 27,
+    "passed": 27,
+    "failed": [],
+    "source_unchanged": true,
+    "instrumented": false,
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "not_executed": [],
+    "status": "PASS"
+  },
+  "native_gui_final": {
+    "status": "PASS",
+    "cases": 19,
+    "images": 11,
+    "source_unchanged": true
+  },
+  "latest_new_review": {
+    "unique_current_occurrences": 11335,
+    "new_or_variant": 397,
+    "unreviewed": 0
+  },
+  "next": "Resume from GitHub and receipt; original restore-verified ZIP remains a valid6c07597c historical snapshot. Await authorized work; no automatic EXE/new features.",
+  "final_delivery_status": "CHECK_POST_COMMIT_RECEIPT_OR_ZIP_RESTORE_RECEIPT",
+  "remote_write": "PUSHED_AND_INDEPENDENT_NATIVE_GIT_READBACK_VERIFIED",
+  "remote_readback": "docs/dev/pre_download_audit/github-persistence-20261021/snapshot-readback.json",
+  "formal_governance_status": "Historical registered source manifests expired; not reissued this documentation/persistence task. See governance-final-disposition.json. Persistence success does not imply formal Gate PASS.",
+  "remote_checkpoint_receipt": "docs/checkpoints/CP-20261021-AUDIT-GITHUB-RESUME.receipt.json",
+  "execution_policy": "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
+}

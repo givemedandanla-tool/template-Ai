@@ -1,0 +1,55 @@
+test_external_reference_is_not_assumed_current_source_evidence (test_svg_preflight.SvgPreflightTests.test_external_reference_is_not_assumed_current_source_evidence) ... FAIL
+test_filter_effect_cannot_pass_as_preserved_native_vector (test_svg_preflight.SvgPreflightTests.test_filter_effect_cannot_pass_as_preserved_native_vector) ... FAIL
+test_large_lossless_body_has_full_rgb_evidence_without_mse_downsampling (test_svg_preflight.SvgPreflightTests.test_large_lossless_body_has_full_rgb_evidence_without_mse_downsampling) ... FAIL
+test_native_curves_strokes_and_internal_reference_remain_vector (test_svg_preflight.SvgPreflightTests.test_native_curves_strokes_and_internal_reference_remain_vector) ... ok
+test_unknown_extension_cannot_be_silently_ignored (test_svg_preflight.SvgPreflightTests.test_unknown_extension_cannot_be_silently_ignored) ... FAIL
+test_unpinned_svg_text_font_cannot_pass_as_verified_outlines (test_svg_preflight.SvgPreflightTests.test_unpinned_svg_text_font_cannot_pass_as_verified_outlines) ... FAIL
+
+======================================================================
+FAIL: test_external_reference_is_not_assumed_current_source_evidence (test_svg_preflight.SvgPreflightTests.test_external_reference_is_not_assumed_current_source_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_svg_preflight.py", line 31, in test_external_reference_is_not_assumed_current_source_evidence
+    self.assertNotEqual(row['status'],'PASS')
+AssertionError: 'PASS' == 'PASS'
+
+======================================================================
+FAIL: test_filter_effect_cannot_pass_as_preserved_native_vector (test_svg_preflight.SvgPreflightTests.test_filter_effect_cannot_pass_as_preserved_native_vector)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_svg_preflight.py", line 22, in test_filter_effect_cannot_pass_as_preserved_native_vector
+    self.assertNotEqual(row['status'],'PASS')
+AssertionError: 'PASS' == 'PASS'
+
+======================================================================
+FAIL: test_large_lossless_body_has_full_rgb_evidence_without_mse_downsampling (test_svg_preflight.SvgPreflightTests.test_large_lossless_body_has_full_rgb_evidence_without_mse_downsampling)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_svg_preflight.py", line 45, in test_large_lossless_body_has_full_rgb_evidence_without_mse_downsampling
+    self.assertEqual(row['status'],'PASS');self.assertTrue(row['measurements']['full_rgb_equal'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NOT_CHECKED' != 'PASS'
+- NOT_CHECKED
++ PASS
+
+
+======================================================================
+FAIL: test_unknown_extension_cannot_be_silently_ignored (test_svg_preflight.SvgPreflightTests.test_unknown_extension_cannot_be_silently_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_svg_preflight.py", line 35, in test_unknown_extension_cannot_be_silently_ignored
+    self.assertNotEqual(row['status'],'PASS')
+AssertionError: 'PASS' == 'PASS'
+
+======================================================================
+FAIL: test_unpinned_svg_text_font_cannot_pass_as_verified_outlines (test_svg_preflight.SvgPreflightTests.test_unpinned_svg_text_font_cannot_pass_as_verified_outlines)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_svg_preflight.py", line 27, in test_unpinned_svg_text_font_cannot_pass_as_verified_outlines
+    self.assertNotEqual(row['status'],'PASS')
+AssertionError: 'PASS' == 'PASS'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.329s
+
+FAILED (failures=5)

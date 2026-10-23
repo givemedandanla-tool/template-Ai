@@ -1,0 +1,1486 @@
+{
+  "proof": {
+    "D-APP-02983": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_ocr.py",
+        "line": 47,
+        "message": "Argument of type \"bool | str | list[str] | None\" cannot be assigned to parameter \"args\" of type \"StrPath\" in function \"__new__\"\n  Type \"bool | str | list[str] | None\" is not assignable to type \"StrPath\"\n    Type \"bool\" is not assignable to type \"StrPath\"\n      \"bool\" is not assignable to \"str\"\n      \"bool\" is incompatible with protocol \"PathLike[str]\"\n        \"__fspath__\" is not present",
+        "context": "source=Path(cap['data_dir'])/(language+'.traineddata')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a94118ab2cbcb61ad5cb9dd315cd31a11eb409da21fcb589356c66c62aa95ac3"
+      },
+      "reason": "logo_ocr.capability data_dir is str or None; freeze rejects unavailable/missing data_dir before converting that exact stable record field to Path.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02984": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_ocr.py",
+        "line": 47,
+        "message": "Argument of type \"bool | str | list[str] | None\" cannot be assigned to parameter \"args\" of type \"StrPath\" in function \"__init__\"\n  Type \"bool | str | list[str] | None\" is not assignable to type \"StrPath\"\n    Type \"bool\" is not assignable to type \"StrPath\"\n      \"bool\" is not assignable to \"str\"\n      \"bool\" is incompatible with protocol \"PathLike[str]\"\n        \"__fspath__\" is not present",
+        "context": "source=Path(cap['data_dir'])/(language+'.traineddata')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "579e85e575c14c1d1847dc8fcf1b52e58ad7acbb402fa3f82b9f481f1bd070a9"
+      },
+      "reason": "logo_ocr.capability data_dir is str or None; freeze rejects unavailable/missing data_dir before converting that exact stable record field to Path.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02985": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 138,
+        "message": "Arguments missing for parameters \"x\", \"y\", \"w\", \"h\"",
+        "context": "crop=Rect(**work['crop']);kept={slot['id'] for slot in work['slots'] if slot['kind']=='logo'}",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2a17f42a5a9d522002c26594387803d663943d8cb930dc1eaae14c2ea7705bab"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02986": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 138,
+        "message": "Argument expression after ** must be a mapping with a \"str\" key type",
+        "context": "crop=Rect(**work['crop']);kept={slot['id'] for slot in work['slots'] if slot['kind']=='logo'}",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "fc05f901b8623f30b2849f252bdde5183a66c8daac9570b679d7085f9551eaeb"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02987": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "template_ai/quality_ocr.py",
+        "line": 138,
+        "message": "\"int\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "crop=Rect(**work['crop']);kept={slot['id'] for slot in work['slots'] if slot['kind']=='logo'}",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "1539360ec309bbcfa9881548552520164a05cd207a26f498d9d8ed85f3a3c403"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02988": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "template_ai/quality_ocr.py",
+        "line": 139,
+        "message": "\"int\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "work['slots']=[slot for slot in work['slots'] if slot['id'] in kept];work['observations']=[obs for obs in work['observations'] if obs.get('slot_id') in kept]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4ab97800ca452e03c0c90e0c8c3eaea7e305d88f100ef85f8b4ce4abe708737c"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02989": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "template_ai/quality_ocr.py",
+        "line": 139,
+        "message": "\"int\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "work['slots']=[slot for slot in work['slots'] if slot['id'] in kept];work['observations']=[obs for obs in work['observations'] if obs.get('slot_id') in kept]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4ab97800ca452e03c0c90e0c8c3eaea7e305d88f100ef85f8b4ce4abe708737c"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02990": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "template_ai/quality_ocr.py",
+        "line": 140,
+        "message": "\"int\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "companies=[slot['owner'] for slot in work['slots']];counts=Counter();name=False",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4c91fe16f245ab96f93ccbc6f3d02d5a478f09726034f662b207c2084f1e0708"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02991": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "template_ai/quality_ocr.py",
+        "line": 141,
+        "message": "\"int\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "for obs in work['observations']:obs['component_text_predictions']=[]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "623d5fd55cf6eb747ed9fa57ce0db569b53e16c5065c1a3e95c6bfa690509ca1"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02992": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "template_ai/quality_ocr.py",
+        "line": 146,
+        "message": "\"int\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "logo=next((obs for obs in work['observations'] if obs['classification']=='LOGO' and contains(Rect(**obs['region']),rect)),None)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "429579c8a1a036841f22bd646ccb8ae3e05acf15c6ba76ee342783c21e1c3c36"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02993": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 154,
+        "message": "Cannot access attribute \"append\" for class \"str\"\n  Attribute \"append\" is unknown",
+        "context": "slot_id=identity;work['slots'].append(asdict(Slot(kind,owner,Rect(rect.x-crop.x,rect.y-crop.y,rect.w,rect.h),index=counts[kind],id=identity,required=kind=='name')));counts[kind]+=1",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "67491f9a2f90bbebb6b8919cba059789cb64b90ff632e9fd7692446cac2ce5ab"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02994": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 154,
+        "message": "Cannot access attribute \"append\" for class \"dict[str, int]\"\n  Attribute \"append\" is unknown",
+        "context": "slot_id=identity;work['slots'].append(asdict(Slot(kind,owner,Rect(rect.x-crop.x,rect.y-crop.y,rect.w,rect.h),index=counts[kind],id=identity,required=kind=='name')));counts[kind]+=1",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "782934bcfae91782c1e7fecc9b1e18cbef38880338aa32c3076eeca4e0d9806e"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02995": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 154,
+        "message": "Cannot access attribute \"append\" for class \"int\"\n  Attribute \"append\" is unknown",
+        "context": "slot_id=identity;work['slots'].append(asdict(Slot(kind,owner,Rect(rect.x-crop.x,rect.y-crop.y,rect.w,rect.h),index=counts[kind],id=identity,required=kind=='name')));counts[kind]+=1",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "31a1707103a495b0c0ee5ea586783d2895f9a5809270fbac1b9c8d1fe59b6431"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02996": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 154,
+        "message": "Cannot access attribute \"append\" for class \"dict[str, str]\"\n  Attribute \"append\" is unknown",
+        "context": "slot_id=identity;work['slots'].append(asdict(Slot(kind,owner,Rect(rect.x-crop.x,rect.y-crop.y,rect.w,rect.h),index=counts[kind],id=identity,required=kind=='name')));counts[kind]+=1",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "45d43b463ee367100819ee74b5abc797ed1abd911c503d4f870f241871e0d155"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02997": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 155,
+        "message": "Cannot access attribute \"append\" for class \"str\"\n  Attribute \"append\" is unknown",
+        "context": "work['observations'].append(dict(id='obs-'+identity,slot_id=slot_id,text=line['text'],region=line['rect'],object_type='TEXT',classification='FIELD' if kind else 'UNKNOWN',semantic=semantic,ocr_word_confidences=line['word_confidences'],prior_prediction='ACTUAL_OCR_UNCONFIRMED'))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e6369d592320be8e9d6bbed78403758333507a63f1088b6c526109f41c16c004"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02998": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 155,
+        "message": "Cannot access attribute \"append\" for class \"dict[str, int]\"\n  Attribute \"append\" is unknown",
+        "context": "work['observations'].append(dict(id='obs-'+identity,slot_id=slot_id,text=line['text'],region=line['rect'],object_type='TEXT',classification='FIELD' if kind else 'UNKNOWN',semantic=semantic,ocr_word_confidences=line['word_confidences'],prior_prediction='ACTUAL_OCR_UNCONFIRMED'))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "9da3527749202a081101ea90f94d0a3ea7324ba75da91194b98a949be96246bf"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-02999": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 155,
+        "message": "Cannot access attribute \"append\" for class \"int\"\n  Attribute \"append\" is unknown",
+        "context": "work['observations'].append(dict(id='obs-'+identity,slot_id=slot_id,text=line['text'],region=line['rect'],object_type='TEXT',classification='FIELD' if kind else 'UNKNOWN',semantic=semantic,ocr_word_confidences=line['word_confidences'],prior_prediction='ACTUAL_OCR_UNCONFIRMED'))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "74504dfccfdc1f9a1b7d15fc0f6ba402718204da2dc821846460541752f24a97"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03000": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 155,
+        "message": "Cannot access attribute \"append\" for class \"dict[str, str]\"\n  Attribute \"append\" is unknown",
+        "context": "work['observations'].append(dict(id='obs-'+identity,slot_id=slot_id,text=line['text'],region=line['rect'],object_type='TEXT',classification='FIELD' if kind else 'UNKNOWN',semantic=semantic,ocr_word_confidences=line['word_confidences'],prior_prediction='ACTUAL_OCR_UNCONFIRMED'))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c362c52f12aee21b7987955c0af12e4db0b2fcb36a2a9ed18db5b071b052c44b"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03001": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_ocr.py",
+        "line": 156,
+        "message": "Argument of type \"dict[str, list[Unknown]]\" cannot be assigned to parameter \"value\" of type \"str | dict[str, int] | int | dict[str, str] | list[Any]\" in function \"__setitem__\"\n  Type \"dict[str, list[Unknown]]\" is not assignable to type \"str | dict[str, int] | int | dict[str, str] | list[Any]\"\n    \"dict[str, list[Unknown]]\" is not assignable to \"str\"\n    \"dict[str, list[Unknown]]\" is not assignable to \"dict[str, int]\"\n      Type parameter \"_VT@dict\" is invariant, but \"list[Unknown]\" is not the same as \"int\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[str, list[Unknown]]\" is not assignable to \"int\"\n    \"dict[str, list[Unknown]]\" is not assignable to \"dict[str, str]\"\n      Type parameter \"_VT@dict\" is invariant, but \"list[Unknown]\" is not the same as \"str\"",
+        "context": "work['company_bindings']={'p1':companies} if name else {}",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ba76579c93934263857732b20c5d540312efc5c83c93caf9917f54faeb521c04"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03002": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportIndexIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 157,
+        "message": "\"__setitem__\" method not defined on type \"str\"",
+        "context": "work['evidence']['ocr']=dict(executed=True,algorithm_version=VERSION,model_hashes={m['language']:m['sha256'] for m in record['models']},configuration=record['configuration'],all_page_lines=len(text_lines),confidence_filter_applied=False,original_native_text_or_identity_verified=False)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3ef6ed8fe1b3cabad81eb4d6b506e7219c1132461eecc3b7a86f7020154b9352"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03003": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_ocr.py",
+        "line": 157,
+        "message": "Argument of type \"dict[str, bool | str | dict[Unknown, Unknown] | int]\" cannot be assigned to parameter \"value\" of type \"int\" in function \"__setitem__\"\n  \"dict[str, bool | str | dict[Unknown, Unknown] | int]\" is not assignable to \"int\"",
+        "context": "work['evidence']['ocr']=dict(executed=True,algorithm_version=VERSION,model_hashes={m['language']:m['sha256'] for m in record['models']},configuration=record['configuration'],all_page_lines=len(text_lines),confidence_filter_applied=False,original_native_text_or_identity_verified=False)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "05fc2b033b2ab91b111691c20e94fd098837d852555430f939399162cb329b90"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03004": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportIndexIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 157,
+        "message": "\"__setitem__\" method not defined on type \"int\"",
+        "context": "work['evidence']['ocr']=dict(executed=True,algorithm_version=VERSION,model_hashes={m['language']:m['sha256'] for m in record['models']},configuration=record['configuration'],all_page_lines=len(text_lines),confidence_filter_applied=False,original_native_text_or_identity_verified=False)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b3d46a38172a1afb1347af78b82eefa58b9bcabf40677f2e6fb38676e77a801f"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03005": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_ocr.py",
+        "line": 157,
+        "message": "Argument of type \"dict[str, bool | str | dict[Unknown, Unknown] | int]\" cannot be assigned to parameter \"value\" of type \"str\" in function \"__setitem__\"\n  \"dict[str, bool | str | dict[Unknown, Unknown] | int]\" is not assignable to \"str\"",
+        "context": "work['evidence']['ocr']=dict(executed=True,algorithm_version=VERSION,model_hashes={m['language']:m['sha256'] for m in record['models']},configuration=record['configuration'],all_page_lines=len(text_lines),confidence_filter_applied=False,original_native_text_or_identity_verified=False)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a4b467f0ccf5416b655938fd172437dba8bd6bb76885f46b3063786c1c49b43e"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03006": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 157,
+        "message": "No overloads for \"__setitem__\" match the provided arguments",
+        "context": "work['evidence']['ocr']=dict(executed=True,algorithm_version=VERSION,model_hashes={m['language']:m['sha256'] for m in record['models']},configuration=record['configuration'],all_page_lines=len(text_lines),confidence_filter_applied=False,original_native_text_or_identity_verified=False)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "96e70cabbf89a05223e4cd33d68de211d64d218fb9ef0f90644e042337f76308"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03007": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_ocr.py",
+        "line": 157,
+        "message": "Argument of type \"Literal['ocr']\" cannot be assigned to parameter \"key\" of type \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__setitem__\"\n  \"Literal['ocr']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "work['evidence']['ocr']=dict(executed=True,algorithm_version=VERSION,model_hashes={m['language']:m['sha256'] for m in record['models']},configuration=record['configuration'],all_page_lines=len(text_lines),confidence_filter_applied=False,original_native_text_or_identity_verified=False)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "bc8fe25897dd11136e80cb577ad5ab63e0cc896dfd75583ae953b2c0727b43e7"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03008": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_ocr.py",
+        "line": 159,
+        "message": "Argument of type \"Literal['ocr']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['ocr']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['ocr']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['ocr']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "for work in works:work['evidence']['ocr']['unassigned_source_text_lines']=unassigned",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b336d1b96ec02360f7bd4d554e24e6947a180a0d66a2d74a4424c3e1403777ab"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03009": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportIndexIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 159,
+        "message": "\"__getitem__\" method not defined on type \"int\"",
+        "context": "for work in works:work['evidence']['ocr']['unassigned_source_text_lines']=unassigned",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ff2fe0a2c4ff751565af8bf7d158107af75625e5ffe7690f99eeb433ea90fb32"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03010": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 159,
+        "message": "No overloads for \"__getitem__\" match the provided arguments",
+        "context": "for work in works:work['evidence']['ocr']['unassigned_source_text_lines']=unassigned",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4de64ee7e1411b76cba1ab4c3957c0cdf0d68d2b109229a5d1709663af5b2aa2"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03011": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_ocr.py",
+        "line": 159,
+        "message": "Argument of type \"Literal['ocr']\" cannot be assigned to parameter \"s\" of type \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  \"Literal['ocr']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "for work in works:work['evidence']['ocr']['unassigned_source_text_lines']=unassigned",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a54e4df81c6054a5cd3838575c409d458adb1015f0df56e218a06f408b4f8d68"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03012": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportIndexIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 159,
+        "message": "\"__setitem__\" method not defined on type \"str\"",
+        "context": "for work in works:work['evidence']['ocr']['unassigned_source_text_lines']=unassigned",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4e5bee45ad0ae20c9502e6eea13daa9e841074f7121a051fd08ac100733d262b"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-APP-03013": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportIndexIssue",
+        "path": "template_ai/quality_ocr.py",
+        "line": 159,
+        "message": "\"__setitem__\" method not defined on type \"int\"",
+        "context": "for work in works:work['evidence']['ocr']['unassigned_source_text_lines']=unassigned",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "9f629a71d024035800c3875bbf14d88802e20eea07333ef988d7ccc192a89e9f"
+      },
+      "reason": "Both the local raster-page constructor and the registered source_analysis vector constructor return a work record whose crop is the x/y/w/h numeric mapping, slots/observations are lists and evidence is a mapping. The OCR adapter filters/appends list entries, then writes the ocr evidence mapping before accessing its unassigned-source-lines key. Heterogeneous record inference merges unrelated scalar/status keys. Arbitrary injected analysers outside this declared provider contract are not accepted as proven.",
+      "source_anchors": [
+        "template_ai/logo_ocr.py:31",
+        "template_ai/quality_ocr.py:39",
+        "template_ai/quality_ocr.py:128",
+        "template_ai/source_analysis.py:151"
+      ],
+      "source_hashes": {
+        "template_ai/quality_ocr.py": "f41dbc95abbae6213c81aefd7438c4907ae94ccbadbf6b2cfdb3fb1896ef4471",
+        "template_ai/logo_ocr.py": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+        "template_ai/source_analysis.py": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0"
+      },
+      "passed_existing_ocr_cases": [
+        "test_quality_ocr.QualityOcrTests.test_actual_local_tesseract_pipeline_runs_without_gold_and_preserves_observations",
+        "test_quality_ocr.QualityOcrTests.test_immutable_language_model_tamper_blocks_actual_pipeline",
+        "test_quality_ocr.QualityOcrTests.test_invalid_nonempty_or_oversized_tsv_is_failure_not_empty_success",
+        "test_quality_ocr.QualityOcrTests.test_language_snapshot_retains_actual_older_bytes_when_installed_pack_changes",
+        "test_quality_ocr.QualityOcrTests.test_low_confidence_tsv_words_are_not_silently_removed_or_clipped",
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "run": "full-regression-005",
+      "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+      "not_claimed": "OCR truth, private AI restoration, original typography, Windows or production admission. Unknown/review flags remain unchanged."
+    },
+    "D-TES-06311": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportUnhashable",
+        "path": "tests/test_design_family.py",
+        "line": 53,
+        "message": "Set entry must be hashable\n  Type \"str | int | list[dict[str, str | int | dict[str, float]]]\" is not hashable",
+        "context": "self.assertEqual(set(a['assignment']),{row['id'] for row in rows})",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b7a48feb0c2d00bd9f1b5ce01ad27e4229f4c4e99cd96fd507adc812c044af39"
+      },
+      "reason": "example(index) returns id=\"example-\"+str(index), which is hashable str. The set iterates assignment dict keys and these explicit IDs; no fields list is inserted. Heterogeneous record inference merges the fields list with id.",
+      "anchors": [
+        "tests/test_design_family.py:8",
+        "tests/test_design_family.py:53"
+      ],
+      "run": "full-regression-005",
+      "case": "test_design_family.DesignFamilyTests.test_batch_reestimation_is_deterministic_and_preserves_rare_observations"
+    },
+    "D-APP-02869": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalIterable",
+        "path": "template_ai/quality_domains.py",
+        "line": 88,
+        "message": "Object of type \"None\" cannot be used as iterable value",
+        "context": "for match in result['matching']['matches']:",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "56d55caf53bc0670cb84157163188c78b4c580dabc6c6253294c6cc320c69520"
+      },
+      "reason": "quality_metrics.match_boxes builds paired as a list and returns matches=paired. quality_metrics.evaluate places that exact matching record under matching; the matches key is not its bool/threshold/status fields. Iteration does not include undefined rate values.",
+      "source_hashes": {
+        "template_ai/quality_domains.py": "f27f81222dfb4a74436d7a910239a58b9da71c6d3471b4cb980d2a646074374d",
+        "template_ai/quality_metrics.py": "713158c026df61ca3a5939ceb2934ddedfd499cc8664b2716e3d7d2824496198"
+      },
+      "source_anchors": [
+        "template_ai/quality_metrics.py:52",
+        "template_ai/quality_metrics.py:55",
+        "template_ai/quality_metrics.py:83",
+        "template_ai/quality_domains.py:165"
+      ],
+      "tests": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_incomplete_source_truth_cannot_turn_known_subset_into_hundred_percent",
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "test_quality_domains.QualityDomainTests.test_missing_entire_work_is_critical_and_all_missing_objects_remain_in_counts",
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution",
+        "test_quality_domains.QualityDomainTests.test_unparsed_or_missing_gold_source_remains_required_and_all_rates_unknown",
+        "test_quality_domains.QualityDomainTests.test_whole_logo_and_customer_mapping_never_inferred_from_correct_field_boxes",
+        "test_quality_metrics.QualityMetricTests.test_invalid_box_duplicate_ids_budget_or_unapproved_match_policy_never_silently_drop",
+        "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification",
+        "test_quality_metrics.QualityMetricTests.test_maximum_cardinality_avoids_greedy_iou_false_missing_case",
+        "test_quality_metrics.QualityMetricTests.test_missing_extra_and_zero_denominators_are_not_fake_one_hundred_percent",
+        "test_quality_metrics.QualityMetricTests.test_root_labels_can_permute_but_cross_person_contact_stays_critical",
+        "test_quality_metrics.QualityMetricTests.test_same_lexical_owner_without_name_anchor_is_unknown_not_identity_evidence",
+        "test_quality_metrics.QualityMetricTests.test_wilson_intervals_keep_small_sample_uncertainty_and_empty_unknown"
+      ],
+      "run": "full-regression-005",
+      "scope": "Description of exact metric fields only; does not convert undefined rates or unknown ownership into correct results"
+    },
+    "D-APP-02870": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "template_ai/quality_domains.py",
+        "line": 88,
+        "message": "\"bool\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "for match in result['matching']['matches']:",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4f3a4af1569c9bdd2755ff08fdee82369f8c05e8159cd6943c4f678875c6025f"
+      },
+      "reason": "quality_metrics.match_boxes builds paired as a list and returns matches=paired. quality_metrics.evaluate places that exact matching record under matching; the matches key is not its bool/threshold/status fields. Iteration does not include undefined rate values.",
+      "source_hashes": {
+        "template_ai/quality_domains.py": "f27f81222dfb4a74436d7a910239a58b9da71c6d3471b4cb980d2a646074374d",
+        "template_ai/quality_metrics.py": "713158c026df61ca3a5939ceb2934ddedfd499cc8664b2716e3d7d2824496198"
+      },
+      "source_anchors": [
+        "template_ai/quality_metrics.py:52",
+        "template_ai/quality_metrics.py:55",
+        "template_ai/quality_metrics.py:83",
+        "template_ai/quality_domains.py:165"
+      ],
+      "tests": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_incomplete_source_truth_cannot_turn_known_subset_into_hundred_percent",
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "test_quality_domains.QualityDomainTests.test_missing_entire_work_is_critical_and_all_missing_objects_remain_in_counts",
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution",
+        "test_quality_domains.QualityDomainTests.test_unparsed_or_missing_gold_source_remains_required_and_all_rates_unknown",
+        "test_quality_domains.QualityDomainTests.test_whole_logo_and_customer_mapping_never_inferred_from_correct_field_boxes",
+        "test_quality_metrics.QualityMetricTests.test_invalid_box_duplicate_ids_budget_or_unapproved_match_policy_never_silently_drop",
+        "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification",
+        "test_quality_metrics.QualityMetricTests.test_maximum_cardinality_avoids_greedy_iou_false_missing_case",
+        "test_quality_metrics.QualityMetricTests.test_missing_extra_and_zero_denominators_are_not_fake_one_hundred_percent",
+        "test_quality_metrics.QualityMetricTests.test_root_labels_can_permute_but_cross_person_contact_stays_critical",
+        "test_quality_metrics.QualityMetricTests.test_same_lexical_owner_without_name_anchor_is_unknown_not_identity_evidence",
+        "test_quality_metrics.QualityMetricTests.test_wilson_intervals_keep_small_sample_uncertainty_and_empty_unknown"
+      ],
+      "run": "full-regression-005",
+      "scope": "Description of exact metric fields only; does not convert undefined rates or unknown ownership into correct results"
+    },
+    "D-APP-02871": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "template_ai/quality_domains.py",
+        "line": 88,
+        "message": "\"float\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "for match in result['matching']['matches']:",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a940a7c4176b2a7f5c235bb943b7c25857eb9ec7ed102c316db41eeb88407395"
+      },
+      "reason": "quality_metrics.match_boxes builds paired as a list and returns matches=paired. quality_metrics.evaluate places that exact matching record under matching; the matches key is not its bool/threshold/status fields. Iteration does not include undefined rate values.",
+      "source_hashes": {
+        "template_ai/quality_domains.py": "f27f81222dfb4a74436d7a910239a58b9da71c6d3471b4cb980d2a646074374d",
+        "template_ai/quality_metrics.py": "713158c026df61ca3a5939ceb2934ddedfd499cc8664b2716e3d7d2824496198"
+      },
+      "source_anchors": [
+        "template_ai/quality_metrics.py:52",
+        "template_ai/quality_metrics.py:55",
+        "template_ai/quality_metrics.py:83",
+        "template_ai/quality_domains.py:165"
+      ],
+      "tests": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_incomplete_source_truth_cannot_turn_known_subset_into_hundred_percent",
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "test_quality_domains.QualityDomainTests.test_missing_entire_work_is_critical_and_all_missing_objects_remain_in_counts",
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution",
+        "test_quality_domains.QualityDomainTests.test_unparsed_or_missing_gold_source_remains_required_and_all_rates_unknown",
+        "test_quality_domains.QualityDomainTests.test_whole_logo_and_customer_mapping_never_inferred_from_correct_field_boxes",
+        "test_quality_metrics.QualityMetricTests.test_invalid_box_duplicate_ids_budget_or_unapproved_match_policy_never_silently_drop",
+        "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification",
+        "test_quality_metrics.QualityMetricTests.test_maximum_cardinality_avoids_greedy_iou_false_missing_case",
+        "test_quality_metrics.QualityMetricTests.test_missing_extra_and_zero_denominators_are_not_fake_one_hundred_percent",
+        "test_quality_metrics.QualityMetricTests.test_root_labels_can_permute_but_cross_person_contact_stays_critical",
+        "test_quality_metrics.QualityMetricTests.test_same_lexical_owner_without_name_anchor_is_unknown_not_identity_evidence",
+        "test_quality_metrics.QualityMetricTests.test_wilson_intervals_keep_small_sample_uncertainty_and_empty_unknown"
+      ],
+      "run": "full-regression-005",
+      "scope": "Description of exact metric fields only; does not convert undefined rates or unknown ownership into correct results"
+    },
+    "D-APP-02888": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/quality_domains.py",
+        "line": 165,
+        "message": "No overloads for \"sum\" match the provided arguments",
+        "context": "tp=sum(v['tp'] for v in per_class.values());fp=sum(v['fp'] for v in per_class.values());fn=sum(v['fn'] for v in per_class.values())",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "1551c5ec8f80fda317f2081142920bb1f3d67ab9d0ac668bc8900fb0cd4d775a"
+      },
+      "reason": "quality_metrics.counts explicitly rejects non-int/negative tp/fp/fn and returns those exact integers under their named keys. Only precision/recall/f1 may be None for undefined denominators. per_class stores counts() records, so summing tp/fp/fn does not sum undefined rates.",
+      "source_hashes": {
+        "template_ai/quality_domains.py": "f27f81222dfb4a74436d7a910239a58b9da71c6d3471b4cb980d2a646074374d",
+        "template_ai/quality_metrics.py": "713158c026df61ca3a5939ceb2934ddedfd499cc8664b2716e3d7d2824496198"
+      },
+      "source_anchors": [
+        "template_ai/quality_metrics.py:52",
+        "template_ai/quality_metrics.py:55",
+        "template_ai/quality_metrics.py:83",
+        "template_ai/quality_domains.py:165"
+      ],
+      "tests": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_incomplete_source_truth_cannot_turn_known_subset_into_hundred_percent",
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "test_quality_domains.QualityDomainTests.test_missing_entire_work_is_critical_and_all_missing_objects_remain_in_counts",
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution",
+        "test_quality_domains.QualityDomainTests.test_unparsed_or_missing_gold_source_remains_required_and_all_rates_unknown",
+        "test_quality_domains.QualityDomainTests.test_whole_logo_and_customer_mapping_never_inferred_from_correct_field_boxes",
+        "test_quality_metrics.QualityMetricTests.test_invalid_box_duplicate_ids_budget_or_unapproved_match_policy_never_silently_drop",
+        "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification",
+        "test_quality_metrics.QualityMetricTests.test_maximum_cardinality_avoids_greedy_iou_false_missing_case",
+        "test_quality_metrics.QualityMetricTests.test_missing_extra_and_zero_denominators_are_not_fake_one_hundred_percent",
+        "test_quality_metrics.QualityMetricTests.test_root_labels_can_permute_but_cross_person_contact_stays_critical",
+        "test_quality_metrics.QualityMetricTests.test_same_lexical_owner_without_name_anchor_is_unknown_not_identity_evidence",
+        "test_quality_metrics.QualityMetricTests.test_wilson_intervals_keep_small_sample_uncertainty_and_empty_unknown"
+      ],
+      "run": "full-regression-005",
+      "scope": "Description of exact metric fields only; does not convert undefined rates or unknown ownership into correct results"
+    },
+    "D-APP-02889": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_domains.py",
+        "line": 165,
+        "message": "Argument of type \"Generator[Unknown | None, None, None]\" cannot be assigned to parameter \"iterable\" of type \"Iterable[_SupportsSumNoDefaultT@sum]\" in function \"sum\"\n  \"Generator[Unknown | None, None, None]\" is not assignable to \"Iterable[_SupportsSumNoDefaultT@sum]\"\n    Type parameter \"_T_co@Iterable\" is covariant, but \"Unknown | None\" is not a subtype of \"_SupportsSumNoDefaultT@sum\"\n      Type \"Unknown | None\" is not assignable to type \"_SupportsSumWithNoDefaultGiven\"\n        Type \"Unknown | None\" is not assignable to type \"_SupportsSumWithNoDefaultGiven\"\n          \"None\" is incompatible with protocol \"_SupportsSumWithNoDefaultGiven\"",
+        "context": "tp=sum(v['tp'] for v in per_class.values());fp=sum(v['fp'] for v in per_class.values());fn=sum(v['fn'] for v in per_class.values())",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "47e406d584409226844543527067265b9842a020dbc99ab470cf67954ccca4d0"
+      },
+      "reason": "quality_metrics.counts explicitly rejects non-int/negative tp/fp/fn and returns those exact integers under their named keys. Only precision/recall/f1 may be None for undefined denominators. per_class stores counts() records, so summing tp/fp/fn does not sum undefined rates.",
+      "source_hashes": {
+        "template_ai/quality_domains.py": "f27f81222dfb4a74436d7a910239a58b9da71c6d3471b4cb980d2a646074374d",
+        "template_ai/quality_metrics.py": "713158c026df61ca3a5939ceb2934ddedfd499cc8664b2716e3d7d2824496198"
+      },
+      "source_anchors": [
+        "template_ai/quality_metrics.py:52",
+        "template_ai/quality_metrics.py:55",
+        "template_ai/quality_metrics.py:83",
+        "template_ai/quality_domains.py:165"
+      ],
+      "tests": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_incomplete_source_truth_cannot_turn_known_subset_into_hundred_percent",
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "test_quality_domains.QualityDomainTests.test_missing_entire_work_is_critical_and_all_missing_objects_remain_in_counts",
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution",
+        "test_quality_domains.QualityDomainTests.test_unparsed_or_missing_gold_source_remains_required_and_all_rates_unknown",
+        "test_quality_domains.QualityDomainTests.test_whole_logo_and_customer_mapping_never_inferred_from_correct_field_boxes",
+        "test_quality_metrics.QualityMetricTests.test_invalid_box_duplicate_ids_budget_or_unapproved_match_policy_never_silently_drop",
+        "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification",
+        "test_quality_metrics.QualityMetricTests.test_maximum_cardinality_avoids_greedy_iou_false_missing_case",
+        "test_quality_metrics.QualityMetricTests.test_missing_extra_and_zero_denominators_are_not_fake_one_hundred_percent",
+        "test_quality_metrics.QualityMetricTests.test_root_labels_can_permute_but_cross_person_contact_stays_critical",
+        "test_quality_metrics.QualityMetricTests.test_same_lexical_owner_without_name_anchor_is_unknown_not_identity_evidence",
+        "test_quality_metrics.QualityMetricTests.test_wilson_intervals_keep_small_sample_uncertainty_and_empty_unknown"
+      ],
+      "run": "full-regression-005",
+      "scope": "Description of exact metric fields only; does not convert undefined rates or unknown ownership into correct results"
+    },
+    "D-APP-02890": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/quality_domains.py",
+        "line": 165,
+        "message": "No overloads for \"sum\" match the provided arguments",
+        "context": "tp=sum(v['tp'] for v in per_class.values());fp=sum(v['fp'] for v in per_class.values());fn=sum(v['fn'] for v in per_class.values())",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "1551c5ec8f80fda317f2081142920bb1f3d67ab9d0ac668bc8900fb0cd4d775a"
+      },
+      "reason": "quality_metrics.counts explicitly rejects non-int/negative tp/fp/fn and returns those exact integers under their named keys. Only precision/recall/f1 may be None for undefined denominators. per_class stores counts() records, so summing tp/fp/fn does not sum undefined rates.",
+      "source_hashes": {
+        "template_ai/quality_domains.py": "f27f81222dfb4a74436d7a910239a58b9da71c6d3471b4cb980d2a646074374d",
+        "template_ai/quality_metrics.py": "713158c026df61ca3a5939ceb2934ddedfd499cc8664b2716e3d7d2824496198"
+      },
+      "source_anchors": [
+        "template_ai/quality_metrics.py:52",
+        "template_ai/quality_metrics.py:55",
+        "template_ai/quality_metrics.py:83",
+        "template_ai/quality_domains.py:165"
+      ],
+      "tests": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_incomplete_source_truth_cannot_turn_known_subset_into_hundred_percent",
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "test_quality_domains.QualityDomainTests.test_missing_entire_work_is_critical_and_all_missing_objects_remain_in_counts",
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution",
+        "test_quality_domains.QualityDomainTests.test_unparsed_or_missing_gold_source_remains_required_and_all_rates_unknown",
+        "test_quality_domains.QualityDomainTests.test_whole_logo_and_customer_mapping_never_inferred_from_correct_field_boxes",
+        "test_quality_metrics.QualityMetricTests.test_invalid_box_duplicate_ids_budget_or_unapproved_match_policy_never_silently_drop",
+        "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification",
+        "test_quality_metrics.QualityMetricTests.test_maximum_cardinality_avoids_greedy_iou_false_missing_case",
+        "test_quality_metrics.QualityMetricTests.test_missing_extra_and_zero_denominators_are_not_fake_one_hundred_percent",
+        "test_quality_metrics.QualityMetricTests.test_root_labels_can_permute_but_cross_person_contact_stays_critical",
+        "test_quality_metrics.QualityMetricTests.test_same_lexical_owner_without_name_anchor_is_unknown_not_identity_evidence",
+        "test_quality_metrics.QualityMetricTests.test_wilson_intervals_keep_small_sample_uncertainty_and_empty_unknown"
+      ],
+      "run": "full-regression-005",
+      "scope": "Description of exact metric fields only; does not convert undefined rates or unknown ownership into correct results"
+    },
+    "D-APP-02891": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_domains.py",
+        "line": 165,
+        "message": "Argument of type \"Generator[Unknown | None, None, None]\" cannot be assigned to parameter \"iterable\" of type \"Iterable[_SupportsSumNoDefaultT@sum]\" in function \"sum\"\n  \"Generator[Unknown | None, None, None]\" is not assignable to \"Iterable[_SupportsSumNoDefaultT@sum]\"\n    Type parameter \"_T_co@Iterable\" is covariant, but \"Unknown | None\" is not a subtype of \"_SupportsSumNoDefaultT@sum\"\n      Type \"Unknown | None\" is not assignable to type \"_SupportsSumWithNoDefaultGiven\"\n        Type \"Unknown | None\" is not assignable to type \"_SupportsSumWithNoDefaultGiven\"\n          \"None\" is incompatible with protocol \"_SupportsSumWithNoDefaultGiven\"",
+        "context": "tp=sum(v['tp'] for v in per_class.values());fp=sum(v['fp'] for v in per_class.values());fn=sum(v['fn'] for v in per_class.values())",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "47e406d584409226844543527067265b9842a020dbc99ab470cf67954ccca4d0"
+      },
+      "reason": "quality_metrics.counts explicitly rejects non-int/negative tp/fp/fn and returns those exact integers under their named keys. Only precision/recall/f1 may be None for undefined denominators. per_class stores counts() records, so summing tp/fp/fn does not sum undefined rates.",
+      "source_hashes": {
+        "template_ai/quality_domains.py": "f27f81222dfb4a74436d7a910239a58b9da71c6d3471b4cb980d2a646074374d",
+        "template_ai/quality_metrics.py": "713158c026df61ca3a5939ceb2934ddedfd499cc8664b2716e3d7d2824496198"
+      },
+      "source_anchors": [
+        "template_ai/quality_metrics.py:52",
+        "template_ai/quality_metrics.py:55",
+        "template_ai/quality_metrics.py:83",
+        "template_ai/quality_domains.py:165"
+      ],
+      "tests": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_incomplete_source_truth_cannot_turn_known_subset_into_hundred_percent",
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "test_quality_domains.QualityDomainTests.test_missing_entire_work_is_critical_and_all_missing_objects_remain_in_counts",
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution",
+        "test_quality_domains.QualityDomainTests.test_unparsed_or_missing_gold_source_remains_required_and_all_rates_unknown",
+        "test_quality_domains.QualityDomainTests.test_whole_logo_and_customer_mapping_never_inferred_from_correct_field_boxes",
+        "test_quality_metrics.QualityMetricTests.test_invalid_box_duplicate_ids_budget_or_unapproved_match_policy_never_silently_drop",
+        "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification",
+        "test_quality_metrics.QualityMetricTests.test_maximum_cardinality_avoids_greedy_iou_false_missing_case",
+        "test_quality_metrics.QualityMetricTests.test_missing_extra_and_zero_denominators_are_not_fake_one_hundred_percent",
+        "test_quality_metrics.QualityMetricTests.test_root_labels_can_permute_but_cross_person_contact_stays_critical",
+        "test_quality_metrics.QualityMetricTests.test_same_lexical_owner_without_name_anchor_is_unknown_not_identity_evidence",
+        "test_quality_metrics.QualityMetricTests.test_wilson_intervals_keep_small_sample_uncertainty_and_empty_unknown"
+      ],
+      "run": "full-regression-005",
+      "scope": "Description of exact metric fields only; does not convert undefined rates or unknown ownership into correct results"
+    },
+    "D-APP-02892": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/quality_domains.py",
+        "line": 165,
+        "message": "No overloads for \"sum\" match the provided arguments",
+        "context": "tp=sum(v['tp'] for v in per_class.values());fp=sum(v['fp'] for v in per_class.values());fn=sum(v['fn'] for v in per_class.values())",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "1551c5ec8f80fda317f2081142920bb1f3d67ab9d0ac668bc8900fb0cd4d775a"
+      },
+      "reason": "quality_metrics.counts explicitly rejects non-int/negative tp/fp/fn and returns those exact integers under their named keys. Only precision/recall/f1 may be None for undefined denominators. per_class stores counts() records, so summing tp/fp/fn does not sum undefined rates.",
+      "source_hashes": {
+        "template_ai/quality_domains.py": "f27f81222dfb4a74436d7a910239a58b9da71c6d3471b4cb980d2a646074374d",
+        "template_ai/quality_metrics.py": "713158c026df61ca3a5939ceb2934ddedfd499cc8664b2716e3d7d2824496198"
+      },
+      "source_anchors": [
+        "template_ai/quality_metrics.py:52",
+        "template_ai/quality_metrics.py:55",
+        "template_ai/quality_metrics.py:83",
+        "template_ai/quality_domains.py:165"
+      ],
+      "tests": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_incomplete_source_truth_cannot_turn_known_subset_into_hundred_percent",
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "test_quality_domains.QualityDomainTests.test_missing_entire_work_is_critical_and_all_missing_objects_remain_in_counts",
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution",
+        "test_quality_domains.QualityDomainTests.test_unparsed_or_missing_gold_source_remains_required_and_all_rates_unknown",
+        "test_quality_domains.QualityDomainTests.test_whole_logo_and_customer_mapping_never_inferred_from_correct_field_boxes",
+        "test_quality_metrics.QualityMetricTests.test_invalid_box_duplicate_ids_budget_or_unapproved_match_policy_never_silently_drop",
+        "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification",
+        "test_quality_metrics.QualityMetricTests.test_maximum_cardinality_avoids_greedy_iou_false_missing_case",
+        "test_quality_metrics.QualityMetricTests.test_missing_extra_and_zero_denominators_are_not_fake_one_hundred_percent",
+        "test_quality_metrics.QualityMetricTests.test_root_labels_can_permute_but_cross_person_contact_stays_critical",
+        "test_quality_metrics.QualityMetricTests.test_same_lexical_owner_without_name_anchor_is_unknown_not_identity_evidence",
+        "test_quality_metrics.QualityMetricTests.test_wilson_intervals_keep_small_sample_uncertainty_and_empty_unknown"
+      ],
+      "run": "full-regression-005",
+      "scope": "Description of exact metric fields only; does not convert undefined rates or unknown ownership into correct results"
+    },
+    "D-APP-02893": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_domains.py",
+        "line": 165,
+        "message": "Argument of type \"Generator[Unknown | None, None, None]\" cannot be assigned to parameter \"iterable\" of type \"Iterable[_SupportsSumNoDefaultT@sum]\" in function \"sum\"\n  \"Generator[Unknown | None, None, None]\" is not assignable to \"Iterable[_SupportsSumNoDefaultT@sum]\"\n    Type parameter \"_T_co@Iterable\" is covariant, but \"Unknown | None\" is not a subtype of \"_SupportsSumNoDefaultT@sum\"\n      Type \"Unknown | None\" is not assignable to type \"_SupportsSumWithNoDefaultGiven\"\n        Type \"Unknown | None\" is not assignable to type \"_SupportsSumWithNoDefaultGiven\"\n          \"None\" is incompatible with protocol \"_SupportsSumWithNoDefaultGiven\"",
+        "context": "tp=sum(v['tp'] for v in per_class.values());fp=sum(v['fp'] for v in per_class.values());fn=sum(v['fn'] for v in per_class.values())",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "47e406d584409226844543527067265b9842a020dbc99ab470cf67954ccca4d0"
+      },
+      "reason": "quality_metrics.counts explicitly rejects non-int/negative tp/fp/fn and returns those exact integers under their named keys. Only precision/recall/f1 may be None for undefined denominators. per_class stores counts() records, so summing tp/fp/fn does not sum undefined rates.",
+      "source_hashes": {
+        "template_ai/quality_domains.py": "f27f81222dfb4a74436d7a910239a58b9da71c6d3471b4cb980d2a646074374d",
+        "template_ai/quality_metrics.py": "713158c026df61ca3a5939ceb2934ddedfd499cc8664b2716e3d7d2824496198"
+      },
+      "source_anchors": [
+        "template_ai/quality_metrics.py:52",
+        "template_ai/quality_metrics.py:55",
+        "template_ai/quality_metrics.py:83",
+        "template_ai/quality_domains.py:165"
+      ],
+      "tests": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_incomplete_source_truth_cannot_turn_known_subset_into_hundred_percent",
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "test_quality_domains.QualityDomainTests.test_missing_entire_work_is_critical_and_all_missing_objects_remain_in_counts",
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution",
+        "test_quality_domains.QualityDomainTests.test_unparsed_or_missing_gold_source_remains_required_and_all_rates_unknown",
+        "test_quality_domains.QualityDomainTests.test_whole_logo_and_customer_mapping_never_inferred_from_correct_field_boxes",
+        "test_quality_metrics.QualityMetricTests.test_invalid_box_duplicate_ids_budget_or_unapproved_match_policy_never_silently_drop",
+        "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification",
+        "test_quality_metrics.QualityMetricTests.test_maximum_cardinality_avoids_greedy_iou_false_missing_case",
+        "test_quality_metrics.QualityMetricTests.test_missing_extra_and_zero_denominators_are_not_fake_one_hundred_percent",
+        "test_quality_metrics.QualityMetricTests.test_root_labels_can_permute_but_cross_person_contact_stays_critical",
+        "test_quality_metrics.QualityMetricTests.test_same_lexical_owner_without_name_anchor_is_unknown_not_identity_evidence",
+        "test_quality_metrics.QualityMetricTests.test_wilson_intervals_keep_small_sample_uncertainty_and_empty_unknown"
+      ],
+      "run": "full-regression-005",
+      "scope": "Description of exact metric fields only; does not convert undefined rates or unknown ownership into correct results"
+    }
+  }
+}

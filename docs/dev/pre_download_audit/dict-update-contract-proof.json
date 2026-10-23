@@ -1,0 +1,1290 @@
+{
+  "method": "Review concrete dict.update field-contract debt, preserving content validation.",
+  "proof": {
+    "D-APP-00856": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/design_learning.py",
+        "line": 108,
+        "message": "No overloads for \"update\" match the provided arguments",
+        "context": "field.update(semantic_observation(slot['kind'],label['text']))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f3bf98c7310bed0c541d05c2bd6df4c1cc5a412fed9b1339957c87a58c0d3686"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "field.update(semantic_observation(slot['kind'], label['text']))",
+        "range": [
+          108,
+          20,
+          108,
+          82
+        ],
+        "original_expression_range": [
+          108,
+          20,
+          108,
+          82
+        ]
+      },
+      "named_fields": [],
+      "observed_types": {
+        "value": {
+          "builtins.dict": 664,
+          "builtins.builtin_function_or_method": 664
+        },
+        "call_receiver": {
+          "builtins.dict": 664
+        },
+        "call_result": {
+          "builtins.NoneType": 664
+        }
+      },
+      "contexts": [
+        "test_design_composite_learning.CompositeLearningIntegrationTests.test_actual_multisource_training_generates_new_mixed_face_and_static_components",
+        "test_design_rich_text.CompositeSourceTests.test_actual_multirun_binding_persists_all_fonts_and_new_text_selectors",
+        "test_design_source_binding.SourceTypographyBindingTests.test_explicit_binding_is_pinned_and_enables_measured_demand_not_default_typography",
+        "test_local_visual_binding.VisualSourceBindingTests.test_reproduced_visual_match_becomes_traceable_learning_evidence_without_native_truth"
+      ],
+      "source": "ast-module-contexts-001/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-02752": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/property_context.py",
+        "line": 163,
+        "message": "No overloads for \"update\" match the provided arguments\n  Argument types: (Unknown, Unknown, Unknown)",
+        "context": "common=common_properties(payload,[row['id'] for row in rows]);controls=dict(zip(('x','y','w','h'),w.coords));controls.update(size_pt=w.pt,min_scale=w.scale,index=w.index)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5b858c5a75a934d2ba96bfb9b1e85661dd46d9384857a5a8991d513521c5013d"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "controls.update(size_pt=w.pt, min_scale=w.scale, index=w.index)",
+        "range": [
+          163,
+          117,
+          163,
+          178
+        ],
+        "original_expression_range": [
+          163,
+          117,
+          163,
+          178
+        ]
+      },
+      "named_fields": [
+        "size_pt",
+        "min_scale",
+        "index"
+      ],
+      "observed_types": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.builtin_function_or_method": 2
+        },
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "contexts": [
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_problem_row_routes_exact_slot_to_existing_canvas_without_moving_it"
+      ],
+      "source": "ast-module-contexts-001/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-03155": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/quality_repair_commands.py",
+        "line": 38,
+        "message": "No overloads for \"update\" match the provided arguments\n  Argument types: (int, Literal[50], Literal[False])",
+        "context": "result.update(offset=offset,limit=50,weights_loaded=False);return result",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f244271bfc09d26ff0cc5d51b3cd050cd624b3a7083e3dace0c203b44fb54ce5"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(offset=offset, limit=50, weights_loaded=False)",
+        "range": [
+          38,
+          4,
+          38,
+          62
+        ],
+        "original_expression_range": [
+          38,
+          4,
+          38,
+          62
+        ]
+      },
+      "named_fields": [
+        "offset",
+        "limit",
+        "weights_loaded"
+      ],
+      "observed_types": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.builtin_function_or_method": 2
+        },
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "contexts": [
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_training_selection_owned_candidate_job_and_shared_fifo"
+      ],
+      "source": "ast-module-contexts-001/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00024": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/annotation_dialog.py",
+        "line": 214,
+        "message": "No overloads for \"update\" match the provided arguments\n  Argument types: (Any, str)",
+        "context": "patch=dict(zip(('x','y','w','h'),[s.value() for s in self.coords]));patch.update(kind=self.kind.currentData(),owner=self.owner.text())",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "92c2b8a2c8646c2d5a4f1da75d6191b4d2e7e8ff71ce99fbcc25c54b1d6e1855"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "patch.update(kind=self.kind.currentData(), owner=self.owner.text())",
+        "range": [
+          219,
+          80,
+          219,
+          146
+        ],
+        "original_expression_range": [
+          214,
+          80,
+          214,
+          146
+        ]
+      },
+      "named_fields": [
+        "kind",
+        "owner"
+      ],
+      "observed_types": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.builtin_function_or_method": 2
+        },
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "contexts": [
+        "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
+        "test_marker_review.MarkerReviewTests.test_unapplied_form_survives_selection_and_close_cancel_and_save_refuses_loss"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00162": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 28,
+        "message": "Argument of type \"Unbound | Unknown | dict[str, str | dict[str, str] | bool]\" cannot be assigned to parameter \"request\" of type \"str | bool\" in function \"update\"\n  Type \"Unbound | Unknown | dict[str, str | dict[str, str] | bool]\" is not assignable to type \"str | bool\"\n    Type \"dict[str, str | dict[str, str] | bool]\" is not assignable to type \"str | bool\"\n      \"dict[str, str | dict[str, str] | bool]\" is not assignable to \"str\"\n      \"dict[str, str | dict[str, str] | bool]\" is not assignable to \"bool\"",
+        "context": "except NoObjectChange as e:row.update(state='UNCHANGED',risk='NONE',snapshot=snapshot,request=request,reason=str(e))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "30fb1f3de92bf6420a62e1f04acb471ffd60c8cbdffe3cd97a7d2ac9c9af24e0"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "row.update(state='UNCHANGED', risk='NONE', snapshot=snapshot, request=request, reason=str(e))",
+        "range": [
+          33,
+          35,
+          33,
+          124
+        ],
+        "original_expression_range": [
+          28,
+          35,
+          28,
+          124
+        ]
+      },
+      "named_fields": [
+        "state",
+        "risk",
+        "snapshot",
+        "request",
+        "reason"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "value": {
+          "builtins.dict": 1,
+          "builtins.NoneType": 1
+        },
+        "argument": {
+          "builtins.dict": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_noop_target_does_not_create_revision_or_history"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00168": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 177,
+        "message": "Argument of type \"Literal['BLOCKED']\" cannot be assigned to parameter \"state\" of type \"bool\" in function \"update\"\n  \"Literal['BLOCKED']\" is not assignable to \"bool\"",
+        "context": "current=library.object_snapshot(row['kind'],row['id']);fresh=current==row['snapshot'];result.update(state='BLOCKED',outcome='SKIPPED_PRECONDITION' if fresh else 'STALE',reason=row['reason'] if fresh else '預檢後來源已變更；未猜測重試')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b30a6e8cc3672bbbdf4d9cb9aa3ff813c7128e8da282913855e9b21d2292f7f9"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='BLOCKED', outcome='SKIPPED_PRECONDITION' if fresh else 'STALE', reason=row['reason'] if fresh else '預檢後來源已變更；未猜測重試')",
+        "range": [
+          182,
+          102,
+          182,
+          265
+        ],
+        "original_expression_range": [
+          177,
+          102,
+          177,
+          265
+        ]
+      },
+      "named_fields": [
+        "state",
+        "outcome",
+        "reason"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "value": {
+          "builtins.NoneType": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_noop_target_does_not_create_revision_or_history"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00169": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 177,
+        "message": "Argument of type \"Literal['SKIPPED_PRECONDITION', 'STALE']\" cannot be assigned to parameter \"outcome\" of type \"bool\" in function \"update\"\n  Type \"Literal['SKIPPED_PRECONDITION', 'STALE']\" is not assignable to type \"bool\"\n    \"Literal['SKIPPED_PRECONDITION']\" is not assignable to \"bool\"",
+        "context": "current=library.object_snapshot(row['kind'],row['id']);fresh=current==row['snapshot'];result.update(state='BLOCKED',outcome='SKIPPED_PRECONDITION' if fresh else 'STALE',reason=row['reason'] if fresh else '預檢後來源已變更；未猜測重試')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6fc1689abd3631ed04fae9dc66081795b9ab2a3445ecd4c21f5b13522b3d5d1b"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='BLOCKED', outcome='SKIPPED_PRECONDITION' if fresh else 'STALE', reason=row['reason'] if fresh else '預檢後來源已變更；未猜測重試')",
+        "range": [
+          182,
+          102,
+          182,
+          265
+        ],
+        "original_expression_range": [
+          177,
+          102,
+          177,
+          265
+        ]
+      },
+      "named_fields": [
+        "state",
+        "outcome",
+        "reason"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "value": {
+          "builtins.str": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_noop_target_does_not_create_revision_or_history"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00170": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 177,
+        "message": "Argument of type \"Unknown | Literal['預檢後來源已變更；未猜測重試']\" cannot be assigned to parameter \"reason\" of type \"bool\" in function \"update\"\n  Type \"Unknown | Literal['預檢後來源已變更；未猜測重試']\" is not assignable to type \"bool\"\n    \"Literal['預檢後來源已變更；未猜測重試']\" is not assignable to \"bool\"",
+        "context": "current=library.object_snapshot(row['kind'],row['id']);fresh=current==row['snapshot'];result.update(state='BLOCKED',outcome='SKIPPED_PRECONDITION' if fresh else 'STALE',reason=row['reason'] if fresh else '預檢後來源已變更；未猜測重試')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "cc61532760d01be5c8a4b0ccda209cb531bd8fa63db4a185d0b5aa61d57e45d1"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='BLOCKED', outcome='SKIPPED_PRECONDITION' if fresh else 'STALE', reason=row['reason'] if fresh else '預檢後來源已變更；未猜測重試')",
+        "range": [
+          182,
+          102,
+          182,
+          265
+        ],
+        "original_expression_range": [
+          177,
+          102,
+          177,
+          265
+        ]
+      },
+      "named_fields": [
+        "state",
+        "outcome",
+        "reason"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "value": {
+          "builtins.dict": 1,
+          "builtins.str": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_noop_target_does_not_create_revision_or_history"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00176": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 192,
+        "message": "Argument of type \"Literal['FAILED_OR_STALE']\" cannot be assigned to parameter \"state\" of type \"bool\" in function \"update\"\n  \"Literal['FAILED_OR_STALE']\" is not assignable to \"bool\"",
+        "context": "result.update(state='FAILED_OR_STALE',outcome='STALE' if stale else 'FAILED',reason=str(e))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "260f22cbbf7eb35fbf35bda52b9e53ddf65df6c6ed7245cb331e312f78d03f99"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='FAILED_OR_STALE', outcome='STALE' if stale else 'FAILED', reason=str(e))",
+        "range": [
+          197,
+          20,
+          197,
+          111
+        ],
+        "original_expression_range": [
+          192,
+          20,
+          192,
+          111
+        ]
+      },
+      "named_fields": [
+        "state",
+        "outcome",
+        "reason"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "value": {
+          "builtins.NoneType": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_eight_applied_two_failed_one_manual_counts_are_exact_and_not_global_pass"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00177": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 192,
+        "message": "Argument of type \"Literal['STALE', 'FAILED']\" cannot be assigned to parameter \"outcome\" of type \"bool\" in function \"update\"\n  Type \"Literal['STALE', 'FAILED']\" is not assignable to type \"bool\"\n    \"Literal['FAILED']\" is not assignable to \"bool\"",
+        "context": "result.update(state='FAILED_OR_STALE',outcome='STALE' if stale else 'FAILED',reason=str(e))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b79f7f54cbaed03bac4e0d4e6ede93872c5e867252f212de9e52a3928a3623c0"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='FAILED_OR_STALE', outcome='STALE' if stale else 'FAILED', reason=str(e))",
+        "range": [
+          197,
+          20,
+          197,
+          111
+        ],
+        "original_expression_range": [
+          192,
+          20,
+          192,
+          111
+        ]
+      },
+      "named_fields": [
+        "state",
+        "outcome",
+        "reason"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "value": {
+          "builtins.str": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_eight_applied_two_failed_one_manual_counts_are_exact_and_not_global_pass"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00179": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 193,
+        "message": "Argument of type \"Literal['FAILED_OR_STALE']\" cannot be assigned to parameter \"state\" of type \"bool\" in function \"update\"\n  \"Literal['FAILED_OR_STALE']\" is not assignable to \"bool\"",
+        "context": "except (ValueError,KeyError,TypeError,OSError,sqlite3.Error):result.update(state='FAILED_OR_STALE',outcome='STALE' if isinstance(e,ValueError) else 'RESULT_UNVERIFIED',reason=str(e)+'；結果未安全核實，不盲目重試')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2cab1af37797e2734bb72427f78a33548fc2a79cda4b0022eba38b1cad34dd09"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='FAILED_OR_STALE', outcome='STALE' if isinstance(e, ValueError) else 'RESULT_UNVERIFIED', reason=str(e) + '；結果未安全核實，不盲目重試')",
+        "range": [
+          198,
+          73,
+          198,
+          239
+        ],
+        "original_expression_range": [
+          193,
+          73,
+          193,
+          239
+        ]
+      },
+      "named_fields": [
+        "state",
+        "outcome",
+        "reason"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "value": {
+          "builtins.NoneType": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_single_explicit_inverse_does_not_undo_other_success_and_retry_cannot_redo_undone"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00180": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 193,
+        "message": "Argument of type \"Literal['STALE', 'RESULT_UNVERIFIED']\" cannot be assigned to parameter \"outcome\" of type \"bool\" in function \"update\"\n  Type \"Literal['STALE', 'RESULT_UNVERIFIED']\" is not assignable to type \"bool\"\n    \"Literal['RESULT_UNVERIFIED']\" is not assignable to \"bool\"",
+        "context": "except (ValueError,KeyError,TypeError,OSError,sqlite3.Error):result.update(state='FAILED_OR_STALE',outcome='STALE' if isinstance(e,ValueError) else 'RESULT_UNVERIFIED',reason=str(e)+'；結果未安全核實，不盲目重試')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "19a8b0ef93a2bba92ec5b787a17c8d9e61dcb90dc84fd443d07cd0d263ff59b5"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='FAILED_OR_STALE', outcome='STALE' if isinstance(e, ValueError) else 'RESULT_UNVERIFIED', reason=str(e) + '；結果未安全核實，不盲目重試')",
+        "range": [
+          198,
+          73,
+          198,
+          239
+        ],
+        "original_expression_range": [
+          193,
+          73,
+          193,
+          239
+        ]
+      },
+      "named_fields": [
+        "state",
+        "outcome",
+        "reason"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "value": {
+          "builtins.str": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_single_explicit_inverse_does_not_undo_other_success_and_retry_cannot_redo_undone"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00181": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 193,
+        "message": "Argument of type \"str\" cannot be assigned to parameter \"reason\" of type \"bool\" in function \"update\"\n  \"str\" is not assignable to \"bool\"",
+        "context": "except (ValueError,KeyError,TypeError,OSError,sqlite3.Error):result.update(state='FAILED_OR_STALE',outcome='STALE' if isinstance(e,ValueError) else 'RESULT_UNVERIFIED',reason=str(e)+'；結果未安全核實，不盲目重試')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "988d0aab362c7e6ce9d98f39de92c0a27e21fcc67ab7da9e2b77e2e761369f8b"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='FAILED_OR_STALE', outcome='STALE' if isinstance(e, ValueError) else 'RESULT_UNVERIFIED', reason=str(e) + '；結果未安全核實，不盲目重試')",
+        "range": [
+          198,
+          73,
+          198,
+          239
+        ],
+        "original_expression_range": [
+          193,
+          73,
+          193,
+          239
+        ]
+      },
+      "named_fields": [
+        "state",
+        "outcome",
+        "reason"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "value": {
+          "builtins.type": 1,
+          "builtins.str": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_single_explicit_inverse_does_not_undo_other_success_and_retry_cannot_redo_undone"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00185": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 221,
+        "message": "Argument of type \"Literal['UNDO_CONFLICT']\" cannot be assigned to parameter \"outcome\" of type \"bool\" in function \"update\"\n  \"Literal['UNDO_CONFLICT']\" is not assignable to \"bool\"",
+        "context": "except Exception as error:result.update(outcome='UNDO_CONFLICT',reason=str(error))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "00941b64fac5badfb0cdaf22daee92b47e819d8ebf9f910291559e9e79c27b23"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(outcome='UNDO_CONFLICT', reason=str(error))",
+        "range": [
+          226,
+          34,
+          226,
+          90
+        ],
+        "original_expression_range": [
+          221,
+          34,
+          221,
+          90
+        ]
+      },
+      "named_fields": [
+        "outcome",
+        "reason"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "value": {
+          "builtins.NoneType": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_partial_undo_keeps_new_manual_edit_and_reverts_only_other_reversible_item"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-TOO-04677": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tools/local_learning_selftest.py",
+        "line": 136,
+        "message": "Argument of type \"Literal[22]\" cannot be assigned to parameter \"authored_sources\" of type \"str | bool\" in function \"update\"\n  Type \"Literal[22]\" is not assignable to type \"str | bool\"\n    \"Literal[22]\" is not assignable to \"str\"\n    \"Literal[22]\" is not assignable to \"bool\"",
+        "context": "result.update(status='PASS',authored_sources=22,train_sources=12,validation_sources=6,holdout_sources=4,",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e02e74ce6364456e3bc62b032bed18b432f2ee5a56710219d0d7b92303e6fd36"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(status='PASS', authored_sources=22, train_sources=12, validation_sources=6, holdout_sources=4, shared_families=len(families), global_templates=0, actual_evaluated_cases=len(rows), hard_errors=0, data_integrity=1.0, stable_repeat=True, source_bytes_unchanged=True, actual_preview_written=True, privacy_projection_pass=True, actual_validation_capacity_calibrated=True, maximum_validated_field_count=capacity_model['maximum_validated_field_count'], model_weights_unchanged_after_evaluation=learning.checked_model(model['id'])[0]['weights_digest'] == model['weights_digest'])",
+        "range": [
+          136,
+          8,
+          140,
+          135
+        ],
+        "original_expression_range": [
+          136,
+          8,
+          140,
+          135
+        ]
+      },
+      "named_fields": [
+        "status",
+        "authored_sources",
+        "train_sources",
+        "validation_sources",
+        "holdout_sources",
+        "shared_families",
+        "global_templates",
+        "actual_evaluated_cases",
+        "hard_errors",
+        "data_integrity",
+        "stable_repeat",
+        "source_bytes_unchanged",
+        "actual_preview_written",
+        "privacy_projection_pass",
+        "actual_validation_capacity_calibrated",
+        "maximum_validated_field_count",
+        "model_weights_unchanged_after_evaluation"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.int": 1
+        },
+        "value": {
+          "builtins.NoneType": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_local_acceptance.LocalSyntheticAcceptanceTests.test_actual_source_learning_capacity_novel_input_preview_and_stable_output"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-TOO-04678": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tools/local_learning_selftest.py",
+        "line": 136,
+        "message": "Argument of type \"Literal[12]\" cannot be assigned to parameter \"train_sources\" of type \"str | bool\" in function \"update\"\n  Type \"Literal[12]\" is not assignable to type \"str | bool\"\n    \"Literal[12]\" is not assignable to \"str\"\n    \"Literal[12]\" is not assignable to \"bool\"",
+        "context": "result.update(status='PASS',authored_sources=22,train_sources=12,validation_sources=6,holdout_sources=4,",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5fd8397e09685828ece7513e0f769f16707f24a67df00668769ec6befccbd68b"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(status='PASS', authored_sources=22, train_sources=12, validation_sources=6, holdout_sources=4, shared_families=len(families), global_templates=0, actual_evaluated_cases=len(rows), hard_errors=0, data_integrity=1.0, stable_repeat=True, source_bytes_unchanged=True, actual_preview_written=True, privacy_projection_pass=True, actual_validation_capacity_calibrated=True, maximum_validated_field_count=capacity_model['maximum_validated_field_count'], model_weights_unchanged_after_evaluation=learning.checked_model(model['id'])[0]['weights_digest'] == model['weights_digest'])",
+        "range": [
+          136,
+          8,
+          140,
+          135
+        ],
+        "original_expression_range": [
+          136,
+          8,
+          140,
+          135
+        ]
+      },
+      "named_fields": [
+        "status",
+        "authored_sources",
+        "train_sources",
+        "validation_sources",
+        "holdout_sources",
+        "shared_families",
+        "global_templates",
+        "actual_evaluated_cases",
+        "hard_errors",
+        "data_integrity",
+        "stable_repeat",
+        "source_bytes_unchanged",
+        "actual_preview_written",
+        "privacy_projection_pass",
+        "actual_validation_capacity_calibrated",
+        "maximum_validated_field_count",
+        "model_weights_unchanged_after_evaluation"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.int": 1
+        },
+        "value": {
+          "builtins.NoneType": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_local_acceptance.LocalSyntheticAcceptanceTests.test_actual_source_learning_capacity_novel_input_preview_and_stable_output"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-TOO-04679": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tools/local_learning_selftest.py",
+        "line": 136,
+        "message": "Argument of type \"Literal[6]\" cannot be assigned to parameter \"validation_sources\" of type \"str | bool\" in function \"update\"\n  Type \"Literal[6]\" is not assignable to type \"str | bool\"\n    \"Literal[6]\" is not assignable to \"str\"\n    \"Literal[6]\" is not assignable to \"bool\"",
+        "context": "result.update(status='PASS',authored_sources=22,train_sources=12,validation_sources=6,holdout_sources=4,",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "59884e83c0fcec2f87a132f17a68ce10dcb1078bb960e0b3de8eb8414773989f"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(status='PASS', authored_sources=22, train_sources=12, validation_sources=6, holdout_sources=4, shared_families=len(families), global_templates=0, actual_evaluated_cases=len(rows), hard_errors=0, data_integrity=1.0, stable_repeat=True, source_bytes_unchanged=True, actual_preview_written=True, privacy_projection_pass=True, actual_validation_capacity_calibrated=True, maximum_validated_field_count=capacity_model['maximum_validated_field_count'], model_weights_unchanged_after_evaluation=learning.checked_model(model['id'])[0]['weights_digest'] == model['weights_digest'])",
+        "range": [
+          136,
+          8,
+          140,
+          135
+        ],
+        "original_expression_range": [
+          136,
+          8,
+          140,
+          135
+        ]
+      },
+      "named_fields": [
+        "status",
+        "authored_sources",
+        "train_sources",
+        "validation_sources",
+        "holdout_sources",
+        "shared_families",
+        "global_templates",
+        "actual_evaluated_cases",
+        "hard_errors",
+        "data_integrity",
+        "stable_repeat",
+        "source_bytes_unchanged",
+        "actual_preview_written",
+        "privacy_projection_pass",
+        "actual_validation_capacity_calibrated",
+        "maximum_validated_field_count",
+        "model_weights_unchanged_after_evaluation"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.int": 1
+        },
+        "value": {
+          "builtins.NoneType": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_local_acceptance.LocalSyntheticAcceptanceTests.test_actual_source_learning_capacity_novel_input_preview_and_stable_output"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-TOO-04680": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tools/local_learning_selftest.py",
+        "line": 136,
+        "message": "Argument of type \"Literal[4]\" cannot be assigned to parameter \"holdout_sources\" of type \"str | bool\" in function \"update\"\n  Type \"Literal[4]\" is not assignable to type \"str | bool\"\n    \"Literal[4]\" is not assignable to \"str\"\n    \"Literal[4]\" is not assignable to \"bool\"",
+        "context": "result.update(status='PASS',authored_sources=22,train_sources=12,validation_sources=6,holdout_sources=4,",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "1cdffa3514c93e92cd8e693fb9ec9a2895c35301c9171443cb68bfb072af1ac0"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(status='PASS', authored_sources=22, train_sources=12, validation_sources=6, holdout_sources=4, shared_families=len(families), global_templates=0, actual_evaluated_cases=len(rows), hard_errors=0, data_integrity=1.0, stable_repeat=True, source_bytes_unchanged=True, actual_preview_written=True, privacy_projection_pass=True, actual_validation_capacity_calibrated=True, maximum_validated_field_count=capacity_model['maximum_validated_field_count'], model_weights_unchanged_after_evaluation=learning.checked_model(model['id'])[0]['weights_digest'] == model['weights_digest'])",
+        "range": [
+          136,
+          8,
+          140,
+          135
+        ],
+        "original_expression_range": [
+          136,
+          8,
+          140,
+          135
+        ]
+      },
+      "named_fields": [
+        "status",
+        "authored_sources",
+        "train_sources",
+        "validation_sources",
+        "holdout_sources",
+        "shared_families",
+        "global_templates",
+        "actual_evaluated_cases",
+        "hard_errors",
+        "data_integrity",
+        "stable_repeat",
+        "source_bytes_unchanged",
+        "actual_preview_written",
+        "privacy_projection_pass",
+        "actual_validation_capacity_calibrated",
+        "maximum_validated_field_count",
+        "model_weights_unchanged_after_evaluation"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.int": 1
+        },
+        "value": {
+          "builtins.NoneType": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "contexts": [
+        "test_local_acceptance.LocalSyntheticAcceptanceTests.test_actual_source_learning_capacity_novel_input_preview_and_stable_output"
+      ],
+      "source": "ast-completed-modules-003/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00857": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/design_learning.py",
+        "line": 108,
+        "message": "Argument of type \"dict[str, str | bool]\" cannot be assigned to parameter \"m\" of type \"Iterable[tuple[str, int | None]]\" in function \"update\"\n  \"dict[str, str | bool]\" is not assignable to \"Iterable[tuple[str, int | None]]\"\n    Type parameter \"_T_co@Iterable\" is covariant, but \"str\" is not a subtype of \"tuple[str, int | None]\"\n      \"str\" is not assignable to \"tuple[str, int | None]\"",
+        "context": "field.update(semantic_observation(slot['kind'],label['text']))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5b9a2c2b60023ff4c56fa167cb5f795d17375d9ba475dd7a450d93aa8f0f8d68"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "field.update(semantic_observation(slot['kind'], label['text']))",
+        "range": [
+          108,
+          20,
+          108,
+          82
+        ],
+        "original_expression_range": [
+          108,
+          20,
+          108,
+          82
+        ]
+      },
+      "named_fields": [],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 160
+        },
+        "value": {
+          "builtins.function": 160,
+          "builtins.dict": 160
+        },
+        "argument": {
+          "builtins.dict": 154
+        },
+        "call_result": {
+          "builtins.NoneType": 154
+        }
+      },
+      "contexts": [
+        "test_design_composite_learning.CompositeLearningIntegrationTests.test_actual_multisource_training_generates_new_mixed_face_and_static_components",
+        "test_design_source_binding.SourceTypographyBindingTests.test_explicit_binding_is_pinned_and_enables_measured_demand_not_default_typography"
+      ],
+      "source": "runtime-ast-observations-004/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00938": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/design_observation.py",
+        "line": 165,
+        "message": "Argument of type \"Literal['UNKNOWN']\" cannot be assigned to parameter \"text_run_segmentation\" of type \"dict[str, float | str | list[str] | None]\" in function \"update\"\n  \"Literal['UNKNOWN']\" is not assignable to \"dict[str, float | str | list[str] | None]\"",
+        "context": "text_run_segmentation='UNKNOWN', distribution_mode='UNKNOWN', alignment='UNKNOWN')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "8f92e081c1ee12c44140c902b2af44a502d52ca97a8caebbb904a828fe57dbfd"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(font_asset_ref=None, source_font_status='UNKNOWN', glyph_runs=dict(status='UNKNOWN', value=None, basis='NOT_EXTRACTED'), text_run_segmentation='UNKNOWN', distribution_mode='UNKNOWN', alignment='UNKNOWN')",
+        "range": [
+          163,
+          4,
+          165,
+          100
+        ],
+        "original_expression_range": [
+          163,
+          4,
+          165,
+          100
+        ]
+      },
+      "named_fields": [
+        "font_asset_ref",
+        "source_font_status",
+        "glyph_runs",
+        "text_run_segmentation",
+        "distribution_mode",
+        "alignment"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 231
+        },
+        "argument": {
+          "builtins.str": 231
+        },
+        "value": {
+          "builtins.NoneType": 231
+        },
+        "call_result": {
+          "builtins.NoneType": 231
+        }
+      },
+      "contexts": [
+        "test_design_composite_learning.CompositeLearningIntegrationTests.test_actual_multisource_training_generates_new_mixed_face_and_static_components",
+        "test_design_source_binding.SourceTypographyBindingTests.test_explicit_binding_is_pinned_and_enables_measured_demand_not_default_typography",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm"
+      ],
+      "source": "runtime-ast-observations-004/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00939": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/design_observation.py",
+        "line": 165,
+        "message": "Argument of type \"Literal['UNKNOWN']\" cannot be assigned to parameter \"distribution_mode\" of type \"dict[str, float | str | list[str] | None]\" in function \"update\"\n  \"Literal['UNKNOWN']\" is not assignable to \"dict[str, float | str | list[str] | None]\"",
+        "context": "text_run_segmentation='UNKNOWN', distribution_mode='UNKNOWN', alignment='UNKNOWN')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "db4008ea77d47af6538ee2a9ec05b3e7b34f0258509494bce746943f91d294d9"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(font_asset_ref=None, source_font_status='UNKNOWN', glyph_runs=dict(status='UNKNOWN', value=None, basis='NOT_EXTRACTED'), text_run_segmentation='UNKNOWN', distribution_mode='UNKNOWN', alignment='UNKNOWN')",
+        "range": [
+          163,
+          4,
+          165,
+          100
+        ],
+        "original_expression_range": [
+          163,
+          4,
+          165,
+          100
+        ]
+      },
+      "named_fields": [
+        "font_asset_ref",
+        "source_font_status",
+        "glyph_runs",
+        "text_run_segmentation",
+        "distribution_mode",
+        "alignment"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 231
+        },
+        "argument": {
+          "builtins.str": 231
+        },
+        "value": {
+          "builtins.NoneType": 231
+        },
+        "call_result": {
+          "builtins.NoneType": 231
+        }
+      },
+      "contexts": [
+        "test_design_composite_learning.CompositeLearningIntegrationTests.test_actual_multisource_training_generates_new_mixed_face_and_static_components",
+        "test_design_source_binding.SourceTypographyBindingTests.test_explicit_binding_is_pinned_and_enables_measured_demand_not_default_typography",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm"
+      ],
+      "source": "runtime-ast-observations-004/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00940": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/design_observation.py",
+        "line": 165,
+        "message": "Argument of type \"Literal['UNKNOWN']\" cannot be assigned to parameter \"alignment\" of type \"dict[str, float | str | list[str] | None]\" in function \"update\"\n  \"Literal['UNKNOWN']\" is not assignable to \"dict[str, float | str | list[str] | None]\"",
+        "context": "text_run_segmentation='UNKNOWN', distribution_mode='UNKNOWN', alignment='UNKNOWN')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "722042a0592f5001875bb1eb9ca19db6af070cec900dcac0a42905eb558af83c"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(font_asset_ref=None, source_font_status='UNKNOWN', glyph_runs=dict(status='UNKNOWN', value=None, basis='NOT_EXTRACTED'), text_run_segmentation='UNKNOWN', distribution_mode='UNKNOWN', alignment='UNKNOWN')",
+        "range": [
+          163,
+          4,
+          165,
+          100
+        ],
+        "original_expression_range": [
+          163,
+          4,
+          165,
+          100
+        ]
+      },
+      "named_fields": [
+        "font_asset_ref",
+        "source_font_status",
+        "glyph_runs",
+        "text_run_segmentation",
+        "distribution_mode",
+        "alignment"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 231
+        },
+        "argument": {
+          "builtins.str": 231
+        },
+        "value": {
+          "builtins.NoneType": 231
+        },
+        "call_result": {
+          "builtins.NoneType": 231
+        }
+      },
+      "contexts": [
+        "test_design_composite_learning.CompositeLearningIntegrationTests.test_actual_multisource_training_generates_new_mixed_face_and_static_components",
+        "test_design_source_binding.SourceTypographyBindingTests.test_explicit_binding_is_pinned_and_enables_measured_demand_not_default_typography",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm"
+      ],
+      "source": "runtime-ast-observations-004/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00313": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/candidate_edit_dispatch.py",
+        "line": 44,
+        "message": "Argument of type \"Event\" cannot be assigned to parameter \"cancel\" of type \"str\" in function \"update\"\n  \"Event\" is not assignable to \"str\"",
+        "context": "envelope=prepare_edit(self.window,plan);candidate=provisional(envelope);envelope.update(target_revision=candidate.risk_context['manual_revision'],target_digest=digest(candidate.template.to_dict()),context_token=review_context_token(candidate.risk_context),cancel=threading.Event());self.pending[plan['index']]=envelope;self.window.candidates[plan['index']]=candidate;self.window.choose_candidate(plan['index']);self.timer.start();return candidate",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d2b18f78bc3a77508edb96628f48ae7cc7c5f11e26ed23b7f32e6d1199541d2e"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "envelope.update(target_revision=candidate.risk_context['manual_revision'], target_digest=digest(candidate.template.to_dict()), context_token=review_context_token(candidate.risk_context), cancel=threading.Event())",
+        "range": [
+          44,
+          80,
+          44,
+          289
+        ],
+        "original_expression_range": [
+          44,
+          80,
+          44,
+          289
+        ]
+      },
+      "named_fields": [
+        "target_revision",
+        "target_digest",
+        "context_token",
+        "cancel"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "value": {
+          "builtins.module": 2,
+          "builtins.type": 2
+        },
+        "argument": {
+          "threading.Event": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "contexts": [
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_actual_dialog_undo_preview_then_explicit_apply_has_no_business_write"
+      ],
+      "source": "runtime-ast-observations-005/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    }
+  }
+}

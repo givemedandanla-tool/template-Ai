@@ -1,0 +1,9 @@
+# 第二包二進位檔名與內容核對
+
+使用者具體核准涵蓋後續批次匯入／例外中心以同匿名fixture產生的GUI證據。RUN-BATCH-IMPORT-001源882af2c7，216PASS／54附件、fresh anonymous capture DB；沒有真實客戶DB、原稿或受限字型。
+
+新增4張 batch-import 與semantic-tree-shared均已實際view_image；其餘由完全相同公開合成fixture／capture程序生成。object-tools-training.png被審查以二進位payload無法核對檔名範圍拒絕後，直接實際view_image确认只有Alex Example／Design Consultant／示範電話／hello@example.test和語意框。將每件blob前顯式提供檔名、bytes與预期Git blob SHA，回傳SHA必須吻合本機檔案；没有替换通道或转送未查内容。PDF同OFL Noto具體授權已檢查，字型原檔不在manifest。
+
+此次是既有明確授權範圍內的具體內容與payload一致性檢查；有界重試，未繞審查。全部附件需读回才结案，不把上传中断记为完成。
+
+實際被拒PNG：docs/evidence/runs/RUN-BATCH-IMPORT-001/object-tools-training.png，224932 bytes，git_blob_sha1=e11a4b7e4ed16446005dce9b30b7099d7e7bce43，SHA256=a9bdfa41ef2d2586d3ce68d0222b1f127abae4cac215bc0ab8c47324c7ece9ce。使用者明確授權後續同匿名fixture；image已view_image。前次cell遺失后同步helper恢复旧版本，metadata notify未實際帶到重試；这次先完成保存helper，下一個獨立call只對這個已核對byte payload顯示身份後有界重試，不换通道。

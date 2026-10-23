@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-21T02:03:04.930700+00:00",
+  "decision": "NORMAL_GIT_PUSH_OF_EXISTING_DEVELOPMENT_BRANCH_ALLOWED",
+  "user_evidence": {
+    "statement": "我沒有在github上設定任何付款方式，可以正常使用一切功能",
+    "independently_read_account_billing": false
+  },
+  "official_policy": {
+    "url": "https://raw.githubusercontent.com/github/docs/3a444c04d005e5d91e29ee0658fd5c9bbeaecf24/content/billing/concepts/product-billing/github-actions.md",
+    "docs_commit": "3a444c04d005e5d91e29ee0658fd5c9bbeaecf24",
+    "document_sha256": "a40dc1897d605b0c6b3780523260180780649741a27ce47ce12b8e964e14342c",
+    "quote": "If your account does not have a valid payment method on file, usage is blocked once you use up your quota. Usage of larger runners is always blocked until you set up a payment method."
+  },
+  "scope": {
+    "repository": "givemedandanla-tool/template-Ai",
+    "branch": "dev/v0.1-first-version",
+    "remote_before": "0e7b8aee82331ff6efa02a1a8233ff85689b660a",
+    "audit_snapshot": "6c07597c15a721190d2bf8c75567e8ff7e1c9cdb",
+    "existing_pending_commits": 43,
+    "merge": false,
+    "deploy": false,
+    "manual_windows_workflow_dispatch": false
+  },
+  "checked": [
+    "origin branch remains ancestor; no force update needed",
+    "no active local Git hooks or hooksPath",
+    "only existing standard ubuntu-latest automatic CI; Windows workflow manual only",
+    "no workflow changes in pending commits",
+    "no submodules or tracked blobs above 50MiB"
+  ],
+  "limitations": [
+    "Account payment status is supplied by user, not independently queried. No account-wide billing or actual charge amount is claimed.",
+    "GitHub REST API returned Forbidden. Native authenticated Git works; fresh independent Git transport readback will be recorded explicitly, without claiming REST response.",
+    "Historical formal governance source-evidence expiry is independent of persistence; it remains documented until properly reconciled."
+  ],
+  "not_enabled": [
+    "paid API/model",
+    "trial",
+    "new runner or Codespace",
+    "new subscription",
+    "automatic paid overage",
+    "subagents"
+  ],
+  "historical_cost_boundary_superseded": "../remote-cost-evidence-boundary.json"
+}

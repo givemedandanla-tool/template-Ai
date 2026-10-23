@@ -1,0 +1,29 @@
+test_dead_running_request_is_recoverable_and_keeps_all_original_backend_results (test_runtime_queue.RuntimeQueueTests.test_dead_running_request_is_recoverable_and_keeps_all_original_backend_results) ... ok
+test_dead_session_does_not_auto_resume_and_explicit_resume_keeps_original_arrival_rank (test_runtime_queue.RuntimeQueueTests.test_dead_session_does_not_auto_resume_and_explicit_resume_keeps_original_arrival_rank) ... ok
+test_fifo_does_not_follow_wall_clock_and_atomic_claim_cannot_bypass_older_live_scope (test_runtime_queue.RuntimeQueueTests.test_fifo_does_not_follow_wall_clock_and_atomic_claim_cannot_bypass_older_live_scope) ... ok
+test_other_window_cannot_duplicate_worker_and_stale_request_cas_rolls_back (test_runtime_queue.RuntimeQueueTests.test_other_window_cannot_duplicate_worker_and_stale_request_cas_rolls_back) ... ok
+test_pressure_resume_uses_same_confirmed_scope_and_persisted_completed_units (test_runtime_queue.RuntimeQueueTests.test_pressure_resume_uses_same_confirmed_scope_and_persisted_completed_units) ... ok
+test_queue_audit_failure_rolls_back_backend_claim_worker_lease_and_request (test_runtime_queue.RuntimeQueueTests.test_queue_audit_failure_rolls_back_backend_claim_worker_lease_and_request) ... ok
+test_queue_bookkeeping_never_changes_learning_epoch_and_requires_scope_confirmation (test_runtime_queue.RuntimeQueueTests.test_queue_bookkeeping_never_changes_learning_epoch_and_requires_scope_confirmation) ... ok
+test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure (test_runtime_queue.RuntimeQueueTests.test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure) ... ERROR
+test_scope_changed_request_is_blocked_and_next_eligible_is_not_starved (test_runtime_queue.RuntimeQueueTests.test_scope_changed_request_is_blocked_and_next_eligible_is_not_starved) ... ok
+
+======================================================================
+ERROR: test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure (test_runtime_queue.RuntimeQueueTests.test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_runtime_queue.py", line 95, in test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure
+    with self.assertRaises(WorkerTimeout):run_isolated(self.library.root,'AUTO_JOB',job['id'],token,admission=lambda:resources.ALLOW,unit_timeout=2.5,process_factory=factory)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/runtime_worker.py", line 110, in run_isolated
+    if process.returncode!=0 or not result:raise RuntimeError('worker未完成已核實結果；'+''.join(errors)[-4000:])
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: worker未完成已核實結果；usage: -c [-h] --root ROOT --kind {JOB,AUTO_JOB,EVAL_JOB} --job JOB --token
+          TOKEN
+-c: error: unrecognized arguments: template_ai.runtime_worker
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 8.139s
+
+FAILED (errors=1)

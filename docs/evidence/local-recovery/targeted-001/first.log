@@ -1,0 +1,27 @@
+....FF.
+======================================================================
+FAIL: test_duplicate_faces_are_ambiguous_and_incomplete_search_is_explicit (test_local_recovery.VisualFontMatchingTests.test_duplicate_faces_are_ambiguous_and_incomplete_search_is_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_local_recovery.py", line 98, in test_duplicate_faces_are_ambiguous_and_incomplete_search_is_explicit
+    self.assertEqual(report['status'],'AMBIGUOUS')
+AssertionError: 'NO_MATCH' != 'AMBIGUOUS'
+- NO_MATCH
++ AMBIGUOUS
+
+
+======================================================================
+FAIL: test_real_outline_matching_finds_known_font_with_scale_and_physical_size (test_local_recovery.VisualFontMatchingTests.test_real_outline_matching_finds_known_font_with_scale_and_physical_size)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_local_recovery.py", line 87, in test_real_outline_matching_finds_known_font_with_scale_and_physical_size
+    self.assertEqual(report['status'],'CANDIDATE',report)
+AssertionError: 'NO_MATCH' != 'CANDIDATE'
+- NO_MATCH
++ CANDIDATE
+ : {'schema': 'local-outline-font-match-1', 'status': 'NO_MATCH', 'font_match_status': 'INCOMPLETE', 'candidates': [], 'exclusions': [{'index': 0, 'code': 'FONT_UNREADABLE_OR_UNSUPPORTED'}, {'index': 1, 'code': 'FONT_UNREADABLE_OR_UNSUPPORTED'}, {'index': 2, 'code': 'FONT_UNREADABLE_OR_UNSUPPORTED'}], 'checked_faces': 3, 'omitted_faces': 0, 'next_offset': 3, 'issues': [{'code': 'FONT_NO_MATCH', 'stage': 'FONT', 'count': 1, 'message': '未找到符合條件的字型', 'remedy': '檢查 OCR 文字、欄位裁切、字型庫與幾何搜尋範圍。'}, {'code': 'SEARCH_INCOMPLETE', 'stage': 'BUDGET', 'count': 1, 'message': '搜尋未涵蓋全部候選', 'remedy': '繼續下一批或擴大本地預算；本輪結果不宣稱全庫最佳。'}], 'physical_calibration': 'KNOWN', 'policy': {'maximum_error': 0.18, 'minimum_margin': 0.015, 'scale_bounds': [0.5, 1.5]}, 'identity': 'VISUAL_CANDIDATES_NOT_BINARY_SOURCE_IDENTITY_OR_LICENCE', 'crop_digest': '169148c1995f00d8fd600796f017a00b0eb6acd7a44770b69b273c7e24d6bd91', 'search_complete': False}
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.036s
+
+FAILED (failures=2)

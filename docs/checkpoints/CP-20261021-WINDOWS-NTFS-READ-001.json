@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261021-WINDOWS-NTFS-READ-001",
+  "kind": "INCREMENTAL_FORMAL",
+  "phase": "PREPARED",
+  "base_commit": "4cfa758683e38b4e891a18ea1854d5f6e93f472f",
+  "created_utc": "2026-10-21T15:08:17.051777+00:00",
+  "summary": "CI-only bounded NTFS metadata-read retries. Four controlled IO checks PASS; previous native82 cases remain partial FAIL, no EXE or tag. Original176 cases and watchdog unchanged.",
+  "source_files": {
+    "AGENTS.md": {
+      "bytes": 22147,
+      "sha256": "66f9f570a655f9889a5c8a8147369a33d8dc5f6e11f464e13c5b2f28fee63a15",
+      "git_blob_sha1": "66c4c6f9e22c6ff6ff31af00f55c7ecb4f36a787"
+    },
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 4071,
+      "sha256": "5fe3ee1217614a586376eb5e960214cf7d09569b052c4de1ffc8d661127388f0",
+      "git_blob_sha1": "4db117e31e217ef39d0844f1fa6bd94bae5f0c8d"
+    },
+    "docs/dev/CURRENT_PROGRESS.json": {
+      "bytes": 36009,
+      "sha256": "d6dd2387461a1cf7dfd9d146be901a46cc145d0b49eb4a8716bc905311aa5cfa",
+      "git_blob_sha1": "276f6420504c702c91ba7d4201bed42eb07550b8"
+    },
+    "docs/dev/FEATURES.md": {
+      "bytes": 57920,
+      "sha256": "fefbc343f2745e360d8613652aca3ad42fedd570d92f936b4817bc55e65c209a",
+      "git_blob_sha1": "b4c4a7265c1260beb2af137ee83e84c814b46c2d"
+    },
+    "docs/dev/HANDOFF.md": {
+      "bytes": 1037,
+      "sha256": "1533b50245db00d14d401bcefb40ddc2516ef3460cd76332036a4e6bb308a100",
+      "git_blob_sha1": "69939ac3d9f721ad28caa7a980c2186cd029612e"
+    },
+    "docs/dev/PROGRESS.md": {
+      "bytes": 904,
+      "sha256": "c1619cc87267240c3dfa477c14fd8e6e51e2af94ef21fbd951ce8d066cf6018e",
+      "git_blob_sha1": "1dd2ca7e9c78634af5f6bab27ad2ceaad35e14a3"
+    },
+    "docs/dev/PROJECT_ROADMAP.json": {
+      "bytes": 561737,
+      "sha256": "556d23283890115f639f738c988b78ce3b66b1661aee57c37e68e48c6574b6de",
+      "git_blob_sha1": "d234483300907a667fd41c7f54899f31022f2a33"
+    },
+    "docs/dev/PROJECT_ROADMAP.md": {
+      "bytes": 6701,
+      "sha256": "fea5c9721b962bf2236e734fe9fd9019738b835904ac239ab7b89e4a2251c422",
+      "git_blob_sha1": "4717a05b09d724ebcf09d2b20830ce7c3d4ca082"
+    },
+    "docs/dev/REQUIREMENTS.json": {
+      "bytes": 2890594,
+      "sha256": "0c0ecf8da8f62c662965831b181fccbb04ee2aadf3943ba046c54d45bcbba3bb",
+      "git_blob_sha1": "ed21786c71c2590eb6fa4bd56c8d8d21a68a78ff"
+    },
+    "docs/dev/STATE.json": {
+      "bytes": 88035,
+      "sha256": "e435045c877f63ad9e0dc00ae294855097bdad642aaf4ed0b683102a73810a5d",
+      "git_blob_sha1": "cfe25a5a57cce65192b60194bbc2237afa36a8ec"
+    },
+    "docs/dev/WORK_LOG.md": {
+      "bytes": 317199,
+      "sha256": "efed2dd7ca75fd7a6ee6e3c3bb76cc4440933b456a70a45e164a79edbfb361b2",
+      "git_blob_sha1": "f65a986206fbff027a8b0acbe071e50a8b5a7287"
+    },
+    "docs/dev/releases/run_windows_case_audit.py": {
+      "bytes": 6305,
+      "sha256": "0965615a7523b44a1bb0e3de32bb8fa78b2973cc96353caca1f9de81039480d3",
+      "git_blob_sha1": "f7710376dde4b11adb29b4007192579b33c0bea1"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/metadata-read-controls-001/README.md": {
+      "bytes": 1158,
+      "sha256": "64d9f1756ecf0e9028e4536f6eec3329c23123eb977d4a8d72e387725cc8fe74",
+      "git_blob_sha1": "969d10c304a796a9cc45dbd2aa6c6b464a11a7d4"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/metadata-read-controls-001/summary.json": {
+      "bytes": 620,
+      "sha256": "b2e6801c4936140a9ed6fbcfb0c8c1a45a37edc4f69c70ab7f2a6fb09aab35b9",
+      "git_blob_sha1": "acc62ff9988c653d7590fe76919f4b97d1f002ec"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-004-ci-read-failed/WINDOWS_RUNTIME.txt": {
+      "bytes": 63,
+      "sha256": "73cddd65f8003a60ca4d3b95a3c7c081e0743307d8b0d99a5455a77126924b06",
+      "git_blob_sha1": "6adf42d351563c33c16d1161dc8a4f8775b47c88"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-004-ci-read-failed/governance-gate.json": {
+      "bytes": 108,
+      "sha256": "4a94fac9fc3b2a01d34fb2fbb915be1949c7a0660b670f3986ccb29a15b1fb57",
+      "git_blob_sha1": "955a9ee6110d86fc18745c011e11e740dfea7c45"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-004-ci-read-failed/installed-dependencies.txt": {
+      "bytes": 511,
+      "sha256": "966d8d3399ef3fa3ac3d01d647f3700edb8f145545b355c1a73c562b8ecd59d0",
+      "git_blob_sha1": "2bdc7f94af73f0218394dfe957850e1678039963"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-004-ci-read-failed/pyinstaller.log": {
+      "bytes": 11680,
+      "sha256": "5f6c370c8fd96281299757d0135f2f6d50efe31475c2e66132a11116ac9f2c29",
+      "git_blob_sha1": "8ca2c9e485ab92fe45973121f56b3f09aab15852"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-004-ci-read-failed/source-tests/catalog.json": {
+      "bytes": 20865,
+      "sha256": "8e55ddf8abfed9faf9c2e2e67961eeda72c00c1c835d34a42b6892b0dfecf857",
+      "git_blob_sha1": "9e424d39252b0c5c41a6b5b15d82a0baa896580f"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-004-ci-read-failed/source-tests/live/test-modules.json": {
+      "bytes": 4652,
+      "sha256": "52935d9b404d2181855401209770b4e2d78feb461e8874711b24b1dfa7102bed",
+      "git_blob_sha1": "2b74cdfbc5b2d1156a45e97aa2ef5777b073abdd"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-004-ci-read-failed/status.json": {
+      "bytes": 360,
+      "sha256": "7ea9fcddd4dc7eecb03505d395663588183058893a5b7124707235e75dce5e36",
+      "git_blob_sha1": "cfd2f6f4446aec09afdbeb2f02b440c0be59d814"
+    }
+  },
+  "source_manifest_sha256": "17cda14d26a081a26cc5cb570e3131534a082d463ddf034db0a1e7d51fc5b040",
+  "local_snapshot": {
+    "path": ".checkpoints/CP-20261021-WINDOWS-NTFS-READ-001/source.zip",
+    "sha256": "5f5f44dffe74e5e63499604f32e7475bb5f9a5b371f03544a6d24a7396fe4bd3"
+  },
+  "requirement_ids": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-004"
+  ],
+  "next_step": "Use compact repository handoff; local feedback via manually exported safe support report.",
+  "remote_confirmation": "PENDING_ACTUAL_REMOTE_READBACK",
+  "restore_verification": {
+    "status": "PASS",
+    "kind": "INCREMENTAL_CHANGED_PATH_RESTORE_NOT_STANDALONE_PRODUCT",
+    "files": 21,
+    "base_commit_required": "4cfa758683e38b4e891a18ea1854d5f6e93f472f",
+    "archive_sha256": "5f5f44dffe74e5e63499604f32e7475bb5f9a5b371f03544a6d24a7396fe4bd3",
+    "isolated_temporary_restore": true,
+    "all_hashes_match": true,
+    "user_data_included": false
+  }
+}

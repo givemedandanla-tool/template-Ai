@@ -1,0 +1,24 @@
+test_real_navigation_keeps_three_modes_and_original_commands (test_desktop_workspace.DesktopNavigationTests.test_real_navigation_keeps_three_modes_and_original_commands) ... ok
+test_small_window_keeps_primary_and_canvas_visible_without_scrolling (test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling) ... ok
+test_embedded_pointer_drag_keeps_same_core_intent_and_data (test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data) ... ok
+test_embedded_primary_confirms_and_exports_same_real_preview (test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview) ... ERROR
+test_external_session_revision_clears_embedded_old_result_and_confirmation (test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation) ... ok
+test_real_background_cancel_stays_enabled_and_close_waits_for_worker (test_desktop_workspace.DesktopProductionTests.test_real_background_cancel_stays_enabled_and_close_waits_for_worker) ... ok
+test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data (test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data) ... This plugin does not support propagateSizeHints()
+ok
+test_resume_selector_updates_main_graph_dimensions_and_embedded_session (test_desktop_workspace.DesktopProductionTests.test_resume_selector_updates_main_graph_dimensions_and_embedded_session) ... This plugin does not support propagateSizeHints()
+ok
+
+======================================================================
+ERROR: test_embedded_primary_confirms_and_exports_same_real_preview (test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_desktop_workspace.py", line 149, in test_embedded_primary_confirms_and_exports_same_real_preview
+    artifact = next(x for x in saved if x["session_id"] == row["id"] and x["path"] == str(path))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+----------------------------------------------------------------------
+Ran 8 tests in 73.283s
+
+FAILED (errors=1)

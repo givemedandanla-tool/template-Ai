@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "source_commit": "192db957a927e6fcdedf7b62ef835748bf238717",
+  "formal_run": "RUN-EXCEPTION-CENTER-002",
+  "formal_tests": {
+    "total": 229,
+    "passed": 229,
+    "skip": 0,
+    "source_unchanged": true
+  },
+  "governance_current_local": {
+    "status": "PASS",
+    "requirements": 126,
+    "completed_scoped": 51,
+    "parent_topics": 75,
+    "tests_known": 229
+  },
+  "all_attachment_gate": {
+    "status": "NOT_SATISFIED_USER_APPROVED_PUBLICATION_EXCEPTION",
+    "reason": "證據還未全部納入已確認的遠端 checkpoint，不能當作永久保存完成",
+    "not_claimed_PASS": true
+  },
+  "publication_scope_audit": {
+    "local_all_originals": "PASS",
+    "clean_view_only_9_approved_missing": "PASS",
+    "command": "docs/dev/EVIDENCE_PUBLICATION_SCOPE_CHECK.md"
+  },
+  "publication_snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
+  "publication_snapshot_tree": "7bc349e82cd59b4fcc435add7331576bc7dab96b",
+  "checkpoint_receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json",
+  "published_scope_files": 905,
+  "latest_run_published_attachments": 51,
+  "latest_run_unpublished": [
+    "object-tools-multiselect.png",
+    "synthetic-FINAL.pdf",
+    "semantic-tree-shared.png",
+    "object-tools-difference.png",
+    "semantic-viewport-isolated.png",
+    "object-tools-mixed-patch.png",
+    "semantic-derived-structure.png",
+    "object-tools-training.png",
+    "semantic-search-preserved.png"
+  ],
+  "approved_90_published": 81,
+  "approved_90_excluded": 9,
+  "groups": {
+    "topic": {
+      "total": 75,
+      "verified": 0,
+      "implemented_pending": 0,
+      "partial": 46,
+      "in_progress": 0,
+      "not_implemented": 24,
+      "blocked": 2,
+      "deferred": 3,
+      "not_complete": 75,
+      "has_implementation": 46
+    },
+    "core": {
+      "total": 45,
+      "verified": 45,
+      "implemented_pending": 0,
+      "partial": 0,
+      "in_progress": 0,
+      "not_implemented": 0,
+      "blocked": 0,
+      "deferred": 0,
+      "not_complete": 0,
+      "has_implementation": 45
+    },
+    "governance": {
+      "total": 6,
+      "verified": 6,
+      "implemented_pending": 0,
+      "partial": 0,
+      "in_progress": 0,
+      "not_implemented": 0,
+      "blocked": 0,
+      "deferred": 0,
+      "not_complete": 0,
+      "has_implementation": 6
+    }
+  },
+  "new_core_completed": [
+    "CORE-040",
+    "CORE-041",
+    "CORE-042",
+    "CORE-043",
+    "CORE-044",
+    "CORE-045"
+  ],
+  "not_verified": [
+    "Windows",
+    "真實AI全面視覺一致",
+    "指定硬體",
+    "實體印刷",
+    "獨立覆核"
+  ],
+  "next": "docs/dev/MARKING_TRUST_NEXT_PLAN.md"
+}

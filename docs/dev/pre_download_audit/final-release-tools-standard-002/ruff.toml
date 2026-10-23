@@ -1,0 +1,7 @@
+# Canonical TOML is stored as .txt so existing checkpoint snapshots include it.
+target-version = "py311"
+respect-gitignore = false
+force-exclude = false
+
+[lint]
+select = ["F821", "F822", "F823"]

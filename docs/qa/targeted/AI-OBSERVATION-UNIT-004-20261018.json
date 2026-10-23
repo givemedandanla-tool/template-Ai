@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "checked_utc": "2026-10-18T16:56:03.401881+00:00",
+  "source_base_commit": "e1b8d17",
+  "source_files_sha256": {
+    "template_ai/design_observation.py": "9a6d9c400634f86b902d6dc0c02edc810deba5242375f205cb42db75eadad6f8",
+    "template_ai/design_observation_store.py": "0525af0acdd7d68134cfaa1e59caf5087f9517f16fc4b2c092d5ae085c4dd048",
+    "template_ai/training_store.py": "0833067184e3fee04128f7591fe45a1c270de8895ca4a1813b43b5313be7ee91",
+    "template_ai/automatic_training.py": "778e65f82351dd9784fdf42d3b07eb7c57a97fe7310cdb0e6d187e4bd1ceb67f",
+    "tests/test_design_observation.py": "b839e5a25e145c6faf4e193be0f2948457bf43319e1d2152cd491d80b7d54c6a"
+  },
+  "command": "QT_QPA_PLATFORM=offscreen PYTHONPATH=.:tests .venv/bin/python -m unittest test_design_observation",
+  "exit_code": 0,
+  "tests_run": 18,
+  "passed": 18,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "test_methods": [
+    "test_unknown_defaults_untraceable_and_nonfinite_metrics_rejected",
+    "test_uniform_rotation_and_scale_preserve_known_point_measurement",
+    "test_anisotropy_shear_unknown_and_template_defaults_do_not_become_source_pt",
+    "test_graph_rejects_duplicate_or_dangling_identity",
+    "test_default_typography_not_learned_and_no_source_or_training_records_rewritten",
+    "test_multi_size_same_source_has_distinct_scoped_nodes_and_one_content_group",
+    "test_people_remain_separate_and_can_reference_one_company_without_position_identity",
+    "test_source_crop_to_nominal_work_transform_is_not_a_font_transform",
+    "test_idempotent_refresh_cas_history_and_reopen",
+    "test_old_facts_are_not_relinked_after_work_revision_changes",
+    "test_modified_original_or_derivative_invalidates_and_cannot_be_saved",
+    "test_noise_revision_stales_snapshot_but_excluded_region_is_preserved",
+    "test_transaction_failure_rolls_back_snapshot_history_and_epoch",
+    "test_oversized_role_budget_is_explicit_and_does_not_truncate",
+    "test_field_from_another_work_region_cannot_be_linked",
+    "test_automatic_work_records_references_and_reuses_without_creating_templates",
+    "test_late_automatic_unit_failure_rolls_back_observation_too",
+    "test_cancel_resume_preserves_exact_observation_identity_and_history"
+  ],
+  "log": "docs/qa/targeted/AI-OBSERVATION-UNIT-004-20261018.log",
+  "scope": "Synthetic typed graph/storage/automatic/cancel mechanism tests;not package completion or real AI/model evaluation",
+  "prior_attempts": [
+    {
+      "attempt": 1,
+      "result": "System Python lacked PySide6;no functional tests executed;use existing .venv"
+    },
+    {
+      "attempt": 2,
+      "result": "4PASS/2FAIL/12ERROR;canonical JSON digest separators mismatched existing store,fixed"
+    },
+    {
+      "attempt": 3,
+      "result": "15PASS/3ERROR;test fixture needed registered current-path source view,fixed"
+    }
+  ]
+}

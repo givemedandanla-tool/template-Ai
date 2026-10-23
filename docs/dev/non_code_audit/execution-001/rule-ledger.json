@@ -1,0 +1,248 @@
+{
+  "kind": "NORMATIVE_SCOPE_REVIEW_NOT_RUNTIME_PROOF",
+  "rules": [
+    {
+      "id": "R01",
+      "audit_topic": "NCA-B02",
+      "normative_meaning": "Every displayed field retains stable identity,real owner and explicit users; equal strings do not imply shared identity.",
+      "source": "docs/dev/INPUT_LEARNING_INTERFACE_MAP.md",
+      "source_sha256": "d27867d4f79b31e4249cf5ca8d5d328975ba009f2009d554d151930bb0a4fa3c",
+      "scope": "ALL_INPUTS",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R02",
+      "audit_topic": "NCA-B01",
+      "normative_meaning": "Values and leading zeroes survive; an engineering budget rejects rather than silently truncates.",
+      "source": "docs/dev/INPUT_LEARNING_INTERFACE_MAP.md",
+      "source_sha256": "d27867d4f79b31e4249cf5ca8d5d328975ba009f2009d554d151930bb0a4fa3c",
+      "scope": "ALL_INPUTS",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R03",
+      "audit_topic": "NCA-F03",
+      "normative_meaning": "Logo identity,owner,source,whole proportions and designated physical size remain bound.",
+      "source": "docs/dev/INPUT_LEARNING_INTERFACE_MAP.md",
+      "source_sha256": "d27867d4f79b31e4249cf5ca8d5d328975ba009f2009d554d151930bb0a4fa3c",
+      "scope": "ASSETS",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R04",
+      "audit_topic": "NCA-B04",
+      "normative_meaning": "Measured,declared,estimated,unknown and confirmed source typography remain distinct; defaults are not source truth.",
+      "source": "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
+      "source_sha256": "7ebdd7ec8e5aa6658ea351217e2ec8cdcfd2889604378a9cee1011dc3553569f",
+      "scope": "OBSERVATION_AND_TRAINING",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R05",
+      "audit_topic": "NCA-C01",
+      "normative_meaning": "Training uses permitted TRAIN groups; lineage is kept across splits; sealed evaluation is not used to fit.",
+      "source": "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
+      "source_sha256": "7ebdd7ec8e5aa6658ea351217e2ec8cdcfd2889604378a9cee1011dc3553569f",
+      "scope": "MODEL_FITTING",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R06",
+      "audit_topic": "NCA-C02",
+      "normative_meaning": "New learning produces cross-work shared family/rules; isolated observations are not silently one-output-template-per-work.",
+      "source": "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
+      "source_sha256": "7ebdd7ec8e5aa6658ea351217e2ec8cdcfd2889604378a9cee1011dc3553569f",
+      "scope": "NEW_LEARNING_NOT_LEGACY_MANUAL_SAVE",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R07",
+      "audit_topic": "NCA-C04",
+      "normative_meaning": "Confidence,style qualification and real generalization require evidence; predictions are not human labels.",
+      "source": "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
+      "source_sha256": "0a68b0d8a2b98c555dc6b0708a003d08efb89f90876b1bcde27b43a2616f7a82",
+      "scope": "LEARNING_QUALITY",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R08",
+      "audit_topic": "NCA-D01",
+      "normative_meaning": "Substitution is conditional on both endpoints,role,owner,label/icon,font,actual data and joint layout; not unrestricted transitivity.",
+      "source": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+      "source_sha256": "614992ecf7846a04e463b207a938e849819f7687fee16a90d08e881b9dc8e2f3",
+      "scope": "NEW_FAMILY_ASSIGNMENT",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R09",
+      "audit_topic": "NCA-C03",
+      "normative_meaning": "Qualified positive support defines advice; known negative demands cannot expand it; no global learned hard maximum is invented.",
+      "source": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
+      "source_sha256": "cd21dc6bb4d77e533fda820fe242115001439962e77e81357d79315f71ef3ee5",
+      "scope": "CAPACITY_ADVICE_NOT_OUTPUT_PERMISSION",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R10",
+      "audit_topic": "NCA-D03",
+      "normative_meaning": "A move preserves unaffected protected relative relations while approved joint geometry/typography can adapt.",
+      "source": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+      "source_sha256": "614992ecf7846a04e463b207a938e849819f7687fee16a90d08e881b9dc8e2f3",
+      "scope": "RELATIVE_EDITING",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R11",
+      "audit_topic": "NCA-D03",
+      "normative_meaning": "Customer intent is relative placement; font size,ScaleX,frame,alignment and distribution are core rules; professional template tools keep their approved scope.",
+      "source": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+      "source_sha256": "614992ecf7846a04e463b207a938e849819f7687fee16a90d08e881b9dc8e2f3",
+      "scope": "ROLE_SCOPED_CONTROLS",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R12",
+      "audit_topic": "NCA-D04",
+      "normative_meaning": "All multiple legal choices have a versioned default; compare equal complete contexts,not mutable aliases.",
+      "source": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+      "source_sha256": "614992ecf7846a04e463b207a938e849819f7687fee16a90d08e881b9dc8e2f3",
+      "scope": "DETERMINISTIC_SELECTION",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R13",
+      "audit_topic": "NCA-E04",
+      "normative_meaning": "Published templates and confirmed artifacts keep original versions; reordered accepted work reuses exact accepted bytes.",
+      "source": "docs/dev/INPUT_LEARNING_INTERFACE_MAP.md",
+      "source_sha256": "d27867d4f79b31e4249cf5ca8d5d328975ba009f2009d554d151930bb0a4fa3c",
+      "scope": "FIXED_AND_ACCEPTED_ARTIFACTS",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R14",
+      "audit_topic": "NCA-E01",
+      "normative_meaning": "Confirmation belongs to exact current input,result,policy and dependencies; changes invalidate it.",
+      "source": "docs/dev/INPUT_LEARNING_INTERFACE_MAP.md",
+      "source_sha256": "d27867d4f79b31e4249cf5ca8d5d328975ba009f2009d554d151930bb0a4fa3c",
+      "scope": "CONFIRM_AND_EXPORT",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R15",
+      "audit_topic": "NCA-E03",
+      "normative_meaning": "Cancel,resume,retry,undo and late callbacks preserve target identity and explicit transactional scope.",
+      "source": "docs/dev/INPUT_LEARNING_INTERFACE_MAP.md",
+      "source_sha256": "d27867d4f79b31e4249cf5ca8d5d328975ba009f2009d554d151930bb0a4fa3c",
+      "scope": "STATE_TRANSITIONS",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R16",
+      "audit_topic": "NCA-F04",
+      "normative_meaning": "Completed computation or preview is not formal output qualification; all applicable preflight gates remain required.",
+      "source": "docs/dev/REQUIREMENTS.json",
+      "source_sha256": "e0e7eb3c53757b17525193f45a8c33ceb1ed27d9524fb3e8fad8c986c98d0fe1",
+      "scope": "OUTPUT",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R17",
+      "audit_topic": "NCA-G03",
+      "normative_meaning": "Prepared desktop workflows run locally; no automatic source upload or required cloud inference.",
+      "source": "docs/dev/GUI_OFFLINE_DELIVERY_CONTRACT_20261020.md",
+      "source_sha256": "aa082d6a5f39787fe4b7128b8e00f64d4f3e8c12df5459eee77364d2a3c20e7f",
+      "scope": "PREPARED_DESKTOP_RUNTIME",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R18",
+      "audit_topic": "NCA-G02",
+      "normative_meaning": "Reports give faithful plain summaries and professional details through a safe allowlist; private data stays local.",
+      "source": "docs/dev/GUI_OFFLINE_DELIVERY_CONTRACT_20261020.md",
+      "source_sha256": "aa082d6a5f39787fe4b7128b8e00f64d4f3e8c12df5459eee77364d2a3c20e7f",
+      "scope": "MANUAL_DIAGNOSTIC_EXPORT",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R19",
+      "audit_topic": "NCA-H02",
+      "normative_meaning": "Only actual source/tree/blob remote readback qualifies REMOTE_VERIFIED; local-only evidence is labeled local.",
+      "source": "docs/dev/DEVELOPMENT_PROTOCOL.md",
+      "source_sha256": "3ed90192a004dad99e6cde43b37e0a306ee5be70258c8563cc4e84a70edf3161",
+      "scope": "PERSISTENCE",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R20",
+      "audit_topic": "NCA-H01",
+      "normative_meaning": "Tests,mappings,synthetic scope,real-corpus qualification and physical print are different claims; unknown/skipped are not PASS.",
+      "source": "docs/dev/DEVELOPMENT_PROTOCOL.md",
+      "source_sha256": "3ed90192a004dad99e6cde43b37e0a306ee5be70258c8563cc4e84a70edf3161",
+      "scope": "ALL_COMPLETION_CLAIMS",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R21",
+      "audit_topic": "NCA-H04",
+      "normative_meaning": "Core desktop first; no unrequested web,mobile,EXE or redefinition of8AI packages/75parents.",
+      "source": "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
+      "source_sha256": "0a68b0d8a2b98c555dc6b0708a003d08efb89f90876b1bcde27b43a2616f7a82",
+      "scope": "DELIVERY_SCOPE",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    },
+    {
+      "id": "R22",
+      "audit_topic": "NCA-H04",
+      "normative_meaning": "Use included tools and normal Git operations; do not repeat billing-proof gates or enable paid add-ons/trials.",
+      "source": "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md",
+      "source_sha256": "5cc938b84520fa7ea75c3d4b05398c9f304450272b62e92234a8536c6978008c",
+      "scope": "DEVELOPMENT_EXECUTION",
+      "precedence": "Latest explicit user decision within matching scope;do not flatten history."
+    }
+  ],
+  "resolutions": [
+    {
+      "id": "SCOPE-01",
+      "question": "UI042 versus UI043",
+      "resolution": "UI_DECISIONS line644 explicitly withdraws only designed/purchased/purchase-proof categories;customer master,resume and exact dedup authorization remain. No global UI042 replacement.",
+      "evidence": "docs/UI_DECISIONS.md:644",
+      "result": "SCOPE_RESOLVED_NOT_PRODUCT_DEFECT"
+    },
+    {
+      "id": "SCOPE-02",
+      "question": "Fixed point size versus joint adaptive rules",
+      "resolution": "Existing published/confirmed versions retain original rules. New learned instances follow later joint-adaptation decision. Not one global override.",
+      "evidence": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+      "result": "SCOPE_RESOLVED"
+    },
+    {
+      "id": "SCOPE-03",
+      "question": "Customer controls versus professional template editing",
+      "resolution": "Withdrawn customer font/width/single-double-row controls do not revoke approved professional template authoring. Audit role and entry,not labels alone.",
+      "evidence": "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
+      "result": "SCOPE_RESOLVED"
+    },
+    {
+      "id": "SCOPE-04",
+      "question": "TRAIN style learning versus VALIDATION calibration",
+      "resolution": "Primary profiles are fitted onTRAIN. Separate validation calibration is conditional advice,not a new style truth or production qualification;sealedHOLDOUT never fits. Negative calibration evidence must not become positive support.",
+      "evidence": "template_ai/design_capacity.py",
+      "result": "DISTINCT_PURPOSES;NEGATIVE_SUPPORT_DEFECT_FIXED_SEPARATELY"
+    },
+    {
+      "id": "SCOPE-05",
+      "question": "Software implemented versus real AI quality",
+      "resolution": "Synthetic software mechanism and8partial/0full real-corpus qualification are distinct;do not rewrite original package counts.",
+      "evidence": "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
+      "result": "SCOPE_RESOLVED"
+    },
+    {
+      "id": "SCOPE-06",
+      "question": "Old singleCodex/no-billing-proof prohibition",
+      "resolution": "Later included-tools decision supersedes cost blanket bans;platform/task delegation rules still apply. Current Git failure is authentication,not a budget gate.",
+      "evidence": "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md",
+      "result": "SUPERSESSION_RESOLVED"
+    }
+  ],
+  "generator_sha256": "7e1a4d4eea1f4b1779ffd08e0e5d34cdda3c19881b3d5e9a3b46503b4aa2a202"
+}

@@ -1,0 +1,97 @@
+Owned module test_design_observation: exit=0; completed=18/18; healthy=True
+test_automatic_work_records_references_and_reuses_without_creating_templates (test_design_observation.DesignObservationStoreTests.test_automatic_work_records_references_and_reuses_without_creating_templates) ... ok
+test_cancel_resume_preserves_exact_observation_identity_and_history (test_design_observation.DesignObservationStoreTests.test_cancel_resume_preserves_exact_observation_identity_and_history) ... ok
+test_default_typography_not_learned_and_no_source_or_training_records_rewritten (test_design_observation.DesignObservationStoreTests.test_default_typography_not_learned_and_no_source_or_training_records_rewritten) ... ok
+test_field_from_another_work_region_cannot_be_linked (test_design_observation.DesignObservationStoreTests.test_field_from_another_work_region_cannot_be_linked) ... ok
+test_idempotent_refresh_cas_history_and_reopen (test_design_observation.DesignObservationStoreTests.test_idempotent_refresh_cas_history_and_reopen) ... ok
+test_late_automatic_unit_failure_rolls_back_observation_too (test_design_observation.DesignObservationStoreTests.test_late_automatic_unit_failure_rolls_back_observation_too) ... ok
+test_modified_original_or_derivative_invalidates_and_cannot_be_saved (test_design_observation.DesignObservationStoreTests.test_modified_original_or_derivative_invalidates_and_cannot_be_saved) ... ok
+test_multi_size_same_source_has_distinct_scoped_nodes_and_one_content_group (test_design_observation.DesignObservationStoreTests.test_multi_size_same_source_has_distinct_scoped_nodes_and_one_content_group) ... ok
+test_noise_revision_stales_snapshot_but_excluded_region_is_preserved (test_design_observation.DesignObservationStoreTests.test_noise_revision_stales_snapshot_but_excluded_region_is_preserved) ... ok
+test_old_facts_are_not_relinked_after_work_revision_changes (test_design_observation.DesignObservationStoreTests.test_old_facts_are_not_relinked_after_work_revision_changes) ... ok
+test_oversized_role_budget_is_explicit_and_does_not_truncate (test_design_observation.DesignObservationStoreTests.test_oversized_role_budget_is_explicit_and_does_not_truncate) ... ok
+test_people_remain_separate_and_can_reference_one_company_without_position_identity (test_design_observation.DesignObservationStoreTests.test_people_remain_separate_and_can_reference_one_company_without_position_identity) ... ok
+test_source_crop_to_nominal_work_transform_is_not_a_font_transform (test_design_observation.DesignObservationStoreTests.test_source_crop_to_nominal_work_transform_is_not_a_font_transform) ... ok
+test_transaction_failure_rolls_back_snapshot_history_and_epoch (test_design_observation.DesignObservationStoreTests.test_transaction_failure_rolls_back_snapshot_history_and_epoch) ... ok
+test_anisotropy_shear_unknown_and_template_defaults_do_not_become_source_pt (test_design_observation.ObservationMetricTests.test_anisotropy_shear_unknown_and_template_defaults_do_not_become_source_pt) ... ok
+test_graph_rejects_duplicate_or_dangling_identity (test_design_observation.ObservationMetricTests.test_graph_rejects_duplicate_or_dangling_identity) ... ok
+test_uniform_rotation_and_scale_preserve_known_point_measurement (test_design_observation.ObservationMetricTests.test_uniform_rotation_and_scale_preserve_known_point_measurement) ... ok
+test_unknown_defaults_untraceable_and_nonfinite_metrics_rejected (test_design_observation.ObservationMetricTests.test_unknown_defaults_untraceable_and_nonfinite_metrics_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 6.777s
+
+OK
+
+Owned module test_source_text_evidence: exit=0; completed=2/2; healthy=True
+test_effect_path_is_never_misclassified_as_outlined_text_and_unknown_native_metrics_stay_unknown (test_source_text_evidence.SourceTextEvidenceTests.test_effect_path_is_never_misclassified_as_outlined_text_and_unknown_native_metrics_stay_unknown) ... ok
+test_logo_text_is_protected_and_names_or_visual_similarity_cannot_prove_original_identity (test_source_text_evidence.SourceTextEvidenceTests.test_logo_text_is_protected_and_names_or_visual_similarity_cannot_prove_original_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.024s
+
+OK
+
+Owned module test_dataset_learning: exit=0; completed=9/9; healthy=True
+test_actual_changed_scope_confirmation_and_failed_source_controls_recover (test_dataset_learning.DatasetLearningGuiTests.test_actual_changed_scope_confirmation_and_failed_source_controls_recover) ... ok
+test_actual_manifest_cancel_create_explicit_learning_draft_and_usage (test_dataset_learning.DatasetLearningGuiTests.test_actual_manifest_cancel_create_explicit_learning_draft_and_usage) ... ok
+test_learning_result_does_not_save_or_reset_unrelated_dirty_editor (test_dataset_learning.DatasetLearningGuiTests.test_learning_result_does_not_save_or_reset_unrelated_dirty_editor) ... ok
+test_false_source_proof_cannot_confirm_modified_source (test_dataset_learning.DatasetLearningTests.test_false_source_proof_cannot_confirm_modified_source) ... ok
+test_global_whole_source_role_lock_holdout_and_unassigned_not_learned (test_dataset_learning.DatasetLearningTests.test_global_whole_source_role_lock_holdout_and_unassigned_not_learned) ... ok
+test_late_use_audit_failure_atomic_template_clock_usage_rollback (test_dataset_learning.DatasetLearningTests.test_late_use_audit_failure_atomic_template_clock_usage_rollback) ... ok
+test_manifest_reproducible_reopen_and_actual_geometry_draft_no_overwrite (test_dataset_learning.DatasetLearningTests.test_manifest_reproducible_reopen_and_actual_geometry_draft_no_overwrite) ... ok
+test_revocation_blocks_new_learning_draft_publish_and_existing_reference (test_dataset_learning.DatasetLearningTests.test_revocation_blocks_new_learning_draft_publish_and_existing_reference) ... ok
+test_same_content_alias_identity_exact_dedup_and_group_split_prevented (test_dataset_learning.DatasetLearningTests.test_same_content_alias_identity_exact_dedup_and_group_split_prevented) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 5.904s
+
+OK
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_automatic_training: exit=0; completed=15/15; healthy=True
+test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel (test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel) ... ok
+test_actual_qt_confirmation_cancel_does_not_create_job_or_source (test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source) ... ok
+test_actual_qt_preflight_once_start_creates_two_pending_works_and_restores_controls (test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_preflight_once_start_creates_two_pending_works_and_restores_controls) ... ok
+test_worker_start_failure_releases_lease_and_busy_controls_without_publishing (test_automatic_training.AutomaticTrainingGuiTests.test_worker_start_failure_releases_lease_and_busy_controls_without_publishing) ... ok
+test_bad_source_is_isolated_and_other_source_finishes (test_automatic_training.AutomaticTrainingTests.test_bad_source_is_isolated_and_other_source_finishes) ... ok
+test_cancel_before_start_and_resume_then_incremental_cache_reuses_units (test_automatic_training.AutomaticTrainingTests.test_cancel_before_start_and_resume_then_incremental_cache_reuses_units) ... ok
+test_changed_source_cache_and_approved_work_revision_require_reanalysis (test_automatic_training.AutomaticTrainingTests.test_changed_source_cache_and_approved_work_revision_require_reanalysis) ... ok
+test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission (test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission) ... ok
+test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets (test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets) ... ok
+test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected (test_automatic_training.AutomaticTrainingTests.test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected) ... ok
+test_one_bad_work_is_isolated_and_same_source_other_work_continues (test_automatic_training.AutomaticTrainingTests.test_one_bad_work_is_isolated_and_same_source_other_work_continues) ... ok
+test_preflight_change_and_job_cas_do_not_overwrite_or_start (test_automatic_training.AutomaticTrainingTests.test_preflight_change_and_job_cas_do_not_overwrite_or_start) ... ok
+test_real_inkscape_two_work_hypotheses_keep_whole_logo_and_pending_facts (test_automatic_training.AutomaticTrainingTests.test_real_inkscape_two_work_hypotheses_keep_whole_logo_and_pending_facts) ... ok
+test_single_worker_lease_and_dead_owner_are_explicitly_recoverable (test_automatic_training.AutomaticTrainingTests.test_single_worker_lease_and_dead_owner_are_explicitly_recoverable) ... ok
+test_sqlite_or_late_audit_failure_stops_worker_without_false_success (test_automatic_training.AutomaticTrainingTests.test_sqlite_or_late_audit_failure_stops_worker_without_false_success) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 16.554s
+
+OK
+
+Owned module test_training_pipeline: exit=0; completed=12/12; healthy=True
+test_actual_cancel_during_worker_then_resume_without_duplicate_success (test_training_pipeline.PipelineGuiTests.test_actual_cancel_during_worker_then_resume_without_duplicate_success) ... ok
+test_actual_preflight_confirm_worker_progress_and_controls_restored (test_training_pipeline.PipelineGuiTests.test_actual_preflight_confirm_worker_progress_and_controls_restored) ... ok
+test_actual_stale_confirmation_worker_error_and_close_guard_preserve_results (test_training_pipeline.PipelineGuiTests.test_actual_stale_confirmation_worker_error_and_close_guard_preserve_results) ... ok
+test_actual_worker_start_failure_is_interrupted_and_controls_recover_for_resume (test_training_pipeline.PipelineGuiTests.test_actual_worker_start_failure_is_interrupted_and_controls_recover_for_resume) ... ok
+test_cooperative_cancel_after_actual_item_then_reopen_resume_no_success_rerun (test_training_pipeline.PipelineTests.test_cooperative_cancel_after_actual_item_then_reopen_resume_no_success_rerun) ... ok
+test_dead_owner_is_interrupted_manual_resume_only_preserves_scope (test_training_pipeline.PipelineTests.test_dead_owner_is_interrupted_manual_resume_only_preserves_scope) ... ok
+test_existing_geometric_result_reused_no_duplicate_output_or_use (test_training_pipeline.PipelineTests.test_existing_geometric_result_reused_no_duplicate_output_or_use) ... ok
+test_holdout_revoke_wrong_role_and_caller_after_do_not_train (test_training_pipeline.PipelineTests.test_holdout_revoke_wrong_role_and_caller_after_do_not_train) ... ok
+test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system (test_training_pipeline.PipelineTests.test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system) ... ok
+test_live_owner_cross_window_double_claim_CAS_and_stale_worker_rejected (test_training_pipeline.PipelineTests.test_live_owner_cross_window_double_claim_CAS_and_stale_worker_rejected) ... ok
+test_real_worker_connection_durable_success_exact_use_source_unchanged (test_training_pipeline.PipelineTests.test_real_worker_connection_durable_success_exact_use_source_unchanged) ... ok
+test_source_failure_isolated_other_valid_item_completes_and_failed_retry_explicit (test_training_pipeline.PipelineTests.test_source_failure_isolated_other_valid_item_completes_and_failed_retry_explicit) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 15.204s
+
+OK
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()

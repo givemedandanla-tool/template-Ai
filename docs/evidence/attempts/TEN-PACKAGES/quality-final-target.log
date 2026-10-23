@@ -1,0 +1,36 @@
+test_actual_readonly_search_filter_navigation_and_stale_recovery (test_training_quality.TrainingQualityGuiTests.test_actual_readonly_search_filter_navigation_and_stale_recovery) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ERROR
+test_dirty_main_edit_and_backend_failure_preserve_content (test_training_quality.TrainingQualityGuiTests.test_dirty_main_edit_and_backend_failure_preserve_content) ... This plugin does not support propagateSizeHints()
+FAIL
+test_paginated_report_and_source_entry_actual_dialog (test_training_quality.TrainingQualityGuiTests.test_paginated_report_and_source_entry_actual_dialog) ... This plugin does not support propagateSizeHints()
+ok
+test_duplicate_identity_mapping_bounds_and_bad_schema_explained (test_training_quality.TrainingQualityTests.test_duplicate_identity_mapping_bounds_and_bad_schema_explained) ... ok
+test_invalid_dimensions_budget_owner_and_missing_person_name (test_training_quality.TrainingQualityTests.test_invalid_dimensions_budget_owner_and_missing_person_name) ... ok
+test_known_semantics_do_not_invent_optional_email_or_claim_visual (test_training_quality.TrainingQualityTests.test_known_semantics_do_not_invent_optional_email_or_claim_visual) ... ok
+test_large_overlap_set_is_bounded_and_invalid_coordinate_not_crash (test_training_quality.TrainingQualityTests.test_large_overlap_set_is_bounded_and_invalid_coordinate_not_crash) ... ok
+test_logo_containment_is_uncertain_not_automatic_deletion (test_training_quality.TrainingQualityTests.test_logo_containment_is_uncertain_not_automatic_deletion) ... ok
+test_stable_sort_independent_of_slot_order_and_source_bounds (test_training_quality.TrainingQualityTests.test_stable_sort_independent_of_slot_order_and_source_bounds) ... ok
+
+======================================================================
+ERROR: test_actual_readonly_search_filter_navigation_and_stale_recovery (test_training_quality.TrainingQualityGuiTests.test_actual_readonly_search_filter_navigation_and_stale_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_training_quality.py", line 71, in test_actual_readonly_search_filter_navigation_and_stale_recovery
+    self.assertEqual(self.window.work['id'], self.work['id']); self.assertEqual(self.window.current_slot.id, self.work['payload']['slots'][0]['id'])
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'id'
+
+======================================================================
+FAIL: test_dirty_main_edit_and_backend_failure_preserve_content (test_training_quality.TrainingQualityGuiTests.test_dirty_main_edit_and_backend_failure_preserve_content)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_training_quality.py", line 78, in test_dirty_main_edit_and_backend_failure_preserve_content
+    QTest.mouseClick(self.d.locate_button, Qt.LeftButton); self.assertIn('未保存', self.d.status.text()); self.assertEqual(self.window.slots, before)
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '未保存' not found in '已定位exact作品；未改標記／未核准訓練'
+
+----------------------------------------------------------------------
+Ran 9 tests in 7.878s
+
+FAILED (failures=1, errors=1)

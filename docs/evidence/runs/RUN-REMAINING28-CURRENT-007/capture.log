@@ -1,0 +1,66 @@
+{"tests": "NOT_RUN_CAPTURE_ONLY", "captures": 49, "exports": 6, "validation": "/workspace/template-Ai/.checkpoints/evidence-workspaces/RUN-REMAINING28-CURRENT-007/VALIDATION.json"}
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+{"status": "SELF_CAPTURED_ONGOING_TWENTY; NOT_PARENT_COMPLETION", "screenshots": 7}
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/capture_next_twentyeight.py", line 88, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--artifacts-dir',required=True);args=p.parse_args();result=capture(args.artifacts_dir);print(json.dumps(dict(status=result['status'],screenshots=len(result['screenshots']))))
+                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/capture_next_twentyeight.py", line 77, in capture
+    wait(lambda:not dialog.running);assert sum(r['status']=='SUCCESS' for r in dialog.engine.items)==2;shot(dialog,'next28-per-file-output-results.png')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/capture_next_twentyeight.py", line 42, in wait
+    if not fn():raise ValueError('bounded worker wait failed')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: bounded worker wait failed
+QFontDatabase: Must construct a QGuiApplication before accessing QFontDatabase

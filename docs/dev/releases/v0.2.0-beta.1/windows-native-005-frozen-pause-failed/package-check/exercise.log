@@ -1,0 +1,28 @@
+release-check: version_in_actual_window
+release-check: actual_executable_trains_frozen_synthetic_dataset
+release-check: input_generate_embedded_preview
+release-check: confirm_actual_preview
+release-check: drag_targets_visible_in_actual_viewport
+release-check: real_pointer_drag_preserves_data_invalidates_confirmation
+release-check: content_correction_clears_stale_preview
+release-check: regenerate_latest_input
+Timeout (0:00:45)!
+Thread 0x000008ec (most recent call first):
+  File "template_ai\background.py", line 15 in file_digest
+  File "template_ai\font_catalog.py", line 32 in asset_health
+  File "template_ai\font_catalog.py", line 38 in raw_asset
+  File "template_ai\font_catalog.py", line 191 in analyze_font
+  File "template_ai\render.py", line 24 in prepared_text_metrics
+  File "template_ai\render.py", line 36 in draw_text
+  File "template_ai\render.py", line 179 in paint_candidate
+  File "template_ai\render.py", line 202 in render_image
+  File "template_ai\render.py", line 210 in card_view_image
+  File "template_ai\design_learning_dialog.py", line 83 in show_candidate
+  File "template_ai\design_learning_dialog.py", line 511 in refresh_draft
+  File "template_ai\design_learning_dialog.py", line 542 in confirm_preview
+  File "template_ai\release_check.py", line 195 in run
+  File "app.py", line 39 in main
+  File "app.py", line 100 in <module>
+release-check: allowed_preview_export_matches_saved_bytes
+release-check: unqualified_formal_export_still_refused
+release-check: frozen_json_pipe_worker

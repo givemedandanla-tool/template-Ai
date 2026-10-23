@@ -1,0 +1,34 @@
+{
+  "schema": "local-recovery-diagnostics-1",
+  "scope": "CONTENT_FREE_LOCAL_SUPPORT_REPORT",
+  "privacy": "NO_SOURCE_TEXT_PATH_FONT_NAMES_IMAGES_HASHES_OR_RAW_LOGS",
+  "issues": [
+    {
+      "code": "FIDELITY_UNKNOWN",
+      "stage": "FIDELITY",
+      "count": 1,
+      "message": "缺少獨立外觀參考",
+      "impact": "外觀一致性尚未核實，不能自動採作合格來源。",
+      "remedy": "可提供本地可信預覽作比對，或在本體審查確認。"
+    }
+  ],
+  "source_kind": "SVG",
+  "semantic_status": "ORIGINAL_TEXT",
+  "fidelity_status": "UNKNOWN",
+  "font_match_status": "CANDIDATE",
+  "counts": {
+    "text_nodes": 1,
+    "path_nodes": 0,
+    "checked_faces": 1,
+    "omitted_faces": 0
+  },
+  "software_versions": {
+    "python": "3.12.14",
+    "qt": "6.8.3",
+    "fonttools": "4.60.1",
+    "scipy": "1.16.3",
+    "sklearn": "1.7.2",
+    "pdfminer": "20260107",
+    "inkscape": "1.4"
+  }
+}

@@ -1,0 +1,543 @@
+{
+  "schema_version": 1,
+  "id": "NONCODE-AUDIT-001",
+  "status": "DESIGN_COMPLETE_NOT_EXECUTED",
+  "created_utc": "2026-10-21T03:03:35.219669+00:00",
+  "document": "docs/dev/non_code_audit/PLAN.md",
+  "research": "docs/dev/non_code_audit/SOURCES.json",
+  "design_baseline": "24202acab96c84f81aede27eb947d3975be1851f",
+  "scope": "Design/report only; no product modification, dependency installation or execution of32 checks.",
+  "existing_qualification": "Original1921PASS/27stockGUI/19native and external qualifications unchanged.",
+  "product_parent_and_ai_counts_changed": false,
+  "domains": [
+    {
+      "id": "A",
+      "name": "需求與邏輯一致性",
+      "references": [
+        "REF-DMN",
+        "REF-Z3"
+      ],
+      "reuse": [
+        "docs/dev/REQUIREMENTS.json",
+        "docs/dev/AI_TRAINING_INTERVIEW_DECISION_INDEX.json",
+        "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json"
+      ],
+      "checks": [
+        {
+          "id": "NCA-A01",
+          "title": "核准規則的範圍與取代",
+          "probe": "對照新家族聯動、舊固定模板、定稿及撤回的客戶細參數控制；標來源與版本。",
+          "pass_condition": "同scope不套互斥或撤回規則；歷史保留但不當現行授權。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-A02",
+          "title": "決策表重疊、空缺與多命中",
+          "probe": "構造0／1／多條規則命中，分別檢查UNIQUE、明確優選與無規則處理。",
+          "pass_condition": "衝突可指出規則ID；合法多解有優選；無匹配不偷偷當合法。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-A03",
+          "title": "聯合規則的可行性",
+          "probe": "以有限角色與有界量化幾何列舉／求解，查矛盾與循環。",
+          "pass_condition": "反例與衝突可重播；UNKNOWN不當PASS；有界無解不冒稱所有模板無解。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-A04",
+          "title": "成功定義是否被偷換",
+          "probe": "分開匯入、測試、家族數、跨作品共用規則及正式輸出資格。",
+          "pass_condition": "不以每作品一模板、拆分數或測試數代替學習能力及產品完成。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "name": "資料與語意真值",
+      "references": [
+        "REF-GX"
+      ],
+      "reuse": [
+        "template_ai/input_graph.py",
+        "template_ai/semantic_learning.py",
+        "template_ai/design_observation.py",
+        "template_ai/training_store.py"
+      ],
+      "checks": [
+        {
+          "id": "NCA-B01",
+          "title": "字串與語意真值",
+          "probe": "用前導零客戶碼、國碼電話、市話手機、Email、社群ID、地址職稱及易混字串，人工指定期望。",
+          "pass_condition": "原值不被數字轉型／正規化／截短破壞；辨識來源與未知可查。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-B02",
+          "title": "多人物與共享歸屬",
+          "probe": "構造同字串不同ID、多人共享、同人多公司、同公司多人及Logo歸屬圖。",
+          "pass_condition": "owner、users、stable ID與資產綁定完整，不按值相同合併或搬移。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-B03",
+          "title": "同檔同畫板多作品",
+          "probe": "合成多尺寸、多人物、不完整框線、文字尺寸標記、隨筆與不確定分割的作品。",
+          "pass_condition": "作品、尺寸與lineage不混；標記不自動當客戶欄位；未知分割可回報。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-B04",
+          "title": "預設、量測與標籤來源",
+          "probe": "混合核實、估計、未知字型、轉曲、非等向變換與噪音註記。",
+          "pass_condition": "預設10pt／Noto不冒稱原稿真值；未知不混入核實標籤；覆核可追溯。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "name": "學習與推論有效性",
+      "references": [
+        "REF-MLFLOW",
+        "REF-GX",
+        "REF-HYPOTHESIS"
+      ],
+      "reuse": [
+        "template_ai/training_quality.py",
+        "template_ai/design_family.py",
+        "template_ai/design_capacity.py",
+        "template_ai/design_rank_evaluation.py"
+      ],
+      "checks": [
+        {
+          "id": "NCA-C01",
+          "title": "近重複與切分洩漏",
+          "probe": "同作品改版、來源重排與近重複分到不同角色，核對lineage及參數選擇來源。",
+          "pass_condition": "同lineage不跨訓練評估邊界；封存測試不回流擬合；客戶外推另報範圍。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-C02",
+          "title": "是否真的學出家族規則",
+          "probe": "人工建立多作品共用規則、外觀近似但限制不同、少數合格風格的golden集合。",
+          "pass_condition": "對新資料可解釋適配；不每作品偽造一個家族；不為降數量強併。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-C03",
+          "title": "容量與字串區間過度推論",
+          "probe": "使用單欄各自可行但同時不可行、聯合區域有洞、邊界與低支持樣本。",
+          "pass_condition": "不把最大值或矩形包絡當安全上限；超出支持可UNKNOWN，仍驗實際排版。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-C04",
+          "title": "信心、偏好與回饋有效性",
+          "probe": "追溯人工修正、模型預測、品質標記、發布與留出評估，分家族及角色切片。",
+          "pass_condition": "預測不當人工真值；版本可追溯；合成只證機制，真實品質需本地留出資料。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic mechanism now; real generalization requires local corpus."
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "name": "排版約束與預設優選",
+      "references": [
+        "REF-DMN",
+        "REF-Z3",
+        "REF-HYPOTHESIS"
+      ],
+      "reuse": [
+        "template_ai/design_assignment.py",
+        "template_ai/design_synthesis.py",
+        "template_ai/design_capacity.py",
+        "template_ai/layout_session.py"
+      ],
+      "checks": [
+        {
+          "id": "NCA-D01",
+          "title": "條件替代不可無條件傳遞",
+          "probe": "造出A可放B、B可放C但A不可放C的語意／字型／尺寸上下文。",
+          "pass_condition": "不以傳遞閉包永久授權交換；分資料需求與容器能力，實際條件逐次驗證。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-D02",
+          "title": "同模板交換與換模板界線",
+          "probe": "比較尺寸接近或懸殊的市話手機交換，包含圖示、owner及聯合成本。",
+          "pass_condition": "合法同模板適配優先；無法合法承接時拒絕或找相容候選，不犧牲歸屬與關係。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-D03",
+          "title": "拖動局部影響與聯動自由",
+          "probe": "指定拖動意圖及受保護關係，讓受影響結構依規則改欄位、字級與ScaleX。",
+          "pass_condition": "未受影響相對關係保留；聯動合法；不凍結全部幾何或恢復客戶細參數控制。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-D04",
+          "title": "多合法解優選與重訂",
+          "probe": "固定資料、ID、意圖、模型、政策、字型、資產、引擎與輸出設定，擾動無語意的序列／查詢順序。",
+          "pass_condition": "相同完整條件選相同預設內容／幾何；tie明確；重訂取exact artifact，byte承諾含metadata。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "name": "操作流程與版本",
+      "references": [
+        "REF-ADOBE",
+        "REF-MLFLOW",
+        "REF-HYPOTHESIS"
+      ],
+      "reuse": [
+        "template_ai/production_bridge.py",
+        "template_ai/layout_session.py",
+        "template_ai/input_graph_dialog.py",
+        "docs/dev/INPUT_LEARNING_INTERFACE_MAP.md"
+      ],
+      "checks": [
+        {
+          "id": "NCA-E01",
+          "title": "確認與輸出狀態機",
+          "probe": "列出輸入、草稿、更正、預覽、確認、輸出及非法捷徑，追蹤資料與版本。",
+          "pass_condition": "未確認／過期確認不能輸出；來源與正式Gate不被成功按鈕繞過。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-E02",
+          "title": "更正、返回與復原",
+          "probe": "真介面更正某人電話，切工作區返回及復原受控操作，對照人工期望圖。",
+          "pass_condition": "只有正確對象被改；資料關係不丟；復原不覆蓋後續其他合法修改。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-E03",
+          "title": "取消重啟重試的作用對象",
+          "probe": "中止、保存恢復、晚到背景結果、同工作重試及重複點擊。",
+          "pass_condition": "舊結果不套新對象；重試不重複關鍵寫入；進度與持久狀態一致。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-E04",
+          "title": "固定／家族／定稿分流",
+          "probe": "換目前模型alias、發布新版、開舊客戶與確認稿，對照固定版本及artifact。",
+          "pass_condition": "新模型不默改舊定稿；固定模板保留版本；新稿確實用所選能力，來源可追。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "name": "稿件內容與輸出資格",
+      "references": [
+        "REF-SCRIBUS",
+        "REF-ADOBE"
+      ],
+      "reuse": [
+        "template_ai/digital_preflight.py",
+        "template_ai/digital_output_proof.py",
+        "template_ai/font_evidence.py",
+        "template_ai/logo_output_proof.py"
+      ],
+      "checks": [
+        {
+          "id": "NCA-F01",
+          "title": "單位、邊界與實體尺寸",
+          "probe": "用已知mm、pt、px控制圖、裁切框、多畫板尺寸與重排情況。",
+          "pass_condition": "不混單位、尺寸或作品；誤差有來源；沿用核准標準，不臨時放寬。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-F02",
+          "title": "字型、成形與內容可讀性",
+          "probe": "混合長字串、中英數、組合字／雙向文字、缺字、替代與溢出例。",
+          "pass_condition": "不以外框能放下當缺字／來源字型已核實；來源與實際輸出字型證據分開。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-F03",
+          "title": "畫面確認輸出一致",
+          "probe": "逐ID對照輸入、Logo、預覽、確認artifact與解析後輸出，加入舊客戶文字背景反例。",
+          "pass_condition": "無漏欄、錯owner、舊資料殘留；同版本資產；不只以像素差判語意。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-F04",
+          "title": "產稿與正式印刷資格分開",
+          "probe": "合成缺字、低解析度、未知來源、尺寸錯誤；另標真.ai及實印資格範圍。",
+          "pass_condition": "輸出Gate與警告忠實；預覽不等於印前合格；真實還原與實印維持延後。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic gates now; Windows/native AI/physical print remain external."
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "name": "人員操作與離線運作",
+      "references": [
+        "REF-ADOBE",
+        "REF-GX"
+      ],
+      "reuse": [
+        "template_ai/production_report.py",
+        "template_ai/diagnostic_bundle.py",
+        "template_ai/recovery_diagnostics.py",
+        "template_ai/relational_backup.py",
+        "docs/dev/DESKTOP_WORKSPACE_USER_GUIDE_20261020.md"
+      ],
+      "checks": [
+        {
+          "id": "NCA-G01",
+          "title": "新手理解與完成任務",
+          "probe": "先需求走查，再由未參與開發的本地人員做輸入、更正、拖動及輸出，記求助與誤解。",
+          "pass_condition": "提示含影響與下一步；無人員實測只算走查，不冒稱新手驗收。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Scenario walkthrough now; independent novice usability later locally."
+        },
+        {
+          "id": "NCA-G02",
+          "title": "白話報告忠實且安全",
+          "probe": "合成敏感canary、部分成功／未知／取消／失敗報告與ZIP，查摘要及專業詳情。",
+          "pass_condition": "不把部分成功說全成功；無原文、私有截圖、字型模型DB或敏感路徑；沿用allowlist與手動匯出。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-G03",
+          "title": "準備後真正離線運作",
+          "probe": "備齊本地依賴、模型與字型後斷網操作，觀察自動連線與上傳。",
+          "pass_condition": "流程不依賴雲端；無自動上傳／遙測；安裝準備與日常離線分開，Windows另記。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Linux scenarios now; Windows qualification later locally."
+        },
+        {
+          "id": "NCA-G04",
+          "title": "批次狀態與安全回復",
+          "probe": "混合合法非法作品，批次修正、只重試失敗、備份還原及後續修改後局部回復。",
+          "pass_condition": "逐筆狀態吻合，失敗不消失；不以整批綠燈掩蓋失敗；恢復不蓋掉新資料。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        }
+      ]
+    },
+    {
+      "id": "H",
+      "name": "證據與交接可信度",
+      "references": [
+        "REF-MLFLOW",
+        "REF-GX",
+        "REF-HYPOTHESIS"
+      ],
+      "reuse": [
+        "tools/dev_governance.py",
+        "tools/dev_checkpoint.py",
+        "tools/run_evidence.py",
+        "tools/resume_status.py",
+        "docs/dev/pre_download_audit/requirements-test-matrix.json"
+      ],
+      "checks": [
+        {
+          "id": "NCA-H01",
+          "title": "需求、斷言與來源對應",
+          "probe": "逐條看測試真正斷言及版本範圍，先處理已知過期治理來源。",
+          "pass_condition": "不是只看測試名稱；來源與要求版本吻合；缺證據／過期不算PASS，不擴大資格。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-H02",
+          "title": "GitHub收據與產物可驗",
+          "probe": "核對checkpoint本身、manifest、附件hash與來源樹；原生Git JSON須有獨立fetch佐證。",
+          "pass_condition": "commit／tree／逐檔一致，讀回才REMOTE_VERIFIED；不捏造REST回應或將ZIP當EXE。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-H03",
+          "title": "故意錯例能否被攔截",
+          "probe": "隔離副本放錯owner、衝突、未知來源、過期確認及錯hash的負控制。",
+          "pass_condition": "對應關鍵檢查確實拒絕；不污染正式基準／歷史run，不弱化斷言。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        },
+        {
+          "id": "NCA-H04",
+          "title": "新對話接續與完成宣告",
+          "probe": "由GitHub來源及精簡接手重建狀態，模擬中斷、未推送與外部條件摘要。",
+          "pass_condition": "完成／未跑／延後／未知不混；不用整串聊天；下一步及安全報告入口明確。",
+          "execution_status": "NOT_RUN",
+          "result": null,
+          "evidence": [],
+          "availability": "Synthetic cases and existing local evidence; real qualification unchanged."
+        }
+      ]
+    }
+  ],
+  "domain_count": 8,
+  "planned_check_count": 32,
+  "executed_check_count": 0,
+  "results": {},
+  "execution_order": [
+    "Normative scope and evidence calibration",
+    "P0/P1 ownership,frozen artifacts,privacy,wrong-output counterexamples",
+    "Data,learning,constraints",
+    "Real interface and produced artifacts",
+    "Isolated negative controls",
+    "Disposition,limits,handoff and remote readback"
+  ],
+  "result_values": [
+    "PASS",
+    "FAIL",
+    "UNKNOWN",
+    "NOT_APPLICABLE"
+  ],
+  "execution_status_values": [
+    "NOT_RUN",
+    "COMPLETED",
+    "BLOCKED_EXTERNAL",
+    "DEFERRED"
+  ],
+  "evidence_required": [
+    "Approved rule and applicability/version",
+    "Source/data/model/policy/font/runtime versions",
+    "Independent expected-result origin",
+    "Positive,negative and applicable unknown/boundary cases",
+    "Actual result,resource bounds,limitations",
+    "Safe evidence path and minimal counterexample",
+    "Plain-language impact and next step"
+  ],
+  "severity_order": [
+    "P0 loss/privacy/wrong-owner/frozen artifact corruption",
+    "P1 wrong output or critical rule/gate invalid",
+    "P2 other consistency/usability/maintenance"
+  ],
+  "logic_methods": [
+    "Scoped rule precedence;decision table gaps/overlap",
+    "Necessary versus sufficient conditions",
+    "Conditional substitution without unjustified transitivity",
+    "Bounded SAT,counterexamples,nonminimal unsat cores",
+    "Hard feasibility before explicit versioned preference",
+    "Independent oracles,conditional metamorphic properties,negative controls"
+  ],
+  "resource_policy": {
+    "existing_tools": "Normal use;no billing-proof gate",
+    "new_paid_services": false,
+    "new_dependencies_this_turn": false,
+    "private_data_upload": false,
+    "bounded_generation": "Freeze and record finite case/time limits and seed before execution; exhaustion isUNKNOWN",
+    "no_repeated_full_tests_for_design_only": true,
+    "generation_limit_per_check": {
+      "total_candidates": 200,
+      "seeds": [
+        0,
+        7,
+        42
+      ],
+      "total_seconds": 120,
+      "solver_seconds_per_submodel": 10,
+      "limit_effect": "Stop at first exhausted budget; incomplete/unresolved coverage isUNKNOWN. Existing Qt/unittest deadlines and isolation unchanged."
+    }
+  },
+  "completion_rule": "All32 dispositions evidence-backed;no unresolved reproducedP0/P1 in claimed scope;external subsets explicit;no universal zero-error claim.",
+  "coverage_mapping_required": "Every current requirement acceptance clause maps to audit domain,independent expectation or original defer reason; current baseline172requirements/825clauses,not a claim of coverage by32subjects alone.",
+  "planned_execution_deliverables": [
+    "rule-ledger.json",
+    "requirement-audit-map.json",
+    "case-results.jsonl",
+    "issues.jsonl",
+    "FINAL_REPORT.md"
+  ],
+  "historical_design_snapshot": true,
+  "current_execution_report": "docs/dev/non_code_audit/FINAL_REPORT.md",
+  "current_execution_status_source": "docs/dev/non_code_audit/execution-001/PROGRESS.json"
+}

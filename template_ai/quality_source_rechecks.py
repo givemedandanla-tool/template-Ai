@@ -1,0 +1,112 @@
+"""Source-evidence major cases in the existing review records, never a second ledger."""
+import copy,time
+from .training_store import digest,text
+from .model import new_id
+
+
+def plan(service,issue_id,category,correct_example,wrong_example,severity='CRITICAL',case_id=None):
+    from .quality_repairs import QualityRepairs
+    if severity not in ('HIGH','CRITICAL'):raise ValueError('重大重審需明確嚴重程度')
+    for value,label,limit in [(category,'問題類別',120),(correct_example,'可核對正確例子',2000),(wrong_example,'可核對錯誤例子',2000)]:text(value,label,limit)
+    if correct_example.strip()==wrong_example.strip():raise ValueError('正確與錯誤例子不能相同')
+    issue=QualityRepairs(service.library).current_issue(issue_id);wid=issue['evidence'].get('work_id')
+    if not wid:raise ValueError('先由既有原稿／例外流程核實確切作品，不猜測失聯來源')
+    proof=service.store.source_proof(wid);service.store.checked(wid,proof)
+    dependencies=service.source_dependencies(wid,include_quality_evidence=True);rows=[];templates=[];proofs={};matches={r['key']:r['dependency_match'] for r in dependencies['nodes']}
+    for identity in dependencies['affected_work_ids']:
+        work=service.library.artwork(identity)
+        if not work:continue  # Explicit missing_historical_nodes remains UNKNOWN in the frozen case.
+        source_id=work['source_id'];reason=''
+        try:
+            if source_id not in proofs:proofs[source_id]=service.store.source_proof(identity)
+            service.store.checked(identity,proofs[source_id]);verified=proofs[source_id];source_proof=dict(path=verified.path,hash=verified.hash,stat=list(verified.stat))
+        except (ValueError,OSError) as error:source_proof=None;reason=str(error)
+        samples=[(r[0],r[1]) for r in service.db.execute("SELECT id,revision FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? ORDER BY id",(identity,))]
+        batch_ids=[r[0] for r in service.db.execute("SELECT DISTINCT json_extract(payload,'$.batch_id') FROM training_records WHERE kind='COVERAGE_REVIEW' AND json_extract(payload,'$.work_id')=? ORDER BY 1",(identity,)).fetchmany(201)]
+        if len(batch_ids)>200:raise ValueError('單作品歷史批次超過200，未截斷／未宣稱完整')
+        rows.append(dict(work_id=identity,batch_ids=batch_ids,source_id=source_id,pins=service.store.pins(identity),facts_revision=service.store.facts(identity)['revision'],source_proof=source_proof,samples=samples,dependency_match=matches['WORK:'+identity],precheck='SOURCE_CURRENT' if source_proof else 'SOURCE_UNKNOWN',reason=reason))
+    for node in dependencies['nodes']:
+        if not node['key'].startswith('TEMPLATE:'):continue
+        _,identity,version=node['key'].split(':');snapshot=service.library.object_snapshot('TEMPLATE',identity)
+        if snapshot['payload']['version']!=int(version):raise ValueError('受影響模板版次已變更，需重新核對範圍')
+        templates.append(dict(template_id=identity,version=int(version),family_id=snapshot['payload']['family_id'],source_work_id=snapshot['payload'].get('source_work_id',''),snapshot_digest=digest(snapshot),dependency_match=node['dependency_match']))
+    from .quality_trust import components
+    fingerprints={};pipelines=set();node_keys={row['key'] for row in dependencies['nodes']}
+    for key in node_keys:
+        if not key.startswith('PIPELINE:'):continue
+        pipeline=service.store.get('QUALITY_PIPELINE',key.split(':')[1])
+        if not pipeline or digest(pipeline['manifest'])!=pipeline['manifest_digest']:raise ValueError('受影響實際管線指紋失聯／變更，不能以名稱猜測')
+        pipelines.add(pipeline['id']);manifest=pipeline['manifest'];model=f'MODEL:{manifest.get("semantic_model_id")}:{manifest.get("semantic_model_revision")}'
+        rules={r['id'] for r in manifest.get('rules',[]) if f'RULE:{r["id"]}:{r["revision"]}' in node_keys}
+        for fingerprint in components(manifest):
+            if fingerprint['kind']=='MODEL' and (model in node_keys or manifest.get('semantic_model_revision') is None and any(n.startswith('MODEL:'+str(manifest.get('semantic_model_id'))+':') for n in node_keys)) or fingerprint['kind']=='RULE' and fingerprint['rule_id'] in rules:fingerprints[fingerprint['key']]=fingerprint
+    result=dict(mode='SOURCE_EVIDENCE',case_id=case_id or new_id(),issue_id=issue_id,issue_digest=digest(issue),work_id=wid,category=category,correct_example=correct_example,wrong_example=wrong_example,severity=severity,rows=rows,templates=templates,dependency_digest=dependencies['digest'],dependency_nodes=dependencies['nodes'],missing_historical_nodes=dependencies['missing_historical_nodes'],unknown_unrecorded_dependencies=True,whole_corpus_safe=False,coverage=dict(registered_sources=service.db.execute('SELECT count(*) FROM sources').fetchone()[0],registered_works=service.db.execute('SELECT count(*) FROM artworks').fetchone()[0],affected_sources=len({r['source_id'] for r in rows}),affected_works=len(rows),affected_templates=len(templates),known_nodes=len(dependencies['nodes']),known_edges=len(dependencies['edges']),known_graph_complete=dependencies['complete_known_graph']))
+    gold_versions={key.split(':')[1]:digest(service.store.get('QUALITY_GOLD',key.split(':')[1])) for key in node_keys if key.startswith('GOLD:')}
+    from collections import Counter
+    counts=Counter(key.split(':',1)[0] for key in node_keys)
+    result['affected_batch_ids']=sorted({identity for row in rows for identity in row['batch_ids'] if identity})
+    result['coverage'].update(affected_rule_versions=counts['RULE'],affected_model_versions=counts['MODEL'],affected_customers=counts['CUSTOMER'],affected_style_families=counts['STYLE'],affected_batches=len(result['affected_batch_ids']))
+    result.update(component_fingerprints=list(fingerprints.values()),pipeline_ids=sorted(pipelines),gold_versions=gold_versions);result['digest']=digest(result);return result
+
+
+def confirm(service,value,actor,reason,approved=False):
+    if approved is not True:raise ValueError('需核對使用者證據、影響範圍與未知部分，明確啟動重審')
+    text(actor,'重審發起人',120);text(reason,'隔離依據',2000)
+    if value.get('digest')!=digest({k:v for k,v in value.items() if k!='digest'}):raise ValueError('重大重審證據／精確範圍已變更')
+    with service.store.transaction():
+        existing=service.store.get('QUALITY_MAJOR_RECHECK',value['case_id'])
+        if existing:
+            if existing.get('plan_digest')!=value['digest']:raise ValueError('此案件ID已對應其他範圍，未覆寫')
+            return dict(existing,replayed=True)
+        fresh=plan(service,**{k:value[k] for k in ('issue_id','category','correct_example','wrong_example','severity','case_id')})
+        if fresh['digest']!=value['digest']:raise ValueError('來源／作品／版本／歷史依賴已變更，未啟動隔離')
+        case_id=value['case_id'];now=time.time()
+        for row in value['rows']:
+            service.store._write('QUALITY_WORK_QUARANTINE',digest([case_id,row['work_id']]),dict(row,case_id=case_id,state='REVIEW_REQUIRED',review_state='UNSCANNED',actor=actor,reason=reason,at=now),0,'major_source_evidence_work_quarantined')
+            for identity,revision in row['samples']:
+                sample=service.store.get('SAMPLE',identity)
+                if sample and sample['state']=='APPROVED':
+                    sample.update(state='QUARANTINED',quality_recheck_case=case_id,transition_actor=actor,transition_reason=reason);service.store._write('SAMPLE',identity,sample,revision,'major_source_evidence_sample_quarantined')
+        for row in value['templates']:
+            service.store._write('QUALITY_TEMPLATE_QUARANTINE',digest([case_id,'TEMPLATE',row['template_id'],row['version']]),dict(row,case_id=case_id,state='REVIEW_REQUIRED',review_state='UNSCANNED',actor=actor,reason=reason,at=now),0,'major_source_evidence_template_availability_suspended')
+        for fingerprint in value.get('component_fingerprints',[]):
+            previous=service.store.get('QUALITY_COMPONENT_QUARANTINE',fingerprint['key']);service.store._write('QUALITY_COMPONENT_QUARANTINE',fingerprint['key'],dict(fingerprint=fingerprint,case_id=case_id,state='REVIEW_REQUIRED',actor=actor,reason=reason,at=now,new_pipeline_id_does_not_reset_trust=True,models_decontaminated=False),previous['revision'] if previous else 0,'major_source_actual_component_suspended_not_display_alias')
+        for identity in value.get('pipeline_ids',[]):
+            previous=service.store.get('QUALITY_PIPELINE_QUARANTINE',identity);service.store._write('QUALITY_PIPELINE_QUARANTINE',identity,dict(case_id=case_id,state='REVIEW_REQUIRED',reason=reason,actor=actor,at=now,fallback_assumed_safe=False),previous['revision'] if previous else 0,'major_source_dependent_pipeline_suspended')
+        # A source may reach acceptance through GOLD -> SET -> PROTOCOL without
+        # traversing either incoming pipeline. Retire that exact old oracle using
+        # its original validity mechanism, rather than blame an unproved parser.
+        for identity in value.get('gold_versions',{}):
+            if not service.store.get('QUALITY_GOLD_INVALIDATION',identity):
+                service.store._write('QUALITY_GOLD_INVALIDATION',identity,dict(gold_id=identity,case_id=case_id,state='REVIEW_REQUIRED',actor=actor,reason=reason,at=now,old_version_retained=True),0,'major_source_exact_gold_suspended_new_explicit_gold_required')
+        header={k:copy.deepcopy(v) for k,v in value.items() if k not in ('rows','templates','digest')}
+        return service.store._write('QUALITY_MAJOR_RECHECK',case_id,dict(plan=header,plan_digest=value['digest'],affected_works=len(value['rows']),affected_templates=len(value['templates']),state='REVIEW_REQUIRED',actor=actor,reason=reason,at=now,completed=False,old_closure_receipts_preserved=True,models_decontaminated=False,formal_versions_changed=False),0,'major_source_evidence_case_started_not_completed')
+
+
+def source_or_template_blocked(store,template,*,exact_content=False):
+    if not store.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='training_records'").fetchone():return False
+    from .quality_rechecks import blocked
+    if template.source_work_id and blocked(store,template.source_work_id):return True
+    matches=store.db.execute("SELECT q.payload FROM training_records q LEFT JOIN templates t ON t.id=json_extract(q.payload,'$.template_id') WHERE q.kind='QUALITY_TEMPLATE_QUARANTINE' AND json_extract(q.payload,'$.state') IN ('REVIEW_REQUIRED','REPLACED_WITH_VERIFIED_TEMPLATE','EXCLUDED_HOLD') AND ((json_extract(q.payload,'$.template_id')=? AND json_extract(q.payload,'$.version')=?) OR COALESCE(json_extract(q.payload,'$.family_id'),t.family_id)=? OR (?<>'' AND COALESCE(json_extract(q.payload,'$.source_work_id'),json_extract(t.payload,'$.source_work_id'))=?))",(template.id,template.version,template.family_id,template.source_work_id,template.source_work_id)).fetchall()
+    if not matches:return False
+    # A new ID/version/family must not evade an unresolved source/style case.
+    # Clearances are exact reviewed versions, never a global trust reset.
+    from .major_template_review import clearance_current
+    import json
+    return any(not clearance_current(store.db,json.loads(raw[0])['case_id'],template,exact_content=exact_content) for raw in matches)
+
+
+def current_condition(candidate):
+    import sqlite3
+    from pathlib import Path
+    from types import SimpleNamespace
+    root=candidate.risk_context.get('source_trust_root')
+    if not root:return []
+    connection=None
+    try:
+        connection=sqlite3.connect((Path(root)/'library.sqlite3').resolve().as_uri()+'?mode=ro',uri=True,timeout=.05)
+        pending=source_or_template_blocked(SimpleNamespace(db=connection),candidate.template)
+        return [dict(id='CURRENT_MAJOR_REVIEW_TRUST',status='UNKNOWN' if pending else 'PASS',reason='重大共通錯誤重審尚未解除此來源／模板版本隔離' if pending else '目前來源／模板版本未受重大重審隔離')]
+    except (sqlite3.Error,OSError,ValueError):return [dict(id='CURRENT_MAJOR_REVIEW_TRUST',status='UNKNOWN',reason='目前重大重審紀錄無法讀回，未沿用舊通過狀態')]
+    finally:
+        if connection is not None:connection.close()

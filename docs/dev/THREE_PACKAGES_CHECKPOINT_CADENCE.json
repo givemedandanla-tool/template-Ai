@@ -1,0 +1,120 @@
+{
+  "total_remote_verified_receipts": 59,
+  "new_this_three_packages": 9,
+  "baseline": "CP-20261014-OBJECT-TOOLS-VERIFIED",
+  "receipts": [
+    {
+      "checkpoint_id": "CP-20261014-THREE-BEGIN",
+      "snapshot_commit": "d5cb3fd5fabaf7ad576553934fbd5e4ca17a01cd",
+      "verified_utc": "2026-10-14T09:44:08.346351+00:00",
+      "verified_files": 628
+    },
+    {
+      "checkpoint_id": "CP-20261014-SEMANTIC-IMPLEMENTED",
+      "snapshot_commit": "ca34731b950fdead2eb49ebb19a5bbadec8ed34a",
+      "verified_utc": "2026-10-14T09:49:49.274644+00:00",
+      "verified_files": 635
+    },
+    {
+      "checkpoint_id": "CP-20261014-SEMANTIC-APPROVED",
+      "snapshot_commit": "61f8c7e584041cd6d7fedf66dcaf1072d8de56f5",
+      "verified_utc": "2026-10-14T10:18:25.426874+00:00",
+      "verified_files": 695
+    },
+    {
+      "checkpoint_id": "CP-20261014-BATCH-CORE",
+      "snapshot_commit": "7e2e295228844ba5f95a79c228fc8c706a454e43",
+      "verified_utc": "2026-10-14T10:28:19.470213+00:00",
+      "verified_files": 701
+    },
+    {
+      "checkpoint_id": "CP-20261014-BATCH-IMPLEMENTED",
+      "snapshot_commit": "351b28e519dba121ce6ebc6814bee76e00e433aa",
+      "verified_utc": "2026-10-14T10:38:10.075208+00:00",
+      "verified_files": 706
+    },
+    {
+      "checkpoint_id": "CP-20261014-BATCH-VERIFIED",
+      "snapshot_commit": "f656abcb9f2b60dbe54056cbe7f0e87a00291f87",
+      "verified_utc": "2026-10-14T11:46:45.088467+00:00",
+      "verified_files": 764
+    },
+    {
+      "checkpoint_id": "CP-20261014-EXCEPTION-CORE",
+      "snapshot_commit": "fb127a4c6a318f345443d6f15e1a6acaf77cd1dc",
+      "verified_utc": "2026-10-14T11:55:50.656570+00:00",
+      "verified_files": 773
+    },
+    {
+      "checkpoint_id": "CP-20261014-EXCEPTION-IMPLEMENTED",
+      "snapshot_commit": "9a9f808a28652ca3bf2c46373c7eb43c8475fe61",
+      "verified_utc": "2026-10-14T12:00:08.619568+00:00",
+      "verified_files": 777
+    },
+    {
+      "checkpoint_id": "CP-20261014-THREE-SOURCE-VERIFIED",
+      "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
+      "verified_utc": "2026-10-14T14:09:28.539934+00:00",
+      "verified_files": 905
+    }
+  ],
+  "intervals": [
+    {
+      "previous": "CP-20261014-OBJECT-TOOLS-VERIFIED",
+      "next": "CP-20261014-THREE-BEGIN",
+      "seconds": 1460.145,
+      "over_10_minutes": true
+    },
+    {
+      "previous": "CP-20261014-THREE-BEGIN",
+      "next": "CP-20261014-SEMANTIC-IMPLEMENTED",
+      "seconds": 340.928,
+      "over_10_minutes": false
+    },
+    {
+      "previous": "CP-20261014-SEMANTIC-IMPLEMENTED",
+      "next": "CP-20261014-SEMANTIC-APPROVED",
+      "seconds": 1716.152,
+      "over_10_minutes": true
+    },
+    {
+      "previous": "CP-20261014-SEMANTIC-APPROVED",
+      "next": "CP-20261014-BATCH-CORE",
+      "seconds": 594.043,
+      "over_10_minutes": false
+    },
+    {
+      "previous": "CP-20261014-BATCH-CORE",
+      "next": "CP-20261014-BATCH-IMPLEMENTED",
+      "seconds": 590.605,
+      "over_10_minutes": false
+    },
+    {
+      "previous": "CP-20261014-BATCH-IMPLEMENTED",
+      "next": "CP-20261014-BATCH-VERIFIED",
+      "seconds": 4115.013,
+      "over_10_minutes": true
+    },
+    {
+      "previous": "CP-20261014-BATCH-VERIFIED",
+      "next": "CP-20261014-EXCEPTION-CORE",
+      "seconds": 545.568,
+      "over_10_minutes": false
+    },
+    {
+      "previous": "CP-20261014-EXCEPTION-CORE",
+      "next": "CP-20261014-EXCEPTION-IMPLEMENTED",
+      "seconds": 257.963,
+      "over_10_minutes": false
+    },
+    {
+      "previous": "CP-20261014-EXCEPTION-IMPLEMENTED",
+      "next": "CP-20261014-THREE-SOURCE-VERIFIED",
+      "seconds": 7759.92,
+      "over_10_minutes": true
+    }
+  ],
+  "over_10_minutes_count": 4,
+  "max_interval_seconds": 7759.92,
+  "notes": "目標10分鐘未嚴格達標；長區間因binary自動審查／具體授權與工具中斷，code/docs及partial snapshots中途多次保存。Source-verification checkpoint僅涵蓋使用者核准保存範圍，不含9件證明例外。不得改寫時刻／PREPARED歷史。"
+}

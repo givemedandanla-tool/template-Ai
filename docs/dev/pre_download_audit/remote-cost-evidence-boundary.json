@@ -1,0 +1,34 @@
+{
+  "observed_at": "2026-10-20T23:25:06.639807+00:00",
+  "operation": "REMOTE_WRITE_NOT_EXECUTED",
+  "basis": "development-verification has push and pull_request triggers and artifact upload. first-version Windows workflow is manual-only. Remaining included artifact storage, account budget/overage and linked service billing cannot be read here. No fee guarantee inferred from runner labels alone.",
+  "not_changed": [
+    "workflow triggers",
+    "required checks",
+    "account billing",
+    "budgets",
+    "branch protections"
+  ],
+  "workflows": [
+    {
+      "path": ".github/workflows/development-verification.yml",
+      "sha256": "065a34f46dd7a6081ce6c20dfd255d68c7fb4c31b2dbea86c430cabc64d92104",
+      "trigger_evidence": [
+        "push:",
+        "pull_request:",
+        "workflow_dispatch:",
+        "runs-on: ubuntu-latest",
+        "- uses: actions/upload-artifact@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/first-version.yml",
+      "sha256": "2450e64d933734b20d8a33b85049bbec89bee43df0f99a2466416b211032d880",
+      "trigger_evidence": [
+        "workflow_dispatch:",
+        "runs-on: windows-latest",
+        "uses: actions/upload-artifact@v4"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/git_readback.py", line 62, in <module>
+    main()
+  File "/workspace/template-Ai/tools/git_readback.py", line 57, in main
+    result = readback(remote=args.remote, ref=args.ref, checkpoint_id=args.checkpoint)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/git_readback.py", line 44, in readback
+    receipt = acknowledge(root, checkpoint_id, folder/'commit.json', folder/'tree.json',
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/dev_checkpoint.py", line 56, in acknowledge
+    raise ValueError("遠端快照未吻合：" + ", ".join(mismatches[:10]))
+ValueError: 遠端快照未吻合：docs/qa/plans/CARD-STYLE-DESIGN-CHECK-20261017.json

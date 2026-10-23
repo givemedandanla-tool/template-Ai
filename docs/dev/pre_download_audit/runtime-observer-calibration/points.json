@@ -1,0 +1,82 @@
+{
+  "source_files": {
+    "docs/dev/pre_download_audit/runtime-observer-calibration/test_observer_contract.py": "34dd28ab9e7c1de4ec91e108b1ba57b5a108198d8c34a4639570b2f86064a648"
+  },
+  "points": [
+    {
+      "id": "CAL-NATIVE",
+      "path": "docs/dev/pre_download_audit/runtime-observer-calibration/test_observer_contract.py",
+      "line": 12,
+      "targets": [
+        {
+          "label": "receiver",
+          "expression": "table.cellWidget(0, 0)"
+        }
+      ],
+      "member": "setText",
+      "call_ranges": [
+        [
+          12,
+          8,
+          12,
+          64
+        ]
+      ],
+      "producer_names": [
+        "setText"
+      ],
+      "test_id": "test_observer_contract.ObserverCalibrationTests.test_computed_widget_receiver",
+      "source_sha256": "34dd28ab9e7c1de4ec91e108b1ba57b5a108198d8c34a4639570b2f86064a648"
+    },
+    {
+      "id": "CAL-RETURN",
+      "path": "docs/dev/pre_download_audit/runtime-observer-calibration/test_observer_contract.py",
+      "line": 22,
+      "targets": [
+        {
+          "label": "container",
+          "expression": "store.get('CALIBRATION', 'authored')"
+        }
+      ],
+      "member": null,
+      "call_ranges": [
+        [
+          22,
+          25,
+          22,
+          60
+        ]
+      ],
+      "producer_names": [
+        "get"
+      ],
+      "test_id": "test_observer_contract.ObserverCalibrationTests.test_exact_python_container_return",
+      "source_sha256": "34dd28ab9e7c1de4ec91e108b1ba57b5a108198d8c34a4639570b2f86064a648"
+    },
+    {
+      "id": "CAL-POST",
+      "path": "docs/dev/pre_download_audit/runtime-observer-calibration/test_observer_contract.py",
+      "line": 27,
+      "targets": [
+        {
+          "label": "receiver",
+          "expression": "widget"
+        }
+      ],
+      "member": "setObjectName",
+      "call_ranges": [
+        [
+          27,
+          27,
+          27,
+          67
+        ]
+      ],
+      "producer_names": [
+        "setObjectName"
+      ],
+      "test_id": "test_observer_contract.ObserverCalibrationTests.test_post_line_binding",
+      "source_sha256": "34dd28ab9e7c1de4ec91e108b1ba57b5a108198d8c34a4639570b2f86064a648"
+    }
+  ]
+}

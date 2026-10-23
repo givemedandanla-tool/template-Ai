@@ -1,0 +1,17 @@
+{
+  "storage_nonoptional_callers": {
+    "source": "template_ai/storage.py:224",
+    "caller_guards": [
+      "artworks iterates 5-column SELECT rows; every yielded row is a nonempty tuple",
+      "artwork raises ValueError on missing row before calling _decode_artwork"
+    ],
+    "helper_contract": "_decode_artwork returns a dictionary for truthy SQL rows and None only for no row",
+    "debt": "Missing overload/refined row type; runtime behavior is already consistent with caller guarantees"
+  },
+  "catalog_callback": {
+    "source": "template_ai/catalog_widget.py:43",
+    "entry_rule": "pick_button is created and connected to pick only when on_pick is truthy; otherwise no pick button exists",
+    "debt": "The method-local callable precondition is not expressed to Pyright; direct Python calls without a callback are outside this UI entry contract",
+    "native_ui_no_none_callback_claim": true
+  }
+}

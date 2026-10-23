@@ -1,0 +1,822 @@
+{
+  "method": "Explicitly reviewed schemas for heterogeneous command/status/observation dicts.",
+  "proof": {
+    "D-APP-00161": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 26,
+        "message": "Argument of type \"Unknown | dict[str, str | dict[str, str] | bool]\" cannot be assigned to parameter \"request\" of type \"str | bool\" in function \"update\"\n  Type \"Unknown | dict[str, str | dict[str, str] | bool]\" is not assignable to type \"str | bool\"\n    Type \"dict[str, str | dict[str, str] | bool]\" is not assignable to type \"str | bool\"\n      \"dict[str, str | dict[str, str] | bool]\" is not assignable to \"str\"\n      \"dict[str, str | dict[str, str] | bool]\" is not assignable to \"bool\"",
+        "context": "row.update(state='READY',risk='LOW' if request['operation']=='PATCH' and set(request['patch'])<={'align','color'} else 'CONFIRM',snapshot=snapshot,request=request,changes=plan['changes'],warnings=plan['warnings'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d75cf8858f37b87d8e4ab9a06c857d6f1b011e2887711687071484a19c47cf64"
+      },
+      "schema_reason": "Rows start with id/kind/status strings and formal_eligible/attempted booleans. Prepared rows add snapshot/request dictionaries and changes/warnings lists. Execution results add state/outcome/reason/history strings. validate_request and exact selection/source/revision/seal checks remain active; formal_eligible stays false until whole-card validation. These are separate named fields, not one bool/string value type.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "row.update(state='READY', risk='LOW' if request['operation'] == 'PATCH' and set(request['patch']) <= {'align', 'color'} else 'CONFIRM', snapshot=snapshot, request=request, changes=plan['changes'], warnings=plan['warnings'])",
+        "range": [
+          31,
+          12,
+          31,
+          225
+        ],
+        "original_expression_range": [
+          26,
+          12,
+          26,
+          225
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 18
+        },
+        "value": {
+          "builtins.dict": 18,
+          "builtins.NoneType": 18
+        },
+        "argument": {
+          "builtins.dict": 18
+        },
+        "call_result": {
+          "builtins.NoneType": 18
+        }
+      },
+      "successful_contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_relative_move_retry_reads_existing_operation_instead_of_moving_twice",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_actual_worker_save_restore_reads_partial_source_history_without_writing",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_changed_parameters_cannot_be_saved_as_old_preflight",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_recovery_buttons_during_real_owned_worker_do_not_clear_running_or_start_restore",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_source_graphic_preview_is_readonly_and_does_not_add_history",
+        "test_batch_recovery.BatchRecoverySourceTests.test_authenticated_but_modified_scope_seal_is_refused",
+        "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat"
+      ],
+      "run": "runtime-ast-observations-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00173": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 185,
+        "message": "Argument of type \"Literal['APPLIED_PENDING_FULL_VALIDATION']\" cannot be assigned to parameter \"state\" of type \"bool\" in function \"update\"\n  \"Literal['APPLIED_PENDING_FULL_VALIDATION']\" is not assignable to \"bool\"",
+        "context": "result.update(state='APPLIED_PENDING_FULL_VALIDATION',outcome='APPLIED_PENDING_FULL_VALIDATION',history_id=r['id'],reason='只保存選取草稿／標記差異；尚未核實當前整作品印前條件')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5b7bb3b03dd049548c9cfa81050f3eaa9df9b4bea06fc9811c7332ebddaa60e3"
+      },
+      "schema_reason": "Rows start with id/kind/status strings and formal_eligible/attempted booleans. Prepared rows add snapshot/request dictionaries and changes/warnings lists. Execution results add state/outcome/reason/history strings. validate_request and exact selection/source/revision/seal checks remain active; formal_eligible stays false until whole-card validation. These are separate named fields, not one bool/string value type.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='APPLIED_PENDING_FULL_VALIDATION', outcome='APPLIED_PENDING_FULL_VALIDATION', history_id=r['id'], reason='只保存選取草稿／標記差異；尚未核實當前整作品印前條件')",
+        "range": [
+          190,
+          16,
+          190,
+          219
+        ],
+        "original_expression_range": [
+          185,
+          16,
+          185,
+          219
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 8
+        },
+        "argument": {
+          "builtins.str": 8
+        },
+        "value": {
+          "builtins.NoneType": 8
+        },
+        "call_result": {
+          "builtins.NoneType": 8
+        }
+      },
+      "successful_contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_relative_move_retry_reads_existing_operation_instead_of_moving_twice"
+      ],
+      "run": "runtime-ast-observations-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00174": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 185,
+        "message": "Argument of type \"Literal['APPLIED_PENDING_FULL_VALIDATION']\" cannot be assigned to parameter \"outcome\" of type \"bool\" in function \"update\"\n  \"Literal['APPLIED_PENDING_FULL_VALIDATION']\" is not assignable to \"bool\"",
+        "context": "result.update(state='APPLIED_PENDING_FULL_VALIDATION',outcome='APPLIED_PENDING_FULL_VALIDATION',history_id=r['id'],reason='只保存選取草稿／標記差異；尚未核實當前整作品印前條件')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ab840036d11d29607118e2a1cdf4e5a2e464981816958820aa9dc1b1ee27592a"
+      },
+      "schema_reason": "Rows start with id/kind/status strings and formal_eligible/attempted booleans. Prepared rows add snapshot/request dictionaries and changes/warnings lists. Execution results add state/outcome/reason/history strings. validate_request and exact selection/source/revision/seal checks remain active; formal_eligible stays false until whole-card validation. These are separate named fields, not one bool/string value type.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='APPLIED_PENDING_FULL_VALIDATION', outcome='APPLIED_PENDING_FULL_VALIDATION', history_id=r['id'], reason='只保存選取草稿／標記差異；尚未核實當前整作品印前條件')",
+        "range": [
+          190,
+          16,
+          190,
+          219
+        ],
+        "original_expression_range": [
+          185,
+          16,
+          185,
+          219
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 8
+        },
+        "argument": {
+          "builtins.str": 8
+        },
+        "value": {
+          "builtins.NoneType": 8
+        },
+        "call_result": {
+          "builtins.NoneType": 8
+        }
+      },
+      "successful_contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_relative_move_retry_reads_existing_operation_instead_of_moving_twice"
+      ],
+      "run": "runtime-ast-observations-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00175": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 185,
+        "message": "Argument of type \"Literal['只保存選取草稿／標記差異；尚未核實當前整作品印前條件']\" cannot be assigned to parameter \"reason\" of type \"bool\" in function \"update\"\n  \"Literal['只保存選取草稿／標記差異；尚未核實當前整作品印前條件']\" is not assignable to \"bool\"",
+        "context": "result.update(state='APPLIED_PENDING_FULL_VALIDATION',outcome='APPLIED_PENDING_FULL_VALIDATION',history_id=r['id'],reason='只保存選取草稿／標記差異；尚未核實當前整作品印前條件')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "89a080fa7f6d98cbefb3d326425361266f488980d6270286cde789606b23938f"
+      },
+      "schema_reason": "Rows start with id/kind/status strings and formal_eligible/attempted booleans. Prepared rows add snapshot/request dictionaries and changes/warnings lists. Execution results add state/outcome/reason/history strings. validate_request and exact selection/source/revision/seal checks remain active; formal_eligible stays false until whole-card validation. These are separate named fields, not one bool/string value type.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='APPLIED_PENDING_FULL_VALIDATION', outcome='APPLIED_PENDING_FULL_VALIDATION', history_id=r['id'], reason='只保存選取草稿／標記差異；尚未核實當前整作品印前條件')",
+        "range": [
+          190,
+          16,
+          190,
+          219
+        ],
+        "original_expression_range": [
+          185,
+          16,
+          185,
+          219
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 8
+        },
+        "argument": {
+          "builtins.str": 8
+        },
+        "value": {
+          "builtins.NoneType": 8
+        },
+        "call_result": {
+          "builtins.NoneType": 8
+        }
+      },
+      "successful_contexts": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_relative_move_retry_reads_existing_operation_instead_of_moving_twice"
+      ],
+      "run": "runtime-ast-observations-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00296": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/candidate_edit.py",
+        "line": 223,
+        "message": "Argument of type \"Literal['PATCH']\" cannot be assigned to parameter \"operation\" of type \"list[Any] | bool\" in function \"update\"\n  Type \"Literal['PATCH']\" is not assignable to type \"list[Any] | bool\"\n    \"Literal['PATCH']\" is not assignable to \"list[Any]\"\n    \"Literal['PATCH']\" is not assignable to \"bool\"",
+        "context": "if operation==1:request.update(operation='PATCH',patch=dict(w=self.width.value(),h=self.height.value()))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c586253a06258e3b42fa90e1f686d5c28b85337d6a613fb3dad949891e7b1f6f"
+      },
+      "schema_reason": "The command starts with ids list and cross_owner boolean, then adds operation PATCH/LOCK strings, a numeric patch dictionary or locked boolean. propose/prepare_edit validate exact target, generation and current input; distinct command fields require a typed tagged record.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "request.update(operation='PATCH', patch=dict(w=self.width_input.value(), h=self.height_input.value()))",
+        "range": [
+          228,
+          24,
+          228,
+          124
+        ],
+        "original_expression_range": [
+          223,
+          24,
+          223,
+          112
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "value": {
+          "builtins.NoneType": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "successful_contexts": [
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_actual_canvas_selection_resize_lock_and_keep_comparison"
+      ],
+      "run": "runtime-ast-observations-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00300": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/candidate_edit.py",
+        "line": 224,
+        "message": "Argument of type \"Literal['LOCK']\" cannot be assigned to parameter \"operation\" of type \"list[Any] | bool\" in function \"update\"\n  Type \"Literal['LOCK']\" is not assignable to type \"list[Any] | bool\"\n    \"Literal['LOCK']\" is not assignable to \"list[Any]\"\n    \"Literal['LOCK']\" is not assignable to \"bool\"",
+        "context": "else:request.update(operation='LOCK',locked=operation==2)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "cfcee397de62be0a5b8af1af5b1d71549b58442a276866820e2c172cded2d1ed"
+      },
+      "schema_reason": "The command starts with ids list and cross_owner boolean, then adds operation PATCH/LOCK strings, a numeric patch dictionary or locked boolean. propose/prepare_edit validate exact target, generation and current input; distinct command fields require a typed tagged record.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "request.update(operation='LOCK', locked=operation == 2)",
+        "range": [
+          229,
+          13,
+          229,
+          65
+        ],
+        "original_expression_range": [
+          224,
+          13,
+          224,
+          65
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 4
+        },
+        "argument": {
+          "builtins.str": 4
+        },
+        "value": {
+          "builtins.NoneType": 4
+        },
+        "call_result": {
+          "builtins.NoneType": 4
+        }
+      },
+      "successful_contexts": [
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_actual_canvas_selection_resize_lock_and_keep_comparison"
+      ],
+      "run": "runtime-ast-observations-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00340": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/candidate_sync.py",
+        "line": 64,
+        "message": "Argument of type \"str | bool | list[Unknown]\" cannot be assigned to parameter \"changes\" of type \"str | list[Unknown]\" in function \"update\"\n  Type \"str | bool | list[Unknown]\" is not assignable to type \"str | list[Unknown]\"\n    Type \"bool\" is not assignable to type \"str | list[Unknown]\"\n      \"bool\" is not assignable to \"str\"\n      \"bool\" is not assignable to \"list[Unknown]\"",
+        "context": "else:receipt=manual_delta(before,after);row.update(state='READY_FOR_EXPLICIT_CONFIRMATION',reason='僅列出的屬性；每目標仍須整張重驗',changes=receipt['changes'],after=after,mappings=mappings)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ad6b41cbff4a04e5c2cf9a6b2eb3a9a68e8f2f7d1801c5cb1d451ca7c1c4c81d"
+      },
+      "schema_reason": "A prepared row adds READY_FOR_EXPLICIT_CONFIRMATION status/reason strings and the explicit changed-property list. Manual delta/revision/dependency validation still gates adoption; the changes key is a list distinct from string/flag fields.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "row.update(state='READY_FOR_EXPLICIT_CONFIRMATION', reason='僅列出的屬性；每目標仍須整張重驗', changes=receipt['changes'], after=after, mappings=mappings)",
+        "range": [
+          64,
+          52,
+          64,
+          218
+        ],
+        "original_expression_range": [
+          64,
+          52,
+          64,
+          218
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 16
+        },
+        "value": {
+          "builtins.dict": 16,
+          "builtins.list": 16
+        },
+        "argument": {
+          "builtins.list": 16
+        },
+        "call_result": {
+          "builtins.NoneType": 16
+        }
+      },
+      "successful_contexts": [
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_actual_confirmation_applies_safe90_only_and_failed100_keeps_original",
+        "test_sync_workflow.SyncWorkflowTests.test_actual_three_candidate_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100"
+      ],
+      "run": "runtime-ast-observations-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00936": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/design_observation.py",
+        "line": 163,
+        "message": "Argument of type \"None\" cannot be assigned to parameter \"font_asset_ref\" of type \"dict[str, float | str | list[str] | None]\" in function \"update\"\n  \"None\" is not assignable to \"dict[str, float | str | list[str] | None]\"",
+        "context": "result.update(font_asset_ref=None, source_font_status='UNKNOWN',",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c243c9266a01c93212f1ad1e079ac4e4e9d0eae59171c2642dbab7e3c7832ea0"
+      },
+      "schema_reason": "Unknown typography is deliberately represented by optional font_asset_ref=None and UNKNOWN source_font_status/text_run_segmentation/distribution_mode/alignment strings. These are absence-of-evidence markers, never a font truth/production approval. The observation record has heterogeneous named fields.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(font_asset_ref=None, source_font_status='UNKNOWN', glyph_runs=dict(status='UNKNOWN', value=None, basis='NOT_EXTRACTED'), text_run_segmentation='UNKNOWN', distribution_mode='UNKNOWN', alignment='UNKNOWN')",
+        "range": [
+          163,
+          4,
+          165,
+          100
+        ],
+        "original_expression_range": [
+          163,
+          4,
+          165,
+          100
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 1014
+        },
+        "argument": {
+          "builtins.NoneType": 1014
+        },
+        "value": {
+          "builtins.NoneType": 1014
+        },
+        "call_result": {
+          "builtins.NoneType": 1014
+        }
+      },
+      "successful_contexts": [
+        "test_annotation_gui.AnnotationGuiTests.test_mode_switch_preserves_each_selection_undo_and_canvas_view",
+        "test_design_components.SeparateComponentTests.test_source_binding_checks_original_label_run_and_physical_ratio",
+        "test_design_composite_learning.CompositeLearningIntegrationTests.test_actual_multisource_training_generates_new_mixed_face_and_static_components",
+        "test_design_rich_text.CompositeSourceTests.test_actual_multirun_binding_persists_all_fonts_and_new_text_selectors",
+        "test_design_source_binding.SourceTypographyBindingTests.test_explicit_binding_is_pinned_and_enables_measured_demand_not_default_typography",
+        "test_local_visual_binding.VisualSourceBindingTests.test_reproduced_visual_match_becomes_traceable_learning_evidence_without_native_truth",
+        "test_qualified_coverage_evidence.QualifiedActualDerivativeTests.test_actual_transformed_svg_source_evidence_stays_derivative_not_certified_native",
+        "test_quality_provenance.QualityProducerProvenanceTests.test_actual_auto_parser_and_model_provenance_are_found_and_quarantined",
+        "test_quality_provenance.QualityProducerProvenanceTests.test_same_weights_other_version_is_potential_impact_and_review_keeps_actual_source_model",
+        "test_quality_repair_impact.QualityRepairImpactTests.test_actual_training_producer_and_historical_templates_reach_customer_without_writes",
+        "test_quality_repair_impact.QualityRepairImpactTests.test_missing_producer_revision_is_potential_and_cannot_be_presented_as_exact",
+        "test_runtime_queue.RuntimeQueueTests.test_pressure_resume_uses_same_confirmed_scope_and_persisted_completed_units",
+        "test_trusted_sample_prediction.TrustedSamplePredictionTests.test_real_auto_source_receipt_is_bound_to_manual_correction_without_training",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo"
+      ],
+      "run": "runtime-ast-observations-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00937": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/design_observation.py",
+        "line": 163,
+        "message": "Argument of type \"Literal['UNKNOWN']\" cannot be assigned to parameter \"source_font_status\" of type \"dict[str, float | str | list[str] | None]\" in function \"update\"\n  \"Literal['UNKNOWN']\" is not assignable to \"dict[str, float | str | list[str] | None]\"",
+        "context": "result.update(font_asset_ref=None, source_font_status='UNKNOWN',",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c00c1d25b8d30ad0ad837e2b8247dc91014d4a32006906f4a6342ddf023a0de6"
+      },
+      "schema_reason": "Unknown typography is deliberately represented by optional font_asset_ref=None and UNKNOWN source_font_status/text_run_segmentation/distribution_mode/alignment strings. These are absence-of-evidence markers, never a font truth/production approval. The observation record has heterogeneous named fields.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(font_asset_ref=None, source_font_status='UNKNOWN', glyph_runs=dict(status='UNKNOWN', value=None, basis='NOT_EXTRACTED'), text_run_segmentation='UNKNOWN', distribution_mode='UNKNOWN', alignment='UNKNOWN')",
+        "range": [
+          163,
+          4,
+          165,
+          100
+        ],
+        "original_expression_range": [
+          163,
+          4,
+          165,
+          100
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 1014
+        },
+        "argument": {
+          "builtins.str": 1014
+        },
+        "value": {
+          "builtins.NoneType": 1014
+        },
+        "call_result": {
+          "builtins.NoneType": 1014
+        }
+      },
+      "successful_contexts": [
+        "test_annotation_gui.AnnotationGuiTests.test_mode_switch_preserves_each_selection_undo_and_canvas_view",
+        "test_design_components.SeparateComponentTests.test_source_binding_checks_original_label_run_and_physical_ratio",
+        "test_design_composite_learning.CompositeLearningIntegrationTests.test_actual_multisource_training_generates_new_mixed_face_and_static_components",
+        "test_design_rich_text.CompositeSourceTests.test_actual_multirun_binding_persists_all_fonts_and_new_text_selectors",
+        "test_design_source_binding.SourceTypographyBindingTests.test_explicit_binding_is_pinned_and_enables_measured_demand_not_default_typography",
+        "test_local_visual_binding.VisualSourceBindingTests.test_reproduced_visual_match_becomes_traceable_learning_evidence_without_native_truth",
+        "test_qualified_coverage_evidence.QualifiedActualDerivativeTests.test_actual_transformed_svg_source_evidence_stays_derivative_not_certified_native",
+        "test_quality_provenance.QualityProducerProvenanceTests.test_actual_auto_parser_and_model_provenance_are_found_and_quarantined",
+        "test_quality_provenance.QualityProducerProvenanceTests.test_same_weights_other_version_is_potential_impact_and_review_keeps_actual_source_model",
+        "test_quality_repair_impact.QualityRepairImpactTests.test_actual_training_producer_and_historical_templates_reach_customer_without_writes",
+        "test_quality_repair_impact.QualityRepairImpactTests.test_missing_producer_revision_is_potential_and_cannot_be_presented_as_exact",
+        "test_runtime_queue.RuntimeQueueTests.test_pressure_resume_uses_same_confirmed_scope_and_persisted_completed_units",
+        "test_trusted_sample_prediction.TrustedSamplePredictionTests.test_real_auto_source_receipt_is_bound_to_manual_correction_without_training",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo"
+      ],
+      "run": "runtime-ast-observations-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-03328": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_source_rechecks.py",
+        "line": 49,
+        "message": "Argument of type \"dict[Unknown, str]\" cannot be assigned to parameter \"gold_versions\" of type \"str | bool | dict[str, int] | list[Unknown]\" in function \"update\"\n  Type \"dict[Unknown, str]\" is not assignable to type \"str | bool | dict[str, int] | list[Unknown]\"\n    \"dict[Unknown, str]\" is not assignable to \"str\"\n    \"dict[Unknown, str]\" is not assignable to \"bool\"\n    \"dict[Unknown, str]\" is not assignable to \"dict[str, int]\"\n      Type parameter \"_VT@dict\" is invariant, but \"str\" is not the same as \"int\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[Unknown, str]\" is not assignable to \"list[Unknown]\"",
+        "context": "result.update(component_fingerprints=list(fingerprints.values()),pipeline_ids=sorted(pipelines),gold_versions=gold_versions);result['digest']=digest(result);return result",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "be1bac1e500781c2f47b9c83752f8c73ef4a24a24808ad259e30bceec6e0897f"
+      },
+      "schema_reason": "Current validity adds component fingerprint and pipeline-ID lists plus the gold-version dictionary, each computed from exact current sources. These metadata keys are distinct from status booleans and do not waive pin/epoch/source checks.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(component_fingerprints=list(fingerprints.values()), pipeline_ids=sorted(pipelines), gold_versions=gold_versions)",
+        "range": [
+          49,
+          4,
+          49,
+          128
+        ],
+        "original_expression_range": [
+          49,
+          4,
+          49,
+          128
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 46
+        },
+        "value": {
+          "builtins.dict": 46,
+          "builtins.NoneType": 46
+        },
+        "argument": {
+          "builtins.dict": 46
+        },
+        "call_result": {
+          "builtins.NoneType": 46
+        }
+      },
+      "successful_contexts": [
+        "test_major_review_closure.MajorReviewClosureTests.test_case_completion_does_not_hide_unreviewed_template_and_can_reopen_exact_unit",
+        "test_major_review_closure.MajorReviewClosureTests.test_explicit_current_source_repair_draft_preserves_old_publication_and_provenance",
+        "test_major_review_closure.MajorReviewClosureTests.test_reviewed_repair_version_can_complete_case_and_new_doubt_reopens_with_history",
+        "test_major_review_dependencies.MajorGoldDeploymentTests.test_source_gold_dependency_suspends_existing_accepted_runtime_without_rewriting_it",
+        "test_major_review_dependencies.MajorModelDependencyTests.test_actual_source_training_quarantines_same_parameter_model_aliases",
+        "test_major_review_entries.MajorReviewEntryTests.test_actual_closed_batch_entry_pins_current_work_and_preserves_old_closure",
+        "test_major_review_jobs.MajorReviewJobTests.test_shared_fifo_claims_source_jobs_in_original_order_and_preserves_other_source",
+        "test_major_review_jobs.MajorReviewJobTests.test_stale_or_tampered_scope_never_enters_original_worker",
+        "test_quality_source_review.QualitySourceReviewTests.test_existing_qualified_candidate_loses_current_trust_without_template_mutation",
+        "test_quality_source_review.QualitySourceReviewTests.test_source_and_work_denominators_keep_equal_bytes_as_distinct_logical_records",
+        "test_quality_source_review.QualitySourceReviewTests.test_source_evidence_can_start_without_quality_protocol_and_preserves_original_records",
+        "test_quality_source_review.QualitySourceReviewTests.test_unknown_other_source_stays_quarantined_without_claiming_complete_safety"
+      ],
+      "run": "runtime-ast-observations-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00171": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 178,
+        "message": "Argument of type \"Literal['BLOCKED']\" cannot be assigned to parameter \"state\" of type \"bool\" in function \"update\"\n  \"Literal['BLOCKED']\" is not assignable to \"bool\"",
+        "context": "elif row['state']!='READY':result.update(state='BLOCKED',outcome='SKIPPED_PRECONDITION' if row['state']=='UNCHANGED' else 'NEEDS_MANUAL_REVIEW',reason=row['reason'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "493c0fabad9f487192519f8378864a159bb122379d98460b5ef1b5c2447b9b4d"
+      },
+      "schema_reason": "Rows start with id/kind/status strings and formal_eligible/attempted booleans. Prepared rows add snapshot/request dictionaries and changes/warnings lists. Execution results add state/outcome/reason/history strings. validate_request and exact selection/source/revision/seal checks remain active; formal_eligible stays false until whole-card validation. These are separate named fields, not one bool/string value type.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='BLOCKED', outcome='SKIPPED_PRECONDITION' if row['state'] == 'UNCHANGED' else 'NEEDS_MANUAL_REVIEW', reason=row['reason'])",
+        "range": [
+          183,
+          39,
+          183,
+          177
+        ],
+        "original_expression_range": [
+          178,
+          39,
+          178,
+          177
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "value": {
+          "builtins.NoneType": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "successful_contexts": [
+        "capture:tools/capture_batch_correction.py"
+      ],
+      "run": "capture-type-evidence-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00172": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 178,
+        "message": "Argument of type \"Literal['SKIPPED_PRECONDITION', 'NEEDS_MANUAL_REVIEW']\" cannot be assigned to parameter \"outcome\" of type \"bool\" in function \"update\"\n  Type \"Literal['SKIPPED_PRECONDITION', 'NEEDS_MANUAL_REVIEW']\" is not assignable to type \"bool\"\n    \"Literal['NEEDS_MANUAL_REVIEW']\" is not assignable to \"bool\"",
+        "context": "elif row['state']!='READY':result.update(state='BLOCKED',outcome='SKIPPED_PRECONDITION' if row['state']=='UNCHANGED' else 'NEEDS_MANUAL_REVIEW',reason=row['reason'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e78147e868d795ab50395c8b3811254b86e15259ab45ea8438f4c6041135dff3"
+      },
+      "schema_reason": "Rows start with id/kind/status strings and formal_eligible/attempted booleans. Prepared rows add snapshot/request dictionaries and changes/warnings lists. Execution results add state/outcome/reason/history strings. validate_request and exact selection/source/revision/seal checks remain active; formal_eligible stays false until whole-card validation. These are separate named fields, not one bool/string value type.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='BLOCKED', outcome='SKIPPED_PRECONDITION' if row['state'] == 'UNCHANGED' else 'NEEDS_MANUAL_REVIEW', reason=row['reason'])",
+        "range": [
+          183,
+          39,
+          183,
+          177
+        ],
+        "original_expression_range": [
+          178,
+          39,
+          178,
+          177
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "value": {
+          "builtins.str": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "successful_contexts": [
+        "capture:tools/capture_batch_correction.py"
+      ],
+      "run": "capture-type-evidence-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00184": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 220,
+        "message": "Argument of type \"Literal['UNDONE_PENDING_FULL_VALIDATION']\" cannot be assigned to parameter \"outcome\" of type \"bool\" in function \"update\"\n  \"Literal['UNDONE_PENDING_FULL_VALIDATION']\" is not assignable to \"bool\"",
+        "context": "record=library.object_history_action(current['history_id'],'UNDO',True);result.update(outcome='UNDONE_PENDING_FULL_VALIDATION',history_id=record['id'],attempted=True)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b62b51e45fba49f7cbe8c692bd6c0a4929991caed7933cb9c8b03eb7dab8690b"
+      },
+      "schema_reason": "Rows start with id/kind/status strings and formal_eligible/attempted booleans. Prepared rows add snapshot/request dictionaries and changes/warnings lists. Execution results add state/outcome/reason/history strings. validate_request and exact selection/source/revision/seal checks remain active; formal_eligible stays false until whole-card validation. These are separate named fields, not one bool/string value type.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(outcome='UNDONE_PENDING_FULL_VALIDATION', history_id=record['id'], attempted=True)",
+        "range": [
+          225,
+          84,
+          225,
+          178
+        ],
+        "original_expression_range": [
+          220,
+          84,
+          220,
+          178
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "value": {
+          "builtins.NoneType": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "successful_contexts": [
+        "capture:tools/capture_batch_correction.py"
+      ],
+      "run": "capture-type-evidence-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00165": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 175,
+        "message": "Argument of type \"Literal['CANCELLED']\" cannot be assigned to parameter \"state\" of type \"bool\" in function \"update\"\n  \"Literal['CANCELLED']\" is not assignable to \"bool\"",
+        "context": "elif cancel():result.update(state='CANCELLED',outcome='CANCELLED',reason='尚未執行；既有完成項不因此撤銷')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ac0a37181597023ea603f44876195d53fae1ff78900edaccabf117fcb591215a"
+      },
+      "schema_reason": "Rows start with id/kind/status strings and formal_eligible/attempted booleans. Prepared rows add snapshot/request dictionaries and changes/warnings lists. Execution results add state/outcome/reason/history strings. validate_request and exact selection/source/revision/seal checks remain active; formal_eligible stays false until whole-card validation. These are separate named fields, not one bool/string value type.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='CANCELLED', outcome='CANCELLED', reason='尚未執行；既有完成項不因此撤銷')",
+        "range": [
+          180,
+          26,
+          180,
+          133
+        ],
+        "original_expression_range": [
+          175,
+          26,
+          175,
+          133
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "value": {
+          "builtins.NoneType": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "successful_contexts": [
+        "owned-module:test_batch_recovery"
+      ],
+      "run": "ast-module-contexts-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00166": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 175,
+        "message": "Argument of type \"Literal['CANCELLED']\" cannot be assigned to parameter \"outcome\" of type \"bool\" in function \"update\"\n  \"Literal['CANCELLED']\" is not assignable to \"bool\"",
+        "context": "elif cancel():result.update(state='CANCELLED',outcome='CANCELLED',reason='尚未執行；既有完成項不因此撤銷')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "1e77bd62bcecc1e956b11c47f3a23b4a08b745cb67349264d4959ff7aa145958"
+      },
+      "schema_reason": "Rows start with id/kind/status strings and formal_eligible/attempted booleans. Prepared rows add snapshot/request dictionaries and changes/warnings lists. Execution results add state/outcome/reason/history strings. validate_request and exact selection/source/revision/seal checks remain active; formal_eligible stays false until whole-card validation. These are separate named fields, not one bool/string value type.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='CANCELLED', outcome='CANCELLED', reason='尚未執行；既有完成項不因此撤銷')",
+        "range": [
+          180,
+          26,
+          180,
+          133
+        ],
+        "original_expression_range": [
+          175,
+          26,
+          175,
+          133
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "value": {
+          "builtins.NoneType": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "successful_contexts": [
+        "owned-module:test_batch_recovery"
+      ],
+      "run": "ast-module-contexts-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    },
+    "D-APP-00167": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/batch_objects.py",
+        "line": 175,
+        "message": "Argument of type \"Literal['尚未執行；既有完成項不因此撤銷']\" cannot be assigned to parameter \"reason\" of type \"bool\" in function \"update\"\n  \"Literal['尚未執行；既有完成項不因此撤銷']\" is not assignable to \"bool\"",
+        "context": "elif cancel():result.update(state='CANCELLED',outcome='CANCELLED',reason='尚未執行；既有完成項不因此撤銷')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c027cb619fe01c482e1466f280e2b5d828f59ce812fc87e8eb28d1e99b4b71bd"
+      },
+      "schema_reason": "Rows start with id/kind/status strings and formal_eligible/attempted booleans. Prepared rows add snapshot/request dictionaries and changes/warnings lists. Execution results add state/outcome/reason/history strings. validate_request and exact selection/source/revision/seal checks remain active; formal_eligible stays false until whole-card validation. These are separate named fields, not one bool/string value type.",
+      "exact_call": {
+        "label": "call_result",
+        "expression": "result.update(state='CANCELLED', outcome='CANCELLED', reason='尚未執行；既有完成項不因此撤銷')",
+        "range": [
+          180,
+          26,
+          180,
+          133
+        ],
+        "original_expression_range": [
+          175,
+          26,
+          175,
+          133
+        ]
+      },
+      "actual_values": {
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "value": {
+          "builtins.NoneType": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "successful_contexts": [
+        "owned-module:test_batch_recovery"
+      ],
+      "run": "ast-module-contexts-001",
+      "validation_scope": "Named-field schema debt only; original guards and all static findings retained; does not approve arbitrary payloads"
+    }
+  }
+}

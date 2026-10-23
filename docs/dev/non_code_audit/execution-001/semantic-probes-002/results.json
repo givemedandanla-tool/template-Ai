@@ -1,0 +1,48 @@
+[
+  {
+    "id": "PROBE-RELATIVE-PROTECTED-PAIR",
+    "status": "PASS",
+    "seconds": 0.8887614809791557,
+    "details": {
+      "protected_relations": [
+        "ABOVE"
+      ],
+      "all_retained": true,
+      "requested_relation": "PHONE_BELOW_EMAIL",
+      "input_graph_unchanged": true,
+      "same_family": true
+    }
+  },
+  {
+    "id": "PROBE-PROTECTED-ROLE-NEGATIVE",
+    "status": "PASS",
+    "seconds": 0.0008083099965006113,
+    "details": {
+      "rejected": true,
+      "original_session_unchanged": true
+    }
+  },
+  {
+    "id": "PROBE-LEGACY-CALIBRATION-AND-PREVIEW",
+    "status": "PASS",
+    "seconds": 0.6668493630131707,
+    "details": {
+      "old_cache_retained": true,
+      "recalibration_required": true,
+      "preview_still_works": true,
+      "exported_bytes_verified": true,
+      "no_production_qualification_claim": true
+    }
+  },
+  {
+    "id": "PROBE-NEW-VALUES-NO-SOURCE-PAGE-BACKGROUND",
+    "status": "PASS",
+    "seconds": 0.40477858000667766,
+    "details": {
+      "source_page_not_copied_as_background": true,
+      "exact_new_values": true,
+      "old_authored_training_text_not_in_dynamic_output": true,
+      "scope": "Authored learned-core fixture;not arbitrary private raster detection."
+    }
+  }
+]

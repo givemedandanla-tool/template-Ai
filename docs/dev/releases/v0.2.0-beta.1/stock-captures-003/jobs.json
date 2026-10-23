@@ -1,0 +1,27 @@
+[
+  {
+    "id": "STOCK-CAPTURE-01",
+    "script": "tools/validate_first_version.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/validate_first_version.py",
+      "--skip-tests",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-003",
+      "--dpi",
+      "96"
+    ],
+    "deadline_seconds": 180,
+    "seconds": 49.9586660710047,
+    "exit_code": 1,
+    "timed_out": false,
+    "runtime_flags": [
+      {
+        "line": 34,
+        "kind": "TRACEBACK_OR_QT_OVERRIDE"
+      }
+    ],
+    "log": "01-validate_first_version.log",
+    "status": "FAIL"
+  }
+]

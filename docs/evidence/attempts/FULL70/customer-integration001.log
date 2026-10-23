@@ -1,0 +1,117 @@
+test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write (test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write) ... ERROR
+test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare (test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare) ... ERROR
+test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite (test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite) ... ERROR
+test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states (test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states) ... ERROR
+test_duplicate_comparison_no_inferred_merge_or_identity_or_writes (test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes) ... ERROR
+test_late_audit_failure_rolls_back_fields_version_and_history (test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history) ... ERROR
+test_search_and_identity_confirmed_exact_reorder_readonly_stale_template (test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template) ... ERROR
+test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched (test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched) ... ERROR
+
+======================================================================
+ERROR: test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write (test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_customers.py", line 21, in setUp
+    self.c=self.store.create('00123','Synthetic Customer',self.fields,self.template.id,True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customers.py", line 44, in create
+    insert_graph(self.db,cid,from_legacy_fields([dict(id=fid,owner=o,kind=k,value=v) for fid,o,k,v in checked]))
+  File "/workspace/template-Ai/template_ai/customer_entities.py", line 49, in insert_graph
+    db.execute('INSERT INTO customer_entities VALUES(?,?,?,?,?,?)',(e['id'],cid,kind,pos,e.get('logo_id','')))
+sqlite3.OperationalError: table customer_entities has 5 columns but 6 values were supplied
+
+======================================================================
+ERROR: test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare (test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_customers.py", line 21, in setUp
+    self.c=self.store.create('00123','Synthetic Customer',self.fields,self.template.id,True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customers.py", line 44, in create
+    insert_graph(self.db,cid,from_legacy_fields([dict(id=fid,owner=o,kind=k,value=v) for fid,o,k,v in checked]))
+  File "/workspace/template-Ai/template_ai/customer_entities.py", line 49, in insert_graph
+    db.execute('INSERT INTO customer_entities VALUES(?,?,?,?,?,?)',(e['id'],cid,kind,pos,e.get('logo_id','')))
+sqlite3.OperationalError: table customer_entities has 5 columns but 6 values were supplied
+
+======================================================================
+ERROR: test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite (test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_customers.py", line 21, in setUp
+    self.c=self.store.create('00123','Synthetic Customer',self.fields,self.template.id,True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customers.py", line 44, in create
+    insert_graph(self.db,cid,from_legacy_fields([dict(id=fid,owner=o,kind=k,value=v) for fid,o,k,v in checked]))
+  File "/workspace/template-Ai/template_ai/customer_entities.py", line 49, in insert_graph
+    db.execute('INSERT INTO customer_entities VALUES(?,?,?,?,?,?)',(e['id'],cid,kind,pos,e.get('logo_id','')))
+sqlite3.OperationalError: table customer_entities has 5 columns but 6 values were supplied
+
+======================================================================
+ERROR: test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states (test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_customers.py", line 21, in setUp
+    self.c=self.store.create('00123','Synthetic Customer',self.fields,self.template.id,True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customers.py", line 44, in create
+    insert_graph(self.db,cid,from_legacy_fields([dict(id=fid,owner=o,kind=k,value=v) for fid,o,k,v in checked]))
+  File "/workspace/template-Ai/template_ai/customer_entities.py", line 49, in insert_graph
+    db.execute('INSERT INTO customer_entities VALUES(?,?,?,?,?,?)',(e['id'],cid,kind,pos,e.get('logo_id','')))
+sqlite3.OperationalError: table customer_entities has 5 columns but 6 values were supplied
+
+======================================================================
+ERROR: test_duplicate_comparison_no_inferred_merge_or_identity_or_writes (test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_customers.py", line 21, in setUp
+    self.c=self.store.create('00123','Synthetic Customer',self.fields,self.template.id,True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customers.py", line 44, in create
+    insert_graph(self.db,cid,from_legacy_fields([dict(id=fid,owner=o,kind=k,value=v) for fid,o,k,v in checked]))
+  File "/workspace/template-Ai/template_ai/customer_entities.py", line 49, in insert_graph
+    db.execute('INSERT INTO customer_entities VALUES(?,?,?,?,?,?)',(e['id'],cid,kind,pos,e.get('logo_id','')))
+sqlite3.OperationalError: table customer_entities has 5 columns but 6 values were supplied
+
+======================================================================
+ERROR: test_late_audit_failure_rolls_back_fields_version_and_history (test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_customers.py", line 21, in setUp
+    self.c=self.store.create('00123','Synthetic Customer',self.fields,self.template.id,True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customers.py", line 44, in create
+    insert_graph(self.db,cid,from_legacy_fields([dict(id=fid,owner=o,kind=k,value=v) for fid,o,k,v in checked]))
+  File "/workspace/template-Ai/template_ai/customer_entities.py", line 49, in insert_graph
+    db.execute('INSERT INTO customer_entities VALUES(?,?,?,?,?,?)',(e['id'],cid,kind,pos,e.get('logo_id','')))
+sqlite3.OperationalError: table customer_entities has 5 columns but 6 values were supplied
+
+======================================================================
+ERROR: test_search_and_identity_confirmed_exact_reorder_readonly_stale_template (test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_customers.py", line 21, in setUp
+    self.c=self.store.create('00123','Synthetic Customer',self.fields,self.template.id,True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customers.py", line 44, in create
+    insert_graph(self.db,cid,from_legacy_fields([dict(id=fid,owner=o,kind=k,value=v) for fid,o,k,v in checked]))
+  File "/workspace/template-Ai/template_ai/customer_entities.py", line 49, in insert_graph
+    db.execute('INSERT INTO customer_entities VALUES(?,?,?,?,?,?)',(e['id'],cid,kind,pos,e.get('logo_id','')))
+sqlite3.OperationalError: table customer_entities has 5 columns but 6 values were supplied
+
+======================================================================
+ERROR: test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched (test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_customers.py", line 21, in setUp
+    self.c=self.store.create('00123','Synthetic Customer',self.fields,self.template.id,True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customers.py", line 44, in create
+    insert_graph(self.db,cid,from_legacy_fields([dict(id=fid,owner=o,kind=k,value=v) for fid,o,k,v in checked]))
+  File "/workspace/template-Ai/template_ai/customer_entities.py", line 49, in insert_graph
+    db.execute('INSERT INTO customer_entities VALUES(?,?,?,?,?,?)',(e['id'],cid,kind,pos,e.get('logo_id','')))
+sqlite3.OperationalError: table customer_entities has 5 columns but 6 values were supplied
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.583s
+
+FAILED (errors=8)

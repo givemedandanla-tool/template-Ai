@@ -1,0 +1,81 @@
+test_clear_background_cannot_remove_another_registered_draft_background (modal_context_draft.ModalOperationContextTests.test_clear_background_cannot_remove_another_registered_draft_background) ... FAIL
+test_clear_input_does_not_erase_input_adopted_during_confirmation (modal_context_draft.ModalOperationContextTests.test_clear_input_does_not_erase_input_adopted_during_confirmation) ... FAIL
+test_demo_does_not_replace_new_input_during_confirmation (modal_context_draft.ModalOperationContextTests.test_demo_does_not_replace_new_input_during_confirmation) ... FAIL
+test_history_confirmation_does_not_restore_different_work (modal_context_draft.ModalOperationContextTests.test_history_confirmation_does_not_restore_different_work) ... FAIL
+test_learn_does_not_use_a_different_unconfirmed_work (modal_context_draft.ModalOperationContextTests.test_learn_does_not_use_a_different_unconfirmed_work) ... ok
+test_publish_cannot_publish_another_registered_draft (modal_context_draft.ModalOperationContextTests.test_publish_cannot_publish_another_registered_draft) ... FAIL
+test_remove_row_does_not_delete_newly_selected_row (modal_context_draft.ModalOperationContextTests.test_remove_row_does_not_delete_newly_selected_row) ... FAIL
+test_rename_does_not_rename_work_selected_during_name_prompt (modal_context_draft.ModalOperationContextTests.test_rename_does_not_rename_work_selected_during_name_prompt) ... FAIL
+
+======================================================================
+FAIL: test_clear_background_cannot_remove_another_registered_draft_background (modal_context_draft.ModalOperationContextTests.test_clear_background_cannot_remove_another_registered_draft_background)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_modal_operation_context.py.txt", line 26, in test_clear_background_cannot_remove_another_registered_draft_background
+    self.assertEqual(len(expected),1);self.assertEqual(self.w.library.object_snapshot('TEMPLATE',expected[0]['id']),expected[0]);self.assertEqual(self.w.library.object_snapshot('TEMPLATE',old['id']),old)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'kin[2017 chars]nd': None, 'source_work_id': '', 'source_work_[75 chars]': 2} != {'kin[2017 chars]nd': {'image': '/tmp/tmpylhpaajn/data/assets/f[832 chars]': 1}
+Diff is 5628 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_clear_input_does_not_erase_input_adopted_during_confirmation (modal_context_draft.ModalOperationContextTests.test_clear_input_does_not_erase_input_adopted_during_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_modal_operation_context.py.txt", line 70, in test_clear_input_does_not_erase_input_adopted_during_confirmation
+    self.assertEqual(len(expected),1);self.assertIsNotNone(self.w.active_input_graph);self.assertEqual(self.w.active_input_graph.data,expected[0])
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None
+
+======================================================================
+FAIL: test_demo_does_not_replace_new_input_during_confirmation (modal_context_draft.ModalOperationContextTests.test_demo_does_not_replace_new_input_during_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_modal_operation_context.py.txt", line 76, in test_demo_does_not_replace_new_input_during_confirmation
+    self.assertEqual(len(expected),1);self.assertEqual(self.w.active_input_graph.data,expected[0])
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'sch[38 chars]d': 'a981be0adaa144a8923b7cb90f9496b2'}], 'com[744 chars]: []} != {'sch[38 chars]d': 'bdb597ac996f4fef92ae9404e34e3bcf'}], 'com[224 chars]: []}
+Diff is 1433 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_history_confirmation_does_not_restore_different_work (modal_context_draft.ModalOperationContextTests.test_history_confirmation_does_not_restore_different_work)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_modal_operation_context.py.txt", line 55, in test_history_confirmation_does_not_restore_different_work
+    self.assertEqual(self.w.work['id'],b['id']);self.assertEqual(self.w.library.artwork(b['id']),b)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id'[116 chars]on': 3, 'payload': {'crop': {'h': 54, 'w': 90,[514 chars]0.0}} != {'id'[116 chars]on': 2, 'payload': {'crop': {'h': 54, 'w': 90,[514 chars]9.0}}
+Diff is 1384 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_publish_cannot_publish_another_registered_draft (modal_context_draft.ModalOperationContextTests.test_publish_cannot_publish_another_registered_draft)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_modal_operation_context.py.txt", line 32, in test_publish_cannot_publish_another_registered_draft
+    self.assertEqual(len(expected),1);self.assertEqual(self.w.library.object_snapshot('TEMPLATE',expected[0]['id']),expected[0]);self.assertEqual(self.w.library.object_snapshot('TEMPLATE',old['id']),old)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'kin[1903 chars]e': 'published', 'reasons': ['合成示範，非歷史 AI 訓練成果[193 chars]': 2} != {'kin[1903 chars]e': 'draft', 'reasons': ['合成示範，非歷史 AI 訓練成果', '[189 chars]': 1}
+Diff is 4416 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_remove_row_does_not_delete_newly_selected_row (modal_context_draft.ModalOperationContextTests.test_remove_row_does_not_delete_newly_selected_row)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_modal_operation_context.py.txt", line 83, in test_remove_row_does_not_delete_newly_selected_row
+    self.assertEqual(self.w.people.rowCount(),2);self.assertEqual(self.w.people.item(1,0).text(),'Authored B')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 2
+
+======================================================================
+FAIL: test_rename_does_not_rename_work_selected_during_name_prompt (modal_context_draft.ModalOperationContextTests.test_rename_does_not_rename_work_selected_during_name_prompt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_modal_operation_context.py.txt", line 48, in test_rename_does_not_rename_work_selected_during_name_prompt
+    self.assertEqual(self.w.library.artwork(b['id']),b);self.assertEqual(self.w.library.artwork(a['id'])['name'],a['name'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id'[91 chars]e': 'Must not rename B', 'revision': 2, 'paylo[546 chars]9.0}} != {'id'[91 chars]e': 'Authored B', 'revision': 2, 'payload': {'[539 chars]9.0}}
+Diff is 1261 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 8 tests in 6.912s
+
+FAILED (failures=7)

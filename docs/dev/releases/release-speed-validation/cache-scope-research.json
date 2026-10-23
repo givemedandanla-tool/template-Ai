@@ -1,0 +1,6 @@
+{
+  "url": "https://raw.githubusercontent.com/actions/cache/0057852bfaa89a56745cba8c7296529d2fc39830/README.md",
+  "sha256": "ac8652b53f24fd05e4aa508a84a60f3354506e7fffccbd1b85046b5efb308633",
+  "bytes": 16751,
+  "excerpt": "Cache scopes\n\nThe cache is scoped to the key, [version](#cache-version), and branch. The default branch cache is available to other branches.\n\nSee [Matching a cache key](https://help.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows#matching-a-cache-key) for more info.\n\n### Example cache workflow\n\n#### Restoring and saving cache using a single action\n\n```yaml\nname: Caching Primes\n\non: push\n\njobs:\n  build:\n    runs-on: ubuntu-latest\n\n    steps:\n    - uses: actions/checkout@v4\n\n    - name: Cache Primes\n      id: cache-primes\n      uses: actions/cache@v4\n      with:\n        path: prime-numbers\n        key: ${{ runner.os }}-primes\n\n    - name: Generate Prime Numbers\n      if: steps.cache-primes."
+}

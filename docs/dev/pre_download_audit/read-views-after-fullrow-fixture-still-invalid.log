@@ -1,0 +1,20 @@
+test_catalog_filter_keeps_payload_from_same_read_as_selected_ids (test_read_view_snapshot.ReadViewSnapshotTests.test_catalog_filter_keeps_payload_from_same_read_as_selected_ids) ... ok
+test_coverage_batch_search_retains_selected_summary (test_read_view_snapshot.ReadViewSnapshotTests.test_coverage_batch_search_retains_selected_summary) ... ok
+test_editor_page_keeps_selected_payload_before_concurrent_rename (test_read_view_snapshot.ReadViewSnapshotTests.test_editor_page_keeps_selected_payload_before_concurrent_rename) ... ok
+test_noise_hit_search_retains_selected_stored_row_and_live_decision_snapshot (test_read_view_snapshot.ReadViewSnapshotTests.test_noise_hit_search_retains_selected_stored_row_and_live_decision_snapshot) ... FAIL
+test_read_snapshot_nests_without_committing_or_losing_callers_pending_write (test_read_view_snapshot.ReadViewSnapshotTests.test_read_snapshot_nests_without_committing_or_losing_callers_pending_write) ... ok
+test_rule_state_filter_retains_selected_revision_through_inspection (test_read_view_snapshot.ReadViewSnapshotTests.test_rule_state_filter_retains_selected_revision_through_inspection) ... ok
+
+======================================================================
+FAIL: test_noise_hit_search_retains_selected_stored_row_and_live_decision_snapshot (test_read_view_snapshot.ReadViewSnapshotTests.test_noise_hit_search_retains_selected_stored_row_and_live_decision_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_read_view_snapshot.py", line 50, in test_noise_hit_search_retains_selected_stored_row_and_live_decision_snapshot
+    panel=NoiseHitsPanel(self.w);self.addCleanup(panel.deleteLater);panel.search.setText('AUTHORED_HIT_OLD');self.assertEqual(len(panel.rows),1);new=dict(body,state='AUTHORED_HIT_NEW');changed=self.interleave(identity,'training_records',new);panel.reload();self.reader.db.row_factory=None
+                                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 6 tests in 4.526s
+
+FAILED (failures=1)

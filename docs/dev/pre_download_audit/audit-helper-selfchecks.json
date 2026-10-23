@@ -1,0 +1,39 @@
+{
+  "scope": "Isolated authored developer helper demonstrations, not product quality qualification",
+  "checks": [
+    {
+      "kind": "NESTED_INDEX_OUTER_TARGET",
+      "source": "x = links[labels.index(choice)]['id']",
+      "expected": "links[labels.index(choice)]",
+      "status": "PASS"
+    },
+    {
+      "kind": "NESTED_INDEX_OUTER_TARGET",
+      "source": "x = target['envelope']['plan']",
+      "expected": "target['envelope']",
+      "status": "PASS"
+    },
+    {
+      "kind": "NESTED_INDEX_OUTER_TARGET",
+      "source": "x = row['left']['status']",
+      "expected": "row['left']",
+      "status": "PASS"
+    },
+    {
+      "kind": "NO_PROPERTY_EXECUTION",
+      "status": "PASS"
+    },
+    {
+      "kind": "NO_PAYLOAD_IN_TYPE_OUTPUT",
+      "status": "PASS"
+    },
+    {
+      "kind": "AUDIT_HELPER_SYNTAX",
+      "status": "PASS"
+    }
+  ],
+  "source_hashes": {
+    "runtime_type_worker.py": "eb218a6ac252dac8aef09a724aab574fa1b67117cf65ffe5bd19dd06c058c09b",
+    "coordinate_contract.py": "8a30d56252255a27ede56d52a1c5786d620d8f7d22c884a01f18c55470abbbb0"
+  }
+}

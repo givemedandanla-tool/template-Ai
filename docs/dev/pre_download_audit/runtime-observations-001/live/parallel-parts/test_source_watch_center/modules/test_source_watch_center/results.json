@@ -1,0 +1,19 @@
+{
+  "records": [
+    {
+      "id": "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts",
+      "status": "FAIL",
+      "details": [
+        "Traceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_source_watch_center.py\", line 57, in test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts\n    self.scan();self.select(lambda c:True);self.dialog.launch();child=self.dialog.training_dialog;self.wait(lambda:not child.running and not self.window.busy)\n                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/template-Ai/tests/test_source_watch_center.py\", line 29, in wait\n    if time.monotonic()>end:self.fail('actual watch/GUI pipeline timed out: '+self.dialog.status.text())\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual watch/GUI pipeline timed out: 已交既有預檢，真正開始訓練仍須在該介面明確確認\n"
+      ],
+      "seconds": 36.181374
+    },
+    {
+      "id": "test_source_watch_center.SourceWatchCenterTests.test_modified_version_needs_review_and_changed_bytes_during_later_preflight_never_start_a_job",
+      "status": "PASS",
+      "details": [],
+      "seconds": 4.306123
+    }
+  ],
+  "runtime_errors": []
+}

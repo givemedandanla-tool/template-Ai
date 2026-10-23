@@ -1,0 +1,97 @@
+test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure (test_input_learning_integration.InputLearningIntegrationTests.test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure) ... This plugin does not support propagateSizeHints()
+ok
+test_background_cancel_retains_new_data_and_cannot_install_old_confirmation (test_input_learning_integration.InputLearningIntegrationTests.test_background_cancel_retains_new_data_and_cannot_install_old_confirmation) ... This plugin does not support propagateSizeHints()
+ok
+test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation (test_input_learning_integration.InputLearningIntegrationTests.test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation) ... This plugin does not support propagateSizeHints()
+ERROR
+test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data (test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data) ... This plugin does not support propagateSizeHints()
+ERROR
+test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data (test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data) ... ERROR
+test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss (test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ERROR
+test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner (test_input_learning_integration.InputLearningIntegrationTests.test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates (test_input_learning_integration.InputLearningIntegrationTests.test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates) ... This plugin does not support propagateSizeHints()
+ERROR
+test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter (test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter) ... This plugin does not support propagateSizeHints()
+ERROR
+test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter (test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter) ... ERROR
+
+======================================================================
+ERROR: test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation (test_input_learning_integration.InputLearningIntegrationTests.test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_input_learning_integration.py", line 120, in test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation
+    artifact=self.sessions.export(self.row['id'],target,preview=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_session.py", line 310, in export
+    path=export(candidate,target,dpi=dpi,preview=preview)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/render.py", line 226, in export
+    raise ValueError("非正式預覽檔名必須包含 PREVIEW")
+ValueError: 非正式預覽檔名必須包含 PREVIEW
+
+======================================================================
+ERROR: test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data (test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_input_learning_integration.py", line 132, in test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data
+    learning.activate(self.model['id'],active['revision'] if active else 0,'Author',dict(version='legacy-main-learning-1',approved=True,production=False),True)
+  File "/workspace/template-Ai/template_ai/design_learning.py", line 253, in activate
+    text(policy.get('basis'),'Policy basis',2048)
+  File "/workspace/template-Ai/template_ai/training_store.py", line 29, in text
+    raise ValueError(label+'需完整非空文字且不超過'+str(maximum)+'字')
+ValueError: Policy basis需完整非空文字且不超過2048字
+
+======================================================================
+ERROR: test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data (test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data)
+----------------------------------------------------------------------
+TypeError: 'NoneType' object is not callable
+
+======================================================================
+ERROR: test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss (test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_input_learning_integration.py", line 87, in test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss
+    modal.accept();self.assertNotEqual(modal.result(),modal.Accepted);self.assertEqual(editor.text(),'X'*2050)
+                                                      ^^^^^^^^^^^^^^
+AttributeError: 'InputGraphDialog' object has no attribute 'Accepted'. Did you mean: 'accepted'?
+
+======================================================================
+ERROR: test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates (test_input_learning_integration.InputLearningIntegrationTests.test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_input_learning_integration.py", line 64, in test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates
+    learning.activate(self.model['id'],active['revision'] if active else 0,'Author',dict(version='new-input-modal-1',approved=True,production=False),True)
+  File "/workspace/template-Ai/template_ai/design_learning.py", line 253, in activate
+    text(policy.get('basis'),'Policy basis',2048)
+  File "/workspace/template-Ai/template_ai/training_store.py", line 29, in text
+    raise ValueError(label+'需完整非空文字且不超過'+str(maximum)+'字')
+ValueError: Policy basis需完整非空文字且不超過2048字
+
+======================================================================
+ERROR: test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter (test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_input_learning_integration.py", line 162, in test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter
+    d=DesignLearningDialog(w);self.addCleanup(d.close);attach(d)
+                                                       ^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/production_bridge.py", line 45, in attach
+    row=dialog.sessions.create(graph,*size,dialog.actor.text())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_session.py", line 54, in create
+    if model is None:raise ValueError('No current approved preview/production learning model')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: No current approved preview/production learning model
+
+======================================================================
+ERROR: test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter (test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter)
+----------------------------------------------------------------------
+TypeError: 'NoneType' object is not callable
+
+----------------------------------------------------------------------
+Ran 8 tests in 33.877s
+
+FAILED (errors=7)

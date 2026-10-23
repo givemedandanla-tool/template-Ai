@@ -1,0 +1,14 @@
+..E................
+======================================================================
+ERROR: test_changed_source_after_merge_preview_blocks_all_permanent_identity_changes (test_customer_identity.CustomerIdentityTests.test_changed_source_after_merge_preview_blocks_all_permanent_identity_changes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_customer_identity.py", line 124, in test_changed_source_after_merge_preview_blocks_all_permanent_identity_changes
+    Path(source['current_path']).write_text('changed original')
+         ~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'current_path'
+
+----------------------------------------------------------------------
+Ran 19 tests in 6.044s
+
+FAILED (errors=1)

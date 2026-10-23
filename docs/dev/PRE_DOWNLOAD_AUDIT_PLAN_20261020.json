@@ -1,0 +1,116 @@
+{
+  "id": "PRE-DOWNLOAD-AUDIT-PLAN-20261020",
+  "status": "LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED",
+  "base_commit": "127b69fc59112a540f78bb8488e5a024c5eddd38",
+  "scope": "PRE_FIRST_DOWNLOAD_AUDIT_EXECUTED_LOCAL_SCOPE",
+  "document": "docs/dev/PRE_DOWNLOAD_AUDIT_PLAN_20261020.md",
+  "initial_diagnostics": {
+    "pyright_application": 4212,
+    "pyright_tools": 521,
+    "pyright_tests": 7065,
+    "pyright_total": 11798,
+    "ruff_known_parser_limits": 3,
+    "jscpd_exact_groups": 7
+  },
+  "product_parent_count_unchanged": 75,
+  "ai_work_package_count_unchanged": 8,
+  "phases": [
+    {
+      "id": "0",
+      "goal": "Protect source and resources; inventory all entries and requirement/test coverage",
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
+    },
+    {
+      "id": "1",
+      "goal": "Classify every original and new diagnostic with evidence and caller scope",
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
+    },
+    {
+      "id": "2",
+      "goal": "Trace all input/version paths and review exact/renamed/structural clone candidates",
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
+    },
+    {
+      "id": "3",
+      "goal": "Independently authored synthetic data, learning and layout invariants/boundaries",
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
+    },
+    {
+      "id": "4",
+      "goal": "Actual GUI end-to-end workflows, races, correction, confirmation and export",
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
+    },
+    {
+      "id": "5",
+      "goal": "Failure injection, persistence/recovery and offline/privacy boundaries",
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
+    },
+    {
+      "id": "6",
+      "goal": "Minimal root-cause fixes, full isolated regression and release-readiness report",
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
+    }
+  ],
+  "ledger_required_fields": [
+    "scope",
+    "tool",
+    "rule",
+    "fingerprint",
+    "occurrence",
+    "source_commit",
+    "original_location",
+    "status",
+    "severity",
+    "affected_workflow",
+    "root_cause_or_blocker",
+    "repro_command_and_result",
+    "fix_commit",
+    "regression_and_result"
+  ],
+  "required_outcomes": [
+    "All original/new findings accounted for with evidence, not blanket suppression",
+    "Fix all confirmed defects possible under available conditions",
+    "No unresolved reproducible P0/P1 in supported reachable workflows",
+    "Complete original catalog plus meaningful new tests, preserving failures/skips/external qualifications",
+    "Real GUI input-to-output/version/recovery/offline checks",
+    "No false remote verification or actual Windows/private-corpus claim"
+  ],
+  "budget": {
+    "included_pro_codex": "USE_NORMALLY",
+    "agents": "TASK_AND_PLATFORM_AUTHORIZATION;NO_EXTRA_BILLING_PROOF_FOR_INCLUDED_CAPABILITIES",
+    "external_paid_apis": false,
+    "new_paid_resources": false,
+    "push_pr_existing_standard_ci": "USE_NORMALLY"
+  },
+  "execution_limitations": [
+    "Workspace has about 50MB free; resolve owned caches/temp routing before full runs",
+    "Remote source receipt requirements remain unmet for unpublished local commits; save LOCAL_ONLY execution evidence without weakening gates",
+    "Windows/hardware/private-corpus/print qualification remains deferred"
+  ],
+  "local_checkpoint": "CP-20261020-PRE-DOWNLOAD-AUDIT-PLAN",
+  "local_recovery_receipt": ".cache/debug-tooling/plan-delivery-20261020/receipt.json",
+  "execution_progress": "docs/dev/pre_download_audit/PROGRESS.json",
+  "agent_policy_current": "Included native capabilities may be used according to task/platform authorization. Prior single-Codex cost restriction and repeated entitlement-proof prerequisite superseded by2026-10-21 decision.",
+  "completion_report": "docs/dev/pre_download_audit/FINAL_REPORT.md",
+  "source_commit": "65f75f37aa771219ea42709b7c2afeed4f5984aa",
+  "completed_at": "2026-10-21T00:01:06.689343+00:00",
+  "qualification": "Local available-condition execution complete; external/native/real-corpus and current formal remote evidence qualifications unchanged",
+  "historical_initial_budget": {
+    "agents": false,
+    "external_models": false,
+    "new_paid_resources": false,
+    "push_pr_ci": "BLOCKED_WITHOUT_ZERO_ADDITIONAL_COST_EVIDENCE"
+  },
+  "current_execution_policy": "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md",
+  "remote_persistence": {
+    "status": "REMOTE_VERIFIED_NATIVE_GIT",
+    "receipt": "docs/checkpoints/CP-20261021-AUDIT-GITHUB-RESUME.receipt.json"
+  }
+}

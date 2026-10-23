@@ -1,0 +1,1021 @@
+{
+  "schema_version": 1,
+  "version": "1.4.2",
+  "upstream_commit": "ebf0e940d050842d608d57f6a04e6daaa5c65f37",
+  "binary_license": "GPL-3.0-or-later; retain individual dependency licenses",
+  "executable_sha256": "08eca52941dc5d77c2934080a33a8540107381f8939120a780628062341e0e64",
+  "installer": {
+    "name": "inkscape-1.4.2_2025-05-08_ebf0e94-x64.msi",
+    "sha256": "437e9bd8c3a7169a0d2a7991c5907b82931cd9acd9e7af8b84f20b37f0f0b0ab"
+  },
+  "inventory": {
+    "url": "https://raw.githubusercontent.com/givemedandanla-tool/template-Ai/945469e95e9f07ad78d973a904029710869becd5/eecb07e11c176b1e5a575b175cd5f6cfaa1a5fd6/inventory.json",
+    "bytes": 2530272,
+    "sha256": "305625af3b0b75db866c0237cd2562478c962a02b0b2856d8ebe30c362acc747"
+  },
+  "corresponding_sources": [
+    {
+      "component": "GraphicsMagick-1.3.43",
+      "version": "PINNED_COMMIT_OR_UPSTREAM_RELEASE",
+      "url": "https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.43/GraphicsMagick-1.3.43.tar.xz",
+      "bytes": 5657460,
+      "sha256": "2b88580732cd7e409d9e22c6116238bef4ae06fcda11451bf33d259f9cbf399f",
+      "asset_name": "GraphicsMagick-1.3.43-GraphicsMagick-1.3.43.tar.xz"
+    },
+    {
+      "component": "extensions",
+      "version": "PINNED_COMMIT_OR_UPSTREAM_RELEASE",
+      "url": "https://gitlab.com/inkscape/extensions/-/archive/4f0376d82cc5f2feca21409f818d182b268af431/extensions-4f0376d82cc5f2feca21409f818d182b268af431.tar.gz",
+      "bytes": 9368202,
+      "sha256": "095ea88232868943c2b1661093caec9f6ac8a133204f7e414e7eedacdeaa2309",
+      "asset_name": "extensions-extensions-4f0376d82cc5f2feca21409f818d182b268af431.tar.gz"
+    },
+    {
+      "component": "inkscape",
+      "version": "PINNED_COMMIT_OR_UPSTREAM_RELEASE",
+      "url": "https://gitlab.com/inkscape/inkscape/-/archive/ebf0e940d050842d608d57f6a04e6daaa5c65f37/inkscape-ebf0e940d050842d608d57f6a04e6daaa5c65f37.tar.gz",
+      "bytes": 80782856,
+      "sha256": "8dd94ab94ffd1d330115c381815afe13aa055a3b30073b4fd756fd0fc8a3aff9",
+      "asset_name": "inkscape-inkscape-ebf0e940d050842d608d57f6a04e6daaa5c65f37.tar.gz"
+    },
+    {
+      "component": "lib2geom",
+      "version": "PINNED_COMMIT_OR_UPSTREAM_RELEASE",
+      "url": "https://gitlab.com/inkscape/lib2geom/-/archive/23316118755def8156c268f767894c145130e07d/lib2geom-23316118755def8156c268f767894c145130e07d.tar.gz",
+      "bytes": 1466773,
+      "sha256": "31ade72dcc25294474a1d66141d24a2bbb0dec92e8e9e9b90aac9a0445c37d8d",
+      "asset_name": "lib2geom-lib2geom-23316118755def8156c268f767894c145130e07d.tar.gz"
+    },
+    {
+      "component": "libcroco",
+      "version": "PINNED_COMMIT_OR_UPSTREAM_RELEASE",
+      "url": "https://gitlab.com/inkscape/libcroco/-/archive/ea3de62c70310d5aa09aa7e5c5e0f7298290a573/libcroco-ea3de62c70310d5aa09aa7e5c5e0f7298290a573.tar.gz",
+      "bytes": 240493,
+      "sha256": "7d75fdaa31100de534b4e75c688a462e8acbb08b60168bdd4b44682571f76a8e",
+      "asset_name": "libcroco-libcroco-ea3de62c70310d5aa09aa7e5c5e0f7298290a573.tar.gz"
+    },
+    {
+      "component": "mingw-w64-adwaita-icon-theme",
+      "version": "47.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-adwaita-icon-theme-47.0-1.src.tar.zst",
+      "bytes": 4200700,
+      "sha256": "c8381878521e46b74bfb3673edd7832dc2d37d48345e24404aa165d0d35a4f7c",
+      "asset_name": "mingw-w64-adwaita-icon-theme-mingw-w64-adwaita-icon-theme-47.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-aspell",
+      "version": "0.60.8.1-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-aspell-0.60.8.1-3.src.tar.zst",
+      "bytes": 3541477,
+      "sha256": "f9eddcd5032fd089c438e8152c20ebe57f4b3ed6b037f4cdad5d4985f6b9184b",
+      "asset_name": "mingw-w64-aspell-mingw-w64-aspell-0.60.8.1-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-aspell-en",
+      "version": "2020.12.07-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-aspell-en-2020.12.07-1.src.tar.gz",
+      "bytes": 191164,
+      "sha256": "80c7216f3613682ff1ed5346492fb55cdea41e02581c06733722a50ab9656980",
+      "asset_name": "mingw-w64-aspell-en-mingw-w64-aspell-en-2020.12.07-1.src.tar.gz"
+    },
+    {
+      "component": "mingw-w64-at-spi2-core",
+      "version": "2.56.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-at-spi2-core-2.56.0-1.src.tar.zst",
+      "bytes": 583386,
+      "sha256": "f43d5fa498d0454d789afb28d8ec8dfcd7ca7e737abaad507b000e013b4af02b",
+      "asset_name": "mingw-w64-at-spi2-core-mingw-w64-at-spi2-core-2.56.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-atkmm",
+      "version": "2.28.4-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-atkmm-2.28.4-1.src.tar.zst",
+      "bytes": 741126,
+      "sha256": "a7e4a561d5bfc7f7d6fb91571b7a00594df8707d824affec94412b24f80ea258",
+      "asset_name": "mingw-w64-atkmm-mingw-w64-atkmm-2.28.4-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-boost",
+      "version": "1.87.0-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-boost-1.87.0-3.src.tar.zst",
+      "bytes": 99462533,
+      "sha256": "477a5d0447304dfd58a7468f9662cda145b2c84e9fcc3f2158bea9b92be83d8f",
+      "asset_name": "mingw-w64-boost-mingw-w64-boost-1.87.0-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-brotli",
+      "version": "1.1.0-4",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-brotli-1.1.0-4.src.tar.zst",
+      "bytes": 511842,
+      "sha256": "39b7743d89d7e0dc0fc969213e42c1ca9aecb42fe2e910ae94a6abba5ea61c6a",
+      "asset_name": "mingw-w64-brotli-mingw-w64-brotli-1.1.0-4.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-bzip2",
+      "version": "1.0.8-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-bzip2-1.0.8-3.src.tar.zst",
+      "bytes": 818786,
+      "sha256": "b818b3d164cd409b1fd883e3ecc056c5bc4d6cad408e871f2781bc11faf5a413",
+      "asset_name": "mingw-w64-bzip2-mingw-w64-bzip2-1.0.8-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-cairo",
+      "version": "1.18.4-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-cairo-1.18.4-1.src.tar.zst",
+      "bytes": 32571226,
+      "sha256": "98e7fb80943e3cd4ecaac3b5f77a5d834a7e967a0e96a2d0e40aed362047a824",
+      "asset_name": "mingw-w64-cairo-mingw-w64-cairo-1.18.4-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-cairomm",
+      "version": "1.14.5-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-cairomm-1.14.5-2.src.tar.zst",
+      "bytes": 139254,
+      "sha256": "0a876127bf8d227d8710f8bebb06a82d48bd3a381e85db7b8b17269375cbb39c",
+      "asset_name": "mingw-w64-cairomm-mingw-w64-cairomm-1.14.5-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-curl",
+      "version": "8.12.1-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-curl-8.12.1-1.src.tar.zst",
+      "bytes": 2777907,
+      "sha256": "f57e24009951fffba87d0beca3b16d5d452e36436ebd42f2851b219a648fa48d",
+      "asset_name": "mingw-w64-curl-mingw-w64-curl-8.12.1-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-double-conversion",
+      "version": "3.3.1-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-double-conversion-3.3.1-1.src.tar.zst",
+      "bytes": 7036344,
+      "sha256": "666d3eb8268696664fc1118fa88cc779a2123519c185794db2f2bf76feb16940",
+      "asset_name": "mingw-w64-double-conversion-mingw-w64-double-conversion-3.3.1-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-enchant",
+      "version": "2.6.7-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-enchant-2.6.7-3.src.tar.zst",
+      "bytes": 4427961,
+      "sha256": "e5599f5948651a74ef79f020208063f29df3b111c9e107f9a6919b2f9a836c7a",
+      "asset_name": "mingw-w64-enchant-mingw-w64-enchant-2.6.7-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-expat",
+      "version": "2.7.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-expat-2.7.0-1.src.tar.zst",
+      "bytes": 495449,
+      "sha256": "6be30dea89348f588a8b0b48d320bc8ba3e7d62b54be57cd6e23a1ec8592fd87",
+      "asset_name": "mingw-w64-expat-mingw-w64-expat-2.7.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-fontconfig",
+      "version": "2.16.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-fontconfig-2.16.0-1.src.tar.zst",
+      "bytes": 1297055,
+      "sha256": "ae5e08b5696e1205951a440cc16d358a4d3e6985d1150790dd6ebebcb3316e90",
+      "asset_name": "mingw-w64-fontconfig-mingw-w64-fontconfig-2.16.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-freetype",
+      "version": "2.13.3-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-freetype-2.13.3-1.src.tar.zst",
+      "bytes": 2621199,
+      "sha256": "25dc75a224f214385c9a4aa436b546f3429b2aeff9b8d22be20fdd10689d05f5",
+      "asset_name": "mingw-w64-freetype-mingw-w64-freetype-2.13.3-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-fribidi",
+      "version": "1.0.16-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-fribidi-1.0.16-1.src.tar.zst",
+      "bytes": 1099723,
+      "sha256": "a496fd3c7973d443e741626e1be7af58d8adcbc1d4a1c056d07a011f0edc6d0b",
+      "asset_name": "mingw-w64-fribidi-mingw-w64-fribidi-1.0.16-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gc",
+      "version": "8.2.8-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gc-8.2.8-1.src.tar.zst",
+      "bytes": 1221149,
+      "sha256": "7c3f904336b0f783d98e9d110136ba64442ffa5337f3049652ef2f65bedadc8d",
+      "asset_name": "mingw-w64-gc-mingw-w64-gc-8.2.8-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gcc",
+      "version": "14.2.0-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gcc-14.2.0-3.src.tar.zst",
+      "bytes": 92328833,
+      "sha256": "36b7ccf3debcf5147013d6e204d18e3b22ad357cc708e63b9550dbaec122f045",
+      "asset_name": "mingw-w64-gcc-mingw-w64-gcc-14.2.0-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gdb",
+      "version": "16.2-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gdb-16.2-1.src.tar.zst",
+      "bytes": 24433299,
+      "sha256": "2048f7b6e873b121fa3bb8faeaafa39f2622db1d10bdbbed4c5032e263b2b49c",
+      "asset_name": "mingw-w64-gdb-mingw-w64-gdb-16.2-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gdk-pixbuf2",
+      "version": "2.42.12-4",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gdk-pixbuf2-2.42.12-4.src.tar.zst",
+      "bytes": 6529153,
+      "sha256": "f081e86b936c40baf983f46d5582d39ff2f8e42979f1b4fdd42b8f28782017e6",
+      "asset_name": "mingw-w64-gdk-pixbuf2-mingw-w64-gdk-pixbuf2-2.42.12-4.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gettext",
+      "version": "0.24-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gettext-0.24-1.src.tar.zst",
+      "bytes": 7775380,
+      "sha256": "6546bfac5e493eff3d73858f6b212cef4b566a560ef6284b8a39aa2d0cd5b0a8",
+      "asset_name": "mingw-w64-gettext-mingw-w64-gettext-0.24-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-glib2",
+      "version": "2.84.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-glib2-2.84.0-1.src.tar.zst",
+      "bytes": 5620958,
+      "sha256": "ed12b0d19dc0cde3a73195fc50a8e9a26a3cfd0a7f9ec12317cccf94414ab258",
+      "asset_name": "mingw-w64-glib2-mingw-w64-glib2-2.84.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-glibmm",
+      "version": "2.66.7-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-glibmm-2.66.7-1.src.tar.zst",
+      "bytes": 8776209,
+      "sha256": "2332fb01866c5e507d304e2918a226b2cfdc46da4b2fda99906a9b4655399a4a",
+      "asset_name": "mingw-w64-glibmm-mingw-w64-glibmm-2.66.7-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gmp",
+      "version": "6.3.0-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gmp-6.3.0-2.src.tar.zst",
+      "bytes": 2097066,
+      "sha256": "f288f944fd9609db220bcf6a8dd0703a5674eeb906ef35eb8485bb8192135994",
+      "asset_name": "mingw-w64-gmp-mingw-w64-gmp-6.3.0-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gobject-introspection",
+      "version": "1.84.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gobject-introspection-1.84.0-1.src.tar.zst",
+      "bytes": 1085947,
+      "sha256": "8adcdbd82741f82a392548d341b490d21c150775fe682347137bf6481b151d8a",
+      "asset_name": "mingw-w64-gobject-introspection-mingw-w64-gobject-introspection-1.84.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-graphite2",
+      "version": "1.3.14-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-graphite2-1.3.14-3.src.tar.zst",
+      "bytes": 6248488,
+      "sha256": "68e0325574ee5bfcb49b3b6bb09e318356740e909b7a6f8ff936638f6af0bbc3",
+      "asset_name": "mingw-w64-graphite2-mingw-w64-graphite2-1.3.14-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gsl",
+      "version": "2.8-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gsl-2.8-1.src.tar.zst",
+      "bytes": 8931056,
+      "sha256": "a3c853785e1de4eb534d486cc63ee2dc8a00943e437d8cbdcbaad0c538dcd6a1",
+      "asset_name": "mingw-w64-gsl-mingw-w64-gsl-2.8-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gspell",
+      "version": "1.14.0-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gspell-1.14.0-2.src.tar.zst",
+      "bytes": 118026,
+      "sha256": "c9c6cfa449adfdb62d35b6e8688d441a9e9b7b251bfecbbeacd7ff6b8395a879",
+      "asset_name": "mingw-w64-gspell-mingw-w64-gspell-1.14.0-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gtk3",
+      "version": "3.24.49-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gtk3-3.24.49-1.src.tar.zst",
+      "bytes": 13456007,
+      "sha256": "36d9e88cb13ff948d8575b0957b9c4a496d2b83a8d943dd0ad4790826d6ac6a0",
+      "asset_name": "mingw-w64-gtk3-mingw-w64-gtk3-3.24.49-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gtkmm3",
+      "version": "3.24.9-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gtkmm3-3.24.9-1.src.tar.zst",
+      "bytes": 15124611,
+      "sha256": "5c109384b1b6c81bdc787bf35ac8eca0dae62eba2b1222e4355e9574d37a617c",
+      "asset_name": "mingw-w64-gtkmm3-mingw-w64-gtkmm3-3.24.9-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-gtksourceview4",
+      "version": "4.8.4-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gtksourceview4-4.8.4-1.src.tar.zst",
+      "bytes": 1161228,
+      "sha256": "1e3b19e48d2a96140cc30d97b9eed498a9989bebced0ea5896ffc5ea995e1953",
+      "asset_name": "mingw-w64-gtksourceview4-mingw-w64-gtksourceview4-4.8.4-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-harfbuzz",
+      "version": "10.4.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-harfbuzz-10.4.0-1.src.tar.zst",
+      "bytes": 18124050,
+      "sha256": "6a830aadb75f95badef41407d34ac860137a2f625cc0e94d1722160350153062",
+      "asset_name": "mingw-w64-harfbuzz-mingw-w64-harfbuzz-10.4.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-hicolor-icon-theme",
+      "version": "0.18-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-hicolor-icon-theme-0.18-1.src.tar.zst",
+      "bytes": 30809,
+      "sha256": "b7987e4b5420248966a8e57e7d1523624d7483cd945550a40f2bb1a8a7572718",
+      "asset_name": "mingw-w64-hicolor-icon-theme-mingw-w64-hicolor-icon-theme-0.18-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-highway",
+      "version": "1.2.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-highway-1.2.0-1.src.tar.zst",
+      "bytes": 2236301,
+      "sha256": "1912a1cd61dd6e0678ddf431077ebfd49a78e801806aa3ecaef82984bc393dd9",
+      "asset_name": "mingw-w64-highway-mingw-w64-highway-1.2.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-icu",
+      "version": "76.1-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-icu-76.1-1.src.tar.zst",
+      "bytes": 25560998,
+      "sha256": "539766e575336bd05d9cbb286690bf0d3dca88c8773bbbad0014cbda0baab6e7",
+      "asset_name": "mingw-w64-icu-mingw-w64-icu-76.1-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-jbigkit",
+      "version": "2.1-5",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-jbigkit-2.1-5.src.tar.zst",
+      "bytes": 443510,
+      "sha256": "402e264e13ffd10424d3217e83076d9e1e3ab0db16303a33d42a4bd4cda4088b",
+      "asset_name": "mingw-w64-jbigkit-mingw-w64-jbigkit-2.1-5.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-lcms2",
+      "version": "2.17-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-lcms2-2.17-1.src.tar.zst",
+      "bytes": 5221926,
+      "sha256": "09abf0b8c09a58f8d06fecd629c36eda6cc53f5139b2c1046afe7c0563b1a6d0",
+      "asset_name": "mingw-w64-lcms2-mingw-w64-lcms2-2.17-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-lerc",
+      "version": "4.0.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-lerc-4.0.0-1.src.tar.zst",
+      "bytes": 4708118,
+      "sha256": "47563a652062b8e9052a6e05591a08d45e5cb48865bbab237b1cc5b1942fc3d0",
+      "asset_name": "mingw-w64-lerc-mingw-w64-lerc-4.0.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libcdr",
+      "version": "0.1.8-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libcdr-0.1.8-2.src.tar.zst",
+      "bytes": 627331,
+      "sha256": "578e8f517f654b9ddb1da92c11453aaa1f363a8ef872f2faf110af4816743962",
+      "asset_name": "mingw-w64-libcdr-mingw-w64-libcdr-0.1.8-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libdatrie",
+      "version": "0.2.13-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libdatrie-0.2.13-3.src.tar.zst",
+      "bytes": 315838,
+      "sha256": "bca8a3d93f01f68390cde45edbfb89c5b2e376e5e8ce60742e16c21d37281ddc",
+      "asset_name": "mingw-w64-libdatrie-mingw-w64-libdatrie-0.2.13-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libdeflate",
+      "version": "1.23-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libdeflate-1.23-1.src.tar.zst",
+      "bytes": 199161,
+      "sha256": "8bbfa75634f695c45c1ebd27abf91abb4f0c3a326181bc63397f1ad0a9ec8548",
+      "asset_name": "mingw-w64-libdeflate-mingw-w64-libdeflate-1.23-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libepoxy",
+      "version": "1.5.10-5",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libepoxy-1.5.10-5.src.tar.zst",
+      "bytes": 333113,
+      "sha256": "ea8a61fa79f2113ad01fd3d31af606e46880a9b3e9072cbde9194fce2429c954",
+      "asset_name": "mingw-w64-libepoxy-mingw-w64-libepoxy-1.5.10-5.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libffi",
+      "version": "3.4.7-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libffi-3.4.7-1.src.tar.zst",
+      "bytes": 1396287,
+      "sha256": "45021cd0103d4fb42beabc2ce828c0574094b244cd15c4aff6b7a5d23ce188bc",
+      "asset_name": "mingw-w64-libffi-mingw-w64-libffi-3.4.7-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libiconv",
+      "version": "1.18-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libiconv-1.18-1.src.tar.zst",
+      "bytes": 5032448,
+      "sha256": "d40dc594479c0fba9aa492c5cbf63dd81a7cc4b91cc1d93619bb43c622d04709",
+      "asset_name": "mingw-w64-libiconv-mingw-w64-libiconv-1.18-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libidn2",
+      "version": "2.3.7-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libidn2-2.3.7-2.src.tar.zst",
+      "bytes": 2070137,
+      "sha256": "69efafca683291566c4b01f4eca71ff06afbdfbef02850cf324a6257837d934e",
+      "asset_name": "mingw-w64-libidn2-mingw-w64-libidn2-2.3.7-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libjpeg-turbo",
+      "version": "3.1.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libjpeg-turbo-3.1.0-1.src.tar.zst",
+      "bytes": 2504209,
+      "sha256": "57d0def97ea5475670976ff236fb026c0e90e53812c940baf2d369480cb01152",
+      "asset_name": "mingw-w64-libjpeg-turbo-mingw-w64-libjpeg-turbo-3.1.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libjxl",
+      "version": "0.11.1-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libjxl-0.11.1-1.src.tar.zst",
+      "bytes": 1878146,
+      "sha256": "7c5196e2d97cd53876ce81e47d4b75c13fc39a38bf263455d7ed27be9a39f13d",
+      "asset_name": "mingw-w64-libjxl-mingw-w64-libjxl-0.11.1-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libpng",
+      "version": "1.6.47-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libpng-1.6.47-1.src.tar.zst",
+      "bytes": 1065951,
+      "sha256": "dec7e90681f4dc4e066601f219c6cc9d147c03eada2e1f55d15c51638eee4969",
+      "asset_name": "mingw-w64-libpng-mingw-w64-libpng-1.6.47-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libpsl",
+      "version": "0.21.5-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libpsl-0.21.5-3.src.tar.zst",
+      "bytes": 6829368,
+      "sha256": "102b4ab4c60322162e808c5c81f545438c346c659e8fb63e0851066f07a0e76b",
+      "asset_name": "mingw-w64-libpsl-mingw-w64-libpsl-0.21.5-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libraqm",
+      "version": "0.10.2-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libraqm-0.10.2-1.src.tar.zst",
+      "bytes": 296868,
+      "sha256": "312644071007b84c7f5350eb6b24e8e4e9a119c11dba607521b5d48db38697ff",
+      "asset_name": "mingw-w64-libraqm-mingw-w64-libraqm-0.10.2-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-librevenge",
+      "version": "0.0.5-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-librevenge-0.0.5-1.src.tar.zst",
+      "bytes": 439057,
+      "sha256": "610e4290dfab209fb2064aab2699e3e35294573eb89dfb941bfaab734d151c73",
+      "asset_name": "mingw-w64-librevenge-mingw-w64-librevenge-0.0.5-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-librsvg",
+      "version": "2.59.2-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-librsvg-2.59.2-3.src.tar.zst",
+      "bytes": 6928895,
+      "sha256": "e491e04d4ab46d2c99d91f3c4e38f2d2feaa25a043b0230808830a59ee3dca91",
+      "asset_name": "mingw-w64-librsvg-mingw-w64-librsvg-2.59.2-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libsigc++",
+      "version": "2.12.1-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libsigc++-2.12.1-1.src.tar.zst",
+      "bytes": 5043425,
+      "sha256": "2bcf6e88cdf4aa55e8c512fe1b87e6b68be72aeb1dfad05d6fb37899548bd5b4",
+      "asset_name": "mingw-w64-libsigc++-mingw-w64-libsigc++-2.12.1-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libssh2",
+      "version": "1.11.1-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libssh2-1.11.1-1.src.tar.zst",
+      "bytes": 1094502,
+      "sha256": "6a4f304c657ac116e7258142a9b4304c593d2d81ea418b2c1c8328e75acf2628",
+      "asset_name": "mingw-w64-libssh2-mingw-w64-libssh2-1.11.1-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libthai",
+      "version": "0.1.29-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libthai-0.1.29-3.src.tar.zst",
+      "bytes": 420518,
+      "sha256": "6010a30c34f0f23a10f6174fd42ccaf7cabd0adb3dfe42ca435e0f7b1f977490",
+      "asset_name": "mingw-w64-libthai-mingw-w64-libthai-0.1.29-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libtiff",
+      "version": "4.7.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libtiff-4.7.0-1.src.tar.zst",
+      "bytes": 3896067,
+      "sha256": "3947a7f3ff315afea2fe8aeacd03b77aca6734cc4cd5b5ef5b43ab5cb30fa7f7",
+      "asset_name": "mingw-w64-libtiff-mingw-w64-libtiff-4.7.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libtool",
+      "version": "2.5.4-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libtool-2.5.4-1.src.tar.zst",
+      "bytes": 1070467,
+      "sha256": "1c34a8b98016986e360d03cc390275178ee904452437f1143ed2ccb11ab98eb5",
+      "asset_name": "mingw-w64-libtool-mingw-w64-libtool-2.5.4-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libunistring",
+      "version": "1.3-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libunistring-1.3-1.src.tar.zst",
+      "bytes": 4719176,
+      "sha256": "b5f564e63acd3d5a3c56a040d81aa47d8fa9d4e11dc60aa64fc28d038717afff",
+      "asset_name": "mingw-w64-libunistring-mingw-w64-libunistring-1.3-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libvisio",
+      "version": "0.1.8-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libvisio-0.1.8-2.src.tar.zst",
+      "bytes": 1687866,
+      "sha256": "15a10c8c2a69eac655c2f79e70cf711428239642f071eba8166b2a7c0777092e",
+      "asset_name": "mingw-w64-libvisio-mingw-w64-libvisio-0.1.8-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libwebp",
+      "version": "1.5.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libwebp-1.5.0-1.src.tar.zst",
+      "bytes": 2554072,
+      "sha256": "35be0a78363d4beeab520d65f4172fd8a01b1ddd887122038c38b3ea44522dcf",
+      "asset_name": "mingw-w64-libwebp-mingw-w64-libwebp-1.5.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libwpd",
+      "version": "0.10.3-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libwpd-0.10.3-2.src.tar.zst",
+      "bytes": 537456,
+      "sha256": "a1211676f7b5cd6f62760e4546167c607fff4cd2a15e3afa8dc3d249cbbc7641",
+      "asset_name": "mingw-w64-libwpd-mingw-w64-libwpd-0.10.3-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libwpg",
+      "version": "0.3.4-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libwpg-0.3.4-1.src.tar.zst",
+      "bytes": 341901,
+      "sha256": "d41046d487f9d2543510ba0f5f1eee78ffed3ac363f762f501f7a44833618f0b",
+      "asset_name": "mingw-w64-libwpg-mingw-w64-libwpg-0.3.4-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libxml2",
+      "version": "2.12.10-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libxml2-2.12.10-1.src.tar.zst",
+      "bytes": 3110930,
+      "sha256": "7e462d3edbaa7582755bf650db28334ecf3a34931a0e03fd4c0a2ece40bbbc5a",
+      "asset_name": "mingw-w64-libxml2-mingw-w64-libxml2-2.12.10-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-libxslt",
+      "version": "1.1.43-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libxslt-1.1.43-1.src.tar.zst",
+      "bytes": 1520859,
+      "sha256": "a6c66971c4e2b0d47191a006a66964742644c8557a59762373e3aae829454f5e",
+      "asset_name": "mingw-w64-libxslt-mingw-w64-libxslt-1.1.43-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-mpdecimal",
+      "version": "4.0.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-mpdecimal-4.0.0-1.src.tar.zst",
+      "bytes": 314598,
+      "sha256": "7ddef3f7332a44009972542cc8d9249f57e7c8646949b3697b847c37f4d03766",
+      "asset_name": "mingw-w64-mpdecimal-mingw-w64-mpdecimal-4.0.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-mpfr",
+      "version": "4.2.1-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-mpfr-4.2.1-2.src.tar.zst",
+      "bytes": 1495362,
+      "sha256": "b7a830f7c85a2d1d5857a03d58371dc390e44c50bafc5d66923ebe8149ca895b",
+      "asset_name": "mingw-w64-mpfr-mingw-w64-mpfr-4.2.1-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-ncurses",
+      "version": "6.5.20241228-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-ncurses-6.5.20241228-3.src.tar.zst",
+      "bytes": 3737286,
+      "sha256": "22d01b66616c04bd366c3801f8c5a1555f0a8c8deadd090b03a9a78955fd980e",
+      "asset_name": "mingw-w64-ncurses-mingw-w64-ncurses-6.5.20241228-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-nghttp2",
+      "version": "1.65.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-nghttp2-1.65.0-1.src.tar.zst",
+      "bytes": 1607287,
+      "sha256": "31d43d1213cce3cb2bdf2ea3b6b340e2751be13d2e581848a13335bf2e9a4fdd",
+      "asset_name": "mingw-w64-nghttp2-mingw-w64-nghttp2-1.65.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-nghttp3",
+      "version": "1.8.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-nghttp3-1.8.0-1.src.tar.zst",
+      "bytes": 401839,
+      "sha256": "b162a4400585d4b17b2b1c7b4b7947512e9157c09f4ae77314012915b89918bb",
+      "asset_name": "mingw-w64-nghttp3-mingw-w64-nghttp3-1.8.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-nspr",
+      "version": "4.35-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-nspr-4.35-2.src.tar.zst",
+      "bytes": 1102228,
+      "sha256": "3c35cd600dec62c740ab2c8e7a29c98dc5694aba1846ca2601109ca3ee07af88",
+      "asset_name": "mingw-w64-nspr-mingw-w64-nspr-4.35-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-nss",
+      "version": "3.109-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-nss-3.109-1.src.tar.zst",
+      "bytes": 76067018,
+      "sha256": "35f4a23e9b3e20052c107e9c22768a9921957c063c0af33b6e7b2f7e7e485ee5",
+      "asset_name": "mingw-w64-nss-mingw-w64-nss-3.109-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-openblas",
+      "version": "0.3.29-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-openblas-0.3.29-1.src.tar.zst",
+      "bytes": 22548672,
+      "sha256": "cd8db51e4698f459b860dccb5392d69d9ca35668f5c216bd8993e8ff0606ff5d",
+      "asset_name": "mingw-w64-openblas-mingw-w64-openblas-0.3.29-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-openjpeg2",
+      "version": "2.5.3-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-openjpeg2-2.5.3-1.src.tar.zst",
+      "bytes": 2153590,
+      "sha256": "d274ce5a3f27628213ce9106f03c40135c9bc62ca004d1592e02a27c92f0c500",
+      "asset_name": "mingw-w64-openjpeg2-mingw-w64-openjpeg2-2.5.3-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-openssl",
+      "version": "3.4.1-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-openssl-3.4.1-1.src.tar.zst",
+      "bytes": 18269511,
+      "sha256": "07bd6b56376c2157e89efffe0ce8b9b9ad1b039f10557b8130d56d7ce063eef4",
+      "asset_name": "mingw-w64-openssl-mingw-w64-openssl-3.4.1-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-pango",
+      "version": "1.56.3-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-pango-1.56.3-1.src.tar.zst",
+      "bytes": 1886250,
+      "sha256": "84894d0689fee6868503e704dc818d1f0de4011e524688136fb798b4d780e02e",
+      "asset_name": "mingw-w64-pango-mingw-w64-pango-1.56.3-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-pangomm",
+      "version": "2.46.4-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-pangomm-2.46.4-1.src.tar.zst",
+      "bytes": 696776,
+      "sha256": "a2f60e2482446f81fbf7d64082187b6b9f8733d97a670275484914f19a570588",
+      "asset_name": "mingw-w64-pangomm-mingw-w64-pangomm-2.46.4-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-pcre2",
+      "version": "10.45-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-pcre2-10.45-1.src.tar.zst",
+      "bytes": 2071000,
+      "sha256": "a4695948cd1824f47ec943ceaedaad2ded636d41dd3c6d194a49ca0bb729d811",
+      "asset_name": "mingw-w64-pcre2-mingw-w64-pcre2-10.45-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-pixman",
+      "version": "0.44.2-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-pixman-0.44.2-1.src.tar.zst",
+      "bytes": 651611,
+      "sha256": "0b780130486cc5e3657d8b5e260591b2e44af139bd08bf8e10485765dc6f2ab4",
+      "asset_name": "mingw-w64-pixman-mingw-w64-pixman-0.44.2-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-poppler",
+      "version": "25.01.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-poppler-25.01.0-1.src.tar.zst",
+      "bytes": 6842918,
+      "sha256": "fe0926a8bf8cb30c4d30f834d7e277141426722e0da892385c18676307afe32f",
+      "asset_name": "mingw-w64-poppler-mingw-w64-poppler-25.01.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-poppler-data",
+      "version": "0.4.12-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-poppler-data-0.4.12-1.src.tar.zst",
+      "bytes": 4420366,
+      "sha256": "418ee35f92307e4b9b1ae22249bdc4173ed301e4e758813a06ee654b17a9c2cb",
+      "asset_name": "mingw-w64-poppler-data-mingw-w64-poppler-data-0.4.12-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-potrace",
+      "version": "1.16-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-potrace-1.16-2.src.tar.gz",
+      "bytes": 658606,
+      "sha256": "75a0bb997a56d0e86e46973d4ea93a7102b79add84994e535ed317dfe365bbf7",
+      "asset_name": "mingw-w64-potrace-mingw-w64-potrace-1.16-2.src.tar.gz"
+    },
+    {
+      "component": "mingw-w64-pycairo",
+      "version": "1.27.0-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-pycairo-1.27.0-2.src.tar.zst",
+      "bytes": 662805,
+      "sha256": "658b5312b45e82aee637e4d20e89302ce5b47d7b0d9a93df76511598c9d8a397",
+      "asset_name": "mingw-w64-pycairo-mingw-w64-pycairo-1.27.0-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-pygobject",
+      "version": "3.52.3-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-pygobject-3.52.3-1.src.tar.zst",
+      "bytes": 1237247,
+      "sha256": "247d445fa48541dc4e312bcf2bd553d66d1aa8e022217b6cc934cb5774522e82",
+      "asset_name": "mingw-w64-pygobject-mingw-w64-pygobject-3.52.3-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python",
+      "version": "3.12.9-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-3.12.9-3.src.tar.zst",
+      "bytes": 20591783,
+      "sha256": "15995bcd539409414d59b7c220043c4a472bd88c62e8d67be66438c4a52eec2a",
+      "asset_name": "mingw-w64-python-mingw-w64-python-3.12.9-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-appdirs",
+      "version": "1.4.4-6",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-appdirs-1.4.4-6.src.tar.zst",
+      "bytes": 14601,
+      "sha256": "270cee9b43469de3ffeef9ed1031207696fb7ab8c841d88452312b02beaf0717",
+      "asset_name": "mingw-w64-python-appdirs-mingw-w64-python-appdirs-1.4.4-6.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-beautifulsoup4",
+      "version": "4.13.3-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-beautifulsoup4-4.13.3-1.src.tar.zst",
+      "bytes": 576591,
+      "sha256": "ec75cc89616909de88001645412a246cc691a7a9db3aef22fbfecaad3705b16d",
+      "asset_name": "mingw-w64-python-beautifulsoup4-mingw-w64-python-beautifulsoup4-4.13.3-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-cachecontrol",
+      "version": "0.14.2-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-cachecontrol-0.14.2-1.src.tar.zst",
+      "bytes": 30111,
+      "sha256": "7fdf62c3af45cdedcbf04ac3dc6275c02d574bc20d5381d9d153bba7a1ab6591",
+      "asset_name": "mingw-w64-python-cachecontrol-mingw-w64-python-cachecontrol-0.14.2-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-certifi",
+      "version": "2025.1.31-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-certifi-2025.1.31-1.src.tar.zst",
+      "bytes": 168911,
+      "sha256": "9ae2ac07cf367782e197cf2e41f2a813b4f218079e6ec8360b4af04c7ebbb009",
+      "asset_name": "mingw-w64-python-certifi-mingw-w64-python-certifi-2025.1.31-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-chardet",
+      "version": "5.2.0-3",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-chardet-5.2.0-3.src.tar.zst",
+      "bytes": 2059400,
+      "sha256": "494fe8152c8800862c074f7ddc682438868a7de6bf981f887a5b005b93653268",
+      "asset_name": "mingw-w64-python-chardet-mingw-w64-python-chardet-5.2.0-3.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-coverage",
+      "version": "7.6.12-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-coverage-7.6.12-1.src.tar.zst",
+      "bytes": 805807,
+      "sha256": "8f28ce0053ee93e599ec0a9b541070dcc1341a06e7eada588d7ab843856a11e4",
+      "asset_name": "mingw-w64-python-coverage-mingw-w64-python-coverage-7.6.12-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-cssselect",
+      "version": "1.3.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-cssselect-1.3.0-1.src.tar.zst",
+      "bytes": 44199,
+      "sha256": "d0e471f0292098625a449c93768b038502519e5b861ab5879d3064787fc6ed9a",
+      "asset_name": "mingw-w64-python-cssselect-mingw-w64-python-cssselect-1.3.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-filelock",
+      "version": "3.17.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-filelock-3.17.0-1.src.tar.zst",
+      "bytes": 19332,
+      "sha256": "540b5ead19e755fdf2ccb1859564508f2c7acae4b9776f10e173cbcd45b93955",
+      "asset_name": "mingw-w64-python-filelock-mingw-w64-python-filelock-3.17.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-idna",
+      "version": "3.10-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-idna-3.10-1.src.tar.zst",
+      "bytes": 184505,
+      "sha256": "921d15a9c536c45ba5ef11c392ce2ae397f0ff9cf4d730755c110f3ab454c2cf",
+      "asset_name": "mingw-w64-python-idna-mingw-w64-python-idna-3.10-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-lxml",
+      "version": "5.3.1-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-lxml-5.3.1-1.src.tar.zst",
+      "bytes": 3673940,
+      "sha256": "2e076b9c51a8dd978a212a252a521dafe045c44cf532559b52c0dcc0293e7d61",
+      "asset_name": "mingw-w64-python-lxml-mingw-w64-python-lxml-5.3.1-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-msgpack",
+      "version": "1.1.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-msgpack-1.1.0-1.src.tar.zst",
+      "bytes": 168389,
+      "sha256": "f1faae9ceacfc7bc3091a6db3a4fa73419a753cea2cf0fb5b87c2211718d0948",
+      "asset_name": "mingw-w64-python-msgpack-mingw-w64-python-msgpack-1.1.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-numpy",
+      "version": "2.2.3-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-numpy-2.2.3-1.src.tar.zst",
+      "bytes": 20207149,
+      "sha256": "61804d6c2e046ada4362b94761c85f30ebc8c219bedc33450a40a2b60a8657ae",
+      "asset_name": "mingw-w64-python-numpy-mingw-w64-python-numpy-2.2.3-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-packaging",
+      "version": "24.2-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-packaging-24.2-1.src.tar.zst",
+      "bytes": 154804,
+      "sha256": "211726b3563dfd30a38ae0ff7afa514ccdb73ecb86959fcd20700f0c4d70b1d1",
+      "asset_name": "mingw-w64-python-packaging-mingw-w64-python-packaging-24.2-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-pillow",
+      "version": "11.1.0-5",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-pillow-11.1.0-5.src.tar.zst",
+      "bytes": 45392371,
+      "sha256": "90872a20b996939888e383c2d1c1fad15da2c02b90ac5c3f489d67f948dd8923",
+      "asset_name": "mingw-w64-python-pillow-mingw-w64-python-pillow-11.1.0-5.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-pyserial",
+      "version": "3.5-5",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-pyserial-3.5-5.src.tar.zst",
+      "bytes": 160302,
+      "sha256": "b45f92b9827c457800860a5287b9948fd18c16eae773d5927efbac29bac68b61",
+      "asset_name": "mingw-w64-python-pyserial-mingw-w64-python-pyserial-3.5-5.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-requests",
+      "version": "2.32.3-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-requests-2.32.3-2.src.tar.zst",
+      "bytes": 132541,
+      "sha256": "024c4d47414e8ba51056b2ab51e2a002e388d5c33bd3fd68ce2f2119bd4b7fbc",
+      "asset_name": "mingw-w64-python-requests-mingw-w64-python-requests-2.32.3-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-six",
+      "version": "1.17.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-six-1.17.0-1.src.tar.zst",
+      "bytes": 35156,
+      "sha256": "db9524c6c3cd88f1bfa903b2759ea0aa143807764b9236a23c3fd6d2741729a6",
+      "asset_name": "mingw-w64-python-six-mingw-w64-python-six-1.17.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-tinycss2",
+      "version": "1.4.0-2",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-tinycss2-1.4.0-2.src.tar.zst",
+      "bytes": 86683,
+      "sha256": "4a0802d95f50754ac45e1a2ee3ed0d3177459358a42c68c2aa7b9073a8c2c648",
+      "asset_name": "mingw-w64-python-tinycss2-mingw-w64-python-tinycss2-1.4.0-2.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-urllib3",
+      "version": "2.3.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-urllib3-2.3.0-1.src.tar.zst",
+      "bytes": 308760,
+      "sha256": "39ffd81a089aad326ca0a97820cc6235adf19e4396c9546730dabae8d24b4a2c",
+      "asset_name": "mingw-w64-python-urllib3-mingw-w64-python-urllib3-2.3.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-webencodings",
+      "version": "0.5.1-6",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-webencodings-0.5.1-6.src.tar.zst",
+      "bytes": 10626,
+      "sha256": "ab9571b3b1646d0065072573d5904eac9216be343929d550913c9e866e92ffd8",
+      "asset_name": "mingw-w64-python-webencodings-mingw-w64-python-webencodings-0.5.1-6.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-python-zstandard",
+      "version": "0.23.0-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-python-zstandard-0.23.0-1.src.tar.zst",
+      "bytes": 683299,
+      "sha256": "0101894f093cd32058d01d959ff9c8d91f21469c1a54f49a557385ca810edbf5",
+      "asset_name": "mingw-w64-python-zstandard-mingw-w64-python-zstandard-0.23.0-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-readline",
+      "version": "8.2.013-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-readline-8.2.013-1.src.tar.zst",
+      "bytes": 3055323,
+      "sha256": "dd6c01da2a1df10535544cef795125f1da445e3002875ff11a09ba05a39cab87",
+      "asset_name": "mingw-w64-readline-mingw-w64-readline-8.2.013-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-scour",
+      "version": "0.38.2-6",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-scour-0.38.2-6.src.tar.zst",
+      "bytes": 53967,
+      "sha256": "a7109c77e580f3ee0a32a9a89e2a7da0af9513d0376035a7069ffc5247fadb2c",
+      "asset_name": "mingw-w64-scour-mingw-w64-scour-0.38.2-6.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-sqlite3",
+      "version": "3.47.2-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-sqlite3-3.47.2-1.src.tar.zst",
+      "bytes": 24339939,
+      "sha256": "e3f13bad41678f1a36b6978321e5b6a768e249a991358f78229860215b38095c",
+      "asset_name": "mingw-w64-sqlite3-mingw-w64-sqlite3-3.47.2-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-tcl",
+      "version": "8.6.13-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-tcl-8.6.13-1.src.tar.zst",
+      "bytes": 10741294,
+      "sha256": "920dd7f14d013bea07daf265518a7df27775fe822aee0a6bed61bd3120b91655",
+      "asset_name": "mingw-w64-tcl-mingw-w64-tcl-8.6.13-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-termcap",
+      "version": "1.3.1-7",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-termcap-1.3.1-7.src.tar.zst",
+      "bytes": 441185,
+      "sha256": "6a1207578fd39b64924fcdfcacc1c862ba3c714477dd662ba20da8d9b4cbd4ed",
+      "asset_name": "mingw-w64-termcap-mingw-w64-termcap-1.3.1-7.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-tk",
+      "version": "8.6.13-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-tk-8.6.13-1.src.tar.zst",
+      "bytes": 4546175,
+      "sha256": "5e1ed228de3c2af2be54cc36bc4350aef1f0e8beaa35f996c2a8caf0eb823d5a",
+      "asset_name": "mingw-w64-tk-mingw-w64-tk-8.6.13-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-winpthreads-git",
+      "version": "12.0.0.r576.g49111ba98-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-winpthreads-git-12.0.0.r576.g49111ba98-1.src.tar.zst",
+      "bytes": 49254009,
+      "sha256": "4237e9fc2b7c6803dd28f0178344d07f0d35ef5a7d8a8b01309dccf8dee17ea5",
+      "asset_name": "mingw-w64-winpthreads-git-mingw-w64-winpthreads-git-12.0.0.r576.g49111ba98-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-xxhash",
+      "version": "0.8.3-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-xxhash-0.8.3-1.src.tar.zst",
+      "bytes": 1056183,
+      "sha256": "6612c4cf4d40bc87250d0ea2719ca3008cd690d9395ac6d7f9d6d256359a838c",
+      "asset_name": "mingw-w64-xxhash-mingw-w64-xxhash-0.8.3-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-xz",
+      "version": "5.6.4-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-xz-5.6.4-1.src.tar.zst",
+      "bytes": 1342793,
+      "sha256": "6bd9989ee53aab5e5e6a30475c35209f16eec2adc268ea15dabe53edb15c9148",
+      "asset_name": "mingw-w64-xz-mingw-w64-xz-5.6.4-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-zlib",
+      "version": "1.3.1-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-zlib-1.3.1-1.src.tar.zst",
+      "bytes": 1311495,
+      "sha256": "9f274086ee2aa74e449908443f5e225855a4fe20f2abddadb4d18c0194c1ceff",
+      "asset_name": "mingw-w64-zlib-mingw-w64-zlib-1.3.1-1.src.tar.zst"
+    },
+    {
+      "component": "mingw-w64-zstd",
+      "version": "1.5.7-1",
+      "url": "https://repo.msys2.org/mingw/sources/mingw-w64-zstd-1.5.7-1.src.tar.zst",
+      "bytes": 2401857,
+      "sha256": "0e369f559046468bb605c8f4c8d93c7a4e7e88e8dc412226ebbad92ac1d5bd28",
+      "asset_name": "mingw-w64-zstd-mingw-w64-zstd-1.5.7-1.src.tar.zst"
+    },
+    {
+      "component": "themes",
+      "version": "PINNED_COMMIT_OR_UPSTREAM_RELEASE",
+      "url": "https://gitlab.com/inkscape/themes/-/archive/2fc6ece138323f905c9b475c3bcdef0d007eb233/themes-2fc6ece138323f905c9b475c3bcdef0d007eb233.tar.gz",
+      "bytes": 226687,
+      "sha256": "b2a0dd6b2ffdac00600f63d5faa869aa21660d3aea218aac7f8667971f5f59ce",
+      "asset_name": "themes-themes-2fc6ece138323f905c9b475c3bcdef0d007eb233.tar.gz"
+    },
+    {
+      "component": "idw88-build-recipes",
+      "url": "https://gitlab.com/inkscape/infra/inkscape-ci-windows/-/archive/f6726ea47f62610dbd11e05506df2b2504d79364/inkscape-ci-windows-f6726ea47f62610dbd11e05506df2b2504d79364.tar.gz",
+      "bytes": 9026,
+      "sha256": "0d9310bf2083349772968be2908d959d0c4ea850bbba93a569f0f49070b31bb5",
+      "asset_name": "idw88-build-recipes-recipes.tar.gz"
+    },
+    {
+      "component": "idw88-msys2installdeps",
+      "url": "https://gitlab.com/inkscape/inkscape/-/raw/0ccb00a30148f96ca27cf72ed13f73098c3178ce/buildtools/msys2installdeps.sh",
+      "bytes": 3782,
+      "sha256": "4d4a9d414a591b491bcedadf9a876cbc1c3cd9edfe291d2ea4f91d341ca94e34",
+      "asset_name": "idw88-msys2installdeps.sh"
+    }
+  ],
+  "evidence_commits": [
+    "945469e95e9f07ad78d973a904029710869becd5",
+    "51381d5dddec15985b7c9e15daed48cb29e79d92",
+    "b564517a59fb233f42c903a57c1f36fdb7f02bca"
+  ]
+}

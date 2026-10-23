@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "kind": "CONTROLLED_BUILD_CONFIGURATION_DEMONSTRATION_NOT_WINDOWS_EXE_QUALIFICATION",
+  "checks": [
+    "only_known_dependency_test_data_removed_runtime_licenses_private_guard_candidates_preserved",
+    "windows_separators_supported",
+    "empty_match_refused",
+    "unexpected_toc_refused",
+    "generated_spec_utf8_hook_and_pre_freeze_filter_loaded",
+    "actual_generated_spec_mock_execution_enforces_policy_before_collect",
+    "already_configured_or_unexpected_spec_refused"
+  ],
+  "count": 7,
+  "policy_sha256": "3509cff447d85097b730280d0f8c58ee8bc4f588b2a7207e2f05ef9f9b534fdc",
+  "official_hook_source": "https://raw.githubusercontent.com/pyinstaller/pyinstaller-hooks-contrib/v2026.9/_pyinstaller_hooks_contrib/stdhooks/hook-sklearn.py",
+  "official_hook_sha256": "2014d47cef99e526b69b0da208430a19dff4fa40e90d7493957a3e06a8ae4b84",
+  "official_hook_behavior": "datas = collect_data_files('sklearn')",
+  "product_source_unchanged": true,
+  "original_inventory_guard_unchanged": true
+}

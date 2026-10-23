@@ -1,0 +1,49 @@
+{
+  "package": "scikit-learn",
+  "version": "1.7.2",
+  "license": "BSD-3-Clause",
+  "scope": "INSTALLED_PINNED_PUBLIC_LIBRARY_API_REVIEW_NOT_REAL_MODEL_QUALITY",
+  "apis": [
+    {
+      "api": "ndcg_score",
+      "source_module": "_ranking.py",
+      "source_sha256": "a1fc02f0b042a3945c37692c9377a746800dd2a90cdc227df5268f218bea3f74",
+      "doc_excerpt": [
+        "Compute Normalized Discounted Cumulative Gain.",
+        "",
+        "Sum the true scores ranked in the order induced by the predicted scores,",
+        "after applying a logarithmic discount. Then divide by the best possible",
+        "score (Ideal DCG, obtained for a perfect ranking) to obtain a score between"
+      ]
+    },
+    {
+      "api": "Ridge",
+      "source_module": "_ridge.py",
+      "source_sha256": "a0a8c5e26611c1bc91a97ae85d6add59b98a2fa5c92ff7c25467ea88bd6e4ce3",
+      "doc_excerpt": [
+        "Linear least squares with l2 regularization.",
+        "",
+        "Minimizes the objective function::",
+        "",
+        "||y - Xw||^2_2 + alpha * ||w||^2_2"
+      ]
+    },
+    {
+      "api": "GaussianMixture",
+      "source_module": "_gaussian_mixture.py",
+      "source_sha256": "c49e431bb0caac3fdcc7ad457a90996897ac6d6bae9a101700c8df06b4c5c6ad",
+      "doc_excerpt": [
+        "Gaussian Mixture.",
+        "",
+        "Representation of a Gaussian mixture model probability distribution.",
+        "This class allows to estimate the parameters of a Gaussian mixture",
+        "distribution."
+      ]
+    }
+  ],
+  "public_docs": [
+    "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.ndcg_score.html",
+    "https://scikit-learn.org/1.7/modules/generated/sklearn.linear_model.Ridge.html",
+    "https://scikit-learn.org/1.7/modules/generated/sklearn.mixture.GaussianMixture.html"
+  ]
+}

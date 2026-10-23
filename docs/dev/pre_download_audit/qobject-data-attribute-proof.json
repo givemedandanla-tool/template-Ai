@@ -1,0 +1,1761 @@
+{
+  "method": "Prove only new Python data attributes, excluding every native/property name.",
+  "proof": {
+    "D-APP-00025": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/annotation_dialog.py",
+        "line": 236,
+        "message": "Cannot assign to attribute \"comparison\" for class \"AnnotationDialog*\"\n  Attribute \"comparison\" is unknown",
+        "context": "self.comparison=CanvasCompareDialog(build_annotation_comparison(self.session),self)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0cce6fc57420e9208bd6d5280c5e83fe32797a5048703d3526d5093601b9fcfd"
+      },
+      "member": "comparison",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.annotation_dialog.AnnotationDialog",
+          "mro": [
+            "template_ai.annotation_dialog.AnnotationDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-00256": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/batch_preview.py",
+        "line": 45,
+        "message": "Cannot assign to attribute \"canvases\" for class \"QDialog\"\n  Attribute \"canvases\" is unknown",
+        "context": "dialog.canvases=[]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "368362d305938d1cadb36bedf073ea1adcf63a3114257d73133d57b87eba8981"
+      },
+      "member": "canvases",
+      "receiver_contracts": [
+        {
+          "receiver": "PySide6.QtWidgets.QDialog",
+          "mro": [
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_batch_recovery.BatchRecoveryGuiTests.test_source_graphic_preview_is_readonly_and_does_not_add_history"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-00355": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/candidate_sync_dialog.py",
+        "line": 64,
+        "message": "Cannot assign to attribute \"results\" for class \"CrossPropertyDialog*\"\n  Attribute \"results\" is unknown",
+        "context": "self.details.setPlainText('\\n'.join(lines));self.status.setText('逐目標結果已列出；成功與失敗各自保留，沒有跨尺寸借用PASS。');self.results=installed;self.plan=None;self.release_adapters()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "592ca9f1850d80e395deb44e1e0ea368622247a7425b4e96a507c079f6ac071b"
+      },
+      "member": "results",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.candidate_sync_dialog.CrossPropertyDialog",
+          "mro": [
+            "template_ai.candidate_sync_dialog.CrossPropertyDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_actual_confirmation_applies_safe90_only_and_failed100_keeps_original",
+        "test_sync_workflow.SyncWorkflowTests.test_actual_three_candidate_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-00419": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/catalog_widget.py",
+        "line": 234,
+        "message": "Cannot assign to attribute \"columns\" for class \"QDialog\"\n  Attribute \"columns\" is unknown",
+        "context": "dialog=QDialog(self);dialog.setWindowTitle('兩個確切版型：唯讀並排比較／各尺寸獨立');dialog.resize(1060,700);layout=QVBoxLayout(dialog);row=QHBoxLayout();dialog.columns=[]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "fa13de01ef1900d3f7de07c3e9623f35726969e757e137f4d13007a8593fa6e1"
+      },
+      "member": "columns",
+      "receiver_contracts": [
+        {
+          "receiver": "PySide6.QtWidgets.QDialog",
+          "mro": [
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_catalog.CatalogTests.test_customer_two_sizes_compare_unknown_source_no_fake_thumb_and_cancel_reorder"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-00662": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/customer_dialog.py",
+        "line": 230,
+        "message": "Cannot assign to attribute \"identity_comparison\" for class \"CustomerDialog*\"\n  Attribute \"identity_comparison\" is unknown",
+        "context": "self.identity_comparison=IdentityPreviewDialog(self.window,self.store,plan,self);self.identity_comparison.open()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "260eb7ce9f07d3a728d49b369540df169e51339a71def4b4bdf368abb5c0019e"
+      },
+      "member": "identity_comparison",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.customer_dialog.CustomerDialog",
+          "mro": [
+            "template_ai.customer_dialog.CustomerDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-00781": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/dataset_panel.py",
+        "line": 71,
+        "message": "Cannot assign to attribute \"last_template\" for class \"DatasetPanel*\"\n  Attribute \"last_template\" is unknown",
+        "context": "template=self.store.learn_dataset_sample(plan,proof,actor,True);self.window.refresh_templates(preserve_editor=True);self.status.setText('已生成DRAFT '+template.id+'；dataset／sample來源與USE已保存；目前人工編輯保持');self.last_template=template",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e6a711fe8ec0650e75f24f2addf87fe8875320977d152d0a927bc616b07041ba"
+      },
+      "member": "last_template",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.dataset_panel.DatasetPanel",
+          "mro": [
+            "template_ai.dataset_panel.DatasetPanel",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_dataset_learning.DatasetLearningGuiTests.test_learning_result_does_not_save_or_reset_unrelated_dirty_editor"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-01664": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/gui.py",
+        "line": 536,
+        "message": "Cannot assign to attribute \"content_guard\" for class \"Canvas\"\n  Attribute \"content_guard\" is unknown",
+        "context": "self.train_canvas.content_guard=lambda operation:self.canvas_content_guard(self.train_canvas,operation)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "9167fde4261505100885e4de91ab655f3cb16eb252f6bdd42da59f87f6cc19a8"
+      },
+      "member": "content_guard",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.gui.Canvas",
+          "mro": [
+            "template_ai.gui.Canvas",
+            "PySide6.QtWidgets.QGraphicsView",
+            "PySide6.QtWidgets.QAbstractScrollArea",
+            "PySide6.QtWidgets.QFrame",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_annotation_gui.AnnotationGuiTests.test_mode_switch_preserves_each_selection_undo_and_canvas_view",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_another_view_cannot_consume_exact_same_size_template_preflight",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_fixed_x_ratio_uses_each_target_original_measurement_and_preserves_other_candidate_sizes",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_old_receipt_same_attribute_conflict_and_tampered_cached_result_do_not_overwrite",
+        "test_batch_candidate_gui.BatchCandidateGuiTests.test_bad_size_and_logo_remain_manual_while_legal_card_applies",
+        "test_batch_candidate_gui.BatchCandidateGuiTests.test_sorted_hidden_checked_exact_targets_keep_their_own_coordinates",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_locked_source_properties_settle_without_overlapping_controls",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_pan_mouse_gesture_changes_only_view_and_never_creates_content_history",
+        "test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_proof_detail_and_literal_named_confirmation_register_only_this_row",
+        "test_batch_format_review_gui.BatchFormatReviewGuiTests.test_sorted_table_review_identity_uses_userrole_not_visible_row_number",
+        "test_batch_import.BatchImportGuiTests.test_modal_preflight_scope_mutation_and_dirty_navigation_are_blocked",
+        "test_batch_recovery.BatchRecoveryCandidateTests.test_tampered_cached_candidate_is_rejected_before_any_adoption",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_actual_worker_save_restore_reads_partial_source_history_without_writing",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_changed_parameters_cannot_be_saved_as_old_preflight",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_recovery_buttons_during_real_owned_worker_do_not_clear_running_or_start_restore",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_source_graphic_preview_is_readonly_and_does_not_add_history",
+        "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
+        "test_batch_source_relink.BatchSourceGuiTests.test_selected_batch_apply_and_gui_undo_preserve_work",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_actual_canvas_selection_resize_lock_and_keep_comparison",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_pending_geometry_is_visible_and_formal_blocked_on_existing_pool",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_single_undo_keeps_earlier_different_object_change",
+        "test_candidate_results.CandidateResultsTests.test_native_comparison_is_nonformal_and_safe_selection_never_erases_blocks",
+        "test_candidate_results.CandidateResultsTests.test_structured_input_problem_opens_exact_stable_field_without_adoption",
+        "test_candidate_results.CandidateResultsTests.test_typed_phone_problem_focuses_actual_legacy_owner_field_and_slot",
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_actual_confirmation_applies_safe90_only_and_failed100_keeps_original",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_phone_table_real_editor_chinese_commit_and_cursor_do_not_move_old_selected_frame",
+        "test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate",
+        "test_canvas_compare.CanvasCompareTests.test_real_review_entry_worker_failure_retry_stale_and_no_writes",
+        "test_catalog.CatalogTests.test_customer_two_sizes_compare_unknown_source_no_fake_thumb_and_cancel_reorder",
+        "test_catalog.CatalogTests.test_exact_reorder_changes_work_only_and_missing_logo_stays_blocked",
+        "test_catalog.CatalogTests.test_master_changed_during_confirmation_cannot_replace_work",
+        "test_catalog.CatalogTests.test_missing_link_and_template_changed_while_worker_runs_clear_old_preview",
+        "test_catalog.CatalogTests.test_source_crop_bounds_budget_and_cancel_return_explicit_unknown",
+        "test_coverage_closure_gui.CoverageClosureGuiTests.test_actual_approved_rule_group_gui_labels_automatic_origin_without_human_layer_approval",
+        "test_customer_candidates.CustomerCandidateTests.test_actual_qt_background_proposal_and_cancelled_batch_do_not_create_customer",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_actual_dialog_default_work_only_cancel_confirmation_and_commit",
+        "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+        "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+        "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+        "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+        "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched",
+        "test_dataset_learning.DatasetLearningGuiTests.test_learning_result_does_not_save_or_reset_unrelated_dirty_editor",
+        "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+        "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_logo_detail_keeps_vector_picture_and_encoded_pixels_with_original_pan_zoom",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_original_worker_populates_named_checks_and_marked_format_readback",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_problem_row_routes_exact_slot_to_existing_canvas_without_moving_it",
+        "test_entity_relations.EntityAdoptionTests.test_undo_redo_survives_adopt_and_reopen_in_same_session_without_disk_history",
+        "test_entity_relations.EntityCustomerTests.test_actual_customer_prefill_graph_edit_diff_selective_write_and_history",
+        "test_entity_relations.EntityCustomerTests.test_cross_entity_change_even_without_revision_bump_rejects_old_snapshot",
+        "test_entity_relations.EntityCustomerTests.test_normalized_master_identity_zero_code_two_people_many_companies_and_foreign_keys",
+        "test_entity_relations.EntityCustomerTests.test_reorder_exact_version_many_companies_readonly_and_no_master_or_template_mutation",
+        "test_entity_relations.EntityEntryTests.test_main_entry_actual_modal_adopt_and_cancel_without_master_writes",
+        "test_entity_relations.EntityGuiTests.test_actual_line_edit_private_no_confirmation_and_shared_confirmation",
+        "test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas",
+        "test_font_center.FontCenterGuiTests.test_failed_worker_releases_ui_and_repair_refreshes_health",
+        "test_font_repair.FontRepairTests.test_gui_repair_preserves_asset_and_invalidates_previous_candidate",
+        "test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result",
+        "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write",
+        "test_font_review.FontReviewGuiTests.test_geometry_and_color_edit_preserve_pinned_italic_style",
+        "test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow",
+        "test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry",
+        "test_guided_operations.GuidedOperationsTests.test_actual_case_input_dialog_keeps_local_size_and_does_not_change_main_input",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services",
+        "test_input_plain_language.InputPlainLanguageTests.test_plain_normal_labels_preserve_full_ids_in_expandable_details",
+        "test_input_warnings.InputWarningsTests.test_company_warning_uses_company_field_identity_and_fixed_point_measurement",
+        "test_input_warnings.InputWarningsTests.test_typing_has_inline_warning_and_exact_navigation_without_focus_loss_or_adoption",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_actual_exact_logo_choice_then_graph_undo_only_changes_local_company_reference",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_changed_geometry_or_company_invalidates_preview_and_all_approval_flags",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_company_card_exposes_status_and_three_actions_without_auto_modifying_graph",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_revoked_during_confirmation_never_adopts_stale_logo",
+        "test_major_review_entries.MajorReviewEntryTests.test_actual_closed_batch_entry_pins_current_work_and_preserves_old_closure",
+        "test_major_review_gui.MajorReviewGuiTests.test_new_workbench_reads_persistent_case_without_restarting_review",
+        "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_local_comparison_does_not_apply_until_explicit_current_gate_adoption",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_source_sync_preserves_previously_unchecked_manual_size",
+        "test_object_tools.ObjectToolsGuiTests.test_actual_apply_history_reopen_undo_redo_and_stale_controls",
+        "test_object_tools.ObjectToolsGuiTests.test_late_failure_retry_publication_and_no_selection_do_not_write",
+        "test_object_tools.ObjectToolsGuiTests.test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots",
+        "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+        "test_property_form_versions.PropertyFormVersionTests.test_existing_editor_stale_retains_unfinished_raw_input_with_old_owner",
+        "test_property_lifecycle.PropertyLifecycleTests.test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies",
+        "test_qualified_coverage_gui.QualifiedCoverageGuiTests.test_exact_dataset_requires_explicit_selection_and_real_validation_role_is_not_training",
+        "test_qualified_coverage_gui.QualifiedCoverageGuiTests.test_saved_history_is_not_current_and_revoke_updates_new_counts",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_gui_dispatcher_uses_existing_fifo_worker_and_preserves_quality_boundary",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_pool_launch_failure_releases_eval_lease_without_false_source_result",
+        "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+        "test_quality_operations.QualityOperationsTests.test_resource_pause_keeps_scan_pending_and_resume_returns_actual_result",
+        "test_quality_repair_gui.QualityRepairGuiTests.test_actual_fact_row_click_has_no_callback_error_or_duplicate_repair_button",
+        "test_quality_repair_gui.QualityRepairGuiTests.test_actual_holdout_metadata_rows_have_disabled_train_choices_and_remain_unselected",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_high_risk_rule_failure_is_visible_and_detail_approval_remains_isolated",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_quality_acceptance_preserves_exact_report_and_does_not_activate",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_training_selection_owned_candidate_job_and_shared_fifo",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_real_cross_recheck_entry_uses_persisted_work_quarantine_and_quality_side_data",
+        "test_quality_review_gui.QualityReviewGuiTests.test_actual_native_single_work_resolution_requires_new_facts_and_keeps_model_quarantine",
+        "test_quality_rule_selector.QualityRuleSelectorTests.test_actual_isolated_rule_selected_by_name_and_frozen_via_reused_native_setup",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims",
+        "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+        "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+        "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+        "test_source_history_gui.SourceHistoryGuiTests.test_actual_undo_then_redo_require_impact_confirmation_and_stay_unadopted",
+        "test_source_relink_scope.SourceRelinkScopeTests.test_real_gui_worker_multi_root_preview_details_and_explicit_alternative_selection",
+        "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts",
+        "test_source_watch_service.SourceWatchServiceTests.test_lost_notifications_and_restart_reconcile_without_duplicate_pending_or_fake_training",
+        "test_source_watch_service.SourceWatchServiceTests.test_real_qt_directory_notification_creates_exact_new_candidates_and_preserves_alias_identity",
+        "test_startup_catalog.StartupCatalogTests.test_oversized_single_payload_is_explicitly_blocked_without_hiding_denominator_or_loading_it",
+        "test_startup_catalog.StartupCatalogTests.test_source_page_denominator_and_selected_id_work_across_pages_without_unbounded_read",
+        "test_startup_catalog.StartupCatalogTests.test_thousand_template_startup_never_calls_unbounded_catalog_and_global_unicode_search_opens_exact_id",
+        "test_sync_workflow.SyncWorkflowTests.test_actual_three_candidate_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100",
+        "test_sync_workflow.SyncWorkflowTests.test_authored_scope_has_two_real_qualified90_candidates_and_failed100_specific_logo",
+        "test_sync_workflow.SyncWorkflowTests.test_common_source_gate_rechecks_removed_binding_and_recovers_only_derived_condition",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_from_different_same_named_company_cannot_match_by_string",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_without_confirmed_entity_binding_stays_unverified",
+        "test_sync_workflow.SyncWorkflowTests.test_phone_a_updates_all_true_consumers_and_same_string_b_is_unchanged",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_actual_preview_confirm_admission_and_changed_input_clears_old_authorization",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_actual_source_purpose_stop_and_selected_training_copy_redaction_through_worker",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_real_owned_directory_and_six_filters_default_to_no_actions_or_privacy_consent",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo",
+        "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_source_button_supplies_multi_origin_and_unmodified_cancel_keeps_source",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_same_named_company_binding_removal_invalidates_return_without_global_generation_change"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-01668": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/gui.py",
+        "line": 613,
+        "message": "Cannot assign to attribute \"content_guard\" for class \"ObjectCanvas\"\n  Attribute \"content_guard\" is unknown",
+        "context": "self.edit_canvas.content_guard=lambda operation:self.canvas_content_guard(self.edit_canvas,operation)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e98f020e1119fc0a50f765881e511abe0aa940d599cb376252e860aad2041f89"
+      },
+      "member": "content_guard",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.object_dialog.ObjectCanvas",
+          "mro": [
+            "template_ai.object_dialog.ObjectCanvas",
+            "template_ai.gui.Canvas",
+            "PySide6.QtWidgets.QGraphicsView",
+            "PySide6.QtWidgets.QAbstractScrollArea",
+            "PySide6.QtWidgets.QFrame",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_annotation_gui.AnnotationGuiTests.test_mode_switch_preserves_each_selection_undo_and_canvas_view",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_another_view_cannot_consume_exact_same_size_template_preflight",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_fixed_x_ratio_uses_each_target_original_measurement_and_preserves_other_candidate_sizes",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_old_receipt_same_attribute_conflict_and_tampered_cached_result_do_not_overwrite",
+        "test_batch_candidate_gui.BatchCandidateGuiTests.test_bad_size_and_logo_remain_manual_while_legal_card_applies",
+        "test_batch_candidate_gui.BatchCandidateGuiTests.test_sorted_hidden_checked_exact_targets_keep_their_own_coordinates",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_locked_source_properties_settle_without_overlapping_controls",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_pan_mouse_gesture_changes_only_view_and_never_creates_content_history",
+        "test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_proof_detail_and_literal_named_confirmation_register_only_this_row",
+        "test_batch_format_review_gui.BatchFormatReviewGuiTests.test_sorted_table_review_identity_uses_userrole_not_visible_row_number",
+        "test_batch_import.BatchImportGuiTests.test_modal_preflight_scope_mutation_and_dirty_navigation_are_blocked",
+        "test_batch_recovery.BatchRecoveryCandidateTests.test_tampered_cached_candidate_is_rejected_before_any_adoption",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_actual_worker_save_restore_reads_partial_source_history_without_writing",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_changed_parameters_cannot_be_saved_as_old_preflight",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_recovery_buttons_during_real_owned_worker_do_not_clear_running_or_start_restore",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_source_graphic_preview_is_readonly_and_does_not_add_history",
+        "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
+        "test_batch_source_relink.BatchSourceGuiTests.test_selected_batch_apply_and_gui_undo_preserve_work",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_actual_canvas_selection_resize_lock_and_keep_comparison",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_pending_geometry_is_visible_and_formal_blocked_on_existing_pool",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_single_undo_keeps_earlier_different_object_change",
+        "test_candidate_results.CandidateResultsTests.test_native_comparison_is_nonformal_and_safe_selection_never_erases_blocks",
+        "test_candidate_results.CandidateResultsTests.test_structured_input_problem_opens_exact_stable_field_without_adoption",
+        "test_candidate_results.CandidateResultsTests.test_typed_phone_problem_focuses_actual_legacy_owner_field_and_slot",
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_actual_confirmation_applies_safe90_only_and_failed100_keeps_original",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_phone_table_real_editor_chinese_commit_and_cursor_do_not_move_old_selected_frame",
+        "test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate",
+        "test_canvas_compare.CanvasCompareTests.test_real_review_entry_worker_failure_retry_stale_and_no_writes",
+        "test_catalog.CatalogTests.test_customer_two_sizes_compare_unknown_source_no_fake_thumb_and_cancel_reorder",
+        "test_catalog.CatalogTests.test_exact_reorder_changes_work_only_and_missing_logo_stays_blocked",
+        "test_catalog.CatalogTests.test_master_changed_during_confirmation_cannot_replace_work",
+        "test_catalog.CatalogTests.test_missing_link_and_template_changed_while_worker_runs_clear_old_preview",
+        "test_catalog.CatalogTests.test_source_crop_bounds_budget_and_cancel_return_explicit_unknown",
+        "test_coverage_closure_gui.CoverageClosureGuiTests.test_actual_approved_rule_group_gui_labels_automatic_origin_without_human_layer_approval",
+        "test_customer_candidates.CustomerCandidateTests.test_actual_qt_background_proposal_and_cancelled_batch_do_not_create_customer",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_actual_dialog_default_work_only_cancel_confirmation_and_commit",
+        "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+        "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+        "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+        "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+        "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched",
+        "test_dataset_learning.DatasetLearningGuiTests.test_learning_result_does_not_save_or_reset_unrelated_dirty_editor",
+        "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+        "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_logo_detail_keeps_vector_picture_and_encoded_pixels_with_original_pan_zoom",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_original_worker_populates_named_checks_and_marked_format_readback",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_problem_row_routes_exact_slot_to_existing_canvas_without_moving_it",
+        "test_entity_relations.EntityAdoptionTests.test_undo_redo_survives_adopt_and_reopen_in_same_session_without_disk_history",
+        "test_entity_relations.EntityCustomerTests.test_actual_customer_prefill_graph_edit_diff_selective_write_and_history",
+        "test_entity_relations.EntityCustomerTests.test_cross_entity_change_even_without_revision_bump_rejects_old_snapshot",
+        "test_entity_relations.EntityCustomerTests.test_normalized_master_identity_zero_code_two_people_many_companies_and_foreign_keys",
+        "test_entity_relations.EntityCustomerTests.test_reorder_exact_version_many_companies_readonly_and_no_master_or_template_mutation",
+        "test_entity_relations.EntityEntryTests.test_main_entry_actual_modal_adopt_and_cancel_without_master_writes",
+        "test_entity_relations.EntityGuiTests.test_actual_line_edit_private_no_confirmation_and_shared_confirmation",
+        "test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas",
+        "test_font_center.FontCenterGuiTests.test_failed_worker_releases_ui_and_repair_refreshes_health",
+        "test_font_repair.FontRepairTests.test_gui_repair_preserves_asset_and_invalidates_previous_candidate",
+        "test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result",
+        "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write",
+        "test_font_review.FontReviewGuiTests.test_geometry_and_color_edit_preserve_pinned_italic_style",
+        "test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow",
+        "test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry",
+        "test_guided_operations.GuidedOperationsTests.test_actual_case_input_dialog_keeps_local_size_and_does_not_change_main_input",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services",
+        "test_input_plain_language.InputPlainLanguageTests.test_plain_normal_labels_preserve_full_ids_in_expandable_details",
+        "test_input_warnings.InputWarningsTests.test_company_warning_uses_company_field_identity_and_fixed_point_measurement",
+        "test_input_warnings.InputWarningsTests.test_typing_has_inline_warning_and_exact_navigation_without_focus_loss_or_adoption",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_actual_exact_logo_choice_then_graph_undo_only_changes_local_company_reference",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_changed_geometry_or_company_invalidates_preview_and_all_approval_flags",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_company_card_exposes_status_and_three_actions_without_auto_modifying_graph",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_revoked_during_confirmation_never_adopts_stale_logo",
+        "test_major_review_entries.MajorReviewEntryTests.test_actual_closed_batch_entry_pins_current_work_and_preserves_old_closure",
+        "test_major_review_gui.MajorReviewGuiTests.test_new_workbench_reads_persistent_case_without_restarting_review",
+        "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_local_comparison_does_not_apply_until_explicit_current_gate_adoption",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_source_sync_preserves_previously_unchecked_manual_size",
+        "test_object_tools.ObjectToolsGuiTests.test_actual_apply_history_reopen_undo_redo_and_stale_controls",
+        "test_object_tools.ObjectToolsGuiTests.test_late_failure_retry_publication_and_no_selection_do_not_write",
+        "test_object_tools.ObjectToolsGuiTests.test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots",
+        "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+        "test_property_form_versions.PropertyFormVersionTests.test_existing_editor_stale_retains_unfinished_raw_input_with_old_owner",
+        "test_property_lifecycle.PropertyLifecycleTests.test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies",
+        "test_qualified_coverage_gui.QualifiedCoverageGuiTests.test_exact_dataset_requires_explicit_selection_and_real_validation_role_is_not_training",
+        "test_qualified_coverage_gui.QualifiedCoverageGuiTests.test_saved_history_is_not_current_and_revoke_updates_new_counts",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_gui_dispatcher_uses_existing_fifo_worker_and_preserves_quality_boundary",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_pool_launch_failure_releases_eval_lease_without_false_source_result",
+        "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+        "test_quality_operations.QualityOperationsTests.test_resource_pause_keeps_scan_pending_and_resume_returns_actual_result",
+        "test_quality_repair_gui.QualityRepairGuiTests.test_actual_fact_row_click_has_no_callback_error_or_duplicate_repair_button",
+        "test_quality_repair_gui.QualityRepairGuiTests.test_actual_holdout_metadata_rows_have_disabled_train_choices_and_remain_unselected",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_high_risk_rule_failure_is_visible_and_detail_approval_remains_isolated",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_quality_acceptance_preserves_exact_report_and_does_not_activate",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_training_selection_owned_candidate_job_and_shared_fifo",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_real_cross_recheck_entry_uses_persisted_work_quarantine_and_quality_side_data",
+        "test_quality_review_gui.QualityReviewGuiTests.test_actual_native_single_work_resolution_requires_new_facts_and_keeps_model_quarantine",
+        "test_quality_rule_selector.QualityRuleSelectorTests.test_actual_isolated_rule_selected_by_name_and_frozen_via_reused_native_setup",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims",
+        "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+        "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+        "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+        "test_source_history_gui.SourceHistoryGuiTests.test_actual_undo_then_redo_require_impact_confirmation_and_stay_unadopted",
+        "test_source_relink_scope.SourceRelinkScopeTests.test_real_gui_worker_multi_root_preview_details_and_explicit_alternative_selection",
+        "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts",
+        "test_source_watch_service.SourceWatchServiceTests.test_lost_notifications_and_restart_reconcile_without_duplicate_pending_or_fake_training",
+        "test_source_watch_service.SourceWatchServiceTests.test_real_qt_directory_notification_creates_exact_new_candidates_and_preserves_alias_identity",
+        "test_startup_catalog.StartupCatalogTests.test_oversized_single_payload_is_explicitly_blocked_without_hiding_denominator_or_loading_it",
+        "test_startup_catalog.StartupCatalogTests.test_source_page_denominator_and_selected_id_work_across_pages_without_unbounded_read",
+        "test_startup_catalog.StartupCatalogTests.test_thousand_template_startup_never_calls_unbounded_catalog_and_global_unicode_search_opens_exact_id",
+        "test_sync_workflow.SyncWorkflowTests.test_actual_three_candidate_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100",
+        "test_sync_workflow.SyncWorkflowTests.test_authored_scope_has_two_real_qualified90_candidates_and_failed100_specific_logo",
+        "test_sync_workflow.SyncWorkflowTests.test_common_source_gate_rechecks_removed_binding_and_recovers_only_derived_condition",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_from_different_same_named_company_cannot_match_by_string",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_without_confirmed_entity_binding_stays_unverified",
+        "test_sync_workflow.SyncWorkflowTests.test_phone_a_updates_all_true_consumers_and_same_string_b_is_unchanged",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_actual_preview_confirm_admission_and_changed_input_clears_old_authorization",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_actual_source_purpose_stop_and_selected_training_copy_redaction_through_worker",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_real_owned_directory_and_six_filters_default_to_no_actions_or_privacy_consent",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo",
+        "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_source_button_supplies_multi_origin_and_unmodified_cancel_keeps_source",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_same_named_company_binding_removal_invalidates_return_without_global_generation_change"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-02641": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/object_dialog.py",
+        "line": 229,
+        "message": "Cannot assign to attribute \"content_guard\" for class \"ObjectCanvas\"\n  Attribute \"content_guard\" is unknown",
+        "context": "self.canvas.content_guard=self.canvas_content_guard;self.canvas.command_status.connect(self.status.setText)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "fe88dd5cf364c8466346720b03de7eeca297312c5d981fe84440275cc568e43a"
+      },
+      "member": "content_guard",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.object_dialog.ObjectCanvas",
+          "mro": [
+            "template_ai.object_dialog.ObjectCanvas",
+            "template_ai.gui.Canvas",
+            "PySide6.QtWidgets.QGraphicsView",
+            "PySide6.QtWidgets.QAbstractScrollArea",
+            "PySide6.QtWidgets.QFrame",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_object_tools.ObjectToolsGuiTests.test_actual_apply_history_reopen_undo_redo_and_stale_controls",
+        "test_object_tools.ObjectToolsGuiTests.test_late_failure_retry_publication_and_no_selection_do_not_write",
+        "test_object_tools.ObjectToolsGuiTests.test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots",
+        "test_property_form_versions.PropertyFormVersionTests.test_existing_editor_stale_retains_unfinished_raw_input_with_old_owner",
+        "test_property_lifecycle.PropertyLifecycleTests.test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-04087": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/viewport_controls.py",
+        "line": 20,
+        "message": "Cannot assign to attribute \"_focus_wheel_guard\" for class \"QAbstractSpinBox\"\n  Attribute \"_focus_wheel_guard\" is unknown",
+        "context": "widget._focus_wheel_guard=FocusWheelGuard(widget);widget.installEventFilter(widget._focus_wheel_guard)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ae8d909abbbc30d12dd02178dfa4fd4fa15b88faeb5551b4543412eeb4fe2e44"
+      },
+      "member": "_focus_wheel_guard",
+      "receiver_contracts": [
+        {
+          "receiver": "PySide6.QtWidgets.QSpinBox",
+          "mro": [
+            "PySide6.QtWidgets.QSpinBox",
+            "PySide6.QtWidgets.QAbstractSpinBox",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        },
+        {
+          "receiver": "PySide6.QtWidgets.QComboBox",
+          "mro": [
+            "PySide6.QtWidgets.QComboBox",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        },
+        {
+          "receiver": "PySide6.QtWidgets.QDoubleSpinBox",
+          "mro": [
+            "PySide6.QtWidgets.QDoubleSpinBox",
+            "PySide6.QtWidgets.QAbstractSpinBox",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        },
+        {
+          "receiver": "PySide6.QtWidgets.QFontComboBox",
+          "mro": [
+            "PySide6.QtWidgets.QFontComboBox",
+            "PySide6.QtWidgets.QComboBox",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_annotation_gui.AnnotationGuiTests.test_mode_switch_preserves_each_selection_undo_and_canvas_view",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_another_view_cannot_consume_exact_same_size_template_preflight",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_fixed_x_ratio_uses_each_target_original_measurement_and_preserves_other_candidate_sizes",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_old_receipt_same_attribute_conflict_and_tampered_cached_result_do_not_overwrite",
+        "test_batch_candidate_gui.BatchCandidateGuiTests.test_bad_size_and_logo_remain_manual_while_legal_card_applies",
+        "test_batch_candidate_gui.BatchCandidateGuiTests.test_sorted_hidden_checked_exact_targets_keep_their_own_coordinates",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_locked_source_properties_settle_without_overlapping_controls",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_pan_mouse_gesture_changes_only_view_and_never_creates_content_history",
+        "test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_proof_detail_and_literal_named_confirmation_register_only_this_row",
+        "test_batch_format_review_gui.BatchFormatReviewGuiTests.test_sorted_table_review_identity_uses_userrole_not_visible_row_number",
+        "test_batch_import.BatchImportGuiTests.test_modal_preflight_scope_mutation_and_dirty_navigation_are_blocked",
+        "test_batch_recovery.BatchRecoveryCandidateTests.test_tampered_cached_candidate_is_rejected_before_any_adoption",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_actual_worker_save_restore_reads_partial_source_history_without_writing",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_changed_parameters_cannot_be_saved_as_old_preflight",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_recovery_buttons_during_real_owned_worker_do_not_clear_running_or_start_restore",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_source_graphic_preview_is_readonly_and_does_not_add_history",
+        "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
+        "test_batch_source_relink.BatchSourceGuiTests.test_selected_batch_apply_and_gui_undo_preserve_work",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_actual_canvas_selection_resize_lock_and_keep_comparison",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_pending_geometry_is_visible_and_formal_blocked_on_existing_pool",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_single_undo_keeps_earlier_different_object_change",
+        "test_candidate_results.CandidateResultsTests.test_native_comparison_is_nonformal_and_safe_selection_never_erases_blocks",
+        "test_candidate_results.CandidateResultsTests.test_structured_input_problem_opens_exact_stable_field_without_adoption",
+        "test_candidate_results.CandidateResultsTests.test_typed_phone_problem_focuses_actual_legacy_owner_field_and_slot",
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_actual_confirmation_applies_safe90_only_and_failed100_keeps_original",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_phone_table_real_editor_chinese_commit_and_cursor_do_not_move_old_selected_frame",
+        "test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate",
+        "test_canvas_compare.CanvasCompareTests.test_real_review_entry_worker_failure_retry_stale_and_no_writes",
+        "test_catalog.CatalogTests.test_customer_two_sizes_compare_unknown_source_no_fake_thumb_and_cancel_reorder",
+        "test_catalog.CatalogTests.test_exact_reorder_changes_work_only_and_missing_logo_stays_blocked",
+        "test_catalog.CatalogTests.test_master_changed_during_confirmation_cannot_replace_work",
+        "test_catalog.CatalogTests.test_missing_link_and_template_changed_while_worker_runs_clear_old_preview",
+        "test_catalog.CatalogTests.test_source_crop_bounds_budget_and_cancel_return_explicit_unknown",
+        "test_coverage_closure_gui.CoverageClosureGuiTests.test_actual_approved_rule_group_gui_labels_automatic_origin_without_human_layer_approval",
+        "test_customer_candidates.CustomerCandidateTests.test_actual_qt_background_proposal_and_cancelled_batch_do_not_create_customer",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_actual_dialog_default_work_only_cancel_confirmation_and_commit",
+        "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+        "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+        "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+        "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+        "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched",
+        "test_dataset_learning.DatasetLearningGuiTests.test_learning_result_does_not_save_or_reset_unrelated_dirty_editor",
+        "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+        "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_logo_detail_keeps_vector_picture_and_encoded_pixels_with_original_pan_zoom",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_original_worker_populates_named_checks_and_marked_format_readback",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_problem_row_routes_exact_slot_to_existing_canvas_without_moving_it",
+        "test_entity_relations.EntityAdoptionTests.test_undo_redo_survives_adopt_and_reopen_in_same_session_without_disk_history",
+        "test_entity_relations.EntityCustomerTests.test_actual_customer_prefill_graph_edit_diff_selective_write_and_history",
+        "test_entity_relations.EntityCustomerTests.test_cross_entity_change_even_without_revision_bump_rejects_old_snapshot",
+        "test_entity_relations.EntityCustomerTests.test_normalized_master_identity_zero_code_two_people_many_companies_and_foreign_keys",
+        "test_entity_relations.EntityCustomerTests.test_reorder_exact_version_many_companies_readonly_and_no_master_or_template_mutation",
+        "test_entity_relations.EntityEntryTests.test_main_entry_actual_modal_adopt_and_cancel_without_master_writes",
+        "test_entity_relations.EntityGuiTests.test_actual_line_edit_private_no_confirmation_and_shared_confirmation",
+        "test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas",
+        "test_font_center.FontCenterGuiTests.test_failed_worker_releases_ui_and_repair_refreshes_health",
+        "test_font_repair.FontRepairTests.test_gui_repair_preserves_asset_and_invalidates_previous_candidate",
+        "test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result",
+        "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write",
+        "test_font_review.FontReviewGuiTests.test_geometry_and_color_edit_preserve_pinned_italic_style",
+        "test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow",
+        "test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry",
+        "test_guided_operations.GuidedOperationsTests.test_actual_case_input_dialog_keeps_local_size_and_does_not_change_main_input",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services",
+        "test_input_plain_language.InputPlainLanguageTests.test_plain_normal_labels_preserve_full_ids_in_expandable_details",
+        "test_input_warnings.InputWarningsTests.test_company_warning_uses_company_field_identity_and_fixed_point_measurement",
+        "test_input_warnings.InputWarningsTests.test_typing_has_inline_warning_and_exact_navigation_without_focus_loss_or_adoption",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_actual_exact_logo_choice_then_graph_undo_only_changes_local_company_reference",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_changed_geometry_or_company_invalidates_preview_and_all_approval_flags",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_company_card_exposes_status_and_three_actions_without_auto_modifying_graph",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_revoked_during_confirmation_never_adopts_stale_logo",
+        "test_major_review_entries.MajorReviewEntryTests.test_actual_closed_batch_entry_pins_current_work_and_preserves_old_closure",
+        "test_major_review_gui.MajorReviewGuiTests.test_new_workbench_reads_persistent_case_without_restarting_review",
+        "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_local_comparison_does_not_apply_until_explicit_current_gate_adoption",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_source_sync_preserves_previously_unchecked_manual_size",
+        "test_object_tools.ObjectToolsGuiTests.test_actual_apply_history_reopen_undo_redo_and_stale_controls",
+        "test_object_tools.ObjectToolsGuiTests.test_late_failure_retry_publication_and_no_selection_do_not_write",
+        "test_object_tools.ObjectToolsGuiTests.test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots",
+        "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+        "test_property_form_versions.PropertyFormVersionTests.test_existing_editor_stale_retains_unfinished_raw_input_with_old_owner",
+        "test_property_lifecycle.PropertyLifecycleTests.test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies",
+        "test_qualified_coverage_gui.QualifiedCoverageGuiTests.test_exact_dataset_requires_explicit_selection_and_real_validation_role_is_not_training",
+        "test_qualified_coverage_gui.QualifiedCoverageGuiTests.test_saved_history_is_not_current_and_revoke_updates_new_counts",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_gui_dispatcher_uses_existing_fifo_worker_and_preserves_quality_boundary",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_pool_launch_failure_releases_eval_lease_without_false_source_result",
+        "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+        "test_quality_operations.QualityOperationsTests.test_resource_pause_keeps_scan_pending_and_resume_returns_actual_result",
+        "test_quality_repair_gui.QualityRepairGuiTests.test_actual_fact_row_click_has_no_callback_error_or_duplicate_repair_button",
+        "test_quality_repair_gui.QualityRepairGuiTests.test_actual_holdout_metadata_rows_have_disabled_train_choices_and_remain_unselected",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_high_risk_rule_failure_is_visible_and_detail_approval_remains_isolated",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_quality_acceptance_preserves_exact_report_and_does_not_activate",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_training_selection_owned_candidate_job_and_shared_fifo",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_real_cross_recheck_entry_uses_persisted_work_quarantine_and_quality_side_data",
+        "test_quality_review_gui.QualityReviewGuiTests.test_actual_native_single_work_resolution_requires_new_facts_and_keeps_model_quarantine",
+        "test_quality_rule_selector.QualityRuleSelectorTests.test_actual_isolated_rule_selected_by_name_and_frozen_via_reused_native_setup",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims",
+        "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+        "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+        "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+        "test_source_history_gui.SourceHistoryGuiTests.test_actual_undo_then_redo_require_impact_confirmation_and_stay_unadopted",
+        "test_source_relink_scope.SourceRelinkScopeTests.test_real_gui_worker_multi_root_preview_details_and_explicit_alternative_selection",
+        "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts",
+        "test_source_watch_service.SourceWatchServiceTests.test_lost_notifications_and_restart_reconcile_without_duplicate_pending_or_fake_training",
+        "test_source_watch_service.SourceWatchServiceTests.test_real_qt_directory_notification_creates_exact_new_candidates_and_preserves_alias_identity",
+        "test_startup_catalog.StartupCatalogTests.test_oversized_single_payload_is_explicitly_blocked_without_hiding_denominator_or_loading_it",
+        "test_startup_catalog.StartupCatalogTests.test_source_page_denominator_and_selected_id_work_across_pages_without_unbounded_read",
+        "test_startup_catalog.StartupCatalogTests.test_thousand_template_startup_never_calls_unbounded_catalog_and_global_unicode_search_opens_exact_id",
+        "test_sync_workflow.SyncWorkflowTests.test_actual_three_candidate_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100",
+        "test_sync_workflow.SyncWorkflowTests.test_authored_scope_has_two_real_qualified90_candidates_and_failed100_specific_logo",
+        "test_sync_workflow.SyncWorkflowTests.test_common_source_gate_rechecks_removed_binding_and_recovers_only_derived_condition",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_from_different_same_named_company_cannot_match_by_string",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_without_confirmed_entity_binding_stays_unverified",
+        "test_sync_workflow.SyncWorkflowTests.test_phone_a_updates_all_true_consumers_and_same_string_b_is_unchanged",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_actual_preview_confirm_admission_and_changed_input_clears_old_authorization",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_actual_source_purpose_stop_and_selected_training_copy_redaction_through_worker",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_real_owned_directory_and_six_filters_default_to_no_actions_or_privacy_consent",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo",
+        "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_source_button_supplies_multi_origin_and_unmodified_cancel_keeps_source",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_same_named_company_binding_removal_invalidates_return_without_global_generation_change"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-04088": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/viewport_controls.py",
+        "line": 20,
+        "message": "Cannot assign to attribute \"_focus_wheel_guard\" for class \"QComboBox\"\n  Attribute \"_focus_wheel_guard\" is unknown",
+        "context": "widget._focus_wheel_guard=FocusWheelGuard(widget);widget.installEventFilter(widget._focus_wheel_guard)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f976bece3599562713f7873771b8b8f88432321c6844588d0f74efaf65deec52"
+      },
+      "member": "_focus_wheel_guard",
+      "receiver_contracts": [
+        {
+          "receiver": "PySide6.QtWidgets.QSpinBox",
+          "mro": [
+            "PySide6.QtWidgets.QSpinBox",
+            "PySide6.QtWidgets.QAbstractSpinBox",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        },
+        {
+          "receiver": "PySide6.QtWidgets.QComboBox",
+          "mro": [
+            "PySide6.QtWidgets.QComboBox",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        },
+        {
+          "receiver": "PySide6.QtWidgets.QDoubleSpinBox",
+          "mro": [
+            "PySide6.QtWidgets.QDoubleSpinBox",
+            "PySide6.QtWidgets.QAbstractSpinBox",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        },
+        {
+          "receiver": "PySide6.QtWidgets.QFontComboBox",
+          "mro": [
+            "PySide6.QtWidgets.QFontComboBox",
+            "PySide6.QtWidgets.QComboBox",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_annotation_gui.AnnotationGuiTests.test_mode_switch_preserves_each_selection_undo_and_canvas_view",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_another_view_cannot_consume_exact_same_size_template_preflight",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_fixed_x_ratio_uses_each_target_original_measurement_and_preserves_other_candidate_sizes",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_old_receipt_same_attribute_conflict_and_tampered_cached_result_do_not_overwrite",
+        "test_batch_candidate_gui.BatchCandidateGuiTests.test_bad_size_and_logo_remain_manual_while_legal_card_applies",
+        "test_batch_candidate_gui.BatchCandidateGuiTests.test_sorted_hidden_checked_exact_targets_keep_their_own_coordinates",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_locked_source_properties_settle_without_overlapping_controls",
+        "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_pan_mouse_gesture_changes_only_view_and_never_creates_content_history",
+        "test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_proof_detail_and_literal_named_confirmation_register_only_this_row",
+        "test_batch_format_review_gui.BatchFormatReviewGuiTests.test_sorted_table_review_identity_uses_userrole_not_visible_row_number",
+        "test_batch_import.BatchImportGuiTests.test_modal_preflight_scope_mutation_and_dirty_navigation_are_blocked",
+        "test_batch_recovery.BatchRecoveryCandidateTests.test_tampered_cached_candidate_is_rejected_before_any_adoption",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_actual_worker_save_restore_reads_partial_source_history_without_writing",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_changed_parameters_cannot_be_saved_as_old_preflight",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_recovery_buttons_during_real_owned_worker_do_not_clear_running_or_start_restore",
+        "test_batch_recovery.BatchRecoveryGuiTests.test_source_graphic_preview_is_readonly_and_does_not_add_history",
+        "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
+        "test_batch_source_relink.BatchSourceGuiTests.test_selected_batch_apply_and_gui_undo_preserve_work",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_actual_canvas_selection_resize_lock_and_keep_comparison",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_pending_geometry_is_visible_and_formal_blocked_on_existing_pool",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_single_undo_keeps_earlier_different_object_change",
+        "test_candidate_results.CandidateResultsTests.test_native_comparison_is_nonformal_and_safe_selection_never_erases_blocks",
+        "test_candidate_results.CandidateResultsTests.test_structured_input_problem_opens_exact_stable_field_without_adoption",
+        "test_candidate_results.CandidateResultsTests.test_typed_phone_problem_focuses_actual_legacy_owner_field_and_slot",
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_actual_confirmation_applies_safe90_only_and_failed100_keeps_original",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_phone_table_real_editor_chinese_commit_and_cursor_do_not_move_old_selected_frame",
+        "test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate",
+        "test_canvas_compare.CanvasCompareTests.test_real_review_entry_worker_failure_retry_stale_and_no_writes",
+        "test_catalog.CatalogTests.test_customer_two_sizes_compare_unknown_source_no_fake_thumb_and_cancel_reorder",
+        "test_catalog.CatalogTests.test_exact_reorder_changes_work_only_and_missing_logo_stays_blocked",
+        "test_catalog.CatalogTests.test_master_changed_during_confirmation_cannot_replace_work",
+        "test_catalog.CatalogTests.test_missing_link_and_template_changed_while_worker_runs_clear_old_preview",
+        "test_catalog.CatalogTests.test_source_crop_bounds_budget_and_cancel_return_explicit_unknown",
+        "test_coverage_closure_gui.CoverageClosureGuiTests.test_actual_approved_rule_group_gui_labels_automatic_origin_without_human_layer_approval",
+        "test_customer_candidates.CustomerCandidateTests.test_actual_qt_background_proposal_and_cancelled_batch_do_not_create_customer",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_actual_dialog_default_work_only_cancel_confirmation_and_commit",
+        "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+        "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+        "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+        "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+        "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched",
+        "test_dataset_learning.DatasetLearningGuiTests.test_learning_result_does_not_save_or_reset_unrelated_dirty_editor",
+        "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+        "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_logo_detail_keeps_vector_picture_and_encoded_pixels_with_original_pan_zoom",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_original_worker_populates_named_checks_and_marked_format_readback",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_problem_row_routes_exact_slot_to_existing_canvas_without_moving_it",
+        "test_entity_relations.EntityAdoptionTests.test_undo_redo_survives_adopt_and_reopen_in_same_session_without_disk_history",
+        "test_entity_relations.EntityCustomerTests.test_actual_customer_prefill_graph_edit_diff_selective_write_and_history",
+        "test_entity_relations.EntityCustomerTests.test_cross_entity_change_even_without_revision_bump_rejects_old_snapshot",
+        "test_entity_relations.EntityCustomerTests.test_normalized_master_identity_zero_code_two_people_many_companies_and_foreign_keys",
+        "test_entity_relations.EntityCustomerTests.test_reorder_exact_version_many_companies_readonly_and_no_master_or_template_mutation",
+        "test_entity_relations.EntityEntryTests.test_main_entry_actual_modal_adopt_and_cancel_without_master_writes",
+        "test_entity_relations.EntityGuiTests.test_actual_line_edit_private_no_confirmation_and_shared_confirmation",
+        "test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas",
+        "test_font_center.FontCenterGuiTests.test_failed_worker_releases_ui_and_repair_refreshes_health",
+        "test_font_repair.FontRepairTests.test_gui_repair_preserves_asset_and_invalidates_previous_candidate",
+        "test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result",
+        "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write",
+        "test_font_review.FontReviewGuiTests.test_geometry_and_color_edit_preserve_pinned_italic_style",
+        "test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow",
+        "test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry",
+        "test_guided_operations.GuidedOperationsTests.test_actual_case_input_dialog_keeps_local_size_and_does_not_change_main_input",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services",
+        "test_input_plain_language.InputPlainLanguageTests.test_plain_normal_labels_preserve_full_ids_in_expandable_details",
+        "test_input_warnings.InputWarningsTests.test_company_warning_uses_company_field_identity_and_fixed_point_measurement",
+        "test_input_warnings.InputWarningsTests.test_typing_has_inline_warning_and_exact_navigation_without_focus_loss_or_adoption",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_actual_exact_logo_choice_then_graph_undo_only_changes_local_company_reference",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_changed_geometry_or_company_invalidates_preview_and_all_approval_flags",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_company_card_exposes_status_and_three_actions_without_auto_modifying_graph",
+        "test_logo_workflow_gui.LogoWorkflowGuiTests.test_revoked_during_confirmation_never_adopts_stale_logo",
+        "test_major_review_entries.MajorReviewEntryTests.test_actual_closed_batch_entry_pins_current_work_and_preserves_old_closure",
+        "test_major_review_gui.MajorReviewGuiTests.test_new_workbench_reads_persistent_case_without_restarting_review",
+        "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_local_comparison_does_not_apply_until_explicit_current_gate_adoption",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_source_sync_preserves_previously_unchecked_manual_size",
+        "test_object_tools.ObjectToolsGuiTests.test_actual_apply_history_reopen_undo_redo_and_stale_controls",
+        "test_object_tools.ObjectToolsGuiTests.test_late_failure_retry_publication_and_no_selection_do_not_write",
+        "test_object_tools.ObjectToolsGuiTests.test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots",
+        "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+        "test_property_form_versions.PropertyFormVersionTests.test_existing_editor_stale_retains_unfinished_raw_input_with_old_owner",
+        "test_property_lifecycle.PropertyLifecycleTests.test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies",
+        "test_qualified_coverage_gui.QualifiedCoverageGuiTests.test_exact_dataset_requires_explicit_selection_and_real_validation_role_is_not_training",
+        "test_qualified_coverage_gui.QualifiedCoverageGuiTests.test_saved_history_is_not_current_and_revoke_updates_new_counts",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_gui_dispatcher_uses_existing_fifo_worker_and_preserves_quality_boundary",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_pool_launch_failure_releases_eval_lease_without_false_source_result",
+        "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+        "test_quality_operations.QualityOperationsTests.test_resource_pause_keeps_scan_pending_and_resume_returns_actual_result",
+        "test_quality_repair_gui.QualityRepairGuiTests.test_actual_fact_row_click_has_no_callback_error_or_duplicate_repair_button",
+        "test_quality_repair_gui.QualityRepairGuiTests.test_actual_holdout_metadata_rows_have_disabled_train_choices_and_remain_unselected",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_high_risk_rule_failure_is_visible_and_detail_approval_remains_isolated",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_quality_acceptance_preserves_exact_report_and_does_not_activate",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_training_selection_owned_candidate_job_and_shared_fifo",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_real_cross_recheck_entry_uses_persisted_work_quarantine_and_quality_side_data",
+        "test_quality_review_gui.QualityReviewGuiTests.test_actual_native_single_work_resolution_requires_new_facts_and_keeps_model_quarantine",
+        "test_quality_rule_selector.QualityRuleSelectorTests.test_actual_isolated_rule_selected_by_name_and_frozen_via_reused_native_setup",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims",
+        "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+        "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+        "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+        "test_source_history_gui.SourceHistoryGuiTests.test_actual_undo_then_redo_require_impact_confirmation_and_stay_unadopted",
+        "test_source_relink_scope.SourceRelinkScopeTests.test_real_gui_worker_multi_root_preview_details_and_explicit_alternative_selection",
+        "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts",
+        "test_source_watch_service.SourceWatchServiceTests.test_lost_notifications_and_restart_reconcile_without_duplicate_pending_or_fake_training",
+        "test_source_watch_service.SourceWatchServiceTests.test_real_qt_directory_notification_creates_exact_new_candidates_and_preserves_alias_identity",
+        "test_startup_catalog.StartupCatalogTests.test_oversized_single_payload_is_explicitly_blocked_without_hiding_denominator_or_loading_it",
+        "test_startup_catalog.StartupCatalogTests.test_source_page_denominator_and_selected_id_work_across_pages_without_unbounded_read",
+        "test_startup_catalog.StartupCatalogTests.test_thousand_template_startup_never_calls_unbounded_catalog_and_global_unicode_search_opens_exact_id",
+        "test_sync_workflow.SyncWorkflowTests.test_actual_three_candidate_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100",
+        "test_sync_workflow.SyncWorkflowTests.test_authored_scope_has_two_real_qualified90_candidates_and_failed100_specific_logo",
+        "test_sync_workflow.SyncWorkflowTests.test_common_source_gate_rechecks_removed_binding_and_recovers_only_derived_condition",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_from_different_same_named_company_cannot_match_by_string",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_without_confirmed_entity_binding_stays_unverified",
+        "test_sync_workflow.SyncWorkflowTests.test_phone_a_updates_all_true_consumers_and_same_string_b_is_unchanged",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_actual_preview_confirm_admission_and_changed_input_clears_old_authorization",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_actual_source_purpose_stop_and_selected_training_copy_redaction_through_worker",
+        "test_trusted_sample_gui.TrustedSampleGuiTests.test_real_owned_directory_and_six_filters_default_to_no_actions_or_privacy_consent",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo",
+        "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_source_button_supplies_multi_origin_and_unmodified_cancel_keeps_source",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_same_named_company_binding_removal_invalidates_return_without_global_generation_change"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-04941": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_batch_candidate_adapter.py",
+        "line": 50,
+        "message": "Cannot assign to attribute \"service\" for class \"QDialog\"\n  Attribute \"service\" is unknown",
+        "context": "checked=self.checked();other=QDialog(self.f.w);self.addCleanup(other.deleteLater);other.window=self.f.w;other.service=self.f.d.service;other.is_current=self.f.d.is_current;adapter=SizeEditAdapter(other,self.a.entry,self.i);before=self.a.candidates[self.i].template.to_dict()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "929f56e6e2f329b009e50afdf4a27997066f96a576fe8198d93f214821998bf7"
+      },
+      "member": "service",
+      "receiver_contracts": [
+        {
+          "receiver": "PySide6.QtWidgets.QDialog",
+          "mro": [
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_another_view_cannot_consume_exact_same_size_template_preflight"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-04942": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_batch_candidate_adapter.py",
+        "line": 50,
+        "message": "Cannot assign to attribute \"is_current\" for class \"QDialog\"\n  Attribute \"is_current\" is unknown",
+        "context": "checked=self.checked();other=QDialog(self.f.w);self.addCleanup(other.deleteLater);other.window=self.f.w;other.service=self.f.d.service;other.is_current=self.f.d.is_current;adapter=SizeEditAdapter(other,self.a.entry,self.i);before=self.a.candidates[self.i].template.to_dict()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "13d2f6656f2e4e5cdd1d2695bf3a4cd20340404d45f83798b96f5f1d91cf28bc"
+      },
+      "member": "is_current",
+      "receiver_contracts": [
+        {
+          "receiver": "PySide6.QtWidgets.QDialog",
+          "mro": [
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_another_view_cannot_consume_exact_same_size_template_preflight"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-06522": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_design_learning_gui.py",
+        "line": 27,
+        "message": "Cannot assign to attribute \"library\" for class \"QWidget\"\n  Attribute \"library\" is unknown",
+        "context": "self.parent=QWidget();self.parent.library=self.library;self.addCleanup(self.parent.deleteLater)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5f46d9eac54b8a9e10d62caa7390383dc0479a063d4d43b27be06cd237a11bce"
+      },
+      "member": "library",
+      "receiver_contracts": [
+        {
+          "receiver": "PySide6.QtWidgets.QWidget",
+          "mro": [
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_design_learning_gui.DesktopSharedLearningWorkflowTests.test_relative_dropdown_edit_data_return_and_undo_do_not_restore_old_phone"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-06879": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_diagnostic_reports.py",
+        "line": 177,
+        "message": "Cannot assign to attribute \"worker\" for class \"LayoutSessionDialog\"\n  Expression of type \"W\" cannot be assigned to attribute \"worker\" of class \"LayoutSessionDialog\"\n    Type \"W\" is not assignable to type \"LayoutWorker | None\"\n      \"W\" is not assignable to \"None\"\n      \"W\" is not assignable to \"LayoutWorker\"",
+        "context": "d=LayoutSessionDialog(self.w);self.addCleanup(d.deleteLater);d.worker=type('W',(),{'templates':[self.t,self.t,self.t]})();d.size=(90,54);d.report_state='CANCELLED';d.generation=self.w.generation",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2d7358d030c50fbd75f98db9bef19d844735b124684c02f01863c616c5cad037"
+      },
+      "member": "worker",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.layout_session.LayoutSessionDialog",
+          "mro": [
+            "template_ai.layout_session.LayoutSessionDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-07390": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_family_workbench.py",
+        "line": 22,
+        "message": "Cannot assign to attribute \"library\" for class \"QWidget\"\n  Attribute \"library\" is unknown",
+        "context": "self.parent=QWidget();self.parent.library=self.library",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6dc2698d62b0b42dede90d68aa6ce68a2e2c08a24175759ea05a40d61c7db168"
+      },
+      "member": "library",
+      "receiver_contracts": [
+        {
+          "receiver": "PySide6.QtWidgets.QWidget",
+          "mro": [
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_family_workbench.FamilyWorkbenchTests.test_native_physical_filters_saved_workset_and_joint_variant_views",
+        "test_family_workbench.FamilyWorkbenchTests.test_role_tree_and_canvas_selection_are_synchronized",
+        "test_family_workbench.FamilyWorkbenchTests.test_saved_workspace_reopens_same_draft_and_query"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-07391": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_family_workbench.py",
+        "line": 23,
+        "message": "Cannot assign to attribute \"input_data\" for class \"QWidget\"\n  Attribute \"input_data\" is unknown",
+        "context": "self.parent.input_data=lambda:([dict(name='Alex Example',title='Designer',phone='+1 202 555 0100',email='alex@example.test')],[],{})",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "abe27ee81e4e9e3ba88edc5ab0fb172d240ff1a18613b39f473c2bb257693d5d"
+      },
+      "member": "input_data",
+      "receiver_contracts": [
+        {
+          "receiver": "PySide6.QtWidgets.QWidget",
+          "mro": [
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_family_workbench.FamilyWorkbenchTests.test_native_physical_filters_saved_workset_and_joint_variant_views",
+        "test_family_workbench.FamilyWorkbenchTests.test_role_tree_and_canvas_selection_are_synchronized",
+        "test_family_workbench.FamilyWorkbenchTests.test_saved_workspace_reopens_same_draft_and_query"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-07648": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_input_learning_integration.py",
+        "line": 35,
+        "message": "Cannot assign to attribute \"library\" for class \"QWidget\"\n  Attribute \"library\" is unknown",
+        "context": "self.parent=QWidget();self.parent.library=self.library;self.addCleanup(self.parent.deleteLater)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "8ba1a268a78ca4d65a054a2eb78a9e2b8d1bdf6ddbfe41033d7259e3db90a867"
+      },
+      "member": "library",
+      "receiver_contracts": [
+        {
+          "receiver": "PySide6.QtWidgets.QWidget",
+          "mro": [
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_background_cancel_retains_new_data_and_cannot_install_old_confirmation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-07763": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_input_learning_integration.py",
+        "line": 321,
+        "message": "Cannot assign to attribute \"reorder_template_id\" for class \"MainWindow\"\n  Expression of type \"Literal['explicit-historical-style']\" cannot be assigned to attribute \"reorder_template_id\" of class \"MainWindow\"\n    \"Literal['explicit-historical-style']\" is not assignable to \"None\"",
+        "context": "w.reorder_template_id='explicit-historical-style';self.assertFalse(uses_learning(w))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e4e5bd55475de5920c09180e9a4367cda2f6e8742827e34518413b4f7ade5317"
+      },
+      "member": "reorder_template_id",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.gui.MainWindow",
+          "mro": [
+            "template_ai.gui.MainWindow",
+            "PySide6.QtWidgets.QMainWindow",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "runtime-ast-observations-001",
+      "contexts": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-01761": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/gui.py",
+        "line": 1713,
+        "message": "Cannot assign to attribute \"last_command_receipt\" for class \"ObjectCanvas\"\n  Attribute \"last_command_receipt\" is unknown",
+        "context": "self.edit_canvas.last_command_receipt=dict(action=request['operation'],description='目前草稿框位／屬性變更',work_id=self.template.id,template_version=self.template.version,before_source_revision=self.template_revision,after_source_revision=self.template_revision,before_content_digest=before_pin,after_content_digest=digest(self.template.to_dict()),affected=[dict(id=row['id'],owner=row['owner'],kind=row['kind']) for row in plan['changes']],scope='目前未發布草稿；內容指紋不是安全落盤收據')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "29b43ec2e6caeb2819c9897ead73d2a409ac51dc480eaf7f156fce206b74082d"
+      },
+      "member": "last_command_receipt",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.object_dialog.ObjectCanvas",
+          "mro": [
+            "template_ai.object_dialog.ObjectCanvas",
+            "template_ai.gui.Canvas",
+            "PySide6.QtWidgets.QGraphicsView",
+            "PySide6.QtWidgets.QAbstractScrollArea",
+            "PySide6.QtWidgets.QFrame",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "capture-type-evidence-001",
+      "contexts": [
+        "capture:tools/capture_canvas_commands.py"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-03166": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/quality_repair_dialog.py",
+        "line": 317,
+        "message": "Cannot assign to attribute \"last_release_status\" for class \"QualityRepairDialog*\"\n  Attribute \"last_release_status\" is unknown",
+        "context": "def loaded(row):self.last_release_status=row;self.details.setPlainText('正式版本：'+str((row['pin'] or {}).get('pipeline_id') or '未建立或需重新核對')+'\\n'+'\\n'.join(row['errors'])+'\\n不自動信任任何舊版；發布與原稿核准仍獨立。');self.status.setText('已讀回目前正式指標與可信證據。')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c2497816bccb19696441aec544c553e6813e8de816e96fef386fddf4fbb8e519"
+      },
+      "member": "last_release_status",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.quality_repair_dialog.QualityRepairDialog",
+          "mro": [
+            "template_ai.quality_repair_dialog.QualityRepairDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "capture-type-evidence-001",
+      "contexts": [
+        "capture:tools/capture_quality_repair.py"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-03946": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/trusted_sample_dialog.py",
+        "line": 147,
+        "message": "Cannot assign to attribute \"last_trace\" for class \"TrustedSampleReviewDialog*\"\n  Attribute \"last_trace\" is unknown",
+        "context": "self.last_trace=value;self.trace_identity=identity;self.trace_offset=value['offset'];lines=['已登錄依賴：'+str(value['total_nodes'])+'項；本頁'+str(len(value['rows']))+'項','未登錄的歷史關聯仍為未知；沒有據此推定其他版本安全。','失聯歷史：'+str(len(value['missing_historical_nodes']))+'項']",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e0c45b902a4b4da7c37d973d6a230c3e6a35d19243d3b7aa90b951a5085a1107"
+      },
+      "member": "last_trace",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.trusted_sample_dialog.TrustedSampleReviewDialog",
+          "mro": [
+            "template_ai.trusted_sample_dialog.TrustedSampleReviewDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "capture-type-evidence-001",
+      "contexts": [
+        "capture:tools/capture_trusted_samples.py"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-03947": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/trusted_sample_dialog.py",
+        "line": 147,
+        "message": "Cannot assign to attribute \"trace_identity\" for class \"TrustedSampleReviewDialog*\"\n  Attribute \"trace_identity\" is unknown",
+        "context": "self.last_trace=value;self.trace_identity=identity;self.trace_offset=value['offset'];lines=['已登錄依賴：'+str(value['total_nodes'])+'項；本頁'+str(len(value['rows']))+'項','未登錄的歷史關聯仍為未知；沒有據此推定其他版本安全。','失聯歷史：'+str(len(value['missing_historical_nodes']))+'項']",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b5a7454b337e7c5fc7df97bbb4fa3e128d3232ac33ab6afb091c3a12662e740f"
+      },
+      "member": "trace_identity",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.trusted_sample_dialog.TrustedSampleReviewDialog",
+          "mro": [
+            "template_ai.trusted_sample_dialog.TrustedSampleReviewDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "capture-type-evidence-001",
+      "contexts": [
+        "capture:tools/capture_trusted_samples.py"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-03948": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/trusted_sample_dialog.py",
+        "line": 147,
+        "message": "Cannot assign to attribute \"trace_offset\" for class \"TrustedSampleReviewDialog*\"\n  Attribute \"trace_offset\" is unknown",
+        "context": "self.last_trace=value;self.trace_identity=identity;self.trace_offset=value['offset'];lines=['已登錄依賴：'+str(value['total_nodes'])+'項；本頁'+str(len(value['rows']))+'項','未登錄的歷史關聯仍為未知；沒有據此推定其他版本安全。','失聯歷史：'+str(len(value['missing_historical_nodes']))+'項']",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "61e1df9272e2ab27b2936fac3b034fc8ec187cbe6196585f700385eabbb2dfb2"
+      },
+      "member": "trace_offset",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.trusted_sample_dialog.TrustedSampleReviewDialog",
+          "mro": [
+            "template_ai.trusted_sample_dialog.TrustedSampleReviewDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "capture-type-evidence-001",
+      "contexts": [
+        "capture:tools/capture_trusted_samples.py"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TOO-04393": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tools/capture_local_recovery.py",
+        "line": 26,
+        "message": "Cannot assign to attribute \"catalog_complete\" for class \"RecoveryDialog\"\n  Attribute \"catalog_complete\" is unknown",
+        "context": "dialog.catalog_complete=True;dialog.text.setText('Alex Example');dialog.verified.setChecked(True);dialog.show();dialog.match()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e7a6a1ae62c38f05d7b7972f040928029d6d2a90779cfc64554c57439e962a60"
+      },
+      "member": "catalog_complete",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.recovery_dialog.RecoveryDialog",
+          "mro": [
+            "template_ai.recovery_dialog.RecoveryDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "capture-type-evidence-001",
+      "contexts": [
+        "capture:tools/capture_local_recovery.py"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TOO-04511": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tools/capture_remaining28.py",
+        "line": 141,
+        "message": "Cannot assign to attribute \"identity_plan\" for class \"CustomerDialog\"\n  Expression of type \"dict[str, str | list[dict[str, list[dict[Unknown, Unknown]]]] | dict[Unknown, Unknown] | bool]\" cannot be assigned to attribute \"identity_plan\" of class \"CustomerDialog\"\n    \"dict[str, str | list[dict[str, list[dict[Unknown, Unknown]]]] | dict[Unknown, Unknown] | bool]\" is not assignable to \"None\"",
+        "context": "dialog.identity_plan=plan",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "9f705d9983510c6d69a5842c2a60a4ec8a1016b221e259d09af04363cdced924"
+      },
+      "member": "identity_plan",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.customer_dialog.CustomerDialog",
+          "mro": [
+            "template_ai.customer_dialog.CustomerDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "capture-type-evidence-001",
+      "contexts": [
+        "capture:tools/capture_remaining28.py"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TOO-04512": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tools/capture_remaining28.py",
+        "line": 149,
+        "message": "Cannot assign to attribute \"identity_plan\" for class \"CustomerDialog\"\n  Expression of type \"dict[str, Any]\" cannot be assigned to attribute \"identity_plan\" of class \"CustomerDialog\"\n    \"dict[str, Any]\" is not assignable to \"None\"",
+        "context": "split=dialog.identity_service().plan_split(result['id']);dialog.identity_plan=split",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c003997d4853155c4c920b6ea5da6869277898a0e0252ba93fc99af93f39e8c7"
+      },
+      "member": "identity_plan",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.customer_dialog.CustomerDialog",
+          "mro": [
+            "template_ai.customer_dialog.CustomerDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "capture-type-evidence-001",
+      "contexts": [
+        "capture:tools/capture_remaining28.py"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-07382": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_family_source_forms.py",
+        "line": 33,
+        "message": "Cannot assign to attribute \"library\" for class \"QWidget\"\n  Attribute \"library\" is unknown",
+        "context": "self.parent=QWidget();self.parent.library=self.library;self.addCleanup(self.parent.deleteLater)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "44690a2934b59d9d116dbb6f8f6fc2f835d3524cdea0f185e281a8aa2257eb30"
+      },
+      "member": "library",
+      "receiver_contracts": [
+        {
+          "receiver": "PySide6.QtWidgets.QWidget",
+          "mro": [
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "capture-type-evidence-001",
+      "contexts": [
+        "capture:tools/capture_family_workbench.py"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-01687": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/gui.py",
+        "line": 1070,
+        "message": "Cannot assign to attribute \"_source_relink_preview\" for class \"MainWindow*\"\n  Attribute \"_source_relink_preview\" is unknown",
+        "context": "dialog=SourceRelinkDialog(self);self._source_relink_preview=dialog",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "854356eabeb4ca56b133846bf83154e132c37469c7f9f2b62c87f964f45b2d69"
+      },
+      "member": "_source_relink_preview",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.gui.MainWindow",
+          "mro": [
+            "template_ai.gui.MainWindow",
+            "PySide6.QtWidgets.QMainWindow",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "ast-module-contexts-003",
+      "contexts": [
+        "test_source_relink.SourceRelinkTests.test_gui_background_relink_keeps_selected_work_and_reopens"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-03022": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/quality_panel.py",
+        "line": 77,
+        "message": "Cannot assign to attribute \"major_entrypoint\" for class \"QualityRepairDialog\"\n  Attribute \"major_entrypoint\" is unknown",
+        "context": "dialog.major_entrypoint=bool(entry and entry.get('major_review'))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "9173d1c08522cc8de4600cce8e39d68ab926862452aaf283004519f88b6c64ed"
+      },
+      "member": "major_entrypoint",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.quality_repair_dialog.QualityRepairDialog",
+          "mro": [
+            "template_ai.quality_repair_dialog.QualityRepairDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "ast-module-contexts-003",
+      "contexts": [
+        "test_major_review_entries.MajorReviewEntryTests.test_overview_opens_actual_major_page_without_creating_any_record"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-08711": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_offline_support.py",
+        "line": 293,
+        "message": "Cannot assign to attribute \"library\" for class \"Window\"\n  Attribute \"library\" is unknown",
+        "context": "self.window.library = types.SimpleNamespace(root=self.root)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d3efb95bdaeb36e87246e4ab9804d3e95dfd435519c4bdb63b7a18556fef3a6c"
+      },
+      "member": "library",
+      "receiver_contracts": [
+        {
+          "receiver": "test_offline_support.Window",
+          "mro": [
+            "test_offline_support.Window",
+            "PySide6.QtWidgets.QMainWindow",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "ast-module-contexts-003",
+      "contexts": [
+        "test_offline_support.OfflineSupportGuiTests.test_corrupt_report_and_cancelled_export_preserve_current_report",
+        "test_offline_support.OfflineSupportGuiTests.test_real_panel_marks_missing_information_and_exports_same_report",
+        "test_offline_support.OfflineSupportGuiTests.test_status_input_hooks_never_copy_private_visible_messages"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-08712": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_offline_support.py",
+        "line": 294,
+        "message": "Cannot assign to attribute \"tabs\" for class \"Window\"\n  Attribute \"tabs\" is unknown",
+        "context": "self.window.tabs = QTabWidget()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a454febfe17c2cbc665334bfff1404d355473ac3aa680663a1560eacad3f0052"
+      },
+      "member": "tabs",
+      "receiver_contracts": [
+        {
+          "receiver": "test_offline_support.Window",
+          "mro": [
+            "test_offline_support.Window",
+            "PySide6.QtWidgets.QMainWindow",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "ast-module-contexts-003",
+      "contexts": [
+        "test_offline_support.OfflineSupportGuiTests.test_corrupt_report_and_cancelled_export_preserve_current_report",
+        "test_offline_support.OfflineSupportGuiTests.test_real_panel_marks_missing_information_and_exports_same_report",
+        "test_offline_support.OfflineSupportGuiTests.test_status_input_hooks_never_copy_private_visible_messages"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    }
+  }
+}

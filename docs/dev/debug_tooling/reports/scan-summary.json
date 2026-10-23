@@ -1,0 +1,171 @@
+{
+  "status": "LOCAL_TOOLING_VERIFIED_WITH_DOCUMENTED_LIMITATIONS",
+  "source_commit": "5bdff7dcf945b8457c562b6c03fdfc0e1e1e4554",
+  "runtime": {
+    "python": "3.12.14",
+    "python_minor": "3.12",
+    "platform": "linux",
+    "PySide6": "6.8.3"
+  },
+  "scans": [
+    {
+      "scope": "application",
+      "source": "5bdff7dcf945b8457c562b6c03fdfc0e1e1e4554",
+      "manifest_sha256": "b149f2fad1ac1818556c30044a039570f9ba8bf338cffcbde380020922357d9e",
+      "profile_sha256": "a0fbc4d5ba9a59cb343fe42752be6d3afcb6124a5b2e2b33a152b4ff37b84c57",
+      "coverage": {
+        "expected": 270,
+        "cpython_compile": 270,
+        "ruff": 270,
+        "ruff_parser_limitations": 3,
+        "pyright_files_analyzed": 270,
+        "pyright_include": 270,
+        "jscpd_explicit_inputs": 270,
+        "jscpd_eligible_sources": 265,
+        "jscpd_below_min_lines": [
+          "template_ai/__init__.py",
+          "template_ai/runtime_admission.py",
+          "template_ai/runtime_labels.py",
+          "template_ai/text_metrics.py"
+        ],
+        "jscpd_additional_below_min_tokens": 1
+      },
+      "counts": {
+        "ruff": 3,
+        "pyright": 4212
+      },
+      "seconds": 28.003,
+      "raw_exit_codes": {
+        "application-runtime": 0,
+        "cpython-syntax": 0,
+        "ruff-files": 0,
+        "ruff": 1,
+        "pyright": 1,
+        "jscpd": 0
+      },
+      "baseline": "baselines/application.json",
+      "baseline_sha256": "2226496a67a9862b681aa61f0c9d56435af149f0f8027c0b37e600fa2570d02e",
+      "pyright_rule_counts": {
+        "reportAttributeAccessIssue": 2313,
+        "reportOperatorIssue": 94,
+        "reportOptionalMemberAccess": 246,
+        "reportCallIssue": 165,
+        "reportOptionalSubscript": 561,
+        "reportIndexIssue": 114,
+        "reportArgumentType": 541,
+        "reportGeneralTypeIssues": 144,
+        "reportOptionalOperand": 16,
+        "reportOptionalIterable": 14,
+        "reportOptionalCall": 1,
+        "reportRedeclaration": 1,
+        "reportReturnType": 2
+      }
+    },
+    {
+      "scope": "tools",
+      "source": "5bdff7dcf945b8457c562b6c03fdfc0e1e1e4554",
+      "manifest_sha256": "36b325d24d1507bac569ae6344ef3082b72d5189db73bbc589b2645e96f72422",
+      "profile_sha256": "a0fbc4d5ba9a59cb343fe42752be6d3afcb6124a5b2e2b33a152b4ff37b84c57",
+      "coverage": {
+        "expected": 60,
+        "cpython_compile": 60,
+        "ruff": 60,
+        "ruff_parser_limitations": 0,
+        "pyright_files_analyzed": 60,
+        "pyright_include": 60,
+        "jscpd_explicit_inputs": 60,
+        "jscpd_eligible_sources": 59,
+        "jscpd_below_min_lines": [
+          "tools/public_evidence.py"
+        ],
+        "jscpd_additional_below_min_tokens": 0
+      },
+      "counts": {
+        "pyright": 521,
+        "jscpd": 2
+      },
+      "seconds": 9.499,
+      "raw_exit_codes": {
+        "application-runtime": 0,
+        "cpython-syntax": 0,
+        "ruff-files": 0,
+        "ruff": 0,
+        "pyright": 1,
+        "jscpd": 0
+      },
+      "baseline": "baselines/tools.json",
+      "baseline_sha256": "99c94fa6230ab7a911f2c0c918311373173f6c5bee7d8ead5e947aa0c7b7ed70",
+      "pyright_rule_counts": {
+        "reportOperatorIssue": 6,
+        "reportGeneralTypeIssues": 6,
+        "reportArgumentType": 26,
+        "reportOptionalSubscript": 128,
+        "reportMissingImports": 78,
+        "reportOptionalMemberAccess": 75,
+        "reportAttributeAccessIssue": 196,
+        "reportCallIssue": 3,
+        "reportIndexIssue": 3
+      }
+    },
+    {
+      "scope": "tests",
+      "source": "5bdff7dcf945b8457c562b6c03fdfc0e1e1e4554",
+      "manifest_sha256": "db20f8e9a19a77a1ff80e649d9ae146691c253f3a56e92c25ec5409fd13d5ea2",
+      "profile_sha256": "a0fbc4d5ba9a59cb343fe42752be6d3afcb6124a5b2e2b33a152b4ff37b84c57",
+      "coverage": {
+        "expected": 246,
+        "cpython_compile": 246,
+        "ruff": 246,
+        "ruff_parser_limitations": 0,
+        "pyright_files_analyzed": 246,
+        "pyright_include": 246,
+        "jscpd_explicit_inputs": 246,
+        "jscpd_eligible_sources": 244,
+        "jscpd_below_min_lines": [
+          "tests/digital_review_fixture.py",
+          "tests/test_evidence_redaction.py"
+        ],
+        "jscpd_additional_below_min_tokens": 0
+      },
+      "counts": {
+        "pyright": 7065,
+        "jscpd": 5
+      },
+      "seconds": 22.84,
+      "raw_exit_codes": {
+        "application-runtime": 0,
+        "cpython-syntax": 0,
+        "ruff-files": 0,
+        "ruff": 0,
+        "pyright": 1,
+        "jscpd": 0
+      },
+      "baseline": "baselines/tests.json",
+      "baseline_sha256": "7008ac6c83e5b6797da23c031500e06099eb3ec80978e9cc868bf2601436ffd2",
+      "pyright_rule_counts": {
+        "reportGeneralTypeIssues": 96,
+        "reportAttributeAccessIssue": 3950,
+        "reportArgumentType": 772,
+        "reportOptionalSubscript": 1397,
+        "reportOperatorIssue": 16,
+        "reportOptionalMemberAccess": 334,
+        "reportIndexIssue": 344,
+        "reportCallIssue": 134,
+        "reportUnhashable": 1,
+        "reportMissingImports": 15,
+        "reportOptionalIterable": 6
+      }
+    }
+  ],
+  "exact_clone_groups": 7,
+  "confirmed_product_behavior_bugs": 0,
+  "new_tooling_type_errors_fixed": 2,
+  "qualifications_unchanged": true,
+  "remote_write": "NOT_PERFORMED_COST_UNVERIFIED",
+  "skill_discovery": {
+    "files": "2 project entries verified",
+    "explicit_use": "READ_AND_APPLIED_TO_DEMO_AND_TRIAGE",
+    "platform_executor_catalog": "EMPTY_CURRENT_SESSION",
+    "automatic_loading": "UNVERIFIED_RELOAD_MAY_BE_REQUIRED"
+  }
+}

@@ -1,0 +1,106 @@
+test_catalog_filter_keeps_payload_from_same_read_as_selected_ids (test_read_view_snapshot.ReadViewSnapshotTests.test_catalog_filter_keeps_payload_from_same_read_as_selected_ids) ... FAIL
+test_coverage_batch_search_retains_selected_summary (test_read_view_snapshot.ReadViewSnapshotTests.test_coverage_batch_search_retains_selected_summary) ... FAIL
+test_editor_page_keeps_selected_payload_before_concurrent_rename (test_read_view_snapshot.ReadViewSnapshotTests.test_editor_page_keeps_selected_payload_before_concurrent_rename) ... FAIL
+test_noise_hit_search_retains_selected_stored_row_and_live_decision_snapshot (test_read_view_snapshot.ReadViewSnapshotTests.test_noise_hit_search_retains_selected_stored_row_and_live_decision_snapshot) ... FAIL
+test_rule_state_filter_retains_selected_revision_through_inspection (test_read_view_snapshot.ReadViewSnapshotTests.test_rule_state_filter_retains_selected_revision_through_inspection) ... FAIL
+
+======================================================================
+FAIL: test_catalog_filter_keeps_payload_from_same_read_as_selected_ids (test_read_view_snapshot.ReadViewSnapshotTests.test_catalog_filter_keeps_payload_from_same_read_as_selected_ids)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/template-ai-read-view-before-62b2/tests/test_read_view_snapshot.py", line 40, in test_catalog_filter_keeps_payload_from_same_read_as_selected_ids
+    self.assertEqual(changed,[True]);self.assertEqual([r['name'] for r in panel.visible],['AUTHORED_FILTER_OLD']);panel.rebuild();self.assertEqual(panel.visible,[])
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['AUTHORED_FILTER_NEW'] != ['AUTHORED_FILTER_OLD']
+
+First differing element 0:
+'AUTHORED_FILTER_NEW'
+'AUTHORED_FILTER_OLD'
+
+- ['AUTHORED_FILTER_NEW']
+?                   ^^^
+
++ ['AUTHORED_FILTER_OLD']
+?                   ^^^
+
+
+======================================================================
+FAIL: test_coverage_batch_search_retains_selected_summary (test_read_view_snapshot.ReadViewSnapshotTests.test_coverage_batch_search_retains_selected_summary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/template-ai-read-view-before-62b2/tests/test_read_view_snapshot.py", line 59, in test_coverage_batch_search_retains_selected_summary
+    self.assertEqual(changed,[True]);self.assertEqual([r['state'] for r in result['rows']],['AUTHORED_BATCH_OLD'])
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['AUTHORED_BATCH_NEW'] != ['AUTHORED_BATCH_OLD']
+
+First differing element 0:
+'AUTHORED_BATCH_NEW'
+'AUTHORED_BATCH_OLD'
+
+- ['AUTHORED_BATCH_NEW']
+?                  ^^^
+
++ ['AUTHORED_BATCH_OLD']
+?                  ^^^
+
+
+======================================================================
+FAIL: test_editor_page_keeps_selected_payload_before_concurrent_rename (test_read_view_snapshot.ReadViewSnapshotTests.test_editor_page_keeps_selected_payload_before_concurrent_rename)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/template-ai-read-view-before-62b2/tests/test_read_view_snapshot.py", line 35, in test_editor_page_keeps_selected_payload_before_concurrent_rename
+    self.assertEqual(changed,[True]);self.assertEqual([t.name for t in page['items']],['AUTHORED_OLD_NAME']);self.assertEqual(editor_page(self.reader,'templates')['items'][0].name,'AUTHORED_NEW_NAME')
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['AUTHORED_NEW_NAME'] != ['AUTHORED_OLD_NAME']
+
+First differing element 0:
+'AUTHORED_NEW_NAME'
+'AUTHORED_OLD_NAME'
+
+- ['AUTHORED_NEW_NAME']
+?            ^^^
+
++ ['AUTHORED_OLD_NAME']
+?            ^^^
+
+
+======================================================================
+FAIL: test_noise_hit_search_retains_selected_stored_row_and_live_decision_snapshot (test_read_view_snapshot.ReadViewSnapshotTests.test_noise_hit_search_retains_selected_stored_row_and_live_decision_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/template-ai-read-view-before-62b2/tests/test_read_view_snapshot.py", line 51, in test_noise_hit_search_retains_selected_stored_row_and_live_decision_snapshot
+    self.assertEqual(changed,[True]);self.assertEqual([r['stored']['state'] for r in panel.rows],['AUTHORED_HIT_OLD']);panel.reload();self.assertEqual(panel.rows,[])
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['AUTHORED_HIT_NEW'] != ['AUTHORED_HIT_OLD']
+
+First differing element 0:
+'AUTHORED_HIT_NEW'
+'AUTHORED_HIT_OLD'
+
+- ['AUTHORED_HIT_NEW']
+?                ^^^
+
++ ['AUTHORED_HIT_OLD']
+?                ^^^
+
+
+======================================================================
+FAIL: test_rule_state_filter_retains_selected_revision_through_inspection (test_read_view_snapshot.ReadViewSnapshotTests.test_rule_state_filter_retains_selected_revision_through_inspection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/template-ai-read-view-before-62b2/tests/test_read_view_snapshot.py", line 45, in test_rule_state_filter_retains_selected_revision_through_inspection
+    self.assertEqual(changed,[True]);self.assertEqual([r['state'] for r in panel.rows],['PENDING']);panel.reload();self.assertEqual(panel.rows,[])
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['DISABLED'] != ['PENDING']
+
+First differing element 0:
+'DISABLED'
+'PENDING'
+
+- ['DISABLED']
++ ['PENDING']
+
+----------------------------------------------------------------------
+Ran 5 tests in 4.181s
+
+FAILED (failures=5)

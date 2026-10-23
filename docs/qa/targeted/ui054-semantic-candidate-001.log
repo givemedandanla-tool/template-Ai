@@ -1,0 +1,88 @@
+test_actual_fifo_owned_children_create_only_isolated_models_and_preserve_source_truth (test_quality_repair_training.RepairCandidateTrainingTests.test_actual_fifo_owned_children_create_only_isolated_models_and_preserve_source_truth) ... ERROR
+test_cancel_pause_resume_same_job_and_completed_result_cannot_be_retrained (test_quality_repair_training.RepairCandidateTrainingTests.test_cancel_pause_resume_same_job_and_completed_result_cannot_be_retrained) ... ERROR
+test_confirmed_holdout_family_discovery_cannot_enter_already_planned_training_job (test_quality_repair_training.RepairCandidateTrainingTests.test_confirmed_holdout_family_discovery_cannot_enter_already_planned_training_job) ... ERROR
+test_late_candidate_link_audit_failure_rolls_back_model_candidate_and_role_lock (test_quality_repair_training.RepairCandidateTrainingTests.test_late_candidate_link_audit_failure_rolls_back_model_candidate_and_role_lock) ... ERROR
+test_stale_human_training_source_blocks_claim_before_worker_lease_or_model (test_quality_repair_training.RepairCandidateTrainingTests.test_stale_human_training_source_blocks_claim_before_worker_lease_or_model) ... ok
+
+======================================================================
+ERROR: test_actual_fifo_owned_children_create_only_isolated_models_and_preserve_source_truth (test_quality_repair_training.RepairCandidateTrainingTests.test_actual_fifo_owned_children_create_only_isolated_models_and_preserve_source_truth)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_repair_training.py", line 41, in test_actual_fifo_owned_children_create_only_isolated_models_and_preserve_source_truth
+    done=run_isolated(self.library.root,'AUTO_JOB',claimed['id'],claimed['owner']['token'],admission=lambda:ALLOW)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/runtime_worker.py", line 108, in run_isolated
+    if failure:raise RuntimeError(failure)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: cannot start a transaction within a transaction
+
+======================================================================
+ERROR: test_cancel_pause_resume_same_job_and_completed_result_cannot_be_retrained (test_quality_repair_training.RepairCandidateTrainingTests.test_cancel_pause_resume_same_job_and_completed_result_cannot_be_retrained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_repair_training.py", line 53, in test_cancel_pause_resume_same_job_and_completed_result_cannot_be_retrained
+    done=self.run_direct(done,admission=lambda:ALLOW);self.assertEqual(done['phase'],'COMPLETED');self.assertEqual(self.service.store.count('SEMANTIC_MODEL'),1)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_quality_repair_training.py", line 30, in run_direct
+    try:return run_automatic(self.library.root,job['id'],claimed['owner']['token'],cancel=cancel,admission=admission)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/automatic_training.py", line 243, in run_automatic
+    return run(service,job,token,cancel,progress,admission)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_repair_training.py", line 100, in run
+    result=service.finish(identity,token,'COMPLETED')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/automatic_training.py", line 112, in finish
+    with self.store.transaction():
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/training_store.py", line 76, in transaction
+    self.db.execute('BEGIN IMMEDIATE')
+sqlite3.OperationalError: cannot start a transaction within a transaction
+
+======================================================================
+ERROR: test_confirmed_holdout_family_discovery_cannot_enter_already_planned_training_job (test_quality_repair_training.RepairCandidateTrainingTests.test_confirmed_holdout_family_discovery_cannot_enter_already_planned_training_job)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_repair_training.py", line 80, in test_confirmed_holdout_family_discovery_cannot_enter_already_planned_training_job
+    source,work=source_work(self.library,self.root,'independent-quality-source');confirmed(self.service.store,work)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/training_fixture.py", line 14, in source_work
+    source = library.add_source(path, import_file(path, library.assets))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/importer.py", line 200, in import_file
+    raise ValueError("此來源需 Inkscape 或 PDF 相容內容；可改提供 PDF／SVG／PNG／JPG")
+ValueError: 此來源需 Inkscape 或 PDF 相容內容；可改提供 PDF／SVG／PNG／JPG
+
+======================================================================
+ERROR: test_late_candidate_link_audit_failure_rolls_back_model_candidate_and_role_lock (test_quality_repair_training.RepairCandidateTrainingTests.test_late_candidate_link_audit_failure_rolls_back_model_candidate_and_role_lock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_repair_training.py", line 69, in test_late_candidate_link_audit_failure_rolls_back_model_candidate_and_role_lock
+    with self.assertRaises(OSError):self.run_direct(job,admission=lambda:ALLOW)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_quality_repair_training.py", line 30, in run_direct
+    try:return run_automatic(self.library.root,job['id'],claimed['owner']['token'],cancel=cancel,admission=admission)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/automatic_training.py", line 243, in run_automatic
+    return run(service,job,token,cancel,progress,admission)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_repair_training.py", line 100, in run
+    result=service.finish(identity,token,'COMPLETED')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/automatic_training.py", line 112, in finish
+    with self.store.transaction():
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/training_store.py", line 76, in transaction
+    self.db.execute('BEGIN IMMEDIATE')
+sqlite3.OperationalError: cannot start a transaction within a transaction
+
+----------------------------------------------------------------------
+Ran 5 tests in 4.521s
+
+FAILED (errors=4)

@@ -1,0 +1,149 @@
+name: Authorized bundled Windows beta2 release
+on:
+  workflow_dispatch:
+  push:
+    # Only this explicit release request; ordinary commits/PRs never build EXE.
+    branches: ['release-request/v0.2.0-beta.2']
+permissions:
+  contents: read
+concurrency:
+  group: windows-v0.2.0-beta.2
+  # Only explicitly supersede a known pre-publication attempt. Ordinary requests
+  # retain serialization, protecting an immutable tag/publish already in flight.
+  cancel-in-progress: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[supersede-prepackage-run]') }}
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    env:
+      QT_QPA_PLATFORM: windows
+      PYTHONUTF8: '1'
+      GH_TOKEN: ${{ github.token }}
+      NATIVE_TESTS_ONLY: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[native-tests-only]') }}
+      FROZEN_PROBE_ONLY: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[frozen-probe-only]') }}
+      FROZEN_UTF8_AB: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[utf8-ab]') }}
+      BUNDLE_DIAGNOSTIC_TRACE: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[bundle-trace]') }}
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - name: Preserve source bytes for immutable fingerprints
+        shell: pwsh
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.longpaths true
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Record actual runner start
+        shell: pwsh
+        run: |
+          gh auth setup-git
+          python tools/persist_release_evidence.py --status RUNNING
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot persist runner evidence' }
+      - name: Install existing free local conversion dependency
+        shell: pwsh
+        run: |
+          choco install inkscape --version=1.4.2 --yes --no-progress
+          if ($LASTEXITCODE -ne 0) { throw 'Inkscape installation failed' }
+          if (!(Test-Path 'C:\Program Files\Inkscape\bin\inkscape.exe')) { throw 'Inkscape executable missing' }
+          'C:\Program Files\Inkscape\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Build and verify actual Windows executable
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force artifacts | Out-Null
+          $pythonBefore = (Get-Command python).Source
+          $selectedPython = Join-Path $env:pythonLocation 'python.exe'
+          try {
+            if (!(Test-Path $selectedPython)) { throw 'The configured setup-python interpreter is missing' }
+            # Inkscape bundles Python too; keep the build on setup-python 3.11.
+            $env:PATH = "$env:pythonLocation;$env:pythonLocation\Scripts;$env:PATH"
+            if ($env:FROZEN_PROBE_ONLY -eq 'true') {
+              & ./.github/build_windows_ci.ps1 -FrozenProbeOnly *>&1 | Tee-Object -FilePath artifacts/build-transcript.log
+            } elseif ($env:NATIVE_TESTS_ONLY -eq 'true') {
+              & ./.github/build_windows_ci.ps1 -NativeTestsOnly *>&1 | Tee-Object -FilePath artifacts/build-transcript.log
+            } else {
+              & ./.github/build_windows_ci.ps1 *>&1 | Tee-Object -FilePath artifacts/build-transcript.log
+            }
+            if ($LASTEXITCODE -ne 0) { throw "Windows build exited with code $LASTEXITCODE" }
+          } catch {
+            # Retain failures that occur before the build script can create logs.
+            'WINDOWS_BUILD_INVOCATION_FAILURE' | Out-File -Encoding utf8 artifacts/pyinstaller.log -Append
+            ($_ | Format-List * -Force | Out-String) | Out-File -Encoding utf8 artifacts/pyinstaller.log -Append
+            $_.ScriptStackTrace | Out-File -Encoding utf8 artifacts/pyinstaller.log -Append
+            throw
+          } finally {
+            if (Test-Path artifacts/build-transcript.log) {
+              Get-Content artifacts/build-transcript.log -Tail 160 | Out-File -Encoding utf8 artifacts/pyinstaller.log -Append
+            }
+            "Python before explicit selection: $pythonBefore" | Out-File -Encoding utf8 artifacts/pyinstaller.log -Append
+            "Selected setup-python interpreter: $selectedPython" | Out-File -Encoding utf8 artifacts/pyinstaller.log -Append
+          }
+      - name: Record native diagnosis without release qualification
+        if: success() && env.NATIVE_TESTS_ONLY == 'true'
+        shell: pwsh
+        run: python tools/persist_release_evidence.py --status NATIVE_TESTS_DIAGNOSTIC_PASS_NOT_PUBLISHED
+      - name: Record frozen probe without publication
+        if: success() && env.FROZEN_PROBE_ONLY == 'true'
+        shell: pwsh
+        run: python tools/persist_release_evidence.py --status FROZEN_DIAGNOSTIC_PASS_NOT_PUBLISHED
+      - name: Create immutable beta tag and draft assets
+        if: env.NATIVE_TESTS_ONLY != 'true' && env.FROZEN_PROBE_ONLY != 'true'
+        shell: pwsh
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git tag -a v0.2.0-beta.2 -m 'Authorized native Windows internal beta'
+          if ($LASTEXITCODE -ne 0) { throw 'Tag exists; do not overwrite' }
+          git push origin v0.2.0-beta.2
+          if ($LASTEXITCODE -ne 0) { throw 'Tag publication failed' }
+          gh release create v0.2.0-beta.2 --verify-tag --draft --prerelease --title 'Template AI v0.2.0-beta.2 — Windows 實測版' --notes-file docs/dev/releases/v0.2.0-beta.2-notes.md artifacts/TemplateAI-v0.2.0-beta.2-windows-x64.zip artifacts/release-manifest.json artifacts/SHA256SUMS.txt artifacts/inkscape-1.4.2-corresponding-sources.zip
+          if ($LASTEXITCODE -ne 0) { throw 'Draft Release publication failed' }
+      - name: Download and verify every draft package file
+        if: env.NATIVE_TESTS_ONLY != 'true' && env.FROZEN_PROBE_ONLY != 'true'
+        shell: pwsh
+        run: |
+          gh release download v0.2.0-beta.2 --dir artifacts/download
+          if ($LASTEXITCODE -ne 0) { throw 'Actual draft download failed' }
+          python tools/windows_release.py verify-download --output artifacts/download
+          if ($LASTEXITCODE -ne 0) { throw 'Downloaded draft differs' }
+      - name: Publish prerelease and verify published bytes
+        if: env.NATIVE_TESTS_ONLY != 'true' && env.FROZEN_PROBE_ONLY != 'true'
+        shell: pwsh
+        run: |
+          gh release edit v0.2.0-beta.2 --draft=false --prerelease
+          if ($LASTEXITCODE -ne 0) { throw 'Prerelease publication failed' }
+          Remove-Item -Recurse artifacts/download
+          gh release download v0.2.0-beta.2 --dir artifacts/download
+          if ($LASTEXITCODE -ne 0) { throw 'Published asset download failed' }
+          python tools/windows_release.py verify-download --output artifacts/download
+          if ($LASTEXITCODE -ne 0) { throw 'Published download not verified' }
+          python tools/persist_release_evidence.py --status RELEASE_PUBLISHED_DOWNLOAD_VERIFIED
+          if ($LASTEXITCODE -ne 0) { throw 'Release receipt persistence failed' }
+      - name: Preserve failure instead of claiming success
+        if: failure()
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force artifacts/package-check | Out-Null
+          foreach ($proof in @('upstream-license-download.json', 'dependency-license-verification.json')) {
+            if (Test-Path "artifacts/$proof") { Copy-Item "artifacts/$proof" "artifacts/package-check/$proof" }
+          }
+          python tools/persist_release_evidence.py --status FAILED_NOT_VERIFIED
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Windows-v0.2.0-beta.2-evidence
+          path: |
+            artifacts/*.txt
+            artifacts/*.json
+            artifacts/*.log
+            artifacts/source-tests/
+            artifacts/package-check/
+          if-no-files-found: warn
+          retention-days: 14

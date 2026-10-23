@@ -1,0 +1,82 @@
+{
+  "receipts": [
+    {
+      "id": "CP-20261015-SEVENTY-BEGIN",
+      "verified_utc": "2026-10-15T03:35:09.746085+00:00",
+      "snapshot_commit": "1fdf730176cc42b1a5b2be0e782dade193ace960",
+      "files": 868
+    },
+    {
+      "id": "CP-20261015-SEVENTY-CUSTOMERS",
+      "verified_utc": "2026-10-15T03:41:12.100882+00:00",
+      "snapshot_commit": "e376fef36d217e48129b7b58a2ec0a56459edf92",
+      "files": 876
+    },
+    {
+      "id": "CP-20261015-SEVENTY-UI-WIP",
+      "verified_utc": "2026-10-15T03:47:23.715357+00:00",
+      "snapshot_commit": "8cf69b6cb1b9bc256f5519e2282214659e65f1ed",
+      "files": 885
+    },
+    {
+      "id": "CP-20261015-SEVENTY-UI-TARGETED",
+      "verified_utc": "2026-10-15T03:51:56.904933+00:00",
+      "snapshot_commit": "0df18a5ca821878cc730092239f6857003cb84eb",
+      "files": 890
+    },
+    {
+      "id": "CP-20261015-SEVENTY-SOURCE",
+      "verified_utc": "2026-10-15T04:00:49.172428+00:00",
+      "snapshot_commit": "483071cde15d7007a4afb55e6f75e0329ac17406",
+      "files": 901
+    },
+    {
+      "id": "CP-20261015-SEVENTY-SAFE-SOURCE",
+      "verified_utc": "2026-10-15T04:13:37.203266+00:00",
+      "snapshot_commit": "d5d110e53b0ee135f1fec69bd13d7ce674a27fd4",
+      "files": 919
+    },
+    {
+      "id": "CP-20261015-SEVENTY-VERIFIED",
+      "verified_utc": "2026-10-15T04:20:57.778967+00:00",
+      "snapshot_commit": "24a3f40d69907c51c87d3a9c718ecd77f79c1153",
+      "files": 945
+    }
+  ],
+  "gaps": [
+    {
+      "from": "CP-20261015-SEVENTY-BEGIN",
+      "to": "CP-20261015-SEVENTY-CUSTOMERS",
+      "seconds": 362.354797
+    },
+    {
+      "from": "CP-20261015-SEVENTY-CUSTOMERS",
+      "to": "CP-20261015-SEVENTY-UI-WIP",
+      "seconds": 371.614475
+    },
+    {
+      "from": "CP-20261015-SEVENTY-UI-WIP",
+      "to": "CP-20261015-SEVENTY-UI-TARGETED",
+      "seconds": 273.189576
+    },
+    {
+      "from": "CP-20261015-SEVENTY-UI-TARGETED",
+      "to": "CP-20261015-SEVENTY-SOURCE",
+      "seconds": 532.267495
+    },
+    {
+      "from": "CP-20261015-SEVENTY-SOURCE",
+      "to": "CP-20261015-SEVENTY-SAFE-SOURCE",
+      "seconds": 768.030838
+    },
+    {
+      "from": "CP-20261015-SEVENTY-SAFE-SOURCE",
+      "to": "CP-20261015-SEVENTY-VERIFIED",
+      "seconds": 440.575701
+    }
+  ],
+  "maximum_gap_seconds": 768.030838,
+  "target_seconds": 600,
+  "strict_10minute_claim": false,
+  "explanation": "實際時刻保留；SOURCE到SAFE-SOURCE因automatic review拒絕raw metadata／安全替代有超10分鐘間隔。CP-LOCK PREPARED未ACK、superseded；不改寫歷史。"
+}

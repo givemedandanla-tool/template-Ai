@@ -1,0 +1,1545 @@
+{
+  "method": "Location-specific review of authored fixture schemas and test-only adapters.\n\nThese cases do not qualify arbitrary inputs, replaced error presenters, or native\nplatforms. Their original assertions and raw static findings remain retained.\n",
+  "proof": {
+    "D-TES-04751": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOperatorIssue",
+        "path": "tests/quality_repair_acceptance_fixture.py",
+        "line": 51,
+        "message": "Operator \"+\" not supported for types \"str\" and \"str | None\"\n  Operator \"+\" not supported for types \"str\" and \"None\" when expected type is \"str\"",
+        "context": "if node.get('id'):node.set('id','multi-'+str(index)+'-'+node.get('id'))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4f36a4a9abeabeb946bc05a0075af2ce05e175230efba086beb7146959fc23af"
+      },
+      "reason": "The XML id value is checked truthy immediately before the repeated get and is not mutated between those reads. ElementTree id is str or None; the accepted branch has str. The same statement then writes the new authored multi-work prefix.",
+      "source_sha256": "1670f7e7cb7650c89be16038846321efcdf40de0b32e438e6f56d3697ecda6b9",
+      "passing_related_cases": [
+        "test_quality_repair_gates.QualityRepairGateTests.test_actual_root_is_fixed_without_independent_pass_and_cannot_skip_controls",
+        "test_quality_repair_gates.QualityRepairGateTests.test_identical_actual_pipeline_cannot_be_registered_as_repair_by_renaming",
+        "test_quality_repair_gates.QualityRepairGateTests.test_sparse_unaffected_controls_save_failed_receipt_and_block_new_acceptance",
+        "test_quality_repair_releases.QualityRepairReleaseTests.test_actual_critical_recheck_quarantines_same_parser_and_no_old_fallback_is_assumed_safe",
+        "test_quality_repair_releases.QualityRepairReleaseTests.test_actual_encrypted_restore_marks_active_runtime_for_explicit_revalidation",
+        "test_quality_repair_releases.QualityRepairReleaseTests.test_actual_owned_fifo_new_source_uses_job_pinned_frozen_pipeline_after_pointer_change",
+        "test_quality_repair_releases.QualityRepairReleaseTests.test_changed_preflight_cas_and_late_pointer_audit_do_not_create_partial_activation",
+        "test_quality_repair_releases.QualityRepairReleaseTests.test_withdrawn_evidence_blocks_runtime_and_same_old_version_cannot_be_safe_rollback"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-04757": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/sync_workflow_fixture.py",
+        "line": 29,
+        "message": "Argument of type \"Unknown | int | list[Any]\" cannot be assigned to parameter \"iterable\" of type \"Iterable[_T@enumerate]\" in function \"__new__\"\n  Type \"Unknown | int | list[Any]\" is not assignable to type \"Iterable[_T@enumerate]\"\n    \"int\" is incompatible with protocol \"Iterable[_T@enumerate]\"\n      \"__iter__\" is not present",
+        "context": "for index,company in enumerate(graph.data['companies']):self.store.bind(company['id'],self.registry[index]['id'],self.registry[index]['name'],True)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e99966ebe4c334232721f77c6bbf8ecd9e88a66ad82305a22799f19c6f25d633"
+      },
+      "reason": "These authored fixtures use validated InputGraph people/companies lists or explicit example fields lists. Counts/revision integers are different named fields; they cannot be the iterated list. Stable owners, links and fields remain checked by the original graph/example validators and assertions.",
+      "source_sha256": "dcf529167850fbc2d9b32586cb0dc9610a87a58956fa2befcdd7a846e7c652e2",
+      "passing_related_cases": [
+        "test_candidate_sync.CandidateSyncTests.test_ambiguous_two_consumers_cannot_choose_one_by_slot_position",
+        "test_candidate_sync.CandidateSyncTests.test_coordinate_font_and_owner_copy_are_not_allowed_properties",
+        "test_candidate_sync.CandidateSyncTests.test_different_physical_sizes_keep_actual_geometry_unchanged",
+        "test_candidate_sync.CandidateSyncTests.test_equal_text_with_different_field_identity_is_incompatible",
+        "test_candidate_sync.CandidateSyncTests.test_locked_target_preserves_lock_and_other_ready_target_is_explicit",
+        "test_candidate_sync.CandidateSyncTests.test_missing_stable_source_identity_never_infers_name_match",
+        "test_candidate_sync.CandidateSyncTests.test_partial_matching_of_multiple_source_slots_never_partially_changes_target",
+        "test_candidate_sync.CandidateSyncTests.test_same_names_and_phones_map_only_same_source_entity_field",
+        "test_candidate_sync.CandidateSyncTests.test_source_or_target_manual_change_invalidates_prior_plan",
+        "test_candidate_sync.CandidateSyncTests.test_unchanged_property_and_generation_conflict_have_named_per_target_states",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_actual_dialog_default_work_only_cancel_confirmation_and_commit",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_add_delete_clear_and_absent_are_distinct_and_names_protected",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_late_event_failure_rolls_back_entities_contacts_links_history_and_revision",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_logo_and_cross_customer_operations_cannot_use_generic_sync",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_partial_dependent_set_is_rejected_without_implicit_selection",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_restore_is_new_revision_then_preserves_later_values_and_history_can_be_deleted",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_selective_values_use_stable_ids_and_never_change_work_or_templates",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_shared_company_and_contacts_preview_all_actual_owners",
+        "test_customer_graph_sync.CustomerGraphSyncTests.test_stale_snapshot_has_three_values_and_never_overwrites_later_write"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-05095": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_batch_import.py",
+        "line": 163,
+        "message": "Cannot access attribute \"load_slot_form\" for class \"MainWindow\"\n  Attribute \"load_slot_form\" is unknown",
+        "context": "self.window.current_slot=Slot('name','p1',Rect(4,4,20,10));self.window.load_slot_form(self.window.current_slot) if hasattr(self.window,'load_slot_form') else None",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7e07591a64a730b36cdbac13adf72a8d73c29945417fa5e94c85214f9ea1d9e9"
+      },
+      "reason": "This optional legacy method is invoked only if hasattr says it exists. Current MainWindow does not define load_slot_form, so the optional branch is skipped; the actual current panel paths are tested separately. Do not claim the absent API is implemented.",
+      "source_sha256": "9032bbef5fbd68474a348d7628bbfa5f8390e8f266905f0edec582bf1bcf7b9d",
+      "passing_related_cases": [
+        "test_batch_import.BatchImportGuiTests.test_actual_cooperative_cancel_history_reopen_resume_and_close_guard",
+        "test_batch_import.BatchImportGuiTests.test_background_failure_isolated_and_preflight_failure_controls_recover",
+        "test_batch_import.BatchImportGuiTests.test_late_result_transaction_failure_stops_and_reenables_gui",
+        "test_batch_import.BatchImportGuiTests.test_modal_preflight_scope_mutation_and_dirty_navigation_are_blocked",
+        "test_batch_import.BatchImportGuiTests.test_page_change_invalidates_preview_and_worker_launch_failure_recovers",
+        "test_batch_import.BatchImportGuiTests.test_real_preflight_confirmation_background_progress_and_source_locate",
+        "test_batch_import.BatchImportGuiTests.test_resource_waiting_import_can_be_cancelled_and_persisted_as_interrupted_without_registration",
+        "test_batch_import.BatchImportTests.test_bounded_folder_files_cancel_page_and_final_cache_changed",
+        "test_batch_import.BatchImportTests.test_cancel_resume_reopen_successes_preserved_once",
+        "test_batch_import.BatchImportTests.test_cas_owner_live_recovery_and_dead_session",
+        "test_batch_import.BatchImportTests.test_health_reuse_recheck_and_no_duplicate_registration",
+        "test_batch_import.BatchImportTests.test_individual_failure_isolation_and_real_counts",
+        "test_batch_import.BatchImportTests.test_late_audit_rolls_back_source_and_result_then_can_recover",
+        "test_batch_import.BatchImportTests.test_other_live_session_cannot_take_over_between_items",
+        "test_batch_import.BatchImportTests.test_preflight_exact_duplicates_keep_paths_and_no_visual_guess",
+        "test_batch_import.BatchImportTests.test_source_changed_before_and_during_conversion_never_committed"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-05168": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_batch_source_relink.py",
+        "line": 75,
+        "message": "Argument of type \"int\" cannot be assigned to parameter \"recursive\" of type \"bool\" in function \"discover_sources\"\n  \"int\" is not assignable to \"bool\"",
+        "context": "self.assertEqual(discover_sources(self.sources, self.search, **kwargs)[\"status\"], \"PARTIAL\")",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "cc2d9487af1b2d4ed391c5ec10d05ee73973f8b3a452dd297d6db4784a7e3f61"
+      },
+      "reason": "The two kwargs literals contain only max_bytes=1 or max_entries=1. Both are integer resource limits; neither supplies recursive. Inference merges arbitrary string keys and incorrectly applies that int to the separate recursive:bool parameter. The actual resource-limit assertions require PARTIAL.",
+      "source_sha256": "7d1d1396959f2e2fa1001e167a41ecb0439fe0933d6ea408fa2fde4363bca41e",
+      "passing_related_cases": [
+        "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
+        "test_batch_source_relink.BatchSourceGuiTests.test_cancelled_scan_or_worker_error_never_enables_commit",
+        "test_batch_source_relink.BatchSourceGuiTests.test_selected_batch_apply_and_gui_undo_preserve_work",
+        "test_batch_source_relink.BatchSourceTests.test_batch_requires_approval_and_preserves_source_payload_and_ids",
+        "test_batch_source_relink.BatchSourceTests.test_candidate_changed_after_background_verify_does_not_partially_commit",
+        "test_batch_source_relink.BatchSourceTests.test_candidate_count_is_bounded_and_partial_not_all_found",
+        "test_batch_source_relink.BatchSourceTests.test_empty_duplicate_and_same_current_location_are_not_fake_updates",
+        "test_batch_source_relink.BatchSourceTests.test_final_batch_audit_failure_rolls_back_links_histories_and_reviews",
+        "test_batch_source_relink.BatchSourceTests.test_late_revision_conflict_and_event_failure_roll_back_entire_batch",
+        "test_batch_source_relink.BatchSourceTests.test_later_relink_revision_is_not_overwritten_by_old_batch_undo",
+        "test_batch_source_relink.BatchSourceTests.test_limits_cancel_unreadable_and_missing_fingerprint_are_explicit",
+        "test_batch_source_relink.BatchSourceTests.test_one_candidate_hashed_once_for_independent_same_content_registrations",
+        "test_batch_source_relink.BatchSourceTests.test_resolved_directory_outside_root_not_entered_even_without_symlink_flag",
+        "test_batch_source_relink.BatchSourceTests.test_search_does_not_follow_symlink_outside_selected_root",
+        "test_batch_source_relink.BatchSourceTests.test_size_prefilter_same_name_different_bytes_and_ambiguous_copies",
+        "test_batch_source_relink.BatchSourceTests.test_undo_missing_original_wrong_position_or_later_revision_rejected",
+        "test_batch_source_relink.BatchSourceTests.test_undo_verifies_old_paths_creates_new_revisions_and_keeps_history"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-05388": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_candidate_edit_history.py",
+        "line": 21,
+        "message": "Argument of type \"float\" cannot be assigned to parameter \"dy\" of type \"int\" in function \"move\"\n  \"float\" is not assignable to \"int\"",
+        "context": "original=self.ready();name_x=original.template.slots[0].rect.x;title_y=original.template.slots[1].rect.y;self.move();self.move(slot=1,dx=0,dy=.25);restored=apply_candidate(self.w,plan_undo(self.w,0),True);self.assertEqual(restored.template.slots[0].rect.x,name_x+1);self.assertEqual(restored.template.slots[1].rect.y,title_y);self.assertEqual(len([r for r in restored.risk_context['manual_history'] if not r['undone']]),1)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0418d5b9f97acf8ebb1c78535435189cc7a31ab62ea596537c6ea594edc33940"
+      },
+      "reason": "The authored move helper defaults dy to integer0 but applies finite numeric millimetre deltas. The explicit .25 float is supported by the real geometry command; independent before/after history assertions verify its effect and selective undo. The helper parameter needs float typing.",
+      "source_sha256": "a74c58f809108dde933e061b3ba5366228426d0e8290b922a7d1786a35e3d45b",
+      "passing_related_cases": [
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_actual_dialog_undo_preview_then_explicit_apply_has_no_business_write",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_late_result_rejected_even_when_manual_roundtrip_returns_exact_same_geometry",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_lock_resize_and_fixed_size_restriction_use_existing_proposal_engine",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_move_and_real_undo_preserve_input_other_candidate_and_official_template",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_required_unknown_is_preserved_by_both_move_and_undo",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_single_undo_keeps_earlier_different_object_change",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_undo_after_input_change_keeps_new_text_and_cannot_make_long_phone_safe"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-05438": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "tests/test_candidate_results.py",
+        "line": 18,
+        "message": "Expected 6 positional arguments",
+        "context": "self.w.library.publish(template);candidate=generate(template,*self.w.input_data(),self.w.generation);bind_source(candidate,self.w.library,require_registered=True);self.w.candidates.append(candidate);self.w.candidate_list.addItem(template.name);return candidate",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0cf0badf3def90b4af0a80071a8bd1a1f4794be3a4264b1f0e5b800a7afe6565"
+      },
+      "reason": "MainWindow.input_data returns exactly (people,companies,logos). generate receives template plus those three values plus generation:5 arguments; its sixth progress parameter is optional. This is uncertain starred-tuple arity inference, not a missing runtime argument. Actual candidate assertions retain data/version gates.",
+      "source_sha256": "ccac1b2d74ab5afef0b428929416d8d74abc907094e567ed5694577b91c8937f",
+      "passing_related_cases": [
+        "test_candidate_results.CandidateResultsTests.test_actual_completed_scope_recommends_only_current_qualified_rule_result",
+        "test_candidate_results.CandidateResultsTests.test_actual_formal_png_uses_current_dimensions_and_preserves_official_template",
+        "test_candidate_results.CandidateResultsTests.test_actual_problem_click_opens_existing_candidate_fix_entry",
+        "test_candidate_results.CandidateResultsTests.test_actual_recommend_button_selects_safe_candidate_without_business_write",
+        "test_candidate_results.CandidateResultsTests.test_comparison_rejects_later_input_and_keeps_existing_manual_geometry",
+        "test_candidate_results.CandidateResultsTests.test_finite_score_tie_is_deterministic_without_mutating_candidates",
+        "test_candidate_results.CandidateResultsTests.test_high_scoring_hard_block_never_becomes_recommendation",
+        "test_candidate_results.CandidateResultsTests.test_input_change_inside_save_dialog_never_writes_old_formal_file",
+        "test_candidate_results.CandidateResultsTests.test_invalid_company_input_is_explicit_unknown_without_gui_exception",
+        "test_candidate_results.CandidateResultsTests.test_manual_change_inside_save_dialog_never_writes_earlier_geometry",
+        "test_candidate_results.CandidateResultsTests.test_native_comparison_is_nonformal_and_safe_selection_never_erases_blocks",
+        "test_candidate_results.CandidateResultsTests.test_nonfinite_score_is_not_ranked_as_safe_confidence",
+        "test_candidate_results.CandidateResultsTests.test_old_size_recheck_cannot_open_formal_output_for_new_requested_size",
+        "test_candidate_results.CandidateResultsTests.test_partial_scope_does_not_claim_global_optimum_or_complete_search",
+        "test_candidate_results.CandidateResultsTests.test_problem_from_old_generation_cannot_focus_reordered_current_input",
+        "test_candidate_results.CandidateResultsTests.test_required_unknown_has_explicit_source_route_instead_of_invented_slot",
+        "test_candidate_results.CandidateResultsTests.test_stale_generation_and_different_dimensions_never_recommend",
+        "test_candidate_results.CandidateResultsTests.test_structured_input_problem_opens_exact_stable_field_without_adoption",
+        "test_candidate_results.CandidateResultsTests.test_typed_phone_problem_focuses_actual_legacy_owner_field_and_slot"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-05705": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_canvas_command_focus.py",
+        "line": 36,
+        "message": "Argument of type \"QWidget | Unknown | None\" cannot be assigned to parameter \"receiver\" of type \"QObject\" in function \"sendEvent\"\n  Type \"QWidget | Unknown | None\" is not assignable to type \"QObject\"\n    \"None\" is not assignable to \"QObject\"",
+        "context": "event=QInputMethodEvent();event.setCommitString('中文電話');APP.sendEvent(editor,event);self.assertIn('中文',editor.text());cursor=editor.cursorPosition();QTest.keyClick(editor,Qt.Key_Left);self.assertEqual(editor.cursorPosition(),cursor-1);self.assertEqual(w.template.to_dict(),before);self.assertFalse(w.undo_stack)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "20bc17a28a49f92bfb210da180176acfdaab267899b6b23281dcc26167044bf2"
+      },
+      "reason": "The actual focused editor is explicitly assertIsInstance(QLineEdit) immediately before the IME/key events. QLineEdit is a QWidget/QObject supported by the sendEvent and QWidget keyClick overloads. Generic nullable focusWidget/QWindow signatures do not express this checked concrete fixture.",
+      "source_sha256": "cca8f73d0082aa3ea1fbc3ba18b39c261ce13a39bf1213491c11df8026df87fe",
+      "passing_related_cases": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_focused_canvas_nudges_only_selected_mm_and_keeps_fixed_font",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_space_mouse_drag_changes_viewport_only",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_text_preedit_leaves_selected_geometry_untouched",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_auto_repeat_does_not_submit_any_repeated_content_transaction",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_ctrl_space_is_reserved_for_ime_and_never_starts_pan",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_escape_cancels_only_unsubmitted_marking_rectangle",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_ime_preedit_on_canvas_blocks_arrow_until_composition_ends",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_locked_or_stale_source_refuses_keyboard_geometry_without_transactions",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_numeric_and_combo_focus_never_dispatch_move_to_old_canvas_selection",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_pending_property_prevents_canvas_nudge_without_losing_input",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_phone_table_real_editor_chinese_commit_and_cursor_do_not_move_old_selected_frame",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_pinned_text_then_logo_keyboard_nudge_keeps_whole_logo_attributes",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_space_focus_loss_restores_exact_tool_and_selection_without_model_change",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_text_delete_arrows_and_ctrlz_stay_in_real_property_field",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_unfocused_property_wheel_never_changes_numeric_draft_by_hover",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_wheel_without_canvas_focus_is_ignored_and_focused_zoom_is_view_only"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-05711": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_canvas_command_focus.py",
+        "line": 36,
+        "message": "Argument of type \"QWidget | Unknown | None\" cannot be assigned to parameter \"window\" of type \"QWindow\" in function \"keyClick\"\n  Type \"QWidget | Unknown | None\" is not assignable to type \"QWindow\"\n    \"QWidget\" is not assignable to \"QWindow\"",
+        "context": "event=QInputMethodEvent();event.setCommitString('中文電話');APP.sendEvent(editor,event);self.assertIn('中文',editor.text());cursor=editor.cursorPosition();QTest.keyClick(editor,Qt.Key_Left);self.assertEqual(editor.cursorPosition(),cursor-1);self.assertEqual(w.template.to_dict(),before);self.assertFalse(w.undo_stack)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6ff6959ec64be66dc884668a1da66ab4e36b6cd2c98673e9c0901ee9f87c1f21"
+      },
+      "reason": "The actual focused editor is explicitly assertIsInstance(QLineEdit) immediately before the IME/key events. QLineEdit is a QWidget/QObject supported by the sendEvent and QWidget keyClick overloads. Generic nullable focusWidget/QWindow signatures do not express this checked concrete fixture.",
+      "source_sha256": "cca8f73d0082aa3ea1fbc3ba18b39c261ce13a39bf1213491c11df8026df87fe",
+      "passing_related_cases": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_focused_canvas_nudges_only_selected_mm_and_keeps_fixed_font",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_space_mouse_drag_changes_viewport_only",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_text_preedit_leaves_selected_geometry_untouched",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_auto_repeat_does_not_submit_any_repeated_content_transaction",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_ctrl_space_is_reserved_for_ime_and_never_starts_pan",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_escape_cancels_only_unsubmitted_marking_rectangle",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_ime_preedit_on_canvas_blocks_arrow_until_composition_ends",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_locked_or_stale_source_refuses_keyboard_geometry_without_transactions",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_numeric_and_combo_focus_never_dispatch_move_to_old_canvas_selection",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_pending_property_prevents_canvas_nudge_without_losing_input",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_phone_table_real_editor_chinese_commit_and_cursor_do_not_move_old_selected_frame",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_pinned_text_then_logo_keyboard_nudge_keeps_whole_logo_attributes",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_space_focus_loss_restores_exact_tool_and_selection_without_model_change",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_text_delete_arrows_and_ctrlz_stay_in_real_property_field",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_unfocused_property_wheel_never_changes_numeric_draft_by_hover",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_wheel_without_canvas_focus_is_ignored_and_focused_zoom_is_view_only"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06154": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_customer_identity.py",
+        "line": 135,
+        "message": "Cannot assign to attribute \"identity_plan\" for class \"CustomerDialog\"\n  Expression of type \"dict[str, str | list[dict[str, list[dict[Unknown, Unknown]]]] | dict[Unknown, Unknown] | bool]\" cannot be assigned to attribute \"identity_plan\" of class \"CustomerDialog\"\n    \"dict[str, str | list[dict[str, list[dict[Unknown, Unknown]]]] | dict[Unknown, Unknown] | bool]\" is not assignable to \"None\"",
+        "context": "dialog.identity_plan=dialog.identity_service().plan_merge(self.a['id'],self.b['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a58e80a02fc483b5de9f1e4c7d6676a4635d2f5eeff727f659ffccd48fe356fc"
+      },
+      "reason": "CustomerDialog initializes identity_plan=None and later stores the explicit validated merge-plan dictionary. The dialog guards approval with plan/revision checks. This is an optional plan DTO assignment beyond inferred initialization, on a real dialog; it does not change customer/ownership rules.",
+      "source_sha256": "563512ba18cb9158523ff4b74ce16812cd6c3cbae67acd68ed162030b0dc3c0a",
+      "passing_related_cases": [
+        "test_customer_identity.CustomerIdentityTests.test_actual_gui_separates_preview_cancel_and_explicit_commit",
+        "test_customer_identity.CustomerIdentityTests.test_ambiguous_post_merge_cross_customer_company_link_is_blocked_without_data_loss",
+        "test_customer_identity.CustomerIdentityTests.test_changed_source_after_merge_preview_blocks_all_permanent_identity_changes",
+        "test_customer_identity.CustomerIdentityTests.test_each_original_style_prefills_only_its_original_stable_person_after_merge",
+        "test_customer_identity.CustomerIdentityTests.test_failed_split_audit_rolls_back_aliases_fields_scopes_and_history",
+        "test_customer_identity.CustomerIdentityTests.test_local_audit_export_no_overwrite_and_closed_event_redaction_cannot_destroy_active_split_mapping",
+        "test_customer_identity.CustomerIdentityTests.test_merge_aliases_are_one_search_result_and_people_companies_fields_styles_remain_distinct",
+        "test_customer_identity.CustomerIdentityTests.test_review_decisions_persist_without_merging_and_normalized_third_party_code_conflict_blocks",
+        "test_customer_identity.CustomerIdentityTests.test_source_identity_unchanged_relation_moves_and_splits_with_exact_original_style_scope",
+        "test_customer_identity.CustomerIdentityTests.test_split_preserves_legitimate_later_values_and_restores_old_code_ownership",
+        "test_customer_identity.CustomerIdentityTests.test_stale_or_tampered_preview_cannot_merge_and_audit_failure_rolls_back_every_relation",
+        "test_customer_identity.CustomerIdentityTests.test_swapped_primary_display_code_splits_back_and_stale_split_cannot_overwrite"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06155": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_customer_identity.py",
+        "line": 138,
+        "message": "Cannot assign to attribute \"identity_plan\" for class \"CustomerDialog\"\n  Expression of type \"dict[str, str | list[dict[str, list[dict[Unknown, Unknown]]]] | dict[Unknown, Unknown] | bool]\" cannot be assigned to attribute \"identity_plan\" of class \"CustomerDialog\"\n    \"dict[str, str | list[dict[str, list[dict[Unknown, Unknown]]]] | dict[Unknown, Unknown] | bool]\" is not assignable to \"None\"",
+        "context": "dialog.identity_plan=dialog.identity_service().plan_merge(self.a['id'],self.b['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a58e80a02fc483b5de9f1e4c7d6676a4635d2f5eeff727f659ffccd48fe356fc"
+      },
+      "reason": "CustomerDialog initializes identity_plan=None and later stores the explicit validated merge-plan dictionary. The dialog guards approval with plan/revision checks. This is an optional plan DTO assignment beyond inferred initialization, on a real dialog; it does not change customer/ownership rules.",
+      "source_sha256": "563512ba18cb9158523ff4b74ce16812cd6c3cbae67acd68ed162030b0dc3c0a",
+      "passing_related_cases": [
+        "test_customer_identity.CustomerIdentityTests.test_actual_gui_separates_preview_cancel_and_explicit_commit",
+        "test_customer_identity.CustomerIdentityTests.test_ambiguous_post_merge_cross_customer_company_link_is_blocked_without_data_loss",
+        "test_customer_identity.CustomerIdentityTests.test_changed_source_after_merge_preview_blocks_all_permanent_identity_changes",
+        "test_customer_identity.CustomerIdentityTests.test_each_original_style_prefills_only_its_original_stable_person_after_merge",
+        "test_customer_identity.CustomerIdentityTests.test_failed_split_audit_rolls_back_aliases_fields_scopes_and_history",
+        "test_customer_identity.CustomerIdentityTests.test_local_audit_export_no_overwrite_and_closed_event_redaction_cannot_destroy_active_split_mapping",
+        "test_customer_identity.CustomerIdentityTests.test_merge_aliases_are_one_search_result_and_people_companies_fields_styles_remain_distinct",
+        "test_customer_identity.CustomerIdentityTests.test_review_decisions_persist_without_merging_and_normalized_third_party_code_conflict_blocks",
+        "test_customer_identity.CustomerIdentityTests.test_source_identity_unchanged_relation_moves_and_splits_with_exact_original_style_scope",
+        "test_customer_identity.CustomerIdentityTests.test_split_preserves_legitimate_later_values_and_restores_old_code_ownership",
+        "test_customer_identity.CustomerIdentityTests.test_stale_or_tampered_preview_cannot_merge_and_audit_failure_rolls_back_every_relation",
+        "test_customer_identity.CustomerIdentityTests.test_swapped_primary_display_code_splits_back_and_stale_split_cannot_overwrite"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06215": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_design_components.py",
+        "line": 54,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__setitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "policy=deepcopy(self.policy);policy['presentation']['components'][0]['frame'][0]=.4",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "93a63425e05e90616fe84961820a0c4932723fc7ab44167f2c703a36de400ad5"
+      },
+      "reason": "These deliberate corruption fixtures mutate concrete numeric lists/rect dictionaries: component frame coordinates, joint-mode intercepts, ranker weights, and example field x. Their producers use named numeric vector/frame fields; metadata strings in other fields do not change those list elements. The mutation exists to test fingerprint, geometry or rule rejection and does not approve malformed product input.",
+      "source_sha256": "8ee119abda7b6d1267e8f3d363663a449811cc781b540b167f709e9f27be9caa",
+      "passing_related_cases": [
+        "test_design_components.SeparateComponentTests.test_actual_static_label_icon_and_dynamic_value_share_measured_output",
+        "test_design_components.SeparateComponentTests.test_long_values_do_not_overwrite_or_move_static_components_silently",
+        "test_design_components.SeparateComponentTests.test_overlap_missing_icon_and_secondary_font_rights_block_admission",
+        "test_design_components.SeparateComponentTests.test_source_binding_checks_original_label_run_and_physical_ratio",
+        "test_design_components.SeparateComponentTests.test_static_icon_cannot_claim_company_logo_identity"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06216": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_design_components.py",
+        "line": 54,
+        "message": "Argument of type \"float\" cannot be assigned to parameter \"value\" of type \"str | bool | dict[str, bool]\" in function \"__setitem__\"\n  Type \"float\" is not assignable to type \"str | bool | dict[str, bool]\"\n    \"float\" is not assignable to \"str\"\n    \"float\" is not assignable to \"bool\"\n    \"float\" is not assignable to \"dict[str, bool]\"",
+        "context": "policy=deepcopy(self.policy);policy['presentation']['components'][0]['frame'][0]=.4",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3688a88b26a541ae11a54afa5218397e4274956de22edcb7644552bbb95e9c66"
+      },
+      "reason": "These deliberate corruption fixtures mutate concrete numeric lists/rect dictionaries: component frame coordinates, joint-mode intercepts, ranker weights, and example field x. Their producers use named numeric vector/frame fields; metadata strings in other fields do not change those list elements. The mutation exists to test fingerprint, geometry or rule rejection and does not approve malformed product input.",
+      "source_sha256": "8ee119abda7b6d1267e8f3d363663a449811cc781b540b167f709e9f27be9caa",
+      "passing_related_cases": [
+        "test_design_components.SeparateComponentTests.test_actual_static_label_icon_and_dynamic_value_share_measured_output",
+        "test_design_components.SeparateComponentTests.test_long_values_do_not_overwrite_or_move_static_components_silently",
+        "test_design_components.SeparateComponentTests.test_overlap_missing_icon_and_secondary_font_rights_block_admission",
+        "test_design_components.SeparateComponentTests.test_source_binding_checks_original_label_run_and_physical_ratio",
+        "test_design_components.SeparateComponentTests.test_static_icon_cannot_claim_company_logo_identity"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06281": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "tests/test_design_evaluation.py",
+        "line": 28,
+        "message": "No overloads for \"assertAlmostEqual\" match the provided arguments",
+        "context": "if len(slate)>=2:self.assertAlmostEqual(after['group_macro_ndcg_at_k'],1.)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "bcf5d515cc3cc5faa269be4a967b425633fce633cdbe896776d512c3bd3ee674"
+      },
+      "reason": "The owned preference fixture has a supported nonempty slate with positive authored relevance; its complete ranking yields numeric group_macro_ndcg_at_k=1. Insufficient/undefined metrics remain nullable on other datasets. The actual almost-equal assertion tests this bounded result; no real-corpus preference quality claim.",
+      "source_sha256": "adbf1b86d588388bda7c39c29b111eb4686b81008166e1e289680b2d6fd70c8a",
+      "passing_related_cases": [
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_actual_paired_layout_evaluation_preserves_weights_and_records_unknown_denominator",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_actual_ranking_slate_requires_independent_complete_grades_and_persists_unknowns",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_independent_checker_detects_data_loss_owner_change_overflow_and_collision",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_preference_requires_actual_two_outputs_and_remains_scoped",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_training_source_cannot_be_relabelled_as_heldout_evaluation",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_uncertainty_with_zero_cases_remains_unknown"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06282": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_design_evaluation.py",
+        "line": 28,
+        "message": "Argument of type \"float\" cannot be assigned to parameter \"second\" of type \"SupportsRSub[_T@assertAlmostEqual, SupportsAbs[SupportsRound[object]]]\" in function \"assertAlmostEqual\"\n  \"float\" is incompatible with protocol \"SupportsRSub[Any | None, SupportsAbs[SupportsRound[object]]]\"\n    \"__rsub__\" is an incompatible type\n      Type \"(value: float, /) -> float\" is not assignable to type \"(x: _T_contra@SupportsRSub, /) -> _T_co@SupportsRSub\"\n        Parameter 1: type \"_T_contra@SupportsRSub\" is incompatible with type \"float\"\n          Type \"Any | None\" is not assignable to type \"float\"",
+        "context": "if len(slate)>=2:self.assertAlmostEqual(after['group_macro_ndcg_at_k'],1.)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "26a71c510d94e2c0b2c1312bc503bd539f3913f058d1d963003458a58741b8a0"
+      },
+      "reason": "The owned preference fixture has a supported nonempty slate with positive authored relevance; its complete ranking yields numeric group_macro_ndcg_at_k=1. Insufficient/undefined metrics remain nullable on other datasets. The actual almost-equal assertion tests this bounded result; no real-corpus preference quality claim.",
+      "source_sha256": "adbf1b86d588388bda7c39c29b111eb4686b81008166e1e289680b2d6fd70c8a",
+      "passing_related_cases": [
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_actual_paired_layout_evaluation_preserves_weights_and_records_unknown_denominator",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_actual_ranking_slate_requires_independent_complete_grades_and_persists_unknowns",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_independent_checker_detects_data_loss_owner_change_overflow_and_collision",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_preference_requires_actual_two_outputs_and_remains_scoped",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_training_source_cannot_be_relabelled_as_heldout_evaluation",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_uncertainty_with_zero_cases_remains_unknown"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06296": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "tests/test_design_evaluation.py",
+        "line": 85,
+        "message": "\"None\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "self.assertIsNone(wilson(0,0));lower,upper=wilson(1,2)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e1f210fea143498d483ec334290c7504d78e268a90fcae0638f6a76abbc91734"
+      },
+      "reason": "wilson(0,0) is intentionally None, while the literal valid counts wilson(1,2) have positive denominator and return a two-float interval. The same source test distinguishes those cases; a dependent overload would express this count condition.",
+      "source_sha256": "adbf1b86d588388bda7c39c29b111eb4686b81008166e1e289680b2d6fd70c8a",
+      "passing_related_cases": [
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_actual_paired_layout_evaluation_preserves_weights_and_records_unknown_denominator",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_actual_ranking_slate_requires_independent_complete_grades_and_persists_unknowns",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_independent_checker_detects_data_loss_owner_change_overflow_and_collision",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_preference_requires_actual_two_outputs_and_remains_scoped",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_training_source_cannot_be_relabelled_as_heldout_evaluation",
+        "test_design_evaluation.ActualLayoutEvaluationTests.test_uncertainty_with_zero_cases_remains_unknown"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06458": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_design_jobs.py",
+        "line": 33,
+        "message": "Argument of type \"dict[Unknown, Unknown] | None\" cannot be assigned to parameter \"container\" of type \"Iterable[Any] | Container[Any]\" in function \"assertNotIn\"\n  Type \"dict[Unknown, Unknown] | None\" is not assignable to type \"Iterable[Any] | Container[Any]\"\n    Type \"None\" is not assignable to type \"Iterable[Any] | Container[Any]\"\n      \"None\" is incompatible with protocol \"Iterable[Any]\"\n        \"__iter__\" is not present\n      \"None\" is incompatible with protocol \"Container[Any]\"\n        \"__contains__\" is not present",
+        "context": "self.assertNotIn('plan',jobs.store.get('DESIGN_JOB',job['id']))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b8dae4684746c7899d87586da8eb5314fecf94778f018266afc7c054260e71b7"
+      },
+      "reason": "The referenced DESIGN_JOB is the actual job just created in this owned fixture. The test checks its summary omits the private plan. Arbitrary get remains nullable; job deletion/missing IDs are not waived.",
+      "source_sha256": "733f9fe020b39ebed0bfb03564cfe652f24c436b500da78de69db48a2b86b0c5",
+      "passing_related_cases": [
+        "test_design_jobs.PersistentDesignJobsTests.test_late_duplicate_result_and_incomplete_completion_are_rejected",
+        "test_design_jobs.PersistentDesignJobsTests.test_live_worker_cannot_be_taken_over_but_interrupted_owner_is_recoverable",
+        "test_design_jobs.PersistentDesignJobsTests.test_pause_reopen_resume_commits_each_item_exactly_once",
+        "test_design_jobs.PersistentDesignJobsTests.test_plan_tampering_and_committed_evidence_tampering_are_rejected"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06489": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOperatorIssue",
+        "path": "tests/test_design_joint.py",
+        "line": 106,
+        "message": "Operator \"+=\" not supported for types \"str\" and \"Literal[1]\"\n  Operator \"+\" not supported for types \"str\" and \"Literal[1]\"",
+        "context": "artifact['modes'][0]['intercept'][0]+=1",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2967b3deb4aac2c8a110c2beaeb65b642e94ac88c14ed394b3c802fecd5b7c37"
+      },
+      "reason": "These deliberate corruption fixtures mutate concrete numeric lists/rect dictionaries: component frame coordinates, joint-mode intercepts, ranker weights, and example field x. Their producers use named numeric vector/frame fields; metadata strings in other fields do not change those list elements. The mutation exists to test fingerprint, geometry or rule rejection and does not approve malformed product input.",
+      "source_sha256": "c03cbcdfe9002d9062c0f5ccea3b6d4b1461275818586030c84e114a7997afd9",
+      "passing_related_cases": [
+        "test_design_joint.JointRegressionTests.test_continuous_size_response_is_not_fragmented_into_discrete_size_modes",
+        "test_design_joint.JointRegressionTests.test_extrapolation_and_unobserved_joint_input_holes_abstain",
+        "test_design_joint.JointRegressionTests.test_joint_prediction_tracks_correlated_outputs_and_is_stable",
+        "test_design_joint.JointRegressionTests.test_missing_typography_and_correlated_aliases_do_not_create_support",
+        "test_design_joint.JointRegressionTests.test_rare_styles_are_preserved_without_averaging_between_modes",
+        "test_design_joint.JointRegressionTests.test_review_provenance_does_not_fragment_shared_style_or_duplicate_weight",
+        "test_design_joint.JointRegressionTests.test_reviewed_word_spacing_is_a_joint_response_not_one_mode_per_value",
+        "test_design_joint.JointRegressionTests.test_weights_tamper_and_invalid_demand_fail"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06533": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "tests/test_design_logo_synthesis.py",
+        "line": 21,
+        "message": "\"int\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "for field in row['fields']:",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "692c789c1fa7bd30f5ca90d9de216d45af15351481f55684cb08695a9e9c23af"
+      },
+      "reason": "These authored fixtures use validated InputGraph people/companies lists or explicit example fields lists. Counts/revision integers are different named fields; they cannot be the iterated list. Stable owners, links and fields remain checked by the original graph/example validators and assertions.",
+      "source_sha256": "420bb7f7d043b19623da014decb21f0a3c912319acbc7b288534a035d369c869",
+      "passing_related_cases": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06547": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_design_ranking.py",
+        "line": 17,
+        "message": "Argument of type \"str | list[Literal['deviation', 'scale_loss', 'density', 'relation_changes', 'joint_style_residual']] | int | float\" cannot be assigned to parameter \"iter1\" of type \"Iterable[_T1@__new__]\" in function \"__new__\"\n  Type \"str | list[Literal['deviation', 'scale_loss', 'density', 'relation_changes', 'joint_style_residual']] | int | float\" is not assignable to type \"Iterable[_T1@__new__]\"\n    \"float\" is incompatible with protocol \"Iterable[_T1@__new__]\"\n      \"__iter__\" is not present",
+        "context": "for a,b in zip(baseline['weights'],repeated['weights']):self.assertAlmostEqual(a,b,places=6)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "257b474d3ef815678b58e2d2f89390134d9aa54b9d97cb25d56d01ab6b7cef1b"
+      },
+      "reason": "The exact model weights field is a numeric coefficient list and the dataset group_components field is list[list[str]]. Other model/manifest fields hold strings/counts; they are not the iterables here. These repeatability/independent-group fixtures intentionally compare weights or combine source groups, with their actual original assertions unchanged.",
+      "source_sha256": "539a631ba44312c47e13ffa7a5cf787f9be9e37cccbc8136f016dcb5151a0a93",
+      "passing_related_cases": [
+        "test_design_ranking.DesignRankingTests.test_equal_score_uses_versioned_defaults_independent_of_candidate_order",
+        "test_design_ranking.DesignRankingTests.test_explicit_pairwise_training_changes_utilities_without_probability_claim",
+        "test_design_ranking.DesignRankingTests.test_hard_checks_precede_score_and_formal_checks_are_separate",
+        "test_design_ranking.DesignRankingTests.test_many_queries_from_one_lineage_cannot_outvote_independent_sources",
+        "test_design_ranking.DesignRankingTests.test_own_scores_missing_evidence_and_heldout_cannot_be_training_labels",
+        "test_design_ranking.DesignRankingTests.test_weight_tamper_and_one_query_do_not_pass"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06548": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_design_ranking.py",
+        "line": 17,
+        "message": "Argument of type \"str | list[Literal['deviation', 'scale_loss', 'density', 'relation_changes', 'joint_style_residual']] | int | float\" cannot be assigned to parameter \"iter2\" of type \"Iterable[_T2@__new__]\" in function \"__new__\"\n  Type \"str | list[Literal['deviation', 'scale_loss', 'density', 'relation_changes', 'joint_style_residual']] | int | float\" is not assignable to type \"Iterable[_T2@__new__]\"\n    \"float\" is incompatible with protocol \"Iterable[_T2@__new__]\"\n      \"__iter__\" is not present",
+        "context": "for a,b in zip(baseline['weights'],repeated['weights']):self.assertAlmostEqual(a,b,places=6)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "54c4a3b71ede7338c952332687e3f1dd633ef06a539c2ba7905f2a83921f80d8"
+      },
+      "reason": "The exact model weights field is a numeric coefficient list and the dataset group_components field is list[list[str]]. Other model/manifest fields hold strings/counts; they are not the iterables here. These repeatability/independent-group fixtures intentionally compare weights or combine source groups, with their actual original assertions unchanged.",
+      "source_sha256": "539a631ba44312c47e13ffa7a5cf787f9be9e37cccbc8136f016dcb5151a0a93",
+      "passing_related_cases": [
+        "test_design_ranking.DesignRankingTests.test_equal_score_uses_versioned_defaults_independent_of_candidate_order",
+        "test_design_ranking.DesignRankingTests.test_explicit_pairwise_training_changes_utilities_without_probability_claim",
+        "test_design_ranking.DesignRankingTests.test_hard_checks_precede_score_and_formal_checks_are_separate",
+        "test_design_ranking.DesignRankingTests.test_many_queries_from_one_lineage_cannot_outvote_independent_sources",
+        "test_design_ranking.DesignRankingTests.test_own_scores_missing_evidence_and_heldout_cannot_be_training_labels",
+        "test_design_ranking.DesignRankingTests.test_weight_tamper_and_one_query_do_not_pass"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06551": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOperatorIssue",
+        "path": "tests/test_design_ranking.py",
+        "line": 48,
+        "message": "Operator \"+=\" not supported for types \"str | Unknown\" and \"Literal[1]\"\n  Operator \"+\" not supported for types \"str\" and \"Literal[1]\"",
+        "context": "model=train_preferences([comparison('q1'),comparison('q2')]);model['weights'][0]+=1",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b602e472a0f1f368d5aa514c0d073f4d5a3f923f0e5cfe00f00f9d83ec8c9fa7"
+      },
+      "reason": "These deliberate corruption fixtures mutate concrete numeric lists/rect dictionaries: component frame coordinates, joint-mode intercepts, ranker weights, and example field x. Their producers use named numeric vector/frame fields; metadata strings in other fields do not change those list elements. The mutation exists to test fingerprint, geometry or rule rejection and does not approve malformed product input.",
+      "source_sha256": "539a631ba44312c47e13ffa7a5cf787f9be9e37cccbc8136f016dcb5151a0a93",
+      "passing_related_cases": [
+        "test_design_ranking.DesignRankingTests.test_equal_score_uses_versioned_defaults_independent_of_candidate_order",
+        "test_design_ranking.DesignRankingTests.test_explicit_pairwise_training_changes_utilities_without_probability_claim",
+        "test_design_ranking.DesignRankingTests.test_hard_checks_precede_score_and_formal_checks_are_separate",
+        "test_design_ranking.DesignRankingTests.test_many_queries_from_one_lineage_cannot_outvote_independent_sources",
+        "test_design_ranking.DesignRankingTests.test_own_scores_missing_evidence_and_heldout_cannot_be_training_labels",
+        "test_design_ranking.DesignRankingTests.test_weight_tamper_and_one_query_do_not_pass"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06575": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOperatorIssue",
+        "path": "tests/test_design_rule_extensions.py",
+        "line": 102,
+        "message": "Operator \"+=\" not supported for types \"str | Unknown | float\" and \"float\"\n  Operator \"+\" not supported for types \"str\" and \"float\"",
+        "context": "rows=self.examples();rows[-1]['fields'][1]['rect']['x']+=7.",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b3465ab27e6b0fad826cc8b815fd9c30b013673a9a752b485694c2034ed87fd6"
+      },
+      "reason": "These deliberate corruption fixtures mutate concrete numeric lists/rect dictionaries: component frame coordinates, joint-mode intercepts, ranker weights, and example field x. Their producers use named numeric vector/frame fields; metadata strings in other fields do not change those list elements. The mutation exists to test fingerprint, geometry or rule rejection and does not approve malformed product input.",
+      "source_sha256": "aea57155e685bea294a766044411120752533a193eb17a7c01228ad82a6368fa",
+      "passing_related_cases": [
+        "test_design_rule_extensions.CapacityCalibrationTests.test_correlated_aliases_failure_and_heldout_leak_cannot_produce_safe_region",
+        "test_design_rule_extensions.CapacityCalibrationTests.test_joint_region_calibrates_without_claiming_global_field_limit",
+        "test_design_rule_extensions.CharacterJustificationTests.test_actual_cjk_name_shaped_clusters_distribute_with_fixed_point_size",
+        "test_design_rule_extensions.CharacterJustificationTests.test_gap_limit_unreviewed_mode_and_inconsistent_alignment_are_rejected",
+        "test_design_rule_extensions.CharacterJustificationTests.test_single_cluster_and_combining_mark_are_not_split",
+        "test_design_rule_extensions.ObjectGapTests.test_duplicates_do_not_multiply_support_and_conflicts_are_preserved",
+        "test_design_rule_extensions.ObjectGapTests.test_shared_equal_object_gaps_are_learned_and_used_by_actual_kiwi",
+        "test_design_rule_extensions.RankerCompletionTests.test_explicit_production_quality_policy_rejects_synthetic_or_incomplete_evidence",
+        "test_design_rule_extensions.RankerCompletionTests.test_joint_style_feature_changes_when_actual_typography_changes",
+        "test_design_rule_extensions.WordJustificationTests.test_actual_qt_words_expand_only_at_spaces_and_keep_last_line_natural",
+        "test_design_rule_extensions.WordJustificationTests.test_single_word_and_zero_word_boundaries_are_not_implicitly_stretched"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06604": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOperatorIssue",
+        "path": "tests/test_design_session.py",
+        "line": 123,
+        "message": "Operator \"+=\" not supported for types \"Unknown | int | list[Any]\" and \"Literal[5]\"\n  Operator \"+\" not supported for types \"list[Any]\" and \"Literal[5]\"",
+        "context": "changed_revision=InputGraph(deepcopy(self.graph.data));changed_revision.data['revision']+=5",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6bd142839dae7dce30a89c0a5815cf531bf34d1ad7430998427852f94b5c14d6"
+      },
+      "reason": "InputGraph validates revision as an integer distinct from its people/companies/fields/links lists. This fixture increments that revision to test stale-input rejection; it does not increment a heterogeneous collection or mutate the saved graph.",
+      "source_sha256": "efc70f54daeae0a426aedcd060745d531bec33ec0599c5deb0e706e349a9f2ef",
+      "passing_related_cases": [
+        "test_design_session.DesignSessionTests.test_accepted_artifact_reuses_exact_bytes_after_new_model_activation",
+        "test_design_session.DesignSessionTests.test_actual_source_bound_model_input_solve_confirm_and_preview_output",
+        "test_design_session.DesignSessionTests.test_correct_data_then_undo_layout_preserves_new_phone_and_owner",
+        "test_design_session.DesignSessionTests.test_idempotent_request_and_reopen_keep_intent_without_default_override",
+        "test_design_session.DesignSessionTests.test_late_solve_cannot_install_old_data_over_new_input"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06640": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_design_synthesis.py",
+        "line": 24,
+        "message": "Argument of type \"Literal['key']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['key']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['key']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['key']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "if role['key'] in frames:role['frame_centre']=frames[role['key']]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6abdac6644f878602f638e413a1759d451023028852569636f2fb1529d078c1c"
+      },
+      "reason": "The authored synthesis helper iterates profile roles dictionaries and their presentation sample dictionaries. key/role_key are string fields; frame_centre/frame are their separate numeric arrays. Fixture geometry replacement preserves those schemas; string-key access is not indexing the frame list.",
+      "source_sha256": "ea8bc45e759c88cba3c4ace442b73718ccdf7af29b8663a1dbb6470538e8d4b5",
+      "passing_related_cases": [
+        "test_design_synthesis.DesignSynthesisTests.test_cycles_and_customer_fine_parameter_commands_are_rejected",
+        "test_design_synthesis.DesignSynthesisTests.test_distributed_style_uses_conditional_source_bounds_and_actual_fixed_pt_measurement",
+        "test_design_synthesis.DesignSynthesisTests.test_missing_source_typography_is_unknown_instead_of_default_font",
+        "test_design_synthesis.DesignSynthesisTests.test_oversized_input_is_retained_and_cannot_be_silently_truncated",
+        "test_design_synthesis.DesignSynthesisTests.test_real_qt_shaping_and_kiwi_create_preview_without_publishing_or_losing_data",
+        "test_design_synthesis.DesignSynthesisTests.test_same_appearance_different_review_ids_merges_but_unlearned_size_stays_preview",
+        "test_design_synthesis.DesignSynthesisTests.test_same_input_repeat_and_explicit_swap_keep_same_family_and_stable_geometry",
+        "test_design_synthesis.DesignSynthesisTests.test_semantic_phone_assignment_uses_learned_default_independent_of_input_order",
+        "test_design_synthesis.DesignSynthesisTests.test_source_observed_expanded_width_is_core_controlled_and_actually_measured",
+        "test_design_synthesis.DesignSynthesisTests.test_supported_baseline_rule_uses_actual_render_metrics_after_font_change",
+        "test_design_synthesis.DesignSynthesisTests.test_supported_new_size_prediction_is_not_displaced_by_unverified_source_copy"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06645": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_design_synthesis.py",
+        "line": 28,
+        "message": "Argument of type \"Literal['role_key']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['role_key']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['role_key']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['role_key']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "sample['frame']=frames[sample['role_key']]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "cc76ad9f0549bab570a732fb1cc61124ed71277b26bdddf6fa88ea42dc2c3b32"
+      },
+      "reason": "The authored synthesis helper iterates profile roles dictionaries and their presentation sample dictionaries. key/role_key are string fields; frame_centre/frame are their separate numeric arrays. Fixture geometry replacement preserves those schemas; string-key access is not indexing the frame list.",
+      "source_sha256": "ea8bc45e759c88cba3c4ace442b73718ccdf7af29b8663a1dbb6470538e8d4b5",
+      "passing_related_cases": [
+        "test_design_synthesis.DesignSynthesisTests.test_cycles_and_customer_fine_parameter_commands_are_rejected",
+        "test_design_synthesis.DesignSynthesisTests.test_distributed_style_uses_conditional_source_bounds_and_actual_fixed_pt_measurement",
+        "test_design_synthesis.DesignSynthesisTests.test_missing_source_typography_is_unknown_instead_of_default_font",
+        "test_design_synthesis.DesignSynthesisTests.test_oversized_input_is_retained_and_cannot_be_silently_truncated",
+        "test_design_synthesis.DesignSynthesisTests.test_real_qt_shaping_and_kiwi_create_preview_without_publishing_or_losing_data",
+        "test_design_synthesis.DesignSynthesisTests.test_same_appearance_different_review_ids_merges_but_unlearned_size_stays_preview",
+        "test_design_synthesis.DesignSynthesisTests.test_same_input_repeat_and_explicit_swap_keep_same_family_and_stable_geometry",
+        "test_design_synthesis.DesignSynthesisTests.test_semantic_phone_assignment_uses_learned_default_independent_of_input_order",
+        "test_design_synthesis.DesignSynthesisTests.test_source_observed_expanded_width_is_core_controlled_and_actually_measured",
+        "test_design_synthesis.DesignSynthesisTests.test_supported_baseline_rule_uses_actual_render_metrics_after_font_change",
+        "test_design_synthesis.DesignSynthesisTests.test_supported_new_size_prediction_is_not_displaced_by_unverified_source_copy"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06677": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "tests/test_design_synthesis.py",
+        "line": 83,
+        "message": "\"int\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "for field in row['fields']:",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "8532961e43b68a37833bd4314899e6108d6e175e4e18f7b31e4da64917300cea"
+      },
+      "reason": "These authored fixtures use validated InputGraph people/companies lists or explicit example fields lists. Counts/revision integers are different named fields; they cannot be the iterated list. Stable owners, links and fields remain checked by the original graph/example validators and assertions.",
+      "source_sha256": "ea8bc45e759c88cba3c4ace442b73718ccdf7af29b8663a1dbb6470538e8d4b5",
+      "passing_related_cases": [
+        "test_design_synthesis.DesignSynthesisTests.test_cycles_and_customer_fine_parameter_commands_are_rejected",
+        "test_design_synthesis.DesignSynthesisTests.test_distributed_style_uses_conditional_source_bounds_and_actual_fixed_pt_measurement",
+        "test_design_synthesis.DesignSynthesisTests.test_missing_source_typography_is_unknown_instead_of_default_font",
+        "test_design_synthesis.DesignSynthesisTests.test_oversized_input_is_retained_and_cannot_be_silently_truncated",
+        "test_design_synthesis.DesignSynthesisTests.test_real_qt_shaping_and_kiwi_create_preview_without_publishing_or_losing_data",
+        "test_design_synthesis.DesignSynthesisTests.test_same_appearance_different_review_ids_merges_but_unlearned_size_stays_preview",
+        "test_design_synthesis.DesignSynthesisTests.test_same_input_repeat_and_explicit_swap_keep_same_family_and_stable_geometry",
+        "test_design_synthesis.DesignSynthesisTests.test_semantic_phone_assignment_uses_learned_default_independent_of_input_order",
+        "test_design_synthesis.DesignSynthesisTests.test_source_observed_expanded_width_is_core_controlled_and_actually_measured",
+        "test_design_synthesis.DesignSynthesisTests.test_supported_baseline_rule_uses_actual_render_metrics_after_font_change",
+        "test_design_synthesis.DesignSynthesisTests.test_supported_new_size_prediction_is_not_displaced_by_unverified_source_copy"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06740": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_desktop_workspace.py",
+        "line": 233,
+        "message": "Cannot access attribute \"reject\" for class \"QWidget\"\n  Attribute \"reject\" is unknown",
+        "context": "modal.reject()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0f78150b2a1187adcd0f46545344a8656e8ade31d43b0c7691a271bb4bf5de3a"
+      },
+      "reason": "The desktop fixture opens the actual expected QDialog and inspects it before rejecting that modal. activeModalWidget has a generic QWidget return annotation; the fixture event path supplies the real dialog subtype. This is not evidence every possible modal widget supports reject.",
+      "source_sha256": "0c03432979a5fb8cc0ec701846bb3c5cee079be152a30199ef3873136c8a24f5",
+      "passing_related_cases": [
+        "test_desktop_workspace.DesktopNavigationTests.test_deleted_property_timer_ignores_real_pending_shutdown_signal",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_background_job_records_duration_without_private_message",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_guidance_navigation_opens_four_task_pages",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_navigation_keeps_three_modes_and_original_commands",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_support_navigation_exports_local_safe_report",
+        "test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling",
+        "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data",
+        "test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview",
+        "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation",
+        "test_desktop_workspace.DesktopProductionTests.test_real_background_cancel_stays_enabled_and_close_waits_for_worker",
+        "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+        "test_desktop_workspace.DesktopProductionTests.test_resume_selector_updates_main_graph_dimensions_and_embedded_session"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06932": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_diagnostic_reports.py",
+        "line": 255,
+        "message": "Argument of type \"Unknown | None\" cannot be assigned to parameter \"container\" of type \"Iterable[Any] | Container[Any]\" in function \"assertNotIn\"\n  Type \"Unknown | None\" is not assignable to type \"Iterable[Any] | Container[Any]\"\n    Type \"None\" is not assignable to type \"Iterable[Any] | Container[Any]\"\n      \"None\" is incompatible with protocol \"Iterable[Any]\"\n        \"__iter__\" is not present\n      \"None\" is incompatible with protocol \"Container[Any]\"\n        \"__contains__\" is not present",
+        "context": "for value in list(versions.values())+[dataset['id'],sample['id'],e['id']]:self.assertNotIn(value.encode(),d.raw)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2e17547b757e895b0a484786507aa765499cd34270c0ff6b8d6260d9a1513ce3"
+      },
+      "reason": "The actual completed report path supplies raw bytes after report generation; constructor None is the no-report state. These independent marker/ID privacy assertions fail if bytes are absent or leaked. They do not relax absent-report handling or authorize raw private collection.",
+      "source_sha256": "fd782834da433cd8635b74fd54cfb207eaceb4d1d291b8934f30f19d0c334f95",
+      "passing_related_cases": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+        "test_diagnostic_reports.DiagnosticReportTests.test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation",
+        "test_diagnostic_reports.DiagnosticReportTests.test_changed_font_since_generation_is_stale_without_mutating_candidate",
+        "test_diagnostic_reports.DiagnosticReportTests.test_current_layout_progress_projects_only_public_denominators_not_internal_version_pins",
+        "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+        "test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected",
+        "test_diagnostic_reports.DiagnosticReportTests.test_explicit_imported_font_keeps_real_metrics_private_and_report_nonformal",
+        "test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls",
+        "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_large_library_scope_and_bad_source_schema_fail_truthfully_recover",
+        "test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input",
+        "test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear",
+        "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+        "test_diagnostic_reports.DiagnosticReportTests.test_missing_model_or_source_does_not_prevent_safe_text_report",
+        "test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+        "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup",
+        "test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+        "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+        "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+        "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+        "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+        "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+        "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-06955": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_diagnostic_reports.py",
+        "line": 295,
+        "message": "Argument of type \"Unknown | None\" cannot be assigned to parameter \"container\" of type \"Iterable[Any] | Container[Any]\" in function \"assertNotIn\"\n  Type \"Unknown | None\" is not assignable to type \"Iterable[Any] | Container[Any]\"\n    Type \"None\" is not assignable to type \"Iterable[Any] | Container[Any]\"\n      \"None\" is incompatible with protocol \"Iterable[Any]\"\n        \"__iter__\" is not present\n      \"None\" is incompatible with protocol \"Container[Any]\"\n        \"__contains__\" is not present",
+        "context": "self.assertIn('WORKER_FAILED',[i['code'] for i in report.data['issues']]);self.assertNotIn(b'FORBIDDEN_SYNTHETIC_WORKER_ERROR',report.raw)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "97091e478e0dd2aeaee6c0efee7e0e4cc11c9815c95c3a67e093359c49c9633d"
+      },
+      "reason": "The actual completed report path supplies raw bytes after report generation; constructor None is the no-report state. These independent marker/ID privacy assertions fail if bytes are absent or leaked. They do not relax absent-report handling or authorize raw private collection.",
+      "source_sha256": "fd782834da433cd8635b74fd54cfb207eaceb4d1d291b8934f30f19d0c334f95",
+      "passing_related_cases": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+        "test_diagnostic_reports.DiagnosticReportTests.test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation",
+        "test_diagnostic_reports.DiagnosticReportTests.test_changed_font_since_generation_is_stale_without_mutating_candidate",
+        "test_diagnostic_reports.DiagnosticReportTests.test_current_layout_progress_projects_only_public_denominators_not_internal_version_pins",
+        "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+        "test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected",
+        "test_diagnostic_reports.DiagnosticReportTests.test_explicit_imported_font_keeps_real_metrics_private_and_report_nonformal",
+        "test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls",
+        "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_large_library_scope_and_bad_source_schema_fail_truthfully_recover",
+        "test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input",
+        "test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear",
+        "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+        "test_diagnostic_reports.DiagnosticReportTests.test_missing_model_or_source_does_not_prevent_safe_text_report",
+        "test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+        "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup",
+        "test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+        "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+        "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+        "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+        "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+        "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+        "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-07532": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_font_evidence.py",
+        "line": 41,
+        "message": "Cannot assign to attribute \"fsType\" for class \"GlyphOrder\"\n  Attribute \"fsType\" is unknown",
+        "context": "font=TTFont(SANS);font['OS/2'].fsType=2;path=self.root/'restricted.ttf';font.save(path);font.close()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "81d9cd8b07512202e5a8393a6e429c7a64324c46a7c368f12ceaf674d806654e"
+      },
+      "reason": "TTFont indexed by literal OS/2 returns the registered OS/2 table, whose fsType integer is writable. The generic table/GlyphOrder union does not discriminate the literal table tag. The owned font copy deliberately changes embedding flags to verify restriction handling; licence is not inferred from fsType alone.",
+      "source_sha256": "3fcd17b2256082f0324a81f28cf03542e582648a4fd73ebdbf5eeb0b3257063e",
+      "passing_related_cases": [
+        "test_font_evidence.FontEvidenceTests.test_actual_export_blocks_unknown_rights_allows_labelled_preview_and_only_new_explicit_binding_gets_rights",
+        "test_font_evidence.FontEvidenceTests.test_approval_is_per_face_does_not_install_or_modify_templates_and_invalid_font_never_registers",
+        "test_font_evidence.FontEvidenceTests.test_collection_requires_face_then_persists_actual_selected_family_and_source_hash",
+        "test_font_evidence.FontEvidenceTests.test_font_change_after_attestation_is_still_rejected_by_health_gate",
+        "test_font_evidence.FontEvidenceTests.test_technical_embedding_flags_never_supply_legal_rights_and_pdf_restrictions_are_stricter"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-07533": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_font_evidence.py",
+        "line": 41,
+        "message": "Cannot assign to attribute \"fsType\" for class \"DefaultTable\"\n  Attribute \"fsType\" is unknown",
+        "context": "font=TTFont(SANS);font['OS/2'].fsType=2;path=self.root/'restricted.ttf';font.save(path);font.close()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6d4c4adcb3c6eb2d2ce43277dc438575012f3c43246000e747f88f05d5b74851"
+      },
+      "reason": "TTFont indexed by literal OS/2 returns the registered OS/2 table, whose fsType integer is writable. The generic table/GlyphOrder union does not discriminate the literal table tag. The owned font copy deliberately changes embedding flags to verify restriction handling; licence is not inferred from fsType alone.",
+      "source_sha256": "3fcd17b2256082f0324a81f28cf03542e582648a4fd73ebdbf5eeb0b3257063e",
+      "passing_related_cases": [
+        "test_font_evidence.FontEvidenceTests.test_actual_export_blocks_unknown_rights_allows_labelled_preview_and_only_new_explicit_binding_gets_rights",
+        "test_font_evidence.FontEvidenceTests.test_approval_is_per_face_does_not_install_or_modify_templates_and_invalid_font_never_registers",
+        "test_font_evidence.FontEvidenceTests.test_collection_requires_face_then_persists_actual_selected_family_and_source_hash",
+        "test_font_evidence.FontEvidenceTests.test_font_change_after_attestation_is_still_rejected_by_health_gate",
+        "test_font_evidence.FontEvidenceTests.test_technical_embedding_flags_never_supply_legal_rights_and_pdf_restrictions_are_stricter"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-07548": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_font_review.py",
+        "line": 259,
+        "message": "Cannot assign to attribute \"error\" for class \"MainWindow\"\n  Type \"(msg: Unknown) -> None\" is not assignable to type \"(text: Unknown) -> None\"\n    Parameter name mismatch: \"text\" versus \"msg\"",
+        "context": "self.errors=[];self.window.error=lambda msg:self.errors.append(msg)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b53fd9643d35f12a83bf0c08bc964cedf9ec803438572af4df8d47656177ebb7"
+      },
+      "reason": "Only the error presenter is overridden in these existing fixtures, using positional-message collectors/None return. The real MainWindow/library/commands remain in use. These cases do not verify the replaced modal presenter; actual error/native-window evidence is recorded separately. The instance callback declaration is too narrow for this test adapter.",
+      "source_sha256": "c20d54170243917fed587e33c014e2dc248fa6796a19f51310e8bb5303ce0180",
+      "passing_related_cases": [
+        "test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result",
+        "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write",
+        "test_font_review.FontReviewGuiTests.test_geometry_and_color_edit_preserve_pinned_italic_style",
+        "test_font_review.FontReviewGuiTests.test_history_menu_reopens_without_a_candidate",
+        "test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow",
+        "test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry",
+        "test_font_review.FontReviewTests.test_actual_impact_dimensions_owner_source_and_unknown_reference",
+        "test_font_review.FontReviewTests.test_base_change_aba_and_target_registration_race_block_commit",
+        "test_font_review.FontReviewTests.test_empty_missing_glyph_height_and_geometry_block_individual_field",
+        "test_font_review.FontReviewTests.test_high_risk_unreviewed_unselected_duplicate_and_forged_ticket_rejected",
+        "test_font_review.FontReviewTests.test_legacy_schema_migration_clock_noop_and_binding_styles_compatible",
+        "test_font_review.FontReviewTests.test_limits_and_same_binding_low_noop_are_visible",
+        "test_font_review.FontReviewTests.test_low_risk_identical_face_rebinding_does_not_require_high_review",
+        "test_font_review.FontReviewTests.test_missing_character_details_not_persisted_in_audit",
+        "test_font_review.FontReviewTests.test_modified_target_blocks_prepare_and_redo_while_undo_keeps_draft_gate",
+        "test_font_review.FontReviewTests.test_multi_draft_undo_late_failure_rolls_back_scope_and_can_retry",
+        "test_font_review.FontReviewTests.test_multi_template_late_audit_failure_rolls_back_every_draft_and_clock",
+        "test_font_review.FontReviewTests.test_persistent_actual_style_matches_layout_and_real_export",
+        "test_font_review.FontReviewTests.test_selected_only_new_draft_preserves_publication_geometry_and_no_raw_text",
+        "test_font_review.FontReviewTests.test_ticket_expiry_confirmation_and_single_use_do_not_create_extra_drafts",
+        "test_font_review.FontReviewTests.test_undo_publish_aba_and_late_failure_do_not_overwrite",
+        "test_font_review.FontReviewTests.test_undo_redo_persist_after_reopen_and_reject_later_editor_change",
+        "test_font_review.FontReviewTests.test_unverified_qt_modified_target_and_logo_never_eligible"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-07694": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_input_learning_integration.py",
+        "line": 144,
+        "message": "Argument of type \"dict[Unknown, Unknown] | None\" cannot be assigned to parameter \"iterable\" of type \"Iterable[list[bytes]]\" in function \"__init__\"\n  Type \"dict[Unknown, Unknown] | None\" is not assignable to type \"Iterable[list[bytes]]\"\n    \"None\" is incompatible with protocol \"Iterable[list[bytes]]\"\n      \"__iter__\" is not present",
+        "context": "payload=dict(stored);payload['serialized']=dict(stored['serialized'],items=[])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e17702e6fe37ef87e736db373bf900e78cfdbc290b64bb66596ecfff71954e79"
+      },
+      "reason": "stored is the exact previously persisted learned candidate snapshot in this owned test. serialized is its dictionary field. The fixture deliberately removes serialized items to test integrity rejection; an arbitrary nullable store lookup is not generally certified.",
+      "source_sha256": "eae07720f16287e69be4fe610693df4f7b48564655826a22807782460ca8e36f",
+      "passing_related_cases": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_background_cancel_retains_new_data_and_cannot_install_old_confirmation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_font_style_enumeration_order_does_not_invalidate_same_face",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_input_advice_and_failure_explanations_keep_unknown_and_plain_summary",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_legacy_edit_progress_and_stale_preview_buttons_use_same_learning_draft",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_resize_keeps_position_intent_but_new_person_roots_start_independent_draft",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_resume_other_saved_draft_updates_main_input_size_and_export_reference",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_shared_learning_preview_preserves_original_pdf_png_jpg_formats"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-07748": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "tests/test_input_learning_integration.py",
+        "line": 271,
+        "message": "Expected 6 positional arguments",
+        "context": "candidate=generate(template,*w.input_data(),w.generation);w.candidates=[candidate]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "06ed50c45856342cc1bffdcb1cfe44243b7864df3212ece2ce90a601e25dd06e"
+      },
+      "reason": "MainWindow.input_data returns exactly (people,companies,logos). generate receives template plus those three values plus generation:5 arguments; its sixth progress parameter is optional. This is uncertain starred-tuple arity inference, not a missing runtime argument. Actual candidate assertions retain data/version gates.",
+      "source_sha256": "eae07720f16287e69be4fe610693df4f7b48564655826a22807782460ca8e36f",
+      "passing_related_cases": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_background_cancel_retains_new_data_and_cannot_install_old_confirmation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_font_style_enumeration_order_does_not_invalidate_same_face",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_input_advice_and_failure_explanations_keep_unknown_and_plain_summary",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_legacy_edit_progress_and_stale_preview_buttons_use_same_learning_draft",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_resize_keeps_position_intent_but_new_person_roots_start_independent_draft",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_resume_other_saved_draft_updates_main_input_size_and_export_reference",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_shared_learning_preview_preserves_original_pdf_png_jpg_formats"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-07778": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "tests/test_input_plain_language.py",
+        "line": 41,
+        "message": "\"int\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "for entity in [*graph.data['people'], *graph.data['companies']]:",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "75d19c529ed4c938b1b45de9e4bd3ac499b7f32b61529609cf0961309e266249"
+      },
+      "reason": "These authored fixtures use validated InputGraph people/companies lists or explicit example fields lists. Counts/revision integers are different named fields; they cannot be the iterated list. Stable owners, links and fields remain checked by the original graph/example validators and assertions.",
+      "source_sha256": "0397ef5d260f28822b2098549ea46e69675a538731f6c2756a5f8844bcfb9bac",
+      "passing_related_cases": [
+        "test_input_plain_language.InputPlainLanguageTests.test_plain_normal_labels_preserve_full_ids_in_expandable_details",
+        "test_input_plain_language.InputPlainLanguageTests.test_plain_problem_list_keeps_exact_field_navigation_and_private_data"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-07779": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "tests/test_input_plain_language.py",
+        "line": 41,
+        "message": "\"int\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "for entity in [*graph.data['people'], *graph.data['companies']]:",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "75d19c529ed4c938b1b45de9e4bd3ac499b7f32b61529609cf0961309e266249"
+      },
+      "reason": "These authored fixtures use validated InputGraph people/companies lists or explicit example fields lists. Counts/revision integers are different named fields; they cannot be the iterated list. Stable owners, links and fields remain checked by the original graph/example validators and assertions.",
+      "source_sha256": "0397ef5d260f28822b2098549ea46e69675a538731f6c2756a5f8844bcfb9bac",
+      "passing_related_cases": [
+        "test_input_plain_language.InputPlainLanguageTests.test_plain_normal_labels_preserve_full_ids_in_expandable_details",
+        "test_input_plain_language.InputPlainLanguageTests.test_plain_problem_list_keeps_exact_field_navigation_and_private_data"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-07865": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_local_recovery.py",
+        "line": 200,
+        "message": "Cannot assign to attribute \"library\" for class \"Window\"\n  Attribute \"library\" is unknown",
+        "context": "window=Window();window.library=library",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "88a5a880243ab5fb58aa971b12503a7d6795651eb72e3e18e76c623cc61140f4"
+      },
+      "reason": "The local recovery fixture defines a plain Python Window host and attaches the actual Library plus minimal job interface. Python instance fields are supported; a precise host Protocol is missing. This isolated backend/dialog fixture does not qualify the full MainWindow wiring; real MainWindow/native audits cover that separately.",
+      "source_sha256": "3ac1b052617ea4fc2ea2a55772ff612c053fb3e100701b07273b675401ef401c",
+      "passing_related_cases": [
+        "test_local_recovery.LocalRecoveryTests.test_actual_inkscape_retains_original_semantic_text_separately_from_appearance",
+        "test_local_recovery.LocalRecoveryTests.test_actual_pdf_compatible_ai_has_two_recovery_channels_and_fallback",
+        "test_local_recovery.LocalRecoveryTests.test_semantic_failure_does_not_turn_appearance_into_font_truth",
+        "test_local_recovery.LocalRecoveryTests.test_shareable_report_rebuilds_fixed_values_and_excludes_all_private_payloads",
+        "test_local_recovery.LocalRecoveryTests.test_visual_comparison_rejects_real_missing_content",
+        "test_local_recovery.RecoveryDialogTests.test_first_unreadable_file_is_diagnosable_from_an_empty_library",
+        "test_local_recovery.RecoveryDialogTests.test_local_diagnostic_dialog_crops_field_and_exports_only_public_projection",
+        "test_local_recovery.RecoveryDialogTests.test_semantic_query_ids_and_object_index_do_not_link_through_other_svg_channel",
+        "test_local_recovery.VisualFontMatchingTests.test_actual_local_tesseract_text_then_font_matching",
+        "test_local_recovery.VisualFontMatchingTests.test_duplicate_faces_are_ambiguous_and_incomplete_search_is_explicit",
+        "test_local_recovery.VisualFontMatchingTests.test_large_registered_catalogue_is_paged_and_cancellable",
+        "test_local_recovery.VisualFontMatchingTests.test_light_glyphs_on_dark_background_use_local_contrast",
+        "test_local_recovery.VisualFontMatchingTests.test_paged_search_merges_global_candidates_and_rejects_changed_inputs",
+        "test_local_recovery.VisualFontMatchingTests.test_real_outline_matching_finds_known_font_with_scale_and_physical_size",
+        "test_local_recovery.VisualFontMatchingTests.test_wrong_text_missing_font_and_cancel_do_not_claim_identification"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-07866": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_local_recovery.py",
+        "line": 229,
+        "message": "Cannot assign to attribute \"library\" for class \"Window\"\n  Attribute \"library\" is unknown",
+        "context": "window=Window();window.library=library",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "88a5a880243ab5fb58aa971b12503a7d6795651eb72e3e18e76c623cc61140f4"
+      },
+      "reason": "The local recovery fixture defines a plain Python Window host and attaches the actual Library plus minimal job interface. Python instance fields are supported; a precise host Protocol is missing. This isolated backend/dialog fixture does not qualify the full MainWindow wiring; real MainWindow/native audits cover that separately.",
+      "source_sha256": "3ac1b052617ea4fc2ea2a55772ff612c053fb3e100701b07273b675401ef401c",
+      "passing_related_cases": [
+        "test_local_recovery.LocalRecoveryTests.test_actual_inkscape_retains_original_semantic_text_separately_from_appearance",
+        "test_local_recovery.LocalRecoveryTests.test_actual_pdf_compatible_ai_has_two_recovery_channels_and_fallback",
+        "test_local_recovery.LocalRecoveryTests.test_semantic_failure_does_not_turn_appearance_into_font_truth",
+        "test_local_recovery.LocalRecoveryTests.test_shareable_report_rebuilds_fixed_values_and_excludes_all_private_payloads",
+        "test_local_recovery.LocalRecoveryTests.test_visual_comparison_rejects_real_missing_content",
+        "test_local_recovery.RecoveryDialogTests.test_first_unreadable_file_is_diagnosable_from_an_empty_library",
+        "test_local_recovery.RecoveryDialogTests.test_local_diagnostic_dialog_crops_field_and_exports_only_public_projection",
+        "test_local_recovery.RecoveryDialogTests.test_semantic_query_ids_and_object_index_do_not_link_through_other_svg_channel",
+        "test_local_recovery.VisualFontMatchingTests.test_actual_local_tesseract_text_then_font_matching",
+        "test_local_recovery.VisualFontMatchingTests.test_duplicate_faces_are_ambiguous_and_incomplete_search_is_explicit",
+        "test_local_recovery.VisualFontMatchingTests.test_large_registered_catalogue_is_paged_and_cancellable",
+        "test_local_recovery.VisualFontMatchingTests.test_light_glyphs_on_dark_background_use_local_contrast",
+        "test_local_recovery.VisualFontMatchingTests.test_paged_search_merges_global_candidates_and_rejects_changed_inputs",
+        "test_local_recovery.VisualFontMatchingTests.test_real_outline_matching_finds_known_font_with_scale_and_physical_size",
+        "test_local_recovery.VisualFontMatchingTests.test_wrong_text_missing_font_and_cancel_do_not_claim_identification"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-08505": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "tests/test_multi_size.py",
+        "line": 129,
+        "message": "\"issues\" is not a known attribute of \"None\"",
+        "context": "candidate=deepcopy(self.workflow.selected(self.entries[1]));candidate.issues+=['Synthetic issue '+str(i) for i in range(30)]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f5c98ffcb434fe5e009a6816a5311db53b6cb1d5acfe1d01b0071c76204220a3"
+      },
+      "reason": "The owned multi-size fixture already selected an actual generated candidate for the second size. It copies that candidate and adds30 explicit issues to test report completeness. Optional selected() initialization/missing-candidate paths remain tested separately; this valid selected fixture is non-null.",
+      "source_sha256": "54001a94489c773b19ff9e92c9f27cca76604ffc3b4e8066f7be20d40eee2a85",
+      "passing_related_cases": [
+        "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files",
+        "test_multi_size.MultiSizeTests.test_bad_final_unknown_size_duplicate_requests_and_bad_prefix_are_rejected_before_write",
+        "test_multi_size.MultiSizeTests.test_cancel_and_missing_template_are_explicit_not_zero_test_success",
+        "test_multi_size.MultiSizeTests.test_existing_success_is_not_overwritten_and_late_failure_does_not_delete_other_files",
+        "test_multi_size.MultiSizeTests.test_input_change_before_and_between_files_never_produces_unconfirmed_new_output",
+        "test_multi_size.MultiSizeTests.test_omitted_size_and_all_known_reasons_remain_visible_in_confirmation",
+        "test_multi_size.MultiSizeTests.test_partial_confirmation_is_required_and_real_final_preview_three_formats_are_separate",
+        "test_multi_size.MultiSizeTests.test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text",
+        "test_multi_size.MultiSizeTests.test_revoked_or_changed_logo_and_template_block_only_affected_output",
+        "test_multi_size.MultiSizeTests.test_sizes_keep_independent_geometry_and_missing_logo_does_not_borrow_or_block_other_size"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-08597": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_noise_authoring.py",
+        "line": 31,
+        "message": "Argument of type \"str | list[dict[str, Unknown]] | dict[str, Unknown] | bool\" cannot be assigned to parameter \"approved\" of type \"bool\" in function \"propose_noise_rule\"\n  Type \"str | list[dict[str, Unknown]] | dict[str, Unknown] | bool\" is not assignable to type \"bool\"\n    \"str\" is not assignable to \"bool\"",
+        "context": "args.update(kw); return self.store.propose_noise_rule(**args)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7323830e48fa86f3a36faa8b2cd5b1bc8219a1f2f5df0b039b723d0d146290f7"
+      },
+      "reason": "The fixture builds a keyword record with distinct approval bool, literal/source strings, example lists and binding dictionaries. Generic dict inference applies one union to every keyword. Positive calls preserve the bool field; deliberately invalid overrides are expected-rejection inputs. Core approval/revision/plan-digest checks remain active.",
+      "source_sha256": "32254efae5924774477897db8f1c1c40bb7b19d2c096599760e4b368215efed4",
+      "passing_related_cases": [
+        "test_noise_authoring.NoiseAuthorGuiTests.test_actual_local_confirm_cancel_and_rule_authoring",
+        "test_noise_authoring.NoiseAuthorGuiTests.test_actual_stale_wizard_and_entry_recover_without_loss",
+        "test_noise_authoring.NoiseAuthorTests.test_full_unicode_normalization_explicit_zone_and_counterexamples",
+        "test_noise_authoring.NoiseAuthorTests.test_local_and_remember_have_different_effects_preserve_source_and_slots",
+        "test_noise_authoring.NoiseAuthorTests.test_local_undo_retains_history_and_does_not_activate_pending_rule",
+        "test_noise_authoring.NoiseAuthorTests.test_real_fields_logo_unknown_or_missing_confirmation_cannot_be_excluded",
+        "test_noise_authoring.NoiseAuthorTests.test_rule_plus_local_late_audit_failure_rolls_back_both",
+        "test_noise_authoring.NoiseAuthorTests.test_stale_preview_source_and_local_revision_fail_closed"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-08598": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_noise_authoring.py",
+        "line": 31,
+        "message": "Argument of type \"str | list[dict[str, Unknown]] | dict[str, Unknown] | bool\" cannot be assigned to parameter \"normalization_approved\" of type \"bool\" in function \"propose_noise_rule\"\n  Type \"str | list[dict[str, Unknown]] | dict[str, Unknown] | bool\" is not assignable to type \"bool\"\n    \"str\" is not assignable to \"bool\"",
+        "context": "args.update(kw); return self.store.propose_noise_rule(**args)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3e37a89342fdf410de4bf7d527cec29164c24c6f1bbe72527e49848e8490969b"
+      },
+      "reason": "The fixture builds a keyword record with distinct approval bool, literal/source strings, example lists and binding dictionaries. Generic dict inference applies one union to every keyword. Positive calls preserve the bool field; deliberately invalid overrides are expected-rejection inputs. Core approval/revision/plan-digest checks remain active.",
+      "source_sha256": "32254efae5924774477897db8f1c1c40bb7b19d2c096599760e4b368215efed4",
+      "passing_related_cases": [
+        "test_noise_authoring.NoiseAuthorGuiTests.test_actual_local_confirm_cancel_and_rule_authoring",
+        "test_noise_authoring.NoiseAuthorGuiTests.test_actual_stale_wizard_and_entry_recover_without_loss",
+        "test_noise_authoring.NoiseAuthorTests.test_full_unicode_normalization_explicit_zone_and_counterexamples",
+        "test_noise_authoring.NoiseAuthorTests.test_local_and_remember_have_different_effects_preserve_source_and_slots",
+        "test_noise_authoring.NoiseAuthorTests.test_local_undo_retains_history_and_does_not_activate_pending_rule",
+        "test_noise_authoring.NoiseAuthorTests.test_real_fields_logo_unknown_or_missing_confirmation_cannot_be_excluded",
+        "test_noise_authoring.NoiseAuthorTests.test_rule_plus_local_late_audit_failure_rolls_back_both",
+        "test_noise_authoring.NoiseAuthorTests.test_stale_preview_source_and_local_revision_fail_closed"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-08638": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_noise_recovery.py",
+        "line": 39,
+        "message": "Argument of type \"str | list[dict[str, Unknown]] | dict[str, Unknown] | bool\" cannot be assigned to parameter \"approved\" of type \"bool\" in function \"change_rule_candidate\"\n  Type \"str | list[dict[str, Unknown]] | dict[str, Unknown] | bool\" is not assignable to type \"bool\"\n    \"str\" is not assignable to \"bool\"",
+        "context": "changed=self.store.change_rule_candidate(**kwargs,expected_plan_digest=plan['digest']);self.assertEqual(changed['literal'],'已審核');self.assertEqual(changed['state'],'PENDING');self.assertEqual(self.state(self.future),'INCLUDED');self.assertEqual(self.store.history('RULE',changed['id'])[0]['before']['literal'],'已校稿')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "20dfc9fbc42ca7be8186a6071e87c38d57dbe0a4166aac5478b9164e72dda761"
+      },
+      "reason": "The fixture builds a keyword record with distinct approval bool, literal/source strings, example lists and binding dictionaries. Generic dict inference applies one union to every keyword. Positive calls preserve the bool field; deliberately invalid overrides are expected-rejection inputs. Core approval/revision/plan-digest checks remain active.",
+      "source_sha256": "6c6a86f0a2b209e3b47ac2dbdd51e754489836d8fabb1ef7536a7bb523adfeca",
+      "passing_related_cases": [
+        "test_noise_recovery.NoiseRecoveryGuiTests.test_actual_changed_candidate_preview_and_cancel_source_epoch_stale",
+        "test_noise_recovery.NoiseRecoveryGuiTests.test_actual_keep_whitelist_approve_and_disabled_rollback_controls",
+        "test_noise_recovery.NoiseRecoveryTests.test_change_from_current_manual_source_has_exact_preview_and_pending_activation",
+        "test_noise_recovery.NoiseRecoveryTests.test_disable_rollback_new_candidate_and_reapproval_keep_history_monotonic",
+        "test_noise_recovery.NoiseRecoveryTests.test_exact_sample_dependency_invalidation_no_other_sample_or_source_changed",
+        "test_noise_recovery.NoiseRecoveryTests.test_local_keep_and_pending_whitelist_are_different_from_global_approved_keep",
+        "test_noise_recovery.NoiseRecoveryTests.test_stale_plan_tampered_after_and_late_audit_rollback_do_not_partial_apply",
+        "test_noise_recovery.NoiseRecoveryTests.test_whitelist_requires_noncontradictory_real_refs_and_source_freshness"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-08639": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_noise_recovery.py",
+        "line": 39,
+        "message": "Argument of type \"str | list[dict[str, Unknown]] | dict[str, Unknown] | bool\" cannot be assigned to parameter \"normalization_approved\" of type \"bool\" in function \"change_rule_candidate\"\n  Type \"str | list[dict[str, Unknown]] | dict[str, Unknown] | bool\" is not assignable to type \"bool\"\n    \"str\" is not assignable to \"bool\"",
+        "context": "changed=self.store.change_rule_candidate(**kwargs,expected_plan_digest=plan['digest']);self.assertEqual(changed['literal'],'已審核');self.assertEqual(changed['state'],'PENDING');self.assertEqual(self.state(self.future),'INCLUDED');self.assertEqual(self.store.history('RULE',changed['id'])[0]['before']['literal'],'已校稿')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "368b60400c64f57be9a033907d8fcda4eb0ef9a488ee751b4eaa56522286c15d"
+      },
+      "reason": "The fixture builds a keyword record with distinct approval bool, literal/source strings, example lists and binding dictionaries. Generic dict inference applies one union to every keyword. Positive calls preserve the bool field; deliberately invalid overrides are expected-rejection inputs. Core approval/revision/plan-digest checks remain active.",
+      "source_sha256": "6c6a86f0a2b209e3b47ac2dbdd51e754489836d8fabb1ef7536a7bb523adfeca",
+      "passing_related_cases": [
+        "test_noise_recovery.NoiseRecoveryGuiTests.test_actual_changed_candidate_preview_and_cancel_source_epoch_stale",
+        "test_noise_recovery.NoiseRecoveryGuiTests.test_actual_keep_whitelist_approve_and_disabled_rollback_controls",
+        "test_noise_recovery.NoiseRecoveryTests.test_change_from_current_manual_source_has_exact_preview_and_pending_activation",
+        "test_noise_recovery.NoiseRecoveryTests.test_disable_rollback_new_candidate_and_reapproval_keep_history_monotonic",
+        "test_noise_recovery.NoiseRecoveryTests.test_exact_sample_dependency_invalidation_no_other_sample_or_source_changed",
+        "test_noise_recovery.NoiseRecoveryTests.test_local_keep_and_pending_whitelist_are_different_from_global_approved_keep",
+        "test_noise_recovery.NoiseRecoveryTests.test_stale_plan_tampered_after_and_late_audit_rollback_do_not_partial_apply",
+        "test_noise_recovery.NoiseRecoveryTests.test_whitelist_requires_noncontradictory_real_refs_and_source_freshness"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-08687": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "tests/test_object_tools.py",
+        "line": 197,
+        "message": "\"name\" is not a known attribute of \"None\"",
+        "context": "self.d.preview_patch();other=copy.deepcopy(self.w.template);other.name='external edit';self.w.library.save_template(other);self.d.apply()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f72643cecb1cfa63672f6eb17143f3c080c15282d7b83adddca052a909df0db9"
+      },
+      "reason": "The external-edit fixtures have actual saved Template objects before copying and renaming them. The edits deliberately invalidate the open plan, whose refusal/assertions remain unchanged. Arbitrary missing template lookups are still nullable.",
+      "source_sha256": "0ba1632a9ea91c63fb3696dba47d612f5092f155bc7b343fcbb740234d1f1865",
+      "passing_related_cases": [
+        "test_object_tools.ObjectToolsGuiTests.test_actual_apply_history_reopen_undo_redo_and_stale_controls",
+        "test_object_tools.ObjectToolsGuiTests.test_both_mode_entries_source_history_and_unsaved_editor_protection",
+        "test_object_tools.ObjectToolsGuiTests.test_explicit_font_pin_style_patch_and_cross_owner_gui_gate",
+        "test_object_tools.ObjectToolsGuiTests.test_late_failure_retry_publication_and_no_selection_do_not_write",
+        "test_object_tools.ObjectToolsGuiTests.test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots",
+        "test_object_tools.ObjectToolsGuiTests.test_main_manual_mutation_during_confirmation_preserved_and_refresh_retry",
+        "test_object_tools.ObjectToolsGuiTests.test_mixed_dirty_only_panel_preserves_other_values_and_cancel",
+        "test_object_tools.ObjectToolsGuiTests.test_real_drag_only_candidate_group_and_locked_main_paths",
+        "test_object_tools.ObjectToolsGuiTests.test_real_three_way_click_modifier_list_and_rubber_selection",
+        "test_object_tools.ObjectToolsTests.test_cas_aba_publication_and_late_audit_atomic_rollback",
+        "test_object_tools.ObjectToolsTests.test_general_save_delete_and_font_transaction_cannot_bypass_lock",
+        "test_object_tools.ObjectToolsTests.test_legacy_lock_policy_empty_invalid_and_noop_requests",
+        "test_object_tools.ObjectToolsTests.test_mixed_dirty_patch_owner_scope_and_logo_aspect",
+        "test_object_tools.ObjectToolsTests.test_persistent_apply_undo_redo_reopen_and_unselected_identity",
+        "test_object_tools.ObjectToolsTests.test_six_alignments_independent_math_and_protected_fields",
+        "test_object_tools.ObjectToolsTests.test_source_revision_visual_revalidation_and_transaction_rollback",
+        "test_object_tools.ObjectToolsTests.test_spacing_both_axes_stable_ties_and_group_displacement"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-08698": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "tests/test_object_tools.py",
+        "line": 237,
+        "message": "\"name\" is not a known attribute of \"None\"",
+        "context": "external=copy.deepcopy(saved);external.name='external';self.w.library.save_template(external);self.w.library.save_template(saved)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2575ccc2c18c12d3577b14b915db669cd12aaaa171fc70182008c7036bf29752"
+      },
+      "reason": "The external-edit fixtures have actual saved Template objects before copying and renaming them. The edits deliberately invalidate the open plan, whose refusal/assertions remain unchanged. Arbitrary missing template lookups are still nullable.",
+      "source_sha256": "0ba1632a9ea91c63fb3696dba47d612f5092f155bc7b343fcbb740234d1f1865",
+      "passing_related_cases": [
+        "test_object_tools.ObjectToolsGuiTests.test_actual_apply_history_reopen_undo_redo_and_stale_controls",
+        "test_object_tools.ObjectToolsGuiTests.test_both_mode_entries_source_history_and_unsaved_editor_protection",
+        "test_object_tools.ObjectToolsGuiTests.test_explicit_font_pin_style_patch_and_cross_owner_gui_gate",
+        "test_object_tools.ObjectToolsGuiTests.test_late_failure_retry_publication_and_no_selection_do_not_write",
+        "test_object_tools.ObjectToolsGuiTests.test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots",
+        "test_object_tools.ObjectToolsGuiTests.test_main_manual_mutation_during_confirmation_preserved_and_refresh_retry",
+        "test_object_tools.ObjectToolsGuiTests.test_mixed_dirty_only_panel_preserves_other_values_and_cancel",
+        "test_object_tools.ObjectToolsGuiTests.test_real_drag_only_candidate_group_and_locked_main_paths",
+        "test_object_tools.ObjectToolsGuiTests.test_real_three_way_click_modifier_list_and_rubber_selection",
+        "test_object_tools.ObjectToolsTests.test_cas_aba_publication_and_late_audit_atomic_rollback",
+        "test_object_tools.ObjectToolsTests.test_general_save_delete_and_font_transaction_cannot_bypass_lock",
+        "test_object_tools.ObjectToolsTests.test_legacy_lock_policy_empty_invalid_and_noop_requests",
+        "test_object_tools.ObjectToolsTests.test_mixed_dirty_patch_owner_scope_and_logo_aspect",
+        "test_object_tools.ObjectToolsTests.test_persistent_apply_undo_redo_reopen_and_unselected_identity",
+        "test_object_tools.ObjectToolsTests.test_six_alignments_independent_math_and_protected_fields",
+        "test_object_tools.ObjectToolsTests.test_source_revision_visual_revalidation_and_transaction_rollback",
+        "test_object_tools.ObjectToolsTests.test_spacing_both_axes_stable_ties_and_group_displacement"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-09492": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_jobs.py",
+        "line": 29,
+        "message": "Argument of type \"SimpleNamespace\" cannot be assigned to parameter \"self\" of type \"QualityPolicyTests\" in function \"plan\"\n  \"SimpleNamespace\" is not assignable to \"QualityPolicyTests\"",
+        "context": "policies=QualityPolicies(self.library);policy_plan=policy_fixture.QualityPolicyTests.plan(SimpleNamespace(policy=lambda:policies));policy=policies.approve(policy_plan,'Reviewer',True)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "49b43f75dbd2179a21e64ee781359149ed6d1253be7fdcb7fddf5af48d9e4053"
+      },
+      "reason": "These specific borrowed fixture helpers consume only the explicitly provided policy() or service member of SimpleNamespace. They do not require other TestCase identity/state. The nominal fixture self class is too restrictive; the source helper protocol and actual complete fixture assertions define the bounded reuse.",
+      "source_sha256": "b4c64319cc9a6befbd44a7c2b5e1112077e7f06897bb4f266f497975b2fdcb10",
+      "passing_related_cases": [
+        "test_quality_jobs.QualityJobTests.test_actual_fifo_isolated_children_execute_both_sides_and_keep_quality_insufficient",
+        "test_quality_jobs.QualityJobTests.test_atomic_result_audit_failure_never_leaves_prediction_or_fake_done",
+        "test_quality_jobs.QualityJobTests.test_cancel_before_first_source_saves_no_predictions_and_explicit_resume_works",
+        "test_quality_jobs.QualityJobTests.test_queue_claim_receipt_failure_rolls_back_shared_lease_and_job",
+        "test_quality_jobs.QualityJobTests.test_resource_pause_resumes_same_job_without_repredicting_committed_source"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-09537": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_logo.py",
+        "line": 51,
+        "message": "Argument of type \"dict[str, str | dict[str, int] | dict[str, str | list[Unknown] | dict[Unknown, Unknown] | bool]]\" cannot be assigned to parameter \"object\" of type \"dict[str, dict[str, int] | str]\" in function \"append\"\n  \"dict[str, str | dict[str, int] | dict[str, str | list[Unknown] | dict[Unknown, Unknown] | bool]]\" is not assignable to \"dict[str, dict[str, int] | str]\"\n    Type parameter \"_VT@dict\" is invariant, but \"str | dict[str, int] | dict[str, str | list[Unknown] | dict[Unknown, Unknown] | bool]\" is not the same as \"dict[str, int] | str\"\n    Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type",
+        "context": "gold['objects'].append(dict(id='gold-logo',slot_id='logo',kind='logo',owner='c1',rect=rect,text='',object_type='LOGO_PART',classification='LOGO',component_truth=evidence))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "42c1097819a1d294eb6f86a3afd0f95f1472ee98cbc2d10a7cd6dbaaf8616d63"
+      },
+      "reason": "The authored Logo truth/prediction objects add component_truth/component_prediction dictionaries to the existing text-object schema. Objects remain named heterogeneous dictionaries; rect, ownership, text and component evidence are separate fields. These Logo scoring fixtures test that extension and preserve critical owner/correspondence assertions.",
+      "source_sha256": "a6f6a4560dc9d836d124f13944aca35ede5f97aef3ba53264a786a58094a7f77",
+      "passing_related_cases": [
+        "test_quality_logo.ActualLogoPipelineTests.test_actual_renderer_source_pipeline_retains_all_authored_logo_components",
+        "test_quality_logo.QualityLogoTests.test_actual_path_tag_cannot_erase_human_confirmed_outlined_logo_text",
+        "test_quality_logo.QualityLogoTests.test_explicit_whole_original_truth_rejects_truncated_or_unreviewed_components",
+        "test_quality_logo.QualityLogoTests.test_manual_nested_outline_word_group_is_one_text_region_and_cannot_double_count_glyph",
+        "test_quality_logo.QualityLogoTests.test_missing_id_or_external_image_is_unknown_not_full_logo_proof",
+        "test_quality_logo.QualityLogoTests.test_no_manual_text_partition_keeps_logo_text_completeness_unknown",
+        "test_quality_logo.QualityLogoTests.test_reviewed_semantic_logo_truth_and_prediction_use_the_same_derivative",
+        "test_quality_logo.QualityLogoTests.test_same_bbox_truncated_logo_is_critical_and_logo_text_remains_denominator"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-09552": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_logo.py",
+        "line": 55,
+        "message": "Argument of type \"dict[str, str | dict[str, int] | dict[str, str | list[Unknown] | dict[Unknown, Unknown] | bool]]\" cannot be assigned to parameter \"object\" of type \"dict[str, dict[str, int] | str]\" in function \"append\"\n  \"dict[str, str | dict[str, int] | dict[str, str | list[Unknown] | dict[Unknown, Unknown] | bool]]\" is not assignable to \"dict[str, dict[str, int] | str]\"\n    Type parameter \"_VT@dict\" is invariant, but \"str | dict[str, int] | dict[str, str | list[Unknown] | dict[Unknown, Unknown] | bool]\" is not the same as \"dict[str, int] | str\"\n    Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type",
+        "context": "work['observations'].append(dict(id='pred-logo',slot_id='logo',region=rect,text='',object_type='LOGO_PART',classification='LOGO',component_prediction=candidate))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a10a0aac22bc5490930c5c594fb2569ac4fbe3cd8b378d00537c74105dde0d17"
+      },
+      "reason": "The authored Logo truth/prediction objects add component_truth/component_prediction dictionaries to the existing text-object schema. Objects remain named heterogeneous dictionaries; rect, ownership, text and component evidence are separate fields. These Logo scoring fixtures test that extension and preserve critical owner/correspondence assertions.",
+      "source_sha256": "a6f6a4560dc9d836d124f13944aca35ede5f97aef3ba53264a786a58094a7f77",
+      "passing_related_cases": [
+        "test_quality_logo.ActualLogoPipelineTests.test_actual_renderer_source_pipeline_retains_all_authored_logo_components",
+        "test_quality_logo.QualityLogoTests.test_actual_path_tag_cannot_erase_human_confirmed_outlined_logo_text",
+        "test_quality_logo.QualityLogoTests.test_explicit_whole_original_truth_rejects_truncated_or_unreviewed_components",
+        "test_quality_logo.QualityLogoTests.test_manual_nested_outline_word_group_is_one_text_region_and_cannot_double_count_glyph",
+        "test_quality_logo.QualityLogoTests.test_missing_id_or_external_image_is_unknown_not_full_logo_proof",
+        "test_quality_logo.QualityLogoTests.test_no_manual_text_partition_keeps_logo_text_completeness_unknown",
+        "test_quality_logo.QualityLogoTests.test_reviewed_semantic_logo_truth_and_prediction_use_the_same_derivative",
+        "test_quality_logo.QualityLogoTests.test_same_bbox_truncated_logo_is_critical_and_logo_text_remains_denominator"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-09684": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_metrics.py",
+        "line": 34,
+        "message": "Argument of type \"float\" cannot be assigned to parameter \"b\" of type \"SupportsDunderGT[_T@assertLess]\" in function \"assertLess\"\n  \"float\" is incompatible with protocol \"SupportsDunderGT[Unknown | float | str]\"\n    \"__gt__\" is an incompatible type\n      Type \"(value: float, /) -> bool\" is not assignable to type \"(other: _T_contra@SupportsDunderGT, /) -> SupportsBool\"\n        Parameter 1: type \"_T_contra@SupportsDunderGT\" is incompatible with type \"float\"\n          Type \"Unknown | float | str\" is not assignable to type \"float\"",
+        "context": "self.assertLess(small['lower'],.3);self.assertGreater(large['lower'],.9);self.assertEqual(small['independent_groups'],1)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "087448e552d11e2d6802e5c5a73090af4459de5d6d84d2ce2a2430c6f9b50359"
+      },
+      "reason": "The authored independent-group confidence case supplies a numeric lower interval bound. Python float supports the relevant comparisons; the inferred optional heterogeneous metric record obscures that supported-data result. Tiny/undefined support stays unknown elsewhere.",
+      "source_sha256": "ce4367501a4f253e2a17729cc606759a2a9db4f91ffbdc88d17266e35a5ae5a4",
+      "passing_related_cases": [
+        "test_quality_metrics.QualityMetricTests.test_invalid_box_duplicate_ids_budget_or_unapproved_match_policy_never_silently_drop",
+        "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification",
+        "test_quality_metrics.QualityMetricTests.test_maximum_cardinality_avoids_greedy_iou_false_missing_case",
+        "test_quality_metrics.QualityMetricTests.test_missing_extra_and_zero_denominators_are_not_fake_one_hundred_percent",
+        "test_quality_metrics.QualityMetricTests.test_root_labels_can_permute_but_cross_person_contact_stays_critical",
+        "test_quality_metrics.QualityMetricTests.test_same_lexical_owner_without_name_anchor_is_unknown_not_identity_evidence",
+        "test_quality_metrics.QualityMetricTests.test_wilson_intervals_keep_small_sample_uncertainty_and_empty_unknown"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-09739": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_operations.py",
+        "line": 109,
+        "message": "Argument of type \"Unknown | None\" cannot be assigned to parameter \"obj\" of type \"_DataclassT@replace\" in function \"replace\"\n  Type \"Unknown | None\" is not assignable to type \"DataclassInstance\"\n    Type \"Unknown | None\" is not assignable to type \"DataclassInstance\"\n      \"None\" is incompatible with protocol \"DataclassInstance\"\n        \"__dataclass_fields__\" is not present",
+        "context": "self.w.runtime.monitor.snapshot=lambda:replace(snapshot(),cpu_percent=100)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "1e2e6eb0af8feb888b965207c57af04aec006bedb034dfeab0cf303cd15faef4"
+      },
+      "reason": "The real runtime monitor has produced a ResourceSnapshot dataclass before this fixture replaces only its cpu_percent with100. dataclasses.replace acts on that actual snapshot. The controlled high-load fixture checks resource refusal without claiming native Windows/hardware performance.",
+      "source_sha256": "0702d90a35ae9255e34ec0fed7762e49c6d18874069aee96f981caca1deab806",
+      "passing_related_cases": [
+        "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+        "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
+        "test_quality_operations.QualityOperationsTests.test_fair_AB_repair_isolation_exposed_holdout_and_two_bad_versions_never_safe",
+        "test_quality_operations.QualityOperationsTests.test_fixed_holdout_confusion_denominators_zero_classes_unknown_and_critical_owners",
+        "test_quality_operations.QualityOperationsTests.test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate",
+        "test_quality_operations.QualityOperationsTests.test_major_recheck_stale_plan_and_late_audit_rollback_entire_scope",
+        "test_quality_operations.QualityOperationsTests.test_resource_pause_keeps_scan_pending_and_resume_returns_actual_result",
+        "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
+        "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
+        "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-09912": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_rechecks.py",
+        "line": 28,
+        "message": "Argument of type \"SimpleNamespace\" cannot be assigned to parameter \"self\" of type \"CoverageBatchTests\" in function \"review_all\"\n  \"SimpleNamespace\" is not assignable to \"CoverageBatchTests\"",
+        "context": "coverage_fixture.CoverageBatchTests.review_all(SimpleNamespace(service=self.coverage),member,self.work)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "50cf6eaf5d22d0298b58c22ca100a54bedd756f76bb645ce97d08ef6a6019ee2"
+      },
+      "reason": "These specific borrowed fixture helpers consume only the explicitly provided policy() or service member of SimpleNamespace. They do not require other TestCase identity/state. The nominal fixture self class is too restrictive; the source helper protocol and actual complete fixture assertions define the bounded reuse.",
+      "source_sha256": "d9379f6fcc1a7a9bd28fbd01950a2d1b4f71af67cf5577bd8c21b9a7ffb16f63",
+      "passing_related_cases": [
+        "test_quality_rechecks.QualityRecheckTests.test_actual_critical_result_finds_closed_historical_batch_and_quarantines_it",
+        "test_quality_rechecks.QualityRecheckTests.test_explicit_approval_and_disk_failure_cannot_partially_quarantine_history",
+        "test_quality_rechecks.QualityRecheckTests.test_legacy_review_without_version_snapshot_is_potential_impact_not_guessed_exact",
+        "test_quality_rechecks.QualityRecheckTests.test_no_acceptance_receipt_never_qualifies_quality_recommendations",
+        "test_quality_rechecks.QualityRecheckTests.test_no_new_human_fact_review_cannot_clear_quarantine_or_restore_safe_model"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-10641": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_roles.py",
+        "line": 29,
+        "message": "Argument of type \"SimpleNamespace\" cannot be assigned to parameter \"self\" of type \"QualityPolicyTests\" in function \"plan\"\n  \"SimpleNamespace\" is not assignable to \"QualityPolicyTests\"",
+        "context": "policy_service=QualityPolicies(self.library);policy=policy_service.approve(policy_fixture.QualityPolicyTests.plan(SimpleNamespace(policy=lambda:policy_service)),'Reviewer',True)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7f4c9cf20dcd36cf2aa7af8ba552921ebe435e6f29a26ebdf74e6ae71e2a2be9"
+      },
+      "reason": "These specific borrowed fixture helpers consume only the explicitly provided policy() or service member of SimpleNamespace. They do not require other TestCase identity/state. The nominal fixture self class is too restrictive; the source helper protocol and actual complete fixture assertions define the bounded reuse.",
+      "source_sha256": "3be5cdcd954cee36c0261ecd3de10d0e40dce141ccef7b729febafc8572c9e83",
+      "passing_related_cases": [
+        "test_quality_roles.QualityRoleGuiTests.test_actual_native_train_role_diagnosis_has_correct_filtered_rows",
+        "test_quality_roles.QualityRoleTests.test_actual_train_diagnostics_never_admit_train_or_qualify_independent_quality",
+        "test_quality_roles.QualityRoleTests.test_actual_validation_diagnostics_are_not_holdout_generalization",
+        "test_quality_roles.QualityRoleTests.test_diagnostic_permission_cannot_be_reused_as_independent_holdout_or_vice_versa",
+        "test_quality_roles.QualityRoleTests.test_even_perfect_synthetic_fit_counts_have_no_inference_interval_or_quality_pass",
+        "test_quality_roles.QualityRoleTests.test_explicit_diagnostic_exposure_allows_new_fixed_fit_pair_but_cannot_wash_role"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-10747": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_statistics.py",
+        "line": 37,
+        "message": "Argument of type \"list[list[str]] | int\" cannot be assigned to parameter \"iterable\" of type \"Iterable[_AddableT1@sum]\" in function \"sum\"\n  Type \"list[list[str]] | int\" is not assignable to type \"Iterable[_AddableT1@sum]\"\n    \"int\" is incompatible with protocol \"Iterable[_AddableT1@sum]\"\n      \"__iter__\" is not present",
+        "context": "manifest['group_components'] = [sum(manifest['group_components'], [])]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c0d7b311ef8d27fc2f5b7814d9380529b35d736db69d565b25a74caf29fe70f0"
+      },
+      "reason": "The exact model weights field is a numeric coefficient list and the dataset group_components field is list[list[str]]. Other model/manifest fields hold strings/counts; they are not the iterables here. These repeatability/independent-group fixtures intentionally compare weights or combine source groups, with their actual original assertions unchanged.",
+      "source_sha256": "325b6f49d8e6605436cb9c3e97e091e46ca5a4c07addb5bac1f5261d2cb43e0e",
+      "passing_related_cases": [
+        "test_quality_statistics.QualityStatisticsTests.test_critical_owner_error_blocks_even_when_all_aggregate_rates_pass",
+        "test_quality_statistics.QualityStatisticsTests.test_known_good_synthetic_groups_pass_math_without_publication",
+        "test_quality_statistics.QualityStatisticsTests.test_missing_whole_group_is_not_silently_dropped",
+        "test_quality_statistics.QualityStatisticsTests.test_physical_mm_tolerance_uses_each_group_worst_failure",
+        "test_quality_statistics.QualityStatisticsTests.test_rare_class_cannot_hide_behind_frequent_email",
+        "test_quality_statistics.QualityStatisticsTests.test_thousands_of_fields_from_one_related_group_are_one_sample",
+        "test_quality_statistics.QualityStatisticsTests.test_unknown_source_retained_for_every_applicable_class",
+        "test_quality_statistics.QualityStatisticsTests.test_zero_observed_errors_with_small_n_still_fails_uncertainty_bound"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    },
+    "D-TES-11317": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_text_policy.py",
+        "line": 21,
+        "message": "Cannot assign to attribute \"error\" for class \"MainWindow\"\n  Type \"(message: Unknown) -> None\" is not assignable to type \"(text: Unknown) -> None\"\n    Parameter name mismatch: \"text\" versus \"message\"",
+        "context": "self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.w=MainWindow(Path(self.temp.name)/'data');self.addCleanup(self.w.library.close);self.w.error=lambda message:None",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "15f7eab830f986564cc21f6dae6c564dd79fabbbf11fb44f436e8a098911fd36"
+      },
+      "reason": "Only the error presenter is overridden in these existing fixtures, using positional-message collectors/None return. The real MainWindow/library/commands remain in use. These cases do not verify the replaced modal presenter; actual error/native-window evidence is recorded separately. The instance callback declaration is too narrow for this test adapter.",
+      "source_sha256": "e31c5b86dd05591d177493df4a73e64aa16d8bcfcb78b19ad8b661cca98f794b",
+      "passing_related_cases": [
+        "test_text_policy.TextPolicyTests.test_actual_text_policy_dialog_cancel_then_explicit_draft_apply_and_normal_edit_preserves_policy",
+        "test_text_policy.TextPolicyTests.test_bounded_measured_tracking_keeps_fixed_size_and_blocks_long_content",
+        "test_text_policy.TextPolicyTests.test_distributed_requires_explicit_semantic_approval_and_never_applies_to_identifiers",
+        "test_text_policy.TextPolicyTests.test_main_canvas_tree_property_keyboard_resize_and_undo_are_one_draft",
+        "test_text_policy.TextPolicyTests.test_raster_uses_same_fixed_point_tracking_parameter_as_measurement"
+      ],
+      "run": "full-regression-005",
+      "qualification": "Authored bounded fixture/type contract only; no general input, full GUI presentation, real corpus or native Windows guarantee"
+    }
+  }
+}

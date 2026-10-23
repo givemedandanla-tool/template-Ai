@@ -1,0 +1,23 @@
+...........FE.
+======================================================================
+ERROR: test_pressure_after_first_durable_unit_preserves_it_and_resume_reuses_without_duplicate_sources (test_runtime_execution.RuntimeAutomaticExecutionTests.test_pressure_after_first_durable_unit_preserves_it_and_resume_reuses_without_duplicate_sources)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_runtime_execution.py", line 31, in test_pressure_after_first_durable_unit_preserves_it_and_resume_reuses_without_duplicate_sources
+    unit=self.service.store.list('AUTO_UNIT')[0];sources=self.library.list_sources();self.assertEqual(len(sources),1)
+         ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TrainingStore' object has no attribute 'list'
+
+======================================================================
+FAIL: test_pause_commit_audit_failure_is_failure_and_keeps_recoverable_running_state (test_runtime_execution.RuntimeAutomaticExecutionTests.test_pause_commit_audit_failure_is_failure_and_keeps_recoverable_running_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_runtime_execution.py", line 44, in test_pause_commit_audit_failure_is_failure_and_keeps_recoverable_running_state
+    with patch.object(Library,'event',fail),self.assertRaises(OSError):self.execute(job,lambda:HOLD)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: OSError not raised
+
+----------------------------------------------------------------------
+Ran 14 tests in 14.041s
+
+FAILED (failures=1, errors=1)

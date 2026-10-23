@@ -1,0 +1,29 @@
+{
+  "kind": "ACTUAL_TEST_FIXTURE_HANG_REVIEW",
+  "run": "RUN-TEMPLATE-EDITOR-ALL-005",
+  "interruption": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-005/interruption.json",
+  "actual_completed_results": 721,
+  "actual_passed": 721,
+  "planned_tests": 1779,
+  "stack": "docs/evidence/template-editor/full005-batch-cleanup-hang-001.log",
+  "observed_location": "MainWindow.closeEvent/inform called by unittest cleanup after workflow wait failure",
+  "product_cancel_defect_established": false,
+  "changes": [
+    "existing controlled_resources on initial and reopened test window",
+    "existing native Qt wait_for_gui at original10s budget",
+    "bounded cancellation before modal-free test teardown",
+    "explicit disposal of old reopened window"
+  ],
+  "diagnostic": {
+    "gui_tests": 7,
+    "seconds": 5.568,
+    "status": "PASS"
+  },
+  "actual_persisted_module": {
+    "tests": 16,
+    "seconds": 10.06,
+    "status": "PASS"
+  },
+  "test_ids_removed": 0,
+  "assertions_relaxed": false
+}

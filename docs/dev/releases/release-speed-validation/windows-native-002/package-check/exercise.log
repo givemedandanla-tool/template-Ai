@@ -1,0 +1,31 @@
+FROZEN_UTF8_MODE=1
+release-check: version_in_actual_window
+release-check: actual_executable_trains_frozen_synthetic_dataset
+release-check: input_generate_embedded_preview
+release-check: confirm_actual_preview
+release-check: drag_targets_visible_in_actual_viewport
+release-check: real_pointer_drag_preserves_data_invalidates_confirmation
+release-check: content_correction_clears_stale_preview
+SAFE_FROZEN_TRACEBACK after 45s
+Thread 1992
+  frozen_runtime_hook.py:34 dump_referenced_frames
+  threading.py:1401 run
+  threading.py:1045 _bootstrap_inner
+  threading.py:1002 _bootstrap
+Thread 4608
+  production_bridge.py:133 learning_input_status
+  workbench_navigation.py:307 update
+  production_bridge.py:109 publish_preview
+  design_learning_dialog.py:521 refresh_draft
+  design_learning_dialog.py:446 solve_finished
+  release_check.py:89 wait
+  release_check.py:201 run
+  app.py:39 main
+  app.py:100 <module>
+release-check: regenerate_latest_input
+release-check: allowed_preview_export_matches_saved_bytes
+release-check: unqualified_formal_export_still_refused
+release-check: frozen_json_pipe_worker
+release-check: actual_frozen_background_worker_pauses_at_saved_boundary
+release-check: safe_report_does_not_include_authored_content
+release-check: actual_window_close_preserves_durable_session

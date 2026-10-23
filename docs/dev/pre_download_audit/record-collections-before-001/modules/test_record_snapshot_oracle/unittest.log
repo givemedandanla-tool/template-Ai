@@ -1,0 +1,250 @@
+test_customer_candidates_snapshot_does_not_mix_concurrent_update (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_customer_candidates_snapshot_does_not_mix_concurrent_update) ... ERROR
+test_customer_candidates_snapshot_survives_concurrent_delete (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_customer_candidates_snapshot_survives_concurrent_delete) ... ERROR
+test_eligible_queue_snapshot_does_not_mix_concurrent_update (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_eligible_queue_snapshot_does_not_mix_concurrent_update) ... FAIL
+test_eligible_queue_snapshot_survives_concurrent_delete (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_eligible_queue_snapshot_survives_concurrent_delete) ... ERROR
+test_import_batch_list_preserves_revision_integrity_gate (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_import_batch_list_preserves_revision_integrity_gate) ... ok
+test_import_batches_snapshot_does_not_mix_concurrent_update (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_import_batches_snapshot_does_not_mix_concurrent_update) ... FAIL
+test_import_batches_snapshot_survives_concurrent_delete (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_import_batches_snapshot_survives_concurrent_delete) ... ERROR
+test_queue_page_snapshot_does_not_mix_concurrent_update (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_queue_page_snapshot_does_not_mix_concurrent_update) ... FAIL
+test_queue_page_snapshot_survives_concurrent_delete (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_queue_page_snapshot_survives_concurrent_delete) ... FAIL
+test_training_records_snapshot_does_not_mix_concurrent_update (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_training_records_snapshot_does_not_mix_concurrent_update) ... FAIL
+test_training_records_snapshot_survives_concurrent_delete (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_training_records_snapshot_survives_concurrent_delete) ... FAIL
+test_write_readback_remains_inside_real_sqlite_write_transaction (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_write_readback_remains_inside_real_sqlite_write_transaction) ... ok
+
+======================================================================
+ERROR: test_customer_candidates_snapshot_does_not_mix_concurrent_update (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_customer_candidates_snapshot_does_not_mix_concurrent_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 115, in test_customer_candidates_snapshot_does_not_mix_concurrent_update
+    self.interleaving('customer_candidates', 'update')
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 44, in interleaving
+    service = CustomerCandidates(reader)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customer_candidates.py", line 31, in __init__
+    self.store, self.library, self.db = store, store.library, store.db
+                                               ^^^^^^^^^^^^^
+AttributeError: 'Library' object has no attribute 'library'
+
+======================================================================
+ERROR: test_customer_candidates_snapshot_survives_concurrent_delete (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_customer_candidates_snapshot_survives_concurrent_delete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 112, in test_customer_candidates_snapshot_survives_concurrent_delete
+    self.interleaving('customer_candidates', 'delete')
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 44, in interleaving
+    service = CustomerCandidates(reader)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customer_candidates.py", line 31, in __init__
+    self.store, self.library, self.db = store, store.library, store.db
+                                               ^^^^^^^^^^^^^
+AttributeError: 'Library' object has no attribute 'library'
+
+======================================================================
+ERROR: test_eligible_queue_snapshot_survives_concurrent_delete (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_eligible_queue_snapshot_survives_concurrent_delete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 106, in test_eligible_queue_snapshot_survives_concurrent_delete
+    self.interleaving('queue_eligible', 'delete')
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 76, in interleaving
+    selected = collection()
+               ^^^^^^^^^^^^
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 41, in <lambda>
+    collection = service.page if kind == 'queue_page' else lambda: service.eligible('authored-audit-session')
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/runtime_queue.py", line 48, in eligible
+    return [row for row in rows if (session is None or row['consent_session']==session) and owner_alive(row.get('consent_owner'))]
+                                                       ~~~^^^^^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+ERROR: test_import_batches_snapshot_survives_concurrent_delete (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_import_batches_snapshot_survives_concurrent_delete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 118, in test_import_batches_snapshot_survives_concurrent_delete
+    self.interleaving('batch', 'delete')
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 76, in interleaving
+    selected = collection()
+               ^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/batch_import.py", line 120, in list
+    def list(self):return [self.get(r[0]) for r in self.db.execute('SELECT id FROM import_batches ORDER BY rowid DESC')]
+                           ^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/batch_import.py", line 116, in get
+    if not row:raise ValueError('批次不存在')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 批次不存在
+
+======================================================================
+FAIL: test_eligible_queue_snapshot_does_not_mix_concurrent_update (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_eligible_queue_snapshot_does_not_mix_concurrent_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 109, in test_eligible_queue_snapshot_does_not_mix_concurrent_update
+    self.interleaving('queue_eligible', 'update')
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 80, in interleaving
+    self.assertEqual(selected, [expected], 'Selected rows must retain their complete original snapshot')
+AssertionError: Lists differ: [{'id[30 chars]on': 2, 'state': 'WAITING', 'count': 99, 'cons[113 chars]: 1}] != [{'id[30 chars]on': 1, 'state': 'WAITING', 'count': 1, 'conse[112 chars]: 1}]
+
+First differing element 0:
+{'id'[29 chars]on': 2, 'state': 'WAITING', 'count': 99, 'cons[112 chars]': 1}
+{'id'[29 chars]on': 1, 'state': 'WAITING', 'count': 1, 'conse[111 chars]': 1}
+
+  [{'consent_owner': {'pid': 1094531, 'token': 'audit-snapshot-owner'},
+    'consent_session': 'authored-audit-session',
+-   'count': 99,
+?            ^^
+
++   'count': 1,
+?            ^
+
+    'id': 'audit-record-one',
+-   'revision': 2,
+?               ^
+
++   'revision': 1,
+?               ^
+
+    'seq': 1,
+    'state': 'WAITING'}] : Selected rows must retain their complete original snapshot
+
+======================================================================
+FAIL: test_import_batches_snapshot_does_not_mix_concurrent_update (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_import_batches_snapshot_does_not_mix_concurrent_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 121, in test_import_batches_snapshot_does_not_mix_concurrent_update
+    self.interleaving('batch', 'update')
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 80, in interleaving
+    self.assertEqual(selected, [expected], 'Selected rows must retain their complete original snapshot')
+AssertionError: Lists differ: [{'id[30 chars]on': 2, 'state': 'WAITING', 'count': 99, 'cons[103 chars]r'}}] != [{'id[30 chars]on': 1, 'state': 'WAITING', 'count': 1, 'conse[102 chars]r'}}]
+
+First differing element 0:
+{'id'[29 chars]on': 2, 'state': 'WAITING', 'count': 99, 'cons[102 chars]er'}}
+{'id'[29 chars]on': 1, 'state': 'WAITING', 'count': 1, 'conse[101 chars]er'}}
+
+  [{'consent_owner': {'pid': 1094531, 'token': 'audit-snapshot-owner'},
+    'consent_session': 'authored-audit-session',
+-   'count': 99,
+?            ^^
+
++   'count': 1,
+?            ^
+
+    'id': 'audit-record-one',
+-   'revision': 2,
+?               ^
+
++   'revision': 1,
+?               ^
+
+    'state': 'WAITING'}] : Selected rows must retain their complete original snapshot
+
+======================================================================
+FAIL: test_queue_page_snapshot_does_not_mix_concurrent_update (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_queue_page_snapshot_does_not_mix_concurrent_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 103, in test_queue_page_snapshot_does_not_mix_concurrent_update
+    self.interleaving('queue_page', 'update')
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 80, in interleaving
+    self.assertEqual(selected, [expected], 'Selected rows must retain their complete original snapshot')
+AssertionError: Lists differ: [{'id[30 chars]on': 2, 'state': 'WAITING', 'count': 99, 'cons[113 chars]: 1}] != [{'id[30 chars]on': 1, 'state': 'WAITING', 'count': 1, 'conse[112 chars]: 1}]
+
+First differing element 0:
+{'id'[29 chars]on': 2, 'state': 'WAITING', 'count': 99, 'cons[112 chars]': 1}
+{'id'[29 chars]on': 1, 'state': 'WAITING', 'count': 1, 'conse[111 chars]': 1}
+
+  [{'consent_owner': {'pid': 1094531, 'token': 'audit-snapshot-owner'},
+    'consent_session': 'authored-audit-session',
+-   'count': 99,
+?            ^^
+
++   'count': 1,
+?            ^
+
+    'id': 'audit-record-one',
+-   'revision': 2,
+?               ^
+
++   'revision': 1,
+?               ^
+
+    'seq': 1,
+    'state': 'WAITING'}] : Selected rows must retain their complete original snapshot
+
+======================================================================
+FAIL: test_queue_page_snapshot_survives_concurrent_delete (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_queue_page_snapshot_survives_concurrent_delete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 100, in test_queue_page_snapshot_survives_concurrent_delete
+    self.interleaving('queue_page', 'delete')
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 80, in interleaving
+    self.assertEqual(selected, [expected], 'Selected rows must retain their complete original snapshot')
+AssertionError: Lists differ: [None] != [{'id': 'audit-record-one', 'revision': 1,[151 chars]: 1}]
+
+First differing element 0:
+None
+{'id': 'audit-record-one', 'revision': 1,[150 chars]': 1}
+
+- [None]
++ [{'consent_owner': {'pid': 1094531, 'token': 'audit-snapshot-owner'},
++   'consent_session': 'authored-audit-session',
++   'count': 1,
++   'id': 'audit-record-one',
++   'revision': 1,
++   'seq': 1,
++   'state': 'WAITING'}] : Selected rows must retain their complete original snapshot
+
+======================================================================
+FAIL: test_training_records_snapshot_does_not_mix_concurrent_update (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_training_records_snapshot_does_not_mix_concurrent_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 97, in test_training_records_snapshot_does_not_mix_concurrent_update
+    self.interleaving('training', 'update')
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 80, in interleaving
+    self.assertEqual(selected, [expected], 'Selected rows must retain their complete original snapshot')
+AssertionError: Lists differ: [{'id[30 chars]on': 2, 'state': 'WAITING', 'count': 99, 'cons[103 chars]r'}}] != [{'id[30 chars]on': 1, 'state': 'WAITING', 'count': 1, 'conse[102 chars]r'}}]
+
+First differing element 0:
+{'id'[29 chars]on': 2, 'state': 'WAITING', 'count': 99, 'cons[102 chars]er'}}
+{'id'[29 chars]on': 1, 'state': 'WAITING', 'count': 1, 'conse[101 chars]er'}}
+
+  [{'consent_owner': {'pid': 1094531, 'token': 'audit-snapshot-owner'},
+    'consent_session': 'authored-audit-session',
+-   'count': 99,
+?            ^^
+
++   'count': 1,
+?            ^
+
+    'id': 'audit-record-one',
+-   'revision': 2,
+?               ^
+
++   'revision': 1,
+?               ^
+
+    'state': 'WAITING'}] : Selected rows must retain their complete original snapshot
+
+======================================================================
+FAIL: test_training_records_snapshot_survives_concurrent_delete (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_training_records_snapshot_survives_concurrent_delete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 94, in test_training_records_snapshot_survives_concurrent_delete
+    self.interleaving('training', 'delete')
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 80, in interleaving
+    self.assertEqual(selected, [expected], 'Selected rows must retain their complete original snapshot')
+AssertionError: Lists differ: [None] != [{'id': 'audit-record-one', 'revision': 1,[141 chars]r'}}]
+
+First differing element 0:
+None
+{'id': 'audit-record-one', 'revision': 1,[140 chars]er'}}
+
+- [None]
++ [{'consent_owner': {'pid': 1094531, 'token': 'audit-snapshot-owner'},
++   'consent_session': 'authored-audit-session',
++   'count': 1,
++   'id': 'audit-record-one',
++   'revision': 1,
++   'state': 'WAITING'}] : Selected rows must retain their complete original snapshot
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.094s
+
+FAILED (failures=6, errors=4)

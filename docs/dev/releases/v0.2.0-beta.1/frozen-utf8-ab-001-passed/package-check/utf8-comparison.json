@@ -1,0 +1,26 @@
+{
+  "status": "PASS_DIAGNOSTIC_ONLY_NOT_PUBLISHED",
+  "source": {
+    "source_commit": "c45dc23643044fa60c2088511575589146039479",
+    "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",
+    "source_matches_head": true
+  },
+  "attempts": [
+    {
+      "mode": "baseline",
+      "exit_code": 1,
+      "executable_sha256": "83cb39473dea54b73110a1181f62543a224012d8bb06d1f0f1a845855bc9cb92",
+      "actual_units": 0,
+      "runtime_utf8_mode": 0
+    },
+    {
+      "mode": "utf8",
+      "exit_code": 0,
+      "executable_sha256": "3ff87a3e0d7a001d0ce312a5c3579dae360e2ab54f70885addbd0b1a6b96c09b",
+      "actual_units": 2,
+      "runtime_utf8_mode": 1
+    }
+  ],
+  "source_tests": "NOT_EXECUTED_BY_THIS_DIAGNOSTIC",
+  "original_frozen_checks_unchanged": true
+}

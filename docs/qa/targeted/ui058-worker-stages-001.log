@@ -1,0 +1,127 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1625: UserWarning: Duplicate name: 'report.json'
+  return self._open_to_write(zinfo, force_zip64=force_zip64)
+======================================================================
+ERROR: test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors (test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_diagnostic_reports.py", line 70, in test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors
+    s=make_snapshot(self.w,'candidate');raw=build_bundle(s.data)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/diagnostic_snapshot.py", line 233, in make_snapshot
+    validate(data)
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 79, in validate
+    exact(data['progress'],{'state','total','checked','calculated','failed','unstarted','global_unsolvable'})
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 35, in exact
+    raise ValueError('報告格式含未允許或缺少欄位')
+ValueError: 報告格式含未允許或缺少欄位
+
+======================================================================
+ERROR: test_changed_font_since_generation_is_stale_without_mutating_candidate (test_diagnostic_reports.DiagnosticReportTests.test_changed_font_since_generation_is_stale_without_mutating_candidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_diagnostic_reports.py", line 248, in test_changed_font_since_generation_is_stale_without_mutating_candidate
+    before=copy.deepcopy(c);s=make_snapshot(self.w,'candidate')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/diagnostic_snapshot.py", line 233, in make_snapshot
+    validate(data)
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 79, in validate
+    exact(data['progress'],{'state','total','checked','calculated','failed','unstarted','global_unsolvable'})
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 35, in exact
+    raise ValueError('報告格式含未允許或缺少欄位')
+ValueError: 報告格式含未允許或缺少欄位
+
+======================================================================
+ERROR: test_each_size_and_candidate_readonly_scope_never_unlocks_output (test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_diagnostic_reports.py", line 147, in test_each_size_and_candidate_readonly_scope_never_unlocks_output
+    s=make_snapshot(self.w,'candidate');i=next(i for i,r in enumerate(s.data['issues']) if r['code']=='WIDTH');self.w.export_button.setEnabled(False)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/diagnostic_snapshot.py", line 233, in make_snapshot
+    validate(data)
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 79, in validate
+    exact(data['progress'],{'state','total','checked','calculated','failed','unstarted','global_unsolvable'})
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 35, in exact
+    raise ValueError('報告格式含未允許或缺少欄位')
+ValueError: 報告格式含未允許或缺少欄位
+
+======================================================================
+ERROR: test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation (test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_diagnostic_reports.py", line 140, in test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation
+    c.template.slots[0].font_asset={'path':str(font)};s=make_snapshot(self.w,'candidate');enabled=self.w.export_button.isEnabled();font.write_bytes(b'second')
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/diagnostic_snapshot.py", line 233, in make_snapshot
+    validate(data)
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 79, in validate
+    exact(data['progress'],{'state','total','checked','calculated','failed','unstarted','global_unsolvable'})
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 35, in exact
+    raise ValueError('報告格式含未允許或缺少欄位')
+ValueError: 報告格式含未允許或缺少欄位
+
+======================================================================
+ERROR: test_gui_original_entry_points_training_template_and_candidate (test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_diagnostic_reports.py", line 210, in test_gui_original_entry_points_training_template_and_candidate
+    self.w.people.item(0,0).setText('X'*200);self.candidate();d=self.dialog('candidate');self.assertEqual(d.data['status'],'BLOCKED')
+                                                                                                          ~~~~~~^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+ERROR: test_oversized_problem_set_is_explicit_partial_not_silent_success (test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_diagnostic_reports.py", line 161, in test_oversized_problem_set_is_explicit_partial_not_silent_success
+    s=make_snapshot(self.w,'candidate');self.assertEqual(len(s.data['issues']),2000);self.assertEqual(s.data['omitted_issues'],2);self.assertEqual(s.data['progress']['state'],'PARTIAL')
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/diagnostic_snapshot.py", line 233, in make_snapshot
+    validate(data)
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 79, in validate
+    exact(data['progress'],{'state','total','checked','calculated','failed','unstarted','global_unsolvable'})
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 35, in exact
+    raise ValueError('報告格式含未允許或缺少欄位')
+ValueError: 報告格式含未允許或缺少欄位
+
+======================================================================
+ERROR: test_snapshot_html_json_have_same_facts_width_and_historical_scope (test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_diagnostic_reports.py", line 46, in test_snapshot_html_json_have_same_facts_width_and_historical_scope
+    s=make_snapshot(self.w,'candidate');self.assertEqual(s.data['status'],'BLOCKED')
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/diagnostic_snapshot.py", line 233, in make_snapshot
+    validate(data)
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 79, in validate
+    exact(data['progress'],{'state','total','checked','calculated','failed','unstarted','global_unsolvable'})
+  File "/workspace/template-Ai/template_ai/diagnostic_bundle.py", line 35, in exact
+    raise ValueError('報告格式含未允許或缺少欄位')
+ValueError: 報告格式含未允許或缺少欄位
+
+----------------------------------------------------------------------
+Ran 51 tests in 10.279s
+
+FAILED (errors=7)

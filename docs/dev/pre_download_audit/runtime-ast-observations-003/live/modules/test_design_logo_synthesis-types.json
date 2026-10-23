@@ -1,0 +1,683 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_design_logo_synthesis.py": {
+      "source_sha256": "420bb7f7d043b19623da014decb21f0a3c912319acbc7b288534a035d369c869",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_family.py": {
+      "source_sha256": "70c3949305b2a5888286a93ccab05e8855f58d3db342fe571a2e13c1f4c4fbfa",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/batch_import.py": {
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 0,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation_store.py": {
+      "source_sha256": "884945432fa826422293d05131c1bfa2caf8b7229ac6c424facf08e27dd8bc2d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation.py": {
+      "source_sha256": "255e58b284a97d510f3aba40932fa61451eee8d8a12371e8743f1b64f93fa603",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 13,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_joint.py": {
+      "source_sha256": "5791515767264d827ee3b26d01b08f726d18136719ca3a2666348d9d25bfc4ca",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [
+        [
+          "D-APP-00842",
+          "result",
+          null
+        ],
+        [
+          "D-APP-00843",
+          "result",
+          null
+        ]
+      ],
+      "unmatched_ranges": [
+        [
+          48,
+          12,
+          48,
+          34
+        ]
+      ]
+    },
+    "/workspace/template-Ai/template_ai/design_synthesis.py": {
+      "source_sha256": "b7e280a13faa80f4db44b6b96fe1b4d1b6447a7ab71de32bc462d35bf7de7f5a",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/layout.py": {
+      "source_sha256": "875862aa49c51fc19a8e7633dca6be8c2d6a14156dd244bd077e9c4c361e88fe",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/candidate_risk.py": {
+      "source_sha256": "13937a5f3d72c04afa22e06bbdf30b2b60a1324b5d0c4c6a257fb9d90f7962eb",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 12,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/input_graph.py": {
+      "source_sha256": "c3e6f9c0c4b0a85e99e86df4c37c964cc7dc7cf1d4868813292d7b7ddc389858",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/authored_font_fixture.py": {
+      "source_sha256": "1e02ff8e7486dbe0820f93467f3af05daf114aabb85f4f30550c49388690bcc6",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/font_evidence.py": {
+      "source_sha256": "8b617d07575e254d51c85ca71b882d8cab7c7902b4cbf579faedc3d5378637b7",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_design_family.py": {
+      "source_sha256": "c2143d2d236811525bcaa9739487cacafa384caf934bbadc16b564da77c59644",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 78,
+      "skipped_target_keys": [
+        [
+          "D-TES-06320",
+          "result",
+          null
+        ],
+        [
+          "D-TES-06321",
+          "result",
+          null
+        ],
+        [
+          "D-TES-06336",
+          "result",
+          null
+        ],
+        [
+          "D-TES-06337",
+          "result",
+          null
+        ],
+        [
+          "D-TES-06340",
+          "result",
+          null
+        ],
+        [
+          "D-TES-06341",
+          "result",
+          null
+        ],
+        [
+          "D-TES-06381",
+          "result",
+          null
+        ],
+        [
+          "D-TES-06382",
+          "result",
+          null
+        ],
+        [
+          "D-TES-06383",
+          "result",
+          null
+        ],
+        [
+          "D-TES-06384",
+          "result",
+          null
+        ],
+        [
+          "D-TES-06386",
+          "result",
+          null
+        ]
+      ],
+      "unmatched_ranges": [
+        [
+          68,
+          28,
+          68,
+          57
+        ],
+        [
+          83,
+          8,
+          83,
+          41
+        ],
+        [
+          84,
+          8,
+          84,
+          41
+        ],
+        [
+          149,
+          62,
+          149,
+          107
+        ],
+        [
+          159,
+          19,
+          159,
+          43
+        ]
+      ]
+    },
+    "/workspace/template-Ai/tests/test_logo_lifecycle.py": {
+      "source_sha256": "f54879359cd00acb8fcc01bf400db888587416d35494ec41b8223648f4a1941a",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 31,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/customers.py": {
+      "source_sha256": "3a7948459cd959e628a2c255863ea43b93ee6ba0ea35ca2f77def54597be23c6",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 11,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/logo_discovery.py": {
+      "source_sha256": "220472242e01a5eebebfcd2787ba470d4d98686d2ddefdfda97d7fee47e59061",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 5,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/logo_store.py": {
+      "source_sha256": "fe64d2a1032d86f6ca96f6852a4a648e8b8882796a7a7f2de4a32883644e3404",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 5,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/render.py": {
+      "source_sha256": "8209686d71ca5ee2dae2771954afcff0c6579914b0107834a01da8718ce332f8",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 4,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/fonts.py": {
+      "source_sha256": "13068091887cde61d9efc460ef14bbd1f9cd9965d03c56b7ca54ae5193fd0138",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 16,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/semantic_fields.py": {
+      "source_sha256": "aa5d0816ab3672c7a7523225ff5eb66c525eae1632daa8316401b9c0d73a975b",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 3,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/font_catalog.py": {
+      "source_sha256": "72e233d426762d5e3dc237b437537fd9b3af2c733bd85583e94a89d2b0e132cb",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 12,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/family_workspace.py": {
+      "source_sha256": "2ff34e49eb78c90e0582bc6b770877e7603e5a3d20b3334b3f55d93dd2f9c1f0",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 9,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_learning.py": {
+      "source_sha256": "05e8895990a4ed675a0fc78f9f7831a868f709d8fb15fa45f0b2231eddd41fb1",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 7,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/quality_groups.py": {
+      "source_sha256": "dc258d99534bc2940d5b699ece2aa8a401624f155d0d1d69b3f4cab71ec9af52",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-00824": {
+      "visits": 128,
+      "values": {
+        "call_receiver": {
+          "builtins.list": 37
+        },
+        "value": {
+          "builtins.list": 9,
+          "builtins.tuple": 9
+        },
+        "argument": {
+          "builtins.tuple": 9,
+          "builtins.list": 28
+        },
+        "call_result": {
+          "builtins.NoneType": 36
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-00825": {
+      "visits": 8,
+      "values": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.int": 2
+        },
+        "argument": {
+          "builtins.int": 2
+        },
+        "call_result": {
+          "sklearn.cluster._hdbscan.hdbscan.HDBSCAN": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01011": {
+      "visits": 15,
+      "values": {
+        "value": {
+          "builtins.dict": 5,
+          "builtins.list": 5
+        },
+        "iterable": {
+          "builtins.list": 5
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01012": {
+      "visits": 15,
+      "values": {
+        "value": {
+          "builtins.dict": 5,
+          "builtins.list": 5
+        },
+        "iterable": {
+          "builtins.list": 5
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01481": {
+      "visits": 20,
+      "values": {
+        "value": {
+          "builtins.dict": 4,
+          "builtins.float": 4
+        },
+        "operator_left": {
+          "builtins.float": 4
+        },
+        "operator_right": {
+          "builtins.float": 4
+        },
+        "operation": {
+          "builtins.float": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01482": {
+      "visits": 20,
+      "values": {
+        "value": {
+          "builtins.dict": 4,
+          "builtins.float": 4
+        },
+        "operator_left": {
+          "builtins.float": 4
+        },
+        "operator_right": {
+          "builtins.float": 4
+        },
+        "operation": {
+          "builtins.float": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01483": {
+      "visits": 20,
+      "values": {
+        "value": {
+          "builtins.dict": 4,
+          "builtins.float": 4
+        },
+        "operator_left": {
+          "builtins.float": 4
+        },
+        "operator_right": {
+          "builtins.float": 4
+        },
+        "operation": {
+          "builtins.float": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01561": {
+      "visits": 80,
+      "values": {
+        "receiver": {
+          "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2": 40
+        },
+        "member_value": {
+          "builtins.int": 40
+        }
+      },
+      "member_checks": {
+        "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2:True": 40
+      },
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01562": {
+      "visits": 80,
+      "values": {
+        "receiver": {
+          "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2": 40
+        },
+        "member_value": {
+          "builtins.int": 40
+        }
+      },
+      "member_checks": {
+        "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2:True": 40
+      },
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01627": {
+      "visits": 6,
+      "values": {
+        "value": {
+          "builtins.type": 2,
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01628": {
+      "visits": 4,
+      "values": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01629": {
+      "visits": 8,
+      "values": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.list": 2
+        },
+        "argument": {
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01924": {
+      "visits": 10,
+      "values": {
+        "container": {
+          "builtins.list": 5
+        },
+        "result": {
+          "builtins.str": 5
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-04734": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.list": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06533": {
+      "visits": 32,
+      "values": {
+        "value": {
+          "builtins.dict": 16,
+          "builtins.list": 16
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06534": {
+      "visits": 32,
+      "values": {
+        "receiver": {
+          "builtins.list": 16
+        },
+        "member_value": {
+          "builtins.builtin_function_or_method": 16
+        }
+      },
+      "member_checks": {
+        "builtins.list:True": 16
+      },
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06535": {
+      "visits": 32,
+      "values": {
+        "receiver": {
+          "builtins.list": 16
+        },
+        "member_value": {
+          "builtins.builtin_function_or_method": 16
+        }
+      },
+      "member_checks": {
+        "builtins.list:True": 16
+      },
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06536": {
+      "visits": 4,
+      "values": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_missing_size_identity_or_exact_selected_version_does_not_borrow_asset"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

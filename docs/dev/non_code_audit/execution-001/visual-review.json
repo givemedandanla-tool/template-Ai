@@ -1,0 +1,22 @@
+{
+  "developer_walkthrough_completed": true,
+  "independent_novice_qualification": false,
+  "images": [
+    {
+      "path": "native-gui-001/desktop-small-window.png",
+      "sha256": "21359243226eedb2ad0c427b23c41255cdb0b2d3cb3aa489c333d166ae531752",
+      "review": "Developer visually inspected the actual native xcb capture."
+    },
+    {
+      "path": "native-gui-001/desktop-after-drag.png",
+      "sha256": "76986932a8a4c5312f7a45a7689282143c927ab1fe7e9fb1a1ad2f0722735a5a",
+      "review": "Developer visually inspected the actual native xcb capture."
+    }
+  ],
+  "findings": [
+    "960x640: primary generate control and canvas visible; blank canvas is the expected before-generation state.",
+    "After actual pointer drag: four synthetic values visible; phone is below email; confirmation is required again; formal output remains disabled with qualification guidance.",
+    "The left input summary still gives a generic generate-and-check instruction after generation; record as a P3 wording/usability candidate for local novice feedback, not an established safety or layout defect."
+  ],
+  "limits": "Two real captures inspected; not a claim about all pixel states, Windows DPI, accessibility or novice task success."
+}

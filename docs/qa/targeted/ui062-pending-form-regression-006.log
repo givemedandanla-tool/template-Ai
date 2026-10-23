@@ -1,0 +1,16 @@
+test_actual_back_with_selected_frame_keeps_unapplied_property_value (test_workbench_navigation.WorkbenchNavigationTests.test_actual_back_with_selected_frame_keeps_unapplied_property_value) ... Fontconfig error: No writable cache directories
+FAIL
+
+======================================================================
+FAIL: test_actual_back_with_selected_frame_keeps_unapplied_property_value (test_workbench_navigation.WorkbenchNavigationTests.test_actual_back_with_selected_frame_keeps_unapplied_property_value)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_workbench_navigation.py", line 156, in test_actual_back_with_selected_frame_keeps_unapplied_property_value
+    self.assertTrue(w.navigation.return_to_work());self.assertEqual(w.coords[0].value(),original+1)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 8.0 != 9
+
+----------------------------------------------------------------------
+Ran 1 test in 0.659s
+
+FAILED (failures=1)

@@ -1,0 +1,62 @@
+test_saved_case_runs_in_worker_and_renders_actual_preview (test_family_workbench.FamilyWorkbenchTests.test_saved_case_runs_in_worker_and_renders_actual_preview) ... This plugin does not support propagateSizeHints()
+Timeout (0:00:20)!
+Thread 0x00007f0561df76c0 (most recent call first):
+  File "/workspace/template-Ai/template_ai/source_links.py", line 53 in <lambda>
+  File "/workspace/template-Ai/template_ai/source_links.py", line 53 in hash_source
+  File "/workspace/template-Ai/template_ai/source_links.py", line 28 in verify_source
+  File "/workspace/template-Ai/template_ai/original_text_observation.py", line 265 in original_text_observation
+  File "/workspace/template-Ai/template_ai/design_observation_store.py", line 25 in _design_observation_document
+  File "/workspace/template-Ai/template_ai/design_learning.py", line 66 in dataset_plan
+  File "/workspace/template-Ai/template_ai/design_learning.py", line 159 in checked_dataset
+  File "/workspace/template-Ai/template_ai/design_learning.py", line 207 in checked_model
+  File "/workspace/template-Ai/template_ai/family_workspace.py", line 89 in resolve
+  File "/workspace/template-Ai/template_ai/family_batch.py", line 75 in execute_family_item
+  File "/workspace/template-Ai/template_ai/design_evaluation.py", line 131 in execute_item
+  File "/workspace/template-Ai/template_ai/design_jobs.py", line 124 in run_design_job
+  File "/workspace/template-Ai/template_ai/design_learning_dialog.py", line 27 in run
+
+Thread 0x00007f0577fff6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1431 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f057d479740 (most recent call first):
+  File "/workspace/template-Ai/tests/test_family_workbench.py", line 86 in test_saved_case_runs_in_worker_and_renders_actual_preview
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "<stdin>", line 6 in <module>
+Timeout (0:00:20)!
+Thread 0x00007f0561df76c0 (most recent call first):
+  File "/workspace/template-Ai/template_ai/quality_groups.py", line 91 in role_conflicts
+  File "/workspace/template-Ai/template_ai/design_learning.py", line 124 in dataset_plan
+  File "/workspace/template-Ai/template_ai/design_learning.py", line 159 in checked_dataset
+  File "/workspace/template-Ai/template_ai/design_learning.py", line 207 in checked_model
+  File "/workspace/template-Ai/template_ai/family_workspace.py", line 89 in resolve
+  File "/workspace/template-Ai/template_ai/family_scenarios.py", line 61 in run
+  File "/workspace/template-Ai/template_ai/family_batch.py", line 77 in execute_family_item
+  File "/workspace/template-Ai/template_ai/design_evaluation.py", line 131 in execute_item
+  File "/workspace/template-Ai/template_ai/design_jobs.py", line 124 in run_design_job
+  File "/workspace/template-Ai/template_ai/design_learning_dialog.py", line 27 in run
+
+Thread 0x00007f0577fff6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1431 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f057d479740 (most recent call first):
+  File "/workspace/template-Ai/tests/test_family_workbench.py", line 86 in test_saved_case_runs_in_worker_and_renders_actual_preview
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "<stdin>", line 6 in <module>

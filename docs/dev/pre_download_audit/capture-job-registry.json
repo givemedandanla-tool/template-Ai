@@ -1,0 +1,253 @@
+{
+  "source": "tools/run_evidence.py",
+  "ordered_original_jobs": [
+    {
+      "script": "tools/validate_first_version.py",
+      "arguments": [
+        "--skip-tests",
+        "--artifacts-dir",
+        "<OWNED_OUTPUT>",
+        "--dpi",
+        "96"
+      ],
+      "timeout": 180,
+      "source_line": 146
+    },
+    {
+      "script": "tools/capture_next_twenty.py",
+      "arguments": [
+        "--artifacts-dir",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 90,
+      "source_line": 150
+    },
+    {
+      "script": "tools/capture_next_twentyeight.py",
+      "arguments": [
+        "--artifacts-dir",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 90,
+      "source_line": 157
+    },
+    {
+      "script": "tools/capture_remaining28.py",
+      "arguments": [
+        "--artifacts-dir",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 164
+    },
+    {
+      "script": "tools/capture_quality_repair.py",
+      "arguments": [
+        "--artifacts-dir",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 173
+    },
+    {
+      "script": "tools/capture_trusted_samples.py",
+      "arguments": [
+        "--artifacts-dir",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 60,
+      "source_line": 180
+    },
+    {
+      "script": "tools/capture_qualified_coverage.py",
+      "arguments": [
+        "--artifacts-dir",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 60,
+      "source_line": 187
+    },
+    {
+      "script": "tools/capture_layout_risk_session.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 60,
+      "source_line": 194
+    },
+    {
+      "script": "tools/capture_candidate_changes.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 201
+    },
+    {
+      "script": "tools/capture_candidate_results.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 208
+    },
+    {
+      "script": "tools/capture_sync_workflow.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 215
+    },
+    {
+      "script": "tools/capture_workbench_navigation.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 222
+    },
+    {
+      "script": "tools/capture_property_context.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 229
+    },
+    {
+      "script": "tools/capture_canvas_commands.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 236
+    },
+    {
+      "script": "tools/capture_batch_correction.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 243
+    },
+    {
+      "script": "tools/capture_major_review.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 251
+    },
+    {
+      "script": "tools/capture_digital_preflight.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 258
+    },
+    {
+      "script": "tools/capture_font_source_workflow.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 265
+    },
+    {
+      "script": "tools/capture_source_text_diagnostics.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 120,
+      "source_line": 272
+    },
+    {
+      "script": "tools/capture_fixed70_ten.py",
+      "arguments": [
+        "--artifacts-dir",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 60,
+      "source_line": 279
+    },
+    {
+      "script": "tools/capture_diagnostics.py",
+      "arguments": [
+        "--artifacts-dir",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 60,
+      "source_line": 286
+    },
+    {
+      "script": "tools/capture_entities.py",
+      "arguments": [
+        "--artifacts-dir",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 60,
+      "source_line": 290
+    },
+    {
+      "script": "tools/capture_catalog.py",
+      "arguments": [
+        "--artifacts-dir",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 60,
+      "source_line": 294
+    },
+    {
+      "script": "tools/capture_local_recovery.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 60,
+      "source_line": 298
+    },
+    {
+      "script": "tools/capture_family_workbench.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 180,
+      "source_line": 305
+    },
+    {
+      "script": "tools/capture_input_integration.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 180,
+      "source_line": 312
+    },
+    {
+      "script": "tools/capture_desktop_workspace.py",
+      "arguments": [
+        "--folder",
+        "<OWNED_OUTPUT>"
+      ],
+      "timeout": 240,
+      "source_line": 319
+    }
+  ],
+  "qualification": "Local technical capture only; no formal remote provenance gate overridden",
+  "outputs": "New owned cache directory; preserve all script assertions, flags, order and deadlines"
+}

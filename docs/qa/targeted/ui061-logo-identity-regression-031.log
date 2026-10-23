@@ -1,0 +1,32 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+FAIL: test_explicit_logo_from_different_same_named_company_cannot_match_by_string (test_sync_workflow.SyncWorkflowTests.test_explicit_logo_from_different_same_named_company_cannot_match_by_string)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_sync_workflow.py", line 47, in test_explicit_logo_from_different_same_named_company_cannot_match_by_string
+    self.assertFalse(f.candidate(name).formal_eligible);self.assertIsNone(next(item.logo for item in f.candidate(name).items if item.slot.kind=='logo' and item.slot.owner=='c1'))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_explicit_logo_without_confirmed_entity_binding_stays_unverified (test_sync_workflow.SyncWorkflowTests.test_explicit_logo_without_confirmed_entity_binding_stays_unverified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_sync_workflow.py", line 50, in test_explicit_logo_without_confirmed_entity_binding_stays_unverified
+    f=self.fx;entity=f.w.active_input_graph.data['companies'][0]['id'];f.w.library.db.execute('DELETE FROM logo_entity_bindings WHERE entity_id=?',(entity,));f.w.library.db.commit();f.w.invalidate();f.sync();self.assertFalse(f.candidate('A90').formal_eligible);self.assertEqual(f.entry('A90')['logo_states']['c1'],'IDENTITY_REVIEW_REQUIRED')
+                                                                                                                                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 2 tests in 3.719s
+
+FAILED (failures=2)

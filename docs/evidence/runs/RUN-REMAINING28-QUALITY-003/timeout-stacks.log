@@ -1,0 +1,19 @@
+Owned module test_coverage_rules
+Fatal Python error: Aborted
+
+Current thread 0x00007f731be7e740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/demo.py", line 7 in default_font
+  File "/workspace/template-Ai/template_ai/demo.py", line 17 in demo_template
+  File "/workspace/template-Ai/tests/test_coverage_rules.py", line 66 in test_failed_analysis_and_duplicate_label_are_real_blockers
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 23 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 39 in <module>
+
+Extension modules: shiboken6.Shiboken, PySide6.QtCore, PySide6.QtGui, PySide6.QtPdf, PySide6.QtSvg (total: 5)

@@ -1,0 +1,20 @@
+test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields (test_import_then_analysis.ImportThenAnalysisTests.test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields) ... FAIL
+test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields (test_import_then_analysis.ImportThenAnalysisTests.test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields) ... ERROR
+
+======================================================================
+ERROR: test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields (test_import_then_analysis.ImportThenAnalysisTests.test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields)
+----------------------------------------------------------------------
+RuntimeError: Internal C++ object (AutomaticTrainingDialog) already deleted.
+
+======================================================================
+FAIL: test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields (test_import_then_analysis.ImportThenAnalysisTests.test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_import_then_analysis.py", line 160, in test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields
+    self.assertEqual(len(self.analysed_candidates(source['id'])), 2)
+AssertionError: 0 != 2
+
+----------------------------------------------------------------------
+Ran 1 test in 1.718s
+
+FAILED (failures=1, errors=1)

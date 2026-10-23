@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "scenario": "missing-executable",
+      "actual_frozen_executable": true,
+      "support_report_cli": true,
+      "status": "PASS",
+      "vector_blocked": true,
+      "safe_report_available": true,
+      "raster_available": true,
+      "runtime": {
+        "state": "UNAVAILABLE",
+        "origin": "NONE",
+        "version": "UNKNOWN",
+        "manifest_sha256": null,
+        "executable_sha256": null,
+        "verified_files": 0,
+        "error_code": "BUNDLED_RUNTIME_INVALID"
+      }
+    },
+    {
+      "scenario": "corrupt-dll",
+      "actual_frozen_executable": true,
+      "support_report_cli": true,
+      "status": "PASS",
+      "vector_blocked": true,
+      "safe_report_available": true,
+      "raster_available": true,
+      "runtime": {
+        "state": "UNAVAILABLE",
+        "origin": "NONE",
+        "version": "UNKNOWN",
+        "manifest_sha256": null,
+        "executable_sha256": null,
+        "verified_files": 0,
+        "error_code": "BUNDLED_RUNTIME_INVALID"
+      }
+    }
+  ]
+}

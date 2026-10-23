@@ -1,0 +1,23 @@
+{
+  "kind": "ADOPT_ACTUAL_COMPLETED_EXECUTION_NO_TEST_RERUN",
+  "command": [
+    "docs/dev/non_code_audit/adopt_verified_execution.py",
+    "--execution",
+    "docs/dev/releases/v0.2.0-beta.1/linux-regression-004",
+    "--stock",
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-004",
+    "--readback",
+    ".checkpoints/release-beta-source-005/native-readback",
+    "--run-id",
+    "RUN-WINDOWS-BETA-LINUX-001"
+  ],
+  "driver_sha256": "f812a7add8a0551940b67c0993ceb81f35a5f69965b7d5647b8ce1ddcc69d36b",
+  "execution": "docs/dev/releases/v0.2.0-beta.1/linux-regression-004",
+  "captures": "docs/dev/releases/v0.2.0-beta.1/stock-captures-004",
+  "actual_execution_commit": "570ecebe1e5135b0fc271b6c0d56639fdae55566",
+  "remote_snapshot": "570ecebe1e5135b0fc271b6c0d56639fdae55566",
+  "equivalent_source_basis": "Exact per-path content/blob manifest equality; documentation-only commit difference allowed.",
+  "original_claim_generator_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+  "original_overall_status_preserved": "FAIL",
+  "original_not_verified": 5
+}

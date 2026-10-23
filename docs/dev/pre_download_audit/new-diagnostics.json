@@ -1,0 +1,887 @@
+{
+  "method": "Multiset comparison normalized only documented namespace renames; original baseline is immutable",
+  "findings": [
+    {
+      "id": "N-application-00209",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/candidate_edit.py",
+        "line": 228,
+        "message": "Argument of type \"dict[str, float]\" cannot be assigned to parameter \"patch\" of type \"list[Any] | bool\" in function \"update\"\n  Type \"dict[str, float]\" is not assignable to type \"list[Any] | bool\"\n    \"dict[str, float]\" is not assignable to \"list[Any]\"\n    \"dict[str, float]\" is not assignable to \"bool\"",
+        "context": "if operation==1:request.update(operation='PATCH',patch=dict(w=self.width_input.value(),h=self.height_input.value()))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "fc33a305629f4d043979d7ab37e53d50bcb3b962c84da3c3df65944a01d149a2"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The PATCH request keyword contains a dictionary of measured width/height/x/y numbers. Earlier request keys include list/bool; heterogeneous dict.update inference confuses the patch field with unrelated values. Candidate plan validators, explicit scope and apply revision checks remain active.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-00488",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/customer_dialog.py",
+        "line": 145,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if getattr(self.host_window,'reorder_customer_snapshot',None) and self.host_window.reorder_customer_snapshot['id']==self.snapshot['id']:",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "588ec55c6cd35e74968422813fe23938e22371377e4b8bb118461741f41d851b"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The exact snapshot access is guarded by getattr(host_window,reorder_customer_snapshot,None) in the same GUI-thread Boolean expression. No intervening event loop or write changes this property. Missing optional snapshot takes the other branch. A stable narrowed local/typed snapshot would express this contract.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-00515",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/customer_dialog.py",
+        "line": 212,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if getattr(self.host_window,'reorder_customer_snapshot',None) and self.host_window.reorder_customer_snapshot['id']==updated['id']:self.host_window.reorder_customer_snapshot=updated",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6167f2b5e149145e3043e3346b2e7d26068be17449fbaeabec62094238c6cc73"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The exact snapshot access is guarded by getattr(host_window,reorder_customer_snapshot,None) in the same GUI-thread Boolean expression. No intervening event loop or write changes this property. Missing optional snapshot takes the other branch. A stable narrowed local/typed snapshot would express this contract.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-00527",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/customer_dialog.py",
+        "line": 265,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if getattr(self.host_window,'reorder_customer_snapshot',None) and self.host_window.reorder_customer_snapshot['id']==updated['id']:self.host_window.reorder_customer_snapshot=updated",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6167f2b5e149145e3043e3346b2e7d26068be17449fbaeabec62094238c6cc73"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The exact snapshot access is guarded by getattr(host_window,reorder_customer_snapshot,None) in the same GUI-thread Boolean expression. No intervening event loop or write changes this property. Missing optional snapshot takes the other branch. A stable narrowed local/typed snapshot would express this contract.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-00532",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/customer_dialog.py",
+        "line": 281,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if getattr(self.host_window,'reorder_customer_snapshot',None) and self.host_window.reorder_customer_snapshot['id']==updated['id']:self.host_window.reorder_customer_snapshot=updated",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6167f2b5e149145e3043e3346b2e7d26068be17449fbaeabec62094238c6cc73"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The exact snapshot access is guarded by getattr(host_window,reorder_customer_snapshot,None) in the same GUI-thread Boolean expression. No intervening event loop or write changes this property. Missing optional snapshot takes the other branch. A stable narrowed local/typed snapshot would express this contract.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-01576",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/input_graph_dialog.py",
+        "line": 227,
+        "message": "Cannot access attribute \"sessions\" for class \"MainWindow\"\n  Attribute \"sessions\" is unknown",
+        "context": "model_id=self.host_window.sessions.current(self.host_window.session_id)['model_id']",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e1eceac3a56779bc4c81fa9f13567f940e0c1e14dfd1fe69811384ab0799b1c0"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The host declaration is overly specific after the QWidget.window rename: valid callers include MainWindow and DesignLearningDialog. The sessions/session_id path is explicitly guarded by getattr/hasattr; the learned report summary is a named string field in production_report.input_advice. A precise host protocol and report DTO are P2 followup; this does not justify an unconditional MainWindow.sessions attribute.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-01577",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/input_graph_dialog.py",
+        "line": 227,
+        "message": "Cannot access attribute \"session_id\" for class \"MainWindow\"\n  Attribute \"session_id\" is unknown",
+        "context": "model_id=self.host_window.sessions.current(self.host_window.session_id)['model_id']",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6c7394622f1ee73f1387fe8a835c8b0016a6b4d6ddd9ea3d70877b092b306ed2"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The host declaration is overly specific after the QWidget.window rename: valid callers include MainWindow and DesignLearningDialog. The sessions/session_id path is explicitly guarded by getattr/hasattr; the learned report summary is a named string field in production_report.input_advice. A precise host protocol and report DTO are P2 followup; this does not justify an unconditional MainWindow.sessions attribute.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-01578",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/input_graph_dialog.py",
+        "line": 232,
+        "message": "Argument of type \"dict[str, str | None] | dict[str, str | dict[Unknown, int] | list[float] | bool | None]\" cannot be assigned to parameter \"value\" of type \"str | int | list[Unknown]\" in function \"__setitem__\"\n  Type \"dict[str, str | None] | dict[str, str | dict[Unknown, int] | list[float] | bool | None]\" is not assignable to type \"str | int | list[Unknown]\"\n    Type \"dict[str, str | None]\" is not assignable to type \"str | int | list[Unknown]\"\n      \"dict[str, str | None]\" is not assignable to \"str\"\n      \"dict[str, str | None]\" is not assignable to \"int\"\n      \"dict[str, str | None]\" is not assignable to \"list[Unknown]\"",
+        "context": "if learning_summary:report['learning_advice']=advice",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "43083b37dabf576895db90f69497e1a6263c0736823dc965039fe5eb3f098184"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The host declaration is overly specific after the QWidget.window rename: valid callers include MainWindow and DesignLearningDialog. The sessions/session_id path is explicitly guarded by getattr/hasattr; the learned report summary is a named string field in production_report.input_advice. A precise host protocol and report DTO are P2 followup; this does not justify an unconditional MainWindow.sessions attribute.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-01582",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOperatorIssue",
+        "path": "template_ai/input_graph_dialog.py",
+        "line": 237,
+        "message": "Operator \"+\" not supported for types \"Literal['有資料需要查看；', '']\" and \"str | dict[Unknown, int] | list[float] | Literal[True]\"\n  Operator \"+\" not supported for types \"Literal['有資料需要查看；']\" and \"dict[Unknown, int]\" when expected type is \"str\"\n  Operator \"+\" not supported for types \"Literal['有資料需要查看；']\" and \"list[float]\" when expected type is \"str\"\n  Operator \"+\" not supported for types \"Literal['有資料需要查看；']\" and \"Literal[True]\" when expected type is \"str\"\n  Operator \"+\" not supported for types \"Literal['']\" and \"dict[Unknown, int]\" when expected type is \"str\"\n  Operator \"+\" not supported for types \"Literal['']\" and \"list[float]\" when expected type is \"str\"\n  Operator \"+\" not supported for types \"Literal['']\" and \"Literal[True]\" when expected type is \"str\"",
+        "context": "if learning_summary:self.summary.setText(('有資料需要查看；' if report['issues'] else '')+learning_summary)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3564fcc20bc2084df5c62ed5b04951ab7dd01ce82200837bbf9b4297859d0707"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The host declaration is overly specific after the QWidget.window rename: valid callers include MainWindow and DesignLearningDialog. The sessions/session_id path is explicitly guarded by getattr/hasattr; the learned report summary is a named string field in production_report.input_advice. A precise host protocol and report DTO are P2 followup; this does not justify an unconditional MainWindow.sessions attribute.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-01620",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/layout_session.py",
+        "line": 168,
+        "message": "Cannot assign to attribute \"last_layout_risk_summary\" for class \"MainWindow\"\n  Attribute \"last_layout_risk_summary\" is unknown",
+        "context": "w.last_layout_risk_summary=search_result(results,scope_complete=self.report_state=='COMPLETED' and checked==total and not failed,unstarted=max(0,total-checked),excluded=[r.get('error','計算失敗') for r in self.rows if not r.get('candidate')])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a8a4d1fc842ce89af5748286c2eb7c369bbdb3ff35884d9890c6ea201e8a2d70"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "These two MainWindow result-summary fields are deliberately attached on completed layout search, then read via guarded access. Qt native APIs are no longer shadowed. Declare optional summary DTO members rather than suppressing this warning.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-01621",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/layout_session.py",
+        "line": 169,
+        "message": "Cannot assign to attribute \"last_layout_summary\" for class \"MainWindow\"\n  Attribute \"last_layout_summary\" is unknown",
+        "context": "w.last_layout_summary=dict(state=self.report_state,total=total,checked=checked,calculated=max(0,checked-failed),failed=failed,unstarted=max(0,total-checked),global_unsolvable=False,generation=self.generation,scope_template_pins=copy.deepcopy(self.template_digests))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b8df1c718053a2eef5d01c170aad97722baf9a21fd9dce21f5f3960db727fa07"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "These two MainWindow result-summary fields are deliberately attached on completed layout search, then read via guarded access. Qt native APIs are no longer shadowed. Declare optional summary DTO members rather than suppressing this warning.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-01687",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/logo_library_dialog.py",
+        "line": 26,
+        "message": "Cannot assign to attribute \"host_window\" for class \"LogoLibraryDialog*\"\n  Type \"Any | None\" is not assignable to type \"MainWindow\"\n    \"None\" is not assignable to \"MainWindow\"",
+        "context": "self.size_owner=window;self.host_window: MainWindow=getattr(window,'service_window',window)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3844ac4aa471e5ec35d5384120640cfde35b9c8cbe0fbe4f512398c16d8d4645"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "LogoLibraryDialog accepts both the real MainWindow and service-window wrapper. The host annotation does not fully express this constructor contract; None is explicitly rejected before runtime use. Real logo-library modal input integration tests exercise the service host.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-02100",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/output_batch_dialog.py",
+        "line": 21,
+        "message": "Cannot access attribute \"QueuedConnection\" for class \"type[Qt]\"\n  Attribute \"QueuedConnection\" is unknown",
+        "context": "super().__init__(parent);self.owner=parent;self.host_window: MainWindow=parent.host_window;self.engine=OutputBatch(parent.service,plan);self.running=False;self.cancel=threading.Event();self.controls=[];self.setWindowTitle('逐檔FINAL／PREVIEW清單、更名與安全重試');self.resize(1350,780);self.progress=Progress(self);self.progress.updated.connect(self.update_row,Qt.QueuedConnection)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4c5c216f56fa42898478423e018430714a3b9c62d48fbe74e37d0621e35be750"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TOOL_LIMITATION",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "Qt.QueuedConnection is a supported Qt.ConnectionType alias in the installed PySide6 runtime. Exact member/value equivalence is proved in the enum inventory; this is a stub spelling issue, not a synchronous signal substitution.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-03036",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "template_ai/text_policy_dialog.py",
+        "line": 44,
+        "message": "\"id\" is not a known attribute of \"None\"",
+        "context": "if self.host_window.tabs.currentIndex()!=1 or self.host_window.template.id!=self.template_id or fingerprint(self.host_window.template.to_dict())!=fingerprint(self.before):raise ValueError('目前草稿已變更，請重開規則編輯')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "1194dc3037641786a4e6baf8d7c6cd1535bdddb71aea7e96495a51debbd2a513"
+      },
+      "profile": "final-scan-application-003",
+      "status": "FIXED_AND_VERIFIED",
+      "severity": "P0_CONFIRMED_STALE_DRAFT_OVERWRITE",
+      "review": "Corrected exact confirmation fixtures on isolated old92977b77:2FAIL1ERROR; fixed source3PASS and current full1921PASS. Earlier max_tracking=0 fixture never reached confirmation and is rejected as evidence.",
+      "evidence": [
+        "text-policy-context-before-corrected.log",
+        "full-regression-final-010/summary.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source.",
+      "fix_commit": "bb7f65a9"
+    },
+    {
+      "id": "N-application-03037",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "template_ai/text_policy_dialog.py",
+        "line": 44,
+        "message": "\"to_dict\" is not a known attribute of \"None\"",
+        "context": "if self.host_window.tabs.currentIndex()!=1 or self.host_window.template.id!=self.template_id or fingerprint(self.host_window.template.to_dict())!=fingerprint(self.before):raise ValueError('目前草稿已變更，請重開規則編輯')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "dc835c2d7339cff91e7a63f000dfd3a8ddac7e49dccd8971e918f0d84f550758"
+      },
+      "profile": "final-scan-application-003",
+      "status": "FIXED_AND_VERIFIED",
+      "severity": "P0_CONFIRMED_STALE_DRAFT_OVERWRITE",
+      "review": "Corrected exact confirmation fixtures on isolated old92977b77:2FAIL1ERROR; fixed source3PASS and current full1921PASS. Earlier max_tracking=0 fixture never reached confirmation and is rejected as evidence.",
+      "evidence": [
+        "text-policy-context-before-corrected.log",
+        "full-regression-final-010/summary.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source.",
+      "fix_commit": "bb7f65a9"
+    },
+    {
+      "id": "N-application-03293",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/trusted_samples.py",
+        "line": 98,
+        "message": "Cannot access attribute \"db\" for class \"TrustedSampleMixin*\"\n  Attribute \"db\" is unknown",
+        "context": "uses=[training_record(row) for row in self.db.execute(\"SELECT id,revision,payload FROM training_records WHERE kind='USE' AND json_extract(payload,'$.sample_id')=? ORDER BY id LIMIT 201\",(sample_id,))]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6f08a26940ae831b0189ce20019a0dcb8683f9aac3f49fdddb1c05f1cbe5f9f7"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "TrustedSampleMixin is composed into TrainingStore, whose real constructor supplies db. The full-row SQL decoder preserves selected revision/payload and size limit. Training-store MRO/member proof and the actual snapshot oracle demonstrate the db contract; the mixin lacks a host protocol.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-application-03295",
+      "scope": "application",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/trusted_samples.py",
+        "line": 100,
+        "message": "Cannot access attribute \"db\" for class \"TrustedSampleMixin*\"\n  Attribute \"db\" is unknown",
+        "context": "design_uses=[training_record(row) for row in self.db.execute(\"SELECT id,revision,payload FROM training_records WHERE kind='DESIGN_USE' AND json_extract(payload,'$.sample_id')=? ORDER BY id LIMIT 201\",(sample_id,))]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "77454ea35ce60c494cd5fa2ff59d32c27b0e8f9786254fa750ee5b36dcb9ebba"
+      },
+      "profile": "final-scan-application-003",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "TrustedSampleMixin is composed into TrainingStore, whose real constructor supplies db. The full-row SQL decoder preserves selected revision/payload and size limit. Training-store MRO/member proof and the actual snapshot oracle demonstrate the db contract; the mixin lacks a host protocol.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-00119",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "tests/test_assignment_oracle.py",
+        "line": 35,
+        "message": "\"bool\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "self.assertEqual({r['render_id']: r['source_role_key'] for r in output['assignments']},",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "9097717f6bc427495ed77fcdc7052b9a5742b42cd224eef837920a5e11840266"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "assign_fields returns a heterogeneous result with feasible bool and assignments list in separate named fields. These three positive authored assignment oracle cases consume the assignments list after the solver result has been asserted feasible. Five independent assignment oracles pass; bool is an inference from a different key.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-00120",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "tests/test_assignment_oracle.py",
+        "line": 45,
+        "message": "\"bool\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "self.assertEqual({r['render_id']: r['container_key'] for r in output['assignments']},",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "69e485f6a78133a3851599a7fa5f257746c7cff063c19d478cb4738a115110c4"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "assign_fields returns a heterogeneous result with feasible bool and assignments list in separate named fields. These three positive authored assignment oracle cases consume the assignments list after the solver result has been asserted feasible. Five independent assignment oracles pass; bool is an inference from a different key.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-00121",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportGeneralTypeIssues",
+        "path": "tests/test_assignment_oracle.py",
+        "line": 65,
+        "message": "\"bool\" is not iterable\n  \"__iter__\" method not defined",
+        "context": "self.assertEqual({r['render_id']: r['source_role_key'] for r in result['assignments']}, expected)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c0a615842a7b3ef5121158d931152ce5cce51c4e2b9f0a22153e31281f7e3ee4"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "assign_fields returns a heterogeneous result with feasible bool and assignments list in separate named fields. These three positive authored assignment oracle cases consume the assignments list after the solver result has been asserted feasible. Five independent assignment oracles pass; bool is an inference from a different key.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-00205",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_batch_candidate_adapter.py",
+        "line": 50,
+        "message": "Cannot assign to attribute \"host_window\" for class \"QDialog\"\n  Attribute \"host_window\" is unknown",
+        "context": "checked=self.checked();other=QDialog(self.f.w);self.addCleanup(other.deleteLater);other.host_window=self.f.w;other.service=self.f.d.service;other.is_current=self.f.d.is_current;adapter=SizeEditAdapter(other,self.a.entry,self.i);before=self.a.candidates[self.i].template.to_dict()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "bb35406ae1d0011897f2b23ed71a16e13f75f32af8009b4f3556ca849cfc1e1d"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The foreign-container rejection fixture deliberately attaches host_window/service/is_current to a real QDialog. Python Qt instance attributes are supported, and host_window does not shadow a native method. This fixture tests exact adapter ownership rejection, not acceptance of arbitrary container types.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-02839",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_guided_operations.py",
+        "line": 95,
+        "message": "Cannot access attribute \"host_window\" for class \"QWidget\"\n  Attribute \"host_window\" is unknown",
+        "context": "self.assertEqual(modal.host_window.out_w.value(), 85.)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "64b67ea9caf378d8649d979ca54439ff4d18433d3663906722ae507f2465c483"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "QApplication.activeModalWidget has nullable QWidget stub; the real modal used here is DesignLearningDialog, opened through the guided operation. The timer callback accesses its host_window only during the modal operation. A Qt-specific type guard would express the actual dialog contract; native guided/navigation assertions cover the GUI sequence.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-02840",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "tests/test_guided_operations.py",
+        "line": 95,
+        "message": "\"host_window\" is not a known attribute of \"None\"",
+        "context": "self.assertEqual(modal.host_window.out_w.value(), 85.)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d87d77eccf26ea700873a5431040bcaf8b30371cfd7e9c36f207ec78d07f86b5"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "QApplication.activeModalWidget has nullable QWidget stub; the real modal used here is DesignLearningDialog, opened through the guided operation. The timer callback accesses its host_window only during the modal operation. A Qt-specific type guard would express the actual dialog contract; native guided/navigation assertions cover the GUI sequence.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-02841",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_guided_operations.py",
+        "line": 96,
+        "message": "Cannot access attribute \"host_window\" for class \"QWidget\"\n  Attribute \"host_window\" is unknown",
+        "context": "self.assertEqual(modal.host_window.out_h.value(), 50.)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7f74904ecaab05bdd68d6146743fe95a7cfa2c9e5d032d42ce28c07f960e2504"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "QApplication.activeModalWidget has nullable QWidget stub; the real modal used here is DesignLearningDialog, opened through the guided operation. The timer callback accesses its host_window only during the modal operation. A Qt-specific type guard would express the actual dialog contract; native guided/navigation assertions cover the GUI sequence.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-02842",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "tests/test_guided_operations.py",
+        "line": 96,
+        "message": "\"host_window\" is not a known attribute of \"None\"",
+        "context": "self.assertEqual(modal.host_window.out_h.value(), 50.)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "36135322f6b25f91c2c116643eae919ed3fe6a9f65c1dfd23cc303d9a0923b5b"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "QApplication.activeModalWidget has nullable QWidget stub; the real modal used here is DesignLearningDialog, opened through the guided operation. The timer callback accesses its host_window only during the modal operation. A Qt-specific type guard would express the actual dialog contract; native guided/navigation assertions cover the GUI sequence.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-02968",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_input_learning_integration.py",
+        "line": 207,
+        "message": "Cannot access attribute \"host_window\" for class \"QWidget\"\n  Attribute \"host_window\" is unknown",
+        "context": "self.assertIsInstance(modal,LogoLibraryDialog);self.assertIs(modal.host_window,w);self.assertIs(modal.size_owner,d)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d789594cbfd5546883d5b98b8af32d0ab27944e0581fa8967831b683c8e61099"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The modal is explicitly asserted to be LogoLibraryDialog before its service host is checked. unittest.assertIsInstance is not a Pyright narrowing assertion. This is a test type-description gap, not permission to replace the actual modal.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-02969",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "tests/test_input_learning_integration.py",
+        "line": 207,
+        "message": "\"host_window\" is not a known attribute of \"None\"",
+        "context": "self.assertIsInstance(modal,LogoLibraryDialog);self.assertIs(modal.host_window,w);self.assertIs(modal.size_owner,d)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2cbaa0e2b5961d39ec9d13f31ae1c10c28c215f6adf55bd5786ec5592ac34e2d"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The modal is explicitly asserted to be LogoLibraryDialog before its service host is checked. unittest.assertIsInstance is not a Pyright narrowing assertion. This is a test type-description gap, not permission to replace the actual modal.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-04121",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_output_batch_gui.py",
+        "line": 20,
+        "message": "Cannot assign to attribute \"is_current\" for class \"MultiSizeDialog\"\n  Type \"() -> Literal[True]\" is not assignable to type \"() -> Literal[False]\"\n    Function return type \"Literal[True]\" is incompatible with type \"Literal[False]\"\n      \"Literal[True]\" is not assignable to type \"Literal[False]\"",
+        "context": "window=MainWindow(self.library.root);controlled_resources(window);self.addCleanup(window.deleteLater);self.addCleanup(window.library.close);self.addCleanup(window.font_manager.close);self.addCleanup(window.input_timer.stop);parent=MultiSizeDialog(window);self.addCleanup(parent.deleteLater);parent.service=self.workflow;parent.inputs=self.inputs;parent.graph=self.graph;parent.generation=7;parent.is_current=lambda:True",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "218e9a2b2a11b0f1784ccc6ea0fb6bf8f7c0b3196d08a82819034a7c967d90d5"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The owned output fixture deliberately replaces is_current with a zero-argument True function while supplying its exact workflow/inputs/graph. This is limited fixture control for output actions and does not qualify the independent current-input/version guard. Its focused assertions remain unchanged.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-04280",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_qt_event_contract.py",
+        "line": 33,
+        "message": "Cannot access attribute \"User\" for class \"type[QEvent]\"\n  Attribute \"User\" is unknown",
+        "context": "QCoreApplication.sendEvent(controller, QEvent(QEvent.User))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "085171c0b93c899b282962897a5dedd45e4f9edf9c6faa537c9916734dee65a1"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TOOL_LIMITATION",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "QEvent.User is a legacy alias of QEvent.Type.User in PySide6 6.8.3. Both direct QObject.event and real QCoreApplication.sendEvent regressions pass; the cancellation flag no longer shadows QObject.event.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-04281",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_qt_event_contract.py",
+        "line": 47,
+        "message": "Cannot access attribute \"User\" for class \"type[QEvent]\"\n  Attribute \"User\" is unknown",
+        "context": "self.assertIsInstance(controller.event(QEvent(QEvent.User)), bool)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0e5fc8930de2589a107b61341ca2840adbafd6d8a266983f131fb5ad7b4d935c"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TOOL_LIMITATION",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "QEvent.User is a legacy alias of QEvent.Type.User in PySide6 6.8.3. Both direct QObject.event and real QCoreApplication.sendEvent regressions pass; the cancellation flag no longer shadows QObject.event.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-04282",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_qt_event_contract.py",
+        "line": 48,
+        "message": "Cannot access attribute \"User\" for class \"type[QEvent]\"\n  Attribute \"User\" is unknown",
+        "context": "self.assertIsInstance(QCoreApplication.sendEvent(controller, QEvent(QEvent.User)), bool)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "18b1ee77bd57ff6e92cdf9abeae213796b59849558a762037aa617b37838f324"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TOOL_LIMITATION",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "QEvent.User is a legacy alias of QEvent.Type.User in PySide6 6.8.3. Both direct QObject.event and real QCoreApplication.sendEvent regressions pass; the cancellation flag no longer shadows QObject.event.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-04283",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_qt_native_contract.py",
+        "line": 73,
+        "message": "Cannot assign to attribute \"inform\" for class \"MainWindow\"\n  Type \"(object: Unknown, /) -> None\" is not assignable to type \"(text: Unknown) -> None\"\n    Missing keyword parameter \"text\"\n      Position-only parameter mismatch; parameter \"text\" is not position-only\n      Position-only parameter mismatch; expected 1 but received 0",
+        "context": "self.window.inform = notices.append",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "8022d9d082c5be337eabe4911f2ceeabdf364e35970f9935e680761666ee2c2e"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The close-guard test temporarily binds MainWindow.inform to notices.append to collect actual rejection messages without opening another modal. The real window, closeEvent and database remain in use; this does not substitute their behavior.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-04475",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tests/test_qualified_coverage_gui.py",
+        "line": 32,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "dialog.facts_panel.observed_text.setText(original);panel.locate();APP.processEvents();self.assertEqual(dialog.tabs.currentWidget(),dialog.facts_panel);self.assertEqual(dialog.facts_panel.loaded['id'],self.work['id']);self.assertEqual(panel.host_window.work['id'],self.work['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d043d7f0ee9ad6d4cee8f1d635265bb6a9297acbde966fa0d3bc600c9610c11a"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The authored quality fixture has a selected registered artwork/facts record before accessing its observed slot. Missing arbitrary lookups remain nullable and are tested separately. The current warning moved because selected-row metadata now decodes a complete snapshot.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-05999",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tests/test_record_snapshot_oracle.py",
+        "line": 92,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "self.assertEqual((latest['revision'], latest['count']), (2, 99))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6fd2c2b5fd7b6ed11628c963f3177f9dcf5859aa947b5f85d0c2629bd156ba4d"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The lookup after concurrent UPDATE is of the exact row just committed by the second real connection. The delete branch separately asserts missing/ValueError. The protected-write test reads the exact upserted record. Public arbitrary get() remains nullable; tests do not change that contract.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-06000",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tests/test_record_snapshot_oracle.py",
+        "line": 92,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "self.assertEqual((latest['revision'], latest['count']), (2, 99))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6fd2c2b5fd7b6ed11628c963f3177f9dcf5859aa947b5f85d0c2629bd156ba4d"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The lookup after concurrent UPDATE is of the exact row just committed by the second real connection. The delete branch separately asserts missing/ValueError. The protected-write test reads the exact upserted record. Public arbitrary get() remains nullable; tests do not change that contract.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-06001",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tests/test_record_snapshot_oracle.py",
+        "line": 163,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "self.assertEqual(written['count'],1)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "9867d16189867c6df1fab56337c4783cb030e48fa46045a4abf8fd98dc484c6c"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TYPE_CONTRACT_GAP",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "The lookup after concurrent UPDATE is of the exact row just committed by the second real connection. The delete branch separately asserts missing/ValueError. The protected-write test reads the exact upserted record. Public arbitrary get() remains nullable; tests do not change that contract.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-06366",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_solve_callback_lifetime.py",
+        "line": 40,
+        "message": "Cannot access attribute \"QueuedConnection\" for class \"type[Qt]\"\n  Attribute \"QueuedConnection\" is unknown",
+        "context": "worker.finished.connect(self.dialog.solve_finished, Qt.QueuedConnection)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7d0ca484c8e597150b512c22f2b85b49ca05b2c9b2f13ed7ec193d405b746859"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TOOL_LIMITATION",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "Qt.QueuedConnection equals Qt.ConnectionType.QueuedConnection at runtime. These are real queued late-finish signals and exact worker ownership cases, not a mocked replacement window.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    },
+    {
+      "id": "N-tests-06367",
+      "scope": "tests",
+      "finding": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_solve_callback_lifetime.py",
+        "line": 77,
+        "message": "Cannot access attribute \"QueuedConnection\" for class \"type[Qt]\"\n  Attribute \"QueuedConnection\" is unknown",
+        "context": "worker.finished.connect(self.dialog.worker_finished,Qt.QueuedConnection)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "566bbf80689fadd6d270d93075908f77adf37c532d5a3990bad4d04f02a32ca5"
+      },
+      "profile": "final-scan-tests-001",
+      "status": "TOOL_LIMITATION",
+      "severity": "P2_TYPED_CONTRACT_OR_STUB_DEBT",
+      "review": "Qt.QueuedConnection equals Qt.ConnectionType.QueuedConnection at runtime. These are real queued late-finish signals and exact worker ownership cases, not a mocked replacement window.",
+      "evidence": [
+        "full-regression-005/catalog.json",
+        "native-gui-003/native-runner-result.json"
+      ],
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+    }
+  ],
+  "all_new_occurrences_reviewed": true,
+  "unreviewed": 0,
+  "confirmed_defect_root": "BUG-DRAFT-CONTEXT-007",
+  "qualification": "Does not close remaining original diagnostics or deferred external qualifications",
+  "superseded_current_review": "release-diagnostic-comparison.json",
+  "historical_profile_only": true
+}

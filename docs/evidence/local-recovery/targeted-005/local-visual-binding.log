@@ -1,0 +1,63 @@
+EEEThis plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.
+======================================================================
+ERROR: test_missing_review_and_stale_field_facts_are_rejected (test_local_visual_binding.VisualSourceBindingTests.test_missing_review_and_stale_field_facts_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_local_visual_binding.py", line 35, in setUp
+    self.store=TrainingStore(self.library);confirmed(self.store,self.work);self.sample=admitted(self.store,self.work)
+                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_trusted_samples.py", line 21, in admitted
+    plan=store.sample_approval_plan(work['id'],RIGHTS);return store.approve_sample(plan,store.source_proof(work['id']),'Synthetic Reviewer',True)
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/trusted_samples.py", line 61, in approve_sample
+    return self.approve_sample_in_transaction(plan,proof,actor,approved)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/trusted_samples.py", line 69, in approve_sample_in_transaction
+    if current['digest']!=plan.get('digest') or current['errors']:raise ValueError('准入範圍已變更或條件未滿足：'+'；'.join(current['errors']))
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 准入範圍已變更或條件未滿足：幾何／語意硬條件：姓名／p1 與 職稱／p1 重疊
+
+======================================================================
+ERROR: test_reproduced_visual_match_becomes_traceable_learning_evidence_without_native_truth (test_local_visual_binding.VisualSourceBindingTests.test_reproduced_visual_match_becomes_traceable_learning_evidence_without_native_truth)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_local_visual_binding.py", line 35, in setUp
+    self.store=TrainingStore(self.library);confirmed(self.store,self.work);self.sample=admitted(self.store,self.work)
+                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_trusted_samples.py", line 21, in admitted
+    plan=store.sample_approval_plan(work['id'],RIGHTS);return store.approve_sample(plan,store.source_proof(work['id']),'Synthetic Reviewer',True)
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/trusted_samples.py", line 61, in approve_sample
+    return self.approve_sample_in_transaction(plan,proof,actor,approved)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/trusted_samples.py", line 69, in approve_sample_in_transaction
+    if current['digest']!=plan.get('digest') or current['errors']:raise ValueError('准入範圍已變更或條件未滿足：'+'；'.join(current['errors']))
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 准入範圍已變更或條件未滿足：幾何／語意硬條件：姓名／p1 與 職稱／p1 重疊
+
+======================================================================
+ERROR: test_wrong_crop_face_and_changed_source_image_cannot_enter_model (test_local_visual_binding.VisualSourceBindingTests.test_wrong_crop_face_and_changed_source_image_cannot_enter_model)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_local_visual_binding.py", line 35, in setUp
+    self.store=TrainingStore(self.library);confirmed(self.store,self.work);self.sample=admitted(self.store,self.work)
+                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_trusted_samples.py", line 21, in admitted
+    plan=store.sample_approval_plan(work['id'],RIGHTS);return store.approve_sample(plan,store.source_proof(work['id']),'Synthetic Reviewer',True)
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/trusted_samples.py", line 61, in approve_sample
+    return self.approve_sample_in_transaction(plan,proof,actor,approved)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/trusted_samples.py", line 69, in approve_sample_in_transaction
+    if current['digest']!=plan.get('digest') or current['errors']:raise ValueError('准入範圍已變更或條件未滿足：'+'；'.join(current['errors']))
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 准入範圍已變更或條件未滿足：幾何／語意硬條件：姓名／p1 與 職稱／p1 重疊
+
+----------------------------------------------------------------------
+Ran 6 tests in 20.700s
+
+FAILED (errors=3)

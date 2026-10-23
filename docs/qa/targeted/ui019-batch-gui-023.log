@@ -1,0 +1,36 @@
+test_actual_original_row_entry_uses_unchecked_current_target_and_no_auto_review (test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_original_row_entry_uses_unchecked_current_target_and_no_auto_review) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_actual_proof_detail_and_literal_named_confirmation_register_only_this_row (test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_proof_detail_and_literal_named_confirmation_register_only_this_row) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_actual_worker_delivery_copies_review_registry_and_selected_dpi (test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_worker_delivery_copies_review_registry_and_selected_dpi) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_parent_dpi_change_invalidates_open_target_without_registering_receipt (test_batch_format_review_gui.BatchFormatReviewGuiTests.test_parent_dpi_change_invalidates_open_target_without_registering_receipt) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_sorted_table_review_identity_uses_userrole_not_visible_row_number (test_batch_format_review_gui.BatchFormatReviewGuiTests.test_sorted_table_review_identity_uses_userrole_not_visible_row_number) ... This plugin does not support propagateSizeHints()
+FAIL
+
+======================================================================
+FAIL: test_sorted_table_review_identity_uses_userrole_not_visible_row_number (test_batch_format_review_gui.BatchFormatReviewGuiTests.test_sorted_table_review_identity_uses_userrole_not_visible_row_number)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_batch_format_review_gui.py", line 43, in test_sorted_table_review_identity_uses_userrole_not_visible_row_number
+    self.d,self.parent=self.dialog();self.d.table.setSortingEnabled(True);self.d.table.sortItems(0,Qt.DescendingOrder);self.d.table.selectRow(0);identity=self.d.table.item(0,0).data(Qt.UserRole);self.assertEqual(self.d.ids(),[identity])
+                                                                                                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['0'] != [None]
+
+First differing element 0:
+'0'
+None
+
+- ['0']
++ [None]
+
+----------------------------------------------------------------------
+Ran 5 tests in 8.506s
+
+FAILED (failures=1)

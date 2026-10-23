@@ -1,0 +1,13 @@
+test_age_window_is_union_with_latest_count_and_changed_file_is_never_removed (test_backup_policy.BackupPolicyTests.test_age_window_is_union_with_latest_count_and_changed_file_is_never_removed) ... ok
+test_history_only_records_real_complete_files_and_duplicate_receipt_is_idempotent (test_backup_policy.BackupPolicyTests.test_history_only_records_real_complete_files_and_duplicate_receipt_is_idempotent) ... ok
+test_last_complete_backup_disappearing_during_rotation_cannot_delete_older_recovery (test_backup_policy.BackupPolicyTests.test_last_complete_backup_disappearing_during_rotation_cannot_delete_older_recovery) ... ok
+test_migration_retains_receipts_but_disables_schedule_and_cannot_prune_old_machine_files (test_backup_policy.BackupPolicyTests.test_migration_retains_receipts_but_disables_schedule_and_cannot_prune_old_machine_files) ... ok
+test_race_after_move_retains_recovery_bytes_and_last_verified_backup (test_backup_policy.BackupPolicyTests.test_race_after_move_retains_recovery_bytes_and_last_verified_backup) ... ok
+test_retention_requires_confirmation_preserves_newest_and_complete_last_and_never_deletes_unknown_files (test_backup_policy.BackupPolicyTests.test_retention_requires_confirmation_preserves_newest_and_complete_last_and_never_deletes_unknown_files) ... ok
+test_schedule_cas_offline_key_busy_sleep_catchup_and_clock_rollback_never_store_password (test_backup_policy.BackupPolicyTests.test_schedule_cas_offline_key_busy_sleep_catchup_and_clock_rollback_never_store_password) ... ok
+test_wrong_password_cancellation_and_no_verified_full_backup_stop_retention (test_backup_policy.BackupPolicyTests.test_wrong_password_cancellation_and_no_verified_full_backup_stop_retention) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.511s
+
+OK

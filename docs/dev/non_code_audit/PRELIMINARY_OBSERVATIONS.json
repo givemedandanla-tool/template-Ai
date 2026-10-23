@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-21T03:04:13.175625+00:00",
+  "baseline_head": "614c9dc7a119fe9a1ae62673fa09395dde7f626f",
+  "scope": "Read-only discovery to design audit; not execution/completion of32 audit cases.",
+  "observations": [
+    {
+      "id": "OBS-001",
+      "classification": "CONFIRMED_EVIDENCE_GAP",
+      "fact": "Governance check currently fails because registered evidence source manifest has expired.",
+      "command_exit": 1,
+      "evidence": [
+        {
+          "path": "docs/dev/non_code_audit/baseline-governance-check.txt",
+          "sha256": "3ad9a9102185e6e1a386ca10164932226cd8fc1370861ec508fddeac519d5b99"
+        },
+        "docs/dev/pre_download_audit/governance-final-disposition.json"
+      ],
+      "interpretation": "Known formal evidence registration gap; does not establish product malfunction, nor erase1921PASS. Do not claim GatePASS.",
+      "next_check": [
+        "NCA-H01",
+        "NCA-A04"
+      ],
+      "product_defect_confirmed": false
+    },
+    {
+      "id": "OBS-002",
+      "classification": "DISPLAYED_STATUS_DIFFERS_SCOPE_NOT_YET_ADJUDICATED",
+      "fact": [
+        {
+          "id": "UI-061",
+          "requirements_status": "VERIFIED",
+          "roadmap_display": "|3|UI-061|UI-061｜多候選與多尺寸修改同步、套用範圍及局部回復（正式決策）|PARTIAL|補精確目標／可套用屬性比較與獨立幾何重算，測跨尺寸不直接複製座標、回復不動其他人工修改；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|"
+        },
+        {
+          "id": "UI-065",
+          "requirements_status": "VERIFIED",
+          "roadmap_display": "|3|UI-065|template-Ai｜UI-065 多物件／多候選／多作品批次修正：風險分級、差異預覽與安全回復（正式決策）|PARTIAL|補各操作家族及跨尺寸語意映射，測只重試失敗、整批回復不覆蓋後續新值／不改字級或Logo比例；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/dev/PROJECT_ROADMAP.md",
+          "sha256": "74a2d530407fe826c1b347daa053d4df20c68208f29dbb42271a5db6fdaa8536",
+          "anchors": [
+            {
+              "line": 66,
+              "text": "|3|UI-061|UI-061｜多候選與多尺寸修改同步、套用範圍及局部回復（正式決策）|PARTIAL|補精確目標／可套用屬性比較與獨立幾何重算，測跨尺寸不直接複製座標、回復不動其他人工修改；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|"
+            }
+          ]
+        },
+        {
+          "path": "docs/dev/PROJECT_ROADMAP.md",
+          "sha256": "74a2d530407fe826c1b347daa053d4df20c68208f29dbb42271a5db6fdaa8536",
+          "anchors": [
+            {
+              "line": 67,
+              "text": "|3|UI-065|template-Ai｜UI-065 多物件／多候選／多作品批次修正：風險分級、差異預覽與安全回復（正式決策）|PARTIAL|補各操作家族及跨尺寸語意映射，測只重試失敗、整批回復不覆蓋後續新值／不改字級或Logo比例；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|"
+            }
+          ]
+        },
+        {
+          "path": "docs/dev/REQUIREMENTS.json",
+          "sha256": "73ce70557884bff0fbb4caed9d5ce52cc7b01a23ae3ec7556acf82d82922cf82"
+        }
+      ],
+      "interpretation": "Displayed status diverges. Confirm snapshot time and scoped software versus full parent qualification before calling a contradiction. REQUIREMENTS current registry remains authoritative; do not promote/demote counts automatically.",
+      "next_check": [
+        "NCA-A01",
+        "NCA-H01"
+      ],
+      "product_defect_confirmed": false
+    },
+    {
+      "id": "OBS-003",
+      "classification": "REFERENCE_AMBIGUITY_NEEDS_SCOPE_REVIEW",
+      "fact": {
+        "corpus_identity_reference": "Filename identifies customer code;preserve raw name and code as text;ambiguous suffix/identity still follows UI-042 confirmation rules",
+        "interview_supersession": {
+          "current": "docs/UI_DECISIONS.md UI-043",
+          "supersedes": "docs/UI_DECISIONS.md UI-042 transaction categories",
+          "result": "Association-only customer sizes/styles;no designed/purchased flags or purchase-proof flow"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
+          "sha256": "0a68b0d8a2b98c555dc6b0708a003d08efb89f90876b1bcde27b43a2616f7a82",
+          "anchors": [
+            {
+              "line": 1414,
+              "text": "    \"filename_convention\": \"Filename identifies customer code;preserve raw name and code as text;ambiguous suffix/identity still follows UI-042 confirmation rules\","
+            }
+          ]
+        },
+        {
+          "path": "docs/dev/AI_TRAINING_INTERVIEW_DECISION_INDEX.json",
+          "sha256": "704afaf840ba330bbd667883ce67078ffff3a768bcd995b3c63b4f9cf80b4691",
+          "anchors": [
+            {
+              "line": 16,
+              "text": "      \"UI-043\","
+            },
+            {
+              "line": 107,
+              "text": "        \"docs/UI_DECISIONS.md UI-042/UI-043\""
+            },
+            {
+              "line": 116,
+              "text": "        \"docs/UI_DECISIONS.md UI-016/UI-017/UI-043\""
+            }
+          ]
+        }
+      ],
+      "interpretation": "An oldUI-042 reference and laterUI-043 supersession coexist. The latter replaces transaction categories; determine whether identity-confirmation clauses are still valid. Do not globally replace UI-042 or infer product regression.",
+      "next_check": [
+        "NCA-A01",
+        "NCA-B01"
+      ],
+      "product_defect_confirmed": false
+    }
+  ],
+  "confirmed_product_defects_this_design": 0
+}

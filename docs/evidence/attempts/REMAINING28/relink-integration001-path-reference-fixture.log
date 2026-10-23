@@ -1,0 +1,24 @@
+........F..This plugin does not support propagateSizeHints()
+.......................This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+........................................
+======================================================================
+FAIL: test_same_content_customer_registrations_keep_distinct_actual_style_person_and_training_dependencies (test_source_relink_scope.SourceRelinkScopeTests.test_same_content_customer_registrations_keep_distinct_actual_style_person_and_training_dependencies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_relink_scope.py", line 57, in test_same_content_customer_registrations_keep_distinct_actual_style_person_and_training_dependencies
+    self.assertEqual(len([asset for asset in a['context']['assets'] if asset['declared_by'].startswith('SOURCE:')]),2)
+AssertionError: 3 != 2
+
+----------------------------------------------------------------------
+Ran 78 tests in 19.495s
+
+FAILED (failures=1)

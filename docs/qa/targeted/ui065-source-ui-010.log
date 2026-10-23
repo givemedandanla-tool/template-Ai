@@ -1,0 +1,32 @@
+test_actual_confirmation_selection_race_rejects_without_starting_worker_or_writing (test_batch_correction_gui.BatchCorrectionGuiTests.test_actual_confirmation_selection_race_rejects_without_starting_worker_or_writing) ... Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+ok
+test_actual_shared_worker_partial_states_and_no_unselected_false_success (test_batch_correction_gui.BatchCorrectionGuiTests.test_actual_shared_worker_partial_states_and_no_unselected_false_success) ... ok
+test_close_cancels_unstarted_only_and_stays_open_until_current_transaction_finishes (test_batch_correction_gui.BatchCorrectionGuiTests.test_close_cancels_unstarted_only_and_stays_open_until_current_transaction_finishes) ... This plugin does not support propagateSizeHints()
+ok
+test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job (test_batch_correction_gui.BatchCorrectionGuiTests.test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job) ... ERROR
+test_sorted_filtered_hidden_selection_keeps_exact_ids_counts_and_only_selected_states (test_batch_correction_gui.BatchCorrectionGuiTests.test_sorted_filtered_hidden_selection_keeps_exact_ids_counts_and_only_selected_states) ... ok
+test_undo_one_original_transaction_keeps_other_source_and_counts_truthfully (test_batch_correction_gui.BatchCorrectionGuiTests.test_undo_one_original_transaction_keeps_other_source_and_counts_truthfully) ... FAIL
+
+======================================================================
+ERROR: test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job (test_batch_correction_gui.BatchCorrectionGuiTests.test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_batch_correction_gui.py", line 57, in test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job
+    d=self.make(1);self.w.property_pin_checks['text'].setChecked(True);key=self.check(self.works[0],2);index=next(i for i in range(d.table.rowCount()) if d.table.item(i,0).data(Qt.UserRole)==key);d.table.setCurrentCell(index,2);d.locate();self.assertEqual(self.w.tabs.currentIndex(),0);self.assertEqual(self.w.current_slot.id,self.works[0]['payload']['slots'][2]['id']);self.assertTrue(self.w.property_pin_checks['text'].isChecked());self.assertFalse(self.w.busy)
+                                                                                                                                                                                                                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'id'
+
+======================================================================
+FAIL: test_undo_one_original_transaction_keeps_other_source_and_counts_truthfully (test_batch_correction_gui.BatchCorrectionGuiTests.test_undo_one_original_transaction_keeps_other_source_and_counts_truthfully)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_batch_correction_gui.py", line 55, in test_undo_one_original_transaction_keeps_other_source_and_counts_truthfully
+    self.assertTrue(wait_for_gui(lambda:not d.running,5));self.assertEqual(self.w.library.artwork(self.works[0]['id'])['payload']['slots'][0]['align'],'left');self.assertEqual(self.w.library.artwork(self.works[1]['id'])['payload']['slots'][0]['align'],'center');self.assertIn('已回復 1',d.status.text())
+                                                                                                                                                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '已回復 1' not found in '逐項結果：核對 1 個交易、嘗試 1；套用待重驗 0、失敗 0、過期 0、需人工 0、取消 0。回復與套用不代表印前PASS。'
+
+----------------------------------------------------------------------
+Ran 6 tests in 6.049s
+
+FAILED (failures=1, errors=1)

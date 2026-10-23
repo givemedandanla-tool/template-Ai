@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "id": "RUN-FRAMEWORK-001",
+  "created_utc": "2026-10-13T08:54:36.965428+00:00",
+  "source_commit": "f5da9c41e432e0b7b3927ae9b51c5e94645406b3",
+  "source_manifest_sha256": "ba3eaf637f0ca90e1768f5378df2127fa99a0f1c0d45b2d47a69a4c7fbd98b30",
+  "source_unchanged": true,
+  "status": "PASS",
+  "test_count": 58,
+  "passed": 58,
+  "capture_exit_code": 0,
+  "tests_sha256": "7c09bb5e0668bd4c8de08b8bb4fbd7b0eea8ede82cde5c1fe1b27a912ab791d3",
+  "attachments": {
+    "synthetic-FINAL.pdf": {
+      "bytes": 9955,
+      "sha256": "2489441a0a9779aacc1c65e4b757166261e5a40e70d9ca8a0c35746a8948b019",
+      "mime": "application/pdf"
+    },
+    "training-workspace.png": {
+      "bytes": 206851,
+      "sha256": "da200434d6cb8f972f5bce9856c580e84f8d6fa794b209b51fdddfb8334b1bd8",
+      "mime": "image/png"
+    },
+    "synthetic-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "bbe406834015e4e501b0058971b06f917b33b81d5a7700138b48de65a30dd003",
+      "mime": "image/png"
+    },
+    "decorated-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "742eb545ec519f462e339ad125f4448eba0f08a4b6533c14bf1b03614d284320",
+      "mime": "image/png"
+    },
+    "source-manifest.json": {
+      "bytes": 6257,
+      "sha256": "eeda6719140a1187310b6d491a67dcf9a851fb729ac56b17f056b62a4e1b5b45",
+      "mime": "application/json"
+    },
+    "multiple-artworks-workspace.png": {
+      "bytes": 211025,
+      "sha256": "13120703a0d8f78137139a515d94bf8f80c00a5d9eae3a23cff3fcca5309b65a",
+      "mime": "image/png"
+    },
+    "decorated-FINAL.jpg": {
+      "bytes": 10992,
+      "sha256": "fbb60e1d7659ec4b4c2a91276a2c881e91424b311e4c0f8c5f6b7f6fb8fe199b",
+      "mime": "image/jpeg"
+    },
+    "tests.json": {
+      "bytes": 10425,
+      "sha256": "7c09bb5e0668bd4c8de08b8bb4fbd7b0eea8ede82cde5c1fe1b27a912ab791d3",
+      "mime": "application/json"
+    },
+    "decorated-FINAL.pdf": {
+      "bytes": 10130,
+      "sha256": "f89d97a717948edd6e0c6f75379c70a3939d474e65be385c99a16e961f7c821a",
+      "mime": "application/pdf"
+    },
+    "synthetic-FINAL.jpg": {
+      "bytes": 7908,
+      "sha256": "ec9d05d441ecbd43e0eabe3e989789c7e20b2238a3e6d82a0ef3702913b916ae",
+      "mime": "image/jpeg"
+    },
+    "capture.log": {
+      "bytes": 170,
+      "sha256": "2b99ac393f9d4b46fb795d413b38ee812e1effaef3e076ad4c3d0a26b17a4594",
+      "mime": "text/plain"
+    },
+    "template-workspace.png": {
+      "bytes": 193647,
+      "sha256": "b581926c24b6ae8c1b68cea89a9af6c5a0b1215ece4d879ff531524e9ad16f3d",
+      "mime": "image/png"
+    },
+    "commit.json": {
+      "bytes": 1412,
+      "sha256": "2d34f333933b0e0c6dfe5e32395e954718e4b6af5e58aa12d305fbcb66726366",
+      "mime": "application/json"
+    },
+    "tree.json": {
+      "bytes": 29652,
+      "sha256": "4e4dd350bd20fab20c7bb0bcc64499cbc33f5990a2569686045e60fdf7a81bd8",
+      "mime": "application/json"
+    },
+    "tests.log": {
+      "bytes": 9071,
+      "sha256": "9bf1856187819a8cdd0687e96b9f965c1f43e15321aab5b55d8313cdd9e8721b",
+      "mime": "text/plain"
+    },
+    "output-workspace.png": {
+      "bytes": 218538,
+      "sha256": "3fbcaef73adb873d5db2630fb58857ee4ca99da345965daac57bc2fbc8f5a6b8",
+      "mime": "image/png"
+    },
+    "junit.xml": {
+      "bytes": 10349,
+      "sha256": "645c5e9488b2486b5411557f85281e5d37a4589bf206dd5ac17c0aedfe58c471",
+      "mime": "application/xml"
+    },
+    "claims.json": {
+      "bytes": 16852,
+      "sha256": "57cc15f22ae5aff6e9a0889b5ad668b980a1044560706bacd744f7d27a82801e",
+      "mime": "application/json"
+    },
+    "decorated-output-workspace.png": {
+      "bytes": 225259,
+      "sha256": "6da2ad75772d30be1478f41815b022b392c5cbe8fd2fb98e46ff1c33a4b2d6ca",
+      "mime": "image/png"
+    }
+  },
+  "environment": {
+    "python": "3.11.16",
+    "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "PySide6": "6.8.3",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+    "qt_platform": "offscreen"
+  },
+  "command": "python tools/run_evidence.py --run-id RUN-FRAMEWORK-001 --source-commit f5da9c41e432e0b7b3927ae9b51c5e94645406b3 --commit-json <readback> --tree-json <readback>",
+  "review_level": "SELF_VERIFIED",
+  "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
+  "not_verified": [
+    "真實私人 Illustrator 全面視覺一致",
+    "VivoBook／RTX 5050",
+    "實體印刷",
+    "Windows EXE",
+    "獨立覆核"
+  ]
+}

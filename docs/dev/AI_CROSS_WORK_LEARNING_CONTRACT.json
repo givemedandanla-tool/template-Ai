@@ -1,0 +1,1605 @@
+{
+  "id": "AI-CROSS-WORK-LEARNING",
+  "status": "PARTIAL_SHARED_LEARNING_CORE_AUTHORED_TESTS_ONLY",
+  "target_parent_ids": [],
+  "target_parent_ids_note": "New learning work packages are separate from historical75 original topics; no count inflation or aliasing. Register actual tests/requirements when each implementation package begins.",
+  "product_decision": "docs/decisions/2026-10-17-TEMPLATE-AI-CROSS-WORK-LEARNING.md",
+  "historical_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "historical_evidence": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+  "work_packages": [
+    {
+      "id": "AI-LEARN-01",
+      "title": "作品與可學習觀察資料",
+      "status": "PARTIALLY_IMPLEMENTED",
+      "completed": false,
+      "planned_tests": [
+        {
+          "module": "test_design_observation",
+          "status": "20_OBSERVATION_TESTS_AND_FULL1581_CURRENT_SOURCE_PASS_PARTIAL_AI_ACCEPTANCE"
+        },
+        {
+          "module": "test_original_text_observation",
+          "status": "12_ORIGINAL_SOURCE_TESTS_IN_FULL1581_FORMAL_PASS_NOT_REAL_CORPUS"
+        }
+      ],
+      "actual_evidence": "docs/qa/targeted/AI-ORIGINAL-TEXT-FORMAL-SUMMARY-20261019.json",
+      "acceptance": [
+        {
+          "id": "AI-LEARN-01-A01",
+          "expected": "已知字級與均勻變換可核實；未知字型／點陣估計不變成10pt真值",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-01-A01"
+        },
+        {
+          "id": "AI-LEARN-01-A02",
+          "expected": "去重與lineage拆分避免同作品改版跨TRAIN與TEST",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-01-A02"
+        },
+        {
+          "id": "AI-LEARN-01-A03",
+          "expected": "相同來源的角色／群組／圖形分層有可追溯觀察版本",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-01-A03"
+        },
+        {
+          "id": "AI-LEARN-01-A04",
+          "expected": "資料／來源修訂失效與批次取消續行保持精確身份",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-01-A04"
+        },
+        {
+          "id": "AI-LEARN-01-A05",
+          "expected": "重用TrainingStore歷史及交易，舊資料與原稿不改寫",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-01-A05"
+        },
+        {
+          "id": "AI-LEARN-01-A06",
+          "expected": "來源 text run／glyph cluster／baseline／pt／容器及四類風格觀察帶單位與可信來源，缺證據為UNKNOWN，預設值不當訓練真值",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-01-A06"
+        }
+      ],
+      "depends_on": [],
+      "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "status": "PARTIAL_CORE_CANDIDATE_CURRENT_FULL_SOFTWARE_REGRESSION_PASS_REAL_CORPUS_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED",
+        "scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json"
+      },
+      "current_evidence": {
+        "run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+        "source_commit": "851ef2ac62a49f865bac52b524c66c31371d0942",
+        "scope": "CURRENT_SOFTWARE_MECHANISMS_NOT_FULL_REAL_CORPUS_OR_UNSUPPORTED_SUBSETS",
+        "complete": false
+      }
+    },
+    {
+      "id": "AI-LEARN-02",
+      "title": "跨作品設計家族",
+      "status": "PARTIALLY_IMPLEMENTED",
+      "completed": false,
+      "planned_tests": [
+        {
+          "module": "test_design_family_learning",
+          "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
+        }
+      ],
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+      "acceptance": [
+        {
+          "id": "AI-LEARN-02-A01",
+          "expected": "至少5不同設計lineage共同支持家族，禁止一作品一學成模板",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-02-A01"
+        },
+        {
+          "id": "AI-LEARN-02-A02",
+          "expected": "同源重複不增加支持或洩漏內容身份特徵",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-02-A02"
+        },
+        {
+          "id": "AI-LEARN-02-A03",
+          "expected": "HDBSCAN孤例／低可信保留，不強併／靜默丟棄",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-02-A03"
+        },
+        {
+          "id": "AI-LEARN-02-A04",
+          "expected": "重估版本與成員對應可重現，不假稱partial_fit",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-02-A04"
+        },
+        {
+          "id": "AI-LEARN-02-A05",
+          "expected": "四類風格及角色／容器關係用於跨作品家族，來源去重與反例不被同座標或同字串掩蓋",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-02-A05"
+        }
+      ],
+      "depends_on": [
+        "AI-LEARN-01"
+      ],
+      "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "status": "PARTIAL_CORE_CANDIDATE_CURRENT_FULL_SOFTWARE_REGRESSION_PASS_REAL_CORPUS_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED",
+        "scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json"
+      },
+      "current_evidence": {
+        "run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+        "source_commit": "851ef2ac62a49f865bac52b524c66c31371d0942",
+        "scope": "CURRENT_SOFTWARE_MECHANISMS_NOT_FULL_REAL_CORPUS_OR_UNSUPPORTED_SUBSETS",
+        "complete": false
+      }
+    },
+    {
+      "id": "AI-LEARN-03",
+      "title": "可變規則與群組文法學習",
+      "status": "PARTIALLY_IMPLEMENTED",
+      "completed": false,
+      "planned_tests": [
+        {
+          "module": "test_learned_rule_grammar",
+          "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
+        }
+      ],
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+      "acceptance": [
+        {
+          "id": "AI-LEARN-03-A01",
+          "expected": "共用對齊／間距及可選／重複／流向由多作品資料學出",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-03-A01"
+        },
+        {
+          "id": "AI-LEARN-03-A02",
+          "expected": "資料分布改變會改變規則，刪去支持導致降級",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-03-A02"
+        },
+        {
+          "id": "AI-LEARN-03-A03",
+          "expected": "統計軟偏好與硬政策／來源信心分離且保存反例",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-03-A03"
+        },
+        {
+          "id": "AI-LEARN-03-A04",
+          "expected": "尺寸或內容證據不足不擬造回歸／外推可信度",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-03-A04"
+        },
+        {
+          "id": "AI-LEARN-03-A05",
+          "expected": "分開學字內／詞內與物件等距；語系、合法邊界、單字／零邊界與最後一行有明確規則，越權模式不自動啟用",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-03-A05"
+        },
+        {
+          "id": "AI-LEARN-03-A06",
+          "expected": "學具來源的pt、角色字級比例及文字／容器聯動；新規則實例由核心依核准聯合條件調整字級、字寬與欄位尺寸，不提供客戶細參數控制，未知或越適用範圍不任意縮放",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-03-A06"
+        },
+        {
+          "id": "AI-LEARN-03-A07",
+          "expected": "學角色／群組相對關係、baseline、gap及錨點，保留獨立來源支持與矛盾反例",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-03-A07"
+        },
+        {
+          "id": "AI-LEARN-03-A08",
+          "expected": "學容器欄列／label-value／optional-repeat-flow、欄位收合及同模板條件交換變體，保留資料ID、歸屬與完整內容，不列舉每案模板",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-03-A08"
+        }
+      ],
+      "depends_on": [
+        "AI-LEARN-02"
+      ],
+      "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "status": "PARTIAL_CORE_CANDIDATE_CURRENT_FULL_SOFTWARE_REGRESSION_PASS_REAL_CORPUS_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED",
+        "scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json"
+      },
+      "current_evidence": {
+        "run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+        "source_commit": "851ef2ac62a49f865bac52b524c66c31371d0942",
+        "scope": "CURRENT_SOFTWARE_MECHANISMS_NOT_FULL_REAL_CORPUS_OR_UNSUPPORTED_SUBSETS",
+        "complete": false
+      }
+    },
+    {
+      "id": "AI-LEARN-04",
+      "title": "條件式模板合成與約束求解",
+      "status": "PARTIALLY_IMPLEMENTED",
+      "completed": false,
+      "planned_tests": [
+        {
+          "module": "test_template_synthesis",
+          "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
+        }
+      ],
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+      "acceptance": [
+        {
+          "id": "AI-LEARN-04-A01",
+          "expected": "未見文案／欄位組合可生成非原庫複製的新實例",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-04-A01"
+        },
+        {
+          "id": "AI-LEARN-04-A02",
+          "expected": "在已學適用範圍內未見尺寸可由條件規則產生",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-04-A02"
+        },
+        {
+          "id": "AI-LEARN-04-A03",
+          "expected": "群組／文字多行量測與實際渲染一致且資料完整",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-04-A03"
+        },
+        {
+          "id": "AI-LEARN-04-A04",
+          "expected": "非凸拓撲分支與搜尋預算有完整性狀態，非法版面不放行",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-04-A04"
+        },
+        {
+          "id": "AI-LEARN-04-A05",
+          "expected": "多來源generation_reference核驗，不能偽造單一source或published狀態",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-04-A05"
+        },
+        {
+          "id": "AI-LEARN-04-A06",
+          "expected": "字型／Logo／鎖定／舊模板與現有輸出Gate完整回歸",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-04-A06"
+        },
+        {
+          "id": "AI-LEARN-04-A07",
+          "expected": "新風格子集由版本化政策編譯到同一Qt文字布局與Kiwi；舊模板固定pt、分散角色、Logo與正式Gate不回退",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-04-A07"
+        },
+        {
+          "id": "AI-LEARN-04-A08",
+          "expected": "受控SET_RELATION優先在同模板合法交換／重排，超出適用能力再比較相容模板；同命令冪等、循環與歸屬衝突有原因，不修改全域模板",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-04-A08"
+        },
+        {
+          "id": "AI-LEARN-04-A09",
+          "expected": "跨候選／尺寸適配保留意圖與穩定映射，依UI-061預覽確認；高影響不可默默採用，客戶確認不冒充正式發布",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-04-A09"
+        }
+      ],
+      "depends_on": [
+        "AI-LEARN-03"
+      ],
+      "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "status": "PARTIAL_CORE_CANDIDATE_CURRENT_FULL_SOFTWARE_REGRESSION_PASS_REAL_CORPUS_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED",
+        "scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json"
+      },
+      "current_evidence": {
+        "run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+        "source_commit": "851ef2ac62a49f865bac52b524c66c31371d0942",
+        "scope": "CURRENT_SOFTWARE_MECHANISMS_NOT_FULL_REAL_CORPUS_OR_UNSUPPORTED_SUBSETS",
+        "complete": false
+      }
+    },
+    {
+      "id": "AI-LEARN-05",
+      "title": "輸入檢索與偏好排序",
+      "status": "PARTIALLY_IMPLEMENTED",
+      "completed": false,
+      "planned_tests": [
+        {
+          "module": "test_layout_ranker",
+          "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
+        }
+      ],
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+      "acceptance": [
+        {
+          "id": "AI-LEARN-05-A01",
+          "expected": "依輸入能力檢索家族，硬Gate前置且所有結果可追溯",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-05-A01"
+        },
+        {
+          "id": "AI-LEARN-05-A02",
+          "expected": "偏好訓練按query分組，舊幾何規則評分不冒充獨立標註",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-05-A02"
+        },
+        {
+          "id": "AI-LEARN-05-A03",
+          "expected": "封存偏好topK／NDCG及基準比較有明確分母與信賴區間",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-05-A03"
+        },
+        {
+          "id": "AI-LEARN-05-A04",
+          "expected": "最佳僅限已搜且已驗證範圍；所有複數合法結果含同分須有版本化預設優選與穩定決勝，客戶明確關係優先；未校準分數不當機率",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-05-A04"
+        }
+      ],
+      "depends_on": [
+        "AI-LEARN-04"
+      ],
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "status": "PARTIAL_CORE_CANDIDATE_CURRENT_FULL_SOFTWARE_REGRESSION_PASS_REAL_CORPUS_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED",
+        "scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json"
+      },
+      "current_evidence": {
+        "run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+        "source_commit": "851ef2ac62a49f865bac52b524c66c31371d0942",
+        "scope": "CURRENT_SOFTWARE_MECHANISMS_NOT_FULL_REAL_CORPUS_OR_UNSUPPORTED_SUBSETS",
+        "complete": false
+      }
+    },
+    {
+      "id": "AI-LEARN-06",
+      "title": "回饋訓練與版本啟用",
+      "status": "PARTIALLY_IMPLEMENTED",
+      "completed": false,
+      "planned_tests": [
+        {
+          "module": "test_learning_feedback",
+          "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
+        }
+      ],
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+      "acceptance": [
+        {
+          "id": "AI-LEARN-06-A01",
+          "expected": "回饋區分偏好／必要修正／政策，輸出成功不等於好看",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-06-A01"
+        },
+        {
+          "id": "AI-LEARN-06-A02",
+          "expected": "訓練／驗證／測試與來源權利／撤回版本不洩漏",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-06-A02"
+        },
+        {
+          "id": "AI-LEARN-06-A03",
+          "expected": "PENDING評估／明確政策啟用／回退不改寫舊模型",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-06-A03"
+        },
+        {
+          "id": "AI-LEARN-06-A04",
+          "expected": "來源與支持證據變動可失效並精確恢復受影響模型／結果",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-06-A04"
+        },
+        {
+          "id": "AI-LEARN-06-A05",
+          "expected": "保存前稿＋明確意圖＋後稿＋接受拒絕＋適用範圍，缺理由保持未知，個案接受不得直接改全域政策",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-06-A05"
+        }
+      ],
+      "depends_on": [
+        "AI-LEARN-05"
+      ],
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "status": "PARTIAL_CORE_CANDIDATE_CURRENT_FULL_SOFTWARE_REGRESSION_PASS_REAL_CORPUS_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED",
+        "scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json"
+      },
+      "current_evidence": {
+        "run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+        "source_commit": "851ef2ac62a49f865bac52b524c66c31371d0942",
+        "scope": "CURRENT_SOFTWARE_MECHANISMS_NOT_FULL_REAL_CORPUS_OR_UNSUPPORTED_SUBSETS",
+        "complete": false
+      }
+    },
+    {
+      "id": "AI-LEARN-07",
+      "title": "本體端到端流程與持久接續（網頁／手機實作延後）",
+      "status": "PARTIALLY_IMPLEMENTED",
+      "completed": false,
+      "planned_tests": [
+        {
+          "module": "test_learning_workflow",
+          "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
+        }
+      ],
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+      "acceptance": [
+        {
+          "id": "AI-LEARN-07-A01",
+          "expected": "匯入->共用學習->家族->輸入->新排版為主流程，不逐作品建模板",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-07-A01"
+        },
+        {
+          "id": "AI-LEARN-07-A02",
+          "expected": "家族／暫態實例與低可信例外可理解，代表性抽查不逐件聊天",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-07-A02"
+        },
+        {
+          "id": "AI-LEARN-07-A03",
+          "expected": "工作暫停／重啟／新對話可依倉庫與本機持久資料接續",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-07-A03"
+        },
+        {
+          "id": "AI-LEARN-07-A04",
+          "expected": "程式／匿名指標／checkpoints保存GitHub；不自動上傳原稿／字型／個資",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-07-A04"
+        },
+        {
+          "id": "AI-LEARN-07-A05",
+          "expected": "客戶端先完整初稿，三階段可返回；客戶表達必要相對位置，欄位尺寸／字級／字寬／切齊／分散與數值間距由核心規則控制，不加入客戶細參數、單雙排或必選模板庫；專業後台維持既有能力",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
+          "scope_parts": {
+            "current_core": "Operable desktop input/complete draft/edit/return/review flow; no forced template library or font/width/row tuning; existing professional editing remains",
+            "deferred_frontend": "Independent web/mobile customer screens and device-specific presentation"
+          },
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-07-A05"
+        },
+        {
+          "id": "AI-LEARN-07-A06",
+          "expected": "網頁手機發同一語意操作契約，驗證資源權限／期望版本／冪等／晚到結果；拖曳中只代理回饋，放開核心精排，提供非拖曳等效操作",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
+          "scope_parts": {
+            "current_core": "Actual desktop relative-position interaction with feedback,core semantic operations and verified reflow; owner/revision/idempotency/stale-result protection; functions/contracts alone are insufficient",
+            "deferred_frontend": "Independent web/mobile client transport,device-specific touch gestures and frontend authentication UI"
+          },
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-07-A06"
+        },
+        {
+          "id": "AI-LEARN-07-A07",
+          "expected": "確認綁定精確資料／結果；相同有效輸入重複下單沿用有效已確認版，不因多合法解或模型更新任意換印紋；新資料無解保留並標stale，撤回版面不退電話；正式封存不把JSON重算當精確回播",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
+          "scope_parts": {
+            "current_core": "Actual desktop local content correction/return/layout undo/current result review and confirmation; preserve new data,mark stale results and validate exact output; use existing approved persistence",
+            "deferred_frontend": "Independent web/mobile confirmation screens and hosted/cross-device archive service; permanent archive policy remains scoped/open"
+          },
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-07-A07"
+        }
+      ],
+      "depends_on": [
+        "AI-LEARN-06"
+      ],
+      "current_delivery_phase": "CORE_APPLICATION",
+      "interaction_delivery_basis": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
+      "interaction_design_start_condition": "Versioned training results with stated validation scope available; later body interaction goal retained",
+      "implementation_slice": {
+        "status": "PARTIAL_CORE_CANDIDATE_CURRENT_FULL_SOFTWARE_REGRESSION_PASS_REAL_CORPUS_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED",
+        "scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json"
+      },
+      "current_evidence": {
+        "run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+        "source_commit": "851ef2ac62a49f865bac52b524c66c31371d0942",
+        "scope": "CURRENT_SOFTWARE_MECHANISMS_NOT_FULL_REAL_CORPUS_OR_UNSUPPORTED_SUBSETS",
+        "complete": false
+      }
+    },
+    {
+      "id": "AI-LEARN-08",
+      "title": "真實資料泛化與規模驗證",
+      "status": "PARTIALLY_IMPLEMENTED",
+      "completed": false,
+      "planned_tests": [
+        {
+          "module": "test_learning_heldout_corpus",
+          "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
+        }
+      ],
+      "actual_evidence": null,
+      "acceptance": [
+        {
+          "id": "AI-LEARN-08-A01",
+          "expected": "真實授權lineage隔離封存集驗證跨作品泛化，合成結果另列",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-08-A01"
+        },
+        {
+          "id": "AI-LEARN-08-A02",
+          "expected": "硬錯誤0與資料完整100%；可行率分母及未知／搜尋狀態透明",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-08-A02"
+        },
+        {
+          "id": "AI-LEARN-08-A03",
+          "expected": "偏好驗收與基準比較獨立，缺標註不宣稱學成最佳美學",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-08-A03"
+        },
+        {
+          "id": "AI-LEARN-08-A04",
+          "expected": "1000／3000作品持久批次、資源／延遲／取消／恢復以實測保存",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-08-A04"
+        },
+        {
+          "id": "AI-LEARN-08-A05",
+          "expected": "多人／公司／字型／Logo／參考Windows與VivoBook資格依實際範圍驗收",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CURRENT_CORE",
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-08-A05"
+        },
+        {
+          "id": "AI-LEARN-08-A06",
+          "expected": "四類風格在獨立授權lineage封存集及長短／多語／多筆／多人／多公司情境分項驗證；網站／實體手機／印前各列證據，不以37項原型PASS代替",
+          "status": "PARTIAL_IMPLEMENTED_NOT_FULLY_VERIFIED",
+          "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
+          "scope_parts": {
+            "current_core": "Four-style heldout evaluation and multi-language/field/person/company behavior; existing output/preflight qualification only on actual evidence",
+            "deferred_frontend": "Website and physical-phone interface validation"
+          },
+          "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json#AI-LEARN-08-A06"
+        }
+      ],
+      "depends_on": [
+        "AI-LEARN-06"
+      ],
+      "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
+      "current_delivery_phase": "CORE_APPLICATION",
+      "dependency_change_basis": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
+      "implementation_slice": {
+        "status": "PARTIAL_CORE_CANDIDATE_CURRENT_FULL_SOFTWARE_REGRESSION_PASS_REAL_CORPUS_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED",
+        "scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json"
+      },
+      "current_evidence": {
+        "run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+        "source_commit": "851ef2ac62a49f865bac52b524c66c31371d0942",
+        "scope": "CURRENT_SOFTWARE_MECHANISMS_NOT_FULL_REAL_CORPUS_OR_UNSUPPORTED_SUBSETS",
+        "complete": false
+      }
+    }
+  ],
+  "implemented_count": 0,
+  "verified_count": 0,
+  "total_work_packages": 8,
+  "next_work_package": "AI-LEARN-01",
+  "planning_not_completion": true,
+  "acceptance_count": 50,
+  "verified_acceptance_count": 0,
+  "plan": "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
+  "engineering_references": "docs/dev/AI_CROSS_WORK_ENGINEERING_REFERENCES.json",
+  "first_vertical_slice": [
+    "AI-LEARN-01",
+    "AI-LEARN-02",
+    "AI-LEARN-03",
+    "AI-LEARN-04"
+  ],
+  "success_is_not_import_count": true,
+  "no_one_work_one_template_as_learning_result": true,
+  "parameter_design": {
+    "observation_geometry": [
+      "rect_mm",
+      "normalized_rect",
+      "baseline",
+      "source_transform",
+      "value_provenance"
+    ],
+    "semantic_structure": [
+      "entity_roles",
+      "company_bindings",
+      "groups",
+      "layer_roles"
+    ],
+    "learned_family": [
+      "membership",
+      "effective_lineage_support",
+      "prototype_graph",
+      "applicability",
+      "version"
+    ],
+    "learned_rules": [
+      "anchors",
+      "alignment",
+      "gap_median_MAD",
+      "conditional_geometry",
+      "repeat",
+      "optional",
+      "flow",
+      "wrap",
+      "font_hierarchy",
+      "distributed_unit_and_allowed_boundaries",
+      "font_role_log_ratios",
+      "container_tree_and_column_gutter",
+      "baseline_and_relation_graph",
+      "conditional_split_merge",
+      "intent_preservation",
+      "conditional_same_template_swaps",
+      "joint_typography_container_regions",
+      "default_role_position_preferences",
+      "stable_legal_candidate_tie_break"
+    ],
+    "hard_policy": [
+      "required_data",
+      "bounds",
+      "safe_margin",
+      "font_use_rights",
+      "whole_logo",
+      "core_controlled_joint_parameter_policy",
+      "min_horizontal_scale",
+      "locks"
+    ],
+    "training_hyperparameters": {
+      "hdbscan_min_cluster_size": 5,
+      "hdbscan_min_samples": 3,
+      "catboost_loss": "PairLogit",
+      "catboost_depth": 6,
+      "catboost_iterations_cap": 500,
+      "catboost_learning_rate": 0.05,
+      "catboost_early_stopping_rounds": 50,
+      "split_by_lineage": [
+        0.7,
+        0.15,
+        0.15
+      ],
+      "rule_relation_support_start": 0.8,
+      "ransac_min_independent_support": 20,
+      "ransac_residual_threshold": "Starting2.5*TRAIN_MAD with measured epsilon floor; validate without TEST tuning",
+      "cross_size_fit_requires": "At least3distinct supported size conditions; insufficient data uses constant/unknown, no extrapolation claim"
+    },
+    "runtime_budget": {
+      "retrieved_families": 10,
+      "beam": 16,
+      "candidate_cap": 32,
+      "batch_size": 64,
+      "cpu_concurrency_cap": 2
+    },
+    "numeric_status": "PROPOSED_STARTING_VALUES_NOT_MEASURED_OR_USER_ACCEPTED_GUARANTEES"
+  },
+  "milestones": [
+    {
+      "id": "M1",
+      "scope": [
+        "AI-LEARN-01",
+        "AI-LEARN-02",
+        "AI-LEARN-03",
+        "AI-LEARN-04"
+      ],
+      "deliverable": "Many-work learned shared rules -> new input-conditioned template/layout; no one-work copy completion",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "M2",
+      "scope": [
+        "AI-LEARN-05",
+        "AI-LEARN-06"
+      ],
+      "deliverable": "Independent preference ranking and safe local feedback/model lifecycle",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "M3",
+      "scope": [
+        "AI-LEARN-08",
+        "AI-LEARN-07"
+      ],
+      "deliverable": "Core model validation before interaction design; resume existing-app workflow discussion after inspectable training results; independent clients deferred",
+      "status": "NOT_IMPLEMENTED"
+    }
+  ],
+  "initial_numeric_targets": {
+    "status": "PROPOSED_NOT_MEASURED_FREEZE_BEFORE_TEST",
+    "hard_errors_accepted_formal": 0,
+    "required_data_preservation": 1.0,
+    "family_ARI_target": 0.8,
+    "feasible_holdout_generation_rate_target": 0.95,
+    "independent_preference_top3_target": 0.9,
+    "representative_real_pilot_works": 100,
+    "pilot_input_queries": 200,
+    "scale_corpus_sizes": [
+      1000,
+      3000
+    ],
+    "single_person_query_P95_seconds_target": 3,
+    "reference_process_RSS_GiB_target": 4,
+    "not_hardware_measurements": true
+  },
+  "implementation_reuse": [
+    "template_ai/source_analysis.py",
+    "template_ai/automatic_training.py",
+    "template_ai/datasets.py",
+    "template_ai/training_store.py",
+    "template_ai/model.py",
+    "template_ai/storage.py",
+    "template_ai/layout.py",
+    "template_ai/text_policy.py",
+    "template_ai/render.py",
+    "template_ai/custom_layout.py",
+    "template_ai/candidate_results.py",
+    "template_ai/layout_session.py"
+  ],
+  "implementation_requires": [
+    "New generated-instance provenance valid path, not fake published state or fake single source",
+    "Typed schema migration and old-template compatibility",
+    "Default automatic learning creates observations/families rather than per-work templates",
+    "Shared source measurement/rendering for new text-flow support",
+    "All new model/testing status remains separate from historical CURRENT008 software scope"
+  ],
+  "style_and_interface_review": "docs/dev/CARD_INTERFACE_STYLE_LEARNING_REVIEW.md",
+  "reference_review": "docs/qa/plans/CARD-INTERFACE-REVIEW-BASELINE-20261017.json",
+  "policy_boundaries": {
+    "customer_controls": "RELATIVE_POSITION_INTENT_ONLY_NO_CUSTOMER_FONT_SIZE_WIDTH_FIELD_DIMENSION_ALIGNMENT_DISTRIBUTION_NUMERIC_GAP_TRACKING_OR_ROW_CONTROLS_OR_REQUIRED_TEMPLATE_LIBRARY",
+    "font_size": "New learned instances:core-controlled,source-supported,versioned joint typography/container rules;no customer fine controls or unsupported arbitrary shrinking. Legacy fixed-pt templates and accepted outputs retain their versions.",
+    "distributed": "Current executable subset only approved title/address; observed broader patterns not activation authority",
+    "switching": "UI-061 preview/confirmation remains; low-impact automatic switch is OPEN",
+    "rule_publication": "Learning/acceptance does not confer formal eligibility",
+    "open_policies": [
+      "Moving protected name/title/company/Logo beyond approved scope",
+      "Calibration of joint typography/container applicability and adaptation costs",
+      "Automatic low-impact cross-template adoption",
+      "Formal archive retention and cross-device service"
+    ]
+  },
+  "acceptance_revision_note": "2026-10-17: 36->50 planned clauses across same8packages; +14 design criteria, +0implementation, +0verified; historical completion unchanged 2026-10-19依使用者澄清修訂6條未驗收文字，50條原ID與完成數不變；核心聯動參數／同模板交換／預設優選詳見最新決策，舊固定pt規則保留於既有模板版本。",
+  "field_structure_learning_basis": {
+    "decision": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
+    "approval_status": "USER_CONFIRMED_DESIGN_PRINCIPLE",
+    "engineering_status": "PROPOSED_NOT_IMPLEMENTED",
+    "confirmed_on": "2026-10-18",
+    "principle": "Structure and typography constrain each other; conditionally equivalent roles and variable grammar increase layout flexibility and reduce duplicate templates",
+    "inference_dependencies": [
+      [
+        "segmentation_alignment_arrangement",
+        "container_space_and_relations"
+      ],
+      [
+        "container_space_and_relations",
+        "text_configuration_with_source_font_evidence"
+      ],
+      [
+        "text_measurement_needs",
+        "bounded_structure_reflow"
+      ],
+      [
+        "structure_typography_semantics_policy",
+        "conditional_equivalent_roles"
+      ],
+      [
+        "equivalent_roles_and_variable_grammar",
+        "reusable_family_generation"
+      ]
+    ],
+    "feature_groups": {
+      "structure": [
+        "container_tree",
+        "entity_roles",
+        "row_column_groups",
+        "observed_frame",
+        "measured_ink_bounds",
+        "inferred_available_space",
+        "padding_gutter",
+        "baseline_anchor_relations",
+        "allowed_extent"
+      ],
+      "typography": [
+        "font_face_hash",
+        "source_pt",
+        "role_size_ratios",
+        "cluster_advance",
+        "horizontal_scale",
+        "tracking",
+        "distribution_units_and_legal_boundaries",
+        "text_flow"
+      ],
+      "equivalence": [
+        "allowed_semantic_types",
+        "ownership_constraints",
+        "group_alignment_signature",
+        "capacity_conditions",
+        "asset_text_policy_version"
+      ],
+      "grammar": [
+        "conditional_substitution",
+        "optional",
+        "repeat",
+        "collapse",
+        "expand",
+        "approved_reflow"
+      ],
+      "evidence": [
+        "source_transform",
+        "value_provenance",
+        "independent_lineage_support",
+        "uncertainty",
+        "counterexamples",
+        "version"
+      ]
+    },
+    "equivalence_stages": [
+      "STRUCTURAL_ROLE_COMPATIBILITY",
+      "CURRENT_INPUT_BINDING_FEASIBILITY"
+    ],
+    "binding_requires": [
+      "semantic_type_allowed",
+      "stable_field_identity_and_owner",
+      "actual_text_font_measurement",
+      "approved_joint_parameter_policy_and_current_typography_measurement",
+      "data_completeness",
+      "bounds_and_no_overlap",
+      "current_asset_and_formal_gate_evidence"
+    ],
+    "non_identifiability": "Geometry alone cannot uniquely recover pt/font/tracking/ScaleX; missing evidence stays unknown",
+    "policy_limits": [
+      "New learned instances adapt typography/container parameters only within source-supported joint policy;legacy fixed-pt versions and confirmed outputs remain protected",
+      "No customer font/width/field-dimension/alignment/distribution/numeric-gap/tracking/row controls;customer relative-position intent takes precedence over defaults",
+      "No identity merge based on equal strings or boxes",
+      "No forced family merge solely to minimize template count",
+      "No observed style automatically grants execution or formal-output authority"
+    ],
+    "work_packages": [
+      "AI-LEARN-01",
+      "AI-LEARN-02",
+      "AI-LEARN-03",
+      "AI-LEARN-04",
+      "AI-LEARN-08"
+    ],
+    "evaluation_examples": [
+      "Same geometry different font/pt remains ambiguous",
+      "Same box name/contact not equivalent",
+      "Compatible contact role still rejects overflowing or disallowed Email",
+      "Two/three contacts share family without copying per-work templates",
+      "Optional collapse preserves all other data and identity",
+      "Incompatible families remain separate"
+    ],
+    "status_note": "Refines existing50criteria; no added work packages, no implementation or feature-test evidence"
+  },
+  "delivery_priority": {
+    "decision": "docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md",
+    "status": "USER_DIRECTED",
+    "current_phase": "TEMPLATE_AI_CORE_AND_EXISTING_APPLICATION",
+    "card_interface_role": "Persisted future usage/interaction reference and core design input",
+    "current_deliverables": [
+      "Joint source structure/typography observations",
+      "Cross-work families and conditional equivalent roles",
+      "Rule learning and input-conditioned template/layout generation",
+      "Retrieval and preference ranking",
+      "Scoped feedback and model/version lifecycle",
+      "Existing-application workflow,persistence and core self-validation",
+      "Operable input/draft/relative edit/content correction/return/preview/confirmation/validated export in the existing desktop application"
+    ],
+    "deferred": [
+      "New customer web/PWA frontend",
+      "Mobile application or new touch frontend",
+      "Website deployment and physical-phone interface qualification",
+      "Public API hosting,cross-device accounts and synchronization service"
+    ],
+    "prepare_in_core": [
+      "Stable entity/field identity and ownership",
+      "Reusable operation/input/result types",
+      "Policy,asset,model and result version pins",
+      "Expected-version,idempotency and stale-result handling where needed",
+      "Single measurement/solver/persistence/Gate implementation"
+    ],
+    "preparation_does_not_require_frontend_or_hosted_api": true,
+    "core_completion_not_blocked_by_future_frontend": true,
+    "retained_roadmap_criteria": 50,
+    "deferred_is_not_complete": true,
+    "report_core_phase_and_full_retained_roadmap_separately": true,
+    "body_interaction_decision": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
+    "existing_application_interaction_is_current_delivery": true,
+    "current_focus": "DATA_PROCESSING_MODELS_PARAMETERS_AND_TRAINING_RESULTS",
+    "interaction_design_discussion": "DEFER_UNTIL_VERSIONED_TRAINING_RESULTS",
+    "inverse_model_requirement_decision": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md"
+  },
+  "body_interaction_goal": {
+    "decision": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
+    "status": "USER_CONFIRMED_NOT_IMPLEMENTED",
+    "application": "Existing Template AI desktop application with necessary workflow improvements",
+    "flow": [
+      "INPUT_PERSON_COMPANY_DATA",
+      "COMPLETE_INITIAL_DRAFT",
+      "RELATIVE_POSITION_EDIT",
+      "LOCAL_CONTENT_CORRECTION_AND_RETURN",
+      "PREVIEW_AND_CONFIRM_EXACT_RESULT",
+      "VALIDATE_AND_EXPORT"
+    ],
+    "must_be_operable_in_application": true,
+    "only_functions_or_contracts_do_not_satisfy_goal": true,
+    "shared_future_behavior": [
+      "Stable field and owner identity",
+      "Core semantic intent and measurement/solver behavior",
+      "Data/layout version separation",
+      "Same result/evidence binding before output"
+    ],
+    "acceptance_scenarios": [
+      {
+        "id": "BODY-FLOW-01",
+        "expected": "Input -> actual core initial draft -> preview without manual layout -> formal output only when all current Gates pass",
+        "status": "PLANNED_NOT_EXECUTED"
+      },
+      {
+        "id": "BODY-FLOW-02",
+        "expected": "Move mobile below landline -> correct phone -> return preserving relation -> undo layout preserving corrected phone -> preview/confirm exact result",
+        "status": "PLANNED_NOT_EXECUTED"
+      },
+      {
+        "id": "BODY-FLOW-03",
+        "expected": "New input infeasible under approved joint rules retains new data;old preview stale and cannot confirm/export new revision;no truncation,unsupported arbitrary shrinking or misuse of old confirmation",
+        "status": "PLANNED_NOT_EXECUTED"
+      },
+      {
+        "id": "BODY-FLOW-04",
+        "expected": "Preview,confirmation,output and recovery bind exact data/layout/asset/model/policy revisions; late results never overwrite current edits",
+        "status": "PLANNED_NOT_EXECUTED"
+      }
+    ],
+    "scenario_count_is_not_additional_acceptance_or_completion": true,
+    "current_work_packages": [
+      "AI-LEARN-07",
+      "AI-LEARN-08"
+    ],
+    "core_capabilities_depend_on": [
+      "AI-LEARN-01",
+      "AI-LEARN-02",
+      "AI-LEARN-03",
+      "AI-LEARN-04",
+      "AI-LEARN-05",
+      "AI-LEARN-06"
+    ],
+    "deferred": [
+      "Separate web/PWA frontend",
+      "Mobile App and physical touch adaptation",
+      "Hosted public API,cross-device accounts and synchronization"
+    ],
+    "policy_limits": [
+      "Customer relative-position intent only;core controls typography,field dimensions,alignment,distribution and spacing under versioned rules",
+      "Keep existing approved professional editing scope",
+      "New learned joint-parameter policy plus actual font/Logo/source/formal Gates;legacy templates and accepted outputs retain their fixed versions",
+      "Confirmation is result adoption,not rule/template publication or prepress exemption"
+    ]
+  },
+  "learned_capacity_input_policy": {
+    "decision": "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
+    "status": "USER_DIRECTED_NOT_IMPLEMENTED",
+    "sequence": [
+      "LEARN_CONDITIONAL_CAPACITY_AND_TEXT_RANGES",
+      "VALIDATE_MEASUREMENT_SOLVER_AND_QUALITY",
+      "VERSION_CAPABILITY_PROFILE",
+      "GUIDE_AND_LIMIT_EXISTING_APP_INPUT",
+      "REVALIDATE_EACH_ACTUAL_LAYOUT"
+    ],
+    "profile_condition_keys": [
+      "physical_size",
+      "family_rule_model_policy_versions",
+      "person_company_ownership",
+      "field_type_mix",
+      "font_face_and_frozen_pt",
+      "container_topology",
+      "logo_fixed_artwork_occupancy"
+    ],
+    "metrics": [
+      "logical_field_count",
+      "rendered_instance_count",
+      "per_role_group_and_total_capacity",
+      "grapheme_length",
+      "shaped_width_height",
+      "line_count",
+      "joint_field_mix_and_string_lengths"
+    ],
+    "range_kinds": {
+      "observed": "Descriptive training range/max,not admission authority",
+      "recommended": "Conditioned evidenced style-feature region from qualified TRAIN works,independently validated; multimodal/joint structure preserved,not a single global optimum",
+      "validated_admission": "Scope-specific executable boundary with approved rule/policy and evidence; actual layout Gate still required"
+    },
+    "evidence": [
+      "Independent lineage support",
+      "Coverage and uncertainty",
+      "Feasible witnesses and counterexamples",
+      "Quality labels/evaluation",
+      "Versioned dependencies"
+    ],
+    "numeric_limits": null,
+    "numeric_limits_status": "NOT_LEARNED_NOT_VALIDATED",
+    "not_global_mathematical_maximum": true,
+    "per_field_ranges_do_not_prove_joint_feasibility": true,
+    "sample_max_not_hard_limit": true,
+    "text_length_does_not_change_point_size": true,
+    "unknown_or_incomplete_search_not_infeasibility": true,
+    "shared_source_printed_instances_still_consume_space": true,
+    "input_family_not_selected": "Use compatible currently approved family capabilities without excluding alternatives or mixing incompatible maxima",
+    "body_interaction": "Existing Template AI input/preview workflow first; future clients reuse same profile",
+    "optimality_preference": "DEFINED_AS_STYLE_REGION_OF_QUALIFIED_TRAINING_WORKS",
+    "work_packages": [
+      "AI-LEARN-01",
+      "AI-LEARN-03",
+      "AI-LEARN-04",
+      "AI-LEARN-07",
+      "AI-LEARN-08"
+    ],
+    "verification_status": "PLANNED_NOT_EXECUTED; refines existing50criteria",
+    "suitable_region_definition": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md"
+  },
+  "qualified_training_style_region": {
+    "decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
+    "status": "USER_CONFIRMED_DEFINITION_NOT_IMPLEMENTED",
+    "definition": "Suitable region is the evidenced style-feature region expressed by qualified training works",
+    "quality_reference": "QUALIFIED_TRAINING_WORKS",
+    "qualification_workflow": "OPEN_NEXT_INTERVIEW",
+    "all_imported_or_historical_works_not_assumed_qualified": true,
+    "feature_families": [
+      "Structure/segmentation/alignment/arrangement",
+      "Equivalent roles and conditional field capacity",
+      "Font/point-size hierarchy/horizontal scale/tracking/distribution",
+      "Whitespace/density/visual hierarchy",
+      "Text occupied-space and length combinations"
+    ],
+    "condition_keys": [
+      "physical_size",
+      "design_family_and_role",
+      "font_face_and_joint_typography_container_configuration",
+      "person_company_grouping",
+      "field_type_mix",
+      "asset_occupancy",
+      "policy_version"
+    ],
+    "region_properties": [
+      "Conditional and joint,not independent scalar limits",
+      "Multimodal/subfamily regions retained",
+      "Rare qualified styles are low-support,not automatically invalid",
+      "Source-unknown values do not expand verified regions",
+      "Not a unique mathematical optimum"
+    ],
+    "record_evidence": [
+      "qualification_reference",
+      "source_and_value_provenance",
+      "independent_lineage_support",
+      "feature_uncertainty",
+      "condition_signature",
+      "joint_feature_relationships",
+      "version"
+    ],
+    "fit_split": "Qualified TRAIN only",
+    "validation_splits": [
+      "Independent qualified VALIDATION",
+      "Sealed qualified TEST without refitting on exposed evaluation"
+    ],
+    "thresholds": "NOT_LEARNED_NOT_VALIDATED; no fixed quantile clipping chosen",
+    "formal_output": "Region membership never bypasses actual measurement,ownership,source/font/Logo and formal Gates",
+    "planning_only": true,
+    "refines_existing_work_packages": [
+      "AI-LEARN-01",
+      "AI-LEARN-02",
+      "AI-LEARN-03",
+      "AI-LEARN-04",
+      "AI-LEARN-07",
+      "AI-LEARN-08"
+    ]
+  },
+  "model_first_interview_scope": {
+    "decision": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
+    "status": "USER_DIRECTED_NOT_IMPLEMENTED",
+    "current_scope": [
+      "Data representation and preprocessing",
+      "Model input/output and learnable targets",
+      "Feature/parameter dependencies and identifiability",
+      "Training/validation and versioned result evidence"
+    ],
+    "deferred_discussion": [
+      "Input/output interaction policy and screens",
+      "Drag/preview/confirmation control design",
+      "Web/mobile or new customer frontend"
+    ],
+    "future_interactions_used_as_inverse_requirements": true,
+    "resume_interaction_discussion_when": "Versioned training results and stated validation scope are available to inspect,without requiring all external hardware qualifications to close",
+    "model_outputs": {
+      "typed_field_group_graph": [
+        "Stable semantic/owner identity",
+        "Container/group/field/run relationships",
+        "mm and normalized frames",
+        "font/glyph/baseline provenance"
+      ],
+      "equivalent_field_groups": [
+        "Role/group compatibility signature",
+        "Conditional capacity and policy applicability",
+        "Source/support/counterexamples"
+      ],
+      "conditional_substitution_relations": [
+        "Direction and preconditions",
+        "Semantic type and owner preservation",
+        "Actual measurement feasibility",
+        "AUTHORIZED_DESIGN_TODO; exact cross-type applicability unconfirmed"
+      ],
+      "relative_relation_graph": [
+        "above/below/left/right",
+        "ordering",
+        "align-edge/baseline",
+        "gap/anchor/inside",
+        "variability/applicability"
+      ],
+      "style_regions": [
+        "Qualified TRAIN joint/multimodal style features",
+        "Conditions and uncertainty"
+      ],
+      "joint_capacity_profile": [
+        "Conditional field count and string-length/occupied-space combinations",
+        "Best-found/validated/unknown status"
+      ],
+      "variable_grammar": [
+        "optional/repeat/collapse/expand/reflow",
+        "Legal topology and role mapping"
+      ],
+      "evidence_and_versions": [
+        "Lineage support",
+        "Source confidence",
+        "Counterexamples/validation scope",
+        "Data/model/rule/policy dependency versions"
+      ]
+    },
+    "equivalence_representation": "User authorized design TODOs for data requirements,field capabilities and their conditional relations; exact equivalence/substitution memberships,thresholds and runtime permissions remain to design",
+    "do_not_infer": [
+      "Global capacity from separate scalar maxima",
+      "Unconditional exchangeability from equal frame dimensions",
+      "Model accuracy/probability from uncalibrated support",
+      "Qualified corpus availability from unanswered question"
+    ],
+    "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED",
+    "next_model_topic": "No next generic interview;two views/conditional relations already registered;finalize schemas and source/evaluation design",
+    "training_design_todos": "training_design_todos"
+  },
+  "training_design_todos": {
+    "request_decision": "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md",
+    "human_view": "docs/dev/AI_TRAINING_DESIGN_TODOS.md",
+    "status": "PARTIAL_DESIGN_CANDIDATE_IMPLEMENTED_NOT_CORPUS_VALIDATED",
+    "scope": "Design tasks only; not implementation,training or feature completion",
+    "source_of_truth": "This active contract; Markdown is a rendered view",
+    "conceptual_views": [
+      "Data-type-centered requirements",
+      "Field/container-centered capabilities"
+    ],
+    "deployed_model_architecture": "No production deployment;shared structural HDBSCAN family,dual logical profiles/grammar,joint Ridge+style modes,Qt/Kiwi solver and curated pairwise logistic preview ranker",
+    "common_design_requirements": [
+      "Define typed inputs/outputs,units,source confidence,UNKNOWN handling and dependency versions",
+      "Separate learned features from approved hard policies and training/runtime hyperparameters",
+      "Compare mathematical methods,mature OSS and public commercial ideas with source/version/hash/license and reuse reasons",
+      "Define TRAIN/VALIDATION/sealed TEST lineage isolation,fit targets,baselines,negative cases and evaluation criteria",
+      "Reuse existing source parser,Qt/fontTools,TrainingStore,graph/solver/version mechanisms; no parallel engine/database",
+      "Derive required outputs from future uses without designing input/output interaction now",
+      "Learn joint typography/container parameter regions;independent scalar bounds do not prove validity",
+      "Same-template conditional variants and defaults for every multiple-legal-result choice;preserve explicit user intent and accepted output binding"
+    ],
+    "tasks": [
+      {
+        "id": "TRAIN-DESIGN-01",
+        "title": "以資料種類為主體的需求模型設計",
+        "status": "TODO_DESIGN",
+        "completed": false,
+        "depends_on": [],
+        "work_packages": [
+          "AI-LEARN-01",
+          "AI-LEARN-03"
+        ],
+        "objective": "Design how semantic data types and roles learn their conditional text/layout requirements across qualified works",
+        "inputs": [
+          "Qualified TRAIN work observations and lineage",
+          "Semantic type,person/company role and group context",
+          "Actual font face/pt/shape metrics and source confidence",
+          "Size,family and style conditions"
+        ],
+        "expected_deliverables": [
+          "DataRequirementProfile schema and missing-data policy",
+          "Conditional features for text occupied space,tracking,distribution,legal line flow and role hierarchy",
+          "Fit/parameter/evaluation design and examples; no numeric thresholds assumed",
+          "Source-supported joint typography/container region and parameter co-variation schema"
+        ],
+        "validation_cases": [
+          "Same character count with different actual font widths",
+          "Source-unknown font/pt not converted to default truth",
+          "Same data type in different roles/styles not forcibly merged",
+          "No memorization of private strings/owner IDs as style clusters",
+          "Independent scalar ranges pass while joint combination fails",
+          "Same legal effective input uses the same default typography configuration"
+        ],
+        "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+        "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
+        "remaining_design_work": [
+          "Formal typed schema and migration into current models/store",
+          "Actual source-example and gold-annotation mapping",
+          "Validation-calibrated class conditions,thresholds and heldout acceptance plan"
+        ],
+        "joint_swap_default_training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
+      },
+      {
+        "id": "TRAIN-DESIGN-02",
+        "title": "以欄位／容器為主體的承接能力模型設計",
+        "status": "TODO_DESIGN",
+        "completed": false,
+        "depends_on": [],
+        "work_packages": [
+          "AI-LEARN-01",
+          "AI-LEARN-02",
+          "AI-LEARN-03"
+        ],
+        "objective": "Design how fields,roles and containers learn capacity,style and relational constraints independently of current content",
+        "inputs": [
+          "Field/group/container/run graph",
+          "Physical and normalized geometry,anchors,alignment,baseline,gaps",
+          "Qualified style regions and logical/rendered instance counts",
+          "Label/icon fixed-versus-data-bound properties,ownership and policy evidence"
+        ],
+        "expected_deliverables": [
+          "FieldCapabilityProfile and group/relative-relation graph schemas",
+          "Conditional role/type capability and joint count/text-space capacity representation",
+          "Observed/recommended/validated ranges with support,unknown and applicability",
+          "Training/parameter/reference/evaluation design",
+          "Bilateral same-template swap capability,adaptation envelope and template-fallback reasons"
+        ],
+        "validation_cases": [
+          "Equal frame size does not establish equal semantic/owner capability",
+          "Fixed TEL label cannot silently host Email; label/value linkage must be represented",
+          "Shared source printed more than once still consumes space",
+          "Individual range compliance does not prove whole-layout feasibility",
+          "Similar geometry but incompatible owner/label must not swap",
+          "Legal left/right swap retains the template family and both data identities"
+        ],
+        "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+        "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
+        "remaining_design_work": [
+          "Formal typed schema and migration into current models/store",
+          "Actual source-example and gold-annotation mapping",
+          "Validation-calibrated class conditions,thresholds and heldout acceptance plan"
+        ],
+        "joint_swap_default_training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
+      },
+      {
+        "id": "TRAIN-DESIGN-03",
+        "title": "資料需求與欄位能力的條件相容、等效及替代模型設計",
+        "status": "TODO_DESIGN",
+        "completed": false,
+        "depends_on": [
+          "TRAIN-DESIGN-01",
+          "TRAIN-DESIGN-02"
+        ],
+        "work_packages": [
+          "AI-LEARN-03",
+          "AI-LEARN-04",
+          "AI-LEARN-08"
+        ],
+        "objective": "Design how the two views connect into supported matches,equivalent roles and directional conditional substitutions",
+        "inputs": [
+          "DataRequirementProfile",
+          "FieldCapabilityProfile",
+          "Qualified cross-work role/group evidence and counterexamples",
+          "Font/size/semantic/owner/label/policy conditions"
+        ],
+        "expected_deliverables": [
+          "Conditioned match/data-field compatibility representation",
+          "Same-role equivalent-group signature and separate directional substitution relation",
+          "Relative-position/applicability/evidence output needed for future reuse",
+          "Bilateral interchange checks and training/validation design; exact category permissions remain to design",
+          "Family-conditioned default assignment/order profile and stable candidate/tie-break provenance"
+        ],
+        "validation_cases": [
+          "A can fit B does not imply reverse fit or transitive substitution",
+          "Swap requires both destination bindings and complete semantic/owner/label conditions",
+          "Cross-type candidates need evidence and conditions,not unconditional phone/Email exchange",
+          "Positive-source or synthetic labels do not substitute independent evaluation",
+          "Incompatible or unknown bindings remain explicit; no fake calibrated confidence",
+          "Two contact fields accepting landline/mobile use a stable default when unspecified",
+          "Explicit swap survives restart and is not overwritten by defaults",
+          "Same input repeat order retains accepted print result despite model upgrade"
+        ],
+        "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+        "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
+        "remaining_design_work": [
+          "Formal typed schema and migration into current models/store",
+          "Actual source-example and gold-annotation mapping",
+          "Validation-calibrated class conditions,thresholds and heldout acceptance plan"
+        ],
+        "joint_swap_default_training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
+      }
+    ],
+    "total_design_todos": 3,
+    "completed_design_todos": 0,
+    "no_new_parent_or_acceptance_count": true,
+    "related_existing_work_packages": [
+      "AI-LEARN-01",
+      "AI-LEARN-02",
+      "AI-LEARN-03",
+      "AI-LEARN-04",
+      "AI-LEARN-08"
+    ],
+    "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
+    "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+    "current_scope": "Core candidate implementations and owned mechanism checks;3design TODOs remain0fully completed pending actual source/rule/domain qualification"
+  },
+  "comprehensive_training_proposal": {
+    "path": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+    "references": "docs/dev/AI_TRAINING_COMPREHENSIVE_REFERENCES.json",
+    "status": "ENGINEERING_PROPOSAL_NOT_IMPLEMENTED",
+    "user_request": "Comprehensive tailored analysis beyond fixed versus data-bound A/B",
+    "recommended_architecture": "Shared hierarchical typed scene graph; conditional data-requirement and field-capability views; binding/variation evidence; grammar and measured solver validation",
+    "observation_policy_feasibility_are_separate": true,
+    "runtime_policy_change": false,
+    "training_executed": false,
+    "final_schema_and_real_corpus_validation_pending": true
+  },
+  "training_corpus_basis": {
+    "decision": "docs/decisions/2026-10-18-AI-CORPUS-CUSTOMER-IDENTITY-AND-REVIEW.md",
+    "status": "USER_REPORTED_PARTIAL_FACTS_NO_PRIVATE_CORPUS_INSPECTED",
+    "primary_format": ".ai",
+    "filename_convention": "Filename identifies customer code;preserve raw name and code as text;ambiguous suffix/identity still follows UI-042 confirmation rules",
+    "qualification": "Mostly qualified per user;exceptions often have informal nonstandard annotations;initial partial human review/noise/auxiliary labels may be needed",
+    "database": "Reuse Library SQLite/CustomerStore/TrainingStore/customer candidates and associations;no parallel customer database",
+    "identity_is_not_style_family": true,
+    "unknown": [
+      "Actual original text/font/layer/group availability",
+      "Actual dimension units and mark meanings",
+      "Exact person/style correspondence and historical revisions",
+      "Actual qualified corpus and independent-lineage coverage"
+    ],
+    "runtime_implementation_or_training": false,
+    "within_file_structure": {
+      "may_contain_multiple_dimensions_and_works": true,
+      "source": "USER_REPLY_2026-10-18",
+      "artboard_vs_shared_canvas": "USUALLY_SAME_ARTBOARD_USER_REPORTED",
+      "work_boundaries_and_physical_size_marks": {
+        "border": "NOT_ALWAYS_PRESENT",
+        "dimension_text": "USUALLY_PRESENT",
+        "not_universal": true,
+        "exact_notation_units_and_association": "UNKNOWN_PENDING_SAMPLE_INSPECTION"
+      },
+      "historical_revision_storage": "UNKNOWN",
+      "same_file_implies_same_family": false,
+      "same_file_must_not_be_split_across_train_and_test": true,
+      "reuse": "Existing artworks/crop/work_mm/artwork_revisions in Library SQLite;automatic native AI segmentation not verified",
+      "segmentation_design": {
+        "status": "PROPOSED_NOT_IMPLEMENTED",
+        "basis": [
+          "Source groups and object relationships",
+          "Whitespace and alignment",
+          "Dimension-text candidates and conditional work association",
+          "Optional borders"
+        ],
+        "no_frame_or_one_artboard_assumption": true,
+        "ink_bounds_are_not_card_bounds": true,
+        "dimension_annotation_role_requires_evidence": true,
+        "unknown_unit_or_conflicting_label_not_forced": true,
+        "manual_correction_reuses_existing_non_destructive_records": true,
+        "current_gap": "source_analysis rect-first regions with whole-page fallback;native AI multiwork segmentation unverified"
+      }
+    },
+    "person_variants": {
+      "user_statement": "同一人物，但如果是雙人或多人門禁卡，就會在那一個人之外再加人。",
+      "base_person_repeated_additional_people_possible": true,
+      "size_person_count_field_count_separate": true,
+      "person_mapping": "EVIDENCE_REQUIRED_NOT_POSITION_OR_STRING_IDENTITY",
+      "style_and_exact_values_correspondence": "UNKNOWN_PENDING_SOURCE_INSPECTION"
+    },
+    "customer_database_policy": "UI043 association-only,NO designed/purchased or transaction classification;reuse existing SQLite"
+  },
+  "training_interview_review": {
+    "human_review": "docs/dev/AI_TRAINING_INTERVIEW_REVIEW.md",
+    "decision_index": "docs/dev/AI_TRAINING_INTERVIEW_DECISION_INDEX.json",
+    "status": "CURRENT_SCOPE_REVIEWED_NO_PENDING_USER_QUESTION",
+    "no_new_parent_or_completion": true
+  },
+  "policy_revisions": [
+    {
+      "id": "CORE-SWAP-DEFAULT-20261019",
+      "decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+      "status": "USER_CONFIRMED_DESIGN_NOT_IMPLEMENTED",
+      "revised_acceptance": [
+        {
+          "id": "AI-LEARN-03-A06",
+          "previous_expected": "學真實pt及角色字級比例，固定當次已核准字級；不得用長度／字寬或其代理偷偷選較小字級解圍",
+          "expected": "學具來源的pt、角色字級比例及文字／容器聯動；新規則實例由核心依核准聯合條件調整字級、字寬與欄位尺寸，不提供客戶細參數控制，未知或越適用範圍不任意縮放"
+        },
+        {
+          "id": "AI-LEARN-03-A08",
+          "previous_expected": "學容器欄列／label-value／optional-repeat-flow與欄位收合，保留資料ID、歸屬與完整內容，不列舉每案模板",
+          "expected": "學容器欄列／label-value／optional-repeat-flow、欄位收合及同模板條件交換變體，保留資料ID、歸屬與完整內容，不列舉每案模板"
+        },
+        {
+          "id": "AI-LEARN-04-A08",
+          "previous_expected": "受控SET_RELATION入口可處理合格稿，與原拓撲保留repair分開；同命令冪等、循環與歸屬衝突有原因，不修改全域模板",
+          "expected": "受控SET_RELATION優先在同模板合法交換／重排，超出適用能力再比較相容模板；同命令冪等、循環與歸屬衝突有原因，不修改全域模板"
+        },
+        {
+          "id": "AI-LEARN-05-A04",
+          "previous_expected": "最佳僅限已搜且已驗證範圍，未校準分數不當機率",
+          "expected": "最佳僅限已搜且已驗證範圍；所有複數合法結果含同分須有版本化預設優選與穩定決勝，客戶明確關係優先；未校準分數不當機率"
+        },
+        {
+          "id": "AI-LEARN-07-A05",
+          "previous_expected": "客戶端先完整初稿，三階段可返回；不得加入字級／字寬／tracking／單雙排控制或必選模板庫，專業後台另維持既有能力",
+          "expected": "客戶端先完整初稿，三階段可返回；客戶表達必要相對位置，欄位尺寸／字級／字寬／切齊／分散與數值間距由核心規則控制，不加入客戶細參數、單雙排或必選模板庫；專業後台維持既有能力"
+        },
+        {
+          "id": "AI-LEARN-07-A07",
+          "previous_expected": "確認綁定精確資料／結果，資料無解保留新值並標stale；撤回版面不退電話；正式封存依核准保存範圍，不把JSON重算當精確回播",
+          "expected": "確認綁定精確資料／結果；相同有效輸入重複下單沿用有效已確認版，不因多合法解或模型更新任意換印紋；新資料無解保留並標stale，撤回版面不退電話；正式封存不把JSON重算當精確回播"
+        }
+      ],
+      "completion_changed": false,
+      "legacy_verified_registry_changed": false
+    }
+  ],
+  "joint_adaptation_and_default_preferences": {
+    "decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+    "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md",
+    "status": "USER_CONFIRMED_DESIGN_NOT_IMPLEMENTED",
+    "confirmed_on": "2026-10-19",
+    "same_template_first": true,
+    "swap_conditions": [
+      "both destinations supported and policy allowed",
+      "stable semantic identity and owner",
+      "label/icon binding",
+      "actual font/text measurement",
+      "joint capacity and surrounding layout",
+      "customer/protected relative relations preserved"
+    ],
+    "size_similarity_is_only_candidate_evidence": true,
+    "adaptation_parameters": [
+      "field_width_height",
+      "point_size",
+      "horizontal_scale",
+      "alignment",
+      "distribution",
+      "spacing"
+    ],
+    "parameters_are_core_controlled": true,
+    "default_required_for_all_multiple_legal_decisions": true,
+    "default_scope": [
+      "family_template",
+      "field_assignment",
+      "relative_order",
+      "structure_branch",
+      "joint_parameter_configuration",
+      "equal_score_tie_break"
+    ],
+    "customer_explicit_relations_override_defaults": true,
+    "defaults_conditioned_on_family_and_context": true,
+    "no_global_landline_left_assumption": true,
+    "stable_reprint": {
+      "effective_input": [
+        "data",
+        "stable identities and ownership",
+        "physical size",
+        "customer relative-position intent",
+        "necessary production conditions"
+      ],
+      "reuse_current_accepted_exact_result": true,
+      "no_silent_regeneration_due_to_model_upgrade": true
+    },
+    "background_automatic_adoption": "OPEN_NOT_AUTHORIZED_BY_THIS_DECISION",
+    "numeric_limits": "TO_CALIBRATE_NOT_INVENTED",
+    "legacy_runtime_and_verified_requirements": "UNCHANGED;new design policy not yet implemented",
+    "completion_changed": false
+  },
+  "user_corpus_training": "NOT_STARTED",
+  "user_corpus_availability": "NOT_PROVIDED_CONFIRMED_BY_USER_2026-10-19",
+  "implementation_count_semantics": "implemented_count/verified_count count complete packages,not candidate modules;all8partial is not0engineering work",
+  "current_scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json",
+  "current_full_software_evidence": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
+  "local_only_synthetic_acceptance": {
+    "decision": "docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md",
+    "user_confirmed": true,
+    "private_corpus_required_in_cloud": false,
+    "local_real_qualification_required_for_production": true,
+    "software_and_synthetic_verification_separate": true
+  },
+  "local_only_synthetic_acceptance_implementation": {
+    "status": "SUPPORTED_LOCAL_SOFTWARE_SELF_VERIFIED",
+    "source_commit": "96b1eb9dc23fe39fd5233d17513cc42f8ed547f8",
+    "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+    "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json",
+    "original_acceptance_count_unchanged": true,
+    "real_user_artwork_required_in_cloud": false,
+    "production_qualification_not_granted_by_synthetic_tests": true
+  },
+  "previous_full_software_evidence": [
+    "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json"
+  ],
+  "current_internal_input_integration": {
+    "status": "SOFTWARE_SCOPE_SELF_VERIFIED",
+    "contract": "docs/dev/INPUT_LEARNING_INTEGRATION_CONTRACT.json",
+    "audit": "docs/dev/INPUT_INTEGRATION_CLAUSE_AUDIT_20261020.json",
+    "run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
+    "source_commit": "bd1e9c5aff9d049d5b5d0bb339bf4bc5d135a2da",
+    "software": "PASS",
+    "overall": "FAIL",
+    "tests": 1798,
+    "passed": 1798,
+    "modules": 230,
+    "attachments": 384,
+    "scope": "LINUX_AUTHORED_SOFTWARE_SELF_VERIFICATION;PRIVATE_WINDOWS_PREPRESS_SEPARATE",
+    "original_8_work_packages_50_full_criteria_unchanged": true,
+    "historical_body_interview_flags": "Original interview planning flags retained;current integration scope is this source-bound9-clause audit",
+    "learned_input_advice": "Conditioned observed combinations and reviewed empirical capacity;UNKNOWN retained;not a global hard cap",
+    "gui_design": "Skill/tools/prototype ready;complete panel redesign is a future plan"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "UI055-IMPLEMENTATION-MAP",
+  "status": "DESIGN_ONLY_PENDING_UI054_FORMAL",
+  "source_parent_sha256": "c1ce876c8721c99d6d1eab975d42283bab8fbf148b154e556c9e291df54d6e5d",
+  "source_ownership": "Existing Library SQLite/training_records/training_history; no parallel customer or sample database",
+  "implementation": [
+    {
+      "scope": "Correction collection",
+      "reuse": [
+        "TrainingStore.save_facts",
+        "TrainingStore.confirm_facts",
+        "TrainingStore.history"
+      ],
+      "extension": "SAMPLE_CANDIDATE refs record current/previous exact facts revision, pins, observation IDs and hashes in the same transaction; no duplicate personal text; initial labeling vs actual confirmed correction distinguished",
+      "proof": "No SAMPLE/RULE/MODEL/AUTO_JOB creation; failed audit rolls back both facts and candidate"
+    },
+    {
+      "scope": "Candidate review and batch",
+      "reuse": [
+        "sample_approval_plan",
+        "admit_sample",
+        "source_proof",
+        "QualityGroups.role_conflicts"
+      ],
+      "extension": "50-row metadata directory and explicit per-item approve/reject/defer; controlled bounded batch revalidates current source, rights, roles and conflicts; high-risk owner/customer/Logo ambiguity needs individual review",
+      "proof": "Actual HOLDOUT and related-family rejection, stale plan, same-bytes conflicting labels, late audit atomic rollback"
+    },
+    {
+      "scope": "Lineage and stop-use",
+      "reuse": [
+        "sample_state",
+        "sample_usage_impact",
+        "QualityRechecks.source_dependencies",
+        "SemanticLearning.checked_model",
+        "DatasetMixin"
+      ],
+      "extension": "Purpose-specific source restriction receipt; actual dependency edges separate from potential/unknown; prevent alias bypass and unsafe rollback; old snapshots retain immutable use proof",
+      "proof": "Actual trained model/geometry outputs become unavailable for new trust as appropriate; stop-use does not claim model parameter decontamination"
+    },
+    {
+      "scope": "Retention and privacy",
+      "reuse": [
+        "existing local sample metadata",
+        "review audit",
+        "source rights"
+      ],
+      "extension": "Explicit retention deadline and locally scoped minimization request; content hashes/IDs and minimal action proof retained; distinguish stop-use, local payload redaction, original source deletion, model weights and external backups",
+      "proof": "Do not mark external backups or original design deleted by a training-only action; no PII in new auxiliary audit reason or duplicated candidate payload"
+    },
+    {
+      "scope": "Native GUI",
+      "reuse": [
+        "TrustedSamplesPanel",
+        "training_navigation",
+        "existing QualityPanel command worker",
+        "source canvas/repair center"
+      ],
+      "extension": "Six required filters, indexed 50 rows, candidate/source review with actual before/after fact refs, role and sample use trace, explicit batched actions, preservation of pending source edits",
+      "proof": "Actual Qt point-and-click flow, source return/dirty guard, changed-input plan invalidation; current busy workflow stays responsive"
+    }
+  ],
+  "nonclaims": [
+    "No new paid service or cloud training",
+    "No implied automatic holdout demotion or reset of consumption",
+    "No true production/native Illustrator/Windows reference hardware accuracy claim"
+  ],
+  "next_action": "Implement after UI054 formal PASS/publication Gate; targeted meaningful tests then batch remaining unblocked parents before next complete formal where contract allows",
+  "privacy_implementation_notes": {
+    "semantic_storage": "SemanticLearning stores exact selected text examples in plan and reconstructs CharacterModel counts; no opaque serialized weights file currently",
+    "redaction": "Explicit narrowly scoped local training-copy redaction may replace selected SAMPLE positive/negative payload and corresponding historical PII copies with minimal hashes; revoke trust before redaction. Semantic source scopes remain for actual-use proof while exact example text is removed and model unusable. Must not falsely claim raw source, unrelated FACTS/business data, external backups, filesystem secure erasure or deployed copies were deleted.",
+    "required_checks": "All affected dependent datasets/models/pipelines unavailable after source-purpose stop; historical privacy redaction must have exact record IDs/revisions/hashes, explicit approval, transactional rollback and retained minimal use proof; ordinary sample revocation keeps full immutable history"
+  },
+  "draft": "docs/dev/wip/UI055_SAMPLE_POOL.py",
+  "draft_status": "SYNTAX_ONLY_NOT_INSTALLED_NOT_TESTED_NOT_A_COMPLETED_FEATURE"
+}

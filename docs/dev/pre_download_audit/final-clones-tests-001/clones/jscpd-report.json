@@ -1,0 +1,2505 @@
+{
+  "duplicates": [
+    {
+      "firstFile": {
+        "end": 16,
+        "endLoc": {
+          "column": 3,
+          "line": 16,
+          "position": 700
+        },
+        "name": "quality_acceptance_fixture.py",
+        "start": 6,
+        "startLoc": {
+          "column": 17,
+          "line": 6,
+          "position": 263
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.customers import CustomerStore\nfrom template_ai.quality_gold import QualityGold,DOMAINS,USE\nfrom template_ai.quality_sets import QualitySets\nfrom template_ai.quality_policy import QualityPolicies\nfrom template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_protocol import QualityProtocols\nfrom template_ai.quality_groups import QualityGroups\nfrom template_ai.quality_jobs import EvaluationJobs,run_evaluation\n\n\ndef actual_positive_pair(case,execute=True):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 10,
+        "endLoc": {
+          "column": 44,
+          "line": 10,
+          "position": 443
+        },
+        "name": "sync_workflow_fixture.py",
+        "start": 3,
+        "startLoc": {
+          "column": 5,
+          "line": 3,
+          "position": 106
+        }
+      },
+      "tokens": 74
+    },
+    {
+      "firstFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 8,
+          "line": 29,
+          "position": 887
+        },
+        "name": "test_artwork_recovery.py",
+        "start": 18,
+        "startLoc": {
+          "column": 35,
+          "line": 18,
+          "position": 557
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.model import Rect, learn_from_labels, new_id\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass ArtworkRecoveryTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        image = QImage(900, 540, QImage.Format_ARGB32)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 30,
+        "endLoc": {
+          "column": 8,
+          "line": 30,
+          "position": 960
+        },
+        "name": "test_batch_source_relink.py",
+        "start": 19,
+        "startLoc": {
+          "column": 36,
+          "line": 19,
+          "position": 633
+        }
+      },
+      "tokens": 87
+    },
+    {
+      "firstFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 8,
+          "line": 29,
+          "position": 887
+        },
+        "name": "test_artwork_recovery.py",
+        "start": 19,
+        "startLoc": {
+          "column": 31,
+          "line": 19,
+          "position": 615
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass ArtworkRecoveryTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        image = QImage(900, 540, QImage.Format_ARGB32)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 8,
+          "line": 23,
+          "position": 758
+        },
+        "name": "test_import_pages.py",
+        "start": 13,
+        "startLoc": {
+          "column": 45,
+          "line": 13,
+          "position": 490
+        }
+      },
+      "tokens": 75
+    },
+    {
+      "firstFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 8,
+          "line": 29,
+          "position": 887
+        },
+        "name": "test_artwork_recovery.py",
+        "start": 19,
+        "startLoc": {
+          "column": 0,
+          "line": 19,
+          "position": 584
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass ArtworkRecoveryTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        image = QImage(900, 540, QImage.Format_ARGB32)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 32,
+        "endLoc": {
+          "column": 8,
+          "line": 32,
+          "position": 983
+        },
+        "name": "test_offline_support.py",
+        "start": 21,
+        "startLoc": {
+          "column": 0,
+          "line": 21,
+          "position": 634
+        }
+      },
+      "tokens": 82
+    },
+    {
+      "firstFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 34,
+          "line": 18,
+          "position": 556
+        },
+        "name": "test_artwork_recovery.py",
+        "start": 5,
+        "startLoc": {
+          "column": 13,
+          "line": 5,
+          "position": 159
+        }
+      },
+      "format": "python",
+      "fragment": "from pathlib import Path\nimport sqlite3\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nos.environ.setdefault(\"QT_QPA_PLATFORM\", \"offscreen\")\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtWidgets import QApplication, QMessageBox\n\nfrom template_ai.demo import demo_template\nfrom template_ai.gui import MainWindow\nfrom template_ai.importer import import_file\nfrom template_ai.model import Rect, learn_from_labels, new_id",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 39,
+          "line": 21,
+          "position": 596
+        },
+        "name": "test_persistent_fonts.py",
+        "start": 8,
+        "startLoc": {
+          "column": 0,
+          "line": 8,
+          "position": 188
+        }
+      },
+      "tokens": 89
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 57,
+          "line": 22,
+          "position": 756
+        },
+        "name": "test_automatic_training.py",
+        "start": 12,
+        "startLoc": {
+          "column": 17,
+          "line": 12,
+          "position": 407
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.training_pipeline import LIVE_OWNERS\nfrom training_fixture import source_work\nfrom test_training_pipeline import pipeline_samples\nfrom test_dataset_learning import frozen\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass AutomaticTrainingTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name);self.library=Library(self.root/'data');self.service=AutomaticTraining(self.library)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 62,
+          "line": 23,
+          "position": 790
+        },
+        "name": "test_quality_coverage.py",
+        "start": 14,
+        "startLoc": {
+          "column": 5,
+          "line": 14,
+          "position": 455
+        }
+      },
+      "tokens": 72
+    },
+    {
+      "firstFile": {
+        "end": 32,
+        "endLoc": {
+          "column": 22,
+          "line": 32,
+          "position": 1069
+        },
+        "name": "test_batch_source_relink.py",
+        "start": 22,
+        "startLoc": {
+          "column": 48,
+          "line": 22,
+          "position": 750
+        }
+      },
+      "format": "python",
+      "fragment": "APP = QApplication.instance() or QApplication([])\n\n\nclass BatchSourceTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        self.library = Library(self.root / \"data\")\n        self.addCleanup(self.library.close)\n        self.search = self.root / \"search\"",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 36,
+        "endLoc": {
+          "column": 23,
+          "line": 36,
+          "position": 1435
+        },
+        "name": "test_font_repair.py",
+        "start": 28,
+        "startLoc": {
+          "column": 77,
+          "line": 28,
+          "position": 1118
+        }
+      },
+      "tokens": 91
+    },
+    {
+      "firstFile": {
+        "end": 32,
+        "endLoc": {
+          "column": 22,
+          "line": 32,
+          "position": 1069
+        },
+        "name": "test_batch_source_relink.py",
+        "start": 22,
+        "startLoc": {
+          "column": 48,
+          "line": 22,
+          "position": 750
+        }
+      },
+      "format": "python",
+      "fragment": "APP = QApplication.instance() or QApplication([])\n\n\nclass BatchSourceTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        self.library = Library(self.root / \"data\")\n        self.addCleanup(self.library.close)\n        self.search = self.root / \"search\"",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 40,
+        "endLoc": {
+          "column": 23,
+          "line": 40,
+          "position": 1518
+        },
+        "name": "test_persistent_fonts.py",
+        "start": 32,
+        "startLoc": {
+          "column": 92,
+          "line": 32,
+          "position": 1197
+        }
+      },
+      "tokens": 91
+    },
+    {
+      "firstFile": {
+        "end": 30,
+        "endLoc": {
+          "column": 23,
+          "line": 30,
+          "position": 975
+        },
+        "name": "test_batch_source_relink.py",
+        "start": 14,
+        "startLoc": {
+          "column": 44,
+          "line": 14,
+          "position": 386
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication, QMessageBox\nfrom template_ai.gui import MainWindow\nfrom template_ai.importer import import_file\nfrom template_ai.source_dialog import SourceRelinkDialog\nfrom template_ai.source_discovery import discover_sources\nfrom template_ai.source_links import hash_source, verify_source\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass BatchSourceTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        self.library = Library(self.root / \"data\")",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 17,
+      "secondFile": {
+        "end": 30,
+        "endLoc": {
+          "column": 24,
+          "line": 30,
+          "position": 980
+        },
+        "name": "test_source_relink.py",
+        "start": 14,
+        "startLoc": {
+          "column": 43,
+          "line": 14,
+          "position": 424
+        }
+      },
+      "tokens": 137
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 42,
+          "line": 13,
+          "position": 536
+        },
+        "name": "test_candidate_sync.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 106
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.model import Template,Slot,Rect\nfrom template_ai.layout import generate\nfrom template_ai.candidate_sync import cross_property_plan,verify_cross_plan,field_reference\nAPP=QApplication.instance() or QApplication([])\n\n\nclass CandidateSyncTests(unittest.TestCase):\n    def setUp(self):\n        self.graph=InputGraph.from_legacy([dict(name=['Same name'],phone=['123'],company='c1'),dict(name=['Same name'],phone=['123'],company='c2')],[dict(name='Synthetic A'),dict(name='Synthetic B')]);self.inputs=self.graph.compile()",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 46,
+          "line": 21,
+          "position": 743
+        },
+        "name": "test_object_tools.py",
+        "start": 11,
+        "startLoc": {
+          "column": 0,
+          "line": 11,
+          "position": 330
+        }
+      },
+      "tokens": 94
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 20,
+          "line": 14,
+          "position": 533
+        },
+        "name": "test_coverage_closure_gui.py",
+        "start": 4,
+        "startLoc": {
+          "column": 20,
+          "line": 4,
+          "position": 93
+        }
+      },
+      "format": "python",
+      "fragment": "from pathlib import Path\nfrom unittest.mock import patch\nfrom PySide6.QtCore import QTimer,Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.coverage_batches import CoverageBatches\nfrom template_ai.coverage_closure_panel import CoverageClosurePanel\nfrom template_ai.coverage_command import run_command\nfrom runtime_fixture import controlled_resources",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 16,
+          "line": 21,
+          "position": 779
+        },
+        "name": "test_design_composite_learning.py",
+        "start": 11,
+        "startLoc": {
+          "column": 58,
+          "line": 11,
+          "position": 307
+        }
+      },
+      "tokens": 87
+    },
+    {
+      "firstFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 8,
+          "line": 17,
+          "position": 612
+        },
+        "name": "test_custom_layout.py",
+        "start": 5,
+        "startLoc": {
+          "column": 55,
+          "line": 5,
+          "position": 163
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication,QMessageBox,QTableWidgetItem\nfrom PySide6.QtTest import QTest\nfrom template_ai.storage import Library\nfrom template_ai.demo import demo_template\nfrom template_ai.custom_layout import CustomLayout\nfrom template_ai.custom_layout_dialog import CustomLayoutDialog\nfrom template_ai.layout import generate\nfrom template_ai.gui import MainWindow\nAPP=QApplication.instance() or QApplication([])\n\nclass CustomLayoutTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.library=Library(self.root/'data');self.addCleanup(self.library.close);self.t=demo_template();self.t.slots[0].rect.w=20;self.library.publish(self.t);self.service=CustomLayout(self.library);self.people=[dict(name=['Alex Example'],title=['Designer'],phone=['123'],email=['a@example.test'])];self.policy=dict(move_mm=0,expand_mm=40,gap_mm=0)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 28,
+        "endLoc": {
+          "column": 8,
+          "line": 28,
+          "position": 1021
+        },
+        "name": "test_design_composite_learning.py",
+        "start": 14,
+        "startLoc": {
+          "column": 42,
+          "line": 14,
+          "position": 488
+        }
+      },
+      "tokens": 97
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 16,
+          "line": 13,
+          "position": 398
+        },
+        "name": "test_customer_candidates.py",
+        "start": 1,
+        "startLoc": {
+          "column": 80,
+          "line": 1,
+          "position": 80
+        }
+      },
+      "format": "python",
+      "fragment": "\"\"\"UI043：真實來源、人工事實、客戶候選與 SQLite 原子入庫。\"\"\"\nfrom copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\n\nfrom template_ai.customer_candidates import CustomerCandidates\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 21,
+          "line": 12,
+          "position": 436
+        },
+        "name": "test_design_learning.py",
+        "start": 1,
+        "startLoc": {
+          "column": 76,
+          "line": 1,
+          "position": 76
+        }
+      },
+      "tokens": 72
+    },
+    {
+      "firstFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 38,
+          "line": 15,
+          "position": 544
+        },
+        "name": "test_customer_candidates.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 150
+        }
+      },
+      "format": "python",
+      "fragment": "import unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\n\nfrom template_ai.customer_candidates import CustomerCandidates\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog\nfrom template_ai.customers import CustomerStore\nfrom template_ai.gui import MainWindow",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 54,
+          "line": 12,
+          "position": 521
+        },
+        "name": "test_family_review_extensions.py",
+        "start": 4,
+        "startLoc": {
+          "column": 20,
+          "line": 4,
+          "position": 79
+        }
+      },
+      "tokens": 78
+    },
+    {
+      "firstFile": {
+        "end": 31,
+        "endLoc": {
+          "column": 19,
+          "line": 31,
+          "position": 1140
+        },
+        "name": "test_customer_candidates.py",
+        "start": 21,
+        "startLoc": {
+          "column": 48,
+          "line": 21,
+          "position": 796
+        }
+      },
+      "format": "python",
+      "fragment": "APP = QApplication.instance() or QApplication([])\n\n\nclass CustomerCandidateTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.root = Path(self.temp.name)\n        self.library = Library(self.root / 'library')\n        self.store = CustomerStore(self.library)\n        self.candidates = CustomerCandidates(self.store)\n        self.source, self.work, self.template = self.make_source('00001.svg')",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 37,
+        "endLoc": {
+          "column": 20,
+          "line": 37,
+          "position": 1489
+        },
+        "name": "test_logo_lifecycle.py",
+        "start": 27,
+        "startLoc": {
+          "column": 90,
+          "line": 27,
+          "position": 1148
+        }
+      },
+      "tokens": 92
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 47,
+          "line": 14,
+          "position": 505
+        },
+        "name": "test_customer_candidates.py",
+        "start": 2,
+        "startLoc": {
+          "column": 10,
+          "line": 2,
+          "position": 93
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\n\nfrom template_ai.customer_candidates import CustomerCandidates\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog\nfrom template_ai.customers import CustomerStore",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 45,
+          "line": 12,
+          "position": 399
+        },
+        "name": "test_noise_authoring.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 41
+        }
+      },
+      "tokens": 82
+    },
+    {
+      "firstFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 16,
+          "line": 17,
+          "position": 608
+        },
+        "name": "test_customer_candidates.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 150
+        }
+      },
+      "format": "python",
+      "fragment": "import unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\n\nfrom template_ai.customer_candidates import CustomerCandidates\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog\nfrom template_ai.customers import CustomerStore\nfrom template_ai.gui import MainWindow\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.model import Slot, Rect, learn_from_labels",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 21,
+          "line": 15,
+          "position": 530
+        },
+        "name": "test_rule_review.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 94
+        }
+      },
+      "tokens": 90
+    },
+    {
+      "firstFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 49,
+          "line": 23,
+          "position": 752
+        },
+        "name": "test_customer_graph_sync.py",
+        "start": 13,
+        "startLoc": {
+          "column": 28,
+          "line": 13,
+          "position": 439
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.demo import demo_template\nfrom template_ai.gui import MainWindow\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass CustomerGraphSyncTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 20,
+        "endLoc": {
+          "column": 54,
+          "line": 20,
+          "position": 553
+        },
+        "name": "test_input_plain_language.py",
+        "start": 8,
+        "startLoc": {
+          "column": 43,
+          "line": 8,
+          "position": 216
+        }
+      },
+      "tokens": 75
+    },
+    {
+      "firstFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 12,
+          "line": 12,
+          "position": 383
+        },
+        "name": "test_customer_identity.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.customer_identity import CustomerIdentity\nfrom template_ai.customers import CustomerStore\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.storage import Library\nfrom pathlib import Path",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 16,
+          "line": 13,
+          "position": 400
+        },
+        "name": "test_design_session.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 26
+        }
+      },
+      "tokens": 79
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 8,
+          "line": 19,
+          "position": 524
+        },
+        "name": "test_customer_identity.py",
+        "start": 7,
+        "startLoc": {
+          "column": 42,
+          "line": 7,
+          "position": 176
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.customer_identity import CustomerIdentity\nfrom template_ai.customers import CustomerStore\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.storage import Library\nfrom pathlib import Path\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass CustomerIdentityTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 8,
+          "line": 21,
+          "position": 688
+        },
+        "name": "test_design_text_flow.py",
+        "start": 9,
+        "startLoc": {
+          "column": 52,
+          "line": 9,
+          "position": 255
+        }
+      },
+      "tokens": 77
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 82,
+          "line": 19,
+          "position": 598
+        },
+        "name": "test_customer_identity.py",
+        "start": 9,
+        "startLoc": {
+          "column": 29,
+          "line": 9,
+          "position": 270
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.storage import Library\nfrom pathlib import Path\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass CustomerIdentityTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 82,
+          "line": 13,
+          "position": 499
+        },
+        "name": "test_parent_navigation.py",
+        "start": 5,
+        "startLoc": {
+          "column": 43,
+          "line": 5,
+          "position": 166
+        }
+      },
+      "tokens": 79
+    },
+    {
+      "firstFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 39,
+          "line": 11,
+          "position": 370
+        },
+        "name": "test_customer_identity.py",
+        "start": 1,
+        "startLoc": {
+          "column": 10,
+          "line": 1,
+          "position": 10
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.customer_identity import CustomerIdentity\nfrom template_ai.customers import CustomerStore\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.storage import Library",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 53,
+          "line": 15,
+          "position": 528
+        },
+        "name": "test_record_snapshot_oracle.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 124
+        }
+      },
+      "tokens": 72
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 3,
+          "line": 19,
+          "position": 694
+        },
+        "name": "test_dataset_learning.py",
+        "start": 9,
+        "startLoc": {
+          "column": 43,
+          "line": 9,
+          "position": 248
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.model import Template\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_quality_dialog import TrainingQualityDialog\nfrom template_ai.source_links import VerifiedSource,fingerprint\nfrom training_fixture import source_work\nfrom test_noise_authoring import confirmed\nfrom test_trusted_samples import admitted\nAPP=QApplication.instance() or QApplication([])",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 4,
+          "line": 15,
+          "position": 577
+        },
+        "name": "test_design_source_binding.py",
+        "start": 5,
+        "startLoc": {
+          "column": 30,
+          "line": 5,
+          "position": 113
+        }
+      },
+      "tokens": 78
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 16,
+          "line": 14,
+          "position": 447
+        },
+        "name": "test_dataset_learning.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.model import Template\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_quality_dialog import TrainingQualityDialog",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 21,
+          "line": 14,
+          "position": 483
+        },
+        "name": "test_noise_hits.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 100
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 16,
+          "line": 14,
+          "position": 447
+        },
+        "name": "test_dataset_learning.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.model import Template\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_quality_dialog import TrainingQualityDialog",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 21,
+          "line": 14,
+          "position": 483
+        },
+        "name": "test_trusted_samples.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 100
+    },
+    {
+      "firstFile": {
+        "end": 27,
+        "endLoc": {
+          "column": 25,
+          "line": 27,
+          "position": 906
+        },
+        "name": "test_design_observation.py",
+        "start": 17,
+        "startLoc": {
+          "column": 0,
+          "line": 17,
+          "position": 497
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.storage import Library\nfrom template_ai.training_pipeline import LIVE_OWNERS\nfrom template_ai.training_store import TrainingStore\nfrom training_fixture import source_work, observations\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass ObservationMetricTests(unittest.TestCase):\n    def test_unknown_defaults_untraceable_and_nonfinite_metrics_rejected(self):\n        self.assertIsNone(ObservedScalar(None, 'pt', 'UNKNOWN', 'No source').value)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 16,
+          "line": 22,
+          "position": 722
+        },
+        "name": "test_training_facts.py",
+        "start": 13,
+        "startLoc": {
+          "column": 0,
+          "line": 13,
+          "position": 379
+        }
+      },
+      "tokens": 75
+    },
+    {
+      "firstFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 121,
+          "line": 29,
+          "position": 1156
+        },
+        "name": "test_design_rich_text.py",
+        "start": 17,
+        "startLoc": {
+          "column": 35,
+          "line": 17,
+          "position": 618
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.model import Rect, Slot\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom test_noise_authoring import confirmed\nfrom test_trusted_samples import admitted\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass CompositeSourceTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name)\n        self.library=Library(self.root/'data');self.addCleanup(self.library.close);self.manager=FontManager(self.library)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 30,
+        "endLoc": {
+          "column": 121,
+          "line": 30,
+          "position": 1187
+        },
+        "name": "test_local_visual_binding.py",
+        "start": 18,
+        "startLoc": {
+          "column": 31,
+          "line": 18,
+          "position": 628
+        }
+      },
+      "tokens": 135
+    },
+    {
+      "firstFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 46,
+          "line": 12,
+          "position": 383
+        },
+        "name": "test_design_session.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtWidgets import QApplication\n\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.fonts import FontManager\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 57,
+          "line": 11,
+          "position": 430
+        },
+        "name": "test_design_source_binding.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 83
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 16,
+          "line": 14,
+          "position": 462
+        },
+        "name": "test_design_session.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtWidgets import QApplication\n\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.fonts import FontManager\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.design_learning import CrossWorkLearning,USE\nfrom template_ai.design_source_binding import SourceTypographyReview",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 26,
+          "line": 14,
+          "position": 497
+        },
+        "name": "test_design_synthesis.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 97
+    },
+    {
+      "firstFile": {
+        "end": 26,
+        "endLoc": {
+          "column": 4,
+          "line": 26,
+          "position": 902
+        },
+        "name": "test_design_session.py",
+        "start": 1,
+        "startLoc": {
+          "column": 10,
+          "line": 1,
+          "position": 10
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtWidgets import QApplication\n\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.fonts import FontManager\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.design_learning import CrossWorkLearning,USE\nfrom template_ai.design_source_binding import SourceTypographyReview\nfrom template_ai.design_session import DesignSessions\nfrom template_ai.design_synthesis import input_facts\nfrom authored_font_fixture import bind_authored_fonts\nfrom training_fixture import source_work\nfrom test_noise_authoring import confirmed\nfrom test_trusted_samples import admitted\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass DesignSessionTests(unittest.TestCase):\n    @classmethod",
+      "isNew": false,
+      "kind": "similar",
+      "lines": 26,
+      "method": "gap",
+      "secondFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 4,
+          "line": 22,
+          "position": 711
+        },
+        "name": "test_quality_coverage.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 41
+        }
+      },
+      "similarity": 0.829,
+      "tokens": 141
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 13,
+          "line": 22,
+          "position": 804
+        },
+        "name": "test_desktop_workspace.py",
+        "start": 11,
+        "startLoc": {
+          "column": 25,
+          "line": 11,
+          "position": 294
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtGui import QMouseEvent\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QComboBox, QDialog, QPushButton, QFileDialog, QMessageBox\n\nfrom template_ai.gui import MainWindow\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.input_graph_dialog import InputGraphDialog\nfrom template_ai.design_learning import CrossWorkLearning\nfrom template_ai.design_session import DesignSessions\nfrom template_ai.design_synthesis import input_facts\nfrom template_ai.model import new_id\nfrom gui_wait import wait_for_gui, dispose_main_window",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 16,
+          "line": 19,
+          "position": 739
+        },
+        "name": "test_logo_workflow_gui.py",
+        "start": 8,
+        "startLoc": {
+          "column": 30,
+          "line": 8,
+          "position": 228
+        }
+      },
+      "tokens": 101
+    },
+    {
+      "firstFile": {
+        "end": 16,
+        "endLoc": {
+          "column": 42,
+          "line": 16,
+          "position": 481
+        },
+        "name": "test_first_version.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 142
+        }
+      },
+      "format": "python",
+      "fragment": "import copy\nimport json\nimport os\nfrom pathlib import Path\nimport shutil\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nos.environ.setdefault(\"QT_QPA_PLATFORM\", \"offscreen\")\nfrom PySide6.QtCore import QSize\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtPdf import QPdfDocument\nfrom PySide6.QtWidgets import QApplication",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 49,
+          "line": 15,
+          "position": 451
+        },
+        "name": "test_font_candidates.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 93
+        }
+      },
+      "tokens": 81
+    },
+    {
+      "firstFile": {
+        "end": 40,
+        "endLoc": {
+          "column": 8,
+          "line": 40,
+          "position": 1472
+        },
+        "name": "test_first_version.py",
+        "start": 27,
+        "startLoc": {
+          "column": 5,
+          "line": 27,
+          "position": 956
+        }
+      },
+      "format": "python",
+      "fragment": "from authored_font_fixture import bind_authored_fonts\n\nAPP = QApplication.instance() or QApplication([])\nDATA = [{\"name\": \"林小明\", \"title\": \"設計顧問\", \"phone\": \"0900-123-456\", \"email\": \"hello@example.test\"}]\n\n\nclass FirstVersionTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        self.library = Library(self.root / \"data\")\n        self.addCleanup(self.library.close)\n        self.template = demo_template()",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 38,
+        "endLoc": {
+          "column": 8,
+          "line": 38,
+          "position": 1485
+        },
+        "name": "test_visual_background.py",
+        "start": 25,
+        "startLoc": {
+          "column": 17,
+          "line": 25,
+          "position": 991
+        }
+      },
+      "tokens": 136
+    },
+    {
+      "firstFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 3,
+          "line": 23,
+          "position": 787
+        },
+        "name": "test_font_candidates.py",
+        "start": 13,
+        "startLoc": {
+          "column": 23,
+          "line": 13,
+          "position": 339
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication\nfrom template_ai.demo import demo_template\nfrom template_ai.font_catalog import analyze_font, build_inventory\nfrom template_ai.font_candidates import find_candidates, render_candidate\nfrom template_ai.font_candidate_dialog import FontCandidateDialog\nfrom template_ai.font_dialog import FontCenterDialog\nfrom template_ai.fonts import FontManager\nfrom template_ai.gui import MainWindow\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 43,
+          "line": 15,
+          "position": 495
+        },
+        "name": "test_logo_lifecycle.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 152
+        }
+      },
+      "tokens": 81
+    },
+    {
+      "firstFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 93,
+          "line": 15,
+          "position": 592
+        },
+        "name": "test_font_collection_shaping.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 106
+        }
+      },
+      "format": "python",
+      "fragment": "import unittest\nfrom fontTools.ttLib import TTFont\nimport test_multi_size as fixture\nfrom template_ai.background import file_digest\nfrom template_ai.render import render_image\nfrom template_ai.font_catalog import analyze_font,raw_asset,face_fingerprint\n\n\nclass FontCollectionShapingTests(unittest.TestCase):\n    setUp=fixture.MultiSizeTests.setUp\n    tearDown=fixture.MultiSizeTests.tearDown\n\n    def test_actual_extracted_collection_face_measures_and_renders_with_same_shaped_face(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 20,
+          "line": 14,
+          "position": 558
+        },
+        "name": "test_multi_size_manual_sync.py",
+        "start": 3,
+        "startLoc": {
+          "column": 11,
+          "line": 3,
+          "position": 127
+        }
+      },
+      "tokens": 81
+    },
+    {
+      "firstFile": {
+        "end": 28,
+        "endLoc": {
+          "column": 1,
+          "line": 28,
+          "position": 1042
+        },
+        "name": "test_font_repair.py",
+        "start": 16,
+        "startLoc": {
+          "column": 42,
+          "line": 16,
+          "position": 554
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.fonts import FontManager, font_errors\nfrom template_ai.gui import MainWindow\nfrom template_ai.layout import generate\nfrom template_ai.render import export\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\nFONT = next((p for p in (Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),\n                        Path('/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf'),\n                        Path(r'C:\\Windows\\Fonts\\arial.ttf')) if p.is_file()), None)\n\n\n@unittest.skipUnless(FONT, \"無可用環境字型，實際修復驗證跳過\")",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 4,
+          "line": 29,
+          "position": 994
+        },
+        "name": "test_persistent_fonts.py",
+        "start": 19,
+        "startLoc": {
+          "column": 29,
+          "line": 19,
+          "position": 505
+        }
+      },
+      "tokens": 102
+    },
+    {
+      "firstFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 32,
+          "line": 23,
+          "position": 782
+        },
+        "name": "test_import_pages.py",
+        "start": 10,
+        "startLoc": {
+          "column": 75,
+          "line": 10,
+          "position": 389
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtGui import QColor, QImage, QPageLayout, QPageSize, QPainter, QPdfWriter\nfrom PySide6.QtWidgets import QApplication\n\nfrom template_ai.importer import import_file, svg_size\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass ImportPageTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        self.path = self.root / \"two-pages.pdf\"",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 36,
+          "line": 23,
+          "position": 686
+        },
+        "name": "test_source_cache.py",
+        "start": 11,
+        "startLoc": {
+          "column": 25,
+          "line": 11,
+          "position": 288
+        }
+      },
+      "tokens": 108
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 41,
+          "line": 14,
+          "position": 454
+        },
+        "name": "test_local_visual_binding.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 57
+        }
+      },
+      "format": "python",
+      "fragment": "from pathlib import Path\nimport tempfile\nimport unittest\n\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtWidgets import QApplication\n\nfrom template_ai.background import file_digest\nfrom template_ai.demo import demo_template\nfrom template_ai.design_learning import CrossWorkLearning,USE\nfrom template_ai.design_source_binding import SourceTypographyReview\nfrom template_ai.fonts import FontManager",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 10,
+        "endLoc": {
+          "column": 48,
+          "line": 10,
+          "position": 400
+        },
+        "name": "test_similarity_preflight.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 78
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 110,
+          "line": 14,
+          "position": 556
+        },
+        "name": "test_major_review_finding_gui.py",
+        "start": 4,
+        "startLoc": {
+          "column": 5,
+          "line": 4,
+          "position": 141
+        }
+      },
+      "format": "python",
+      "fragment": "from training_fixture import observations\nfrom template_ai.quality_rechecks import blocked\nAPP=fixture.APP\n\n\nclass MajorFindingGuiTests(unittest.TestCase):\n    setUp=fixture.MajorReviewGuiTests.setUp\n    dispose=fixture.MajorReviewGuiTests.dispose\n    wait=fixture.MajorReviewGuiTests.wait\n    def case(self):\n        self.page.preview();self.wait();self.d.consent.setChecked(True);self.d.confirm();self.wait();self.page.table.selectRow(0);self.page.finding_evidence.setPlainText('Original source, all text objects and current human facts explicitly checked')",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 121,
+          "line": 17,
+          "position": 733
+        },
+        "name": "test_major_review_job_gui.py",
+        "start": 7,
+        "startLoc": {
+          "column": 17,
+          "line": 7,
+          "position": 290
+        }
+      },
+      "tokens": 103
+    },
+    {
+      "firstFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 4,
+          "line": 18,
+          "position": 779
+        },
+        "name": "test_major_review_jobs.py",
+        "start": 7,
+        "startLoc": {
+          "column": 42,
+          "line": 7,
+          "position": 375
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.major_review_jobs import plan,create\nfrom template_ai.major_review_commands import execute\nfrom template_ai.runtime_queue import RuntimeQueue\nfrom template_ai.model import new_id\nfrom template_ai.training_store import digest\nfrom template_ai.quality_rechecks import blocked\n\n\nclass MajorReviewJobTests(unittest.TestCase):\n    setUp=fixture.QualitySourceReviewTests.setUp\n    source_plan=fixture.QualitySourceReviewTests.plan\n    def make(self,twins=False,selected=None):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 4,
+          "line": 17,
+          "position": 750
+        },
+        "name": "test_major_template_review.py",
+        "start": 6,
+        "startLoc": {
+          "column": 51,
+          "line": 6,
+          "position": 342
+        }
+      },
+      "tokens": 74
+    },
+    {
+      "firstFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 4,
+          "line": 18,
+          "position": 779
+        },
+        "name": "test_major_review_jobs.py",
+        "start": 7,
+        "startLoc": {
+          "column": 47,
+          "line": 7,
+          "position": 380
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.major_review_jobs import plan,create\nfrom template_ai.major_review_commands import execute\nfrom template_ai.runtime_queue import RuntimeQueue\nfrom template_ai.model import new_id\nfrom template_ai.training_store import digest\nfrom template_ai.quality_rechecks import blocked\n\n\nclass MajorReviewJobTests(unittest.TestCase):\n    setUp=fixture.QualitySourceReviewTests.setUp\n    source_plan=fixture.QualitySourceReviewTests.plan\n    def make(self,twins=False,selected=None):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 4,
+          "line": 21,
+          "position": 938
+        },
+        "name": "test_quality_provenance.py",
+        "start": 10,
+        "startLoc": {
+          "column": 41,
+          "line": 10,
+          "position": 490
+        }
+      },
+      "tokens": 72
+    },
+    {
+      "firstFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 4,
+          "line": 18,
+          "position": 803
+        },
+        "name": "test_major_template_review.py",
+        "start": 7,
+        "startLoc": {
+          "column": 5,
+          "line": 7,
+          "position": 362
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.template_versions import TemplateVersions\nfrom template_ai.model import new_id\nfrom template_ai.training_store import digest\nfrom template_ai.candidate_risk import bind_source\nfrom template_ai.layout import generate\n\n\nclass MajorTemplateReviewTests(unittest.TestCase):\n    setUp=fixture.QualitySourceReviewTests.setUp\n    source_plan=fixture.QualitySourceReviewTests.plan\n    publish=fixture.QualitySourceReviewTests.publish\n    candidate=fixture.QualitySourceReviewTests.candidate",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 4,
+          "line": 23,
+          "position": 997
+        },
+        "name": "test_quality_provenance.py",
+        "start": 11,
+        "startLoc": {
+          "column": 5,
+          "line": 11,
+          "position": 512
+        }
+      },
+      "tokens": 77
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 4,
+          "line": 19,
+          "position": 860
+        },
+        "name": "test_major_template_review.py",
+        "start": 8,
+        "startLoc": {
+          "column": 4,
+          "line": 8,
+          "position": 420
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.model import new_id\nfrom template_ai.training_store import digest\nfrom template_ai.candidate_risk import bind_source\nfrom template_ai.layout import generate\n\n\nclass MajorTemplateReviewTests(unittest.TestCase):\n    setUp=fixture.QualitySourceReviewTests.setUp\n    source_plan=fixture.QualitySourceReviewTests.plan\n    publish=fixture.QualitySourceReviewTests.publish\n    candidate=fixture.QualitySourceReviewTests.candidate\n    def make(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 4,
+          "line": 18,
+          "position": 813
+        },
+        "name": "test_quality_rule_selector.py",
+        "start": 7,
+        "startLoc": {
+          "column": 4,
+          "line": 7,
+          "position": 327
+        }
+      },
+      "tokens": 77
+    },
+    {
+      "firstFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 4,
+          "line": 15,
+          "position": 497
+        },
+        "name": "test_marker_review.py",
+        "start": 3,
+        "startLoc": {
+          "column": 19,
+          "line": 3,
+          "position": 61
+        }
+      },
+      "format": "python",
+      "fragment": "from unittest.mock import patch\nfrom PySide6.QtWidgets import QInputDialog\nfrom template_ai.semantic_fields import review_issues\nimport test_annotation_gui as fixture\nAPP=fixture.APP\n\nclass MarkerReviewTests(unittest.TestCase):\n    setUp=fixture.AnnotationGuiTests.setUp\n    tearDown=fixture.AnnotationGuiTests.tearDown\n    job=fixture.AnnotationGuiTests.job\n    run_job=fixture.AnnotationGuiTests.run_job\n    window=fixture.AnnotationGuiTests.window\n    ready=fixture.AnnotationGuiTests.ready",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 4,
+          "line": 14,
+          "position": 500
+        },
+        "name": "test_source_text_budget.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 25
+        }
+      },
+      "tokens": 83
+    },
+    {
+      "firstFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 50,
+          "line": 18,
+          "position": 695
+        },
+        "name": "test_marker_review.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 26
+        }
+      },
+      "format": "python",
+      "fragment": "import unittest\nfrom unittest.mock import patch\nfrom PySide6.QtWidgets import QInputDialog\nfrom template_ai.semantic_fields import review_issues\nimport test_annotation_gui as fixture\nAPP=fixture.APP\n\nclass MarkerReviewTests(unittest.TestCase):\n    setUp=fixture.AnnotationGuiTests.setUp\n    tearDown=fixture.AnnotationGuiTests.tearDown\n    job=fixture.AnnotationGuiTests.job\n    run_job=fixture.AnnotationGuiTests.run_job\n    window=fixture.AnnotationGuiTests.window\n    ready=fixture.AnnotationGuiTests.ready\n\n    def test_rejected_and_quarantined_marker_persists_reason_and_blocks_truth_until_explicit_restore(self):\n        w,d=self.ready();o=d.session.observations[0];identity=o['id'];slot=o['slot_id'];original=deepcopy(d.session.base)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 17,
+      "secondFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 53,
+          "line": 22,
+          "position": 864
+        },
+        "name": "test_viewport_workbench.py",
+        "start": 5,
+        "startLoc": {
+          "column": 19,
+          "line": 5,
+          "position": 132
+        }
+      },
+      "tokens": 126
+    },
+    {
+      "firstFile": {
+        "end": 20,
+        "endLoc": {
+          "column": 34,
+          "line": 20,
+          "position": 680
+        },
+        "name": "test_multi_size.py",
+        "start": 9,
+        "startLoc": {
+          "column": 20,
+          "line": 9,
+          "position": 246
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtCore import Qt\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtPdf import QPdfDocument\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QFileDialog,QMessageBox\n\nfrom template_ai.customers import digest\nfrom template_ai.gui import MainWindow\nfrom template_ai.importer import import_file\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.logo_store import LogoStore\nfrom template_ai.model import Rect,Slot,Template",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 69,
+          "line": 15,
+          "position": 588
+        },
+        "name": "test_noise_recovery.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 94
+        }
+      },
+      "tokens": 97
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 42,
+          "line": 13,
+          "position": 403
+        },
+        "name": "test_multi_size.py",
+        "start": 2,
+        "startLoc": {
+          "column": 10,
+          "line": 2,
+          "position": 103
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport threading\nimport unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtPdf import QPdfDocument\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QFileDialog,QMessageBox",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 47,
+          "line": 14,
+          "position": 474
+        },
+        "name": "test_record_snapshot_oracle.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 89
+        }
+      },
+      "tokens": 73
+    },
+    {
+      "firstFile": {
+        "end": 16,
+        "endLoc": {
+          "column": 38,
+          "line": 16,
+          "position": 508
+        },
+        "name": "test_multi_size.py",
+        "start": 6,
+        "startLoc": {
+          "column": 0,
+          "line": 6,
+          "position": 177
+        }
+      },
+      "format": "python",
+      "fragment": "import unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtPdf import QPdfDocument\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QFileDialog,QMessageBox\n\nfrom template_ai.customers import digest\nfrom template_ai.gui import MainWindow",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 48,
+          "line": 17,
+          "position": 777
+        },
+        "name": "test_seventy_ui.py",
+        "start": 9,
+        "startLoc": {
+          "column": 21,
+          "line": 9,
+          "position": 310
+        }
+      },
+      "tokens": 79
+    },
+    {
+      "firstFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 45,
+          "line": 12,
+          "position": 399
+        },
+        "name": "test_noise_authoring.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.noise import relative_region, normalized",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 12,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 45,
+          "line": 12,
+          "position": 399
+        },
+        "name": "test_rule_review.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 89
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 54,
+          "line": 13,
+          "position": 351
+        },
+        "name": "test_object_index.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 55
+        }
+      },
+      "format": "python",
+      "fragment": "import hashlib\nimport json\nimport os\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nos.environ.setdefault('QT_QPA_PLATFORM','offscreen')\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 62,
+          "line": 13,
+          "position": 478
+        },
+        "name": "test_object_tools.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 154
+        }
+      },
+      "tokens": 70
+    },
+    {
+      "firstFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 4,
+          "line": 21,
+          "position": 727
+        },
+        "name": "test_quality_jobs.py",
+        "start": 8,
+        "startLoc": {
+          "column": 16,
+          "line": 8,
+          "position": 221
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_policy import QualityPolicies\nfrom template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_protocol import QualityProtocols\nfrom template_ai.quality_jobs import EvaluationJobs,run_evaluation\nfrom template_ai.runtime_queue import RuntimeQueue\nfrom template_ai.runtime_worker import run_isolated\nfrom template_ai.model import new_id\nfrom test_runtime_execution import ALLOW,HOLD\n\n\nclass QualityJobTests(unittest.TestCase):\n    setUp=gold_fixture.QualityGoldSetTests.setUp\n\n    def build(self,two_sources=False):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 4,
+          "line": 18,
+          "position": 784
+        },
+        "name": "test_quality_repair_training.py",
+        "start": 6,
+        "startLoc": {
+          "column": 16,
+          "line": 6,
+          "position": 288
+        }
+      },
+      "tokens": 89
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 3,
+          "line": 14,
+          "position": 572
+        },
+        "name": "test_quality_panel.py",
+        "start": 4,
+        "startLoc": {
+          "column": 43,
+          "line": 4,
+          "position": 124
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication,QMessageBox\nimport test_quality_jobs as fixtures\nimport test_quality_dispatch as gui_fixture\nfrom template_ai.quality_jobs import run_evaluation\nfrom template_ai.quality_panel import QualityPanel,QualityCaseDialog\nfrom template_ai.quality_setup import QualitySetupDialog\nfrom template_ai.quality_diagnostics import QualityDiagnostics\nfrom template_ai.quality_command import run_command\nfrom template_ai.quality_protocol import QualityProtocols\n\nAPP=QApplication.instance() or QApplication([])",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 4,
+          "line": 13,
+          "position": 617
+        },
+        "name": "test_quality_provenance.py",
+        "start": 4,
+        "startLoc": {
+          "column": 26,
+          "line": 4,
+          "position": 157
+        }
+      },
+      "tokens": 71
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 4,
+          "line": 22,
+          "position": 801
+        },
+        "name": "test_quality_panel.py",
+        "start": 8,
+        "startLoc": {
+          "column": 51,
+          "line": 8,
+          "position": 320
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_panel import QualityPanel,QualityCaseDialog\nfrom template_ai.quality_setup import QualitySetupDialog\nfrom template_ai.quality_diagnostics import QualityDiagnostics\nfrom template_ai.quality_command import run_command\nfrom template_ai.quality_protocol import QualityProtocols\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass QualityPanelTests(unittest.TestCase):\n    setUp=fixtures.QualityJobTests.setUp\n    build=fixtures.QualityJobTests.build\n    window=gui_fixture.QualityDispatchTests.window\n\n    def completed(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 15,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 4,
+          "line": 23,
+          "position": 919
+        },
+        "name": "test_quality_repair_gui_actions.py",
+        "start": 10,
+        "startLoc": {
+          "column": 32,
+          "line": 10,
+          "position": 416
+        }
+      },
+      "tokens": 86
+    },
+    {
+      "firstFile": {
+        "end": 20,
+        "endLoc": {
+          "column": 4,
+          "line": 20,
+          "position": 749
+        },
+        "name": "test_quality_panel.py",
+        "start": 7,
+        "startLoc": {
+          "column": 36,
+          "line": 7,
+          "position": 253
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_jobs import run_evaluation\nfrom template_ai.quality_panel import QualityPanel,QualityCaseDialog\nfrom template_ai.quality_setup import QualitySetupDialog\nfrom template_ai.quality_diagnostics import QualityDiagnostics\nfrom template_ai.quality_command import run_command\nfrom template_ai.quality_protocol import QualityProtocols\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass QualityPanelTests(unittest.TestCase):\n    setUp=fixtures.QualityJobTests.setUp\n    build=fixtures.QualityJobTests.build\n    window=gui_fixture.QualityDispatchTests.window",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 4,
+          "line": 19,
+          "position": 712
+        },
+        "name": "test_quality_repair_import_canvas.py",
+        "start": 5,
+        "startLoc": {
+          "column": 33,
+          "line": 5,
+          "position": 209
+        }
+      },
+      "tokens": 90
+    },
+    {
+      "firstFile": {
+        "end": 24,
+        "endLoc": {
+          "column": 8,
+          "line": 24,
+          "position": 1030
+        },
+        "name": "test_quality_provenance.py",
+        "start": 9,
+        "startLoc": {
+          "column": 41,
+          "line": 9,
+          "position": 436
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.training_pipeline import LIVE_OWNERS\nfrom template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_rechecks import blocked\nfrom template_ai.coverage_batches import CoverageBatches\nfrom template_ai.coverage_evidence import work_context\nfrom template_ai.source_analysis import ANALYSER_VERSION\nfrom template_ai.training_store import digest\n\n\nclass QualityProducerProvenanceTests(unittest.TestCase):\n    setUp=recheck_fixture.QualityRecheckTests.setUp\n    build=recheck_fixture.QualityRecheckTests.build\n    critical=recheck_fixture.QualityRecheckTests.critical\n\n    def trained_model(self):\n        self.semantic=SemanticLearning(self.library)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 16,
+      "secondFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 8,
+          "line": 18,
+          "position": 785
+        },
+        "name": "test_quality_repair_impact.py",
+        "start": 3,
+        "startLoc": {
+          "column": 33,
+          "line": 3,
+          "position": 130
+        }
+      },
+      "tokens": 98
+    },
+    {
+      "firstFile": {
+        "end": 24,
+        "endLoc": {
+          "column": 21,
+          "line": 24,
+          "position": 1043
+        },
+        "name": "test_quality_provenance.py",
+        "start": 10,
+        "startLoc": {
+          "column": 40,
+          "line": 10,
+          "position": 489
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_rechecks import blocked\nfrom template_ai.coverage_batches import CoverageBatches\nfrom template_ai.coverage_evidence import work_context\nfrom template_ai.source_analysis import ANALYSER_VERSION\nfrom template_ai.training_store import digest\n\n\nclass QualityProducerProvenanceTests(unittest.TestCase):\n    setUp=recheck_fixture.QualityRecheckTests.setUp\n    build=recheck_fixture.QualityRecheckTests.build\n    critical=recheck_fixture.QualityRecheckTests.critical\n\n    def trained_model(self):\n        self.semantic=SemanticLearning(self.library)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 15,
+      "secondFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 21,
+          "line": 18,
+          "position": 712
+        },
+        "name": "test_quality_repairs.py",
+        "start": 4,
+        "startLoc": {
+          "column": 31,
+          "line": 4,
+          "position": 170
+        }
+      },
+      "tokens": 92
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 4,
+          "line": 19,
+          "position": 834
+        },
+        "name": "test_quality_provenance.py",
+        "start": 8,
+        "startLoc": {
+          "column": 61,
+          "line": 8,
+          "position": 381
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.automatic_training import AutomaticTraining,run_automatic\nfrom template_ai.training_pipeline import LIVE_OWNERS\nfrom template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_rechecks import blocked\nfrom template_ai.coverage_batches import CoverageBatches\nfrom template_ai.coverage_evidence import work_context\nfrom template_ai.source_analysis import ANALYSER_VERSION\nfrom template_ai.training_store import digest\n\n\nclass QualityProducerProvenanceTests(unittest.TestCase):\n    setUp=recheck_fixture.QualityRecheckTests.setUp",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 4,
+          "line": 19,
+          "position": 587
+        },
+        "name": "test_record_snapshot_oracle.py",
+        "start": 7,
+        "startLoc": {
+          "column": 7,
+          "line": 7,
+          "position": 162
+        }
+      },
+      "tokens": 74
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 4,
+          "line": 22,
+          "position": 809
+        },
+        "name": "test_quality_repair_gui.py",
+        "start": 9,
+        "startLoc": {
+          "column": 66,
+          "line": 9,
+          "position": 390
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_repair_dialog import QualityRepairDialog,TITLES\nfrom template_ai.quality_repairs import QualityRepairs\nfrom template_ai.training_quality_dialog import TrainingQualityDialog\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass QualityRepairGuiTests(unittest.TestCase):\n    setUp=fixtures.QualityGoldSetTests.setUp\n    window=gui_fixture.QualityPanelTests.window\n    panel=gui_fixture.QualityPanelTests.panel\n    wait=gui_fixture.QualityPanelTests.wait\n\n    def dialog(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 24,
+        "endLoc": {
+          "column": 4,
+          "line": 24,
+          "position": 967
+        },
+        "name": "test_quality_repair_gui_actions.py",
+        "start": 12,
+        "startLoc": {
+          "column": 40,
+          "line": 12,
+          "position": 538
+        }
+      },
+      "tokens": 76
+    },
+    {
+      "firstFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 4,
+          "line": 17,
+          "position": 681
+        },
+        "name": "test_quality_repair_impact.py",
+        "start": 2,
+        "startLoc": {
+          "column": 12,
+          "line": 2,
+          "position": 88
+        }
+      },
+      "format": "python",
+      "fragment": "import copy,unittest\nimport test_quality_provenance as fixtures\nfrom template_ai.quality_rechecks import QualityRechecks\nfrom template_ai.quality_repairs import QualityRepairs\nfrom template_ai.demo import demo_template\nfrom template_ai.customers import CustomerStore\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.model import new_id\n\n\nclass QualityRepairImpactTests(unittest.TestCase):\n    setUp=fixtures.QualityProducerProvenanceTests.setUp\n    trained_model=fixtures.QualityProducerProvenanceTests.trained_model\n    actual_work=fixtures.QualityProducerProvenanceTests.actual_work\n\n    def test_actual_training_producer_and_historical_templates_reach_customer_without_writes(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 16,
+      "secondFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 4,
+          "line": 17,
+          "position": 753
+        },
+        "name": "test_quality_rule_selector.py",
+        "start": 3,
+        "startLoc": {
+          "column": 36,
+          "line": 3,
+          "position": 143
+        }
+      },
+      "tokens": 96
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 4,
+          "line": 22,
+          "position": 915
+        },
+        "name": "test_quality_repair_releases.py",
+        "start": 9,
+        "startLoc": {
+          "column": 83,
+          "line": 9,
+          "position": 455
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_repair_releases import QualityRepairReleases,ACTIVE,EVENT,KEY\nfrom template_ai.automatic_training import AutomaticTraining\nfrom template_ai.runtime_queue import RuntimeQueue\nfrom template_ai.runtime_worker import run_isolated\nfrom template_ai.model import new_id\nfrom test_runtime_execution import ALLOW\n\n\nclass QualityRepairReleaseTests(unittest.TestCase):\n    setUp=fixtures.QualityGoldSetTests.setUp\n    build=recheck_fixture.QualityRecheckTests.build\n    critical=recheck_fixture.QualityRecheckTests.critical\n\n    def accepted(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 4,
+          "line": 17,
+          "position": 703
+        },
+        "name": "test_quality_repair_replay.py",
+        "start": 5,
+        "startLoc": {
+          "column": 37,
+          "line": 5,
+          "position": 242
+        }
+      },
+      "tokens": 78
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 4,
+          "line": 13,
+          "position": 634
+        },
+        "name": "test_quality_repair_training.py",
+        "start": 3,
+        "startLoc": {
+          "column": 25,
+          "line": 3,
+          "position": 148
+        }
+      },
+      "format": "python",
+      "fragment": "from unittest.mock import patch\nimport test_semantic_learning as fixtures\nfrom template_ai.automatic_training import AutomaticTraining,run_automatic\nfrom template_ai.quality_repairs import QualityRepairs\nfrom template_ai.quality_repair_training import create\nfrom template_ai.runtime_queue import RuntimeQueue\nfrom template_ai.runtime_worker import run_isolated,WorkerTimeout\nfrom template_ai.training_pipeline import LIVE_OWNERS\nfrom template_ai.storage import Library\nfrom template_ai.model import new_id\nfrom test_runtime_execution import ALLOW,HOLD",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 5,
+          "line": 19,
+          "position": 777
+        },
+        "name": "test_quality_roles.py",
+        "start": 7,
+        "startLoc": {
+          "column": 28,
+          "line": 7,
+          "position": 243
+        }
+      },
+      "tokens": 85
+    },
+    {
+      "firstFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 4,
+          "line": 21,
+          "position": 767
+        },
+        "name": "test_quality_review_gui.py",
+        "start": 8,
+        "startLoc": {
+          "column": 5,
+          "line": 8,
+          "position": 267
+        }
+      },
+      "format": "python",
+      "fragment": "from quality_acceptance_fixture import actual_positive_pair\nfrom template_ai.quality_reports import QualityReports\nfrom template_ai.quality_rechecks import blocked\n\n\nclass QualityReviewGuiTests(unittest.TestCase):\n    setUp=fixtures.QualityGoldSetTests.setUp\n    window=gui_fixture.QualityPanelTests.window\n    panel=gui_fixture.QualityPanelTests.panel\n    wait=gui_fixture.QualityPanelTests.wait\n    build=jobs_fixture.QualityJobTests.build\n    critical=recheck_fixture.QualityRecheckTests.critical\n\n    def test_actual_native_compare_accept_and_withdraw_preserves_original_decision(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 20,
+        "endLoc": {
+          "column": 4,
+          "line": 20,
+          "position": 915
+        },
+        "name": "test_quality_rule_selector.py",
+        "start": 8,
+        "startLoc": {
+          "column": 17,
+          "line": 8,
+          "position": 406
+        }
+      },
+      "tokens": 81
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 4,
+          "line": 19,
+          "position": 708
+        },
+        "name": "test_quality_review_gui.py",
+        "start": 8,
+        "startLoc": {
+          "column": 38,
+          "line": 8,
+          "position": 300
+        }
+      },
+      "format": "python",
+      "fragment": "from quality_acceptance_fixture import actual_positive_pair\nfrom template_ai.quality_reports import QualityReports\nfrom template_ai.quality_rechecks import blocked\n\n\nclass QualityReviewGuiTests(unittest.TestCase):\n    setUp=fixtures.QualityGoldSetTests.setUp\n    window=gui_fixture.QualityPanelTests.window\n    panel=gui_fixture.QualityPanelTests.panel\n    wait=gui_fixture.QualityPanelTests.wait\n    build=jobs_fixture.QualityJobTests.build\n    critical=recheck_fixture.QualityRecheckTests.critical",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 4,
+          "line": 14,
+          "position": 535
+        },
+        "name": "test_svg_preflight.py",
+        "start": 3,
+        "startLoc": {
+          "column": 32,
+          "line": 3,
+          "position": 121
+        }
+      },
+      "tokens": 70
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 28,
+          "line": 22,
+          "position": 893
+        },
+        "name": "test_quality_roles.py",
+        "start": 11,
+        "startLoc": {
+          "column": 17,
+          "line": 11,
+          "position": 433
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_protocol import QualityProtocols\nfrom template_ai.quality_jobs import EvaluationJobs,run_evaluation\nfrom template_ai.quality_reports import QualityReports\nfrom template_ai.quality_diagnostics import QualityDiagnostics\nfrom template_ai.quality_statistics import aggregate\n\n\nclass QualityRoleTests(unittest.TestCase):\n    setUp=gold_fixture.QualityGoldSetTests.setUp\n\n    def diagnostic_gold(self,use=DIAGNOSTIC_USE):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 16,
+        "endLoc": {
+          "column": 102,
+          "line": 16,
+          "position": 816
+        },
+        "name": "test_trusted_sample_boundaries.py",
+        "start": 7,
+        "startLoc": {
+          "column": 5,
+          "line": 7,
+          "position": 275
+        }
+      },
+      "tokens": 75
+    },
+    {
+      "firstFile": {
+        "end": 65,
+        "endLoc": {
+          "column": 15,
+          "line": 65,
+          "position": 2432
+        },
+        "name": "test_solve_callback_lifetime.py",
+        "start": 55,
+        "startLoc": {
+          "column": 37,
+          "line": 55,
+          "position": 2015
+        }
+      },
+      "format": "python",
+      "fragment": "        old, current = self.worker(), self.worker()\n        self.dialog.solve_worker = current\n        self.dialog.bound_to_main = True\n        self.dialog.set_solving(True)\n        old.finished.connect(self.dialog.solve_finished)\n        old.finished.emit()\n        self.assertTrue(self.window.busy)\n        self.assertTrue(self.dialog.cancel_solve_button.isEnabled())\n\n    def test_current_worker_finish_still_releases_busy_state(self):\n        current = self.worker()",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 75,
+        "endLoc": {
+          "column": 14,
+          "line": 75,
+          "position": 2878
+        },
+        "name": "test_solve_callback_lifetime.py",
+        "start": 65,
+        "startLoc": {
+          "column": 17,
+          "line": 65,
+          "position": 2434
+        }
+      },
+      "tokens": 92
+    }
+  ],
+  "statistics": {
+    "detectionDate": "2026-10-20T18:34:30.003Z",
+    "formats": {
+      "python": {
+        "clones": 65,
+        "duplicatedLines": 829,
+        "duplicatedTokens": 5722,
+        "lines": 23059,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 3.595125547508565,
+        "percentageTokens": 1.2183022121915388,
+        "sources": 251,
+        "tokens": 469670
+      }
+    },
+    "total": {
+      "clones": 65,
+      "duplicatedLines": 829,
+      "duplicatedTokens": 5722,
+      "lines": 23059,
+      "newClones": 0,
+      "newDuplicatedLines": 0,
+      "percentage": 3.595125547508565,
+      "percentageTokens": 1.2183022121915388,
+      "sources": 251,
+      "tokens": 469670
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "id": "RUN-FULL70-ENTITIES-001",
+  "created_utc": "2026-10-15T08:26:48.853690+00:00",
+  "source_commit": "b729755038263987ed02564ba45d5a2c8911f2b4",
+  "source_manifest_sha256": "a885c25501752d8fa6ac6517aee3aca3711655a75fa0e490b68887d7d13cf9da",
+  "source_unchanged": true,
+  "status": "FAIL",
+  "test_count": 406,
+  "passed": 405,
+  "capture_exit_code": 1,
+  "tests_sha256": "589c6234fa2ce60762efb49b29c86cf3f4602888eefdb1cbb81355fe5806b083",
+  "attachments": {
+    "source-manifest.json": {
+      "bytes": 27827,
+      "sha256": "47030e5534d5581492d36dab63fc55ffb412a679dbdd4b087047f3f48253c913",
+      "mime": "application/json"
+    },
+    "tests.json": {
+      "bytes": 77453,
+      "sha256": "589c6234fa2ce60762efb49b29c86cf3f4602888eefdb1cbb81355fe5806b083",
+      "mime": "application/json"
+    },
+    "capture.log": {
+      "bytes": 55,
+      "sha256": "3bd6a10f7caf96e91bc85af78c0cae82c45f4a25f0f349f0379e44e25318b093",
+      "mime": "text/plain"
+    },
+    "seventy-parent-audit.json": {
+      "bytes": 34845,
+      "sha256": "ee13d2180699ab482e525806c77fe5aaeb1106bc325157ec6c284d9c53c4122c",
+      "mime": "application/json"
+    },
+    "commit.json": {
+      "bytes": 1392,
+      "sha256": "b6862247b39f459d57326b5601d4a8ecf96367f9758ae3f6c445505653b27070",
+      "mime": "application/json"
+    },
+    "tree.json": {
+      "bytes": 534268,
+      "sha256": "df405fba4fe8dcf137e911343fe93433d0b8c09fc4e1f713ad4a49de7a562a04",
+      "mime": "application/json"
+    },
+    "tests.log": {
+      "bytes": 72172,
+      "sha256": "4cdc7e925e9ad801bbecf2facbc1ff54555ce6d9c3d76f18bbb22df36f59e853",
+      "mime": "text/plain"
+    },
+    "junit.xml": {
+      "bytes": 76101,
+      "sha256": "e3139abb43f17e5fcdd7720c93b91d9f0227f10ed8e321805d2d75fa47f36df5",
+      "mime": "application/xml"
+    },
+    "claims.json": {
+      "bytes": 216224,
+      "sha256": "ecf6c30e8b8c68747d6fb4f97265718a36e55a1f4ceba309409c9df743ae1f46",
+      "mime": "application/json"
+    }
+  },
+  "environment": {
+    "python": "3.11.16",
+    "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "PySide6": "6.8.3",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+    "qt_platform": "offscreen"
+  },
+  "command": "python tools/run_evidence.py --run-id RUN-FULL70-ENTITIES-001 --source-commit b729755038263987ed02564ba45d5a2c8911f2b4 --commit-json <readback> --tree-json <readback>",
+  "review_level": "SELF_VERIFIED",
+  "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
+  "not_verified": [
+    "真實私人 Illustrator 全面視覺一致",
+    "VivoBook／RTX 5050",
+    "實體印刷",
+    "Windows EXE",
+    "獨立覆核"
+  ]
+}

@@ -1,0 +1,17 @@
+test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields (test_import_then_analysis.ImportThenAnalysisTests.test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields) ... FAIL
+
+======================================================================
+FAIL: test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields (test_import_then_analysis.ImportThenAnalysisTests.test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_import_then_analysis.py", line 163, in test_real_queued_completion_refreshes_choices_without_discarding_unsaved_fields
+    self.assertEqual(completed['phase'], 'COMPLETED_WITH_EXCEPTIONS',
+AssertionError: 'PAUSED_RESOURCES' != 'COMPLETED_WITH_EXCEPTIONS'
+- PAUSED_RESOURCES
++ COMPLETED_WITH_EXCEPTIONS
+ : GUI_HEARTBEAT_LATE
+
+----------------------------------------------------------------------
+Ran 1 test in 1.923s
+
+FAILED (failures=1)

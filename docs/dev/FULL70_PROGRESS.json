@@ -1,0 +1,970 @@
+{
+  "id": "FULL70-PROGRESS",
+  "baseline_commit": "4238ebc24ae62a2ef90051a86685a4c13bfca94b",
+  "baseline_target_count": 70,
+  "closed": 54,
+  "remaining": 16,
+  "latest_evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+  "rows": [
+    {
+      "id": "UI-001",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-001",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "完成各模式面板收合與狀態一致；驗證切換時選取、未提交內容及背景任務不丟失",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-002",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-002",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "逐模式驗證安全切換與焦點保持；只提醒真正會遺失的修改，不把本題擴成永久案件恢復",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-003",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-003",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補預檢到候選驗證的一鍵管線與例外分流，測多來源、多作品、重用、取消及跨啟動續跑",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-004",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-004",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補齊錯誤家族與增量依賴；驗證單件失敗其餘繼續、不可隔離錯誤才暫停",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-005",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-005",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "逐類對照排序／搜尋／篩選與定位，測不同人物公司不能盲目批次修正",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-006",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-006",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "完成同作品各檢視選取同步、取消／復原／確認差異，再驗證只影響選取作品",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-007",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-007",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補候選產生、適用條件／反例／衝突、正式人工核准與依賴重算；不要求指定深度模型架構",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-008",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-008",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "完成風險與適用條件分組、精確選取、批准／暫緩理由，測一個高風險規則不被整批放行",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-009",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-009",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補雙檢視共用同一索引；測切換不丟搜尋或選取、預覽不直接進編輯",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json"
+    },
+    {
+      "id": "UI-010",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-010",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "先對帳現有能力，補缺失的差異／回滾入口與跨欄位發布驗收，不重建第二套Undo",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-011",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-011",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "與UI016／017共用穩定歸屬模型，驗證畫布／清單／屬性選取同一物件及保護發布版本",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-012",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-012",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補吸附與手勢的精確預覽、鎖定保護和Undo；逐一驗證關閉疊圖不關閉驗證",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-013",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-013",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "在已定案字級不變前提補合法策略與理由，測長姓名／電話／Email不被一律分散或暗縮字級",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-014",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-014",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補安全候選與適用限制、空間／字距方案及跨階段一致提示；只對實際證明的搜尋範圍宣告無解",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-015",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-015",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "完成右側問題導覽與不同風險來源，驗證輸入法、連續打字不奪焦點及刪改後即時更新",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-016",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-016",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "先做人物／公司／聯絡資料穩定ID及關聯模型，再驗證共享與獨立複本不混用",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json"
+    },
+    {
+      "id": "UI-017",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-017",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補可追溯共享關聯與差異／撤銷，測解除一人關聯不刪其他人公司或私人聯絡資料",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json"
+    },
+    {
+      "id": "UI-018",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-018",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補多方案比較與特製草案同等驗證；測部分搜尋不宣稱唯一最佳，切換不改發布模板",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-019",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-019",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補安全區／裁切等已核准數位檢查與高保真參考；實體設備／材料印刷依REV03後移，不作本期阻塞",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-020",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-020",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "建立整體Logo來源候選與人工核對，測Logo內公司文字不被拆成可變文字且圖文完整",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-021",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-021",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補來源候選與包含內容／歸屬比較；測拒絕、撤銷或缺圖都不能冒充正式Logo",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-022",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-022",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "完成同庫管理、來源細節與風險審核，驗證更新不靜默改變已選Logo或其他公司",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-023",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-023",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補單版／多版狀態和版本變動失效，測正常已知尺寸絕不跨庫借用",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-024",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-024",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "完成獨立預測專區及入庫流程，驗證返回一般模式後恢復嚴格尺寸隔離",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-025",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-025",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補原框與實際占用疊圖及版本比較，測留白不等於失敗、無方案不裁切拉伸商標",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-026",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-026",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補公司卡片狀態與人工選擇，驗證無合格Logo保留占位而非借用其他尺寸或品牌",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-027",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-027",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "完成多尺寸矩陣與部分成功確認，測A尺寸正式成功、B缺Logo僅能預覽且互不放行",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-028",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-028",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補多尺寸外側說明區及缺Logo加其他錯誤的完整標記；驗證不蓋掉作品內容、不以預覽當正式",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-029",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-029",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "建置共用批次輸出計畫，測FINAL／PREVIEW分流、取消／略過／撞名與部分成功",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-030",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-030",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補逐項原因與重新驗證／更名，注入磁碟滿、占用、中斷，測成功檔不被重產或刪除",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-031",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-031",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "以合法匿名真AI逐例核對字形／遮罩／Logo並實際學習；完整私有原生結構不是共同必要條件",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-032",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-032",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補Windows能力探測及明確安裝授權，驗證載入不等於安裝、缺字／失聯／異動不借字型通過",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-033",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-033",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補完整影響／選取矩陣及失敗隔離，測高風險未看預覽不得整批核准、舊版及其他欄位不變",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-034",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-034",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補主編輯入口與全部物件類型，驗證空選取清舊值、混合值不覆蓋、鎖定／來源／發布版本受保護",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-035",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-035",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補可得映射與共享引用，測切換搜尋不丟選取、隱藏不減驗證；不要求還原全部Illustrator私有結構",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-036",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-036",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "先核對現有功能，補缺失互動或驗收；測取消零變更、含鎖定物件不得偷偷排除後稱整組成功",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-037",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-037",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補多入口視角操作與選取錨點測試；未校準只說顯示倍率，不能保證螢幕1:1毫米",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-038",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-038",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補作品總覽與候選框校正，驗證同頁多人多尺寸不混作品，來源只讀且衍生資訊標UNKNOWN",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-039",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-039",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補候選證據／不確定性與就近校正，測修改標記不等於修改原稿、未確認不得成訓練真值",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-040",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-040",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補可靠來源對應與語意檢查；測行政註記排除不刪原稿、Logo合理包含不誤刪、真欄位優先",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-041",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-041",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "逐種規則／白名單做完整對帳與回歸；測回滾不覆蓋後續人工資料、不以恢復代表已再驗證",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-042",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-042",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補各階段版本化檢查點與客戶候選審核，測異名同位元仍保留各客戶身份與前導零",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-043",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-043",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補智慧候選及人工確認，測多作品、多尺寸與重複客戶碼不錯綁、不建立購買分類",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-044",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-044",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補可解釋匹配及各尺寸版型選取，測同名同電話不推定同人，過期版型不能沿用為合格",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json"
+    },
+    {
+      "id": "UI-045",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-045",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "接上人物公司模型，測只用本次不改主檔、過期或晚期失敗全交易不部分回寫",
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
+    },
+    {
+      "id": "UI-046",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-046",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補合併前全影響預覽與雙方CAS、別名及拆分；測後續新值不被歷史拆分覆蓋",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json"
+    },
+    {
+      "id": "UI-047",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-047",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補可選範圍與完整依賴Manifest、排程／保留政策及隔離還原驗證；缺資產必須報不完整",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-BACKUP-001/run.json"
+    },
+    {
+      "id": "UI-049",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-049",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補多根搜尋／歧義選擇及完整影響摘要，測不同內容同名不重連、映射與原稿不改",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json"
+    },
+    {
+      "id": "UI-050",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-050",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補事件只是提示的監看器及有界匯入佇列，測暫存檔、寫入中、漏事件／離線／改名均重新核實",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json"
+    },
+    {
+      "id": "UI-051",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-051",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補保守資源預算和不飢餓佇列；逐來源逐作品審核，測重啟／磁碟失敗；不新增急件分類",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json"
+    },
+    {
+      "id": "UI-052",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-052",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補未審／排除／失聯／待人工區分和版本化結案，測無作品來源與異名客戶不得漏掉",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-COVERAGE-001/run.json"
+    },
+    {
+      "id": "UI-053",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-053",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補真實推論與獨立有權樣本、各類門檻／樣本量依據；測關鍵歸屬錯誤與分類退步不得用平均分掩蓋",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json"
+    },
+    {
+      "id": "UI-054",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-054",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補受控候選執行及反向退步測試，測舊測試用於修復後需新holdout、兩版均差不可聲稱退回安全",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json"
+    },
+    {
+      "id": "UI-055",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-055",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補可核實相關群組、防洩漏與各用途消費紀錄，測隔離後所有真正依賴失效且原資料保留",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json"
+    },
+    {
+      "id": "UI-056",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-056",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補已核准C的可追溯分類與門檻依據／未知處理；測重疊類別不灌大總數、不自動產生補樣任務",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json"
+    },
+    {
+      "id": "UI-057",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-057",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補安全草稿與分尺寸風險理由，測忽略警告不放行、缺經驗不自動宣稱無解",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json"
+    },
+    {
+      "id": "UI-058",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-058",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補合法短期恢復及exact依賴核對／明確放棄，測異常／滿碟不能冒稱落盤；不建永久訂單庫",
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json"
+    },
+    {
+      "id": "UI-059",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-059",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補增量排程、保留手工布局與新舊差異選擇，測舊worker不能覆蓋新版、局部重算仍需整體驗證",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-060A",
+      "source_requirement": [
+        {
+          "path": "docs/decisions/UI-060A-RESULT-PRESENTATION.md",
+          "section": "UI-060A",
+          "sha256": "307c7222ba2b9c58b04712c14b05722c4d8860b682fef4c699bc34dde78153bf"
+        }
+      ],
+      "required": "補結果比較與選取狀態保留，測排序更新不悄悄覆蓋人工選擇、不宣稱部分搜尋為最優",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-061",
+      "source_requirement": [
+        {
+          "path": "docs/decisions/UI-061-CROSS-CANDIDATE-SIZE-SYNC.md",
+          "section": "UI-061",
+          "sha256": "9fa2646c6e0f5090e8209f7504383fa7782998cd268a460d4ee73d2f654b516a"
+        }
+      ],
+      "required": "補精確目標／可套用屬性比較與獨立幾何重算，測跨尺寸不直接複製座標、回復不動其他人工修改",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-062",
+      "source_requirement": [
+        {
+          "path": "docs/decisions/UI-062-CROSS-MODE-NAVIGATION-SAFE-RETURN.md",
+          "section": "UI-062",
+          "sha256": "d3fc1231c68d3fb0d18eaa2ebb423efd6b7bb9c0fb30e0cb64c92fd4e88908a7"
+        }
+      ],
+      "required": "補跨既有工具的安全返回鏈，測失聯或版本變動不錯定位、不丟未套用內容、不自動重算或回寫",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-063",
+      "source_requirement": [
+        {
+          "path": "docs/decisions/UI-063-RIGHT-PANEL-ADAPTIVE-TOOLS.md",
+          "section": "UI-063",
+          "sha256": "8298bf19547d707586fc8e89d3e9c2a80a04bd782adf5c652da23d2368203a4a"
+        }
+      ],
+      "required": "補按模式／類型／多選的工具優先序與全部屬性入口，測釘選保持可見但不適用時停用不帶舊值",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-064",
+      "source_requirement": [
+        {
+          "path": "docs/decisions/UI-064-SHORTCUTS-GESTURES-SAFETY.md",
+          "section": "UI-064",
+          "sha256": "0b96d619d38d0b78ad9ad1d8844dc988a928c01389142e12c8f3b18d55f1caa8"
+        }
+      ],
+      "required": "補中央指令作用域與安全提示，測文字Ctrl+Z不撤銷畫布、Delete不誤刪共享／鎖定物件",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-065",
+      "source_requirement": [
+        {
+          "path": "docs/decisions/UI-065-BATCH-REPAIR-SAFETY.md",
+          "section": "UI-065",
+          "sha256": "d0d9e0809eabe78288adb37339598b40f6d64fc978a529e1a01f584e45535360"
+        }
+      ],
+      "required": "補各操作家族及跨尺寸語意映射，測只重試失敗、整批回復不覆蓋後續新值／不改字級或Logo比例",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-066",
+      "source_requirement": [
+        {
+          "path": "docs/decisions/UI-066-DEDUP-REPORT-HANDOFF.md",
+          "section": "UI-066",
+          "sha256": "8f388f97d414091fc24f10305f6aa6fadd63965c59dcf8128c887874570b4759"
+        }
+      ],
+      "required": "完成原六項→現有證據對帳；可被既有證據涵蓋者直接結案，不另造新功能或要求所有其他父題先完成",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-067",
+      "source_requirement": [
+        {
+          "path": "docs/decisions/UI-067-GUI-CONVERGENCE-GOVERNANCE.md",
+          "section": "UI-067",
+          "sha256": "36794fa5012bbe22a65409ce185bbe4f0dc70d5efba9c92c1aa5b6bc19bee77c"
+        }
+      ],
+      "required": "補逐條規格→元件→測試→證據矩陣與過期引用修訂；純治理不算新軟體功能",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "UI-052-REVIEW",
+      "source_requirement": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-052-REVIEW",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "required": "補跨家族直接／間接依賴與逐項重審結論，測舊通過保留歷史、原成品不刪、新證據不足不自動恢復",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "REV-01",
+      "source_requirement": [
+        {
+          "path": "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md",
+          "section": "REV-01",
+          "sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb"
+        }
+      ],
+      "required": "依既有UI要求逐包補齊並整體驗收；不重問名片／門禁卡，不增加第二套商品引擎",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "REV-02",
+      "source_requirement": [
+        {
+          "path": "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md",
+          "section": "REV-02",
+          "sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb"
+        }
+      ],
+      "required": "以獲授權匿名或合法替代真AI樣本逐例比對並真正進訓練管線；不能拿縮圖或合成SVG通過代替",
+      "state": "PARTIAL",
+      "evidence": null
+    },
+    {
+      "id": "REV-04",
+      "source_requirement": [
+        {
+          "path": "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md",
+          "section": "REV-04",
+          "sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb"
+        }
+      ],
+      "required": "取得可用參考環境後測冷啟動、尖峰RAM／VRAM、GUI反應與取消；16GB是整機上限而非程式可占滿",
+      "state": "PARTIAL",
+      "evidence": null
+    }
+  ]
+}

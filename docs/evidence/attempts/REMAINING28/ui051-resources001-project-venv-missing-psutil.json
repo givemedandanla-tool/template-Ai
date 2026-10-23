@@ -1,0 +1,12 @@
+{
+  "kind": "NON_FORMAL_WORKTREE_TARGET_RUN",
+  "status": "FAILED",
+  "tests": 8,
+  "passed": 7,
+  "failures": 1,
+  "errors": 0,
+  "log": "docs/evidence/attempts/REMAINING28/ui051-resources001-project-venv-missing-psutil.log",
+  "sha256": "027fca39b1139e1980412b32068d9066d935dbf25868421f73b85048e2cca341",
+  "cause": "Earlier availability query used global python;psutil7.2.2 exists there but project .venv lacks module. Actual sampler correctly returned psutil-unavailable/unknown disk and available memory.",
+  "correction": "Before environment checkpoint then install exact pinned version into project .venv,retain fail-closed unknown-metric behavior and actual-runtime assertion."
+}

@@ -1,0 +1,31 @@
+test_changed_text_clears_approval_selection_and_late_result (test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result) ... ok
+test_final_decline_no_selection_and_unsaved_editor_do_not_write (test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write) ... ok
+test_history_menu_reopens_without_a_candidate (test_font_review.FontReviewGuiTests.test_history_menu_reopens_without_a_candidate) ... ok
+test_real_gui_review_apply_history_undo_redo_complete_workflow (test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow) ... ok
+test_real_worker_failure_controls_recover_and_retry (test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry) ... ok
+test_actual_impact_dimensions_owner_source_and_unknown_reference (test_font_review.FontReviewTests.test_actual_impact_dimensions_owner_source_and_unknown_reference) ... ok
+test_base_change_aba_and_target_registration_race_block_commit (test_font_review.FontReviewTests.test_base_change_aba_and_target_registration_race_block_commit) ... ok
+test_empty_missing_glyph_height_and_geometry_block_individual_field (test_font_review.FontReviewTests.test_empty_missing_glyph_height_and_geometry_block_individual_field) ... ok
+test_high_risk_unreviewed_unselected_duplicate_and_forged_ticket_rejected (test_font_review.FontReviewTests.test_high_risk_unreviewed_unselected_duplicate_and_forged_ticket_rejected) ... ok
+test_legacy_schema_migration_clock_noop_and_binding_styles_compatible (test_font_review.FontReviewTests.test_legacy_schema_migration_clock_noop_and_binding_styles_compatible) ... ok
+test_limits_and_same_binding_low_noop_are_visible (test_font_review.FontReviewTests.test_limits_and_same_binding_low_noop_are_visible) ... ok
+test_modified_target_blocks_prepare_and_redo_while_undo_keeps_draft_gate (test_font_review.FontReviewTests.test_modified_target_blocks_prepare_and_redo_while_undo_keeps_draft_gate) ... ok
+test_multi_template_late_audit_failure_rolls_back_every_draft_and_clock (test_font_review.FontReviewTests.test_multi_template_late_audit_failure_rolls_back_every_draft_and_clock) ... ok
+test_persistent_actual_style_matches_layout_and_real_export (test_font_review.FontReviewTests.test_persistent_actual_style_matches_layout_and_real_export) ... FAIL
+test_selected_only_new_draft_preserves_publication_geometry_and_no_raw_text (test_font_review.FontReviewTests.test_selected_only_new_draft_preserves_publication_geometry_and_no_raw_text) ... ok
+test_undo_publish_aba_and_late_failure_do_not_overwrite (test_font_review.FontReviewTests.test_undo_publish_aba_and_late_failure_do_not_overwrite) ... ok
+test_undo_redo_persist_after_reopen_and_reject_later_editor_change (test_font_review.FontReviewTests.test_undo_redo_persist_after_reopen_and_reject_later_editor_change) ... ok
+test_unverified_qt_modified_target_and_logo_never_eligible (test_font_review.FontReviewTests.test_unverified_qt_modified_target_and_logo_never_eligible) ... ok
+
+======================================================================
+FAIL: test_persistent_actual_style_matches_layout_and_real_export (test_font_review.FontReviewTests.test_persistent_actual_style_matches_layout_and_real_export)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_review.py", line 190, in test_persistent_actual_style_matches_layout_and_real_export
+    self.assertTrue(candidate.valid,candidate.issues)
+AssertionError: False is not true : ['姓名／p1：實際排版字面與所選字面未核對一致，拒絕替代／混用量測']
+
+----------------------------------------------------------------------
+Ran 18 tests in 1.779s
+
+FAILED (failures=1)

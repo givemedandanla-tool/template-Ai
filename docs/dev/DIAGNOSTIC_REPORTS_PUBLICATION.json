@@ -1,0 +1,608 @@
+{
+  "policy": "USER_AUTHORIZED_METADATA_FIRST_DIAGNOSTICS",
+  "user_instruction": "如果這只是證明文件就略過，持久化在GIHUB文件中就好，已開發速度為首要目標",
+  "contract": "docs/dev/DIAGNOSTIC_REPORTS_CONTRACT.json",
+  "scope": "每run固定source、檔名、hash與大小；只略過PNG/JPG/PDF證明媒體的新發布，code/tests/metadata不得略過",
+  "runs": {
+    "RUN-DIAGNOSTIC-REPORTS-001": {
+      "source_commit": "d9593f2f638dd1c99200891186f922dd550a3463",
+      "attachments": {
+        "diagnostic-work-issues.png": {
+          "bytes": 163913,
+          "sha256": "de3a7c0fc535dd359d7f36dc971ebe775b4e6c8c40dac03b4415c8ef0f7d11ef",
+          "mime": "image/png"
+        },
+        "font-center-workspace.png": {
+          "bytes": 324585,
+          "sha256": "2911d7f043a962227355c38ed63302e4742e7275ec744e2eba497625d78e4169",
+          "mime": "image/png"
+        },
+        "object-tools-multiselect.png": {
+          "bytes": 182496,
+          "sha256": "161fd1b012199b687c6bf4908e50f43d1a5706a1f279fe5dc8ce0a31e3c7f4ad",
+          "mime": "image/png"
+        },
+        "synthetic-FINAL.pdf": {
+          "bytes": 9955,
+          "sha256": "7a1fd06bd48ee1998ebbd2dd899d190546d011c1916e9617509b16feec77f3e5",
+          "mime": "application/pdf"
+        },
+        "diagnostic-stale-refused.png": {
+          "bytes": 132129,
+          "sha256": "7c8781f815b5004d49e090876a33277efff9ba411d6374e22d6f2ef9416bd0a7",
+          "mime": "image/png"
+        },
+        "font-center-diagnostics.png": {
+          "bytes": 157836,
+          "sha256": "db2b0b26be726326fd2b22441b2956dea69b278385123b21dea8e1ecd4628bd9",
+          "mime": "image/png"
+        },
+        "batch-import-resumed.png": {
+          "bytes": 115463,
+          "sha256": "fe0f1cf45e4b3bf2b5f9097107917a2f9e3a233b78838e0ad8fb34eec92150eb",
+          "mime": "image/png"
+        },
+        "batch-import-running.png": {
+          "bytes": 101945,
+          "sha256": "cf642116f39a67453b66313803c84f804b2e84afba5d8c7bb67a1c1b1ede3a19",
+          "mime": "image/png"
+        },
+        "canvas-compare-source.png": {
+          "bytes": 60773,
+          "sha256": "cf3ee0f169ae0537384c434cff66f4fbf7dd31418ced8386a5cef81d241b8321",
+          "mime": "image/png"
+        },
+        "ten-training-queue-completed.png": {
+          "bytes": 134739,
+          "sha256": "c24785153f1b1035643f4a279f2e2543a2d59b20be48f298a5d58894187fc243",
+          "mime": "image/png"
+        },
+        "semantic-tree-shared.png": {
+          "bytes": 191579,
+          "sha256": "6f32ec7acc75e0e2b702b311e9289471b76bbc29e4cb93099427cf7ecad7af9c",
+          "mime": "image/png"
+        },
+        "object-tools-difference.png": {
+          "bytes": 202512,
+          "sha256": "579a3af9118d8e1f8e742e363880ac41939abc34873b3028eea00d75fff5b531",
+          "mime": "image/png"
+        },
+        "semantic-viewport-isolated.png": {
+          "bytes": 183540,
+          "sha256": "5f2d819e568f9e1649cb14649cdc6ef49d61dd5e16fb7c481a29bf2bd083d6c6",
+          "mime": "image/png"
+        },
+        "training-workspace.png": {
+          "bytes": 236572,
+          "sha256": "11b87f94ab69fed90758addfa01d7fb02751895843daf9d2a0c053d7244756ed",
+          "mime": "image/png"
+        },
+        "synthetic-FINAL.png": {
+          "bytes": 278169,
+          "sha256": "bbe406834015e4e501b0058971b06f917b33b81d5a7700138b48de65a30dd003",
+          "mime": "image/png"
+        },
+        "decorated-FINAL.png": {
+          "bytes": 278169,
+          "sha256": "742eb545ec519f462e339ad125f4448eba0f08a4b6533c14bf1b03614d284320",
+          "mime": "image/png"
+        },
+        "canvas-compare-after.png": {
+          "bytes": 14633,
+          "sha256": "59578ebd80e4170bc9373aba74b2c9a3416cccb2063f775a62c9aacd816f8014",
+          "mime": "image/png"
+        },
+        "exception-center-retried.png": {
+          "bytes": 92190,
+          "sha256": "6f2c802ab99790e3c070dd5ae3cb941d32cf6b44c8f5efd3e6747388e0800f6b",
+          "mime": "image/png"
+        },
+        "object-tools-mixed-patch.png": {
+          "bytes": 204373,
+          "sha256": "50a66af5ad95355bcc6a46572113e169c54adf32673fde789921482b34d5e96b",
+          "mime": "image/png"
+        },
+        "exception-center-retry-preview.png": {
+          "bytes": 127634,
+          "sha256": "13889eaaaf1d9c2eb74f50e5501f380cc3db50c408a2d3492023598e530e4475",
+          "mime": "image/png"
+        },
+        "ten-rule-review.png": {
+          "bytes": 132515,
+          "sha256": "9b992877920cbaa70ef35194e354e2a0974791352c36508a154e1d9253b58885",
+          "mime": "image/png"
+        },
+        "canvas-compare-before.png": {
+          "bytes": 15290,
+          "sha256": "12215bc9b405013a7c9587d22ade02d56270773fb39cf11a8a3fe6a5be73b592",
+          "mime": "image/png"
+        },
+        "ten-noise-authoring.png": {
+          "bytes": 92489,
+          "sha256": "5344b9cceff80334d13cbf0266107c966f0dff24bed74ab091ed871a6973feba",
+          "mime": "image/png"
+        },
+        "exception-center-ranked.png": {
+          "bytes": 132219,
+          "sha256": "f44b85d2e80c1d5fd3ee8af99ec01b2fbf4c03bac266accf479152731506e7c9",
+          "mime": "image/png"
+        },
+        "ten-trusted-sample.png": {
+          "bytes": 136071,
+          "sha256": "a975e69d3163517df96f9960e84df9bb78b47b3fd1f1ce39825eacf1836dc14b",
+          "mime": "image/png"
+        },
+        "multiple-artworks-workspace.png": {
+          "bytes": 242455,
+          "sha256": "3bad8d9d509979c1290d8266daa6d0b14b0a60a264d0727d12303fac0c378f93",
+          "mime": "image/png"
+        },
+        "ten-noise-recovery.png": {
+          "bytes": 126997,
+          "sha256": "eee5f25746a0f498cb5f00b9fde9e0fa803d8d5f34edc0d18c35bee0b12b58f8",
+          "mime": "image/png"
+        },
+        "font-review-approved.png": {
+          "bytes": 275196,
+          "sha256": "7328a2d713a7dc4eb3cbaeec509a8c4518d8b10061394d114a68901a3f0c0e6a",
+          "mime": "image/png"
+        },
+        "ten-noise-auto-hit.png": {
+          "bytes": 147162,
+          "sha256": "40f5a81d43b00b0cdd95e6964d2dc53eaca1d3829a749f7af088906226c859f8",
+          "mime": "image/png"
+        },
+        "decorated-FINAL.jpg": {
+          "bytes": 10992,
+          "sha256": "fbb60e1d7659ec4b4c2a91276a2c881e91424b311e4c0f8c5f6b7f6fb8fe199b",
+          "mime": "image/jpeg"
+        },
+        "ten-coverage-distribution.png": {
+          "bytes": 113612,
+          "sha256": "a930a579accf333218076dae4f6544ac5f048f8909219a8fd776a81724a88384",
+          "mime": "image/png"
+        },
+        "batch-source-preview.png": {
+          "bytes": 118726,
+          "sha256": "5ad837eb4a946c442834491937a954a8f2b90c59aff4702ecf2eab72fe1c5106",
+          "mime": "image/png"
+        },
+        "diagnostic-saved-reopened.png": {
+          "bytes": 130063,
+          "sha256": "936aee0b1e414f59cee0c67e9cff55f6bea370070fc501d9155a615bfe55564e",
+          "mime": "image/png"
+        },
+        "decorated-FINAL.pdf": {
+          "bytes": 10130,
+          "sha256": "99230a808bdd761fbcb914e13b236d690bbae3a9fd747d541d316b7fef755d19",
+          "mime": "application/pdf"
+        },
+        "semantic-derived-structure.png": {
+          "bytes": 207703,
+          "sha256": "b2b044af6f2a0ef0382a2fa1d4ff2d7ef4bd0bb587c93f57194649fd9bb9c683",
+          "mime": "image/png"
+        },
+        "synthetic-FINAL.jpg": {
+          "bytes": 7908,
+          "sha256": "ec9d05d441ecbd43e0eabe3e989789c7e20b2238a3e6d82a0ef3702913b916ae",
+          "mime": "image/jpeg"
+        },
+        "font-candidates-preview.png": {
+          "bytes": 274832,
+          "sha256": "660f964203f11f4de2c7964eae4ad1c00da13802db31d4ddfbf95408fa60ba8b",
+          "mime": "image/png"
+        },
+        "font-review-draft-history.png": {
+          "bytes": 259528,
+          "sha256": "dcebba75d786c88aeacffd6cd6d600a65bda25f3438e8848c32e2ec651765b58",
+          "mime": "image/png"
+        },
+        "canvas-compare-focused.png": {
+          "bytes": 99064,
+          "sha256": "eb6cd51b6cd58f68703d7bffdf0dd4ffa4abb29df4d84f89257a4893a5d4f553",
+          "mime": "image/png"
+        },
+        "exception-center-restored.png": {
+          "bytes": 131289,
+          "sha256": "114a51e7e7c18f1292c199c4c9ead8a38925574c5137e854e97c6c4a05896003",
+          "mime": "image/png"
+        },
+        "object-tools-training.png": {
+          "bytes": 221098,
+          "sha256": "af251c62a8cf64887dd09afd8688c6f602cad904c070bb6d258585dba22e91ee",
+          "mime": "image/png"
+        },
+        "object-tools-history.png": {
+          "bytes": 184228,
+          "sha256": "938e93ea29687e71afafcefbc4d354764450fd92abaa01024c50c8a691d924a0",
+          "mime": "image/png"
+        },
+        "canvas-compare-overview.png": {
+          "bytes": 90030,
+          "sha256": "32f87c6d550e928e5c3d1d743da32c7ac67f9f02c794af706decec69c2aaccda",
+          "mime": "image/png"
+        },
+        "ten-facts-confirmed.png": {
+          "bytes": 144980,
+          "sha256": "e2021fc126ff419de2d2137babc86800eda263f5652214caf49ffeda4b425964",
+          "mime": "image/png"
+        },
+        "batch-import-preflight.png": {
+          "bytes": 102584,
+          "sha256": "7bd1d8459eae5490c1ab9f4e7a6220a7f1fb7459799ae00d2040037a32007ba9",
+          "mime": "image/png"
+        },
+        "template-workspace.png": {
+          "bytes": 210684,
+          "sha256": "cca09ddca856b5fa07c582009ce0781ee2b8e5539d30ff64dbeb7461598486c1",
+          "mime": "image/png"
+        },
+        "semantic-search-preserved.png": {
+          "bytes": 174473,
+          "sha256": "0a3c2eddb28c06d9879ec9b8b5d853a4a2fd314ff5f96f53c109d7e977332f7f",
+          "mime": "image/png"
+        },
+        "ten-quality-overview.png": {
+          "bytes": 137500,
+          "sha256": "fae7eb21719ca9fded33da12451e09a96af59875624d9314e88b2b827bd9f6c7",
+          "mime": "image/png"
+        },
+        "diagnostic-preview.png": {
+          "bytes": 133615,
+          "sha256": "1934e8485d580fdd20045bc1d6b145cecb09fb8177cbf0bba262ec6ad8b2689e",
+          "mime": "image/png"
+        },
+        "batch-import-cancelled.png": {
+          "bytes": 112559,
+          "sha256": "e3ec73bc808c0ac8ca846a7af6f62ab4f89334b3350a1cf341e583389ffa4764",
+          "mime": "image/png"
+        },
+        "exception-center-excluded.png": {
+          "bytes": 131918,
+          "sha256": "f961d30c1c20a0a4f55b1aa2267c1cd369fa51e063271cef0d108a3740a815e0",
+          "mime": "image/png"
+        },
+        "output-workspace.png": {
+          "bytes": 248520,
+          "sha256": "c196b26dc019af9c739f68c8fb3aa3e11a813f9ce8372a6defa623df83f0ad1e",
+          "mime": "image/png"
+        },
+        "font-review-undone.png": {
+          "bytes": 261951,
+          "sha256": "72c6972d33fd637fb9e56cd806b3c99f3ed3e6c7dd76746c408294c81dacc7b7",
+          "mime": "image/png"
+        },
+        "font-candidates-ranked.png": {
+          "bytes": 264866,
+          "sha256": "351f20c31f0c583a6b7bf982e452d1e280a78dd815bff8325fadc0cabebf2ffe",
+          "mime": "image/png"
+        },
+        "font-candidate-line.png": {
+          "bytes": 5162,
+          "sha256": "07a825f2fc2f39b76b9947c5cab374a7f93102910cd2c9c304d41ab3baf06e1b",
+          "mime": "image/png"
+        },
+        "font-review-differences.png": {
+          "bytes": 275918,
+          "sha256": "e3ac2d992ef487b6e6284947d7a24036a185f5b4131167bd062eabf7ec32b62b",
+          "mime": "image/png"
+        },
+        "decorated-output-workspace.png": {
+          "bytes": 256921,
+          "sha256": "67c88fbd3353fc4a8d97fcbecb912f7ebf98fab7fc0fed74c3286dfd5774b604",
+          "mime": "image/png"
+        },
+        "object-tools-locked.png": {
+          "bytes": 206866,
+          "sha256": "4b57bec8af9fa0ac58c7d2e7bd728d0c4e4db314537dae1afd37f0986c9221bc",
+          "mime": "image/png"
+        },
+        "ten-dataset-learned-draft.png": {
+          "bytes": 122580,
+          "sha256": "3f7157e4ba6d21a8562ece0f4232c8acb67f9c66bcbb58cbb08afd648adb9586",
+          "mime": "image/png"
+        }
+      }
+    },
+    "RUN-DIAGNOSTIC-REPORTS-002": {
+      "source_commit": "fc5956bcbff2a068f36c4bbc440f938ca177d7e1",
+      "attachments": {
+        "diagnostic-work-issues.png": {
+          "bytes": 179552,
+          "sha256": "50b76f34f9b1e545304fd953c1ded86a19dc816a4a991e8ef2cb8a8b10bde68e",
+          "mime": "image/png"
+        },
+        "font-center-workspace.png": {
+          "bytes": 324624,
+          "sha256": "9430598817ccafde31ba408f6d5739a6a079d5f36a2ebf19b4cdd157a19297d7",
+          "mime": "image/png"
+        },
+        "object-tools-multiselect.png": {
+          "bytes": 181361,
+          "sha256": "4e2fd03b27e21acd87ba1788a26a83995df615bc2e64ce16fc597fa8c4b87037",
+          "mime": "image/png"
+        },
+        "synthetic-FINAL.pdf": {
+          "bytes": 9955,
+          "sha256": "49c8de9b17d07c9d31bb536451dd4a1ec53abb62690ba165bc44c227b64c60d3",
+          "mime": "application/pdf"
+        },
+        "diagnostic-stale-refused.png": {
+          "bytes": 150982,
+          "sha256": "05b9789d50c60bb660e3e8300edbbfd557899c2803996887f3fefefb615019b4",
+          "mime": "image/png"
+        },
+        "font-center-diagnostics.png": {
+          "bytes": 158649,
+          "sha256": "605cff6c4726071735a69304ae82d49b6b7a6ecb887b6e44ff31e7ab5e3da8db",
+          "mime": "image/png"
+        },
+        "batch-import-resumed.png": {
+          "bytes": 114654,
+          "sha256": "23292e98aeee6a962dc68e398b631bf5940dbc189287f6f3efc723b57faf351a",
+          "mime": "image/png"
+        },
+        "batch-import-running.png": {
+          "bytes": 101945,
+          "sha256": "cf642116f39a67453b66313803c84f804b2e84afba5d8c7bb67a1c1b1ede3a19",
+          "mime": "image/png"
+        },
+        "canvas-compare-source.png": {
+          "bytes": 60773,
+          "sha256": "cf3ee0f169ae0537384c434cff66f4fbf7dd31418ced8386a5cef81d241b8321",
+          "mime": "image/png"
+        },
+        "ten-training-queue-completed.png": {
+          "bytes": 135597,
+          "sha256": "b22cce9412fde017042ec034347a28b1f42c1fa107da06addb252e7b611b6448",
+          "mime": "image/png"
+        },
+        "semantic-tree-shared.png": {
+          "bytes": 191839,
+          "sha256": "9aca09c4253b97a3b30e9bc254a598e5ec8a31d4691c31168ffb25067e31904f",
+          "mime": "image/png"
+        },
+        "object-tools-difference.png": {
+          "bytes": 202519,
+          "sha256": "ffafa74a5ff11face176cbbbb0489398026035da79436909825ccba7b3425936",
+          "mime": "image/png"
+        },
+        "semantic-viewport-isolated.png": {
+          "bytes": 183641,
+          "sha256": "5ada9b784db0da1ccd5347ddfdab5da7dbc7fba15d56fc6fcaa356b800c082db",
+          "mime": "image/png"
+        },
+        "training-workspace.png": {
+          "bytes": 236572,
+          "sha256": "11b87f94ab69fed90758addfa01d7fb02751895843daf9d2a0c053d7244756ed",
+          "mime": "image/png"
+        },
+        "synthetic-FINAL.png": {
+          "bytes": 278169,
+          "sha256": "bbe406834015e4e501b0058971b06f917b33b81d5a7700138b48de65a30dd003",
+          "mime": "image/png"
+        },
+        "decorated-FINAL.png": {
+          "bytes": 278169,
+          "sha256": "742eb545ec519f462e339ad125f4448eba0f08a4b6533c14bf1b03614d284320",
+          "mime": "image/png"
+        },
+        "canvas-compare-after.png": {
+          "bytes": 14633,
+          "sha256": "59578ebd80e4170bc9373aba74b2c9a3416cccb2063f775a62c9aacd816f8014",
+          "mime": "image/png"
+        },
+        "exception-center-retried.png": {
+          "bytes": 93904,
+          "sha256": "a8ff21f1b75d85a59b2f4fc22184417a9ac0b89401247d56ea511c60008f840f",
+          "mime": "image/png"
+        },
+        "object-tools-mixed-patch.png": {
+          "bytes": 204639,
+          "sha256": "57d93b37dd500ec2506e45bcd4e86a76b4dec0d2d6356439109f4a9ffd5fdffa",
+          "mime": "image/png"
+        },
+        "exception-center-retry-preview.png": {
+          "bytes": 129997,
+          "sha256": "b1772ee6314004cbb440ce0de6075fc3a69f56801860c221294296b96eaa388c",
+          "mime": "image/png"
+        },
+        "ten-rule-review.png": {
+          "bytes": 130757,
+          "sha256": "46fc12614bdc63587d1de59b1f63a3f4105dd72697f1047326fee54d92e6448a",
+          "mime": "image/png"
+        },
+        "canvas-compare-before.png": {
+          "bytes": 15290,
+          "sha256": "12215bc9b405013a7c9587d22ade02d56270773fb39cf11a8a3fe6a5be73b592",
+          "mime": "image/png"
+        },
+        "ten-noise-authoring.png": {
+          "bytes": 91224,
+          "sha256": "5ceaf87e66b11ff9a488bc7832f2035d1a3a00e2d4bf2f2141a1c7a51da5681d",
+          "mime": "image/png"
+        },
+        "exception-center-ranked.png": {
+          "bytes": 135242,
+          "sha256": "e5e99ea8995d9c288295a6cad8b0f43350a2b4a5deae7b0c3fef893caf4d8d94",
+          "mime": "image/png"
+        },
+        "ten-trusted-sample.png": {
+          "bytes": 137497,
+          "sha256": "fe5da707fae2b0a1f08c632e7623551281fa72b64242c0bbe48ecc81f7fc1ef6",
+          "mime": "image/png"
+        },
+        "multiple-artworks-workspace.png": {
+          "bytes": 242455,
+          "sha256": "3bad8d9d509979c1290d8266daa6d0b14b0a60a264d0727d12303fac0c378f93",
+          "mime": "image/png"
+        },
+        "ten-noise-recovery.png": {
+          "bytes": 125188,
+          "sha256": "8fd2003f6fcccad1008cb4865ab2bf05950108fe10e9e13bb0c22833525fbd3d",
+          "mime": "image/png"
+        },
+        "font-review-approved.png": {
+          "bytes": 273655,
+          "sha256": "397e627e4b47493dd79d86b90306a90f10bb924fee53d35ee6b3f66d9cf840b9",
+          "mime": "image/png"
+        },
+        "ten-noise-auto-hit.png": {
+          "bytes": 145180,
+          "sha256": "e0839d72bbc348c94473e8c98bd3d79e3e12c266b1cbbe4e4ac4e89eac7017cf",
+          "mime": "image/png"
+        },
+        "decorated-FINAL.jpg": {
+          "bytes": 10992,
+          "sha256": "fbb60e1d7659ec4b4c2a91276a2c881e91424b311e4c0f8c5f6b7f6fb8fe199b",
+          "mime": "image/jpeg"
+        },
+        "ten-coverage-distribution.png": {
+          "bytes": 113612,
+          "sha256": "a930a579accf333218076dae4f6544ac5f048f8909219a8fd776a81724a88384",
+          "mime": "image/png"
+        },
+        "batch-source-preview.png": {
+          "bytes": 118287,
+          "sha256": "49070db408f5abbd784fa2923887c335df731fa55190a0b252308aabe266bab6",
+          "mime": "image/png"
+        },
+        "diagnostic-saved-reopened.png": {
+          "bytes": 148785,
+          "sha256": "b233a3181413d943c259e644bf088b946ed399969be714962fa36c92b64359e0",
+          "mime": "image/png"
+        },
+        "decorated-FINAL.pdf": {
+          "bytes": 10130,
+          "sha256": "a30dcf5087eca2b87a556decb552220f9da5534a5ee925330043c5f58160efab",
+          "mime": "application/pdf"
+        },
+        "semantic-derived-structure.png": {
+          "bytes": 207027,
+          "sha256": "f25886d9d68efb3e42a53720f495cb63714ce6e857a00c6e9cda3458c8f98dd2",
+          "mime": "image/png"
+        },
+        "synthetic-FINAL.jpg": {
+          "bytes": 7908,
+          "sha256": "ec9d05d441ecbd43e0eabe3e989789c7e20b2238a3e6d82a0ef3702913b916ae",
+          "mime": "image/jpeg"
+        },
+        "font-candidates-preview.png": {
+          "bytes": 274832,
+          "sha256": "660f964203f11f4de2c7964eae4ad1c00da13802db31d4ddfbf95408fa60ba8b",
+          "mime": "image/png"
+        },
+        "font-review-draft-history.png": {
+          "bytes": 256994,
+          "sha256": "95ce192b7e36c95612582114494d1e71010792a95fdf32af1fece2b63a3cbf31",
+          "mime": "image/png"
+        },
+        "canvas-compare-focused.png": {
+          "bytes": 99298,
+          "sha256": "99a148603036a134e44b4a745a88fef704ca35eb1dd4a3e09e4b6dcb0f74510a",
+          "mime": "image/png"
+        },
+        "exception-center-restored.png": {
+          "bytes": 134299,
+          "sha256": "732151cb6ad9d18f63415b2d71bfdb2620e270c25a53b66d031d2be11de37b23",
+          "mime": "image/png"
+        },
+        "object-tools-training.png": {
+          "bytes": 221399,
+          "sha256": "badee609f9d5fe07e44668de253b13f431e44c0d9252315d5bbd2c64604d0138",
+          "mime": "image/png"
+        },
+        "object-tools-history.png": {
+          "bytes": 182571,
+          "sha256": "ab361e41482519fd7021c997893993cc44a6d5e788a52d2637fc9ccb020b23eb",
+          "mime": "image/png"
+        },
+        "canvas-compare-overview.png": {
+          "bytes": 90251,
+          "sha256": "80a42e03b83fc9bcc1c161eb8862e15eb2a205e26d906fc7cf48bbaf079f1229",
+          "mime": "image/png"
+        },
+        "ten-facts-confirmed.png": {
+          "bytes": 144773,
+          "sha256": "567efc748aea5456c59eec49896b1cd37c91aadf8522179ede35bbd513000fc2",
+          "mime": "image/png"
+        },
+        "batch-import-preflight.png": {
+          "bytes": 102584,
+          "sha256": "7bd1d8459eae5490c1ab9f4e7a6220a7f1fb7459799ae00d2040037a32007ba9",
+          "mime": "image/png"
+        },
+        "template-workspace.png": {
+          "bytes": 210684,
+          "sha256": "cca09ddca856b5fa07c582009ce0781ee2b8e5539d30ff64dbeb7461598486c1",
+          "mime": "image/png"
+        },
+        "semantic-search-preserved.png": {
+          "bytes": 174875,
+          "sha256": "6ae88dd06f3a31d500611d07fd0ab519cd61805ba3ba4a65c41b87d9ad93cce5",
+          "mime": "image/png"
+        },
+        "ten-quality-overview.png": {
+          "bytes": 137708,
+          "sha256": "c31c0ae56b24383d3bd76f549711dd4ebbe3f9f2327a49c426371e8c67974f2e",
+          "mime": "image/png"
+        },
+        "diagnostic-preview.png": {
+          "bytes": 152443,
+          "sha256": "a7ea7ad2adf226b95d2aadfb0cc5104fe7a4cc9f8097f7a558e649e81cbf50c3",
+          "mime": "image/png"
+        },
+        "batch-import-cancelled.png": {
+          "bytes": 112288,
+          "sha256": "91040b6597c4310f2b59c2dba30ed898b28a043837db9516a67cf6146c868d03",
+          "mime": "image/png"
+        },
+        "exception-center-excluded.png": {
+          "bytes": 134995,
+          "sha256": "17da0b495b9f92066f5337e1d583cef53ddcb442ddafe6df04e987069849be35",
+          "mime": "image/png"
+        },
+        "output-workspace.png": {
+          "bytes": 248520,
+          "sha256": "c196b26dc019af9c739f68c8fb3aa3e11a813f9ce8372a6defa623df83f0ad1e",
+          "mime": "image/png"
+        },
+        "font-review-undone.png": {
+          "bytes": 258965,
+          "sha256": "e9b05f9dc9a8463d2279a18cc59091798fd21dab478f3e10122ca708a9628060",
+          "mime": "image/png"
+        },
+        "font-candidates-ranked.png": {
+          "bytes": 264866,
+          "sha256": "351f20c31f0c583a6b7bf982e452d1e280a78dd815bff8325fadc0cabebf2ffe",
+          "mime": "image/png"
+        },
+        "font-candidate-line.png": {
+          "bytes": 5162,
+          "sha256": "07a825f2fc2f39b76b9947c5cab374a7f93102910cd2c9c304d41ab3baf06e1b",
+          "mime": "image/png"
+        },
+        "font-review-differences.png": {
+          "bytes": 274545,
+          "sha256": "9a6fe7e9139142420861220f1cb4deb50951e5ab1e7737a168b10a6a638a6653",
+          "mime": "image/png"
+        },
+        "decorated-output-workspace.png": {
+          "bytes": 256921,
+          "sha256": "67c88fbd3353fc4a8d97fcbecb912f7ebf98fab7fc0fed74c3286dfd5774b604",
+          "mime": "image/png"
+        },
+        "object-tools-locked.png": {
+          "bytes": 205775,
+          "sha256": "cfde6fc18e5d5609844c80abc8b035561bc2f1b7912b9d69304326e4c94aad74",
+          "mime": "image/png"
+        },
+        "ten-dataset-learned-draft.png": {
+          "bytes": 124601,
+          "sha256": "416712e94e2994e1e0518d2603cfec175ef8c23b8b763f8401ad9caf3a957ece",
+          "mime": "image/png"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+======================================================================
+ERROR: test_actual_quality_holdout_cannot_be_admitted_through_new_or_legacy_flow (test_trusted_sample_pool.TrustedSamplePoolTests.test_actual_quality_holdout_cannot_be_admitted_through_new_or_legacy_flow)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_trusted_sample_pool.py", line 60, in test_actual_quality_holdout_cannot_be_admitted_through_new_or_legacy_flow
+    gold_service=QualityGold(self.library);plan=gold_fixture.QualityGoldSetTests.plan(self);gold=gold_service.confirm(plan,'Gold reviewer',True);sets=QualitySets(self.library);sets.create(sets.plan('Actual reserved source',[gold['id']],True,True,'Actual source-family review'),'Reviewer',True)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_quality_gold_sets.py", line 20, in plan
+    def plan(self,work=None):return self.gold.plan((work or self.work)['id'],dict(basis='OWNED',reference='Synthetic authored QA source,local evaluation only',use=USE),{domain:'MANUALLY_VERIFIED' if domain in ('field_types','source_readability') else 'INSUFFICIENT_EVIDENCE' for domain in DOMAINS},'Manual source/facts comparison','Original SVG page1 exact object regions;no native Illustrator certification')
+                                    ^^^^^^^^^
+AttributeError: 'TrustedSamplePoolTests' object has no attribute 'gold'
+
+======================================================================
+FAIL: test_batch_high_risk_requires_individual_review_and_explicit_confirmation (test_trusted_sample_pool.TrustedSamplePoolTests.test_batch_high_risk_requires_individual_review_and_explicit_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_trusted_sample_pool.py", line 33, in test_batch_high_risk_requires_individual_review_and_explicit_confirmation
+    self.assertTrue(plan['items'][0]['errors'])
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_equal_bytes_aliases_keep_sources_but_conflicting_current_truth_blocks_both (test_trusted_sample_pool.TrustedSamplePoolTests.test_equal_bytes_aliases_keep_sources_but_conflicting_current_truth_blocks_both)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_trusted_sample_pool.py", line 57, in test_equal_bytes_aliases_keep_sources_but_conflicting_current_truth_blocks_both
+    self.assertEqual(pool.conflicts(self.work['id'])['conflicting_work_ids'],[other['id']]);self.assertEqual(pool.conflicts(other['id'])['conflicting_work_ids'],[self.work['id']]);self.assertTrue(self.store.sample_approval_plan(self.work['id'],fixture.RIGHTS)['errors'])
+                                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+----------------------------------------------------------------------
+Ran 9 tests in 4.875s
+
+FAILED (failures=2, errors=1)

@@ -1,0 +1,15 @@
+{
+  "status": "PASS_BYTE_IDENTICAL_APPLICATION_AND_NATIVE_INPUT_TEST_PATHS",
+  "native_source_commit": "73c77229c385c28b6bd568d94149f12f60913cd0",
+  "formal_source_commit": "bd1e9c5aff9d049d5b5d0bb339bf4bc5d135a2da",
+  "changed_code_files": [
+    "tests/test_workbench_navigation.py",
+    "tools/capture_workbench_navigation.py"
+  ],
+  "unchanged_other_code_files": 567,
+  "native_entry": "tools/capture_input_integration.py",
+  "native_tests": "tests/test_input_learning_integration.py",
+  "application_changes": [],
+  "interpretation": "Only corrected painted-viewport measurements in navigation unit/capture harness;native5input scenarios do not execute those files;native003 source SHA remains original",
+  "scope": "Source equivalence;not Windows or print qualification"
+}

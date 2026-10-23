@@ -1,0 +1,18 @@
+{
+  "status": "CHECKOUT_FAILED_NO_EXECUTABLE_OR_RELEASE",
+  "source_commit": "a45b7638024550ae1f0932bcb251524d5a2ef790",
+  "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39792844827",
+  "job_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39792844827/job/119872897045",
+  "evidence_method": "PUBLIC_GITHUB_JOB_HTML_ANNOTATION_NOT_NATIVE_EVIDENCE_BRANCH",
+  "annotations": [
+    {
+      "step": "Run actions/checkout@v4",
+      "exit_code": 128,
+      "message": "cannot create directory at docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/anonymous-smoke-data-0.2.0-beta.2/assets/0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7-p1-visual-import-0.2.0-dual-recovery-ra8d3c98d5b75520dc97241b8474d80ca: Filename too long"
+    }
+  ],
+  "observed_html_sha256": "ee05681055373d438e10c71437b82028ecd5a49aaed7d07e1599743a6f56c39c",
+  "root_cause": "Windows Git core.longpaths disabled for new archived cache-derived image paths",
+  "product_bytes_changed": false,
+  "next": "Enable longpaths in both native checkout workflows before checkout; repeat final native build only; retain existing source qualification"
+}

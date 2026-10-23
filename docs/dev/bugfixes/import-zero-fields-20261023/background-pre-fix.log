@@ -1,0 +1,17 @@
+test_outer_background_overflow_does_not_block_valid_inner_artworks (test_import_then_analysis.ImportThenAnalysisTests.test_outer_background_overflow_does_not_block_valid_inner_artworks) ... FAIL
+
+======================================================================
+FAIL: test_outer_background_overflow_does_not_block_valid_inner_artworks (test_import_then_analysis.ImportThenAnalysisTests.test_outer_background_overflow_does_not_block_valid_inner_artworks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_import_then_analysis.py", line 81, in test_outer_background_overflow_does_not_block_valid_inner_artworks
+    self.assertEqual(result['items'][0]['state'], 'WAITING_REVIEW')
+AssertionError: 'FAILED' != 'WAITING_REVIEW'
+- FAILED
++ WAITING_REVIEW
+
+
+----------------------------------------------------------------------
+Ran 1 test in 1.682s
+
+FAILED (failures=1)

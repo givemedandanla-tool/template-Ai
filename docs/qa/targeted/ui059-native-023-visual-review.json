@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "reviewer": "SELF_VISUAL_REVIEW",
+  "reviewed_utc": "2026-10-16T12:48:29.804664+00:00",
+  "scope": "All8 actual final native023 images individually opened and inspected; controlled synthetic Linux only",
+  "screens": [
+    {
+      "path": "docs/qa/targeted/ui059-native-023/candidate-changes-01-core-difference-before-apply.png",
+      "sha256": "c1abcd4228107cfa37de66e841cf475cacd1bd7ad35248a13904508c28b90f2b",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui059-native-023/candidate-changes-02-manual-kept-worker-pending.png",
+      "sha256": "e97c94dda02ffcbc7419a981aabe306f178fb6213d46d5a3b1bde2047b13bfd8",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui059-native-023/candidate-changes-03-verified-separate-nonformal-comparison.png",
+      "sha256": "7c44b56e84ac2ed6bcd30a9a3806cde15859e41f20ca934f0391431e652f82ab",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui059-native-023/candidate-changes-04-keep-manual-explicitly.png",
+      "sha256": "411543a2c797620dd886cb18bc8688914108e2a7b8b962d3caac8851737ec6e6",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui059-native-023/candidate-changes-05-phone-dependency-stale-not-exportable.png",
+      "sha256": "4d6af4887e35e8113fa60e63c13453d60e4ee212f76d5c4365e03e9858b9e0c5",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui059-native-023/candidate-changes-06-long-phone-conflict-no-auto-shrink.png",
+      "sha256": "98c9d03de7c31cacb3b32953e3a8b264c66ff5561d49449207922d80ec447e84",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui059-native-023/candidate-changes-07-single-delta-undo-current-full-gate.png",
+      "sha256": "d2857448d55f32871a0dacc9e70866a288789dc00b6b9ccbec1a3e1fe4768aa9",
+      "status": "VISUALLY_REVIEWED"
+    },
+    {
+      "path": "docs/qa/targeted/ui059-native-023/candidate-changes-08-explicit-lock-current-candidate-only.png",
+      "sha256": "5644a9362a7fdb6c6f5fbf0ebf1020bf61896e64aacfc8e9182c48f58930dfbc",
+      "status": "VISUALLY_REVIEWED"
+    }
+  ],
+  "findings": [
+    "Both card views use equal physical scale and aligned object overlays",
+    "Pending manual geometry is shown immediately and remains nonformal",
+    "Explicit safe compare and keep/manual are separate; hard phone overflow cannot be adopted",
+    "Phone change reason and actual affected object ID are visible in existing scrollable result pane",
+    "Single undo and explicit lock show actual property delta and current fullGate state"
+  ],
+  "previous_diagnostics": [
+    "015/017/019 retained; final main dependency notice is visible after scroll fix"
+  ]
+}

@@ -1,0 +1,14 @@
+..........F...
+======================================================================
+FAIL: test_gui_heartbeat_and_foreground_priority_are_measured_without_reading_key_text (test_runtime_supervisor.RuntimeSupervisorTests.test_gui_heartbeat_and_foreground_priority_are_measured_without_reading_key_text)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_runtime_supervisor.py", line 26, in test_gui_heartbeat_and_foreground_priority_are_measured_without_reading_key_text
+    self.assertIn('GUI_STARTUP_WARMUP',self.service.admit().reasons);self.ready();self.assertTrue(self.service.admit().allowed)
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.029s
+
+FAILED (failures=1)

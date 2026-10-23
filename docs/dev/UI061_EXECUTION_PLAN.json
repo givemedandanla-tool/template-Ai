@@ -1,0 +1,317 @@
+{
+  "id": "UI061-EXECUTION-PLAN",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
+  "parent": "UI-061",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "original_clauses": [
+    "**共用語意資料**：在**同一次排版工作階段**修改人物 ROOT 所屬姓名、電話、Email、IG、LINE、公司與聯絡欄位等已確認的來源資料，依**同一來源實體／欄位 ID 與歸屬鏈**傳遞至所有真正引用該資料的候選與實體尺寸。不得以字串相同、欄位位置相似推定為同一人物；不屬於該人物／公司者不可被波及。修改人物與公司隸屬關係可能使配對候選失效，須重新核實歸屬，不可直接複製舊位置。",
+    "**公司與 Logo 強綁**：公司相關資料變更僅影響該公司的合法映射；Logo 以公司實體和**各實體尺寸專用的已核准資產**分開解析與驗證，不能從 A 尺寸直接挪用 B 尺寸的 Logo 圖或既有合格結論。",
+    "**候選版面獨立**：文字框座標、大小、文字水平壓縮、對齊、特製欄位及群組關係的人工修改，預設**只作用於目前候選＋目前實體尺寸的作品實例**；不同模板的幾何與物理尺寸不直接複製，也不暗中覆寫人工鎖定內容。",
+    "**有意跨候選／跨尺寸套用**：如果使用者主動選擇「套用至其他候選／尺寸」，先列出具體目標、可套用的屬性、涉及人物／公司／物件及例外，再給差異預覽、影響範圍和確認。不得以無對應物件、座標比例或欄位名稱推測就強套。無法可靠映射時顯示不相容／待人工處理，**不部分偷偷套用**；可保留成功目標與失敗目標的明確逐項狀態。",
+    "**局部回復**：使用者可回復某個候選某次版面修改或單一套用動作，而不連帶回退其他已確認的人工變更；對**共用來源內容**的回復則必須明示會影響到哪些引用候選，避免「回復其中一張預覽」悄悄將全部人物來源值改回舊資料。支持預覽差異／取消，保留可追溯的操作版本及作用範圍；若版本已過期或回復依賴不存在，須阻擋或要求明確衝突處理，不聲稱一定可無損還原。",
+    "每次共用資料修改產生新的來源版本；候選及尺寸作品記錄引用的來源／模板 `style_version_id`／Logo／字型／模型與規則／人工編輯版本。沿用 UI-059 的版本柵欄，晚到 AI 結果或 UI-058 暫停／恢復結果不得覆寫新值與人工位置。",
+    "同步後，依依賴圖只重算必要內容與受影響候選，**但每個受影響的正式輸出尺寸都必須重新通過整張作品硬性驗證與 UI-019、UI-027 印前 Gate**，含人物公司資訊無損映射、容量 `peopleCapacity`、相鄰／全域不重疊、裁切安全區、固定字級與允許的 X 軸壓縮、完整尺寸 Logo、字型及來源證據。",
+    "GUI 狀態須可辨識：**已同步待重驗／不受影響／人工編輯保留／跨候選套用待確認／無法安全套用／驗證失敗／已重新驗證**，並可直接定位差異。任何候選從過期轉為可正式輸出須有當前版本 Gate 證據，不能沿用另一尺寸 PASS。",
+    "UI-060 補充決策 A 的「最佳候選／可展開比較／問題定位」作為展示入口，與 UI-018 原候選列表重用；不另造同步管理中心，避免重複功能。",
+    "有兩人／兩公司、三候選與二實體尺寸時，僅修改人物甲電話：所有引用**人物甲該欄位 ID**的候選、尺寸反映新電話；人物乙的同名欄位不受影響；每項受影響結果標記待重驗。",
+    "在候選 A／尺寸 1 手動移動姓名框：候選 B 與尺寸 2 位置維持原狀；AI 局部重算不得還原 A 的人工位置。",
+    "主動跨候選套用對齊設定：GUI 先列出可映射與不可映射物件、各目標實際差異；不得把原始物理座標硬複製至不同尺寸，失敗目標保留舊版本與阻擋理由。",
+    "公司 Logo 變更只使引用該公司 Logo 及涉及實體尺寸的候選需要核實；沒有尺寸專用合法 Logo 的目標不能被標記合格。",
+    "回復某候選的「移動姓名框」不改動電話來源，也不影響其他候選；若回復電話來源值，先顯示所有真正引用者的影響清單。",
+    "兩次修改交錯、排版較早運算晚完成或當機恢復時，版本比對阻止舊數據覆蓋新人工內容；不得把舊印前 PASS 當作新版本 PASS。",
+    "僅一個尺寸驗證成功時，可依 UI-027 原核准規則對該合格尺寸進行許可的輸出，不得讓失敗尺寸搭便車。",
+    "優先重用 UI-013、016～019、020～027、034～037、045、057～059 和 UI-060 補充 A 的既有介面與規則，**REUSE/EXTEND EXISTING 優先**。",
+    "本次候選變更不是 UI-043 正式客戶主檔變更；正式更新走 UI-045。不得改寫原始 .ai、已發布模板、正式 Logo 庫或 UI-055 訓練集，也不建立額外永久訂單／草稿資料庫。",
+    "UI-056 D 的未來補樣建議仍是低優先級待另行核准；UI-048 完整登入權限仍依先前決策留後期；不新造「曾設計／已確認購買」狀態。",
+    "低配置 Windows 受 UI-051／058 的保守資源限額保護，未經實機測試不承諾效能。"
+  ],
+  "normative_clause_count": 20,
+  "references": [
+    {
+      "name": "git-merge-v2.51.0",
+      "url": "https://raw.githubusercontent.com/git/git/v2.51.0/Documentation/git-merge.adoc",
+      "bytes": 15143,
+      "sha256": "8ef01610c3356215cd36ed18acf1fa460a7afbd8ac02b23b75d373b9765cece9",
+      "local": "/tmp/ui059-reference-review/git-merge-v2.51.0.txt"
+    },
+    {
+      "name": "jetbrains-local-history",
+      "url": "https://www.jetbrains.com/help/pycharm/local-history.html",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "NetworkX directed descendants",
+      "version": "3.5",
+      "local": "/workspace/template-Ai/.venv/lib/python3.12/site-packages/networkx/algorithms/dag.py",
+      "bytes": 47248,
+      "sha256": "bd67790b9545125d3e7b7b1dab0ce00ab2dc169d306107bbbb86a428294150d9",
+      "review": "Installed DAG/BFS implementation; reuse existing package, no new graph engine"
+    },
+    {
+      "name": "Microsoft Visual Studio Code1.66 Timeline Local History",
+      "url": "https://raw.githubusercontent.com/microsoft/vscode-docs/main/release-notes/v1_66.md",
+      "bytes": 57517,
+      "sha256": "93c81b917f4036ee579cd1a8c93d05cfa2cce8372041f85ace912c08d2ebbef4",
+      "local": "/tmp/ui059-reference-review/vscode-1.66-local-history.md"
+    }
+  ],
+  "actually_reviewed": [
+    "NetworkX3.5 dag.py descendants uses BFS; installed file SHA recorded",
+    "Git v2.51.0 git-merge.adoc stages1/commonancestor2/HEAD3/MERGE_HEAD and no silent change to existing local modifications",
+    "Microsoft VSCode1.66 release notes Local History compare/restore/delete, maxFileSize/maxFileEntries/mergeWindow; reuse workflow only",
+    "JetBrains URL unavailable; not used as a reviewed design basis"
+  ],
+  "math": [
+    "Exact stable source entity/field ID joins; unique compatible consumer mapping required, never infer from equal text or normalized geometry",
+    "Shared semantic data propagation follows actual input graph references; manual geometry remains independently versioned per candidate and physical size",
+    "Cross-target action is a bounded explicit plan with per-target preconditions/actual delta; incompatible targets unchanged with named reasons",
+    "Single-target inverse uses existing per-property delta receipts; source-value undo must preview all true consumers and advance source generation"
+  ],
+  "reuse": [
+    "Existing InputGraph compile/source_entity_id/field_ids and its bounded undo history",
+    "Existing MultiSizeWorkflow/Dialog per-size Logo resolution/stamps/independent gates/output",
+    "Existing candidate_edit prepare/calculate/install, provisional and manual delta/history; existing MainWindow.run_job max1 worker, no new pool/queue/DB",
+    "Existing UI060A result presentation, UI059 manual/context/source generation fence and UI058 encrypted short recovery"
+  ],
+  "packages": [
+    {
+      "order": 1,
+      "scope": "Audit existing multi-size and stable-source reference shapes; explicit synchronization/cross-target plan contract and tests"
+    },
+    {
+      "order": 2,
+      "scope": "Shared data sync preserves all manual geometry/locks, resolves each size Logo independently; old results fenced"
+    },
+    {
+      "order": 3,
+      "scope": "Explicit compatible target align/color/lock preview/apply plus per-target statuses/undo; no cross-size coordinate copy"
+    },
+    {
+      "order": 4,
+      "scope": "Native twopeople/twocompanies/threecandidates/twosizes cases and full original20 mapping"
+    }
+  ],
+  "limits": [
+    "No duplicate UI060 topic; UI061 already approved; do not reask",
+    "No geometry scaling/fuzzy name inference/published template/business customer/Logo/train writes/new permanent drafts",
+    "Resource budget and single existing worker; no untested reference Windows performance claim"
+  ],
+  "next_action": "Coherent affected regression then UI062; immutable full batch/native/publication Gate required before parent completion.",
+  "targeted_checks": [
+    {
+      "log": "docs/qa/targeted/ui061-exact-target-plan-001.log",
+      "status": "FAIL",
+      "tests": 10,
+      "reason": "Unchanged property proposed an empty object_tools history; retained diagnostic"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-exact-target-plan-002.log",
+      "status": "PASS",
+      "tests": 10,
+      "reason": "Skip unchanged properties/lock; bounded unique stable-ID join, no geometry copies, target statuses and pin fencing"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-multisize-source-reuse-004.log",
+      "status": "FAIL",
+      "tests": 20,
+      "reason": "New exact revalidate exposed existing MultiSize calculate did not pin registered source;4FAIL/1ERROR retained"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-multisize-source-reuse-005.log",
+      "status": "PASS",
+      "tests": 20,
+      "reason": "Pin exact published source during every size calculation"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-manual-source-sync-006.log",
+      "status": "PASS",
+      "tests": 28,
+      "reason": "8newactual tests cover manual revalidate/source sync/long locked text/source identity conflict resolution/per-size Logo/cancel/resource budget"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-explicit-cross-batch-008.log",
+      "status": "PASS",
+      "tests": 28,
+      "reason": "10new actual batch tests: explicit confirmation/no GUI access from worker, nonformal calculation copies, safeB90-only apply/failedC100 unchanged, originalsource no writes, independent singleundo, source/target/ABA late fences/cancel/UNKNOWN/no coordinate injection"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-existing-editor-matrix-integration-010.log",
+      "status": "PASS",
+      "tests": 34,
+      "reason": "Existing matrix, candidate edit/history/dispatch regression after optional controller/background hook integration"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-source-state-retention-regression-012.log",
+      "status": "FAIL",
+      "tests": 2,
+      "reason": "Actual GUI source recalc failure incorrectly made oldservice current; source sync dropped unchecked manual100mm entry"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-source-state-retention-fixed-013.log",
+      "status": "PASS",
+      "tests": 19,
+      "reason": "Separate context_current for callback admission and is_current for actual service generation/root; sourceSync includes all prior sizes and manual recalc preserves prior sizes"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-reused-editor-native-014.log",
+      "status": "FAIL",
+      "tests": 17,
+      "reason": "5 fixture cleanup errors: parent already destroyed dialogs before redundant unittest addCleanup; functional assertions completed; retained diagnostic"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-reused-editor-native-015.log",
+      "status": "PASS",
+      "tests": 17,
+      "reason": "Use Qt parent ownership; actual local move/undo/samepool/no dispatcherqueue, late source+preserving sync, compare/adopt, resource waitcancel, destroyed dialog callback"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-cross-source-fence-017.log",
+      "status": "PASS",
+      "tests": 24,
+      "reason": "Source registry/dependency pre/post batch fence and shared local alignment/color controls"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-cross-confirmation-native-018.log",
+      "status": "FAIL",
+      "tests": 16,
+      "reason": "4 GUI fixture setup errors: missing reused adapter helper,12backend testsPASS; retained diagnostic"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-cross-confirmation-native-019.log",
+      "status": "PASS",
+      "tests": 24,
+      "reason": "4 actual cross GUI+12batch+8local GUI: align source via actualeditor, safe90only/fullGate/failed100 unchanged, changedcontrol/no mutation, admissioncancel/sourceDBchanged whileworker blocked, actualcolor valid/invalid"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-source-undo-consumers-021.log",
+      "status": "PASS",
+      "tests": 18,
+      "reason": "3exactsourceconsumer tests+2 actual undo/redo confirmation GUI +existingcustomer graph/cross GUI; draftonly, Cancel unchanged, bothsize scopes listed"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-original-scope-native-023.log",
+      "status": "FAIL",
+      "tests": 6,
+      "reason": "2expected-safe cases failed because authored fixture name18pt full glyph height exceeded8mm box; actual original issue confirmed by measurement, thresholds unchanged"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-original-scope-native-024.log",
+      "status": "PASS",
+      "tests": 6,
+      "reason": "Correct authored fixture namebox11mm/phone positions, retain18pt and allGate constraints; actual2people2companies/3candidates/2sizes/sourcephone exactID/sharedprop/undo/lockedlongtext/Esc"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-visual-state-company-mapping-027.log",
+      "status": "PASS_BASELINE_ONLY",
+      "tests": 16,
+      "reason": "Edit script precondition assertion failed before any write; ran unchanged baseline, not evidence of intended visual fixes"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-visual-state-company-mapping-028.log",
+      "status": "PASS",
+      "tests": 24,
+      "reason": "Actual stale row labels/historical details/outputmode reset and candidate combo consistency; fixture adds independent companyname10pt slots, preserves Logo and name18pt/fullGate"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-logo-identity-regression-031.log",
+      "status": "FAIL",
+      "tests": 2,
+      "reason": "Actual confirmed-graph same-name differentcompany explicitLogo and missingbinding bothwrongly qualified; old explicitpin branch onlycompared names"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-logo-identity-fixed-032.log",
+      "status": "PASS",
+      "tests": 34,
+      "reason": "Reuse LogoStore.match selected_id in explicitcalc and outputrevalidate; candidate_risk.bind_source checks placedLogo known source_entity_id against current registrybinding/size, adds derived CURRENT_LOGO_IDENTITY unknown onfail"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-common-logo-gate-034.log",
+      "status": "PASS",
+      "tests": 2,
+      "reason": "Actual placed wrong-registry same-name Logo; removed binding; derived condition restoration preserves unrelated UNKNOWN; cross source dependency rejects invalid identity."
+    },
+    {
+      "log": "docs/qa/targeted/ui061-combined-037/summary.json",
+      "status": "PASS",
+      "tests": 163,
+      "modules": 17,
+      "reason": "Coherent current UI059/60/61 +existing source/risk/recovery; actual exits0/no skips/Qt errors."
+    }
+  ],
+  "implementation_limits": [
+    "Original2people2company3candidate2size complete native workflow/capture and all20 mapping stillpending",
+    "Need explicit Esc-while-running regression; current reject guard included but not separately exercised",
+    "No required reference Windows/private Illustrator qualification; all narrowtests syntheticLinux",
+    "Fresh immutable fullbatch/capture/publication Gate stillrequired for UI059/UI060A/UI061; historical12/28 remains"
+  ],
+  "current_implementation": [
+    "MultiSize init compiles same stable graph identities for all dimensions, original Logo choices resolved independently",
+    "Total200candidate preflight with no partial truncation; entry retains actual resolved per-size Logos",
+    "calculate_preserving performs current normal calc then reuses candidate_edit RECHECK on manual exact field/entity references; preserves geometry/locks/history/current shared text; incompatible original manual result stays explicit UNKNOWN",
+    "Output revalidate checks original exact published source pin while keeping manual candidate geometry; uses existing prepare/calculate whole-card service",
+    "Derived SHARED_SOURCE_SYNC_REQUIRED clears only after exact source references recover; unrelated manual required conditions retained",
+    "candidate_edit restricted CROSS_PROPERTIES proposal permits only align/color/locked and protects locked targets/fixed geometry/fonts/owner",
+    "candidate_sync prepare_cross_batch copies envelopes on GUI thread; calculate_cross_batch uses only existing calculate_edit on worker and returns nonformal copies; install_cross_batch rechecks source/alltargetpins and installs only fullGatePASS; failed/incompatible unchanged with named status",
+    "Actual positive target90 and failed missingLogo target100 plus all stale/undo/cancel guards tested",
+    "CandidateEditDialog accepts optional controller; existing default main dispatcher unchanged",
+    "envelope_current extracted to shared function; new multi_size_edit SizeEditAdapter/Controller has no queue/pool/DB and uses existing MultiSizeDialog.background/Main.run_job GEOMETRY/cancel/current guard",
+    "Matrix exposes local editor/shared source editor/sync; start reuses calculate_preserving instead of discarding manual entries; first legacy launch adopts exact same values as stable InputGraph",
+    "Matrix background accepts resource_kind/cancel/on_error/require_current; actual per-size candidate selection retained in combo and FINAL uses formal_eligible",
+    "context_current validates current request inputs/root/generation independently; is_current also validates service generation/library, so failed new request cannot release old service",
+    "Source sync recalculates union of prior size entries including unchecked manual instances",
+    "New candidate_sync_dialog CrossPropertyDialog is compiled/wired to existing matrix; previews chosen objects/properties/targets, explicit confirmation, original background worker, per-target status. Not yet specific tested/visually reviewed",
+    "Crossbatch source_dependency_pin bindchecks exact source/current trust/byte freshness and actual asset/engine/source-root dependency; rechecked before install, modified plans recomputed from source/targets",
+    "CrossPropertyDialog releases ephemeral target adapters on every done/error, read-only target labels; per-target actual currentrisk shown with proposed attribute delta",
+    "Actual source alignment via reusededitor and explicitconfirmed Crossdialog installs only safe90 target; missingLogo100 preservesoldobject; sourceDB external mutation during worker rejectsboth",
+    "Local editor actualcolor valid/invalid revalidation and alignment properties verified; target controls/source version changed afterpreview remain guarded",
+    "source_change_impact collects live main/multi-size consumers by exact stable field/entity IDs; per-consumer field order prevents unrelated person invalidation after global array shift; missing IDs conservatively expands, no fuzzy strings",
+    "Existing InputGraphDialog shows readonly source-change impact list; undo/redo explicit actual modal consumer list with Yes/No; only edits local draft until separateadoption",
+    "MultiSizeDialog/CrossPropertyDialog reject overrides cancel/hold while ownedjob running, preventing Esc deletion of active callbacks; specific Esc test stillnext",
+    "New sync_workflow_fixture authors actual two companies with independently approved geometric marks, A90/B90 valid and C100 lacks only companyBeta100 exactasset; two people have equal initial phone strings but distinct sourceIDs",
+    "6 original-scope tests actual originalworker prove personA phone only across3, Bphone unchanged, manualAonly/independentB,C geometry, singleundo keeps currentphone, localSourceAlign→safeB90-only/failedC100 unchanged, lockedA+longphone blockswithoutshrink, actualEsc cancelsadmission withoutdestroyingowner",
+    "Critical Logo explicitpin name-only bypass actual0312FAIL fixed; every explicitsize selection now existingLogoStore.match exact entityID/registrycompany_id/currentversion/size, invalidchoice never fallsback",
+    "Output revalidate repeats exactentity/asset match; bind_source adds derived CURRENT_LOGO_IDENTITY check for placed Logos with stable source_entity_id, known mismatch/unbound becomesrequiredUNKNOWN ratherthanformal",
+    "Sourcecross dependencycheck now includes CURRENT_LOGO_IDENTITY condition; narrow new addition awaits nextcoherentregression"
+  ],
+  "historical_implementation_limits": [
+    "First module builds transient preview plans only, no app GUI/apply yet; do not claim full UI061 or formal qualification",
+    "Unit fixture has two same-name people/two companies and three candidate previews across two sizes; deliberately not full Logo/source qualification evidence",
+    "Existing MultiSizeWorkflow.revalidate currently demands published template digest equal candidate geometry; must extend to preserve manual geometry using original source pins and candidate_edit recheck",
+    "Existing MultiSizeDialog.background reuses original MainWindow.run_job but needs explicit resource-kind/cancel/error/current-source fencing when new edit/sync actions integrate",
+    "New controller/source sync UI is not yet covered by new specific native tests; existing34 regression PASS only",
+    "Known pending source-sync state edge: current is_current does not compare service generation, so failed recalc could leave oldservice incorrectly current after request metadata advances; add regression and fix, use separate context_current for callback admission",
+    "Current start only checked sizes; must retain all existing size instances on source sync, including unchecked previous manual rows"
+  ],
+  "native_capture_review": {
+    "026": {
+      "status": "CAPTURE_PASS_DIAGNOSTIC_VISUAL_CHANGES_REQUIRED",
+      "views": 13,
+      "qt_uncaught": 0,
+      "individual_views_opened": 13,
+      "findings": [
+        "Stale global context still displayed previous VALID row/body without per-row stale marker; now corrected",
+        "Programmatic selectedcandidate didnot update combo text; now synchronized",
+        "Cross target name column too narrow; now explicitwidth",
+        "Authored company name omitted as independent textslot causing input-source preflight warning despiteapprovedLogo; fixture now explicitly provides companyname+Logo slots,24targetPASS"
+      ],
+      "actual_verified": [
+        "Phones Aonly/Bsamevalue separate",
+        "ManualAonly+independentB,C",
+        "Explicitcross B90pass/C100keepsold",
+        "ExplicitAlpha90markversionchanged Beta90/Alpha100unaffected",
+        "Sourceundo3consumer modal thenlocaldraft/globalunchanged untiladopt",
+        "Actualsingleundo targetB preservescurrentphone/sourceA",
+        "RealPNG qualified90FINAL andfailed100PREVIEW separate"
+      ]
+    },
+    "030": {
+      "status": "PASS",
+      "views": 13,
+      "qt_uncaught": 0,
+      "visual_review": "docs/qa/targeted/ui061-native-030-visual-review.json",
+      "all13_individually_reviewed": true
+    }
+  },
+  "coverage": "docs/dev/UI061_CLAUSE_COVERAGE.json"
+}

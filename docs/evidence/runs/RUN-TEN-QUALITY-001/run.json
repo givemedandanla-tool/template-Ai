@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "RUN-TEN-QUALITY-001",
+  "created_utc": "2026-10-14T15:33:42.974405+00:00",
+  "source_commit": "2f1838a7e1a2eea9f4c5fc43603ac36c2d1fce57",
+  "source_manifest_sha256": "59869240a393f88a1a83ce5e4cfad2fd5a347ea90049164e5e186ee8a6d0193f",
+  "source_unchanged": true,
+  "status": "FAIL",
+  "test_count": 243,
+  "passed": 242,
+  "capture_exit_code": 1,
+  "tests_sha256": "41a5ae5784fce6cf3e250cecd28583965617ed3ec07b55e6329a6145e1031a33",
+  "attachments": {
+    "source-manifest.json": {
+      "bytes": 14752,
+      "sha256": "a72d2e5a38dded8ab8feb5fc0981dce4f2000752e03ac797796b1671fe2a0bbc",
+      "mime": "application/json"
+    },
+    "tests.json": {
+      "bytes": 45621,
+      "sha256": "41a5ae5784fce6cf3e250cecd28583965617ed3ec07b55e6329a6145e1031a33",
+      "mime": "application/json"
+    },
+    "capture.log": {
+      "bytes": 55,
+      "sha256": "3bd6a10f7caf96e91bc85af78c0cae82c45f4a25f0f349f0379e44e25318b093",
+      "mime": "text/plain"
+    },
+    "commit.json": {
+      "bytes": 1400,
+      "sha256": "e8fa9549ae4c3de2b93c8f4cf8fac52f9aa534605f9b752abf458a30e83fe069",
+      "mime": "application/json"
+    },
+    "tree.json": {
+      "bytes": 329194,
+      "sha256": "1ea93952c5f1d6c9c9b87545db630371c4c97b5f4acece0ebc25d51f9ae4d59d",
+      "mime": "application/json"
+    },
+    "tests.log": {
+      "bytes": 41694,
+      "sha256": "ebba70af4d8272ded6d28d1aea979fd3e1b48863bd1b1c3f47888ade8489a61f",
+      "mime": "text/plain"
+    },
+    "junit.xml": {
+      "bytes": 44750,
+      "sha256": "b9854d3e30248bbd3db053e07029fa2e05042bd72ed167c1b1e6505347df04f2",
+      "mime": "application/xml"
+    },
+    "claims.json": {
+      "bytes": 66584,
+      "sha256": "935301e17a30045cc25b10d6bb463302fe8d0aab392c298e808cd436d925ad45",
+      "mime": "application/json"
+    }
+  },
+  "environment": {
+    "python": "3.11.16",
+    "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "PySide6": "6.8.3",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+    "qt_platform": "offscreen"
+  },
+  "command": "python tools/run_evidence.py --run-id RUN-TEN-QUALITY-001 --source-commit 2f1838a7e1a2eea9f4c5fc43603ac36c2d1fce57 --commit-json <readback> --tree-json <readback>",
+  "review_level": "SELF_VERIFIED",
+  "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
+  "not_verified": [
+    "真實私人 Illustrator 全面視覺一致",
+    "VivoBook／RTX 5050",
+    "實體印刷",
+    "Windows EXE",
+    "獨立覆核"
+  ]
+}

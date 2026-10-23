@@ -1,0 +1,43 @@
+{
+  "status": "PUBLISHED_NATIVE_FULL_DOWNLOAD_VERIFIED",
+  "source_commit": "8b95b10b300dbead4c51264100af7bdd644433ce",
+  "observed_utc": "2026-10-21T17:11:37.677372+00:00",
+  "public_release_page": {
+    "status": "PASS",
+    "http_status": 200,
+    "url": "https://github.com/givemedandanla-tool/template-Ai/releases/tag/v0.2.0-beta.1",
+    "page_sha256": "e5011ac4d0df381fd1f364c87b68cd8db3a04d81a314a24243127e879c7a788c"
+  },
+  "public_small_asset_readback": [
+    {
+      "asset": "release-manifest.json",
+      "status": "PASS",
+      "http_status": 200,
+      "bytes": 232193,
+      "sha256": "193a5047206fee3878792d59313ac0a07e512780f6c82ad82c8b22b68cb02d0f",
+      "comparison": "EXACT_BYTES_MATCH_NATIVE_GIT_EVIDENCE"
+    },
+    {
+      "asset": "SHA256SUMS.txt",
+      "status": "PASS",
+      "http_status": 200,
+      "bytes": 197,
+      "sha256": "5578acedfb6c5d63b56c6e6513f53233d0d150595dbcf1a813fdfc1436c4feab",
+      "comparison": "EXACT_BYTES_MATCH_NATIVE_GIT_EVIDENCE"
+    }
+  ],
+  "tag_refs": {
+    "refs/tags/v0.2.0-beta.1": "5de3a35394e2ac564d201746389619d189a1f5b1",
+    "refs/tags/v0.2.0-beta.1^{}": "8b95b10b300dbead4c51264100af7bdd644433ce"
+  },
+  "native_complete_archive_verification": {
+    "status": "PASS",
+    "source_commit": "8b95b10b300dbead4c51264100af7bdd644433ce",
+    "version": "0.2.0-beta.1",
+    "downloaded_archive_sha256": "0429fcbf0d4b2edb17a459b90ab6c04903a577570a739bc6247f33424ec0d526",
+    "checked_files": 1220,
+    "verification": "ACTUAL_GITHUB_RELEASE_ASSETS_DOWNLOADED_AND_CHECKED"
+  },
+  "cloud_archive_download": "NOT_REPEATED_NATIVE_RUNNER_ALREADY_DOWNLOADED_AND_VERIFIED_ALL_MEMBERS",
+  "billing": "NO_NEW_PAID_SERVICE_TRIAL_OR_EXTERNAL_MODEL_ENABLED_ACCOUNT_TOTAL_NOT_AUDITED"
+}

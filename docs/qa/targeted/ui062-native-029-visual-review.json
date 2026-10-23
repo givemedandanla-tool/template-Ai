@@ -1,0 +1,79 @@
+{
+  "status": "PASS_CONTROLLED_NATIVE_VISUAL",
+  "individually_opened": 12,
+  "files": [
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-01-current-candidate-context.png",
+      "sha256": "f3b06b0827c924c124f9db2055492caaaaaa205656631f7d8c8c8abbcfc5c2df",
+      "reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-02-existing-logo-correction.png",
+      "sha256": "5c74ae824fbb6b7c3db6aaa3a0b809aa7dec2731bd4666f6f9d5ab742f589cd7",
+      "reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-03-exact-candidate-view-return.png",
+      "sha256": "7d96b138c37275c5335cd664f64ada8283ce5654b6bd97d224a357ce0cf5e7de",
+      "reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-04-real-unsaved-close-choices.png",
+      "sha256": "e1e3ff0c63da0eb46f063dc33d92db9429f4aa7e7e4cc9b7ade7ba6d0cb19668",
+      "reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-05-actual-save-failure-not-saved.png",
+      "sha256": "4e69219afa28d03f90c168e22487ed587ae84f9a7d7f0d0aa2076a316671f1c0",
+      "reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-06-actual-encrypted-short-recovery.png",
+      "sha256": "cd89e8512f700c9a97c81033ef100c05f2d2cb324bf86ec841ccba4dd4a680ab",
+      "reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-07-new-manual-version-safe-fallback.png",
+      "sha256": "a37e3e6370b6f4049ef9126f0ff078708b4dd892592aae173c72c0bc3005742a",
+      "reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-08-small-window-current-work-return-visible.png",
+      "sha256": "ab8a0abd789b3f95481dd3ef5dcd4d4497bd5d0e21c84eec515e4a257a8e977e",
+      "reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-09-size100-existing-logo-correction.png",
+      "sha256": "70bc510c2f141ef32d3bf7d66a6b11f6d7a449a59b5184e6422db0c76f80a153",
+      "reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-10-return-original100-blocked-candidate.png",
+      "sha256": "4533ec05179fc18e0f5bfe530f9b4b7dd77f30193f4205dcc90195424ac22935",
+      "reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-11-changed-shared-source-size-pending.png",
+      "sha256": "c169671bf5cc5a59108e86b7728ce73cf1551eaa5989f73678b24106d08b4692",
+      "reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-029/workbench-navigation-12-return-preserves-unapplied-property.png",
+      "sha256": "5c035d1a0c0bf858cf645ba1b93df44aab85f596dbfcce85afa66d0757e0ccbd",
+      "reviewed": true
+    }
+  ],
+  "checks": [
+    "Current mode/candidate/size context contains no actual personal values",
+    "Actual unsaved close choices and disk failure/success distinct; terminalglobalstatus accurate",
+    "Visible fallback reason after newer manual/source versions; no oldgeometry installed",
+    "960x640 actual canvas visible/reachable via existing rail; full controls remain scrollable",
+    "100x60 Logo correction opens100; return100 remains blocked missingBeta dedicatedLogo",
+    "Pending X9 retained while actual saved geometry X8 unchanged",
+    "Exact logical scene centre after settled Qt layout is asserted under unchanged.2mm tolerance; zoom/selection/page scroll retained"
+  ],
+  "limits": [
+    "Viewport size may change across mode layouts; logical viewcentre/zoom asserted, pixel-identical screenshot notclaimed",
+    "No Windows/privateIllustrator qualification"
+  ]
+}

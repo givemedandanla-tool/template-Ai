@@ -1,19 +1,91 @@
-# template-Ai｜門禁卡 AI 智慧自動排版
+# Template AI
 
-狀態：**需求訪談已收斂（52 題）；技術研究初稿；尚未開始程式開發。**
+Windows x64內部實測版 **v0.2.0-beta.2 已發佈**：[下載完整ZIP（約317 MB）](https://github.com/givemedandanla-tool/template-Ai/releases/download/v0.2.0-beta.2/TemplateAI-v0.2.0-beta.2-windows-x64.zip)。完整解壓後執行TemplateAI/TemplateAI.exe，保留_internal與engines；不需另裝Python或Inkscape，固定使用包內1.4.2。199項Windows來源與真正EXE21檢查通過，公開下載13060檔校驗通過。私人作品／實機效能與印刷資格待本機回饋。見[本版交付報告](docs/dev/releases/v0.2.0-beta.2/DELIVERY_REPORT.md)及[使用說明](docs/dev/releases/WINDOWS_BETA_QUICK_START.md)；下方較早功能紀錄保留歷史脈絡。
 
-## 目標
-Windows GUI：從多份 Adobe Illustrator .ai 歷史門禁卡作品學習排版規則，歸納少量可解釋、可審核、可重用模板，依輸入資訊與指定尺寸完成排版、驗證及 PDF/PNG/JPG 輸出。
 
-## 文件導覽
-- [需求基準](docs/REQUIREMENTS_BASELINE.md)
-- [技術研究初稿](docs/TECHNICAL_RESEARCH.md)
-- [驗收與研究待辦](docs/VALIDATION_PLAN.md)
-- [開發續行與決策規範](docs/CONTINUATION.md)
+開發用[除錯與查重工具](docs/dev/debug_tooling/README.md)已在既有環境建置：固定版本、本地掃描、保留歷史基準與安全交接。開發工具與來源、報告及交接沿既有GitHub工作脈絡保存；產品離線操作不依賴這些工具，實際遠端狀態以STATE與讀回收據為準。
 
-## 當前狀態與界線
-- 52 題需求已結束，後續修訂需記錄差異，不自行增加訪談題數。
-- **尚未證實** Illustrator 解析、字型量測、規則推導、未知尺寸生成與輸出品質可達到要求。
-- 本倉庫文件是需求及研究基準，不是功能完成證據。
-- 不將客戶真實個資、商用字型或未授權 AI 設計檔直接提交 GitHub。
-- 不在缺乏實際測試時宣稱成功，不以模擬結果取代 Illustrator 實機驗證。
+修正版建置已接入[驗證快取與影響選測規則](docs/dev/releases/RELEASE_SPEED_POLICY.md)，[實測與限制](docs/dev/releases/RELEASE_SPEED_DELIVERY.md)已保存；此輪只優化發佈工具，未改寫現有Release。
+
+## Human／AI 從這裡開始
+
+開發或恢復先讀 [AGENTS.md](AGENTS.md) → [開發狀態](docs/dev/STATE.json) → [交接](docs/dev/HANDOFF.md) → [要求與功能清單](docs/dev/FEATURES.md)／[機器登錄](docs/dev/REQUIREMENTS.json) → [工作紀錄](docs/dev/WORK_LOG.md)。[checkpoint 流程](docs/dev/DEVELOPMENT_PROTOCOL.md)與[證據設計／成熟來源](docs/dev/EVIDENCE_DESIGN.md)供 Human 和 GPT 共用。不要只讀歷史第一版狀態。每輪開發的計數見 [進度統計](docs/dev/PROGRESS.md)，前後差異見 docs/dev/progress/。
+
+**開發以零例行問答、checkpoint 與 GitHub 持久化為核心。本輪授權的 v0.2.0-beta.2 Windows 內部實測版已發佈；一般開發提交不自動打包，下載狀態見頁首與 STATE。**
+
+**v0.1.26：新增程式內問題報告、安全HTML／JSON離線保存與歷史重開／版本定位。** 詳見[報告操作指南](docs/dev/DIAGNOSTIC_REPORTS_USER_GUIDE.md)。產品不自動外傳，正式驗收以STATE為準。
+
+**v0.1.25：擴充客戶建檔／搜尋與逐欄回寫、加密資料庫部分備份、尺寸Logo只讀管理、當次排版單worker控制、候選局部修改、多作品安全批次、來源重掃、分類評估／隔離修復與重大規則重審。** 操作與每項未做範圍見 [使用指南](docs/dev/SEVENTY_USER_GUIDE.md)，最新驗收與父需求數量以 STATE／PROGRESS 為準。這些是明列範圍實作，仍不是全部父需求完整完成。幾何學習不是完整自動辨識或深度模型；分類評估不冒稱模型推論／獨立品質PASS；完整個資權限、指定設備及印刷仍待後續。
+
+[70個部分父需求的完整化缺口報告](docs/dev/PARTIAL_70_GAP_REPORT.md)與[AI可讀清單](docs/dev/PARTIAL_70_GAP_ANALYSIS.json)逐條保留現況、缺口及驗收，不把83個子功能當全產品完成。
+
+**桌面工作台已重構**：三個工作區、完整預覽與相對位置微調、按狀態的主要動作及進階工作引導；普通說明白話、技術內容可展開。日常離線，問題報告由使用者手動匯出，私人資料留本機。見[桌面指南](docs/dev/DESKTOP_WORKSPACE_USER_GUIDE_20261020.md)及[本輪交付結果](docs/dev/GUI_OFFLINE_FINAL_REPORT_20261020.md)。
+
+## 開啟與快速試用
+
+家族／共用規則編輯：模板目錄→「家族與共用規則」，或設計學習視窗第4頁；支援大量工作集、批次與單一家族規則／來源核對／案例試排。見[操作指引](docs/dev/TEMPLATE_EDITING_USER_GUIDE.md)及[本輪驗收](docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.md)。
+
+本地 AI 學習與診斷操作／合成驗收見 [本地學習復原指引](docs/dev/LOCAL_LEARNING_RECOVERY_GUIDE.md)。私人作品、字型與模型留在本機，無需提供給 Codex。
+
+目前提供原始碼及頁首的Windows內部實測版；私人作品、使用者硬體與實印仍須本地驗證。最新來源綁定驗收見 [STATE](docs/dev/STATE.json) 與 [進度](docs/dev/PROGRESS.md)，證明媒體保存例外見 [本輪清單](docs/dev/DIAGNOSTIC_REPORTS_PUBLICATION.json)；程式／測試／文字證據完整保存，原附件及hash清單保留。
+
+原始碼：第一次安裝 64 位元 Python 3.11，明確執行 `PREPARE_WINDOWS.bat` 準備專案依賴；日後雙擊 `START_WINDOWS.bat` 完全離線啟動，不再自動安裝套件。首次離線準備、私人資料備份及手動匯出安全報告見[本機快速開始](docs/dev/LOCAL_DESKTOP_QUICK_START.md)。
+
+最快路徑：「模板與圖片」加入合成示範 → 驗證並發布 →「排版與輸出」填入匿名示範 → 開始排版 → 輸出 PDF／PNG／JPG。
+
+## 核心功能
+
+- AI／PDF／SVG／PNG／JPG 只讀匯入，Inkscape 解套與 Qt PDF／SVG 備援；內容快取和獨立檔名登錄。
+- 框選矩形作品、毫米標定、欄位／完整 Logo 標記、視覺核對與人工確認。
+- 多作品獨立保存、歷史恢復、重開返回上次來源／作品；過期標記不能覆蓋新版本。
+- 標記形成有來源的規則模板；草稿、發布與新版本，正式版本唯讀。
+- 固定字級與實際字型量測、受限字寬適配、人物公司歸屬及同尺寸 Logo。
+- 合法本機字型複本持久保存、啟動時核對及載入；不安裝系統、不隨交付包重發字型。
+- 同尺寸乾淨固定背景、來源／實際呈現並排核對、向量或圖像呈現、內容雜湊與失聯保護；可指定欄位文字色彩。
+- 同尺寸同容量候選、完整映射、無解／缺 Logo 阻擋與過期判定。
+- PDF／PNG／JPG、獨立 PREVIEW、安全排他寫檔。
+
+## 文件與驗證
+
+- [操作說明與限制](docs/FIRST_VERSION.md)、[實際狀態](docs/FIRST_VERSION_STATUS.md)、[第三方選型](docs/THIRD_PARTY.md)
+- [本輪開發授權](docs/decisions/2026-10-12-FIRST-VERSION-AUTHORIZATION.md)
+- [24 小時開發授權與本輪進展](docs/decisions/2026-10-13-CONTINUED-DEVELOPMENT.md)
+- [功能清點與建議計畫](docs/DEVELOPMENT_PLAN.md)、[需求基準](docs/REQUIREMENTS_BASELINE.md)
+- [較新定案](docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md)、[續行規範](docs/CONTINUATION.md)
+
+```bash
+python -m unittest discover -s tests -v
+python tools/validate_first_version.py
+```
+
+驗證產生實際測試、真實 Qt 畫面、合成 PDF／PNG／JPG 與檔案雜湊。真實私人 Illustrator 樣本、16 GB＋RTX 5050／VivoBook 效能及實體印刷仍需指定樣本與設備實測。
+
+請以合成／合法去識別資料測試，原稿、商用字型、Logo 或個資不自動送到 GitHub。所有定案與實際成果持久化到 GitHub，研究候選／已實作／已驗證各自標示。
+
+## 字型替代候選唯讀流程
+
+所有模式選單「共用字型管理中心」→「替代候選排名與唯讀預覽」。輸入完整單行文字、固定pt、框寬與最小水平比例，查詢後明確選取候選，再重新核驗預覽；可勾選比較中心原先選定字面的自然字寬。來源身份、覆蓋率、mm字寬、水平比例、比較差異、排名及排除理由均可查；原稿未知保留未知。每輪最多64字面／64 MiB資產大小、10個展示候選，超額提示部分搜尋。預覽不套用模板或安装系統字型，受控草稿另從明確審核流程進入；完整父題仍見功能清單。
+
+## 受控字型替代與歷史
+
+從核准本機候選進入「模板影響／草稿替代審核」，只將臨時驗證文字填入明確選取的一欄，再背景量測差異。高風險逐欄查看實際字形預覽並核准後，主動勾選、確認範圍，才建立新版本草稿。原草稿／發布版本保留，其他欄位、字級、尺寸與Logo不改。全批交易／CAS與持久歷史可從共用選單「字型替代審核歷史」Undo／Redo；後續編輯／發布會阻擋覆蓋。核准是草稿操作，仍須實際人物資料、版面與正式輸出驗證，不表示原稿外觀相同或字型嵌入授權。
+
+## 原稿與前後矩形同步對照
+
+逐欄詳審進入三視圖：原稿衍生參考、原模板已知文字、僅本欄替代的完整矩形。共用縮放／平移，列表或框選同一stable ID同步高亮與定位；可符合全頁／矩形／所選框。精確來源歷史版次與crop可逆映射；未物理標定圖片標參考單位，來源失聯及原字型未驗證保留未知。對照不寫模板／字型／DB；返回後明確核准仍須背景再驗與套用前驗證，檔案／來源context／template clock異動阻擋。
+
+完整長期目標與全部75父題路線見 [PROJECT_GOAL](docs/dev/PROJECT_GOAL.md)／[PROJECT_ROADMAP](docs/dev/PROJECT_ROADMAP.md)。本輪三視圖與定位附件見RUN-CANVAS-COMPARE-002；SELF_VERIFIED合成測試不代表真實AI视觉／Windows／指定硬體或獨立品質。
+
+## 安全多選與精確對齊
+
+訓練標記／模板工作台「安全多選／精確對齊」進入同一進階編輯器。畫布Ctrl複選／框選、清單複選與面板共享stable ID集合；mixed值不複製第一件，僅明確dirty欄位產生候選。原藍框／新綠框及old/new mm差異先核對，再原子保存；沒有新差異不建空歷史。明確基準可六向對齊、兩軸等邊界間距、group delta；保留固定pt、pin／style、未選物件及Logo比例，locked或未核對跨owner範圍整組拒絕。
+
+Lock／Unlock是獨立明確候選與核准；舊編輯、保存、發布與字型替代同受lock保護。持久歷史重開可UndoRedo，hash／clock擋ABA與後續編輯，晚期audit失敗全rollback；source幾何變更取消原visual確認。主窗口手工未保存／未套用時不丟棄或覆蓋。所有警告仍涵蓋全slot，來源文字與字距未知、未提供人物文字的readability須另排版核驗。正式證據見RUN-OBJECT-TOOLS-001，全部父題完成進度仍看PROGRESS。
+
+## 語意搜尋、批次匯入與例外處理
+
+「安全多選／精確對齊」的語意樹／清單／畫布共用同一stable ID。搜尋與暫時隱藏／淡化／隔離保留真實選取範圍，locked仍阻擋整組移動，完整輸出Gate不減少物件。來源結構是驗證快取的唯讀衍生SVG；原生Illustrator圖層與未知映射不猜測。
+
+訓練工作台「批次匯入／取消與續跑」選多檔／資料夾及頁次，先只讀預檢与SHA＋頁去重，確認精確範圍後開始單worker匯入。合作取消保存目前項後停止；重開可明確續跑未開始項，不重做SUCCESS。結果與audit同交易，原檔只讀；作品／模板近似仍UNKNOWN。
+
+「來源匯入例外中心」查看已保存失敗／中斷／排除項，搜尋與可解释固定排序、追溯exact來源／作品／模板影響及明確定位。選取失敗項重新預檢、核對新舊hash再重試；排除需要理由，排除項可以恢復待辦。這些操作不自動核准可信樣本或規則訓練，資料版本過期／背景故障保留歷史與恢復操作。

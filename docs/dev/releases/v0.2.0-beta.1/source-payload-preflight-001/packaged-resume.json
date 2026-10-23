@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "version": "0.2.0-beta.1",
+  "phase": "resume",
+  "checks": [
+    "version_in_actual_window",
+    "new_executable_process_restores_same_graph_intents_confirmation",
+    "confirmed_export_replay_unchanged_after_restart",
+    "restart_does_not_automatically_resume_worker",
+    "explicit_restart_reuses_completed_unit_without_rewriting",
+    "safe_report_does_not_include_authored_content",
+    "actual_window_close_preserves_durable_session"
+  ],
+  "resource_measurement": "SYNTHETIC_FIXED_LOAD_NOT_HARDWARE_PERFORMANCE",
+  "scope": "ACTUAL_EXECUTABLE_AUTHORED_FIXTURES_NOT_REAL_CORPUS_QUALIFICATION"
+}

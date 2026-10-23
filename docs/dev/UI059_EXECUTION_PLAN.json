@@ -1,0 +1,166 @@
+{
+  "id": "UI059-EXECUTION-PLAN",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
+  "parent": "UI-059",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "16bae7f57d2cf2d17063b6209d474910f489ba4a3dd05652d078e527622efe8e",
+  "original_clauses": [
+    "**使用者正式選擇 D｜智慧局部重算＋人工編輯保護＋版本衝突防護**。本項針對**同一當次排版工作階段**內，輸入人物與公司資料、聯絡方式、模板／卡片實體尺寸、Logo 來源、字型或人工物件座標尺寸改變時的依賴失效與安全重新計算 UX。沿用 UI-013 固定字級、UI-016／UI-017 人物 ROOT 與公司／Logo 歸屬、UI-018 模板配對、UI-034～UI-037 畫布同步編輯、UI-045 客戶主檔受控回寫、UI-057 安全／草稿／硬性無解、UI-058 當次任務暫停／安全恢復，**不建立平行排版引擎、額外永久客戶草稿資料庫或新 AI 訓練機制**。",
+    "**有方向的變更依賴圖與最小失效範圍**：每次使用者明確修改應先區分①**內容／語意層**：姓名、電話、LINE、IG、Email、人物－公司關係、客戶編號候選或新增／刪除一個人物或公司；②**版型／來源層**：卡片物理尺寸、`peopleCapacity`、模板 `style_version_id`、Logo 所屬公司及該尺寸的實際資產、Illustrator 原生文字效果／字型；③**幾何／人工版面層**：某件作品的文字框位置、大小、對齊、群組、已確認的特殊框位新增及鎖定。根據**來源欄位 ID → 人物／公司歸屬 → 該候選模板框位 → 文字適配／相鄰物件／安全區 → 該尺寸輸出品質**的依賴關係，將候選分為「**必須重算／只須重驗／不受影響可沿用／因來源無法核實而待人工**」；要能提供看得懂的「為何這個候選被標示過期」與涉及物件清單，**不強迫每打一個字就全庫重算全部模板**。無法可靠確定依賴邊界時要保守擴大必要重驗，不能假裝完全無影響。",
+    "**預設輕量合併編輯而非按鍵風暴**：打字、貼上文字或快速拖曳時，GUI 即時呈現「此候選資料已變更、排版結果待更新」與受影響標記，但**不在每次按鍵、每個像素拖動時同時重算所有模板**；可在使用者暫停連續輸入、結束拖曳或按「**重新計算受影響候選**」時依保守資源預算排程，並可在高負載／不確定情境先提供明確按鈕確認。自動或手動觸發時都必須遵守 UI-058 真實狀態與 UI-051 低配負載保護。未完成必要重驗者不再沿用舊的「已通過」標記。",
+    "**明確人工編輯保護與作用範圍**：使用者手動選取／移動／縮放／鎖定某文字框、Logo 框、人物欄位或調整群組時，當次候選的**人工修改標記、物件識別與編輯前後版本**需保留；**AI 不得無聲將已人工調整的姓名框重新移回原模板位置，亦不得把已核對的人物電話歸屬改回 AI 舊推測**。修改輸入內容時可更新綁定文字、重新檢查其寬度和相鄰幾何，但**保持人工鎖定的框位置／字級／屬性**；若在既定框位下因文字變長、相鄰框重疊、壓縮超限而違反硬條件，顯示「**人工設定與新資料衝突，待選擇處理**」，不可悄悄改字級、拉開已鎖定物件或自動挪走其他核心元素。",
+    "**新舊差異與衝突選擇**：重算候選若與人工保留的物件衝突，沿用 UI-034 的畫布和物件清單同步展示**「目前人工版面」「新建議候選」「實際受影響文字／框位」「若採用的差異與風險」**，使用者可**保留人工位置（但保持風險／無解標記）／套用經確認且通過必要 Gate 的局部建議／開另一份非正式候選比較／取消本次 AI 調整**。必須顯示會否移動姓名、公司、Logo 等核心元素以及是否觸發其他未覆蓋物件的相對位移，不能用「忽略衝突」一鍵把 FAIL 變 PASS；若無合法排版解，清楚顯示 UI-014／UI-057 的無解與修正選項。",
+    "**舊結果不可回寫新狀態（版本柵欄／防競爭）**：每次輸入、人工移動或來源／字型／`style_version_id`／尺寸 Logo／規則版本改變，產生新的**當次編輯世代／版本 token**；各候選計算記錄其**輸入快照、所依賴的物件人工版本、來源／模型／規則及模板 exact 版本、候選世代**。當較早啟動的運算慢一步完成、UI-058 重新繼續／崩潰恢復或使用者快速連按重算時，只有在**現行依賴完全一致**時才能把結果套到當前候選；不一致者標示「**過期結果已忽略／可另行比較**」，**不得晚到覆寫使用者更新過的文字、人物歸屬、人工框位或已核准版本**。UI 僅展示可追溯的有效結果，不將混合不同世代的框位拼成看似通過的單一候選。",
+    "**局部計算不免除整體驗證**：例如只更動電話字串，可重算對應文字度量與相關框位，但**至少對該候選整張作品重新核實所有必要的語意無損配對、人物／公司／Logo 強歸屬、每個欄位唯一映射、字級固定、受限水平壓縮、相鄰與全局不重疊、裁切安全區、字型及實體尺寸 Logo 完整性**；所需重驗範圍應以真實全域不變條件決定，不能因局部快取推論整張卡仍合格。不同尺寸／不同候選是否受影響分開證明，所有正式輸出仍依 UI-019／UI-027～UI-030 按尺寸通過當下印前 Gate。",
+    "**人工修改與正式資料分離**：人工在本次畫布修正只修改**當次臨時候選及可安全恢復的短期快照**，不能默默寫回 UI-043 正式客戶主檔、永久改 UI-010 已發布模板、異動真實 `.ai`、變更已核准的 UI-023 各尺寸 Logo 資產或加入 UI-055 訓練資料。若要將聯絡資訊正式回寫走 UI-045 逐欄確認及版本保護；規則／學習候選仍走 UI-007／UI-008／UI-055。UI-058 的短期恢復須保留合法人工調整的精確版本及清理邊界，不藉重算生成新的永久訂單／草稿歷史。",
+    "**低配安全與清楚操作**：顯示候選狀態為「待重算／正在重算／可沿用／人工衝突待決／重新核實完成／目前無解」及原因，提供「**重算受影響項／檢視差異／保留人工修改／回復本次單筆更動**」等動作；避免大量無界併行或為一個文字按鍵讓整個 GUI 卡住。延用 UI-058 暫停、取消及崩潰恢復與 UI-051 資源限制，失敗／過載時維持已確認的人工內容，真正落盤前不能冒稱已安全保存；不必增建第二套作業佇列。",
+    "**既有安全決策不變**：UI-056 目前僅 C「樣本覆蓋與缺口提醒」，D「系統化補樣」是正式版本完善後的低優先級 Backlog，UI-059 不提前實作；UI-048 的完整權限介面仍是最後完成的功能，前期使用合成／去識別資料。不新增 UI-043 已取消的「曾設計／已確認購買」分類、不調整 UI-013 字級硬限制，不允許沒有完整真實 Logo 的結果假冒合格。"
+  ],
+  "historical_status_footer": "**本次狀態**：只確認 UI-059 GUI 行為、資料版本／競爭安全及未來測試規格；**沒有啟動排版運算、修改客戶資料、保存實際候選或開始程式開發**。",
+  "normative_clause_count": 10,
+  "references": [
+    {
+      "name": "git-merge-v2.51.0",
+      "url": "https://raw.githubusercontent.com/git/git/v2.51.0/Documentation/git-merge.adoc",
+      "bytes": 15143,
+      "sha256": "8ef01610c3356215cd36ed18acf1fa460a7afbd8ac02b23b75d373b9765cece9",
+      "local": "/tmp/ui059-reference-review/git-merge-v2.51.0.txt"
+    },
+    {
+      "name": "jetbrains-local-history",
+      "url": "https://www.jetbrains.com/help/pycharm/local-history.html",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "NetworkX directed descendants",
+      "version": "3.5",
+      "local": "/workspace/template-Ai/.venv/lib/python3.12/site-packages/networkx/algorithms/dag.py",
+      "bytes": 47248,
+      "sha256": "bd67790b9545125d3e7b7b1dab0ce00ab2dc169d306107bbbb86a428294150d9",
+      "review": "Installed DAG/BFS implementation; reuse existing package, no new graph engine"
+    },
+    {
+      "name": "Microsoft Visual Studio Code1.66 Timeline Local History",
+      "url": "https://raw.githubusercontent.com/microsoft/vscode-docs/main/release-notes/v1_66.md",
+      "bytes": 57517,
+      "sha256": "93c81b917f4036ee579cd1a8c93d05cfa2cce8372041f85ace912c08d2ebbef4",
+      "local": "/tmp/ui059-reference-review/vscode-1.66-local-history.md"
+    }
+  ],
+  "actually_reviewed": [
+    "NetworkX3.5 dag.py descendants uses BFS; installed file SHA recorded",
+    "Git v2.51.0 git-merge.adoc stages1/commonancestor2/HEAD3/MERGE_HEAD and no silent change to existing local modifications",
+    "Microsoft VSCode1.66 release notes Local History compare/restore/delete, maxFileSize/maxFileEntries/mergeWindow; reuse workflow only",
+    "JetBrains URL unavailable; not used as a reviewed design basis"
+  ],
+  "math": [
+    "Directed dependencies from stable field ID/owner to actual slot, neighbors/global card invariants and dimension-specific output; reuse NetworkX.descendants",
+    "Conservative unknown-edge fallback expands full candidate validation; zero changed dependency permits only exact-version reuse",
+    "Three-way property decision over original published base/current manual state/new computed suggestion; divergent changes are explicit conflicts, never last-writer-wins",
+    "Single-property delta inverse with current-after check for bounded local undo, no full customer snapshot/history database"
+  ],
+  "reuse": [
+    "Existing LayoutWorker/LayoutSessionDialog per-candidate admission/stages/pause/cancel/partial and encrypted controlled recovery",
+    "Existing candidate_risk pins, generate whole-card checks, render/output per-size gates",
+    "Existing candidate_edit and object_tools.propose/protect_locked; no duplicate geometry engine or task queue",
+    "Existing generation input_timer180ms coalescing; no per-keystroke worker storm"
+  ],
+  "packages": [
+    {
+      "order": 1,
+      "scope": "Dependency/impact service and minimal candidate states with exact pins/reasons/object lists",
+      "tests": [
+        "Phone text maps only to actual affected slots and their whole-card gate",
+        "Different-size Logo/font asset changes invalidate only actual consumers; unknown mapping expands scope",
+        "Unchanged dependencies reuse only after current gate/version proof"
+      ]
+    },
+    {
+      "order": 2,
+      "scope": "Preserve manual geometry/locks and ownership through input recomputation; typed conflicts/new-old differences",
+      "tests": [
+        "Longer text never shrinks fixed font or moves a manual/locked box; actual hard fail stays blocked",
+        "Base/current/new suggestions show all actual object/property differences and core owner/name/company/Logo movement",
+        "Explicit retain/apply-safe/compare-draft/cancel paths never write original/template/customer/learning data"
+      ]
+    },
+    {
+      "order": 3,
+      "scope": "Existing foreground integration and bounded delta undo",
+      "tests": [
+        "Quick edits coalesce into dirty state; explicit affected recompute uses one resource-controlled worker",
+        "Late worker/restore cannot overwrite new input/manual state; keep difference for inspection",
+        "Inverse only matching current-after properties, unaffected objects/sizes preserved; full card always revalidated"
+      ]
+    },
+    {
+      "order": 4,
+      "scope": "Native adversarial tests/capture and full original10 registration",
+      "tests": [
+        "Actual selected-object movement/locking/new input/partial background conflict/undo controls",
+        "Actual final export rejects every unresolved hard/source conflict",
+        "Frozen next batch formal and normal GitHub publication; no milestone stop"
+      ]
+    }
+  ],
+  "limits": [
+    "Current source/tests/tools/examples remain frozen during RUN-REMAINING28-LAYOUT-001; this is plan documentation only, no UI059 implementation yet",
+    "No automatic training/supplementation, paid model API, permanent order/customer shadow history, source writes, EXE or main merge",
+    "Independent/native Illustrator/required Windows hardware require actual evidence; no invented qualification"
+  ],
+  "next_action": "Continue UI060A; verify UI059 tenclauses in next immutable batch, do not count as completed yet.",
+  "draft_preparation_during_immutable_batch": {
+    "active_app_code_changed": false,
+    "prototype": "docs/dev/wip/UI059_DEPENDENCY_PROTOTYPE.py",
+    "evidence": [
+      "docs/qa/targeted/ui059-pure-math-prototype-001.log",
+      "docs/qa/targeted/ui059-delta-guard-prototype-002.log"
+    ],
+    "pure_scenarios": 11,
+    "valid_gui_undo_verified": false,
+    "notes": [
+      "Existing CandidateEdit plan changes already carry exact per-slot before/after payload; legacy receipt can support undo only if reconstructed-before digest and current-after values prove it, otherwise refuse rather than guess.",
+      "Record per-property coordinate deltas to avoid reverting later unrelated objects/coordinates; preserve fixed pt, source identity and ownership boundaries.",
+      "A manual edit during an existing worker must remain possible: invalidate old token/labels immediately, keep visibly marked provisional geometry if the shared worker is busy, and request full current-candidate recheck through the same worker after safe stop. Never spawn a second queue or silently treat old measurements as current.",
+      "Provisional drawing must update actual placed-slot references, preserve current input/owners, replace old gate labels with explicit pending/UNKNOWN and keep last verified diagnostics only as historical detail. No final export until actual regenerated whole-card/source gates.",
+      "Automatic suggestion apply requires explicit differences and fresh complete gates; retain-manual conflict choice may keep a blocked preview. Source/engine/code dependencies require pin updates when integrating the new module.",
+      "Reuse real Qt event-loop test waits with existing time budgets for worker imports/I/O, not tight QTest polling. No claims of Windows hardware performance or active UI059 completion from draft tests."
+    ]
+  },
+  "current_implementation": {
+    "status": "IMPLEMENTATION_IN_PROGRESS",
+    "catalog_expected": 1125,
+    "packages": [
+      "dependency DAG and bounded inverse receipts",
+      "single existing worker/coalescing/ABA fencing",
+      "native move/resize/lock/undo and side-by-side comparison",
+      "source/font/logo/engine token fence; comparison-only copies cannot formally export"
+    ],
+    "targeted_pass": [
+      "ui059-shared-worker-integration-005.log:22",
+      "ui059-worker-ordering-007.log:6",
+      "ui059-difference-controls-008.log:24",
+      "ui059-comparison-source-fence-011.log:32",
+      "ui059-dependency-states-013.log:26",
+      "ui059-dependency-recovery-014.log:35",
+      "ui059-native-scale-admission-018.log:23",
+      "ui059-review-context-fence-022.log:39"
+    ],
+    "preserved_diagnostics": [
+      "006 used incorrect expected dictionary key; fixed test to actual contract",
+      "009 used nonexistent library fixture method; also source was edited during diagnostic test, so not frozen evidence",
+      "010 attempted forbidden published overwrite; change to explicit adversarial external payload replacement test",
+      "020 actual new review was erased by active late worker; regression FAIL, fixed policy-context stamp and039-test batch022PASS",
+      "021 one expected rejection text mismatch; semantics blocked, message clarified;022 all39PASS"
+    ],
+    "pending": [
+      "Fresh immutable source batch regression and native captures/publication Gate"
+    ],
+    "native_review": {
+      "015": "Actual capture PASS but visually found initial zoom mismatch and export footer squeezed into card height; not final accepted display evidence",
+      "017": "Cards now aligned to actual geometry; first4 visually reviewed; found pending dialog still held prior geometry and unequal pane scale; corrected and tested018",
+      "019": "Capture in progress after equal-scale and pending-geometry fixes",
+      "023": "Actual capture exit0; all8 individually visually inspected and hashed; final scroll notice readable. Native metadata reports controlled synthetic profile only."
+    }
+  }
+}

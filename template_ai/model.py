@@ -1,0 +1,195 @@
+"""資料模型只使用毫米與穩定識別碼；視窗倍率不會改變真實幾何。"""
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass, field
+import math
+import re
+import uuid
+
+KINDS = {"name": "姓名", "title": "職稱", "phone": "電話", "email": "Email",
+         "address": "地址", "line": "LINE", "ig": "IG", "company": "獨立公司文字", "logo": "完整 Logo"}
+
+
+def new_id() -> str:
+    return uuid.uuid4().hex
+
+
+def company_ports(value):
+    """Legacy single binding and explicit many bindings share one representation."""
+    if isinstance(value,str): return [value] if value else []
+    if isinstance(value,list) and all(isinstance(v,str) for v in value): return list(value)
+    return []
+
+
+def input_company_ports(person):
+    return company_ports(person.get('companies',person.get('company','')))
+
+
+def binding_errors(bindings, people, companies):
+    errors=[]
+    if not isinstance(bindings,dict):return ['公司關聯格式不合法']
+    for person,value in bindings.items():
+        ports=company_ports(value)
+        if person not in people or not isinstance(value,(str,list)) or (isinstance(value,list) and not all(isinstance(v,str) for v in value)) or len(set(ports))!=len(ports) or any(c not in companies for c in ports):
+            errors.append(str(person)+'：人物公司關聯不合法')
+    for person in people:
+        if companies and person not in bindings:errors.append(person+' 的模板公司歸屬尚未確認（無公司亦需明確空集合）')
+    for company in companies:
+        if not any(company in company_ports(v) for v in bindings.values()):errors.append(company+' 沒有已確認的人物關聯')
+    return errors
+
+
+@dataclass
+class Rect:
+    x: float
+    y: float
+    w: float
+    h: float
+
+    def valid(self) -> bool:
+        return all(math.isfinite(v) for v in (self.x, self.y, self.w, self.h)) and self.w > 0 and self.h > 0
+
+    def inside(self, w: float, h: float) -> bool:
+        return self.valid() and self.x >= -1e-6 and self.y >= -1e-6 and self.x + self.w <= w + 1e-6 and self.y + self.h <= h + 1e-6
+
+    def intersects(self, other: Rect) -> bool:
+        return min(self.x + self.w, other.x + other.w) - max(self.x, other.x) > 1e-4 and min(self.y + self.h, other.y + other.h) - max(self.y, other.y) > 1e-4
+
+
+@dataclass
+class Slot:
+    kind: str
+    owner: str
+    rect: Rect
+    index: int = 0
+    font: str = "Noto Sans CJK TC"
+    size_pt: float = 10.0
+    min_scale: float = 0.85
+    align: str = "left"
+    required: bool = True
+    id: str = field(default_factory=new_id)
+    color: str = "#111827"
+    font_asset: dict | None = None
+    font_style: str = ""
+    locked: bool = False
+    tracking_mm: float = 0.0
+    tracking_min_mm: float = 0.0
+    tracking_max_mm: float = 0.0
+    distribution_approval: dict | None = None
+    text_flow: dict | None = None
+
+
+@dataclass
+class Template:
+    name: str
+    width_mm: float
+    height_mm: float
+    slots: list[Slot]
+    capacity: int = 1
+    source_id: str = ""
+    artwork: Rect | None = None
+    id: str = field(default_factory=new_id)
+    family_id: str = field(default_factory=new_id)
+    version: int = 1
+    state: str = "draft"
+    reasons: list[str] = field(default_factory=list)
+    company_bindings: dict[str, str | list[str]] = field(default_factory=dict)
+    background: dict | None = None
+    source_work_id: str = ""
+    source_work_revision: int = 0
+    training_reference: dict | None = None
+    safe_margin_mm: float = 0.0
+    generation_reference: dict | None = None
+
+    def to_dict(self) -> dict:
+        result=asdict(self)
+        if result.get('generation_reference') is None:result.pop('generation_reference',None)
+        for slot in result['slots']:
+            if slot.get('text_flow') is None:slot.pop('text_flow',None)
+        return result
+
+    @classmethod
+    def from_dict(cls, data: dict) -> Template:
+        d = dict(data)
+        d["slots"] = [Slot(**{**s, "rect": Rect(**s["rect"])}) for s in d["slots"]]
+        if d.get("artwork"):
+            d["artwork"] = Rect(**d["artwork"])
+        return cls(**d)
+
+
+def template_errors(t: Template) -> list[str]:
+    """發布與正式數位輸出使用同一套幾何和語意檢查。"""
+    errors = []
+    from .background import background_errors
+    errors.extend(background_errors(t.background, t.width_mm, t.height_mm, verify_files=False))
+    from .fonts import font_asset_errors
+    errors.extend(font_asset_errors(t.slots))
+    if not all(math.isfinite(v) and 0 < v <= 2000 for v in (t.width_mm, t.height_mm)):
+        errors.append("矩形尺寸必須大於 0，且不超過本版 2000 mm 支援範圍")
+    margin=t.safe_margin_mm
+    valid_margin=type(margin) in (float,int) and math.isfinite(margin) and 0<=margin<min(t.width_mm,t.height_mm)/2
+    if not valid_margin:errors.append('設計安全邊距需為有效毫米，且小於短邊的一半')
+    if not 1 <= t.capacity <= 20:
+        errors.append("本版人物容量支援 1～20 人")
+    keys = set()
+    if not t.slots:
+        errors.append("模板沒有欄位")
+    for s in t.slots:
+        label = KINDS.get(s.kind, s.kind) + "／" + s.owner
+        if valid_margin and margin>0 and s.rect.valid() and not Rect(s.rect.x-margin,s.rect.y-margin,s.rect.w,s.rect.h).inside(t.width_mm-2*margin,t.height_mm-2*margin):
+            errors.append(label+'：物件 '+s.id+' 超出設計安全區（'+str(margin)+' mm）')
+        if type(s.locked) is not bool:
+            errors.append(label + "：鎖定狀態不合法")
+        if s.kind not in KINDS or not s.rect.inside(t.width_mm, t.height_mm):
+            errors.append(label + "：欄位類型或矩形邊界不合法")
+        prefix = "c" if s.kind in ("company", "logo") or (s.kind in ("phone","email","line","ig","address") and s.owner.startswith("c")) else "p"
+        try:
+            owner_n = int(s.owner[1:])
+            if not s.owner.startswith(prefix) or owner_n < 1 or (prefix == "p" and owner_n > t.capacity):
+                raise ValueError()
+        except ValueError:
+            errors.append(label + "：人物／公司歸屬不合法")
+        key = (s.owner, s.kind, s.index)
+        if key in keys or s.index < 0:
+            errors.append(label + "：同一資料欄位重複映射")
+        keys.add(key)
+        if not 0.05 <= s.min_scale <= 1 or not math.isfinite(s.size_pt) or not 1 <= s.size_pt <= 200:
+            errors.append(label + "：定案字級或模板字寬界限不合法")
+        if s.align not in ("left", "center", "right", "distributed"):
+            errors.append(label + "：對齊設定不合法")
+        from .text_policy import policy_errors
+        errors.extend(label+'：'+e for e in policy_errors(s))
+        if not isinstance(s.font_style, str) or len(s.font_style)>128 or any(ord(c)<32 for c in s.font_style):
+            errors.append(label + "：字型款式識別不合法")
+        if not isinstance(s.color, str) or not re.fullmatch(r"#[0-9a-fA-F]{6}", s.color):
+            errors.append(label + "：文字色彩需為 #RRGGBB")
+    for n in range(1, t.capacity + 1):
+        if (f"p{n}", "name", 0) not in keys:
+            errors.append(f"人物 {n} 缺少姓名欄位")
+    companies = {s.owner for s in t.slots if s.owner.startswith("c")}
+    errors.extend(binding_errors(t.company_bindings, {f"p{i+1}" for i in range(t.capacity)}, companies))
+    for s,other in overlapping_pairs(t.slots):
+        errors.append(f"{KINDS.get(s.kind)}／{s.owner} 與 {KINDS.get(other.kind)}／{other.owner} 重疊")
+    return errors
+
+
+def overlapping_pairs(slots):
+    """The shared original rectangle predicate, streamed without a second validator."""
+    for i,slot in enumerate(slots):
+        for other in slots[i+1:]:
+            if slot.rect.intersects(other.rect):yield slot,other
+
+
+def learn_from_labels(name: str, width: float, height: float, slots: list[Slot], source_id: str, artwork: Rect, bindings: dict[str, str] | None = None, source_work_id: str = "", source_work_revision: int = 0) -> Template:
+    """從已確認標記內化框位及對齊，建立有來源的規則模板；不假稱神經模型已訓練。"""
+    import copy
+    capacity = max([int(s.owner[1:]) for s in slots if s.kind == "name" and s.owner.startswith("p")] or [1])
+    t = Template(name, width, height, copy.deepcopy(slots), capacity, source_id, artwork)
+    t.company_bindings = bindings or {}
+    t.source_work_id, t.source_work_revision = source_work_id, source_work_revision
+    t.reasons = ["框位來自人工確認作品標記", "保留人物／公司歸屬及固定欄位字級",
+                 "依實體矩形尺寸分類；不直接跨尺寸套用", "本版學習方法：標記幾何與明確對齊規則內化"]
+    errors = template_errors(t)
+    if errors:
+        raise ValueError("\n".join(errors))
+    return t

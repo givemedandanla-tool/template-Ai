@@ -1,0 +1,45 @@
+name: Windows release guard validation
+on:
+  push:
+    branches: ['release-guard-check/20261023-001']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  guards:
+    if: github.event.repository.private == false
+    runs-on: windows-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONUTF8: '1'
+      RELEASE_SPEED_JOB: guards
+    steps:
+      - name: Preserve native source bytes and long paths
+        shell: pwsh
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.longpaths true
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Isolated current administrative guards, no product build or release
+        shell: pwsh
+        run: |
+          gh auth setup-git
+          python docs/dev/releases/run_release_guard_validation.py
+          if ($LASTEXITCODE -ne 0) { throw 'Administrative guards failed' }
+      - name: Preserve actual guard evidence
+        if: always()
+        env:
+          RELEASE_SPEED_JOB_RESULT: ${{ job.status }}
+        shell: pwsh
+        run: |
+          python docs/dev/releases/persist_speed_evidence.py
+          if ($LASTEXITCODE -ne 0) { throw 'Guard evidence persistence failed' }

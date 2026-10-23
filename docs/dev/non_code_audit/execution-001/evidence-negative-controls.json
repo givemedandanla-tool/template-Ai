@@ -1,0 +1,42 @@
+{
+  "kind": "ISOLATED_DEMONSTRATION_NOT_ADDITIONAL_PRODUCT_TESTS",
+  "status": "PASS",
+  "controls": [
+    {
+      "id": "valid_actual_execution",
+      "status": "PASS"
+    },
+    {
+      "id": "wrong_manifest_hash",
+      "status": "PASS",
+      "observed_rejection": "Original execution manifest hash mismatch"
+    },
+    {
+      "id": "unknown_is_not_pass",
+      "status": "PASS",
+      "observed_rejection": "Non-PASS test record"
+    },
+    {
+      "id": "missing_result",
+      "status": "PASS",
+      "observed_rejection": "Missing or extra test records"
+    },
+    {
+      "id": "duplicate_result",
+      "status": "PASS",
+      "observed_rejection": "Empty or duplicate execution records"
+    },
+    {
+      "id": "incomplete_module",
+      "status": "PASS",
+      "observed_rejection": "Unhealthy test module"
+    },
+    {
+      "id": "changed_source",
+      "status": "PASS",
+      "observed_rejection": "Execution source differs from current code"
+    }
+  ],
+  "original_evidence_unchanged": true,
+  "validator_sha256": "f812a7add8a0551940b67c0993ceb81f35a5f69965b7d5647b8ce1ddcc69d36b"
+}

@@ -1,0 +1,130 @@
+"""Transparent expression-only type observation of authored existing tests.
+
+Original source, assertions, Qt objects and getter evaluation counts are preserved.
+Runtime bytecode is instrumented; this is bounded type evidence, NOT stock product
+qualification. Each transformed module must unwrap to the identical business AST.
+"""
+import argparse,ast,collections,hashlib,importlib.abc,importlib.machinery,inspect,json,runpy,sys,types,os
+from pathlib import Path
+ROOT=Path(os.environ.get('TEMPLATE_AI_AUDIT_ROOT',str(Path(__file__).resolve().parents[3]))).resolve()
+sys.path[:0]=[str(ROOT),str(ROOT/'tools'),str(ROOT/'tests')]
+ALIAS='__template_ai_observe_expression_type_20261020__'
+
+def typename(value):return type(value).__module__+'.'+type(value).__qualname__
+
+class Observation:
+ def __init__(self,points):
+  self.by_file=collections.defaultdict(list);self.rows={};self.errors=collections.Counter();self.modules={};self.execution_context=None
+  for p in points['points']:
+   self.by_file[str((ROOT/p['path']).resolve())].append(p)
+   self.rows[p['id']]={'visits':0,'values':{},'member_checks':{},'test_contexts':[],'returns':{},'normal_calls':{},'raised_calls':{}}
+ def context(self):
+  f=sys._getframe(1)
+  while f:
+   if f.f_code.co_name=='run' and f.f_globals.get('__name__')=='unittest.case':
+    obj=f.f_locals.get('self')
+    if obj is not None:return type(obj).__module__+'.'+type(obj).__qualname__+'.'+object.__getattribute__(obj,'_testMethodName')
+   f=f.f_back
+  return self.execution_context
+ def capture(self,keys,value):
+  try:
+   if all(self.rows[ident]['visits']>=128 for ident,_,_ in keys):return value
+   context=self.context();kind=typename(value)
+   for ident,label,member in keys:
+    row=self.rows[ident]
+    if row['visits']>=128:continue
+    row['visits']+=1
+    bucket=row['values'].setdefault(label,{});bucket[kind]=bucket.get(kind,0)+1
+    if context and context not in row['test_contexts'] and len(row['test_contexts'])<8:row['test_contexts'].append(context)
+    if member and label=='receiver':
+     try:inspect.getattr_static(value,member);exists=True
+     except AttributeError:exists=False
+     state=kind+':'+str(exists);row['member_checks'][state]=row['member_checks'].get(state,0)+1
+  except BaseException as error:self.errors[type(error).__name__]+=1
+  return value
+ def instrument(self,source,path):
+  tree=ast.parse(source,filename=path);original=ast.dump(tree,include_attributes=False)
+  if any(isinstance(n,ast.Name) and n.id==ALIAS for n in ast.walk(tree)):raise RuntimeError('Observation alias collision')
+  targets=collections.defaultdict(list)
+  for p in self.by_file[path]:
+   for t in p['targets']:
+    if 'range' not in t:raise ValueError('Exact current expression coordinates required')
+    targets[tuple(t['range'])].append((p['id'],t['label'],p.get('member')))
+  skipped=[];matched=set()
+  class Wrap(ast.NodeTransformer):
+   def visit_FunctionDef(self,n):
+    # Preserve annotations/docstrings, including PEP563 stringization.
+    saved=n.returns;n.returns=None;args=[(a,a.annotation) for a in [*n.args.posonlyargs,*n.args.args,*n.args.kwonlyargs] if a.annotation is not None]
+    for a,_ in args:a.annotation=None
+    n=self.generic_visit(n);n.returns=saved
+    for a,v in args:a.annotation=v
+    return n
+   visit_AsyncFunctionDef=visit_FunctionDef
+   def visit_AnnAssign(self,n):
+    saved=n.annotation;n.annotation=None;n=self.generic_visit(n);n.annotation=saved;return n
+   def generic_visit(self,n):
+    span=(n.lineno,n.col_offset,n.end_lineno,n.end_col_offset) if isinstance(n,ast.expr) and hasattr(n,'lineno') else None
+    keys=targets.get(span)
+    result=super().generic_visit(n)
+    if not keys:return result
+    if isinstance(n,(ast.Starred,ast.FormattedValue)) or isinstance(getattr(n,'ctx',None),(ast.Store,ast.Del)):
+     skipped.extend(keys);return result
+    matched.add(span)
+    return ast.copy_location(ast.Call(func=ast.Name(id=ALIAS,ctx=ast.Load()),args=[ast.Constant(value=tuple(keys)),result],keywords=[]),n)
+  tree=Wrap().visit(tree);ast.fix_missing_locations(tree)
+  class Unwrap(ast.NodeTransformer):
+   def visit_Call(self,n):
+    if isinstance(n.func,ast.Name) and n.func.id==ALIAS:return self.visit(n.args[1])
+    return self.generic_visit(n)
+  import copy
+  if ast.dump(Unwrap().visit(copy.deepcopy(tree)),include_attributes=False)!=original:raise RuntimeError('Business AST changed')
+  code=compile(tree,path,'exec')
+  self.modules[path]={'source_sha256':hashlib.sha256(source.encode()).hexdigest(),'business_ast_identical_after_unwrapping':True,'instrumented_expressions':len(matched),'skipped_target_keys':skipped,'unmatched_ranges':[list(k) for k in targets if k not in matched]}
+  return code
+
+class Loader(importlib.abc.Loader):
+ def __init__(self,delegate,path,observation):self.delegate=delegate;self.path=path;self.observation=observation
+ def create_module(self,spec):return self.delegate.create_module(spec)
+ def exec_module(self,module):
+  source=self.delegate.get_source(module.__name__)
+  code=self.observation.instrument(source,self.path)
+  module.__dict__[ALIAS]=self.observation.capture
+  exec(code,module.__dict__)
+ def __getattr__(self,name):return getattr(self.delegate,name)
+
+class Finder(importlib.abc.MetaPathFinder):
+ def __init__(self,observation):self.observation=observation
+ def find_spec(self,fullname,path=None,target=None):
+  spec=importlib.machinery.PathFinder.find_spec(fullname,path)
+  if spec and spec.origin and str(Path(spec.origin).resolve()) in self.observation.by_file:
+   spec.loader=Loader(spec.loader,str(Path(spec.origin).resolve()),self.observation)
+   return spec
+  return None
+
+def main():
+ parser=argparse.ArgumentParser();parser.add_argument('--points',type=Path,required=True);parser.add_argument('--type-output',type=Path,required=True);parser.add_argument('--script',type=Path);args,rest=parser.parse_known_args()
+ if rest and rest[0]=='--':rest=rest[1:]
+ worker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+ points=json.loads(args.points.read_text())
+ for path,digest in points['source_files'].items():
+  if hashlib.sha256((ROOT/path).read_bytes()).hexdigest()!=digest:raise RuntimeError('Source hash changed '+path)
+ observation=Observation(points);finder=Finder(observation);sys.meta_path.insert(0,finder)
+ previous_main=sys.modules['__main__']
+ try:
+  if args.script:
+   script=args.script.resolve();script.relative_to(ROOT)
+   if script.suffix!='.py':raise ValueError('Only a local authored Python script is supported')
+   observation.execution_context='capture:'+script.relative_to(ROOT).as_posix()
+   sys.path.insert(0,str(script.parent))
+   module=types.ModuleType('__main__');module.__dict__.update(__file__=str(script),__package__=None,__spec__=None,__cached__=None,__loader__=importlib.machinery.SourceFileLoader('__main__',str(script)))
+   module.__dict__[ALIAS]=observation.capture;sys.modules['__main__']=module;sys.argv=[str(script),*rest]
+   exec(observation.instrument(script.read_text(),str(script)),module.__dict__)
+  else:
+   sys.argv=[str(ROOT/'tools/evidence_test_worker.py'),*rest]
+   runpy.run_path(str(ROOT/'tools/evidence_test_worker.py'),run_name='__main__')
+ finally:
+  sys.modules['__main__']=previous_main
+  sys.meta_path.remove(finder)
+  args.type_output.write_text(json.dumps(dict(schema=1,worker_sha256=worker_sha256,worker_source_unchanged=worker_sha256==hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),mode='AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS',runtime_instrumented=True,source_files_changed=False,assertions_or_window_replaced=False,observer_errors=dict(observation.errors),modules=observation.modules,rows={k:v for k,v in observation.rows.items() if v['visits']}),indent=2)+'\n')
+
+if __name__=='__main__':main()

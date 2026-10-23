@@ -1,0 +1,2508 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261023-RELEASE-SPEED-COMPLETE-001",
+  "kind": "INCREMENTAL_FORMAL",
+  "phase": "PREPARED",
+  "base_commit": "f97479b40fa46ef1465500f0207e2edfd0a290a3",
+  "created_utc": "2026-10-23T04:12:27.758543+00:00",
+  "summary": "Release speed tooling complete: verified pinned input caches, conservative impact selection, real Windows/EXE and transfer checks, measured cold/warm timings; all formal beta2-004 attachments retained. No new product release or paid service.",
+  "source_files": {
+    ".github/release-actions-lock.json": {
+      "bytes": 1286,
+      "sha256": "87b7b7d1e76d8060dddc8fb06da9c141003665ad9d826f1a96464f4a4a5d86e8",
+      "git_blob_sha1": "7da9cb28c9d16cccd8f32be08681fd2ab822e29f"
+    },
+    ".github/release-assets-lock.json": {
+      "bytes": 1191,
+      "sha256": "ef930441a03e779e6b51ad9f3a03a54be6a6b37835e0ec3c9948b234662cd5f3",
+      "git_blob_sha1": "aee2541283361c18ac064bf9fe1c013e5de4f5b3"
+    },
+    ".github/release-impact-contracts.json": {
+      "bytes": 609,
+      "sha256": "dcd05fef59751fe1ab5713341e65f386daed790e1e512a2ce6b9e83cf0a1660b",
+      "git_blob_sha1": "6e3908da02d644dbbfef818dea0fd80e862072ce"
+    },
+    ".github/windows-wheels-lock.json": {
+      "bytes": 11260,
+      "sha256": "4433999d17d8d242ac4d243a1c93c310fc68f2c64d53b7d7fe5f834aa7d05b72",
+      "git_blob_sha1": "5298c3671c2b7efb4b099b0a797d1ae12162c45d"
+    },
+    ".github/workflows/optimized-release.yml": {
+      "bytes": 7177,
+      "sha256": "7d4cd9852939eccbf1d79fa05705209f15297527f19a82545f789d52f53ce93e",
+      "git_blob_sha1": "fc12b4443d3004e364ee11efc61f4a5049de13e3"
+    },
+    ".github/workflows/release-guard-validation.yml": {
+      "bytes": 1472,
+      "sha256": "0fe500e48bf122c85cba7eff2d3b54507a9b9562d9710dd2221ff96b566584c8",
+      "git_blob_sha1": "69bd35d92c3446ec99ab59920c5c2320b9ce1ef7"
+    },
+    "AGENTS.md": {
+      "bytes": 26097,
+      "sha256": "d073b98549949e43bd0c31e7581a8f2aa3e5317c72ee6d07d434c0e46293e5da",
+      "git_blob_sha1": "4540ec1b7822906d9277f39b0173f953704cf90b"
+    },
+    "README.md": {
+      "bytes": 11233,
+      "sha256": "f38cf9d7b65357e4c5af2d1affdd2dd98860ea9f90929ccb8804caa4104820b6",
+      "git_blob_sha1": "239fb43de96c8111c409b508427ed5790e6e8797"
+    },
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 3383,
+      "sha256": "7189ec63257a543b9f9b6a48e389aa469ece9326766491a37e11cbc80339b022",
+      "git_blob_sha1": "7e7547bac2764239e516635b42cb129418233468"
+    },
+    "docs/dev/CHANGE_IMPACT_DEBUGGING.md": {
+      "bytes": 10174,
+      "sha256": "572ed92fe51a1ca4cff6be2d52f1fbb2dba92cf1b90777dfd07502f7108f1077",
+      "git_blob_sha1": "00baa9882d34a2773bb6716ef2acfd321801c7e2"
+    },
+    "docs/dev/CHANGE_IMPACT_DEBUGGING_QUICK_GUIDE.md": {
+      "bytes": 2558,
+      "sha256": "35ac8301ee234e3f1e4df392daaa22fd8c7d70ab56cef5edb56fa0d08aaeee01",
+      "git_blob_sha1": "68e870744a53fe38c55e26aefaa319244f61be80"
+    },
+    "docs/dev/CURRENT_PROGRESS.json": {
+      "bytes": 36009,
+      "sha256": "0414315d51574cad70bb80b40935acd66fa3913f11a8a746b38aefa274797c5e",
+      "git_blob_sha1": "f3de827e70023938c674c246438800d124025cf4"
+    },
+    "docs/dev/FEATURES.md": {
+      "bytes": 57588,
+      "sha256": "d66b7ae05fc19e9e7535b868a86558315b62290fd442c068bc97c3b483041931",
+      "git_blob_sha1": "1ffd3beadf4d9ef49ece763ea5cd08faffd52d7a"
+    },
+    "docs/dev/HANDOFF.md": {
+      "bytes": 2245,
+      "sha256": "c393c1d9a6ba3a05e7ea64b0ee141ba10a59758bfa49ac9f9eaf8dc537395d2b",
+      "git_blob_sha1": "923fbf909f351a49494706f4c90357d871125c8c"
+    },
+    "docs/dev/PROGRESS.md": {
+      "bytes": 904,
+      "sha256": "c1619cc87267240c3dfa477c14fd8e6e51e2af94ef21fbd951ce8d066cf6018e",
+      "git_blob_sha1": "1dd2ca7e9c78634af5f6bab27ad2ceaad35e14a3"
+    },
+    "docs/dev/PROJECT_ROADMAP.json": {
+      "bytes": 561737,
+      "sha256": "556d23283890115f639f738c988b78ce3b66b1661aee57c37e68e48c6574b6de",
+      "git_blob_sha1": "d234483300907a667fd41c7f54899f31022f2a33"
+    },
+    "docs/dev/PROJECT_ROADMAP.md": {
+      "bytes": 6701,
+      "sha256": "fea5c9721b962bf2236e734fe9fd9019738b835904ac239ab7b89e4a2251c422",
+      "git_blob_sha1": "4717a05b09d724ebcf09d2b20830ce7c3d4ca082"
+    },
+    "docs/dev/RELEASE_MAINTENANCE_POLICY.md": {
+      "bytes": 13521,
+      "sha256": "8d679ac349d972825b12774e784ba3a6c067200a802e9b80346825ac5ac712b4",
+      "git_blob_sha1": "90caece3130ee26abdc48e32aa5a16a3076855a6"
+    },
+    "docs/dev/REQUIREMENTS.json": {
+      "bytes": 2890262,
+      "sha256": "e26a3e404e604aa4153ec9af381e11eed73f2bf3afb8bc92fdc34c2497ae1240",
+      "git_blob_sha1": "95f517c2013ae459a9bbb3123377b42fd27a79a1"
+    },
+    "docs/dev/STATE.json": {
+      "bytes": 102008,
+      "sha256": "faee058bc44e530cacea40f318ddeb3d010a5789a532955110215cf0a85d8760",
+      "git_blob_sha1": "3df39d0962d75575709ee3573cfbc92a6425c7c2"
+    },
+    "docs/dev/WORK_LOG.md": {
+      "bytes": 331059,
+      "sha256": "3ee046d586748ca61e50affaca1c05f64825180af316be648d1fae419200df8a",
+      "git_blob_sha1": "36c38440384ce6f2a0b2006bcaab639ddb22a5d6"
+    },
+    "docs/dev/releases/RELEASE_SPEED_DELIVERY.md": {
+      "bytes": 6659,
+      "sha256": "128311b61aa5ebe8a4f27b768e12601bbea67dbf27dcb74fc165cbbdfdae9981",
+      "git_blob_sha1": "a87408f16e2ef1572c0cd73bc8493f883053b5a4"
+    },
+    "docs/dev/releases/RELEASE_SPEED_PLAN.md": {
+      "bytes": 1624,
+      "sha256": "ae8f6cde437812e1c689b7b25b78b8adc6991771c9fc52f7e5552c69ccccd7f6",
+      "git_blob_sha1": "f20ba479938ef304c3e503d3e2bd8e334f0d79fd"
+    },
+    "docs/dev/releases/RELEASE_SPEED_POLICY.md": {
+      "bytes": 7134,
+      "sha256": "e264311347d8470f3a73488e12a74889d0bcfd2c6dbc82d8b107d94499ee8813",
+      "git_blob_sha1": "23231ebca20e81071c3b39286f78aa1c5951a5b1"
+    },
+    "docs/dev/releases/persist_speed_evidence.py": {
+      "bytes": 4281,
+      "sha256": "553784bb14cf4ac75359d6253207a5a192644076a35978f996607be15f06bee8",
+      "git_blob_sha1": "2f41af0a3f8e9e9ff098186aa463565848f42999"
+    },
+    "docs/dev/releases/probe_engine_environment.py": {
+      "bytes": 7300,
+      "sha256": "914d5eed21bc4b9448b1992ce0f2bf46ec4566c9f77ca5c64227a633e1d57e16",
+      "git_blob_sha1": "d2e250a3a008237bffcc26d1fc2794f0d1e56e7f"
+    },
+    "docs/dev/releases/release-speed-validation/cache-scope-research.json": {
+      "bytes": 1009,
+      "sha256": "83a5c231d407c053516b0f42ba9fc14671cd3036e96474f62ad5d178f2042d4b",
+      "git_blob_sha1": "7a7747ce9d6f449d00e33c3b58055819d5c6f52d"
+    },
+    "docs/dev/releases/release-speed-validation/final-validation-composition.json": {
+      "bytes": 3464,
+      "sha256": "0716110159790a24c3f2942fceb376912afb6e30dc4d2dd9faf98cdd31302592",
+      "git_blob_sha1": "f0d7dee8907dad43206d1cd6cfcaf7343d820b2e"
+    },
+    "docs/dev/releases/release-speed-validation/local-001/actionlint.json": {
+      "bytes": 516,
+      "sha256": "6473fadcf3a7433165f21199117f87d085206fdd5814548c4ee57cdc8e2a932f",
+      "git_blob_sha1": "057567466187fb1bc053407132aa1b1d4f995c40"
+    },
+    "docs/dev/releases/release-speed-validation/local-001/actionlint.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/release-speed-validation/local-001/actual-impact-plan.json": {
+      "bytes": 9057,
+      "sha256": "d861965398e630a0d369dce37c11bd9eb8bb888d906ae9b9e8147c0a37e4a84e",
+      "git_blob_sha1": "c219441bd63dda8b2bb41c763cdc99e4559136d4"
+    },
+    "docs/dev/releases/release-speed-validation/local-001/admin-tests.json": {
+      "bytes": 5306,
+      "sha256": "1edc3a077e2b223fc693a78462b85b6c38e51a496d7c6bb015ac9f544c34eea6",
+      "git_blob_sha1": "a4ec8155747f1375c7ad8e0aa7c10dc6deeabe4f"
+    },
+    "docs/dev/releases/release-speed-validation/local-001/admin-tests.log": {
+      "bytes": 4468,
+      "sha256": "c99305e123b0e23a1530bd23ce3e74cbfb0b73fe78a5807d1a27fdf24be46e46",
+      "git_blob_sha1": "2ebb153f9ec2194552bc3da2d1ca78b43cc79bb3"
+    },
+    "docs/dev/releases/release-speed-validation/local-002/admin-tests.json": {
+      "bytes": 5449,
+      "sha256": "a583e6b2cfc1c5683af65d100092dcb31d3122a9b7d6dfdba00969c51be06e7c",
+      "git_blob_sha1": "1da5b5e7628f9dbff7e10600edd42838c6eaaabd"
+    },
+    "docs/dev/releases/release-speed-validation/local-002/admin-tests.log": {
+      "bytes": 4630,
+      "sha256": "bf809c92925c6eb1ff8f17f744f23e4c5126bd23f6669a26529ba801afae5fc4",
+      "git_blob_sha1": "f15a8763ff7f193579b5170aabf8bbab49eb37ed"
+    },
+    "docs/dev/releases/release-speed-validation/local-003/admin-tests.json": {
+      "bytes": 5737,
+      "sha256": "3dce59dbf15e8ee6092065eae705a14451b0e88e9302922344400c380aa9f17e",
+      "git_blob_sha1": "192fba28882ac0f649dd363309a749a14e7c511e"
+    },
+    "docs/dev/releases/release-speed-validation/local-003/admin-tests.log": {
+      "bytes": 4960,
+      "sha256": "3122849f3600371bd05c1ed7d1ada2fe96afe2ca5c6e6b54cbe16cc60211751f",
+      "git_blob_sha1": "89119a4e461c831adb255276f0c8bd07439e0fb6"
+    },
+    "docs/dev/releases/release-speed-validation/local-004/admin-tests.json": {
+      "bytes": 6021,
+      "sha256": "97aabbe9d80591706264803957351e45e34c10e8838a337de00dfe772b22b126",
+      "git_blob_sha1": "9308b202f005443fa28498fb611eefb817972641"
+    },
+    "docs/dev/releases/release-speed-validation/local-004/admin-tests.log": {
+      "bytes": 5282,
+      "sha256": "9fa3ee3bd6602221c2d002cc0476b0b79d44608834a795035980f6618c15f439",
+      "git_blob_sha1": "41508ee50992e6d66e42ac3342ae959b01497328"
+    },
+    "docs/dev/releases/release-speed-validation/local-005/admin-tests.json": {
+      "bytes": 6343,
+      "sha256": "4a962ce9506db0475dbf94146302e914477350da2bca879069eb14b10edad0da",
+      "git_blob_sha1": "d74d9188003cbdc7abb80637a365047999b4fd4a"
+    },
+    "docs/dev/releases/release-speed-validation/local-005/admin-tests.log": {
+      "bytes": 5678,
+      "sha256": "db1f7507d999a335ae0c7ef55dd7126475826afc32d6928b5f79c9ebc5b7e336",
+      "git_blob_sha1": "bdea409288e10d264aa9ff778ddd6628d2d3c658"
+    },
+    "docs/dev/releases/release-speed-validation/local-006/actual-impact-plan.json": {
+      "bytes": 14801,
+      "sha256": "c4d693a16e07e7fdba1a849b7709151e80d09b106ba3e5cf1c1ba2d791b39d8e",
+      "git_blob_sha1": "7d220e07230641f82c4d871bafeb2bd5ae6798d0"
+    },
+    "docs/dev/releases/release-speed-validation/local-006/admin-tests.json": {
+      "bytes": 6481,
+      "sha256": "7025bf667a1df5291feaad7586681014f5c90a18d662f43ec54c7aab979f3179",
+      "git_blob_sha1": "a11e433879947de0c142831c7138b46af55c230c"
+    },
+    "docs/dev/releases/release-speed-validation/local-006/admin-tests.log": {
+      "bytes": 5830,
+      "sha256": "da696859c0be94332fcb09aa42f126aaf2be12385172fa5ca4c9be92bd0f4098",
+      "git_blob_sha1": "50d6130d6508734208979253e05ee744643daa7c"
+    },
+    "docs/dev/releases/release-speed-validation/local-007/admin-tests.json": {
+      "bytes": 6481,
+      "sha256": "017b809c05b583ac277acb4d203a7b59a8d63482e1df519007315a759d499c33",
+      "git_blob_sha1": "cf73340e379f49e38e1039b6ab3b199f69f632fc"
+    },
+    "docs/dev/releases/release-speed-validation/local-007/admin-tests.log": {
+      "bytes": 5830,
+      "sha256": "cdb8f5e9d856e60e8906c9e44db80882ca9a1b14e81bf7b78fd1cca49859b40e",
+      "git_blob_sha1": "cff41df90c046b04c24cc8d32863ef29dfbfe9a4"
+    },
+    "docs/dev/releases/release-speed-validation/measured-summary.json": {
+      "bytes": 1039,
+      "sha256": "bd08d2378a89b613871d0c5e6a9af3e7e4414802c417eecbc55e81f162b15252",
+      "git_blob_sha1": "e9d00927d1376ae561fcd4f179cd2447dc85d687"
+    },
+    "docs/dev/releases/release-speed-validation/published-release-preservation.json": {
+      "bytes": 822,
+      "sha256": "a039e08851850c207eac56fa73f261b59213bd15771d796de799e3a259d6ba0c",
+      "git_blob_sha1": "c71d8ecb71ae4b6b0cb768ec9960c779aa97661e"
+    },
+    "docs/dev/releases/release-speed-validation/validation-path-equivalence.json": {
+      "bytes": 3161,
+      "sha256": "a250157287beefb822308fc61295efce711094fca352d832ed7e5a360665c0e5",
+      "git_blob_sha1": "e58b9d57921bfac4da237083191aaed613e7cdbb"
+    },
+    "docs/dev/releases/release-speed-validation/windows-guards-001/admin-tests.json": {
+      "bytes": 6621,
+      "sha256": "fdd058c35bbb21829ede857d392a2663fe2263d5eceacc4e57dc80092291ca5a",
+      "git_blob_sha1": "337b5ca5a73e8323c44f666bd685cc60c99dd5f5"
+    },
+    "docs/dev/releases/release-speed-validation/windows-guards-001/admin-tests.log": {
+      "bytes": 5877,
+      "sha256": "ce3bc318cf428c55ea195d99cfdc7f50e00b77db197703d1bb7088b31b90863a",
+      "git_blob_sha1": "d40833f54a9d3b628197a08f84fc5b4552f6c55c"
+    },
+    "docs/dev/releases/release-speed-validation/windows-guards-001/native-git-readback.json": {
+      "bytes": 705,
+      "sha256": "2c5014b9d2c0f7798bfa8ca4994ff694f5dce3d19801b1e49e8040d0ad1b8be9",
+      "git_blob_sha1": "9c8358eb6ed38e97310a0136c2ecc77842fccee4"
+    },
+    "docs/dev/releases/release-speed-validation/windows-guards-001/release-impact-plan.json": {
+      "bytes": 27191,
+      "sha256": "2504f1c415cb9e2dc863d3c137013992a25f75fc77dbe4c4565c9ffbb49e4ee2",
+      "git_blob_sha1": "b79472b3be04feed98c2853ebae4803a8ba6833b"
+    },
+    "docs/dev/releases/release-speed-validation/windows-guards-001/release-timings.json": {
+      "bytes": 393,
+      "sha256": "7a1f95fceb47b41355997c81643928abd2b82c78ce71a780f4bc897fefe03590",
+      "git_blob_sha1": "8be67fb70b831752e9b7f48c6572a6090e4b1b8a"
+    },
+    "docs/dev/releases/release-speed-validation/windows-guards-001/status.json": {
+      "bytes": 497,
+      "sha256": "7e9f7b81bdc976761b6b8f9aaa13d2cc271d148aaa23fbdd09a91a9d92ad5640",
+      "git_blob_sha1": "5c293058b859065e7e7528cf59659ea977848be6"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-001/cache-budget.json": {
+      "bytes": 317,
+      "sha256": "2d79ebb68fc81d34718de1cd9688c0a89490f277c95e88c525920baa7c57c259",
+      "git_blob_sha1": "830d2ae1b5774b637cd8416f072831ae1e7cb868"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-001/cache-transfer-timings.json": {
+      "bytes": 109,
+      "sha256": "e3fb0b1fc5cfe3f2cf75759c348d6d1faf6c7551b40ede074c8a510d2f3de26b",
+      "git_blob_sha1": "8980ce044509597474d907aa3982515f0041ce4c"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-001/native-git-readback.json": {
+      "bytes": 689,
+      "sha256": "e2203871778c42bf3529fffa24fb1c81a0019b6dfcaf1d36e8ce5f7e016e662a",
+      "git_blob_sha1": "6683c85fe3513a954c3ef73f8a04baec45d595ae"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-001/release-timings.json": {
+      "bytes": 425,
+      "sha256": "2cc98de46095bb0aec9bc3abb52bbddb6dedb2f6f1899849744b92491c0fd691",
+      "git_blob_sha1": "6dbdb6029610f48595bf08f61c6a085cce387e0b"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-001/status.json": {
+      "bytes": 481,
+      "sha256": "2967987a211d8da00f981ecd8f6dce8d22ade55283d8e41cd7fbc16466555209",
+      "git_blob_sha1": "5beedd50d40e8403ab117dcc7ee4e3485c15a716"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/SHA256SUMS.txt": {
+      "bytes": 305,
+      "sha256": "49210dca2d2de21ed68e12a74824cf9b81d679c37dcf36da0726138c8a889173",
+      "git_blob_sha1": "dfe1c921a99193fe23ccdf09020c270c9f053490"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/WINDOWS_RUNTIME.txt": {
+      "bytes": 42,
+      "sha256": "5f16fb6613b20dc77181aaca2aa4aec347cc541599c80c064037da95bece8322",
+      "git_blob_sha1": "c8f5f45759588a32b34570859a6f82da707fd606"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/actual-exe.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/admin-tests.json": {
+      "bytes": 5857,
+      "sha256": "a89a682eac64c192f1592252f75f16e1fc3c4acd84f8b70ae44dbdcdc21cb024",
+      "git_blob_sha1": "6885e013e728227d2f5c4c777e3533e3d590d456"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/admin-tests.log": {
+      "bytes": 5002,
+      "sha256": "65fe5f6827e34c13ad5df6c1c06e6092a6284493e0a631df599754ad1436ab98",
+      "git_blob_sha1": "eb648cfb3bef8cbef306fbd25ccb0395b5e13511"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/cache-budget.json": {
+      "bytes": 317,
+      "sha256": "2d79ebb68fc81d34718de1cd9688c0a89490f277c95e88c525920baa7c57c259",
+      "git_blob_sha1": "830d2ae1b5774b637cd8416f072831ae1e7cb868"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/cache-inputs.json": {
+      "bytes": 7165,
+      "sha256": "e00e31b9b280ce948f6937e7672e7a86fa1715e8e459224d50cfbc17296af2df",
+      "git_blob_sha1": "3f69e9f9407272dca37d4c32a937db4e7219abfc"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/cache-local-warm.json": {
+      "bytes": 6180,
+      "sha256": "4960fee9f20c28a109a3b5d8dbeb4da6eea310f9988dd0df100bac12fea31583",
+      "git_blob_sha1": "b6f0c6ff1b33b35435e83fb70743f94abfd374bd"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/cache-prebuild.json": {
+      "bytes": 6177,
+      "sha256": "3c9ffcda6b3fd399fd68a0541e0af8deba42b3aa0150c4f4f69328a6d75fc79e",
+      "git_blob_sha1": "03a695ea0137d593877fd33e0134fe2ccc1de399"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/cache-transfer-timings.json": {
+      "bytes": 235,
+      "sha256": "3cc3c608976f61db8da44272502466e1465a4e527480067dda06d40fa8ec5ba5",
+      "git_blob_sha1": "5fc474baf17548fe53ffedaa14c181454180e05b"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/corresponding-source-verification.json": {
+      "bytes": 481,
+      "sha256": "bee74e9570fc1c5be6ac9ffbe8fa3cd395a91c98a6410c81ff521c9904f01b8e",
+      "git_blob_sha1": "6309d89c39ce0787733eff3b1fa2c37fd7aaeb74"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/download/download-verification.json": {
+      "bytes": 572,
+      "sha256": "356f2e08e3f2cae4c19c16f69be182459677a0c2649009825b240bbcf95fff31",
+      "git_blob_sha1": "031ca6bcbced3a54bcb199ef951cf8103768959f"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/engine-install.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/governance-gate.json": {
+      "bytes": 108,
+      "sha256": "982df2d3b07ac8b9939f2a56055f4b461e3f4a797c20ed6642c5eb465830b736",
+      "git_blob_sha1": "2de7682284393ee6ab8709c9bf0e958e3e7b96e5"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/installed-dependencies.txt": {
+      "bytes": 511,
+      "sha256": "966d8d3399ef3fa3ac3d01d647f3700edb8f145545b355c1a73c562b8ecd59d0",
+      "git_blob_sha1": "2bdc7f94af73f0218394dfe957850e1678039963"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/native-git-readback.json": {
+      "bytes": 712,
+      "sha256": "4bf61c7b49bc4f128e30c51c100040dcdc2300e0c3ac5e1cee120f4d30fbf7c8",
+      "git_blob_sha1": "8f273f9e8f0a8aa85e7f62a148b27cd4c9b24b58"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/bundled-engine-exercise.json": {
+      "bytes": 456,
+      "sha256": "3a7caa7122d1ad861db5e0c7f03818d4602f29f0666325fce5a04b7a3d974983",
+      "git_blob_sha1": "1df3565269ec8f9356f1536011403ecad8bbb41f"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/bundled-engine-resume.json": {
+      "bytes": 454,
+      "sha256": "cb171858e45a458b0f00c24a2eb9c0996a512eb6df3198f03e0a3b8fcf11b33f",
+      "git_blob_sha1": "62191785bcef16270573856d40e816d708f43cb5"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/engine-corrupt-dll.log": {
+      "bytes": 20,
+      "sha256": "6b7b5d69c97726eb3a2169969460353c8d7a53181417fea502a77d110217dc19",
+      "git_blob_sha1": "5267b10299e3591062f0238df474949bda003c4a"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/engine-missing-executable.log": {
+      "bytes": 20,
+      "sha256": "6b7b5d69c97726eb3a2169969460353c8d7a53181417fea502a77d110217dc19",
+      "git_blob_sha1": "5267b10299e3591062f0238df474949bda003c4a"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/engine-system-installed.json": {
+      "bytes": 500,
+      "sha256": "ee9a7f0113509a2ca71ffa90d6641b87626c4294634b4e3cd77b532ed5158623",
+      "git_blob_sha1": "ac9dcc7e0e67f8ac588a8b46257810535d6904e8"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/engine-system-installed.log": {
+      "bytes": 20,
+      "sha256": "6b7b5d69c97726eb3a2169969460353c8d7a53181417fea502a77d110217dc19",
+      "git_blob_sha1": "5267b10299e3591062f0238df474949bda003c4a"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/exercise.log": {
+      "bytes": 1322,
+      "sha256": "eb8dd437f76274a90ed3926f9cc6ad64e0f1199cf1bc5bccf6ccf222b1e99e02",
+      "git_blob_sha1": "5ee16587efdbfbd3917b981f551335ffe2baa7b6"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/host-installation-control.json": {
+      "bytes": 1026,
+      "sha256": "dcf6b872a5019fb787ac7d3025c3551715a06d6b6df2cabd407d0025568eb1fa",
+      "git_blob_sha1": "3e2b48a4159c83adcdac2a4d3bbe00c9fa859924"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/invalid-engine-scenarios.json": {
+      "bytes": 1095,
+      "sha256": "46f71d6fd8eb0a9a71013e2c5d2ecb696cdbadb61dd9ca91773989b30e93b36c",
+      "git_blob_sha1": "1cae5e2f86049eb333e1ef07c6ed16a1b3d6a260"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/native-child-processes.json": {
+      "bytes": 713,
+      "sha256": "c860156c3647761b30b55624c28858c6c19fab14f82f7d803fbfde6898f553b5",
+      "git_blob_sha1": "b0e3fccb660b4343246deb5cf7548e37869ac6dc"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/packaged-drag.png": {
+      "bytes": 56411,
+      "sha256": "b019e1173713dbb85662f4f8af5775e00c4f9aea11b8fea60729a4a793ba4605",
+      "git_blob_sha1": "ae32f054ea4e7da46c520d8b9b56784334e8f5ed"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/packaged-exercise.json": {
+      "bytes": 917,
+      "sha256": "cce93e59cebd93a95190ba86ccd577fc641954425266ec94cd7f80cdbd6f07d8",
+      "git_blob_sha1": "992fac102c8143ffdff652176956f5f014f6ed8b"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/packaged-exercise.png": {
+      "bytes": 55906,
+      "sha256": "72249491b75986c8e2b02d469646d4b7fa368208618c286ebac24691b3468593",
+      "git_blob_sha1": "c232b0cba4089bef126b663a1500a143159412a3"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/packaged-preview.png": {
+      "bytes": 56612,
+      "sha256": "61faecb4c129d4cca0a0f7027e0bbb7a227fcaf67280dcd8b2ae28782e6389c0",
+      "git_blob_sha1": "b2986713d7c486ad6172108e494cbb9e18e64da1"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/packaged-resume.json": {
+      "bytes": 642,
+      "sha256": "cbf373a900c1d49306b3edbbabf4258bb9091b983b644013cbfa69e82917a172",
+      "git_blob_sha1": "0280401406d59fe3a9d5559e87aba34fd8fbd5ff"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/packaged-resume.png": {
+      "bytes": 55908,
+      "sha256": "9ec78d56f458cee6c0d706b40879782cc3cc44e0349758b83238d90e0b7069f9",
+      "git_blob_sha1": "202c77c09c765284d36f3332a5a253159209fb50"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/progress.json": {
+      "bytes": 364,
+      "sha256": "12a2665af4470386a8937e0131bca2ffbaffba91616c54f5912c788c6a5d8bd0",
+      "git_blob_sha1": "472a2db709a7e8b7a614d58b24e40bf0218367f6"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/resume.log": {
+      "bytes": 463,
+      "sha256": "6d805973b1ba3dd209bf266363ebbdbd0a05a642026977409316894617f139f9",
+      "git_blob_sha1": "035b5fdccd18518d67a32b0a64c073a3829061e6"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/summary.json": {
+      "bytes": 715,
+      "sha256": "e779262347aaed8a83a3c995e3890e0761a7469bd2f4da4a6efb395c8890ce0a",
+      "git_blob_sha1": "94defef79cdb4d8c3291b0b4e36e1f5c5865d572"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package-check/worker-observation.json": {
+      "bytes": 2756,
+      "sha256": "b80bfece26e7f8b2245e5255d371fbf17b2ae2253df542957bf46f32035b37c9",
+      "git_blob_sha1": "c64d7148a57b30f4506f78eb9f11aca457c8fd76"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/package.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/pyinstaller.log": {
+      "bytes": 18029,
+      "sha256": "655cee9d29554cce58d3350b71cd2ec48cc5b197cc7352c6d142b8e7e3d6aae7",
+      "git_blob_sha1": "531e034de478bb373280fd232bcc520773138cb8"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/release-impact-plan.json": {
+      "bytes": 10264,
+      "sha256": "70f2d8eab8db2068a33babde55f61d5cc8ce4849abc6fd30e25f01a533125c80",
+      "git_blob_sha1": "1587c3192cc0c26f59ac0e4acb17f848c297659b"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/release-manifest.json": {
+      "bytes": 2768935,
+      "sha256": "b753cb9dbad755e3b702c92bb2b76c18e2d0a061a908ba83892796a28f3a961a",
+      "git_blob_sha1": "855fe9c92c497f4e9f040d70cdfeff9127c2ca90"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/release-timings.json": {
+      "bytes": 1777,
+      "sha256": "da0e23eb5b3dfa52611855509149dd40bfc77acd5ef001106b5590a03bd88a9a",
+      "git_blob_sha1": "e5db51724981fd3a78171b59f20bb39fd8878b8f"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/source-governance.log": {
+      "bytes": 108,
+      "sha256": "982df2d3b07ac8b9939f2a56055f4b461e3f4a797c20ed6642c5eb465830b736",
+      "git_blob_sha1": "2de7682284393ee6ab8709c9bf0e958e3e7b96e5"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/source-tests/catalog.json": {
+      "bytes": 23465,
+      "sha256": "59a82e722c691bfc947dc73db70e475c65c0e5e8a8b92af7aae1380f9c33b131",
+      "git_blob_sha1": "06f11b8817ad84ea0237e36896708aeba53d0e7f"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/source-tests/runtime-errors.json": {
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+      "git_blob_sha1": "60b0742537a340e24cd759907e52a344943fb386"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/source-tests/summary.json": {
+      "bytes": 972,
+      "sha256": "937ccc39ad11a3c71cfa257f8b3dcec0dc6009521580d134d22a67c2b6b42b52",
+      "git_blob_sha1": "32b11ef5817ac012bcc325af56b6e73d84709622"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/source-tests/tests.json": {
+      "bytes": 40765,
+      "sha256": "1a14fceae79f18abbaac7dfd5a334330b00b1e2759343e2d09646bbe90dd94f0",
+      "git_blob_sha1": "eeeb1276b6578a120198fbd6e8e869e9862655b2"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/spec.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/status.json": {
+      "bytes": 503,
+      "sha256": "5842dc3ebc64d9aac4e3afe85bd9c80bdfb00a32f2c8ae86d4ad52798902b8ee",
+      "git_blob_sha1": "f3103239442ea7f5ad12d24d6d267e69d5757b3a"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/utf8-build-policy.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/verify-loopback.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/windows-runtime.log": {
+      "bytes": 42,
+      "sha256": "5f16fb6613b20dc77181aaca2aa4aec347cc541599c80c064037da95bece8322",
+      "git_blob_sha1": "c8f5f45759588a32b34570859a6f82da707fd606"
+    },
+    "docs/dev/releases/release-speed-validation/windows-native-002/windows-source-tests.log": {
+      "bytes": 469,
+      "sha256": "ff05633eb177bdb2f3f53470a0ef75b79842e946edadd4b4c9dc81ba98c81a79",
+      "git_blob_sha1": "71fcc7f8d83ebb233c6ee61cf1683412de50368e"
+    },
+    "docs/dev/releases/release-speed-validation/windows-warm-001/cache-inputs.json": {
+      "bytes": 6178,
+      "sha256": "ef5ca49a037f60b949becf4c9288c6be29c6a56a307c89903c1e0550ccb9b809",
+      "git_blob_sha1": "7e3e4295843e8e510e120ac5831535fa45c8e97d"
+    },
+    "docs/dev/releases/release-speed-validation/windows-warm-001/cache-transfer-timings.json": {
+      "bytes": 133,
+      "sha256": "3817c551d99fcaebb83d1bc3acae348e2371925cebe642565baf3c6f2b7e632b",
+      "git_blob_sha1": "a2594c7c0ee2f38765705e49a5a1bb61a2706e3a"
+    },
+    "docs/dev/releases/release-speed-validation/windows-warm-001/corresponding-source-verification.json": {
+      "bytes": 481,
+      "sha256": "bee74e9570fc1c5be6ac9ffbe8fa3cd395a91c98a6410c81ff521c9904f01b8e",
+      "git_blob_sha1": "6309d89c39ce0787733eff3b1fa2c37fd7aaeb74"
+    },
+    "docs/dev/releases/release-speed-validation/windows-warm-001/native-git-readback.json": {
+      "bytes": 709,
+      "sha256": "449453f4fdc61afb9dedd036f8a3e25ffe46e534c7003f6a5ff0d96ed2c7078b",
+      "git_blob_sha1": "73e765861e9589dd3df726d19f4ffe7a7fb8d1be"
+    },
+    "docs/dev/releases/release-speed-validation/windows-warm-001/release-timings.json": {
+      "bytes": 466,
+      "sha256": "711dfe37205e6d7f8f0f7253eee5e1f85a75e5dac4589a93d9241bbd1b250110",
+      "git_blob_sha1": "a7bc839dd3dd86a8e0a5c905641c66ccd56f5497"
+    },
+    "docs/dev/releases/release-speed-validation/windows-warm-001/status.json": {
+      "bytes": 501,
+      "sha256": "a1e6abede79d29cc106231b0818dfbf40e51d3971062e39e88c3da05ca3a90a8",
+      "git_blob_sha1": "0f570e44ed9c58dddf17afdd10a31a8c2d864b06"
+    },
+    "docs/dev/releases/release_actions_support.py": {
+      "bytes": 3016,
+      "sha256": "b9c24a934259c5e70057a0e321d81dc092b092610a513b377659589be4d6ad89",
+      "git_blob_sha1": "b0cba253bbd6e407fdb0e975bae7eb77db2e92ca"
+    },
+    "docs/dev/releases/release_cache.py": {
+      "bytes": 12668,
+      "sha256": "6fd4abc947645e419dba52d6a2265d8d2b80fac8992928da03ffddf84c7797fd",
+      "git_blob_sha1": "3db50a2647c77d4d61ac0f33f1def22bf37ff9eb"
+    },
+    "docs/dev/releases/release_impact.py": {
+      "bytes": 10312,
+      "sha256": "2d53e7dc5ec233543cec8c583e1da2b43865ec51d708dc9b5d55d1cbbe97db7d",
+      "git_blob_sha1": "ea021753a53adf1033fefed7299c512c2400338d"
+    },
+    "docs/dev/releases/release_pipeline.py": {
+      "bytes": 16716,
+      "sha256": "e83e72b11014a81b2c4d73c41fb09f784958582d005fc18cf2b37438259e68f7",
+      "git_blob_sha1": "bb89d025ef3cd2ea9d8a2576641aa0beb1a7ac90"
+    },
+    "docs/dev/releases/run_release_guard_validation.py": {
+      "bytes": 819,
+      "sha256": "f73f98d0eed6adf4b3c3aec75d4e584ecc66314ae280e8a049a8fdd021b0828a",
+      "git_blob_sha1": "d4066ce72771e9b4e694e7804ae7e219f6b2b162"
+    },
+    "docs/dev/releases/run_release_speed_tests.py": {
+      "bytes": 2172,
+      "sha256": "fc8c111ca8be1dcc891d0d4994a2707c47d901a8dc0ffacdd621ecda736b7442",
+      "git_blob_sha1": "0e3843fbeb9c36a7647163b7eaebba870da89d43"
+    },
+    "docs/dev/releases/test_release_speed.py": {
+      "bytes": 19940,
+      "sha256": "e0440131237543081cbb41dccdd5b475511064d0403499c98649d9238c8f4098",
+      "git_blob_sha1": "cc818700ec84e24d7aed533d9491f96bb26ca275"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/adoption-provenance.json": {
+      "bytes": 1525,
+      "sha256": "45d3b49e62d67df717b7f84c989b65c7d2fbc4b11f675bf099ac138676307598",
+      "git_blob_sha1": "bbec3f2a8265c8b8b6b6a7a17a409517e129c063"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/capture-image-manifest.json": {
+      "bytes": 41373,
+      "sha256": "af88ea00519343402b5aeba00f5529930994b0f1f1adcc158b30d2f52dc9c364",
+      "git_blob_sha1": "75f8fe50180d02b79dfc7537b499828fafe308e8"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/capture-jobs.json": {
+      "bytes": 13114,
+      "sha256": "ba01330e664fee20997d58192d154ebf098fc968fe9247017e4bbfe2b5c5d184",
+      "git_blob_sha1": "a74843bb07ff3d6f975cfbb111c09798fca9a517"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/capture-summary.json": {
+      "bytes": 219,
+      "sha256": "bbbff652bbdcd688f7909650da9acc2d38ac0cba46fb2411409de98a0126574d",
+      "git_blob_sha1": "d49a91fc16000f00e1dcac6d6c2137677ae2c73d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/anonymous-smoke-data-0.2.0-beta.2/assets/0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7-p1-visual-import-0.2.0-dual-recovery-ra8d3c98d5b75520dc97241b8474d80ca/preview.png": {
+      "bytes": 8323,
+      "sha256": "2c87b5931e916d10981658b75fd6b3fb2b775da9f756ebe72543aa17d1c8a927",
+      "git_blob_sha1": "3e987534ec002f8e655395efc5253f2c4382602f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/anonymous-smoke-data-0.2.0-beta.2/assets/3623d830e3efe4687b8376b1cef1640b62495fb95973ed21e8b5593c843946f4-p1-visual-import-0.2.0-dual-recovery-ra8d3c98d5b75520dc97241b8474d80ca/preview.png": {
+      "bytes": 60773,
+      "sha256": "cf3ee0f169ae0537384c434cff66f4fbf7dd31418ced8386a5cef81d241b8321",
+      "git_blob_sha1": "41f0e3568a0e770001891d56f05866608e0f39d1"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/anonymous-smoke-data-0.2.0-beta.2/assets/4aae36ead699295758de4bf689e7e77b96e16a862d6e26e7e582fe1e219e9644-p1-visual-import-0.2.0-dual-recovery-ra8d3c98d5b75520dc97241b8474d80ca/preview.png": {
+      "bytes": 13583,
+      "sha256": "e5a374e78c547b08cc7cd54194dcb0ff95b012534fbea15d9b39e4e1972fd6b4",
+      "git_blob_sha1": "6b89151398b087d4123091d942966d4d1fed4725"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/anonymous-smoke-data-0.2.0-beta.2/assets/6a5b6623511078fce67de16fccec317cf4982556bc40932df7112c9f6eb63c8d-p1-visual-import-0.2.0-dual-recovery-ra8d3c98d5b75520dc97241b8474d80ca/preview.png": {
+      "bytes": 8322,
+      "sha256": "ae871c01bfe734d97d156d8728cfc2bb8ca232d5b16d9ee09c7398ca08025787",
+      "git_blob_sha1": "b4d3f6f4cdcdbb32c7ab8766fc56f591471d0f39"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/anonymous-smoke-data-0.2.0-beta.2/assets/b79cb1326924e1e6c82b2b3d2760fd8aea6274f5e4e6640ccd4a6a55437b92f7-p1-visual-import-0.2.0-dual-recovery-ra8d3c98d5b75520dc97241b8474d80ca/preview.png": {
+      "bytes": 8329,
+      "sha256": "3568c93f2c2f98871b55928ce7b459ebadd55dec9cae329e7ae218f1682720be",
+      "git_blob_sha1": "ecd6d34b5c1d92e1d1f2366d8a98f54608641c76"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/anonymous-smoke-data-0.2.0-beta.2/assets/cd66c870f6ebc08fcc85a67d8150afe956ab983d9e7512c65fcca985267b2721-p1-visual-import-0.2.0-dual-recovery-ra8d3c98d5b75520dc97241b8474d80ca/preview.png": {
+      "bytes": 64118,
+      "sha256": "6004c83cee77a676812c324781dd4fda2533e11840ce0b44f77c84018762d39c",
+      "git_blob_sha1": "c571ba455f085053cdd5f990ff5f633e2cfb8f8f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-01-loaded-coverage-no-global-claim.png": {
+      "bytes": 179180,
+      "sha256": "a47111a460a644005efba2b305a2e588b68ae3e4b746196e1d8bac3145db1adb",
+      "git_blob_sha1": "f3e350b2e41ddcf735c6d79399d82f7561f8634f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-02-filtered-hidden-explicit-selection.png": {
+      "bytes": 131510,
+      "sha256": "8dfe7e023640f021a21e372676a91b9b2726a80f1223fecfab68becdfa584abd",
+      "git_blob_sha1": "26a953461da42eb0d8ae424b3c8ac6883bf82dac"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-03-real-preflight-fixed-font-differences.png": {
+      "bytes": 222152,
+      "sha256": "2833b4082ed788c798c94cb472c22b5c9c488e8d2bc4471808edf4433ec87e3e",
+      "git_blob_sha1": "adf7486a3faa1d1f699dbeba8a872fa5bc5bd590"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-03a-source-readonly-before-after.png": {
+      "bytes": 37541,
+      "sha256": "e4091dda8420b29f2137b0a051a543110854378f477f377462160b09a97e5f79",
+      "git_blob_sha1": "ba4c174cb5e8d8dc703908ed6bab559fd97e8cac"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-04-real-cancel-scope-confirmation.png": {
+      "bytes": 25928,
+      "sha256": "ea43cbd5aadcbf469fa49c40b368665fab5fbec7a8dd25e9bc82dc3dd07fe347",
+      "git_blob_sha1": "5baa52e975dc426bb8f906c7bbbbf755fa463350"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-05-real-approved-fixed-scope.png": {
+      "bytes": 25928,
+      "sha256": "ea43cbd5aadcbf469fa49c40b368665fab5fbec7a8dd25e9bc82dc3dd07fe347",
+      "git_blob_sha1": "5baa52e975dc426bb8f906c7bbbbf755fa463350"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-06-real-shared-worker-processing.png": {
+      "bytes": 222138,
+      "sha256": "99301fce919474f971ecaf57e84e24584e8b324009fa886760dc6e713b5583bc",
+      "git_blob_sha1": "a0517ceca601850bce4f03a93f74db3fc3c75522"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-07-partial-results-no-full-pass.png": {
+      "bytes": 211429,
+      "sha256": "b5c58cf338111039c003b9f1851cb689f7dfea22189acd930972a3535604f4d0",
+      "git_blob_sha1": "255d5b8e1bdee803a4c16ce0e9c7488634d34048"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-08-real-safe-retry-confirmation.png": {
+      "bytes": 25928,
+      "sha256": "ea43cbd5aadcbf469fa49c40b368665fab5fbec7a8dd25e9bc82dc3dd07fe347",
+      "git_blob_sha1": "5baa52e975dc426bb8f906c7bbbbf755fa463350"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-09-operation-readback-no-duplicate-write.png": {
+      "bytes": 207957,
+      "sha256": "d54de16a2b3a1cab9d2d1346328fa55d59a9c3faad3b0a61acd33f6c76c9c1ab",
+      "git_blob_sha1": "9e475f44204c4c80080a98998faec47640aab922"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-10-real-single-transaction-inverse-scope.png": {
+      "bytes": 23087,
+      "sha256": "f873e9fb0c597938f77e100e5912658f2c8b1e5004da52184558f22dd05bd789",
+      "git_blob_sha1": "7ef50c457524a9e38c6b6b84aa3e1833419045e1"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-11-single-inverse-retains-other-success.png": {
+      "bytes": 165982,
+      "sha256": "788e70674d0c20c808a4f806db01a1d7fd8cb151fe8c667ff9022a5327eed480",
+      "git_blob_sha1": "dfdb09d62b02343c9693f990c3d51645a16be67a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-12-exact-locked-source-existing-location.png": {
+      "bytes": 204990,
+      "sha256": "fca297f1d6725e501e6f1087cf3cb4d70746366c9033f63b58f0cdab336e0435",
+      "git_blob_sha1": "f8b70373f2d1caee7aa69c807793867a29256cb1"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-13-candidate-exact-sizes-and-context.png": {
+      "bytes": 202451,
+      "sha256": "eba463439c722991f8f9b6f688323483faae3d5b5d31c5878024ba60e259ccb5",
+      "git_blob_sha1": "8846105b81b5924db5d1dc2e11393b6d4a275e3d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-14-candidate-filter-retains-hidden-logo.png": {
+      "bytes": 168391,
+      "sha256": "d7d2d52435cdf61edcfcb9a4392a704992f8a44aa7777c64b1ee07015a6322f4",
+      "git_blob_sha1": "d75bda08c5f409d8c52ce101330c36d910b9ee22"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-15-candidate-preflight-own-geometry-fixed-font.png": {
+      "bytes": 296638,
+      "sha256": "0a3c828fab083e30aee134d5da06b1d1a3bab8abfa73dde8c66d0738a2535d30",
+      "git_blob_sha1": "aeb05490539e5df26adc8ea70053ac260ea7ea2a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-16-original-canvas-readonly-before-after.png": {
+      "bytes": 54771,
+      "sha256": "040b5aa16597d58d8def5070b7dc32edf1f265b4c503d03b709f37cdb41edcc1",
+      "git_blob_sha1": "7a0971150c39ca6ef560fe9d22d195260cfcb34c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-17-candidate-real-no-confirmation.png": {
+      "bytes": 14872,
+      "sha256": "04ae87e2a85b65c8c8d55ed4adc63f61e9394aef94cefc4beabacc4a5b783e0c",
+      "git_blob_sha1": "6efdf8db4d00072d1944917e936584ac1fe992a5"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-18-candidate-real-yes-confirmation.png": {
+      "bytes": 14872,
+      "sha256": "04ae87e2a85b65c8c8d55ed4adc63f61e9394aef94cefc4beabacc4a5b783e0c",
+      "git_blob_sha1": "6efdf8db4d00072d1944917e936584ac1fe992a5"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-19-two-qualified-one-manual-no-batch-pass.png": {
+      "bytes": 262953,
+      "sha256": "92dc87b63e43e012f426bbed24c6418982cc91aae2458bb07ec3bb79e9449ba7",
+      "git_blob_sha1": "c9f3ea0e4a653283709207d2b11f6cf21bc0f375"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-20-candidate-real-retry-confirmation.png": {
+      "bytes": 14872,
+      "sha256": "04ae87e2a85b65c8c8d55ed4adc63f61e9394aef94cefc4beabacc4a5b783e0c",
+      "git_blob_sha1": "6efdf8db4d00072d1944917e936584ac1fe992a5"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-21-exact-receipts-no-duplicate-geometry.png": {
+      "bytes": 269088,
+      "sha256": "470e893098a4e089fc110a17b8d797c9261e5d721f91d736a15fc79593e9023d",
+      "git_blob_sha1": "176a43e3e7fb65d9d370be046924051d7dfe99c4"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-22-real-encrypted-stop-password.png": {
+      "bytes": 12572,
+      "sha256": "749c283cbd3746771816ffca0cf5d8d19d06cc7b2178b3a1d12726e78742213c",
+      "git_blob_sha1": "b6ffe1a20791de625169e9dfb9c15594f596aa7c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-23-actual-ciphertext-readback-receipt.png": {
+      "bytes": 255856,
+      "sha256": "eddeb3f583c55ade717e8bd2b97c81271daabd8ec59ba2ceafe25c4dc0a3b6b9",
+      "git_blob_sha1": "9753cc82757edf2da46891cdb7cf7facab0d7143"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-24-real-recovery-password.png": {
+      "bytes": 9615,
+      "sha256": "170035112632f73940ba7c0c98c025c5a45dc3030e6c2aba4e8802b3790e13f8",
+      "git_blob_sha1": "60ec5ea41b9cda33660d6b00f9cf9b7cd9b0e596"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-25-real-recovery-scope-confirmation.png": {
+      "bytes": 20060,
+      "sha256": "690b8cb0eca0bb5279af1ba13b8a7694766d13d2ab1ed3c5278ccb1db6b77517",
+      "git_blob_sha1": "707bccc564c99349df3e4a8278a53f718d127f57"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-26-recovery-verified-receipts-unverified-others.png": {
+      "bytes": 280955,
+      "sha256": "fe36199087c1b08d0f9e860c88f06aaf74764612124d25f0ad8d74d283e16ddd",
+      "git_blob_sha1": "df49d06a37d4dc682a9eb862ef171df192d6e7dc"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-27-selected-original-transaction-inverse.png": {
+      "bytes": 15571,
+      "sha256": "cae141249016df850d114832c89390b5b160233fe8f29977c31184a5894e2f2d",
+      "git_blob_sha1": "60fc2f8e2d8a577a9259aaf82715e07b330ba48c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-correction-28-partial-inverse-retains-other-candidate.png": {
+      "bytes": 232961,
+      "sha256": "8f163af1fcec7be661a12d64bb151d1c1d6a9ea01bf48c8b6cc9551d846c5657",
+      "git_blob_sha1": "9bda12f2311730c3df005ffa20c0f630400dd96a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-import-cancelled.png": {
+      "bytes": 112744,
+      "sha256": "ca9df8b2eb9ecd175076aab59ca291c6ae2b96f804700ade2002607387c70f78",
+      "git_blob_sha1": "9f58e95da2437172f5cd95908fe82383ca7694be"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-import-preflight.png": {
+      "bytes": 103357,
+      "sha256": "f2ef7953f9a6e98c245965ade54b296cab2a4b7e904488abb2f8b4c55b92a6a5",
+      "git_blob_sha1": "5ad4932ab23edeb18252e563cdc7deafc3baba72"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-import-resumed.png": {
+      "bytes": 115239,
+      "sha256": "562e66d16a25e0e6d2413ea969b7b69b06bb2d7aabbb273b307444fa9c0fc634",
+      "git_blob_sha1": "de35f995c1dcdb34850911386b6aadd61505a291"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-import-running.png": {
+      "bytes": 102677,
+      "sha256": "7a15943308d9b21ffc5439531021607ccad10a215239c41606fdab4f9684cb22",
+      "git_blob_sha1": "f1e0f58ed53230df396ed6a05cdc1ab6e0e1b776"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/batch-source-preview.png": {
+      "bytes": 141057,
+      "sha256": "160c89a1a07d2891c182aec4a19e7fc2ac0dcc615e3ab8ee889d5bd824b3ad70",
+      "git_blob_sha1": "c3cf81302e054312cd67217b3d53163232277543"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-changes-01-core-difference-before-apply.png": {
+      "bytes": 142725,
+      "sha256": "2c45dab53b1ab1478e89d1066d0b936dc783bf73069db455dacb09f94b1e375d",
+      "git_blob_sha1": "57722e29d273dd5ef9a06a332516bb2fabd9f8f6"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-changes-02-manual-kept-worker-pending.png": {
+      "bytes": 142819,
+      "sha256": "7a416719f824bf09fc323a63f62894075432cc3d8ae4eabcbed3505d533fca6c",
+      "git_blob_sha1": "74e433842831aa5764f45c254f4fd155ccb37792"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-changes-03-verified-separate-nonformal-comparison.png": {
+      "bytes": 152526,
+      "sha256": "5e2525fe4b66fe41073c5210e27d9a24ff71e49765863ff02c34252ad49d9465",
+      "git_blob_sha1": "8380d9498a9363fd6c3e42ac01fb2a2cd3cda457"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-changes-04-keep-manual-explicitly.png": {
+      "bytes": 151443,
+      "sha256": "e1526ef78b48e5e2347b60de4a41cdf29a2eb6718147f947ead5b06d5b964545",
+      "git_blob_sha1": "27b925a2ed2942080f4386b2500981a4d9912c20"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-changes-05-phone-dependency-stale-not-exportable.png": {
+      "bytes": 207495,
+      "sha256": "299d95ef6e52fc89733bdda33db67bdecd785ae332d64bff97aadac650180dab",
+      "git_blob_sha1": "fd43b8ae0250ff15031308c80cbe08ca58b71b51"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-changes-06-long-phone-conflict-no-auto-shrink.png": {
+      "bytes": 158032,
+      "sha256": "2d932140cc85b05228fce0b3e5d56a88c8efb297ee91b27047917c5ca196eaf5",
+      "git_blob_sha1": "c0d45ad0602044a2b30a2edd4165aa98c18330ed"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-changes-07-single-delta-undo-current-full-gate.png": {
+      "bytes": 149934,
+      "sha256": "681f09d6f8eb7741dee57d1ec5ee027f9d071b55b6251c6237e9b680e6217b05",
+      "git_blob_sha1": "82858bc70f3e9fbd85e30f7c12bd6fd6293b09b0"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-changes-08-explicit-lock-current-candidate-only.png": {
+      "bytes": 150485,
+      "sha256": "4da0df1889358f258b5d781f01de76bdae5981e348532ecb94cdae36939dcd39",
+      "git_blob_sha1": "7111cd08b2a2559c04b3f035e3a6a8b70855ad95"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-results-01-current-qualified-finite-recommendation.png": {
+      "bytes": 201574,
+      "sha256": "aa380d665f268bac63a592bc577db381d368a369236a5c0d20313f90e0e23a0d",
+      "git_blob_sha1": "e44311adbd8b8baadd829412619ae4d4a2af127c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-results-02-nonformal-gate-differences.png": {
+      "bytes": 148784,
+      "sha256": "d592d885a242c5a57586ada2cda4081706794fa443e0873be38200f1538c472c",
+      "git_blob_sha1": "768e63b103f45cc354b8efe02e3ca3e90c1bc072"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-results-03-blocked-selection-retains-qualified-recommendation.png": {
+      "bytes": 265545,
+      "sha256": "9f3ceac34fbfeff1689f0916ac4ae9b2a5b5420ad050c8233303de05a8e543dd",
+      "git_blob_sha1": "8b7ebcac04acd7fa10e214a9431df371ca37080a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-results-04-typed-name-field-and-frame-location.png": {
+      "bytes": 235696,
+      "sha256": "45384e92fd91158e852d14c750df517cceae077f8d1cb80a102e3999d7744a96",
+      "git_blob_sha1": "9693409f56d3a01936a8c1800c817b1982b04ac5"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-results-05-stale-comparison-not-selected.png": {
+      "bytes": 150920,
+      "sha256": "ee1c1fbae06c395b2733bf9da2bf6ca787b2cd5e3ef302ac8dd7cbcc1dced7c2",
+      "git_blob_sha1": "3411e09338c02ea1b5fea8cf9879810420ff39e9"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-results-06-long-phone-no-safe-recommendation.png": {
+      "bytes": 258668,
+      "sha256": "334776a292342f0e4de99dfdeb76293b4775b9be09620c919e5048ce3f399209",
+      "git_blob_sha1": "6636a6979096d3265452c2f0eef891761721eb84"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-results-07-stable-field-in-actual-person-card.png": {
+      "bytes": 143746,
+      "sha256": "409fcbda25dd5afa9c8c4d45cdf94cf0d5f0a76f4101bf8fbab7bf1acdf47576",
+      "git_blob_sha1": "8b01f413313f89906d076150db0ec3ce848016bc"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/candidate-results-08-partial-scope-not-global-optimum.png": {
+      "bytes": 259739,
+      "sha256": "15547bedc783fbe19f990afe943ad7671a3d168a899f276c4286aaa41032563b",
+      "git_blob_sha1": "2a293ce74711986b4c5ed01908a6b3ca7ab7b76b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-01-focused-mm-nudge-current-id.png": {
+      "bytes": 246209,
+      "sha256": "a156d8fda2d6859e5f1d06d08ba3c8dbc4821e99275ad3c021105577e75175c8",
+      "git_blob_sha1": "53dd6e8ff1058c5f4a957077dd47ee6868c1e951"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-02-existing-work-undo-redo.png": {
+      "bytes": 265275,
+      "sha256": "80bc2f2aeaadbbb267dac6f17381cbaf2ecaf1c9ce4981db24de524f0c90f66f",
+      "git_blob_sha1": "7ad13b3054218bea27a8ce50a5f40aec7dcec595"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-03-text-focus-undo-keeps-work.png": {
+      "bytes": 265348,
+      "sha256": "bcf0caa535dff545f09e2ba8c43fa165a15d53e4bacec5518d9e7721b1b46b62",
+      "git_blob_sha1": "f540567045aa717a6b0102a587e886864e4edfeb"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-04-unapplied-field-blocks-nudge.png": {
+      "bytes": 266174,
+      "sha256": "63e0e9d0ea41549dec421acb7c091a81d4dfde407203245876a78946320754b6",
+      "git_blob_sha1": "d57a9cc40ccdd14930985acabf9a8444225e45f0"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-05-real-pending-discard-scope.png": {
+      "bytes": 18029,
+      "sha256": "74f92417e49bcafb2d7c3eadd38d228ac35b41341bc6cd0a636908fb02b4808e",
+      "git_blob_sha1": "6ed7319be18c5c14d2ba9aef7ff8bcd492f6fc6d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-06-real-history-scope-confirmation.png": {
+      "bytes": 17647,
+      "sha256": "7bcfb00fd7d34d57aa35eb424748a8619b310cf6105178d25f90981d9a1c8341",
+      "git_blob_sha1": "220a17d29b0f6e13a7bde7f50e1d12da8c8d1478"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-07-actual-f1-overview-and-mouse-routes.png": {
+      "bytes": 105201,
+      "sha256": "471af417e03928d30783e46b1a6a91b325353c6a8f9ac3f2a8fc90666213fc11",
+      "git_blob_sha1": "4fea5b3f5bc53983c6941d652a38873ae28770d5"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-08-real-delete-preview-no-write.png": {
+      "bytes": 238411,
+      "sha256": "bd39ef817ebc16583caba9f115ec0a182e053cced3ee075f21aed55632b92907",
+      "git_blob_sha1": "59c1bd32010e3cfa4b0f6475d13392c08ff24dd8"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-09-locked-delete-remains-blocked.png": {
+      "bytes": 221143,
+      "sha256": "cdd49e1093c2e2d470c707ac5868e5142d665051b39cead100cddf2eac63736e",
+      "git_blob_sha1": "de78f3da1f3833f214c539964787dae4466b77f0"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-10-stale-source-no-old-key-transaction.png": {
+      "bytes": 258805,
+      "sha256": "85b9c01dfe52993b3efcc885bdce5ae3ac2f73d3a0816000933dfc3a5208c4f9",
+      "git_blob_sha1": "a4452b8379687663b06308a97721f01ee9b10b8b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-11-real-key-conflict-no-save.png": {
+      "bytes": 77597,
+      "sha256": "6a56f9ac7505d15ee5819f55a89c7c72c2185739d7d93d56ee82ac55cfaaa4b2",
+      "git_blob_sha1": "66b86167eeb29326ea8d673e82f223345a8eb00a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-12-explicit-remap-reopens-from-preferences.png": {
+      "bytes": 68140,
+      "sha256": "5fc58cacf775448302083d561b04318135e5adc3e7649997df40817b4c961a09",
+      "git_blob_sha1": "f769a1bb1c346e1bbe8e97e33584faeb2cc3cbc8"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-13-space-visible-view-only-mode.png": {
+      "bytes": 264632,
+      "sha256": "dc7d47b8fb8eaff7db3c9a7d4dc8671c00a79936a0c5865fe2fb2b58020b53be",
+      "git_blob_sha1": "1d14d55984a35b15d3985444b22e6643a8211995"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-14-release-restores-exact-tool-and-data.png": {
+      "bytes": 265518,
+      "sha256": "55d664dc885361761f35a90b8240700b90eaf0eebf8a30513c24662048a0a23f",
+      "git_blob_sha1": "a7ff361a9fde170858f33d9fa0b7962590c2ee0b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-command-15-actual-operation-version-scope-receipt.png": {
+      "bytes": 30546,
+      "sha256": "ffb279f9564e2b37e5b2bfa5e5a7b3c54f16647ddcacb65448497f0e2cd2c588",
+      "git_blob_sha1": "dd09d3f6f26f2129b46e080cc730154ea9420677"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-compare-after.png": {
+      "bytes": 14633,
+      "sha256": "59578ebd80e4170bc9373aba74b2c9a3416cccb2063f775a62c9aacd816f8014",
+      "git_blob_sha1": "6a239c9f28598b6eb3bbb34da87db6bb083ca60c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-compare-before.png": {
+      "bytes": 15290,
+      "sha256": "12215bc9b405013a7c9587d22ade02d56270773fb39cf11a8a3fe6a5be73b592",
+      "git_blob_sha1": "f207de0f2831cd6af0252cb375da1eeb9b9790e0"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-compare-focused.png": {
+      "bytes": 104751,
+      "sha256": "11f2148446e8ef4c4ec590581b32f33ec893ceebf91c5dbb831e1117a5a9aed9",
+      "git_blob_sha1": "c42fe85a83f3c96740d0ce59a376924c921862b7"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-compare-overview.png": {
+      "bytes": 96229,
+      "sha256": "f4a2d7c2faaea30b620256e5d53216a5114345bfe64024f1fd7c5596a3afc557",
+      "git_blob_sha1": "093be1109341f9afc7e27bbe9a450245be938621"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/canvas-compare-source.png": {
+      "bytes": 60773,
+      "sha256": "cf3ee0f169ae0537384c434cff66f4fbf7dd31418ced8386a5cef81d241b8321",
+      "git_blob_sha1": "41f0e3568a0e770001891d56f05866608e0f39d1"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/catalog-customer-compare.png": {
+      "bytes": 135736,
+      "sha256": "2c89f3fcb958dedcf0a4de52980b0502dc8944feb17ec6b50936903e0cf50afe",
+      "git_blob_sha1": "c5fa1b448104f0ed9ca14fcbdac50081f9307645"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/catalog-customer-prefilled.png": {
+      "bytes": 165710,
+      "sha256": "3e6f0c56c07d9a28f542164715e581fd1804b25540788ed88a89d4745d8ddbac",
+      "git_blob_sha1": "227139ee482a4b7127819c6ff02ee1e80dd89aad"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/catalog-customer-source-preview.png": {
+      "bytes": 170635,
+      "sha256": "8757f8dc1bf087845360991bbff9d7a251be6de263ad708685c95ab0d551ab3a",
+      "git_blob_sha1": "2a681538730132a8fff4d7f23a6d238725669b76"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/catalog-explicit-editor.png": {
+      "bytes": 215417,
+      "sha256": "4f05a7950e28083a6f83b58589b4e654a5b40e4c28f53e1e592f7e9c64d472dc",
+      "git_blob_sha1": "668ca8874d261f5dc552919ba9f811c5a04aaa98"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/catalog-local-data/assets/0910635696bcadabfa032a08cf091f6d84accaf289e7f59d63cb57d9060d79ee-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 16619,
+      "sha256": "0910635696bcadabfa032a08cf091f6d84accaf289e7f59d63cb57d9060d79ee",
+      "git_blob_sha1": "46d2178e21c51a51d5472157fa585669b7e8f97c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/catalog-local-data/assets/6ea5ca06e2e7ca980e4a81fe672a45fab50e7f2df5b1e5cdcbea5069bffbf84f-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 17029,
+      "sha256": "6ea5ca06e2e7ca980e4a81fe672a45fab50e7f2df5b1e5cdcbea5069bffbf84f",
+      "git_blob_sha1": "71c7796e0202ff148781eafdfae77e4aa09888a7"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/catalog-narrow-source-preview.png": {
+      "bytes": 198247,
+      "sha256": "e2679b55b322ec461847e365795b036dbd1f1eb8974475c5dee3730c7a203563",
+      "git_blob_sha1": "369c54340f260e1e2b0e8f134cf21a796b3f3a4e"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/catalog-synthetic-source-v1.png": {
+      "bytes": 16619,
+      "sha256": "0910635696bcadabfa032a08cf091f6d84accaf289e7f59d63cb57d9060d79ee",
+      "git_blob_sha1": "46d2178e21c51a51d5472157fa585669b7e8f97c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/catalog-synthetic-source-v2.png": {
+      "bytes": 17029,
+      "sha256": "6ea5ca06e2e7ca980e4a81fe672a45fab50e7f2df5b1e5cdcbea5069bffbf84f",
+      "git_blob_sha1": "71c7796e0202ff148781eafdfae77e4aa09888a7"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/catalog-template-icons.png": {
+      "bytes": 213587,
+      "sha256": "9c021c1b1026c51164070b068a9e43a1bea791d06ac00afc97ae14bf30f3d55c",
+      "git_blob_sha1": "4c4cf439179c84077a0ee1b5e64d84163e0acc19"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/catalog-template-list.png": {
+      "bytes": 213041,
+      "sha256": "cb029bd88ddcdb6dfc53ec5a728af0c027117cfa0c7e5240e987b9218ac7042b",
+      "git_blob_sha1": "6c6eb9307eaaf6fd29c0ed64fec57938bb0f7dd7"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/decorated-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "742eb545ec519f462e339ad125f4448eba0f08a4b6533c14bf1b03614d284320",
+      "git_blob_sha1": "d82f92d90d2c06315e5780d26ac5e2a391451386"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/decorated-output-workspace.png": {
+      "bytes": 200446,
+      "sha256": "517679b09f467bd2c7d6437dfd0a871ca20bf37a1c2d2cbb19be4a4323401acb",
+      "git_blob_sha1": "d8b5dd3f14d926578ef58f686d8b148e9f8e7c86"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/desktop-after-drag.png": {
+      "bytes": 203449,
+      "sha256": "76986932a8a4c5312f7a45a7689282143c927ab1fe7e9fb1a1ad2f0722735a5a",
+      "git_blob_sha1": "1c54c09ba25ed3a9fc0e21eb79fa7669f4920622"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/desktop-confirmed.png": {
+      "bytes": 204367,
+      "sha256": "9fc396e210a9d1cccaf3c859237ff9ab1babaa40ceb00c476b1d68ca9b601c79",
+      "git_blob_sha1": "56b5e1c094230027b7ef8c66e91c4d850e358935"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/desktop-corrected-preview.png": {
+      "bytes": 180066,
+      "sha256": "db511b7c78d4da2675c044669d6317485fec3d1f73b7412c31dea8120f9e0529",
+      "git_blob_sha1": "e0605bae8a90d2f103e503e0315bbcaecbb6e4b3"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/desktop-guidance.png": {
+      "bytes": 82150,
+      "sha256": "ca7ed9d047a6bdf949f1b17dd8c243fbb15bec8a61b2711bd29c700942446e05",
+      "git_blob_sha1": "f56f52aeed550f6aea06f916044a29e9840f8e25"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/desktop-learned-preview.png": {
+      "bytes": 203525,
+      "sha256": "881f07921a3b4f4110e94bd6bc081b9f247510db042f0f8cbc17ee637a835ffa",
+      "git_blob_sha1": "0921083006cb963d9c92e5a4adf58fd2b3205571"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/desktop-mode-0.png": {
+      "bytes": 120277,
+      "sha256": "db3f5ec52e547f02af5d7fac2a49d6171fe9e84d672be0a3e5e42b3e47128bee",
+      "git_blob_sha1": "f10f61a9151d4f7b14a5625ec0c1fbb0f05c7135"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/desktop-mode-1.png": {
+      "bytes": 120303,
+      "sha256": "861ee900af69ba4caacbaadeb8ea0331d38dfc050ed4e131e7d3f4a60d73effe",
+      "git_blob_sha1": "0f09debb0587c3a2402488564782bb1cc15bcf10"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/desktop-mode-2.png": {
+      "bytes": 153223,
+      "sha256": "0d7d574fd667f6dac4431d9dd3a0a6882cfb6692dbf1f6887c3b9b1e3801e73c",
+      "git_blob_sha1": "f9fcb1a52cc0d016258f266e6b2dc3928cc90e5a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/desktop-offline-support.png": {
+      "bytes": 126169,
+      "sha256": "152174a595ae6728ba84e1821db390994cd9868d619264f811d66e3adcb7450a",
+      "git_blob_sha1": "490e728273bca0a610dd98eb3b38b4c29fe569c3"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/desktop-small-window.png": {
+      "bytes": 126294,
+      "sha256": "36d66bee01163ce40183daf1f0affcab984f11316346f28163bad084479ed52d",
+      "git_blob_sha1": "720d7af045c1c07121940715bd98c6cee677b92a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/desktop-stale-after-correction.png": {
+      "bytes": 175873,
+      "sha256": "c78b0b44f5c168081cb79d16b56baafd6858dd2592f095dfcd5ab4bccad23e13",
+      "git_blob_sha1": "6755e76f698a78aad0a67e59650451f08c4f16a3"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/diagnostic-local-data/assets/b84c9a1111faf893915eb8e18a65c2c44ab18c03de59a64e046ead16842bd5b4-p1-visual-import-0.2.0-dual-recovery-ra8d3c98d5b75520dc97241b8474d80ca/preview.png": {
+      "bytes": 8282,
+      "sha256": "2d34650e484bd1828bbb5d2c84cf5e88a57caff07439896f2243a1104d89e43b",
+      "git_blob_sha1": "49973c24e369a51c7fa86162791e726e8f05f90b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/diagnostic-preview.png": {
+      "bytes": 175883,
+      "sha256": "98f25b40522688ccf091cc16d364edd3ce418f7d164ab79293db1d5e1f7bd564",
+      "git_blob_sha1": "f3c81c32d063dfa17841c0aec742c55dce87c84b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/diagnostic-saved-reopened.png": {
+      "bytes": 172513,
+      "sha256": "3433d8a4eee48c548dedb21333be02ff69fa4b3072052861533f8b0ccd753203",
+      "git_blob_sha1": "e23299edfcd20918bdcd10de0fba0340fcadb4fd"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/diagnostic-stale-refused.png": {
+      "bytes": 174422,
+      "sha256": "68fd9ec62ca625d37a6ab727dcc89f83674d41bab1476a08c6ad30f31bce08a0",
+      "git_blob_sha1": "4af9b8fc9aa01620115ce53ad76e20e67cdf26b3"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/diagnostic-work-issues.png": {
+      "bytes": 187803,
+      "sha256": "79c83fc51d1ee55aeec23fe2eda9267372790c3ef1ce4c19ecc4b063f3ea7fd8",
+      "git_blob_sha1": "933567e01d6ee0287df3d1270f6ede8211e44817"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-01-original-canvas-unchecked-guides.png": {
+      "bytes": 282065,
+      "sha256": "5ad7b570c76f7146e35f89479a4f63a4e4e03edf370afbeae48f45906ab79f01",
+      "git_blob_sha1": "d4cd7d065ccee1396910bbde0d4691e47b5c6b25"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-02-actual-pdf-checklist-no-consent.png": {
+      "bytes": 320912,
+      "sha256": "fdbf02ec6bdcb99b3084aa014ccd4c533ba5380d9d53d5abe7629b5e0b979723",
+      "git_blob_sha1": "4863a6ff6e99a3858527641648fe1986c55add62"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-03-logo-source-vector-and-actual-pdf.png": {
+      "bytes": 79565,
+      "sha256": "2eff72179add50db4cd222f39337ecfaf6ca6b6a6dc5c482239c84a7a48500e2",
+      "git_blob_sha1": "15cafffc5040024141ff20f4d6a7a3548e61df7e"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-04-text-source-and-actual-pdf.png": {
+      "bytes": 80024,
+      "sha256": "859c2c0da63c13172a230f6ae65cf64329a3f19ad5d91a1ed5afdc78af471e36",
+      "git_blob_sha1": "90cf8a674b5dd7d4687dec393cc5c66ca5797658"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-05-default-no-formal-still-blocked.png": {
+      "bytes": 321929,
+      "sha256": "801db2d55f4d8f5b614e4d752d19b81f766c474419082dc54f5439ce1968a0c9",
+      "git_blob_sha1": "809acea3c9426ba731bd0fe81ba6ff4b2ff3664c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-06-explicit-current-format-review.png": {
+      "bytes": 319268,
+      "sha256": "8dc7cce2abdaf7d943a33ec8e0dc044188c7b37e7a56a75ceb13754827b4ccc0",
+      "git_blob_sha1": "79e6851c51389ee1624024b9b9c4f99c1bb26f6c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-07-original-final-export-readback.png": {
+      "bytes": 320172,
+      "sha256": "3eaf03287d7ade19b797b7b1a47e54d21e9bc0c7e0c7470651da619cbdec5057",
+      "git_blob_sha1": "87b30f7e1919cd82c944654c8862cfec2dae6c47"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-08-new-dpi-clears-old-review.png": {
+      "bytes": 285627,
+      "sha256": "468667532d356a5444c7b4936a5d711dfa6df85f8d09fa5b18c79c1357cb4b94",
+      "git_blob_sha1": "179022e3dff2148553ec292efe93d9cb879de7a9"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-09-lossless-png-proof-current-size.png": {
+      "bytes": 311252,
+      "sha256": "459ade9a257985c2bd31118b7733b03ce7b6ae54c16c0b5e3569312668c3ad48",
+      "git_blob_sha1": "61fe0d3de5a1b9fd55a45f9dc16e4f3e65e66196"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-10-exact-logo-locator.png": {
+      "bytes": 308471,
+      "sha256": "5c77ce428919629b71ddeeaaf9ba2dd0488ca546aafdf9d98328a2445fff6b28",
+      "git_blob_sha1": "4b0dc66f1e91e9cdd8b689ae2ad8e691e1b632a6"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-11-original-batch-target-default-no.png": {
+      "bytes": 51535,
+      "sha256": "e044ef2732ad7fc9100916c513b7c13b730de7427c3e3f3c4e2b7a95ab027cf8",
+      "git_blob_sha1": "2590739a323e8a7d35ef0b6e52971b5b153283d7"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-12-batch-same-format-proof.png": {
+      "bytes": 79551,
+      "sha256": "18f472b15791b217c641bece0aa41638c448a060011abd1e8274d7acb76b9225",
+      "git_blob_sha1": "463788b5a4e4ac9acf521bcafff86755dbda9ddd"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-13-batch-source-and-actual-format.png": {
+      "bytes": 63767,
+      "sha256": "031ceb089d4a4278ce2bdd601c53d8322c5123391cc9578e669e9fb8b0f58c8c",
+      "git_blob_sha1": "96b0fad211c7b8381894f55f5fd916e133296c2d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-14-exact-batch-row-review.png": {
+      "bytes": 77504,
+      "sha256": "e0b74c6a6758b2ab7f9acdeb4ba77e08df7cb765fd7eb97ce874d2f32b2e38f3",
+      "git_blob_sha1": "fdfb7e6cd369011d0d63cc8025968ac14c71f224"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-15-batch-new-dpi-rejects-old-snapshot.png": {
+      "bytes": 74715,
+      "sha256": "03f9ff84a238c8422680aff5a80b377867537d2e3a236b836e5891f514533100",
+      "git_blob_sha1": "fa9f95604f276477452971e4a85a3ce62a06c533"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-16-current-font-source-and-use-rights.png": {
+      "bytes": 334144,
+      "sha256": "b90a9eff536ae746ed8758ec6925be32c931c953d349a7d5d54252db5aec5a39",
+      "git_blob_sha1": "8885f70a00d49ceef06bfc123a493cc80fa5404c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/digital-preflight-17-unknown-font-source-blocks-current-output.png": {
+      "bytes": 371142,
+      "sha256": "5d59c7ea5b6b27b2bcae1337f72ef5bebe83688f59d2c8214b91b82b3801a786",
+      "git_blob_sha1": "7363d9f7b367aa0eab13fe2361295eb208db2fb5"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/entity-adopted-input.png": {
+      "bytes": 161257,
+      "sha256": "e33ac64d159b4c97a8934ef2cc509df1a80eeb666115250842d06f5e98407f81",
+      "git_blob_sha1": "971b6700efd959c8d5706f2f818a448117a06480"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/entity-customer-diff.png": {
+      "bytes": 125957,
+      "sha256": "982e9b560ffad2e8256a484e48d07828a6636f48a9222062276a9865e425bf75",
+      "git_blob_sha1": "51cae265f7b8f138b0daf399bdbfd6616ed9dfb6"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/entity-person-cards.png": {
+      "bytes": 146973,
+      "sha256": "2612e8b095e5ac9b4fc24b4a8870de36b98d9f6acd92f40966649ad006691d80",
+      "git_blob_sha1": "f187c04d342125740f07ff62e1e1535dbc36fcc3"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/exception-center-excluded.png": {
+      "bytes": 133422,
+      "sha256": "b36db9a6639f718d014aa90466d415b164acb28f6e323f123e07e5e6c4715a87",
+      "git_blob_sha1": "77741a4ff60b187429b9a35e3218da4e4880a913"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/exception-center-ranked.png": {
+      "bytes": 133897,
+      "sha256": "2107988d8c8aad8769767a0b26b0612a391bf7d247146baecd6b7bf35e968222",
+      "git_blob_sha1": "26d8c53d0e833c2043c464b3c95237fa44af57f3"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/exception-center-restored.png": {
+      "bytes": 133265,
+      "sha256": "f5ee8555d654043af5d08198c897d64ddac3643d4a9e069c60935f115fac7551",
+      "git_blob_sha1": "c1cb8433d3df07e6234d477370a361c720b38eff"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/exception-center-retried.png": {
+      "bytes": 93413,
+      "sha256": "4b6a0a0731b850c16ce856b28044fd5f5215143edd5b62aa2af93e5abfcfba22",
+      "git_blob_sha1": "0b32ce3c0d6d232cac210e9e84cfe14d0541b331"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/exception-center-retry-preview.png": {
+      "bytes": 124830,
+      "sha256": "059955073a9b88945692c2f8f7c99c005a9fbb7565b532197af7f1d5d15dab28",
+      "git_blob_sha1": "1d599f0917a9c3e9deddfc50a7ffd4c1c0e44762"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/family-workbench-case.png": {
+      "bytes": 136254,
+      "sha256": "f099192610053862d08cddeeb78d11805b2076bccb348c9a9e63422ea7d51e9b",
+      "git_blob_sha1": "b14b43e02a53dbf8071899134b05bd134b912609"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/family-workbench-compatibility.png": {
+      "bytes": 143134,
+      "sha256": "1053f53c71cbbaeb45ff03ef0e3b96d893d6efde23c5f3086cec9a69f8dcf578",
+      "git_blob_sha1": "eb7c941ba5ac2000b1bf355536928405b6175031"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/family-workbench-composite-source.png": {
+      "bytes": 113921,
+      "sha256": "53b962f233b382509c6b688548cb9b881e069be3321ff1bc46c1724eb2fcbd25",
+      "git_blob_sha1": "186081cfdaedfd0718976d717a647e60ddefcc66"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/family-workbench-impact.png": {
+      "bytes": 171351,
+      "sha256": "b2857315322a7de7af0a60f1e63ca023ee75ac80ebfcb6bbd98e41b6be540ef6",
+      "git_blob_sha1": "12b1b1c0b1e04bcee157c57971c4e5d176dc2db7"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/family-workbench-joint-style.png": {
+      "bytes": 176028,
+      "sha256": "843272f1bfa0abafed9ede60b348778c88a2d662f02f3b643532698bb20a56ef",
+      "git_blob_sha1": "aa6b3e579a9eb3b01fad1fcd42d62a8f11dffe20"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/family-workbench-overview.png": {
+      "bytes": 130904,
+      "sha256": "ede63503fd72e94b90553aa65c58b613a6c61db628927817ca102b7a2a28cb6f",
+      "git_blob_sha1": "986e7b1b568a5bbaeced475ffd53b22e62866a03"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/family-workbench-source-comparison.png": {
+      "bytes": 59698,
+      "sha256": "e2b6c36ced3b832be1451e91dc7bf47238ae8bfffe67c9a4412d61230a5a4e44",
+      "git_blob_sha1": "17ea61897cddb839d4188ae62b4f0f9c41ea2e47"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/family-workbench-variants.png": {
+      "bytes": 132459,
+      "sha256": "0182608d6194ad55f1e0bf8ba6f6eff5f453f169a8d702a920aa217bbbd9ca5b",
+      "git_blob_sha1": "038ffbfd8a01c633d2200b7199a9a16b6be3e270"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/fixed70-customer-selective-sync.png": {
+      "bytes": 77503,
+      "sha256": "db4eeb9255b3fa187aa98d4649228c30e6b0cf201afc3c229a865a5cade5e57c",
+      "git_blob_sha1": "2ee6869fd614cc2992c35b5da4c37fc0c23f97cb"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/fixed70-customer-source-candidates.png": {
+      "bytes": 79535,
+      "sha256": "0d751b35683b8c952acd3d634e3961fda4e624dec9ebdcf50704d0d9aa01f6ea",
+      "git_blob_sha1": "84261d88898fa6b0a70a8943050ac4c9a24c8a89"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/fixed70-layout_100x60mm_PREVIEW.png": {
+      "bytes": 433496,
+      "sha256": "5b47998e2271f69166db7b37c6b9693591bffeadcd01d482d9dba6249bae0909",
+      "git_blob_sha1": "0e0f2735256c88b976295f215469df6bd2ba3409"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/fixed70-layout_90x54mm_FINAL.png": {
+      "bytes": 278169,
+      "sha256": "01c091622eaafe3b0a7f2969a7405e83a5be8a187db3c63da2664b82c36ff41a",
+      "git_blob_sha1": "d678d2ac8b9dd76883b7166eacd8aad18591586e"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/fixed70-logo-size-library.png": {
+      "bytes": 169040,
+      "sha256": "7e1cb6f68a00d87d106ccd8bf87d46c4adbe390e86cb343c0a7d2387146ffdc8",
+      "git_blob_sha1": "41be64953968123de11fe658178b303c138c6190"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/fixed70-logo-source-review.png": {
+      "bytes": 108814,
+      "sha256": "021349b0af705c588dc99dc4dab1d9c10cb5c0d9428d5548216ac5de09227ecc",
+      "git_blob_sha1": "37848e6d70b259341fc39977d7b8fa411923efd6"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/fixed70-multi-size-overview.png": {
+      "bytes": 122284,
+      "sha256": "9ce18f9d950469713acd1d0e74c1ecc7812411ddb6a73a2f5c25b374da6c0786",
+      "git_blob_sha1": "a1c55e2aa4b31e9261249bbc333f78e3397812d1"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-candidate-line.png": {
+      "bytes": 5364,
+      "sha256": "06192704f07406ff8c6bb0cc568ac8c72bdb326c067a0f50be46632dd251d707",
+      "git_blob_sha1": "e7e44d91aed6f6d60897ae31134d5bfa41506236"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-candidates-preview.png": {
+      "bytes": 270949,
+      "sha256": "eb1545617c196c79f38a61962de83a696560c61164b482ecb5de503f8ce07821",
+      "git_blob_sha1": "77b8d72e14162fd197025700ebc900fc9a5d7432"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-candidates-ranked.png": {
+      "bytes": 261181,
+      "sha256": "06f6dafaf2bbc10dfba0868aa80f64e926c91bcd862ab92376787fd527bc7ed5",
+      "git_blob_sha1": "43911b83a33a607773ec27f542e17a3b64ae921a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-center-diagnostics.png": {
+      "bytes": 284001,
+      "sha256": "56adb199b0575bdd8e0a7322e694c3bb36920baf2fa9e8edd840f0e6ed752d17",
+      "git_blob_sha1": "083fea76b99ccc5074caa3753376580657bbea6f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-center-workspace.png": {
+      "bytes": 308677,
+      "sha256": "9a22191e08cb025598357ab23f9dc9a45a4f99033d9d2dfa19a3d1bddf86cd32",
+      "git_blob_sha1": "e17ca88ac14ba55afa0ef07ad401405ece8c0fcc"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-review-approved.png": {
+      "bytes": 296225,
+      "sha256": "18951f274346392fe94adeed4b04b136b206d27a700da055ab357bdb3895c0f4",
+      "git_blob_sha1": "4b0801c4b1c90b4dbcb3dea4eeb88393bfbfc940"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-review-differences.png": {
+      "bytes": 288050,
+      "sha256": "12c02a66eaaea26ee0781941f94b7770d219d309a5f19a4b3e17d020edb416eb",
+      "git_blob_sha1": "23da8cbcb684944c1e392bea2514eb6db282cfa4"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-review-draft-history.png": {
+      "bytes": 277523,
+      "sha256": "5d72061be3e8ad9af70b7f869dbd7605dd1357b0c26e9d5556b1f9d254fd53e7",
+      "git_blob_sha1": "49efc311f9299056a099212480bbf0b7a8ffc7b7"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-review-undone.png": {
+      "bytes": 277422,
+      "sha256": "0e34c58e3ec3d6511e5bdcd98d2531127607c58dfe3733240b5369f338341c7d",
+      "git_blob_sha1": "66bbde287332710334d026645cfd3a759301de9f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-source-01-original-centre-unknown-source-use.png": {
+      "bytes": 193766,
+      "sha256": "1511e6c1a455f840db13b357373c661ef0416f6fdb32f82e1d06c290c7bbf17c",
+      "git_blob_sha1": "b4c5ecee17b47a3df11fbf96097cd9a03e793b6b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-source-02-actual-reference-file-and-face-not-native-origin.png": {
+      "bytes": 187197,
+      "sha256": "725320e81427b71599ed533bdfde6305634abf54014ce37de3f4ba8a47316141",
+      "git_blob_sha1": "989332cc15d9aec122b4520ec8ed47cd08d36779"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-source-03-measured-current-glyph-covered.png": {
+      "bytes": 205287,
+      "sha256": "c126ca1a3d803826ebb84d346739b90de248b76457225524ecf8f2351739ac4a",
+      "git_blob_sha1": "2fc7056a7c57922f17a7aaa4fd48bd0099b800b7"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-source-04-real-missing-glyph-no-old-coverage.png": {
+      "bytes": 205572,
+      "sha256": "cee9566140140dd505839af58bffcf68e0fcf07b565c1f8cfbdbab79d2180bcc",
+      "git_blob_sha1": "35c3abe850f2f6379a290da764f63d46f5a1000f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-source-05-pdf-rights-default-no.png": {
+      "bytes": 16238,
+      "sha256": "6c9acd6e66950f328b867979acaa375055c952baebe17985bbf32b915269dc9f",
+      "git_blob_sha1": "5e0774580ea76f2c079d10e61c7d03270e5ae1b4"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-source-06-final-rights-default-no.png": {
+      "bytes": 16315,
+      "sha256": "8036395a94b56e21f9aefee5dfc2c3fd6cb783eb0e4202b3c63b64f5788259f7",
+      "git_blob_sha1": "5ea5ba79a9f50a1aaeac3a664abee813bc9eb535"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-source-07-pdf-rights-explicit-yes.png": {
+      "bytes": 16238,
+      "sha256": "6c9acd6e66950f328b867979acaa375055c952baebe17985bbf32b915269dc9f",
+      "git_blob_sha1": "5e0774580ea76f2c079d10e61c7d03270e5ae1b4"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-source-08-final-rights-explicit-yes.png": {
+      "bytes": 16315,
+      "sha256": "8036395a94b56e21f9aefee5dfc2c3fd6cb783eb0e4202b3c63b64f5788259f7",
+      "git_blob_sha1": "5ea5ba79a9f50a1aaeac3a664abee813bc9eb535"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-source-09-recorded-rights-filter-original-template-unchanged.png": {
+      "bytes": 204680,
+      "sha256": "70f5b81f8a44a21676e52426b9224c0b208c62765353adb8827ba78acecf92bd",
+      "git_blob_sha1": "f3197ffcb470a3797f10cc5420f06d38ef0691d6"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/font-source-10-linux-windows-action-unavailable-no-install.png": {
+      "bytes": 189792,
+      "sha256": "ffdc6328cc03b0afbc550c4470a075d27fb820728c645fc2b582f44c3e26c1f6",
+      "git_blob_sha1": "70d9837d048200952e3384388d41d2a26b885229"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/input-integration-dragged-preview.png": {
+      "bytes": 102187,
+      "sha256": "5dc6c2b3adba08ba20cf3dfedf5885ab87ec31481ccc19c4327c35c95cdbbeeb",
+      "git_blob_sha1": "bbbcdf0958ab81bebda2aad6b87edaff9127b384"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/input-integration-legacy-to-learned-preview.png": {
+      "bytes": 110784,
+      "sha256": "bc2f3855c48319e52eec9da7b1020c5083ecce966f964e134f95e3016b7e3cce",
+      "git_blob_sha1": "b7baf666f84ea1f91efdab0561f7c399ad64d8bb"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/input-integration-logo-library.png": {
+      "bytes": 105237,
+      "sha256": "edf1aa2c4bea306b0b13e70edc029cc1d588c76ee65009e90f5da36963e122fe",
+      "git_blob_sha1": "f083a132a07af1607b06fd97b5580594cac8c6cb"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/input-integration-long-paste-retained.png": {
+      "bytes": 110871,
+      "sha256": "23f30c5ee6216ef0be536af8d031b3b8e277227fc27806894c6034c7d931ab3a",
+      "git_blob_sha1": "40a5d0e5a5f0406365224dfde9ecc906dd9f4a5b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/input-integration-main-preview.png": {
+      "bytes": 175643,
+      "sha256": "354ecda0d4488939ff9ca9697a2c28d788414b95ee98022c462bddcc00205fa6",
+      "git_blob_sha1": "b958c27f36cabc7b205bd31bd066f57391c83321"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/input-integration-real-data-entry.png": {
+      "bytes": 68972,
+      "sha256": "c40793f1dcf0fcd9b908aaad626f13d173a99690e2e0c39dc533af613d4301a6",
+      "git_blob_sha1": "ee3890a5f4a5047044a9d8b4de0b6f446442698d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-01-safe-current-gates.png": {
+      "bytes": 221644,
+      "sha256": "7b1ea705309aed32dd2e05f4a7584ce559d06e9dcd602f41fdca43fcb9453c88",
+      "git_blob_sha1": "40ba87e42d64b01fc5de9126de351bac817cfada"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-02-hard-blocked.png": {
+      "bytes": 254274,
+      "sha256": "88c80508343124d08de04ee742350444fff6cd61c088b7646f5677a91534d695",
+      "git_blob_sha1": "6de83dc6791c39a82742d6dc552f98849bdcb801"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-03-review-draft-marked.png": {
+      "bytes": 251558,
+      "sha256": "6875f17fdd99e7188d381964b59889807f564a199830bc9469de9b758d193782",
+      "git_blob_sha1": "28b3d6568bce107ae8985438581ba854c56ae67d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-04-evidence-required.png": {
+      "bytes": 261683,
+      "sha256": "63d5b4f759bfdafff4b46dedce1b49ee23f1ccc5e3f41d51688d9555c67ab6e5",
+      "git_blob_sha1": "34a92bd25be253558dddd4042dbf6d24bbd2cb8d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-05-real-resource-wait-pending-scope.png": {
+      "bytes": 73306,
+      "sha256": "12d0232f13e7adb805fb55ecad5f002618b4df3e3aee947bdf96f161b2b3634d",
+      "git_blob_sha1": "92015eccf789a4612bac274690fcfec0ebcd1ea0"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-06-partial-preview-only.png": {
+      "bytes": 204257,
+      "sha256": "1d47f64823424ed2ae4ad14d5f71cb9e1f1056037e28b5c6b6bd74b7585583bb",
+      "git_blob_sha1": "e45aeaa595ff8b161f0ba71f5173011325b70a3c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-07-cancelled-valid-partial.png": {
+      "bytes": 68413,
+      "sha256": "02c091597f52ee69cda4350f3468841bdf3b976f37fd18f67c3557c68ec1ac4b",
+      "git_blob_sha1": "ab4e17e2c164a52f14227bdd9b748218debb62cd"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-08-encrypted-safe-save.png": {
+      "bytes": 69890,
+      "sha256": "38467af434b1ab5f1e39938c11adb3c860d0b88a38621c5e15e292931741cd6a",
+      "git_blob_sha1": "4229fd0156f22691bca7ab794104e2e247aa56f4"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-09-explicit-restore-prompt.png": {
+      "bytes": 44960,
+      "sha256": "f975a016c21a3eb519bc59d7a62ed45748993e40b950a3c273ed07c0b4f7f178",
+      "git_blob_sha1": "c8e04f5473f8f2f8c4309eca62e703a534d81044"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-10-restored-current-not-auto-adopted.png": {
+      "bytes": 65084,
+      "sha256": "3b641cadea78ee3229990f01482e4ba0ffc67d4a0ddeb3720bdb15de0a718bff",
+      "git_blob_sha1": "39a1446e0545a88ac29013f3a7c1bc996cfa9589"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-11-explicit-local-clear.png": {
+      "bytes": 57832,
+      "sha256": "92ff298e14e3cfc3cb4f2894d2e68b0217f0b0a967b7bd51db489f79da906bf4",
+      "git_blob_sha1": "46c36b1ead8d36be2f2b1824b1ee64aa44ea9685"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-12-existing-manual-preserved-differences.png": {
+      "bytes": 81113,
+      "sha256": "8666b57c8ee8d63a83bb1f13417086b9885750f9edd0d2e995f3441630446157",
+      "git_blob_sha1": "3df09c0d93ccd20062bc22c5d44a1c27fdf09844"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/layout-risk-session-13-encrypted-current-manual-geometry.png": {
+      "bytes": 74482,
+      "sha256": "adce18122d6c369cef7a7b7238a8160830044cbf69c9fd9d552e7989d33131a8",
+      "git_blob_sha1": "5cede7b6b6a8ef9a3c3699762e12919609c7c272"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/local-recovery-desktop.png": {
+      "bytes": 139298,
+      "sha256": "7bc85f1a25b992c07d007a1fcfbcebf870948d3f3021391a1b9eca4ce7b80db3",
+      "git_blob_sha1": "5bbf0ee1b77ce4668d9c205b3cee90320965dffd"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-01-source-examples-sealed-scope.png": {
+      "bytes": 185281,
+      "sha256": "0e9216772adad5de8ad0a42a0db656d77a09cbc74e599973ae8a1ea206740d12",
+      "git_blob_sha1": "2e2d2f464438a3a70172ab197ab43167821725ff"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-02-no-consent-no-quarantine.png": {
+      "bytes": 181037,
+      "sha256": "85cd77d37a697b7aebba958d5cb55d58a1c918ef0856f8d95954ba4d76d788ba",
+      "git_blob_sha1": "d390a3b4295d8452bd07efc073365099db25538c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-03-persisted-actual-scope-denominator.png": {
+      "bytes": 193328,
+      "sha256": "dd312b22d97b19f620328be02105dc41a4acd465b07f5583bc88e93ef2d33c2a",
+      "git_blob_sha1": "60814f751fd3ae6d92b26163c3f4c4e32fbbdfc3"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-04-explicit-incremental-source-plan.png": {
+      "bytes": 214328,
+      "sha256": "a0e01ee28440f78b2a2e1e1c9155207ac15b902a7c5d56c5aee880f70ea4e80a",
+      "git_blob_sha1": "7999a090ea4c0a9a5b6625bc3714191fc0fc925d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-05-owned-job-old-new-no-auto-release.png": {
+      "bytes": 232934,
+      "sha256": "eafc4d18c0dbae83fe85fd637a189266e5111f5d59da3ae0a10e43abf04bfaf6",
+      "git_blob_sha1": "65ca712549748121b9e4b5bcfe833b862b00f34c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-05a-authored-observations-original-editor.png": {
+      "bytes": 191838,
+      "sha256": "d844c9df1c5ca8c97215c34ccf611896a696cb48f3637a1d36acbb572d40a10f",
+      "git_blob_sha1": "36a2926a7730f0689b95aedfd314c5d340b1fbdf"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-06-real-default-no-fact-confirmation.png": {
+      "bytes": 39229,
+      "sha256": "bb0347eebfd5a8a71701426ccbff0746d6b3882e6fc8af5261b03926bc706fb9",
+      "git_blob_sha1": "48a471efdf53afac9eee4970e5e68ebe01186c73"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-07-real-yes-exact-source-human-facts.png": {
+      "bytes": 39229,
+      "sha256": "bb0347eebfd5a8a71701426ccbff0746d6b3882e6fc8af5261b03926bc706fb9",
+      "git_blob_sha1": "48a471efdf53afac9eee4970e5e68ebe01186c73"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-08-original-source-facts-persisted.png": {
+      "bytes": 194215,
+      "sha256": "b188e7eb5bace8637a021129ef52b43b25b9e3d35df5180db871478ee5f9c890",
+      "git_blob_sha1": "d18190b895d07a5143ad3e7375029e436c5f6a82"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-09-new-human-finding-preview.png": {
+      "bytes": 212863,
+      "sha256": "633672c66b84ce1136bf9226390b9956e69b472d35fbb94e4ffad01c76453673",
+      "git_blob_sha1": "cfd4529b72be6186b04fe380d7b43661835e7486"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-10-work-cleared-template-still-held.png": {
+      "bytes": 213804,
+      "sha256": "7a9510ae5de1bb2711d5e7646455838ba552a121a81c94edf14d3fbee2a8869e",
+      "git_blob_sha1": "f0400c83a3ed0ffabaa616edacc3b1a86c41657f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-11-exact-old-template-physical-qa-preview.png": {
+      "bytes": 207180,
+      "sha256": "cc87c777c04aed0f39d8d85a3cc0c265976232e39479f21c664252c580c07568",
+      "git_blob_sha1": "00c5c923c873f97c4ecebb208d1096160e863142"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-12-controlled-current-source-draft-preview.png": {
+      "bytes": 199794,
+      "sha256": "46a56ff1c581fd90baca308d5f16cf029750a581420c9d7b096237ee2bafdadc",
+      "git_blob_sha1": "717563a160b545ce667c294fcdacfa183b18b327"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-13-new-version-full-checks-no-global-release.png": {
+      "bytes": 225032,
+      "sha256": "5960be3fdc76929192e0d698951c623cca306ae10bfd26768412ec266585b409",
+      "git_blob_sha1": "cb10ef36422fa80fd8b51ef5804be1f9f850da64"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-14-pinned-scope-completion-preview.png": {
+      "bytes": 197173,
+      "sha256": "a44776a8543bad870b8136c2eea49eb16ef083cf076cbbb1714d0b704a220975",
+      "git_blob_sha1": "e385f47d189c197ffbfac0d0a78aa0cc4cd79e30"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-15-completed-scope-model-corpus-unknown.png": {
+      "bytes": 191945,
+      "sha256": "b6d08cded4cd88c912f10f0a75a44fa3c6a59ee9ab6f5365969532cd8962c502",
+      "git_blob_sha1": "cd4d6c678e06035309b79f65bdce3e7f9e795035"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/major-review-16-new-doubt-reopens-retains-old-receipt.png": {
+      "bytes": 189459,
+      "sha256": "ac07233aea3ff4168264825e1006360e9f205d816082691499915a72182c969e",
+      "git_blob_sha1": "21453d21eb897b7932cfffd69ed4cc734ab1c069"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/multiple-artworks-workspace.png": {
+      "bytes": 155569,
+      "sha256": "2b17f6bbddd4d89860afbfd56e3387e5c518f24030cc1aa4bd4778ceeb25a6de",
+      "git_blob_sha1": "62883806322182abd13a5c6ab1393c45cd3e84f3"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next20-automatic-source-work-stages.png": {
+      "bytes": 61171,
+      "sha256": "4c57001bc7ecfa1b716a32ff8b4821c59ccb09959d363eff6ac5a05a47303e68",
+      "git_blob_sha1": "87ffed48f99652a2c47ba31de94f790c653235ca"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next20-canvas-safety-preview-unpublished.png": {
+      "bytes": 276002,
+      "sha256": "10e13cf40b50a93503a112c9d433c2f48e4bc84f6223c7940959117f5a97b1c3",
+      "git_blob_sha1": "d1bda7fbccd3fa927ed72e05a2aa07fb87eb3220"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next20-local-semantic-model-heldout.png": {
+      "bytes": 71147,
+      "sha256": "0574f130da18047ba35c338e7f714d0813e0ab7ba5c31f02eba7b8c0cdf8e70f",
+      "git_blob_sha1": "0e54c0965a7b8b3cacc289bb5eba25685ebbd90e"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next20-source-marking-and-evidence.png": {
+      "bytes": 200052,
+      "sha256": "d6c3333c325cb91108f49810b464da7b9f01102d2403e8dda9b98e1edc5b518f",
+      "git_blob_sha1": "ea5f6a822e5925503f6670c9bf0e6b04f81513fa"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next20-source-work-overview.png": {
+      "bytes": 90916,
+      "sha256": "a7e75ba63dd1e74539d058f8a53ad566aa4f849d701093eb92fec10be7f04f38",
+      "git_blob_sha1": "e7d5a6ac769cbc5d0fb77647f4a958f66fb1c770"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next20-source-work-region-candidates.png": {
+      "bytes": 44202,
+      "sha256": "8ea3aa5de457b54a00385d62b0308954a48d9492dd96aa67c3101d379da255c7",
+      "git_blob_sha1": "4a8aa796e7705d71a82712b0c34596a9b02c3ea0"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next20-template-version-difference.png": {
+      "bytes": 90705,
+      "sha256": "fc7c87844a1c41d166b46f035ff6e474d56b8aba39f7e14d0c87b76a5f597e16",
+      "git_blob_sha1": "3bc075845856f2aa9effb61f8f52b6beb84e5f25"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next28-all-readable-pages-persistent.png": {
+      "bytes": 67691,
+      "sha256": "55a4294851334226fa22feeef966711e16661f299be7c214ea3b2d2a9286844d",
+      "git_blob_sha1": "556d5fb4acc2ac349f864526b458f51b43395618"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next28-cassowary-unpublished-custom.png": {
+      "bytes": 168303,
+      "sha256": "b8789880e3781753de465b622cb9ece379f6832477dd65eef2c1f4a3db4ab5dd",
+      "git_blob_sha1": "d62ecb0e779917ac7c7ac8b9c0897d3528a62891"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next28-fixed-point-tracking-preview.png": {
+      "bytes": 60158,
+      "sha256": "914ef118dcacede7696275089fdc117df7b6845f1a426e861a52eb8084f41771",
+      "git_blob_sha1": "08428576e80f81cce0f6ee422e577b0b2412ca71"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next28-live-input-field-warning.png": {
+      "bytes": 107570,
+      "sha256": "6499312e99c07ae2be6817c4e6b4853f446395c6c55a80895fc5c6212fdc1e97",
+      "git_blob_sha1": "16b35e76ef015f577e2d14a4768c7ee2b97a2b9b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next28-marking-linked-before-after.png": {
+      "bytes": 82745,
+      "sha256": "3a2f892a8f92148899ee60788cafb44ada33cb251d22c23130338662565d2eeb",
+      "git_blob_sha1": "5d1ad25c56a998d957925153a35de56f2a8ac438"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next28-per-file-output-results.png": {
+      "bytes": 148662,
+      "sha256": "bb6d7c32508fa2436ceb4068168e96dbaa5c0794276265a3ad54ed4272b7b292",
+      "git_blob_sha1": "180dd00393f3ba0df56305958dd27fd4f05b243b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next28-qualified-diagnostic-separate.png": {
+      "bytes": 190058,
+      "sha256": "adf11180c3793f20e6de767e5ba6b31278d617de1d635b9aca43a5de13bb37a3",
+      "git_blob_sha1": "1877e26ffc18e66465ec5210f7593437906363b8"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next28-safe-batch-final.png": {
+      "bytes": 2717870,
+      "sha256": "0a8c6bd76102bddd04b99549efc27374e1722cfe9dc15722da812b44e810909a",
+      "git_blob_sha1": "5ef4c2bda478e53d5a4aa872b92f3dafdd8f0a6f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/next28-safe-batch-preview.png": {
+      "bytes": 4231054,
+      "sha256": "28e09cc8e8e234767e9286939053c264b8e17d031627e57ffdcff2f8a692958f",
+      "git_blob_sha1": "99d54a497b92fe9dfa334ab84c568114d7a35b42"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/object-tools-difference.png": {
+      "bytes": 247343,
+      "sha256": "74381c1e0839514e749e1f7b80958aeed8d6a4a12b73b6cb6a89b175dc88b3de",
+      "git_blob_sha1": "e1b2e64aacb23a8512b3c4bcc7f2e87d84a5740c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/object-tools-history.png": {
+      "bytes": 236748,
+      "sha256": "d191f7f15b7dee747c252fd7979883e0d0428afe3010942ef6b4ee61d0f12248",
+      "git_blob_sha1": "e406d5c4bef9386c09a2643ef28a6fbdeb65ef90"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/object-tools-locked.png": {
+      "bytes": 249142,
+      "sha256": "11e1f90806dc307f7b33c4d8c5edb7d95bd340ce7c66ee794f540779c2a9226f",
+      "git_blob_sha1": "c5c6d2518187bec4830e22aacdd712d1ffb7a11a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/object-tools-mixed-patch.png": {
+      "bytes": 248301,
+      "sha256": "c763970a71d8043b971ebc62c5016d522761e3edbcdba7c876b055db1ae76987",
+      "git_blob_sha1": "2f2337139cec71abe8b048a78c8aeb0f32bb8f03"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/object-tools-multiselect.png": {
+      "bytes": 234743,
+      "sha256": "b73120e28c308538b381017eea439b506fcec78e32ecc6a5377ee38732781758",
+      "git_blob_sha1": "243ba87149304123a55785c0a454d34de875823d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/object-tools-training.png": {
+      "bytes": 268446,
+      "sha256": "4c18cbf9d4fd33bf75fbe636a4e81eed00b72fc0801f269af881bef7b256e660",
+      "git_blob_sha1": "dff740c4e3f0313630d5808f5b5d8c1c38c38727"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/output-workspace.png": {
+      "bytes": 188385,
+      "sha256": "774342c906e53af425205d407898264f22a554818b810167c34a695c74d7b2d8",
+      "git_blob_sha1": "2b16713bf06fffa5e1e7700646a15b94ad45a913"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-01-text-fixed-size.png": {
+      "bytes": 259310,
+      "sha256": "57653b6de89d1968329e591fd7abf905a826f93f779b10552cae52a0262b9351",
+      "git_blob_sha1": "43f952d0197d7047d0d603cd48992a2f9cda3150"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-02-logo-pinned-text-inapplicable.png": {
+      "bytes": 273223,
+      "sha256": "5d7c95fe3803d467f3193520bbab81a2f7889c66bcf35052546a1fbab4283cd4",
+      "git_blob_sha1": "33935da453b125a3ebcf74a8961416011d96db3a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-03-all-original-properties.png": {
+      "bytes": 273268,
+      "sha256": "2e0eb3d1c5b672cbe60dba8b1a23b2abb0f444585fb03c564715df2f41269bad",
+      "git_blob_sha1": "d17ba25d8fe376c0f1dd6ef71d489c34e066b13b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-04-mixed-exact-selection.png": {
+      "bytes": 256782,
+      "sha256": "2c1a7f51646974dffcaf6c270b8385c611a5d351a632afb37405890ebbb97a5a",
+      "git_blob_sha1": "f365d8c648c841ccce577271f764bdf9fc2f6a10"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-05-unapplied-original-object.png": {
+      "bytes": 257850,
+      "sha256": "1217ed4b34df8b6ad7758514993863576a8e4f2b6ce3bf3207f520787a542481",
+      "git_blob_sha1": "700c132294d6b3263950032e076fffa19a42b6d9"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-06-real-selection-stay.png": {
+      "bytes": 18029,
+      "sha256": "74f92417e49bcafb2d7c3eadd38d228ac35b41341bc6cd0a636908fb02b4808e",
+      "git_blob_sha1": "6ed7319be18c5c14d2ba9aef7ff8bcd492f6fc6d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-07-narrow-scroll-apply.png": {
+      "bytes": 156346,
+      "sha256": "f4e3eae939ae655ec9e48d1d89a2fbf9ab63641e69214df4f363fd0cc5ba9219",
+      "git_blob_sha1": "f8ff82c14737adb5a66aa28452f5399967674933"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-08-new-source-old-input-retained.png": {
+      "bytes": 243909,
+      "sha256": "5d1e51683dabd09ae635904a823239a923c6f3104dbe09c553099ffdb29349a5",
+      "git_blob_sha1": "4eb70594afe39eb1521309e85f6393a6e1afa2ab"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-09-real-readonly-conflict.png": {
+      "bytes": 18247,
+      "sha256": "94f3d0b80dae9c33742e58e6e8563e20ab0e683d50089323956735eb487fc2c9",
+      "git_blob_sha1": "d0053d2138f35c9c581b3e9f7b4cdf70215338ba"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-10-existing-mixed-property-editor.png": {
+      "bytes": 231627,
+      "sha256": "b5ef18225c490312260134191e28b437e52407a28fef7f43dc6b6290ddcc0199",
+      "git_blob_sha1": "43571c17b0b94cbacebfb16ea17e648a9b5c9160"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-11-real-editor-close-stay.png": {
+      "bytes": 17755,
+      "sha256": "d02663974d7bae6c634a403104101f04ac940ee73704898c9e9b6a6632e627bf",
+      "git_blob_sha1": "912e5890ce32eb9ac61a6543c41da342d9b242db"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-12-stale-editor-retained-patch.png": {
+      "bytes": 231879,
+      "sha256": "3f473519781053d856fb506b1d41ce11ee69f58c4b13508b13605f1a9cd340a6",
+      "git_blob_sha1": "4d595ec1359bc9077165a0da599de485402eb44d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-13-exact-local-problem-blocked.png": {
+      "bytes": 243510,
+      "sha256": "98ed0e307658fde1b700520444b625563580a74219b765c48e76fcf086eaec18",
+      "git_blob_sha1": "43c11fc923f39267b971eb78b2ea97a330f0458c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-14-current-exact-text-readonly.png": {
+      "bytes": 243510,
+      "sha256": "98ed0e307658fde1b700520444b625563580a74219b765c48e76fcf086eaec18",
+      "git_blob_sha1": "43c11fc923f39267b971eb78b2ea97a330f0458c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/property-context-15-hidden-panel-keeps-formal-gate.png": {
+      "bytes": 243510,
+      "sha256": "98ed0e307658fde1b700520444b625563580a74219b765c48e76fcf086eaec18",
+      "git_blob_sha1": "43c11fc923f39267b971eb78b2ea97a330f0458c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/qualified-coverage-01-trainable-alias-denominators.png": {
+      "bytes": 218926,
+      "sha256": "1e616b6dba8e0134df82029298776f5c4de5e42890a451e6f261a37ffc03168a",
+      "git_blob_sha1": "484624100b82f208119d2473550c60730adf3892"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/qualified-coverage-02-pending-not-training.png": {
+      "bytes": 234624,
+      "sha256": "12068182bb717ed64016d5778c3a8785c6e15ce0b3b8c8d5d92c532933c4e0e5",
+      "git_blob_sha1": "06f40e18a303047c140e5ce496bafe5510d5f81e"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/qualified-coverage-03-development-validation.png": {
+      "bytes": 214680,
+      "sha256": "d990349c0ceb4f6d8db7be8f2c165298924da49613cd37e29cee0e0758f2f944",
+      "git_blob_sha1": "caeb441c9c58a5399eadafde5ea87a2c5fd37f9a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/qualified-coverage-04-independent-set-is-separate.png": {
+      "bytes": 234076,
+      "sha256": "5cdc2b2504f26094f92b2994af6caba17a077019c48b60b4663422e6dfb0003e",
+      "git_blob_sha1": "cd2b3c08faa1ec67766a0114b96eb7da3f85ca71"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/qualified-coverage-05-exact-role-pinned-manifest.png": {
+      "bytes": 217695,
+      "sha256": "2a64d6885fae26bc620cfda8ded7129639b64a947c1c2b7ce9c6a5851f9daaec",
+      "git_blob_sha1": "048ebe7efd62688ac733a094cfa4495e16894676"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/qualified-coverage-06-revoked-current-empty.png": {
+      "bytes": 115745,
+      "sha256": "30330f4c9b8442b633ea9d350eaab8c56a6764e3f3748cede91dcec3dc84789b",
+      "git_blob_sha1": "30c922164f3210766026e56aecee6e0980a53e4a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/qualified-coverage-07-historical-not-current.png": {
+      "bytes": 248019,
+      "sha256": "8dd02fef4c7aa61663390f499265269e8aedaac481b172d7c811b374fb1e87cb",
+      "git_blob_sha1": "a06df9704a9fb7358bcb37ee8e3d9dfa6b31852a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-backup-existing-differences.png": {
+      "bytes": 246031,
+      "sha256": "17f08c468a8bb8e3db075f61ba6338f43d3479cb4bc58a89d4234d96ea1f3998",
+      "git_blob_sha1": "e1ed5fe9009eb2796757e305f223f894523929fb"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-backup-scope.png": {
+      "bytes": 170860,
+      "sha256": "e4565b5ff5adb42b0c6aecf72a7fc83f79c10d5fa20efd92b482988b849125ef",
+      "git_blob_sha1": "a073687305a8fa29cfae7be30ea24bbce4860a76"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-backup-tested-restore.png": {
+      "bytes": 113523,
+      "sha256": "fd07080440adabea9a60097207ed95fafd32e6ee5d0e5eb46262a05828a24b32",
+      "git_blob_sha1": "bc434ea3ce3fb45b312fad6f9062c2fd1992befc"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-coverage-600-file-page.png": {
+      "bytes": 287371,
+      "sha256": "c0a4be9f3f2f1a6d12e50d38cda10f1472405a3cf32428f1ff48a4881c5b861b",
+      "git_blob_sha1": "50e81fa90df191bdb5d72d82dbb759eebf7897ac"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-coverage-alias-pending.png": {
+      "bytes": 295386,
+      "sha256": "0a7a2925d6605da432c0d0434d7d296539acce62d50ce7cc6c7cf34f71f87262",
+      "git_blob_sha1": "214066cce29aa37d4465e76fca80363804875e75"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-coverage-blocked-closure.png": {
+      "bytes": 235658,
+      "sha256": "b6e626e2091c49aad009389b0ff0a7b7fd5bc4e5a0091f382c4eea853dfcce98",
+      "git_blob_sha1": "b029019fe5b06efdc61ac8eb373037b1ba87124c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-coverage-committed-receipt.png": {
+      "bytes": 171578,
+      "sha256": "d1b0f565dda4a07c3fd1e07bf6cd904047c39c427e48728175ed7659e3b0c913",
+      "git_blob_sha1": "f2bfd9544ebe31b50656a0399abd014646b268c6"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-coverage-stale-source.png": {
+      "bytes": 181628,
+      "sha256": "4080dc818238b09954cc845e9bb6edb7f18954a341498bc147a6a044f75cda49",
+      "git_blob_sha1": "d520fece3dd27edd87d5f96619998e3a3a50f609"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-identity-merge-preview.png": {
+      "bytes": 212796,
+      "sha256": "f822ed783c804f333d8fc190aa6edb68a0b67642c53d6b0b5e052bb050783b6d",
+      "git_blob_sha1": "a64022725add43ff0986b859b7cc1359ff126962"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-identity-split-preview.png": {
+      "bytes": 226302,
+      "sha256": "80ad1596b36816b972b063ce7bc92c555078279192a9cbd17e62eeb10e0ae313",
+      "git_blob_sha1": "57c86fa83974f80f5233d3ff6645bd7d64b6ae66"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-quality-all-source-samples.png": {
+      "bytes": 238453,
+      "sha256": "bb4d14743c574d923ec7f8332336ed3a0597ba5531f203eb74dedce9580c0f28",
+      "git_blob_sha1": "e9a2d4ffabae567c108aa3ae961d1c483384ab10"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-quality-explicit-decision.png": {
+      "bytes": 219121,
+      "sha256": "0616660750fc0867c79424883c4b939552051cbe4c1b8add1cb701b6787d3846",
+      "git_blob_sha1": "3d12ef366f3da36aee64977001d8f00b0c278190"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-quality-explicit-empty-policy.png": {
+      "bytes": 87003,
+      "sha256": "1183354976460a276800b5370c301d72fdbbab226b6088d89394de16f9ed17f3",
+      "git_blob_sha1": "425470dc3db92e55fd3a5060b5f0d9a364eb0034"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-quality-gold-vs-actual-ai.png": {
+      "bytes": 91496,
+      "sha256": "1432c71063c365e24d3ce8f06f9abe4efa1a317c7f9904f47dd0b05133fecd23",
+      "git_blob_sha1": "b8fad27e6fc9773529d20bb5ea1a20ccbe859092"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-quality-historical-pass-invalid.png": {
+      "bytes": 252771,
+      "sha256": "cf872fb82f451ee25eb60fe810a4ef55ef9de3462929ff8c3a9e4e0b15ffe47d",
+      "git_blob_sha1": "9d8af4f6a8e30c1895d866bc8f386a4629bac669"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-quality-nine-domain-counts.png": {
+      "bytes": 221451,
+      "sha256": "be2c7d306eb25a112de575cb9537240ba40d11c0af268506658e8b6fb9768ebe",
+      "git_blob_sha1": "21047f225311ec449f2eb69af48898fac6e34c1d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-quality-paused-fifo.png": {
+      "bytes": 104789,
+      "sha256": "02f9f5a46d4c4a5276e432cc34dbc46bc209c068765d41df913670011afb4aa6",
+      "git_blob_sha1": "588efb16feb2229cbe395c69a14c8b4630475086"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-quality-withdrawn-no-fallback.png": {
+      "bytes": 222779,
+      "sha256": "e82970cabb29f767fb59aa746df3f185b904320362c1b9aa92192632702861fb",
+      "git_blob_sha1": "78c511b71dd3d4a2fc3413e86e6416b562b01722"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-relink-dependency-details.png": {
+      "bytes": 246570,
+      "sha256": "fe9863f3d2dfe013afeb007c993f8b8d66b3eaf92cd3340b5eeb6310d302d200",
+      "git_blob_sha1": "1703ecbc1f9f766afb5d721371bd5340b13a4d19"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-relink-history-restored.png": {
+      "bytes": 62315,
+      "sha256": "57e77b6d3431d4e08700e1e6dec1d254d7e4c78f5e8e9215039bbe22409a5f69",
+      "git_blob_sha1": "426d2580483853afb2d3c482f768618b5185beea"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-relink-multi-root.png": {
+      "bytes": 84522,
+      "sha256": "4b760aaa6ac82e399eb06eaa1f915e2e2de4d6382d1b9886fee08f02d282cef7",
+      "git_blob_sha1": "efa4960a984930c14f46d861a0195c20fde231ef"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-repair-01-issues.png": {
+      "bytes": 135363,
+      "sha256": "c6718a3a8b94e5c18788ef6a9045bfbf7869d74314edfec7e16ff2ccab3f1bdf",
+      "git_blob_sha1": "a08dae02c9b78a4844b3b4063b0c2c85cffcee5c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-repair-02-root-impact.png": {
+      "bytes": 172651,
+      "sha256": "7c250134dd15ffee96d9de4ce2d756e88a8d0b5b5eca18c43ad57a29a6bb5d6a",
+      "git_blob_sha1": "739c9fc6e7aac485bbd3a1a121111891a044b3a2"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-repair-03-selected-training.png": {
+      "bytes": 172662,
+      "sha256": "5c15acc8659cb888db72e6282ba86341b497acff5f99b9b0153d200ff6aed9de",
+      "git_blob_sha1": "bc150ecced00c8eaf1aca313fff2fb79bcb5265a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-repair-04-actual-progress.png": {
+      "bytes": 144366,
+      "sha256": "d408d4c6a0ca7d93f66c79bce6fb7fb8feace5f6c43af6939646b47c9369317d",
+      "git_blob_sha1": "f74f169e69925ded25a4764c8da6a57f33ffb6a1"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-repair-05-actual-quality-difference.png": {
+      "bytes": 202519,
+      "sha256": "306086c85f25dfce0e6a0d205b5cc8a31296330bf7a907a44da7d724f62bec06",
+      "git_blob_sha1": "68155231744a8475e7f895a26adb22c910921e3c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-repair-06-adopted-version.png": {
+      "bytes": 158241,
+      "sha256": "b35a49260b6719d05b3f88fcfb34cffc057fa88976661fbda2cf21750eddbe50",
+      "git_blob_sha1": "38849a3b0977774f32dfcab81a984f770fb70dcf"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-repair-07-blocked-recovery.png": {
+      "bytes": 139045,
+      "sha256": "43b8ffe81ff31bf92c6f191b7f9a79798b06262ac61ccfb7e9f2772f11891636",
+      "git_blob_sha1": "a977414e86767eb63116a55ec335c897763d6e89"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-runtime-fifo-results.png": {
+      "bytes": 106952,
+      "sha256": "8e6187b8601c74f39c965d38d03113711a343f883ec7269ac992c9dd690ac6a7",
+      "git_blob_sha1": "2942880064476fbf47b455493b98750e46f0c87a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-runtime-human-review.png": {
+      "bytes": 167292,
+      "sha256": "b5c11c5fbe15e57f61c4b8a55ee9b69ed93f8c9df97599260804aa51c098aa18",
+      "git_blob_sha1": "c36a3a3b882fc2473e2fbf1d692527232b502c82"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-runtime-paused-queue.png": {
+      "bytes": 102342,
+      "sha256": "a02e624b2dec3e591508a862b6f3b5948602ed1be40aca4a97b18f6459a94a67",
+      "git_blob_sha1": "8b66b95ee43550cdfbe6df9ea6b73edfd4480450"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-runtime-source-ledger.png": {
+      "bytes": 141331,
+      "sha256": "7d204b9e965d33b33064c53a35e57804afe99489dc02d4342c2ceb12503d6106",
+      "git_blob_sha1": "1cc472f82174cfedc8574e36bcf86ee3dd8f51dc"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-watch-explicit-scope.png": {
+      "bytes": 128000,
+      "sha256": "0b8950cfb480a6119a61d17ee45e642344f7b8664627fe989a6863f7fd76ae9d",
+      "git_blob_sha1": "ad20aa2c0323fb3162390654175068ffcf55952a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-watch-live-candidates.png": {
+      "bytes": 213358,
+      "sha256": "27c0adac9a8930b7b84eef9200c1b7097d5289937b0da372ededd557d95d9140",
+      "git_blob_sha1": "c0210c89a0bfc380d988667a6a17cbc1e9506f5c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-watch-modified-version-review.png": {
+      "bytes": 217865,
+      "sha256": "f7bf943fe7c20bab9511a2d40ddb18a70bd7e8b465f4ca31b6fbad513c31c9f3",
+      "git_blob_sha1": "9c7cbc0283fa9eb3ef5f54790afc7e5d9594a92e"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-watch-registered-works.png": {
+      "bytes": 217876,
+      "sha256": "e3a0dc38bf634a21edf7b139f7c876358bc9e8354feb71484d4956b8db716a2e",
+      "git_blob_sha1": "34989e62eb936a50bef05bfcb188439024d2daf6"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/remaining28-watch-ui003-preflight.png": {
+      "bytes": 118773,
+      "sha256": "3618ad2ced1bca1c17fe7f9aa4ba1aa82b00c12172006be23c95ccce5215ddd9",
+      "git_blob_sha1": "a183cb45b1406ce861649993b1bc307bce2f1dc5"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/semantic-derived-structure.png": {
+      "bytes": 259218,
+      "sha256": "5712594725eb9890055791378b7b502e83dd9f448c6d6b4138ee9218fc1c8c46",
+      "git_blob_sha1": "2a32c5b19d820c1b0ff4371917cee2364245b00d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/semantic-search-preserved.png": {
+      "bytes": 234644,
+      "sha256": "a0fcf49b987b93a9a60fa8ed8097ad63d4e74992e0c9835d191259c1651323cc",
+      "git_blob_sha1": "0c4dcecc37ab0a198c18f4e80c9843b696f08cea"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/semantic-tree-shared.png": {
+      "bytes": 247703,
+      "sha256": "57559a87207d2f6fe39fb6a18ad14a6e4fb506046234c6c121d4eb954ecb975e",
+      "git_blob_sha1": "933a93cab774fde4a2f2e218c9590da224b092aa"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/semantic-viewport-isolated.png": {
+      "bytes": 237625,
+      "sha256": "84522a7a60c70c947ef327895ea8d9c423b46491492302f98b0227aaadf67b31",
+      "git_blob_sha1": "a9e53ec6b7baa2808e4ad9d0f8bf14f35566160a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/source-text-01-original-object-source-literal-unknown-native.png": {
+      "bytes": 229315,
+      "sha256": "a7a86eddaeac74038ab95c24f932bc0f2ab9e06bdc72f3398cfbaa5dcac4376d",
+      "git_blob_sha1": "75eaa4c041bb0568039133c101270d2fa4e9f3f8"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/source-text-02-shared-centre-source-object-not-original-font-proof.png": {
+      "bytes": 217404,
+      "sha256": "a20f18a1ff439b967dde167d2efe7a419140e042ca8c915152d743bdea3851be",
+      "git_blob_sha1": "739fd8063fc59c4cbee9459e58975371521a5477"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/source-text-03-unsaved-local-draft-preserved-no-asset-change.png": {
+      "bytes": 229240,
+      "sha256": "3665b678b667eee961bc15a9626498c2eaa57b40d5dfe8c7f6760d87a0849452",
+      "git_blob_sha1": "ab6d71284b3acbe62a78e0129a1d4290c73516bd"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/source-text-04-whole-logo-font-action-refused.png": {
+      "bytes": 237721,
+      "sha256": "aa72259192a8576e6741f2ee853a6e0a4ccb794e338c1aa51d9cc4caaf999397",
+      "git_blob_sha1": "699f971caad1e0c4aa3683ee6b380fdbbd45bb39"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-01-two-people-companies-three-candidates-two-sizes.png": {
+      "bytes": 127855,
+      "sha256": "80dd442a49bced030eea8c591fbe7cd31d59e8ec9621effda765e00ba77b5397",
+      "git_blob_sha1": "f953b206a327c48c2c303da88e85209ac3912182"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-02-manual-a-only-actual-difference.png": {
+      "bytes": 169840,
+      "sha256": "ab10749f5909430d8a214d4c547a0660af65d53dbafdfdf79fa12e759bd489d8",
+      "git_blob_sha1": "165d853510e56e394d26a7448790fea5981f28f1"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-03-exact-person-a-phone-consumers-before-adoption.png": {
+      "bytes": 140531,
+      "sha256": "a8c1071eb6be2d7053e1e9deb74be774b6a40f300df7a8c40040e3c5607431ca",
+      "git_blob_sha1": "850a52622b2dce25db9ece4c9388823b86412155"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-04-shared-source-stale-no-new-pass.png": {
+      "bytes": 134263,
+      "sha256": "6d43056dd407a0eb41588c82e81898f2d0fa085821d08e018eb9c94f850e729d",
+      "git_blob_sha1": "a20445b449f079de358e6834236f14d449479d38"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-05-synced-phones-preserved-manual-a-and-logos.png": {
+      "bytes": 34626,
+      "sha256": "ebbf995470a1554b74ea9d08c95c4380ba73a5805698de451031140f93b9be7c",
+      "git_blob_sha1": "d52cccb640d505a59c5a5cf8430a169a3350c257"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-06-missing-beta-size-logo-stays-marked-preview.png": {
+      "bytes": 43171,
+      "sha256": "eb86137b461abf8d069bcba82e1c2c9564537a024e1fc6d4c21b928ac46e42c1",
+      "git_blob_sha1": "0e6268f07fc75c79a56023dfbfffbca57af4ed13"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-07-explicit-cross-target-differences-and-current-risks.png": {
+      "bytes": 144644,
+      "sha256": "b41eb2a71ba9c5f1b50239b3c56fcc45bf9af16f5b6f56499ff9bdd5cc4f040b",
+      "git_blob_sha1": "43049593a57431f5cdffdf05be019a9ee5f697e0"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-08-safe-b90-only-failed100-keeps-old-version.png": {
+      "bytes": 121980,
+      "sha256": "7d1273a79f17cf2c6957169e9d333516edd86e53cd703d1973868c921b28f161",
+      "git_blob_sha1": "d456718eee0226d9b27c0fca9eb717fc7734e825"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-09-explicit-alpha90-logo-beta90-unchanged-alpha100-independent.png": {
+      "bytes": 34480,
+      "sha256": "21c9fe05152de34588a798216e64ddf79e1b7710e424c559a93211e9e43b4356",
+      "git_blob_sha1": "008573e3d04e195bca90a93129811338e5173e7e"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-10-source-undo-all-true-consumers-confirmation.png": {
+      "bytes": 83518,
+      "sha256": "d0ebb68611c3eab65cdc9b824ef6c79a0a2ded00275211d61aa253a5ad89b42e",
+      "git_blob_sha1": "61a3ed1d88620309fac4e7cdd9bb6773009eac72"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-11-source-undo-remains-draft-until-adopted.png": {
+      "bytes": 142675,
+      "sha256": "b485c842edb05b1b9cd2dc3c7bfea26923d454ef5a78a9f9f02ffb1805bae236",
+      "git_blob_sha1": "9ddba00dc208b516bfcfcaf50071fc6d7911ed7d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-12-single-target-undo-keeps-source-and-other-manual.png": {
+      "bytes": 178809,
+      "sha256": "b35c985c9d4e0d9b85f42dd0e50b3f7b01c43801520aa4d2b8fbdb09a316e9b8",
+      "git_blob_sha1": "1caa28eae4e85ecbf7fb5aae4f9354a046fb12e7"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/sync-workflow-13-actual-qualified90-final-and-failed100-separate-preview.png": {
+      "bytes": 107490,
+      "sha256": "7e18c13abe78eb446402acddf8f23ff170163c786fdbfdf9ca8e6067c04c3cff",
+      "git_blob_sha1": "360a25355112ab25d77ae8265a2b2efcdd368874"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/synthetic-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "bbe406834015e4e501b0058971b06f917b33b81d5a7700138b48de65a30dd003",
+      "git_blob_sha1": "ef436e87e571d557022b5b54211a6619e3c94519"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/template-workspace.png": {
+      "bytes": 135210,
+      "sha256": "e2343e8310657cd6ce276fe3ce7fac84a7df595ea1b901c23c2b6a00b5edd4e2",
+      "git_blob_sha1": "b65c9b1bd3e9769e264938a0a0ddcbb5fea267ad"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-coverage-distribution.png": {
+      "bytes": 115636,
+      "sha256": "afdb4b09ecde8ab8ab8b2a30f012c363c17f3f763060bf8847b2b0c8c46a7b19",
+      "git_blob_sha1": "af5ebb99bea780c343fff10c5643f6096b14f99a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-dataset-learned-draft.png": {
+      "bytes": 121692,
+      "sha256": "ba7f427bfacf24196e3223e91b5d04d9dac89d8984828fdf59e1a3673a5cb70b",
+      "git_blob_sha1": "1d3d966f8d5bdc44fcfcbb1375bc5003c0197d64"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-facts-confirmed.png": {
+      "bytes": 164068,
+      "sha256": "1c7d308774aa8d8f08b73c9ac567254190b7b4b07a7aa81e8d2ddcc9d1847684",
+      "git_blob_sha1": "5c112b001a071551478cf33c562f6cae09ac1ed7"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-noise-authoring.png": {
+      "bytes": 89970,
+      "sha256": "15f6cdc6c797f41bb39eabe8af71aea15f8ef9f434a7c29a5ed2390938e8aedc",
+      "git_blob_sha1": "34ee5fada633e0f30e331cdd8fb5df1e46790a6f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-noise-auto-hit.png": {
+      "bytes": 151065,
+      "sha256": "d3ad5d9b45496f668ada336daab0e628592fe0b7bf562b95d05071147d53b37c",
+      "git_blob_sha1": "4d85c661578f07f0fd7d00eaa4501e3623456a09"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-noise-recovery.png": {
+      "bytes": 126853,
+      "sha256": "1363cb73c919e226d01b894dbed00b33326ecf83d36b9e231c1d20edfed98199",
+      "git_blob_sha1": "10605c4625df0849907409eed0ab98962fc80386"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-package-data/assets/2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3-p1-visual-import-0.2.0-dual-recovery-ra8d3c98d5b75520dc97241b8474d80ca/preview.png": {
+      "bytes": 62842,
+      "sha256": "1e8211e5871d304afd63a360704623cea283049dda87bf6a8983092b86211269",
+      "git_blob_sha1": "51f8628ea249704289b7e447d617c269135745e4"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-package-data/assets/978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414-p1-visual-import-0.2.0-dual-recovery-ra8d3c98d5b75520dc97241b8474d80ca/preview.png": {
+      "bytes": 64944,
+      "sha256": "810bef90d028ee8157dbcdaff4af7739a05223340d8565e34d0c5d05ff9c5ea6",
+      "git_blob_sha1": "b320b1a6cb036f2c2d73644021090970e85560f8"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-quality-overview.png": {
+      "bytes": 135563,
+      "sha256": "e0db0658c3e896de7760c24732b53c2abacde1a895b912f9b976e4e3131d02c9",
+      "git_blob_sha1": "4376a887000111785d559a250bc16bc4079821cb"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-rule-review.png": {
+      "bytes": 132623,
+      "sha256": "ed0d6a1a9689ad928c7a8a3847f3659512e9067794d3413c6ce623ee2086722d",
+      "git_blob_sha1": "0fd247840951a185a4e45e0be48787456b96ff02"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-training-queue-completed.png": {
+      "bytes": 136943,
+      "sha256": "a5100b58493b1193cc13d51b441c8966459dea831957661362af0a9cd91fc563",
+      "git_blob_sha1": "26200919ff5c4ecab82db02114712966922a4389"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/ten-trusted-sample.png": {
+      "bytes": 144281,
+      "sha256": "a3ddf1f15f0e1c8bff906a90cafdd6642bd25a6dfef523f9eef6bb1405fafff5",
+      "git_blob_sha1": "e84351f3d8468cf2b46520b5773d4e7ce6d5f16e"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/training-workspace.png": {
+      "bytes": 137445,
+      "sha256": "c04455d68ecb2b200c1a7baaf71fc9967496f3e71c0fd2b852686969c0340f4c",
+      "git_blob_sha1": "c76cfaba973cac9f0c555869c9529233337d4603"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/trusted-samples-01-source-review.png": {
+      "bytes": 132223,
+      "sha256": "d961624dca5fd46f8f4eb044d5c45dc432cba7e4dd2848c00cd55d09c05b7f79",
+      "git_blob_sha1": "41f1af077c5628fb69e7b3e11d317e0b4d39e2a6"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/trusted-samples-02-exact-admission-preview.png": {
+      "bytes": 126008,
+      "sha256": "999e7bdac069537b1dd5f719ae4530b80efda4136ced89cac673cc098202b831",
+      "git_blob_sha1": "afa07471651866a8a1e663f3e13c9b3f419bbb58"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/trusted-samples-03-admitted-not-trained.png": {
+      "bytes": 132109,
+      "sha256": "fa55c868a199f5b32c48bc607bdf24229f323341c69866460b8485d9e1e304a5",
+      "git_blob_sha1": "73929eb7c840203b82683b0d6c74f044e6fca925"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/trusted-samples-04-actual-use-lineage.png": {
+      "bytes": 134006,
+      "sha256": "dc3ae825ca10d5459e63cb1902d503a5b938edad6828a24183c0498aab52dadd",
+      "git_blob_sha1": "f5ba0ddfa3f60aeb155ea93470c86152a1fd9ec6"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/trusted-samples-05-stop-use-preview.png": {
+      "bytes": 137282,
+      "sha256": "2d3e81581a6a540a8adc316857ec734a33f70d8e8e8efe95e79933752f58af87",
+      "git_blob_sha1": "b6c5987599f8c1d87b6afdf6377b7d7a3653cba6"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/trusted-samples-06-local-copy-redaction-preview.png": {
+      "bytes": 144890,
+      "sha256": "a7ffea0cf96218354d6cf1654e4114bda4b3e28388ce664f6072c7f6f712d363",
+      "git_blob_sha1": "cee3e78d6a87b182ec8c47ad68b93d1c2b6053d3"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/trusted-samples-07-minimal-privacy-receipt.png": {
+      "bytes": 150143,
+      "sha256": "1588a891ebf104876679da8b9c5276aedc605e99103cb459711e465cc96fd838",
+      "git_blob_sha1": "6ee9b36830d09a7e82fa6a513143a8730f79e7ae"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-01-current-candidate-context.png": {
+      "bytes": 196067,
+      "sha256": "a5b468e13670db18099535696dfb526b2305ff7607005aff40c8c517a36bd077",
+      "git_blob_sha1": "ce45b196e3e0325e5845833a885e742cc185d8df"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-02-existing-logo-correction.png": {
+      "bytes": 113224,
+      "sha256": "909a22952c4e85ecd3b7a78e4e582a7bbe62d3b4660b4e9d4b7d87879a88c815",
+      "git_blob_sha1": "0c919d0b6b01ca9839a2189602b26480b466f07b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-03-exact-candidate-view-return.png": {
+      "bytes": 197818,
+      "sha256": "462f8a23526a2b3582e694ef264dbcebecfbc5a9d05173572736ac6bc7371c6b",
+      "git_blob_sha1": "9aa08f0fc783b673274ed1f323905a3c1ced6644"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-04-real-unsaved-close-choices.png": {
+      "bytes": 31727,
+      "sha256": "fb4e135966fe4d8dea3df9edb378c1f7495ba463e7e3b1f17dd67e2bef093958",
+      "git_blob_sha1": "0193e7a0306a35431dcb1aa016989b7fb8a2e1e8"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-05-actual-save-failure-not-saved.png": {
+      "bytes": 201464,
+      "sha256": "8e04b6cc4269fe3640e1e8db10dec62a2c634e4b09fa7a634dd9a896f9af636a",
+      "git_blob_sha1": "4b76e020b122df7dccc48a0e5aee46f90aebd927"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-06-actual-encrypted-short-recovery.png": {
+      "bytes": 200091,
+      "sha256": "d9beccd0b11bab59113cc15eb0e555dc5533a6d3d28990d67d66ec075eb3ec07",
+      "git_blob_sha1": "02849b0d0135c7c1b1341b16eedce0e9db6ad15d"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-07-new-manual-version-safe-fallback.png": {
+      "bytes": 196823,
+      "sha256": "3fdbe94b622f77865ba8be8ca2de3dc046c400f54263759e32febea48500c77e",
+      "git_blob_sha1": "21f84640fd733a955024bd44265d9b223bb7d0dd"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-08-small-window-current-work-return-visible.png": {
+      "bytes": 162912,
+      "sha256": "62480bea9d7408d5b698fcbcf5efe80cc3a2cbd3e509d8618bddfef7ff4d4fef",
+      "git_blob_sha1": "66a818fb90acc88747955be3946fb214ac5286fb"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-09-size100-existing-logo-correction.png": {
+      "bytes": 168069,
+      "sha256": "1ba6fe4aeba25781e01e6451fe24794f43d9071883c00ad86e8bde0a912522b4",
+      "git_blob_sha1": "c0a6bf1f960d6d052824db9798e3c530afb206e4"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-10-return-original100-blocked-candidate.png": {
+      "bytes": 127175,
+      "sha256": "1b5e031fa3b025e0f6a838b2a3741f6e64fe213dfc879c2a38bbbf4719a9298a",
+      "git_blob_sha1": "d7ab68284b028b261cf1fe99abf13a94bbfa5254"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-11-changed-shared-source-size-pending.png": {
+      "bytes": 144115,
+      "sha256": "765ca6acc9730e16802e24396c976db4c1d72481c525dad4aca774f55a92f87a",
+      "git_blob_sha1": "e88e02a367b3e31cb68d92c0c99edf864af718fc"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/captures/workbench-navigation-12-return-preserves-unapplied-property.png": {
+      "bytes": 178887,
+      "sha256": "c2898cba296ef8aa7aa0e6b789cb3ef39fc16aa850f7f484540c84cac1cc90e3",
+      "git_blob_sha1": "206bd74c1e9efe43b9ad81eeae11fa4552201001"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/claims.json": {
+      "bytes": 2545934,
+      "sha256": "fa6f26e4323617beb98442bcb662ec5ee283665fb1e4b1af9f679727b292e007",
+      "git_blob_sha1": "966daace4d9b68882320489fcc76ed6c3af82044"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/commit.json": {
+      "bytes": 788,
+      "sha256": "4abb5179636ea86fa32c3cf0f8d6bd987130648ac2a89ec0c600f3f0b95618cc",
+      "git_blob_sha1": "71cc1ff0879827e6ea26b12723f1464ec687e764"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/execution-source.json": {
+      "bytes": 139438,
+      "sha256": "bbd7d5882b2139b07117d8fabdf6608f310b65c3193d0b18d6c8b96d24f4f3bd",
+      "git_blob_sha1": "e16693d690c991a1acc6781c343b31ad338aadd3"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/execution-summary.json": {
+      "bytes": 538,
+      "sha256": "a2d301933f8c67ea3fef018ed6428f0f2ec44e2179a85744acf909d5a9b4347e",
+      "git_blob_sha1": "e7350fdd46c2963680115889b91b2059d1dcdb3b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/fixed70-ten-parent-audit.json": {
+      "bytes": 345336,
+      "sha256": "0ac934ca18c2fa778ba24ad04d5cebcdfb9771367666761a03b753031117b81d",
+      "git_blob_sha1": "1ad4f8dee13125e01d17e6ad08f2e5dcd126197b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/fixed70-twentyeight-parent-audit.json": {
+      "bytes": 1241416,
+      "sha256": "71ebd9c72a91715f1e3649db05d96c17d8ee09e43d950af35f2ef41d850f02be",
+      "git_blob_sha1": "c1863a596ce5fd11daa1a52c8dc2db9fbc4e0e8f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/0/catalog.json": {
+      "bytes": 240206,
+      "sha256": "d9f8d52b5414f8c690e29d7b2623a7513757d3afce712e0cc947f4200a410f3a",
+      "git_blob_sha1": "dd4c58248ff4f6e87e8dd0071d829fb4a37bafe9"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/0/live/test-modules.json": {
+      "bytes": 140900,
+      "sha256": "e3518e2ab9641f862309846459f4d3881b64d467dfa10cb20b5b08453d5159eb",
+      "git_blob_sha1": "44c3bfc70ff4edbbdf7d996100c3b521f3fbf915"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/0/runtime-errors.json": {
+      "bytes": 7442,
+      "sha256": "1653912601ba0284bd6ea842620e8e7eccc1762ec903546fcc497af62564fdf7",
+      "git_blob_sha1": "dbadef67d9e5106a00daeca1f08e6e50c2025d95"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/0/source.json": {
+      "bytes": 136594,
+      "sha256": "620f7a10bcdfbae8d6ce9a637a80b7f593e300d3f8d8297d78da03646412cefb",
+      "git_blob_sha1": "8ecb2497559dc6d4b5ec44d0b53d11e8f5b09b5b"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/0/summary.json": {
+      "bytes": 342,
+      "sha256": "6bb000ba87579aa028ddeb8ecc3e7788a24ebe87be5568c4f9243b72570d87f2",
+      "git_blob_sha1": "c37cbc159b0b755f943623988a7a16967aa2cb95"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/0/tests.json": {
+      "bytes": 464864,
+      "sha256": "94ab5e4573d17ec840b7e0868d282c416d61e96cfabb156429619b7a9033d3c2",
+      "git_blob_sha1": "9fa4b897cb5868bcf2b089891c370f1fa11d02c1"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/1/catalog.json": {
+      "bytes": 16253,
+      "sha256": "eb4156b987e2a85e55e09d789ea17a9951bc3fd7b9e5a380ab3db26178187994",
+      "git_blob_sha1": "1f2751faef458e218f517b4f64081f6e5d40dce1"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/1/live/test-modules.json": {
+      "bytes": 7421,
+      "sha256": "72415afaa6b5fd045f6f9254e1d722392dfcc07355845e98b9c93803cdd3b8eb",
+      "git_blob_sha1": "700dc1d8c14f183af8ca24072143f31d1f597f85"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/1/runtime-errors.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "git_blob_sha1": "fe51488c7066f6687ef680d6bfaa4f7768ef205c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/1/source.json": {
+      "bytes": 137447,
+      "sha256": "93d04357e881ab91b33c1fca1ffb46008e7df1d1c20f5bcd0b6cce9fc9f6e6c7",
+      "git_blob_sha1": "14eb3800c1bceebd80d06b85c301d4d539ac056f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/1/summary.json": {
+      "bytes": 504,
+      "sha256": "662384532c0ac32288a4cb4d65b2ad0643e6b1e09c09b1405d4f37a1e485605a",
+      "git_blob_sha1": "fc004ded46ae5a8a511c0120ada2675484b352e7"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-inputs/1/tests.json": {
+      "bytes": 27641,
+      "sha256": "3d659bb3be4af72b302c2b77d4dfa6bd996988d876c7b7fe9423d157e8193ccf",
+      "git_blob_sha1": "806bf765df33728cc2fe5b67f7519131d3ca0f64"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/module-revalidation.json": {
+      "bytes": 359227,
+      "sha256": "64b3bb006206ebdec1abb2ed05b299cafc00d2778767e14831b7836d29f733a8",
+      "git_blob_sha1": "77f06a7b49044242c77d5ca066236eb473ae854f"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/proof.json": {
+      "bytes": 607,
+      "sha256": "f8816b84e2ec4b7b2c7c058fe8d954ea2cba577f96b44332c6d92b2ba2b15f60",
+      "git_blob_sha1": "d07964c6be582667092e6ecb43e7821c2906710a"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/remaining28-full-parent-audit.json": {
+      "bytes": 757804,
+      "sha256": "50fea626d700c543d3688c57b7c6a0a113ad8f649a33065034d3ec5aa1996d64",
+      "git_blob_sha1": "2d2c4318ad467b5b3ee7545f1f7599a57e625c05"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/retained-initial-runtime-errors.json": {
+      "bytes": 7442,
+      "sha256": "1653912601ba0284bd6ea842620e8e7eccc1762ec903546fcc497af62564fdf7",
+      "git_blob_sha1": "dbadef67d9e5106a00daeca1f08e6e50c2025d95"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json": {
+      "bytes": 78548,
+      "sha256": "0e1ec82cfee10e278b94090440c7f4cf3876a256bfb0bfaeebc31c002b59a63f",
+      "git_blob_sha1": "339668ece45231e448139142d5a7bb1fd692fd15"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/seventy-parent-audit.json": {
+      "bytes": 34845,
+      "sha256": "efb7b24d0ecd3af1d28e3243aee84c8a5d55b30215f188b8036d18ee08df631f",
+      "git_blob_sha1": "b095628fb1a871e1abdd65f794307eeb12372996"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/source-manifest.json": {
+      "bytes": 129936,
+      "sha256": "5aa1af200ec2459bc1cd38229c98b9d9f80055557f78e1afea539dc29cb169fa",
+      "git_blob_sha1": "c96f0cfff5c4144c06a59868ed21801b60491793"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/tests.json": {
+      "bytes": 402891,
+      "sha256": "2893d4c1b689ef73c23f8da1f69c323d884ea39e1674afb15d13b8fbb9d19360",
+      "git_blob_sha1": "a63a4a6ed4d2ca1386fafa9b792c915d5848fc9c"
+    },
+    "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/tree.json": {
+      "bytes": 17878306,
+      "sha256": "d8889c8098566ab2b38a76c6b73fa6cb65b7ce2a875a15ce3ce0dbe17864a800",
+      "git_blob_sha1": "540279c940c69737ca05591fa3991278b3b96353"
+    }
+  },
+  "source_manifest_sha256": "55dfbf9e1f6ee2e24c4e2c8989e8d97df5c20a6a9f583ea0993682f3aefedb61",
+  "local_snapshot": {
+    "path": ".checkpoints/CP-20261023-RELEASE-SPEED-COMPLETE-001/source.zip",
+    "sha256": "c1d5292568196ee0b8996628c1e71ef43b690f19163fbc9075ba562589461348"
+  },
+  "requirement_ids": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-004"
+  ],
+  "next_step": "Use compact repository handoff; local feedback via manually exported safe support report.",
+  "remote_confirmation": "PENDING_ACTUAL_REMOTE_READBACK",
+  "restore_verification": {
+    "status": "PASS",
+    "kind": "INCREMENTAL_CHANGED_PATH_RESTORE_NOT_STANDALONE_PRODUCT",
+    "files": 495,
+    "base_commit_required": "f97479b40fa46ef1465500f0207e2edfd0a290a3",
+    "archive_sha256": "c1d5292568196ee0b8996628c1e71ef43b690f19163fbc9075ba562589461348",
+    "isolated_temporary_restore": true,
+    "all_hashes_match": true,
+    "user_data_included": false
+  }
+}

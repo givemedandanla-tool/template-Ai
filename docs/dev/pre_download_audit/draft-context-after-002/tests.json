@@ -1,0 +1,204 @@
+[
+  {
+    "id": "test_text_policy.TextPolicyTests.test_actual_text_policy_dialog_cancel_then_explicit_draft_apply_and_normal_edit_preserves_policy",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.702624
+  },
+  {
+    "id": "test_text_policy.TextPolicyTests.test_bounded_measured_tracking_keeps_fixed_size_and_blocks_long_content",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.617571
+  },
+  {
+    "id": "test_text_policy.TextPolicyTests.test_distributed_requires_explicit_semantic_approval_and_never_applies_to_identifiers",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.593001
+  },
+  {
+    "id": "test_text_policy.TextPolicyTests.test_main_canvas_tree_property_keyboard_resize_and_undo_are_one_draft",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.623186
+  },
+  {
+    "id": "test_text_policy.TextPolicyTests.test_raster_uses_same_fixed_point_tracking_parameter_as_measurement",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.549964
+  },
+  {
+    "id": "test_text_policy_context.TextPolicyContextTests.test_changed_same_draft_during_confirmation_is_not_overwritten",
+    "status": "FAIL",
+    "details": [
+      "Traceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_text_policy_context.py\", line 29, in test_changed_same_draft_during_confirmation_is_not_overwritten\n    self.confirmation_race(replace=False)\n  File \"/workspace/template-Ai/tests/test_text_policy_context.py\", line 39, in confirmation_race\n    self.assertEqual(self.w.template.to_dict(),before)\nAssertionError: {'name': '匿名示範 · 單人矩形', 'width_mm': 90, 'height_mm'[2006 chars] 0.0} != {'name': 'Authored changed draft', 'width_mm': 90, [2017 chars] 0.0}\nDiff is 3144 characters long. Set self.maxDiff to None to see it.\n"
+    ],
+    "seconds": 0.686371
+  },
+  {
+    "id": "test_text_policy_context.TextPolicyContextTests.test_missing_draft_is_plain_rejection",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.54731
+  },
+  {
+    "id": "test_text_policy_context.TextPolicyContextTests.test_replacement_draft_during_confirmation_is_not_overwritten",
+    "status": "FAIL",
+    "details": [
+      "Traceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_text_policy_context.py\", line 26, in test_replacement_draft_during_confirmation_is_not_overwritten\n    self.confirmation_race(replace=True)\n  File \"/workspace/template-Ai/tests/test_text_policy_context.py\", line 39, in confirmation_race\n    self.assertEqual(self.w.template.to_dict(),before)\nAssertionError: {'name': '匿名示範 · 單人矩形', 'width_mm': 90, 'height_mm'[2006 chars] 0.0} != {'name': 'Authored changed draft', 'width_mm': 90, [2011 chars] 0.0}\nDiff is 3183 characters long. Set self.maxDiff to None to see it.\n"
+    ],
+    "seconds": 0.64892
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure",
+    "status": "PASS",
+    "details": [],
+    "seconds": 5.087666
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_background_cancel_retains_new_data_and_cannot_install_old_confirmation",
+    "status": "PASS",
+    "details": [],
+    "seconds": 3.269951
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation",
+    "status": "PASS",
+    "details": [],
+    "seconds": 4.745971
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+    "status": "PASS",
+    "details": [],
+    "seconds": 10.590109
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_font_style_enumeration_order_does_not_invalidate_same_face",
+    "status": "PASS",
+    "details": [],
+    "seconds": 3.339802
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_input_advice_and_failure_explanations_keep_unknown_and_plain_summary",
+    "status": "PASS",
+    "details": [],
+    "seconds": 4.246818
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary",
+    "status": "PASS",
+    "details": [],
+    "seconds": 6.54033
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_legacy_edit_progress_and_stale_preview_buttons_use_same_learning_draft",
+    "status": "PASS",
+    "details": [],
+    "seconds": 6.269861
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+    "status": "PASS",
+    "details": [],
+    "seconds": 11.105441
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder",
+    "status": "PASS",
+    "details": [],
+    "seconds": 9.494643
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context",
+    "status": "PASS",
+    "details": [],
+    "seconds": 4.848236
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss",
+    "status": "PASS",
+    "details": [],
+    "seconds": 1.967076
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner",
+    "status": "PASS",
+    "details": [],
+    "seconds": 9.990003
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services",
+    "status": "PASS",
+    "details": [],
+    "seconds": 2.654339
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates",
+    "status": "PASS",
+    "details": [],
+    "seconds": 1.492501
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_resize_keeps_position_intent_but_new_person_roots_start_independent_draft",
+    "status": "PASS",
+    "details": [],
+    "seconds": 7.623186
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_resume_other_saved_draft_updates_main_input_size_and_export_reference",
+    "status": "PASS",
+    "details": [],
+    "seconds": 2.954437
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter",
+    "status": "PASS",
+    "details": [],
+    "seconds": 2.845142
+  },
+  {
+    "id": "test_input_learning_integration.InputLearningIntegrationTests.test_shared_learning_preview_preserves_original_pdf_png_jpg_formats",
+    "status": "PASS",
+    "details": [],
+    "seconds": 4.959887
+  },
+  {
+    "id": "test_qt_native_contract.QtNativeContractTests.test_font_windows_keep_native_geometry_style_and_result_methods",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.774395
+  },
+  {
+    "id": "test_qt_native_contract.QtNativeContractTests.test_input_editor_keeps_native_owner_and_scroll_methods",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.686253
+  },
+  {
+    "id": "test_qt_native_contract.QtNativeContractTests.test_logo_comparison_keeps_native_layout_access",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.54204
+  },
+  {
+    "id": "test_qt_native_contract.QtNativeContractTests.test_main_window_keeps_native_font_and_geometry_methods",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.511192
+  },
+  {
+    "id": "test_qt_native_contract.QtNativeContractTests.test_rejected_main_close_keeps_catalog_preview_available",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.576104
+  },
+  {
+    "id": "test_qt_native_contract.QtNativeContractTests.test_safe_main_close_stops_catalog_preview_controller",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.485364
+  }
+]

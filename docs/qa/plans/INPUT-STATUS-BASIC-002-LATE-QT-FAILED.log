@@ -1,0 +1,21 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+...This plugin does not support propagateSizeHints()
+.
+----------------------------------------------------------------------
+Ran 4 tests in 18.844s
+
+OK
+Traceback (most recent call last):
+  File "/workspace/template-Ai/template_ai/input_graph_dialog.py", line 132, in commit
+    self.execute('edit_field',field_id=f['id'],value=editor.text())
+  File "/workspace/template-Ai/template_ai/input_graph_dialog.py", line 63, in execute
+    self.rebuild();return True
+    ^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/input_graph_dialog.py", line 270, in rebuild
+    try:self.source_impacts.setPlainText(describe(source_change_impact(consumers(self.window),self.initial_graph,self.graph.data)))
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/source_change_impact.py", line 9, in consumers
+    for dialog in window.findChildren(MultiSizeDialog):
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (MainWindow) already deleted.

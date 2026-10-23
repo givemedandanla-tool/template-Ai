@@ -1,0 +1,59 @@
+{
+  "records": [
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_dead_running_request_is_recoverable_and_keeps_all_original_backend_results",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.031984
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_dead_session_does_not_auto_resume_and_explicit_resume_keeps_original_arrival_rank",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.72514
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_fifo_does_not_follow_wall_clock_and_atomic_claim_cannot_bypass_older_live_scope",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.398442
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_other_window_cannot_duplicate_worker_and_stale_request_cas_rolls_back",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.668717
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_pressure_resume_uses_same_confirmed_scope_and_persisted_completed_units",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.597241
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_queue_audit_failure_rolls_back_backend_claim_worker_lease_and_request",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.646626
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_queue_bookkeeping_never_changes_learning_epoch_and_requires_scope_confirmation",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.656706
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure",
+      "status": "PASS",
+      "details": [],
+      "seconds": 5.15899
+    },
+    {
+      "id": "test_runtime_queue.RuntimeQueueTests.test_scope_changed_request_is_blocked_and_next_eligible_is_not_starved",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.462879
+    }
+  ],
+  "runtime_errors": []
+}

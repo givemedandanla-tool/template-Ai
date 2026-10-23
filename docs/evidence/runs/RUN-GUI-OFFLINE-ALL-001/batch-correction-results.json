@@ -1,0 +1,55 @@
+{
+  "records": [
+    {
+      "id": "test_batch_correction_gui.BatchCorrectionGuiTests.test_actual_confirmation_selection_race_rejects_without_starting_worker_or_writing",
+      "status": "PASS",
+      "details": [],
+      "seconds": 2.322024
+    },
+    {
+      "id": "test_batch_correction_gui.BatchCorrectionGuiTests.test_actual_shared_worker_partial_states_and_no_unselected_false_success",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.889703
+    },
+    {
+      "id": "test_batch_correction_gui.BatchCorrectionGuiTests.test_close_cancels_unstarted_only_and_stays_open_until_current_transaction_finishes",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.919265
+    },
+    {
+      "id": "test_batch_correction_gui.BatchCorrectionGuiTests.test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.217298
+    },
+    {
+      "id": "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_locked_source_properties_settle_without_overlapping_controls",
+      "status": "FAIL",
+      "details": [
+        "Traceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_batch_correction_gui.py\", line 64, in test_located_locked_source_properties_settle_without_overlapping_controls\n    self.assertTrue(wait_for_gui(settled,3),str([(c.y(),c.height(),c.minimumSizeHint().height()) for c in controls]));self.w.property_panel.ensureWidgetVisible(self.w.property_button);self.assertTrue(wait_for_gui(lambda:not self.w.property_button.visibleRegion().isEmpty(),2));self.assertEqual(self.w.pt.value(),18);self.assertTrue(self.w.current_slot.locked)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : [(0, 27, 30), (0, 480, 32), (0, 480, 29), (0, 480, 32), (0, 480, 30), (0, 480, 38)]\n"
+      ],
+      "seconds": 4.107249
+    },
+    {
+      "id": "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_pan_mouse_gesture_changes_only_view_and_never_creates_content_history",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.395522
+    },
+    {
+      "id": "test_batch_correction_gui.BatchCorrectionGuiTests.test_sorted_filtered_hidden_selection_keeps_exact_ids_counts_and_only_selected_states",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.699792
+    },
+    {
+      "id": "test_batch_correction_gui.BatchCorrectionGuiTests.test_undo_one_original_transaction_keeps_other_source_and_counts_truthfully",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.670651
+    }
+  ],
+  "runtime_errors": []
+}

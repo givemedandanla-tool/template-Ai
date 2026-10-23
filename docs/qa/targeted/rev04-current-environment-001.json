@@ -1,0 +1,48 @@
+{
+  "observed_utc": "2026-10-17T00:52:47.502795+00:00",
+  "platform": "Linux",
+  "release": "6.18.44",
+  "machine": "x86_64",
+  "python": "3.12.14",
+  "first_sample": {
+    "sampled_at": 139997.411713096,
+    "sequence": 1,
+    "memory_total": 34359738368,
+    "memory_available": 1163939840,
+    "cpu_percent": null,
+    "effective_cpus": 4.0,
+    "disk_free": 3303022592,
+    "process_rss": 13099008,
+    "unknown": [
+      "io-wait-unavailable",
+      "cpu-first-sample"
+    ],
+    "basis": "CURRENT_RUNTIME_ONLY_NOT_REFERENCE_HARDWARE",
+    "io_wait_percent": null,
+    "io_read_bytes_per_second": null,
+    "io_write_bytes_per_second": null
+  },
+  "second_sample": {
+    "sampled_at": 139997.419970647,
+    "sequence": 2,
+    "memory_total": 34359738368,
+    "memory_available": 1163939840,
+    "cpu_percent": 50.0,
+    "effective_cpus": 4.0,
+    "disk_free": 3303022592,
+    "process_rss": 13144064,
+    "unknown": [],
+    "basis": "CURRENT_RUNTIME_ONLY_NOT_REFERENCE_HARDWARE",
+    "io_wait_percent": 0.0,
+    "io_read_bytes_per_second": 0.0,
+    "io_write_bytes_per_second": 0.0
+  },
+  "gpu": {
+    "state": "UNKNOWN",
+    "reason": "nvidia-smi not available; does not prove GPU absent"
+  },
+  "reference_upper_windows16GB_RTX5050": "NOT_MEASURED",
+  "reference_lower_specified_ASUS_VivoBook": "NOT_MEASURED",
+  "scope": "Actual connected cloud host/cgroup resource observations only. Neither reference machine is established. First/nearby sample is not workload peak, cold start, GUI latency or device benchmark.",
+  "physical_print": "DEFERRED_P10"
+}

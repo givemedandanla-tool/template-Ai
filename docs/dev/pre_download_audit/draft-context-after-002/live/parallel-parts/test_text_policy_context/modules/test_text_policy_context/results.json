@@ -1,0 +1,27 @@
+{
+  "records": [
+    {
+      "id": "test_text_policy_context.TextPolicyContextTests.test_changed_same_draft_during_confirmation_is_not_overwritten",
+      "status": "FAIL",
+      "details": [
+        "Traceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_text_policy_context.py\", line 29, in test_changed_same_draft_during_confirmation_is_not_overwritten\n    self.confirmation_race(replace=False)\n  File \"/workspace/template-Ai/tests/test_text_policy_context.py\", line 39, in confirmation_race\n    self.assertEqual(self.w.template.to_dict(),before)\nAssertionError: {'name': '匿名示範 · 單人矩形', 'width_mm': 90, 'height_mm'[2006 chars] 0.0} != {'name': 'Authored changed draft', 'width_mm': 90, [2017 chars] 0.0}\nDiff is 3144 characters long. Set self.maxDiff to None to see it.\n"
+      ],
+      "seconds": 0.686371
+    },
+    {
+      "id": "test_text_policy_context.TextPolicyContextTests.test_missing_draft_is_plain_rejection",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.54731
+    },
+    {
+      "id": "test_text_policy_context.TextPolicyContextTests.test_replacement_draft_during_confirmation_is_not_overwritten",
+      "status": "FAIL",
+      "details": [
+        "Traceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_text_policy_context.py\", line 26, in test_replacement_draft_during_confirmation_is_not_overwritten\n    self.confirmation_race(replace=True)\n  File \"/workspace/template-Ai/tests/test_text_policy_context.py\", line 39, in confirmation_race\n    self.assertEqual(self.w.template.to_dict(),before)\nAssertionError: {'name': '匿名示範 · 單人矩形', 'width_mm': 90, 'height_mm'[2006 chars] 0.0} != {'name': 'Authored changed draft', 'width_mm': 90, [2011 chars] 0.0}\nDiff is 3183 characters long. Set self.maxDiff to None to see it.\n"
+      ],
+      "seconds": 0.64892
+    }
+  ],
+  "runtime_errors": []
+}

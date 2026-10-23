@@ -1,0 +1,223 @@
+{
+  "duplicates": [
+    {
+      "firstFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 17,
+          "line": 12,
+          "position": 370
+        },
+        "name": "test_dataset_learning.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.model import Template",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 12,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 17,
+          "line": 12,
+          "position": 370
+        },
+        "name": "test_noise_hits.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 83
+    },
+    {
+      "firstFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 17,
+          "line": 12,
+          "position": 370
+        },
+        "name": "test_dataset_learning.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.model import Template",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 12,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 17,
+          "line": 12,
+          "position": 370
+        },
+        "name": "test_trusted_samples.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 83
+    },
+    {
+      "firstFile": {
+        "end": 28,
+        "endLoc": {
+          "column": 1,
+          "line": 28,
+          "position": 1042
+        },
+        "name": "test_font_repair.py",
+        "start": 17,
+        "startLoc": {
+          "column": 0,
+          "line": 17,
+          "position": 567
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.gui import MainWindow\nfrom template_ai.layout import generate\nfrom template_ai.render import export\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\nFONT = next((p for p in (Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),\n                        Path('/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf'),\n                        Path(r'C:\\Windows\\Fonts\\arial.ttf')) if p.is_file()), None)\n\n\n@unittest.skipUnless(FONT, \"無可用環境字型，實際修復驗證跳過\")",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 12,
+      "secondFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 4,
+          "line": 29,
+          "position": 994
+        },
+        "name": "test_persistent_fonts.py",
+        "start": 20,
+        "startLoc": {
+          "column": 0,
+          "line": 20,
+          "position": 518
+        }
+      },
+      "tokens": 100
+    },
+    {
+      "firstFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 45,
+          "line": 12,
+          "position": 399
+        },
+        "name": "test_noise_authoring.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.noise import relative_region, normalized",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 12,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 45,
+          "line": 12,
+          "position": 399
+        },
+        "name": "test_rule_review.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 89
+    },
+    {
+      "firstFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 5,
+          "line": 15,
+          "position": 521
+        },
+        "name": "test_noise_hits.py",
+        "start": 3,
+        "startLoc": {
+          "column": 13,
+          "line": 3,
+          "position": 66
+        }
+      },
+      "format": "python",
+      "fragment": "from pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_quality_dialog import TrainingQualityDialog\nfrom training_fixture import source_work,observations\nfrom test_rule_review import pending_rule",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 13,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 5,
+          "line": 15,
+          "position": 521
+        },
+        "name": "test_trusted_samples.py",
+        "start": 3,
+        "startLoc": {
+          "column": 13,
+          "line": 3,
+          "position": 66
+        }
+      },
+      "tokens": 94
+    }
+  ],
+  "statistics": {
+    "detectionDate": "2026-10-20T20:55:24.211Z",
+    "formats": {
+      "python": {
+        "clones": 5,
+        "duplicatedLines": 61,
+        "duplicatedTokens": 449,
+        "lines": 23180,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 0.2631578947368421,
+        "percentageTokens": 0.09526072584854181,
+        "sources": 254,
+        "tokens": 471338
+      }
+    },
+    "total": {
+      "clones": 5,
+      "duplicatedLines": 61,
+      "duplicatedTokens": 449,
+      "lines": 23180,
+      "newClones": 0,
+      "newDuplicatedLines": 0,
+      "percentage": 0.2631578947368421,
+      "percentageTokens": 0.09526072584854181,
+      "sources": 254,
+      "tokens": 471338
+    }
+  }
+}

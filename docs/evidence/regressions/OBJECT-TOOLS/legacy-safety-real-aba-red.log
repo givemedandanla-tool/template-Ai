@@ -1,0 +1,39 @@
+test_actual_apply_history_reopen_undo_redo_and_stale_controls (test_object_tools.ObjectToolsGuiTests.test_actual_apply_history_reopen_undo_redo_and_stale_controls) ... This plugin does not support propagateSizeHints()
+ok
+test_both_mode_entries_source_history_and_unsaved_editor_protection (test_object_tools.ObjectToolsGuiTests.test_both_mode_entries_source_history_and_unsaved_editor_protection) ... This plugin does not support propagateSizeHints()
+ok
+test_explicit_font_pin_style_patch_and_cross_owner_gui_gate (test_object_tools.ObjectToolsGuiTests.test_explicit_font_pin_style_patch_and_cross_owner_gui_gate) ... This plugin does not support propagateSizeHints()
+ok
+test_late_failure_retry_publication_and_no_selection_do_not_write (test_object_tools.ObjectToolsGuiTests.test_late_failure_retry_publication_and_no_selection_do_not_write) ... This plugin does not support propagateSizeHints()
+ok
+test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots (test_object_tools.ObjectToolsGuiTests.test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots) ... This plugin does not support propagateSizeHints()
+FAIL
+test_mixed_dirty_only_panel_preserves_other_values_and_cancel (test_object_tools.ObjectToolsGuiTests.test_mixed_dirty_only_panel_preserves_other_values_and_cancel) ... This plugin does not support propagateSizeHints()
+ok
+test_real_drag_only_candidate_group_and_locked_main_paths (test_object_tools.ObjectToolsGuiTests.test_real_drag_only_candidate_group_and_locked_main_paths) ... This plugin does not support propagateSizeHints()
+ok
+test_real_three_way_click_modifier_list_and_rubber_selection (test_object_tools.ObjectToolsGuiTests.test_real_three_way_click_modifier_list_and_rubber_selection) ... This plugin does not support propagateSizeHints()
+ok
+test_cas_aba_publication_and_late_audit_atomic_rollback (test_object_tools.ObjectToolsTests.test_cas_aba_publication_and_late_audit_atomic_rollback) ... ok
+test_general_save_delete_and_font_transaction_cannot_bypass_lock (test_object_tools.ObjectToolsTests.test_general_save_delete_and_font_transaction_cannot_bypass_lock) ... ok
+test_legacy_lock_policy_empty_invalid_and_noop_requests (test_object_tools.ObjectToolsTests.test_legacy_lock_policy_empty_invalid_and_noop_requests) ... ok
+test_mixed_dirty_patch_owner_scope_and_logo_aspect (test_object_tools.ObjectToolsTests.test_mixed_dirty_patch_owner_scope_and_logo_aspect) ... ok
+test_persistent_apply_undo_redo_reopen_and_unselected_identity (test_object_tools.ObjectToolsTests.test_persistent_apply_undo_redo_reopen_and_unselected_identity) ... ok
+test_six_alignments_independent_math_and_protected_fields (test_object_tools.ObjectToolsTests.test_six_alignments_independent_math_and_protected_fields) ... ok
+test_source_revision_visual_revalidation_and_transaction_rollback (test_object_tools.ObjectToolsTests.test_source_revision_visual_revalidation_and_transaction_rollback) ... ok
+test_spacing_both_axes_stable_ties_and_group_displacement (test_object_tools.ObjectToolsTests.test_spacing_both_axes_stable_ties_and_group_displacement) ... ok
+
+======================================================================
+FAIL: test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots (test_object_tools.ObjectToolsGuiTests.test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_object_tools.py", line 220, in test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots
+    self.assertEqual(self.w.template.to_dict(),local.to_dict());self.assertEqual(self.w.library.object_snapshot('TEMPLATE',self.t.id),before)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'nam[103 chars]'x': 9.0, 'y': 6.0, 'w': 70.0, 'h': 11.0}, 'in[1466 chars]': 0} != {'nam[103 chars]'x': 10.0, 'y': 6.0, 'w': 70.0, 'h': 11.0}, 'i[1467 chars]': 0}
+Diff is 2614 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 16 tests in 4.065s
+
+FAILED (failures=1)

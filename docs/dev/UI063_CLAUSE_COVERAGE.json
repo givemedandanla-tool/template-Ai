@@ -1,0 +1,240 @@
+{
+  "parent": "UI-063",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "8298bf19547d707586fc8e89d3e9c2a80a04bd782adf5c652da23d2368203a4a",
+  "normative_clause_count": 26,
+  "clauses": [
+    {
+      "id": "UI-063-CLAUSE-1",
+      "expected": "**選取上下文決定主要工具**：右側面板依目前工作模式、現行候選／實體尺寸、確切選取物件類型與數量，優先呈現相關編輯控制。選姓名／文字框時，顯示文字內容、歸屬、字型、**已確定而不得自動縮小的字級**、水平 X 軸縮放與界限、座標／幾何及有效警告；選完整複合 Logo 時，顯示公司歸屬、尺寸專用素材來源、完整性與允許的等比操作；選多物件時，顯示共同可用的對齊／分布／群組操作與混合值、鎖定狀態。無物件選取時顯示該模式最相關的工作狀態與引導，不憑空顯示某物件屬性。",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_text_context_uses_original_fixed_size_and_collapse_does_not_modify_model",
+        "test_property_context.CandidatePropertyGateTests.test_selected_text_is_current_exact_field_plaintext_and_only_a_view",
+        "test_property_context.PropertyContextTests.test_multiple_different_fields_have_blank_mixed_values_and_reuse_existing_editor_ids",
+        "test_property_context.PropertyContextTests.test_no_selection_disables_old_values_and_new_frame_uses_legal_original_defaults"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-2",
+      "expected": "**可固定常用工具**：使用者可以將經常操作的合法工具群組釘選在固定區域；選取對象變化時，釘選區域仍可見，但**控制是否啟用及作用目標必須跟當前確切選取同步**。例如由文字切到 Logo，固定的「字元水平縮放」控制可顯示為不適用，不得把上一個文字框的值或操作偷偷套到 Logo。釘選是 GUI 偏好／可見性，不是永久欄位或模板規則。",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_pinned_text_stays_visible_but_disabled_for_whole_logo_and_never_changes_it",
+        "test_property_context.PropertyContextTests.test_only_explicit_pin_preference_persists_and_reopened_window_reads_it_without_business_change"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-3",
+      "expected": "**完整屬性可隨時展開**：自適應僅改變顯示的優先順序與摺疊狀態，不刪減必要屬性或變更底層資料；提供「全部屬性／詳細資訊」入口。原稿來源、人物－公司－欄位歸屬、Logo 尺寸資產、物件鎖定與風險證據需依現有權限／可核實來源呈現。未知或不可編輯的值應標為未核實／唯讀，不假稱可直接修改。",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_text_context_uses_original_fixed_size_and_collapse_does_not_modify_model",
+        "test_property_context.CandidatePropertyGateTests.test_selected_text_is_current_exact_field_plaintext_and_only_a_view"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-4",
+      "expected": "**局部且可定位的 AI 問題提示**：當目前物件、人物欄位或候選有警告時，在相對應控制附近顯示簡短原因與狀態（正常、警告、待人工確認、阻擋／無解、待重新驗證）；可開啟 UI-014／015／057 的既有詳情與修正入口，點選後依 UI-034／035 高亮定位同一確切物件。面板摺疊、釘選或隱藏警告視覺提示**不改變底層印前 Gate、不得把失敗標記改成 PASS**。AI 低把握與已證實違反硬條件必須分開。",
+      "tests": [
+        "test_property_context.CandidatePropertyGateTests.test_local_problem_button_never_uses_unrelated_previously_selected_problem",
+        "test_property_context.CandidatePropertyGateTests.test_problem_selection_and_input_staleness_keep_same_object_scope_and_disable_old_correction"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-5",
+      "expected": "**維持人工設定及編輯狀態**：切換面板、選取不同物件、切換候選或返回時，**不重設任何已確認的人工數值**、已鎖定座標、字級或人物／公司歸屬。面板輸入框尚在編輯但未提交時，必須明確區分「輸入中／待套用／已套用／已安全保存／失敗」，避免自動切換導致未提交數值不知去向。實際變更才可按 UI-059／061 規則產生版本／失效；僅顯示或切換面板不得觸發 AI 重算、正式主檔回寫或改動原始 .ai。",
+      "tests": [
+        "test_property_selection.PropertySelectionTests.test_main_stay_keeps_original_pending_value_and_three_way_selection_without_db_write",
+        "test_property_form_versions.PropertyFormVersionTests.test_old_mode_pending_values_are_retained_as_conflict_without_retargeting_new_source",
+        "test_property_form_versions.PropertyFormVersionTests.test_successful_explicit_apply_does_not_archive_its_own_values_as_a_version_conflict",
+        "test_property_form_versions.PropertyFormVersionTests.test_save_draft_with_unapplied_fields_keeps_them_pending_without_claiming_saved"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-6",
+      "expected": "**面板尺寸與可見性**：使用者可調整右側面板寬度、收合區段、暫時收起整個面板並快速還原，讓中央畫布可用。不得因面板窄化而失去關鍵確認／取消與錯誤狀態，長文字、中文欄位及無障礙焦點應保持可讀且可操作；暫時收合不等於忽略印前阻擋。",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_narrow_panel_scroll_keeps_apply_and_conflict_status_reachable",
+        "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-7",
+      "expected": "**單選與多選安全**：沿用 UI-034 已核准的三向同步選取與多選共通屬性判定、UI-035 語意樹與鎖定、UI-036 多物件精準對齊。跨人物、跨公司、不同 Logo／文字或鎖定混選時不把選到的第一個物件值假裝所有物件相同；不合法批次變更必須停在明確不可用／需另選範圍。",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_multiple_different_fields_have_blank_mixed_values_and_reuse_existing_editor_ids",
+        "test_property_lifecycle.PropertyLifecycleTests.test_new_selection_does_not_inherit_previous_cross_owner_scope_confirmation",
+        "test_property_lifecycle.PropertyLifecycleTests.test_locked_existing_object_disables_value_tools_but_explicit_unlock_uses_original_pipeline"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-8",
+      "expected": "**狀態生命週期與失效保護**：右側面板所呈現的內容必須連到當下的候選、尺寸、來源欄位 ID、物件 ID、模板 `style_version_id`、人工編輯版本；較早 AI 計算回來時不可替換較新的人工輸入。選取物件已刪除或來源版本改變時清楚清空過期屬性、顯示重新選取提示，不能顯示看似還可編輯的舊內容。",
+      "tests": [
+        "test_property_form_versions.PropertyFormVersionTests.test_old_mode_values_and_undo_are_not_restored_into_newer_same_id_source",
+        "test_property_lifecycle.PropertyLifecycleTests.test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies",
+        "test_property_context.CandidatePropertyGateTests.test_stale_selected_text_is_removed_without_retargeting_another_field"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-9",
+      "expected": "**低配置 Windows 互動**：選取與面板切換應採輕量讀取、必要時延遲顯示較重的來源預覽；禁止每次選取都整批載入 Illustrator 原稿、Logo 集或模型。沿用 UI-051／058 資源限制；尚未實機測量，不承諾具體速度或最低硬體數值。",
+      "tests": [
+        "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_resource_wait_cancel_never_starts_calculation_or_claims_saved_result"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-10",
+      "expected": "**不另建資料中心**：右側只是既有編輯工具與風險資訊的上下文檢視，不新造物件資料表、例外中心、AI 學習中心、永久案件管理或重複屬性系統。UI-062 左側導航／安全返回持續負責跨模式跳轉；右側面板只控制同模式目前物件相關工具。",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_only_explicit_pin_preference_persists_and_reopened_window_reads_it_without_business_change",
+        "test_property_selection.PropertySelectionTests.test_main_stay_keeps_original_pending_value_and_three_way_selection_without_db_write"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-11",
+      "expected": "| 選取姓名文字框 | 文字屬性優先；已決定字級僅依法編輯，不因超長字串自動縮字級 |",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_text_context_uses_original_fixed_size_and_collapse_does_not_modify_model",
+        "test_property_context.CandidatePropertyGateTests.test_selected_text_is_current_exact_field_plaintext_and_only_a_view"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-12",
+      "expected": "| 選取某公司的複合 Logo | 優先顯示該公司與目前實體尺寸的合法 Logo 來源及等比框位控制，不拆分 Logo 圖文 |",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_pinned_text_stays_visible_but_disabled_for_whole_logo_and_never_changes_it"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-13",
+      "expected": "| 選取兩個不同人物的電話框 | 共同屬性可用但語意歸屬仍分離；值不同顯示「混合值」，不可默默覆寫兩者 |",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_multiple_different_fields_have_blank_mixed_values_and_reuse_existing_editor_ids",
+        "test_property_lifecycle.PropertyLifecycleTests.test_new_selection_does_not_inherit_previous_cross_owner_scope_confirmation"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-14",
+      "expected": "| 將文字縮放工具釘選後切到 Logo | 釘選區仍可見，但文字專用控制標記不適用並禁止誤修改 |",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_pinned_text_stays_visible_but_disabled_for_whole_logo_and_never_changes_it"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-15",
+      "expected": "| 在右側輸入尚未提交的新座標後切選另一物件 | 清楚處理「待套用／返回編輯／放棄」而不暗中重設或將值套到新物件 |",
+      "tests": [
+        "test_property_selection.PropertySelectionTests.test_main_stay_keeps_original_pending_value_and_three_way_selection_without_db_write",
+        "test_property_selection.PropertySelectionTests.test_main_explicit_discard_selects_new_object_without_transferring_old_value"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-16",
+      "expected": "| AI 發現目前尺寸 Logo 不完整 | 顯示阻擋與來源、定位及合法修正入口；折疊面板後該尺寸仍不能正式輸出 |",
+      "tests": [
+        "test_property_context.CandidatePropertyGateTests.test_pins_all_properties_and_hidden_panel_never_relax_actual_hard_block",
+        "test_property_context.CandidatePropertyGateTests.test_problem_selection_and_input_staleness_keep_same_object_scope_and_disable_old_correction"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-17",
+      "expected": "| 點擊風險定位但來源物件已被替換 | 明示引用過期並要求重新定位，不把警告導向另一個人物物件 |",
+      "tests": [
+        "test_property_context.CandidatePropertyGateTests.test_problem_selection_and_input_staleness_keep_same_object_scope_and_disable_old_correction",
+        "test_property_context.CandidatePropertyGateTests.test_stale_selected_text_is_removed_without_retargeting_another_field"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-18",
+      "expected": "| 手動鎖定某姓名框，AI 延後完成候選 | 面板保留人工鎖定與當前版本，不讓舊計算覆寫數值 |",
+      "tests": [
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_new_manual_review_during_worker_is_not_erased_by_late_result",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_completed_comparison_cannot_overwrite_later_human_review"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-19",
+      "expected": "**類型正確**：文字、Logo、多選、未選取四種場景均只顯示／啟用對應的合法控制。",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_text_context_uses_original_fixed_size_and_collapse_does_not_modify_model",
+        "test_property_context.PropertyContextTests.test_pinned_text_stays_visible_but_disabled_for_whole_logo_and_never_changes_it",
+        "test_property_context.PropertyContextTests.test_multiple_different_fields_have_blank_mixed_values_and_reuse_existing_editor_ids",
+        "test_property_context.PropertyContextTests.test_no_selection_disables_old_values_and_new_frame_uses_legal_original_defaults"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-20",
+      "expected": "**釘選安全**：固定工具可見但不對不適用物件動作；混合數值不被當成單一確定值。",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_pinned_text_stays_visible_but_disabled_for_whole_logo_and_never_changes_it",
+        "test_property_context.PropertyContextTests.test_multiple_different_fields_have_blank_mixed_values_and_reuse_existing_editor_ids"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-21",
+      "expected": "**資料一致**：右側與畫布、左側物件樹使用同一物件版本與身份；切換／收合不改動工作資料。",
+      "tests": [
+        "test_property_form_versions.PropertyFormVersionTests.test_current_model_replacement_rebinds_controls_and_retains_pending_values_without_db_write",
+        "test_property_form_versions.PropertyFormVersionTests.test_identical_same_source_model_refresh_rebinds_pointer_and_keeps_unapplied_values"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-22",
+      "expected": "**人工修改保護**：人工字級、文字 X 縮放、位置及鎖定／人物歸屬不會被介面切換或舊 AI 結果覆寫。",
+      "tests": [
+        "test_property_form_versions.PropertyFormVersionTests.test_old_mode_pending_values_are_retained_as_conflict_without_retargeting_new_source",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_new_manual_review_during_worker_is_not_erased_by_late_result"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-23",
+      "expected": "**警告可靠**：UI-057 的風險分級、UI-027 的分尺寸印前阻擋不受折疊、隱藏、切選或釘選影響。",
+      "tests": [
+        "test_property_context.CandidatePropertyGateTests.test_pins_all_properties_and_hidden_panel_never_relax_actual_hard_block",
+        "test_property_context.CandidatePropertyGateTests.test_local_problem_button_never_uses_unrelated_previously_selected_problem"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-24",
+      "expected": "**回復穩妥**：輸入中途切換選取、無效來源／衝突、低配資源壓力皆有可理解提示及可行處理入口，並可依既有版本／Undo 機制處理。",
+      "tests": [
+        "test_property_lifecycle.PropertyLifecycleTests.test_actual_close_stay_then_explicit_discard_preserves_model",
+        "test_property_lifecycle.PropertyLifecycleTests.test_actual_reload_stay_retains_input_and_discard_reloads_without_automatic_adoption",
+        "test_property_form_versions.PropertyFormVersionTests.test_unfinished_main_number_survives_unchanged_mode_roundtrip",
+        "test_property_form_versions.PropertyFormVersionTests.test_existing_editor_stale_retains_unfinished_raw_input_with_old_owner"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-25",
+      "expected": "不變更 UI-010 已發布模板、原 Illustrator .ai、UI-043 正式客戶主檔、UI-023 分尺寸 Logo 庫或 UI-055 訓練資料；UI-045 正式主檔回寫須另經使用者明確操作。",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_only_explicit_pin_preference_persists_and_reopened_window_reads_it_without_business_change",
+        "test_property_selection.PropertySelectionTests.test_main_stay_keeps_original_pending_value_and_three_way_selection_without_db_write"
+      ]
+    },
+    {
+      "id": "UI-063-CLAUSE-26",
+      "expected": "UI-048 完整權限 GUI 仍依原核准排序後期實作，UI-056 D 系統化補樣僅屬低優先未來候選。",
+      "tests": [
+        "test_property_context.PropertyContextTests.test_only_explicit_pin_preference_persists_and_reopened_window_reads_it_without_business_change"
+      ]
+    }
+  ],
+  "native_capture": "tools/capture_property_context.py",
+  "architecture_audit": [
+    "Only existing Main/Canvas/ObjectTools/preferences and risk gates; no parallel editor, new table/queue/model, customerwrite or automatic training route",
+    "Visibility=context UNION pins UNION all; enabling intersects current exact selection/type/lock/source permissions",
+    "Selection uses bounded model metadata and existing snapshot point reads, not corpus/model loading; Qt singleShot view refresh only",
+    "Boundary25/26 audited: changed code has no formal customer-master write, source Illustrator mutation, template publish, training/permission scheduling or new data centre"
+  ],
+  "limits": [
+    "Controlled authored Linux; Windows low-resource/IME/device qualification and authorized nonempty native Illustrator corpus remain external gaps",
+    "Target and native PASS do not replace immutable current-source full regression, image review and ordinary GitHub evidence publication Gate"
+  ],
+  "previous_source_pin": {
+    "sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+    "scope": "HISTORICAL_WHOLE_FILE"
+  },
+  "source_hash_scope": "ORIGINAL_PARENT_SECTION"
+}

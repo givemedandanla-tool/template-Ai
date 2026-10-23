@@ -1,0 +1,20 @@
+{
+  "kind": "CHECKPOINT_TOOL_NEGATIVE_NOT_PRODUCT_CASE",
+  "status": "PASS",
+  "command": [
+    "python",
+    "docs/dev/non_code_audit/prepare_scoped_checkpoint.py",
+    "--id",
+    "CP-RELEASE-NEGATIVE-MISSING-ROOT",
+    "--base",
+    "570ecebe",
+    "--scope",
+    "formal",
+    "--run-path",
+    "docs/evidence/runs/INTENTIONALLY_MISSING_RELEASE_TEST"
+  ],
+  "exit_code": 1,
+  "state_unchanged": true,
+  "no_checkpoint_created": true,
+  "expected_failure": "missing scope root before any persistence mutation"
+}

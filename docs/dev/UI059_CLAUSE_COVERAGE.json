@@ -1,0 +1,219 @@
+{
+  "parent": "UI-059",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "16bae7f57d2cf2d17063b6209d474910f489ba4a3dd05652d078e527622efe8e",
+  "normative_clause_count": 10,
+  "source_clauses_sha256": "fc47a203f5422d1546d431abce2397775802ca2e9ce822f91a3d99968c3d4331",
+  "clauses": [
+    {
+      "id": "UI-059-CLAUSE-1",
+      "expected": "**使用者正式選擇 D｜智慧局部重算＋人工編輯保護＋版本衝突防護**。本項針對**同一當次排版工作階段**內，輸入人物與公司資料、聯絡方式、模板／卡片實體尺寸、Logo 來源、字型或人工物件座標尺寸改變時的依賴失效與安全重新計算 UX。沿用 UI-013 固定字級、UI-016／UI-017 人物 ROOT 與公司／Logo 歸屬、UI-018 模板配對、UI-034～UI-037 畫布同步編輯、UI-045 客戶主檔受控回寫、UI-057 安全／草稿／硬性無解、UI-058 當次任務暫停／安全恢復，**不建立平行排版引擎、額外永久客戶草稿資料庫或新 AI 訓練機制**。",
+      "tests": [
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_explicit_affected_action_uses_existing_single_worker_and_preserves_manual",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_pending_geometry_is_visible_and_formal_blocked_on_existing_pool",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_move_and_real_undo_preserve_input_other_candidate_and_official_template"
+      ]
+    },
+    {
+      "id": "UI-059-CLAUSE-2",
+      "expected": "**有方向的變更依賴圖與最小失效範圍**：每次使用者明確修改應先區分①**內容／語意層**：姓名、電話、LINE、IG、Email、人物－公司關係、客戶編號候選或新增／刪除一個人物或公司；②**版型／來源層**：卡片物理尺寸、`peopleCapacity`、模板 `style_version_id`、Logo 所屬公司及該尺寸的實際資產、Illustrator 原生文字效果／字型；③**幾何／人工版面層**：某件作品的文字框位置、大小、對齊、群組、已確認的特殊框位新增及鎖定。根據**來源欄位 ID → 人物／公司歸屬 → 該候選模板框位 → 文字適配／相鄰物件／安全區 → 該尺寸輸出品質**的依賴關係，將候選分為「**必須重算／只須重驗／不受影響可沿用／因來源無法核實而待人工**」；要能提供看得懂的「為何這個候選被標示過期」與涉及物件清單，**不強迫每打一個字就全庫重算全部模板**。無法可靠確定依賴邊界時要保守擴大必要重驗，不能假裝完全無影響。",
+      "tests": [
+        "test_candidate_changes.CandidateChangeTests.test_capacity_change_conservatively_rechecks_all_slots",
+        "test_candidate_changes.CandidateChangeTests.test_company_rebind_reaches_person_and_old_new_company_not_unrelated_company",
+        "test_candidate_changes.CandidateChangeTests.test_deleted_phone_still_names_previous_consumer_and_cannot_reuse_old_text",
+        "test_candidate_changes.CandidateChangeTests.test_explicit_many_company_link_and_malformed_link_conservatively_recheck",
+        "test_candidate_changes.CandidateChangeTests.test_font_change_only_reaches_slots_using_that_exact_family_and_style",
+        "test_candidate_changes.CandidateChangeTests.test_new_unmapped_input_reaches_global_lossless_gate_without_inventing_slot",
+        "test_candidate_changes.CandidateChangeTests.test_other_size_logo_has_no_consumer_but_same_size_logo_does",
+        "test_candidate_changes.CandidateChangeTests.test_phone_change_reaches_only_phone_slots_and_always_whole_card_gate",
+        "test_candidate_changes.CandidateChangeTests.test_scope_budget_failure_never_returns_partial_safe_result",
+        "test_candidate_changes.CandidateChangeTests.test_stable_field_identity_change_is_not_hidden_by_equal_display_text",
+        "test_candidate_changes.CandidateChangeTests.test_unchanged_input_is_only_potential_reuse_not_source_or_output_approval",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_dependency_notice_identifies_phone_only_and_reuses_unchanged_size"
+      ]
+    },
+    {
+      "id": "UI-059-CLAUSE-3",
+      "expected": "**預設輕量合併編輯而非按鍵風暴**：打字、貼上文字或快速拖曳時，GUI 即時呈現「此候選資料已變更、排版結果待更新」與受影響標記，但**不在每次按鍵、每個像素拖動時同時重算所有模板**；可在使用者暫停連續輸入、結束拖曳或按「**重新計算受影響候選**」時依保守資源預算排程，並可在高負載／不確定情境先提供明確按鈕確認。自動或手動觸發時都必須遵守 UI-058 真實狀態與 UI-051 低配負載保護。未完成必要重驗者不再沿用舊的「已通過」標記。",
+      "tests": [
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_explicit_affected_action_uses_existing_single_worker_and_preserves_manual",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_latest_pending_edit_coalesces_while_existing_job_owns_worker",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_resource_wait_cancel_never_starts_calculation_or_claims_saved_result",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_stale_groups_are_inspectable_after_debounce_but_never_exportable"
+      ]
+    },
+    {
+      "id": "UI-059-CLAUSE-4",
+      "expected": "**明確人工編輯保護與作用範圍**：使用者手動選取／移動／縮放／鎖定某文字框、Logo 框、人物欄位或調整群組時，當次候選的**人工修改標記、物件識別與編輯前後版本**需保留；**AI 不得無聲將已人工調整的姓名框重新移回原模板位置，亦不得把已核對的人物電話歸屬改回 AI 舊推測**。修改輸入內容時可更新綁定文字、重新檢查其寬度和相鄰幾何，但**保持人工鎖定的框位置／字級／屬性**；若在既定框位下因文字變長、相鄰框重疊、壓縮超限而違反硬條件，顯示「**人工設定與新資料衝突，待選擇處理**」，不可悄悄改字級、拉開已鎖定物件或自動挪走其他核心元素。",
+      "tests": [
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_changed_input_rejects_late_result_then_current_long_phone_rechecks",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_pending_geometry_is_visible_and_formal_blocked_on_existing_pool",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_lock_resize_and_fixed_size_restriction_use_existing_proposal_engine",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_required_unknown_is_preserved_by_both_move_and_undo",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_undo_after_input_change_keeps_new_text_and_cannot_make_long_phone_safe"
+      ]
+    },
+    {
+      "id": "UI-059-CLAUSE-5",
+      "expected": "**新舊差異與衝突選擇**：重算候選若與人工保留的物件衝突，沿用 UI-034 的畫布和物件清單同步展示**「目前人工版面」「新建議候選」「實際受影響文字／框位」「若採用的差異與風險」**，使用者可**保留人工位置（但保持風險／無解標記）／套用經確認且通過必要 Gate 的局部建議／開另一份非正式候選比較／取消本次 AI 調整**。必須顯示會否移動姓名、公司、Logo 等核心元素以及是否觸發其他未覆蓋物件的相對位移，不能用「忽略衝突」一鍵把 FAIL 變 PASS；若無合法排版解，清楚顯示 UI-014／UI-057 的無解與修正選項。",
+      "tests": [
+        "test_candidate_changes.CandidateChangeTests.test_lock_blocks_real_new_move_but_does_not_reset_manual_to_unchanged_base",
+        "test_candidate_changes.CandidateChangeTests.test_three_way_divergence_retains_manual_value_and_names_conflict",
+        "test_candidate_changes.CandidateChangeTests.test_three_way_preserves_manual_x_and_proposes_disjoint_new_y_without_applying",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_actual_canvas_selection_resize_lock_and_keep_comparison",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_actual_pending_dialog_geometry_and_comparison_use_same_scale",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_completed_comparison_cannot_overwrite_later_human_review",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_failed_comparison_cannot_replace_manual_or_erase_hard_block",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_nonformal_comparison_preserves_manual_until_explicit_safe_adoption"
+      ]
+    },
+    {
+      "id": "UI-059-CLAUSE-6",
+      "expected": "**舊結果不可回寫新狀態（版本柵欄／防競爭）**：每次輸入、人工移動或來源／字型／`style_version_id`／尺寸 Logo／規則版本改變，產生新的**當次編輯世代／版本 token**；各候選計算記錄其**輸入快照、所依賴的物件人工版本、來源／模型／規則及模板 exact 版本、候選世代**。當較早啟動的運算慢一步完成、UI-058 重新繼續／崩潰恢復或使用者快速連按重算時，只有在**現行依賴完全一致**時才能把結果套到當前候選；不一致者標示「**過期結果已忽略／可另行比較**」，**不得晚到覆寫使用者更新過的文字、人物歸屬、人工框位或已核准版本**。UI 僅展示可追溯的有效結果，不將混合不同世代的框位拼成看似通過的單一候選。",
+      "tests": [
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_changed_input_rejects_late_result_then_current_long_phone_rechecks",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_changed_published_source_during_worker_invalidates_result",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_completed_comparison_cannot_overwrite_later_human_review",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_new_manual_review_during_worker_is_not_erased_by_late_result",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_undo_during_active_move_rejects_old_result_and_preserves_history",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_late_result_rejected_even_when_manual_roundtrip_returns_exact_same_geometry",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_actual_gui_encrypted_snapshot_preserves_current_legal_manual_geometry_and_receipt",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_native_password_save_restart_explicit_restore_clear_and_normal_completion_cleanup",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_new_main_calculation_preserves_preexisting_manual_layout_until_explicit_difference_choice",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_old_worker_cannot_overwrite_current_manual_geometry_even_after_reconfirmation",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_resource_wait_real_stage_partial_preview_cancel_and_resume_only_unstarted",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_restore_background_decryption_cannot_replace_newer_input",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_resume_rechecks_changed_input_and_template_instead_of_clearing_paused_flag",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_save_after_input_change_never_claims_stale_session_is_current_saved_work"
+      ]
+    },
+    {
+      "id": "UI-059-CLAUSE-7",
+      "expected": "**局部計算不免除整體驗證**：例如只更動電話字串，可重算對應文字度量與相關框位，但**至少對該候選整張作品重新核實所有必要的語意無損配對、人物／公司／Logo 強歸屬、每個欄位唯一映射、字級固定、受限水平壓縮、相鄰與全局不重疊、裁切安全區、字型及實體尺寸 Logo 完整性**；所需重驗範圍應以真實全域不變條件決定，不能因局部快取推論整張卡仍合格。不同尺寸／不同候選是否受影響分開證明，所有正式輸出仍依 UI-019／UI-027～UI-030 按尺寸通過當下印前 Gate。",
+      "tests": [
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_required_unknown_is_preserved_by_both_move_and_undo",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_undo_after_input_change_keeps_new_text_and_cannot_make_long_phone_safe",
+        "test_candidate_risk.CandidateRiskTests.test_clearing_diagnostics_cannot_skip_actual_engine_recheck",
+        "test_candidate_risk.CandidateRiskTests.test_missing_font_is_unknown_not_a_proven_unsatisfiable_search",
+        "test_candidate_risk.CandidateRiskTests.test_mutated_input_template_placement_and_assets_require_regeneration",
+        "test_candidate_risk.CandidateRiskTests.test_real_width_failure_is_hard_and_high_confidence_or_accepted_label_cannot_export",
+        "test_candidate_risk.CandidateRiskTests.test_required_source_gap_never_claims_hard_pass_or_becomes_safe_by_accepting_risk"
+      ]
+    },
+    {
+      "id": "UI-059-CLAUSE-8",
+      "expected": "**人工修改與正式資料分離**：人工在本次畫布修正只修改**當次臨時候選及可安全恢復的短期快照**，不能默默寫回 UI-043 正式客戶主檔、永久改 UI-010 已發布模板、異動真實 `.ai`、變更已核准的 UI-023 各尺寸 Logo 資產或加入 UI-055 訓練資料。若要將聯絡資訊正式回寫走 UI-045 逐欄確認及版本保護；規則／學習候選仍走 UI-007／UI-008／UI-055。UI-058 的短期恢復須保留合法人工調整的精確版本及清理邊界，不藉重算生成新的永久訂單／草稿歷史。",
+      "tests": [
+        "test_candidate_changes.CandidateChangeTests.test_delta_contains_only_changed_coordinate_and_no_people_or_customer_snapshot",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_actual_dialog_undo_preview_then_explicit_apply_has_no_business_write",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_move_and_real_undo_preserve_input_other_candidate_and_official_template",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_actual_gui_encrypted_snapshot_preserves_current_legal_manual_geometry_and_receipt"
+      ]
+    },
+    {
+      "id": "UI-059-CLAUSE-9",
+      "expected": "**低配安全與清楚操作**：顯示候選狀態為「待重算／正在重算／可沿用／人工衝突待決／重新核實完成／目前無解」及原因，提供「**重算受影響項／檢視差異／保留人工修改／回復本次單筆更動**」等動作；避免大量無界併行或為一個文字按鍵讓整個 GUI 卡住。延用 UI-058 暫停、取消及崩潰恢復與 UI-051 資源限制，失敗／過載時維持已確認的人工內容，真正落盤前不能冒稱已安全保存；不必增建第二套作業佇列。",
+      "tests": [
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_cancel_active_preserves_manual_pending_without_formal_release",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_dependency_notice_identifies_phone_only_and_reuses_unchanged_size",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_destroyed_dialog_does_not_receive_worker_callback",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_explicit_affected_action_uses_existing_single_worker_and_preserves_manual",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_resource_wait_cancel_never_starts_calculation_or_claims_saved_result",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_actual_dialog_undo_preview_then_explicit_apply_has_no_business_write",
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_single_undo_keeps_earlier_different_object_change",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_actual_gui_encrypted_snapshot_preserves_current_legal_manual_geometry_and_receipt",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_native_password_save_restart_explicit_restore_clear_and_normal_completion_cleanup",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_new_main_calculation_preserves_preexisting_manual_layout_until_explicit_difference_choice",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_old_worker_cannot_overwrite_current_manual_geometry_even_after_reconfirmation",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_resource_wait_real_stage_partial_preview_cancel_and_resume_only_unstarted",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_restore_background_decryption_cannot_replace_newer_input",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_resume_rechecks_changed_input_and_template_instead_of_clearing_paused_flag",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_save_after_input_change_never_claims_stale_session_is_current_saved_work"
+      ]
+    },
+    {
+      "id": "UI-059-CLAUSE-10",
+      "expected": "**既有安全決策不變**：UI-056 目前僅 C「樣本覆蓋與缺口提醒」，D「系統化補樣」是正式版本完善後的低優先級 Backlog，UI-059 不提前實作；UI-048 的完整權限介面仍是最後完成的功能，前期使用合成／去識別資料。不新增 UI-043 已取消的「曾設計／已確認購買」分類、不調整 UI-013 字級硬限制，不允許沒有完整真實 Logo 的結果假冒合格。",
+      "tests": [
+        "test_candidate_changes.CandidateChangeTests.test_delta_cannot_hide_font_source_size_owner_or_dimension_rewrite",
+        "test_candidate_changes.CandidateChangeTests.test_fixed_font_size_and_semantic_owner_are_never_automatic_merge_permissions",
+        "test_candidate_risk.CandidateRiskTests.test_real_width_failure_is_hard_and_high_confidence_or_accepted_label_cannot_export",
+        "test_candidate_risk.CandidateRiskTests.test_required_source_gap_never_claims_hard_pass_or_becomes_safe_by_accepting_risk",
+        "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states"
+      ]
+    }
+  ],
+  "implementation": [
+    "template_ai/candidate_changes.py",
+    "template_ai/candidate_edit.py",
+    "template_ai/candidate_edit_dispatch.py",
+    "template_ai/gui.py",
+    "template_ai/layout_recovery.py"
+  ],
+  "new_test_ids": [
+    "test_candidate_changes.CandidateChangeTests.test_phone_change_reaches_only_phone_slots_and_always_whole_card_gate",
+    "test_candidate_changes.CandidateChangeTests.test_stable_field_identity_change_is_not_hidden_by_equal_display_text",
+    "test_candidate_changes.CandidateChangeTests.test_deleted_phone_still_names_previous_consumer_and_cannot_reuse_old_text",
+    "test_candidate_changes.CandidateChangeTests.test_new_unmapped_input_reaches_global_lossless_gate_without_inventing_slot",
+    "test_candidate_changes.CandidateChangeTests.test_other_size_logo_has_no_consumer_but_same_size_logo_does",
+    "test_candidate_changes.CandidateChangeTests.test_font_change_only_reaches_slots_using_that_exact_family_and_style",
+    "test_candidate_changes.CandidateChangeTests.test_company_rebind_reaches_person_and_old_new_company_not_unrelated_company",
+    "test_candidate_changes.CandidateChangeTests.test_capacity_change_conservatively_rechecks_all_slots",
+    "test_candidate_changes.CandidateChangeTests.test_scope_budget_failure_never_returns_partial_safe_result",
+    "test_candidate_changes.CandidateChangeTests.test_unchanged_input_is_only_potential_reuse_not_source_or_output_approval",
+    "test_candidate_changes.CandidateChangeTests.test_three_way_preserves_manual_x_and_proposes_disjoint_new_y_without_applying",
+    "test_candidate_changes.CandidateChangeTests.test_three_way_divergence_retains_manual_value_and_names_conflict",
+    "test_candidate_changes.CandidateChangeTests.test_lock_blocks_real_new_move_but_does_not_reset_manual_to_unchanged_base",
+    "test_candidate_changes.CandidateChangeTests.test_fixed_font_size_and_semantic_owner_are_never_automatic_merge_permissions",
+    "test_candidate_changes.CandidateChangeTests.test_property_or_object_addition_is_review_instead_of_silent_merge",
+    "test_candidate_changes.CandidateChangeTests.test_delta_contains_only_changed_coordinate_and_no_people_or_customer_snapshot",
+    "test_candidate_changes.CandidateChangeTests.test_actual_inverse_restores_geometry_then_whole_card_is_actually_regenerated",
+    "test_candidate_changes.CandidateChangeTests.test_inverse_preserves_later_untouched_coordinate_and_other_objects",
+    "test_candidate_changes.CandidateChangeTests.test_later_touched_property_receipt_tamper_and_repeated_undo_are_blocked",
+    "test_candidate_changes.CandidateChangeTests.test_delta_cannot_hide_font_source_size_owner_or_dimension_rewrite",
+    "test_candidate_changes.CandidateChangeTests.test_explicit_lock_inverse_reuses_existing_object_engine",
+    "test_candidate_changes.CandidateChangeTests.test_added_object_and_empty_action_never_create_fake_local_history",
+    "test_candidate_changes.CandidateChangeTests.test_explicit_many_company_link_and_malformed_link_conservatively_recheck",
+    "test_candidate_edit_history.CandidateEditHistoryTests.test_move_and_real_undo_preserve_input_other_candidate_and_official_template",
+    "test_candidate_edit_history.CandidateEditHistoryTests.test_single_undo_keeps_earlier_different_object_change",
+    "test_candidate_edit_history.CandidateEditHistoryTests.test_undo_after_input_change_keeps_new_text_and_cannot_make_long_phone_safe",
+    "test_candidate_edit_history.CandidateEditHistoryTests.test_late_result_rejected_even_when_manual_roundtrip_returns_exact_same_geometry",
+    "test_candidate_edit_history.CandidateEditHistoryTests.test_required_unknown_is_preserved_by_both_move_and_undo",
+    "test_candidate_edit_history.CandidateEditHistoryTests.test_lock_resize_and_fixed_size_restriction_use_existing_proposal_engine",
+    "test_candidate_edit_history.CandidateEditHistoryTests.test_actual_dialog_undo_preview_then_explicit_apply_has_no_business_write",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_pending_geometry_is_visible_and_formal_blocked_on_existing_pool",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_latest_pending_edit_coalesces_while_existing_job_owns_worker",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_undo_during_active_move_rejects_old_result_and_preserves_history",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_changed_input_rejects_late_result_then_current_long_phone_rechecks",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_cancel_active_preserves_manual_pending_without_formal_release",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_destroyed_dialog_does_not_receive_worker_callback",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_nonformal_comparison_preserves_manual_until_explicit_safe_adoption",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_failed_comparison_cannot_replace_manual_or_erase_hard_block",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_changed_published_source_during_worker_invalidates_result",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_actual_canvas_selection_resize_lock_and_keep_comparison",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_dependency_notice_identifies_phone_only_and_reuses_unchanged_size",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_explicit_affected_action_uses_existing_single_worker_and_preserves_manual",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_stale_groups_are_inspectable_after_debounce_but_never_exportable",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_actual_pending_dialog_geometry_and_comparison_use_same_scale",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_resource_wait_cancel_never_starts_calculation_or_claims_saved_result",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_new_manual_review_during_worker_is_not_erased_by_late_result",
+    "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_completed_comparison_cannot_overwrite_later_human_review"
+  ],
+  "native_capture": "tools/capture_candidate_changes.py",
+  "native_visual_review": "docs/qa/targeted/ui059-native-023-visual-review.json",
+  "limits": [
+    "Authored synthetic Linux native evidence; no actual required Windows/reference laptop or private Illustrator qualification",
+    "Local reuse is dependency-scoped; existing whole-card generate/gates remain mandatory and may reuse existing metric caches",
+    "New comparison uses explicitly labelled pre-edit geometry; no inference model or fabricated AI geometry",
+    "No extra permanent customer draft store, worker pool, business writes, automatic learning, sample supplementation, EXE or UI048 scope"
+  ],
+  "evidence_run": null,
+  "preformal_native_capture": "docs/qa/targeted/ui059-native-023/candidate-changes-capture.json",
+  "all_eight_capture_views_visually_reviewed": true,
+  "previous_source_pin": {
+    "sha256": "16bae7f57d2cf2d17063b6209d474910f489ba4a3dd05652d078e527622efe8e",
+    "scope": "ORIGINAL_PARENT_SECTION"
+  },
+  "source_hash_scope": "ORIGINAL_PARENT_SECTION"
+}

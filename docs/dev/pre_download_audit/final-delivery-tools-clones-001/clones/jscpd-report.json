@@ -1,0 +1,299 @@
+{
+  "duplicates": [
+    {
+      "firstFile": {
+        "end": 26,
+        "endLoc": {
+          "column": 4,
+          "line": 26,
+          "position": 1455
+        },
+        "name": "capture_batch_correction.py",
+        "start": 14,
+        "startLoc": {
+          "column": 164,
+          "line": 14,
+          "position": 743
+        }
+      },
+      "format": "python",
+      "fragment": "    case=BatchCorrectionGuiTests('runTest');case.setUp();d=case.make(3);w=case.w;app=QApplication.instance();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True);screens=[];errors=[];previous=sys.excepthook;sys.excepthook=lambda typ,error,tb:errors.append(str(error))\n    def shot(widget,name):\n        app.processEvents();path=folder/('batch-correction-'+name+'.png');assert widget.grab().save(str(path));screens.append(path.name)\n    def confirm(name,yes=True):\n        def respond():\n            box=QApplication.activeModalWidget()\n            try:\n                assert isinstance(box,QMessageBox);shot(box,name);box.button(QMessageBox.Yes if yes else QMessageBox.No).click()\n            except BaseException as error:errors.append(str(error))\n            finally:\n                if box and box.isVisible():box.reject()\n        QTimer.singleShot(0,respond)\n    release=threading.Event()",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 71,
+        "endLoc": {
+          "column": 4,
+          "line": 71,
+          "position": 7005
+        },
+        "name": "capture_batch_correction.py",
+        "start": 59,
+        "startLoc": {
+          "column": 114,
+          "line": 59,
+          "position": 6291
+        }
+      },
+      "tokens": 211
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 4,
+          "line": 14,
+          "position": 348
+        },
+        "name": "capture_coverage.py",
+        "start": 4,
+        "startLoc": {
+          "column": 7,
+          "line": 4,
+          "position": 122
+        }
+      },
+      "format": "python",
+      "fragment": "import time\nfrom pathlib import Path\n\nROOT=Path(__file__).resolve().parents[1]\nsys.path[:0]=[str(ROOT),str(ROOT/'tests')]\n\n\ndef capture_coverage(folder):\n    from PySide6.QtCore import QTimer\n    from PySide6.QtTest import QTest\n    from PySide6.QtWidgets import QApplication",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 4,
+          "line": 12,
+          "position": 341
+        },
+        "name": "capture_runtime.py",
+        "start": 2,
+        "startLoc": {
+          "column": 16,
+          "line": 2,
+          "position": 107
+        }
+      },
+      "tokens": 72
+    },
+    {
+      "firstFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 37,
+          "line": 11,
+          "position": 496
+        },
+        "name": "capture_digital_preflight.py",
+        "start": 1,
+        "startLoc": {
+          "column": 79,
+          "line": 1,
+          "position": 79
+        }
+      },
+      "format": "python",
+      "fragment": "\"\"\"Actual original canvas/property panel and per-row format QA; authored data.\"\"\"\nimport argparse,json,sys\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1];sys.path[:0]=[str(ROOT),str(ROOT/'tests')]\n\ndef capture(folder):\n    from unittest.mock import patch\n    from PySide6.QtCore import Qt,QCoreApplication,QEvent\n    from PySide6.QtWidgets import QApplication,QMessageBox\n    from test_digital_preflight_gui import DigitalPreflightGuiTests\n    from test_batch_format_review_gui import BatchFormatReviewGuiTests",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 20,
+          "line": 12,
+          "position": 490
+        },
+        "name": "capture_source_text_diagnostics.py",
+        "start": 1,
+        "startLoc": {
+          "column": 82,
+          "line": 1,
+          "position": 82
+        }
+      },
+      "tokens": 107
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 61,
+          "line": 13,
+          "position": 615
+        },
+        "name": "capture_fixed70_ten.py",
+        "start": 1,
+        "startLoc": {
+          "column": 97,
+          "line": 1,
+          "position": 97
+        }
+      },
+      "format": "python",
+      "fragment": "\"\"\"十父題新增流程的真實 Qt 擷取；只使用本機合成 fixture，不代替測試。\"\"\"\nimport argparse\nimport json\nimport os\nfrom pathlib import Path\nimport sys\nsys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parents[1]/'tests')]\nos.environ.setdefault('QT_QPA_PLATFORM','offscreen')\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.gui import MainWindow\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog\nfrom template_ai.customer_sync_dialog import CustomerSyncDialog\nfrom template_ai.logo_library_dialog import LogoLibraryDialog",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 63,
+          "line": 13,
+          "position": 593
+        },
+        "name": "capture_next_twenty.py",
+        "start": 1,
+        "startLoc": {
+          "column": 80,
+          "line": 1,
+          "position": 80
+        }
+      },
+      "tokens": 120
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 59,
+          "line": 22,
+          "position": 1178
+        },
+        "name": "capture_next_twentyeight.py",
+        "start": 12,
+        "startLoc": {
+          "column": 5,
+          "line": 12,
+          "position": 611
+        }
+      },
+      "format": "python",
+      "fragment": "from runtime_fixture import controlled_resources\n\nfrom template_ai.gui import MainWindow\nfrom template_ai.automatic_training_dialog import AutomaticTrainingDialog\nfrom template_ai.annotation_dialog import AnnotationDialog\nfrom template_ai.text_policy_dialog import TextPolicyDialog\nfrom template_ai.custom_layout_dialog import CustomLayoutDialog\nfrom template_ai.output_batch_dialog import OutputBatchDialog\nfrom template_ai.multi_size_dialog import MultiSizeDialog\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.input_graph_dialog import InputGraphDialog",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 42,
+          "line": 23,
+          "position": 1221
+        },
+        "name": "capture_next_twentyeight.py",
+        "start": 14,
+        "startLoc": {
+          "column": 17,
+          "line": 14,
+          "position": 673
+        }
+      },
+      "tokens": 86
+    },
+    {
+      "firstFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 46,
+          "line": 11,
+          "position": 388
+        },
+        "name": "capture_quality.py",
+        "start": 1,
+        "startLoc": {
+          "column": 79,
+          "line": 1,
+          "position": 79
+        }
+      },
+      "format": "python",
+      "fragment": "\"\"\"Actual quality Qt/FIFO/SQLite source evidence; synthetic safety scope only.\"\"\"\nimport json,sys,time\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1]\nsys.path[:0]=[str(ROOT),str(ROOT/'tests')]\n\n\ndef capture_quality(folder):\n    from PySide6.QtCore import QTimer,QCoreApplication,QEvent\n    from PySide6.QtTest import QTest\n    from PySide6.QtWidgets import QApplication,QMessageBox",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 36,
+          "line": 11,
+          "position": 391
+        },
+        "name": "capture_quality_repair.py",
+        "start": 1,
+        "startLoc": {
+          "column": 83,
+          "line": 1,
+          "position": 83
+        }
+      },
+      "tokens": 92
+    },
+    {
+      "firstFile": {
+        "end": 27,
+        "endLoc": {
+          "column": 65,
+          "line": 27,
+          "position": 1278
+        },
+        "name": "capture_quality.py",
+        "start": 14,
+        "startLoc": {
+          "column": 36,
+          "line": 14,
+          "position": 491
+        }
+      },
+      "format": "python",
+      "fragment": "    import test_quality_gold_sets as fixtures\n    from quality_acceptance_fixture import actual_positive_pair\n    from test_quality_ocr import QualityOcrTests\n    from template_ai.gui import MainWindow\n    from template_ai.training_quality_dialog import TrainingQualityDialog\n    from template_ai.quality_panel import QualityCaseDialog\n    from template_ai.quality_setup import QualitySetupDialog\n    from template_ai.quality_reports import QualityReports\n    from template_ai.quality_diagnostics import QualityDiagnostics\n    from template_ai.quality_pipeline import QualityPipelines\n    from template_ai.quality_jobs import EvaluationJobs\n    from template_ai.quality_protocol import QualityProtocols\n    from template_ai.runtime_panel import RuntimePanel\n    app=QApplication.instance() or QApplication([]);case=fixtures.QualityGoldSetTests('runTest');case.setUp();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 28,
+        "endLoc": {
+          "column": 84,
+          "line": 28,
+          "position": 1406
+        },
+        "name": "capture_quality_repair.py",
+        "start": 15,
+        "startLoc": {
+          "column": 49,
+          "line": 15,
+          "position": 572
+        }
+      },
+      "tokens": 138
+    }
+  ],
+  "statistics": {
+    "detectionDate": "2026-10-20T22:35:43.381Z",
+    "formats": {
+      "python": {
+        "clones": 7,
+        "duplicatedLines": 84,
+        "duplicatedTokens": 826,
+        "lines": 4996,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 1.6813450760608486,
+        "percentageTokens": 0.8395162109970525,
+        "sources": 59,
+        "tokens": 98390
+      }
+    },
+    "total": {
+      "clones": 7,
+      "duplicatedLines": 84,
+      "duplicatedTokens": 826,
+      "lines": 4996,
+      "newClones": 0,
+      "newDuplicatedLines": 0,
+      "percentage": 1.6813450760608486,
+      "percentageTokens": 0.8395162109970525,
+      "sources": 59,
+      "tokens": 98390
+    }
+  }
+}

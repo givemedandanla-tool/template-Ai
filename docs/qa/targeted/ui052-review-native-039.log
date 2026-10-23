@@ -1,0 +1,11 @@
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/capture_major_review.py", line 53, in <module>
+    parser=argparse.ArgumentParser();parser.add_argument('--folder',required=True);args=parser.parse_args();r=capture(args.folder);print(json.dumps({k:v for k,v in r.items() if k!='screens'},ensure_ascii=False))
+                                                                                                              ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/capture_major_review.py", line 38, in capture
+    select_work();p.finding_evidence.setPlainText('Authored source: all exact observations, ownership and source version individually checked in original facts editor');p.preview_finding();case.wait();assert p.finding_plan;shot('09-new-human-finding-preview',p.finding_evidence);save();assert not blocked(case.store,case.work['id']);shot('10-work-cleared-template-still-held',p.table)
+                                                                                                                                                                                                                ^^^^^^^^^^^^^^
+AssertionError

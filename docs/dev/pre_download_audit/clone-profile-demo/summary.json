@@ -1,0 +1,32 @@
+{
+  "label": "ISOLATED_TOOL_PROFILE_DEMONSTRATION_NOT_PRODUCT_VALIDATION",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "/workspace/template-Ai/.cache/debug-tooling/node/node_modules/jscpd/run-jscpd.js",
+    "--config",
+    "/workspace/template-Ai/docs/dev/debug_tooling/jscpd.json",
+    "--no-gitignore",
+    "--output",
+    "/workspace/template-Ai/docs/dev/pre_download_audit/clone-profile-demo/result",
+    "--silent",
+    "--ignore-identifiers",
+    "--max-gap-lines",
+    "1",
+    "--similarity=0.8",
+    "/workspace/template-Ai/docs/dev/pre_download_audit/clone-profile-demo/source/near.py",
+    "/workspace/template-Ai/docs/dev/pre_download_audit/clone-profile-demo/source/existing.py",
+    "/workspace/template-Ai/docs/dev/pre_download_audit/clone-profile-demo/source/renamed.py"
+  ],
+  "exit_code": 0,
+  "checks": {
+    "nonempty_scan": true,
+    "rename_found": true,
+    "new_vs_unchanged_existing": true,
+    "native_ast_or_near_gap_candidates": true
+  },
+  "kinds": [
+    "renamed",
+    "similar"
+  ],
+  "files": 3
+}

@@ -1,0 +1,26 @@
+{
+  "status": "PASS_ISOLATED_EXPECTED_STATIC_ERROR",
+  "qualification": "Authored demonstration, not a product test failure or baseline change",
+  "tool_version": "1.1.414",
+  "sample": "from sqlite3 import connect\nfrom template_ai.metadata_snapshot import snapshot_read\n@snapshot_read(lambda value: connect(':memory:'))\ndef typed_read(value: int) -> int:\n    return value\nvalid = typed_read(1)\ninvalid = typed_read('authored invalid string')\n",
+  "sample_sha256": "472dcec1d1a3d00ddd97194b7a2f1ac381d148f087d6670c1d3346812f1fa6c5",
+  "diagnostic": {
+    "file": "/tmp/template-ai-signature-42pq0l0b/sample.py",
+    "severity": "error",
+    "message": "Argument of type \"Literal['authored invalid string']\" cannot be assigned to parameter \"value\" of type \"int\"\n  \"Literal['authored invalid string']\" is not assignable to \"int\"",
+    "range": {
+      "start": {
+        "line": 6,
+        "character": 21
+      },
+      "end": {
+        "line": 6,
+        "character": 46
+      }
+    },
+    "rule": "reportArgumentType"
+  },
+  "exit_code": 1,
+  "meaning": "ParamSpec preserves typed_read(int)->int through snapshot_read; invalid string is still rejected. No Any/ignore/baseline refresh used.",
+  "source_sha256": "26d5d530e9b20d60b8eec8fd3f0510303dd92a9bbdd21ec9e57ba9e262b27c9c"
+}

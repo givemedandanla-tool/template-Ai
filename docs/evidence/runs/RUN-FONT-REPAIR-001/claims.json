@@ -1,0 +1,382 @@
+[
+  {
+    "requirement_id": "CORE-001",
+    "acceptance_id": "CORE-001-A1",
+    "expected": "不改字級／不截斷長文字，無解時阻擋正式輸出",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_fixed_size_long_text_is_blocked_without_mutation"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "dfefb7b485e2b26542a53131b078016adcd58b9653428502f37a9e6bd438c020"
+  },
+  {
+    "requirement_id": "CORE-002",
+    "acceptance_id": "CORE-002-A1",
+    "expected": "多筆聯絡或人物容量不符時明確阻擋，不默默略去",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_unused_contact_and_wrong_capacity_block"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "188f61094e2f97ed584a13670ed28098b3431ee526f8abf2f3c680c0b5dc9b48"
+  },
+  {
+    "requirement_id": "CORE-003",
+    "acceptance_id": "CORE-003-A1",
+    "expected": "指定字型缺失、超界及重疊不能通過正式發布／輸出",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_missing_font_does_not_use_silent_fallback",
+      "test_first_version.FirstVersionTests.test_geometric_overlap_and_outside_block_publication"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "1a399ef3e797ed9d5ea02569aaa1279c2407d8c0ae94ff415839c0cbfa3491ce"
+  },
+  {
+    "requirement_id": "CORE-004",
+    "acceptance_id": "CORE-004-A1",
+    "expected": "公司歸屬明確；缺 Logo 或不同公司／尺寸不得借用正式輸出",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_missing_logo_and_wrong_size_or_company_do_not_pass",
+      "test_first_version.FirstVersionTests.test_person_company_binding_is_not_inferred_from_strings"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "3e5f69a444d653cf9f821834cd7479a7fe9c37811f4ab9e743f79751e0cf2092"
+  },
+  {
+    "requirement_id": "CORE-005",
+    "acceptance_id": "CORE-005-A1",
+    "expected": "實際 PDF／PNG／JPG 可讀，PDF 毫米正確，既有檔及失敗清理保護",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_export_all_formats_real_pdf_dimensions_and_no_overwrite",
+      "test_first_version.FirstVersionTests.test_atomic_publish_failure_preserves_existing_file_and_cleans_temp"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "9155b39b98c68bde72ee20250ee9995a2efc8a19f1ab59f29446bc271bb183bf"
+  },
+  {
+    "requirement_id": "CORE-006",
+    "acceptance_id": "CORE-006-A1",
+    "expected": "修改資料使舊候選失效；PREVIEW 有檔名及畫面附註",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_stale_generation_and_unmarked_preview_block",
+      "test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "3ca335d17996fa5773f95f94ff3cea7398c4ecd087eae36188d02672b51afbde"
+  },
+  {
+    "requirement_id": "CORE-007",
+    "acceptance_id": "CORE-007-A1",
+    "expected": "已發布版本唯讀，新版本不占用已存在的 family/version",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_published_templates_are_immutable_and_family_versions_safe"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "56f2b667337ce6dc163fadcaa0097f50acce2f5c84d0b524287b007f9da91791"
+  },
+  {
+    "requirement_id": "CORE-008",
+    "acceptance_id": "CORE-008-A1",
+    "expected": "同內容共用解析，異名登錄及標記不混配，重開恢復",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_source_dedupe_preserves_independent_registrations_and_reopen"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "82e94546ef9cdc69130fe87cc25f0ff1f52dda558f733531c067de572f638ec4"
+  },
+  {
+    "requirement_id": "CORE-009",
+    "acceptance_id": "CORE-009-A1",
+    "expected": "標記形成有來源規則模板，發布、同尺寸配對與數位輸出可完成",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_source_labels_to_learned_template_to_output"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "0c21a031039156f62f0f2167e0d5bfbd638ac85795ecb7ecb691d5784013ac43"
+  },
+  {
+    "requirement_id": "CORE-010",
+    "acceptance_id": "CORE-010-A1",
+    "expected": "實際 SVG 轉換與合成 PDF 更名 AI 可匯入；不代表私人原生 AI 全面驗收",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_actual_inkscape_svg_and_pdf_compatible_ai"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "59405f99828568411839f2947d0dd409b832946127686ad1bf03042ff64e10b6"
+  },
+  {
+    "requirement_id": "CORE-011",
+    "acceptance_id": "CORE-011-A1",
+    "expected": "雙色頁實際取到指定頁、快取不混頁；非法頁碼在轉換前失敗",
+    "tests": [
+      "test_import_pages.ImportPageTests.test_actual_second_page_and_cache_stay_distinct",
+      "test_import_pages.ImportPageTests.test_bad_pdf_page_is_rejected_before_converter_runs",
+      "test_import_pages.ImportPageTests.test_qt_fallback_really_selects_second_page",
+      "test_import_pages.ImportPageTests.test_non_pdf_page_is_explicitly_rejected"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "6b6b3929e4cd09e894cba74ccdb01088fac06cb3be95ceff03bc645fafbc87c1"
+  },
+  {
+    "requirement_id": "CORE-012",
+    "acceptance_id": "CORE-012-A1",
+    "expected": "極端比例／超大圖片先被阻擋，再配置畫面或解碼",
+    "tests": [
+      "test_import_pages.ImportPageTests.test_extreme_svg_is_blocked_before_large_preview",
+      "test_import_pages.ImportPageTests.test_raster_budget_checks_header_before_decoding"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "f81341d3d778f822b692d252080436b2279644af6f18f60107c26d2c98838a2e"
+  },
+  {
+    "requirement_id": "CORE-013",
+    "acceptance_id": "CORE-013-A1",
+    "expected": "預覽及三格式讀回有裝飾，向量／圖像模式均生效",
+    "tests": [
+      "test_visual_background.VisualBackgroundTests.test_decoration_in_preview_and_all_actual_exports",
+      "test_visual_background.VisualBackgroundTests.test_raster_choice_uses_approved_imported_pixels"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "59a365d5927966a11b72836f6594e3e63df833d18c075f0050c5b4a6faa39ca4"
+  },
+  {
+    "requirement_id": "CORE-014",
+    "acceptance_id": "CORE-014-A1",
+    "expected": "未核准／錯尺寸／異動／失聯／外連資源不可冒稱有效背景",
+    "tests": [
+      "test_visual_background.VisualBackgroundTests.test_unapproved_and_wrong_size_background_block_publication",
+      "test_visual_background.VisualBackgroundTests.test_changed_background_after_candidate_blocks_and_cleans_export",
+      "test_visual_background.VisualBackgroundTests.test_missing_background_is_not_silently_rendered_white",
+      "test_visual_background.VisualBackgroundTests.test_external_svg_resource_is_rejected_before_approval"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "4a2e0eca996b3f36e6b3e7e8ee9e55dfa9eba4007ad613da4489ea144c4d606a"
+  },
+  {
+    "requirement_id": "CORE-015",
+    "acceptance_id": "CORE-015-A1",
+    "expected": "真實核准對話框保存呈現方式，發布背景版本唯讀，舊格式相容",
+    "tests": [
+      "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+      "test_visual_background.VisualBackgroundTests.test_real_background_review_dialog_saves_chosen_mode",
+      "test_visual_background.VisualBackgroundTests.test_reopen_version_and_old_schema_preserve_background"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "6d244d8dfb4794aa13b92b89c66f53459d935622fea3b0ce885d6287e6f39e76"
+  },
+  {
+    "requirement_id": "CORE-016",
+    "acceptance_id": "CORE-016-A1",
+    "expected": "指定文字色彩確實渲染；非法色彩阻擋",
+    "tests": [
+      "test_visual_background.VisualBackgroundTests.test_text_color_is_real_rendered_and_invalid_color_blocks"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "ec088fb574a7f8d3a50e1d9f95b3feca485c906b2c8298766bf390f6e65052e8"
+  },
+  {
+    "requirement_id": "CORE-017",
+    "acceptance_id": "CORE-017-A1",
+    "expected": "多作品獨立保存，切換／重開回到確切來源與作品",
+    "tests": [
+      "test_artwork_recovery.ArtworkRecoveryTests.test_two_works_reopen_active_selection_and_marks",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_gui_new_crop_keeps_previous_work_and_reopens_latest",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_gui_reopens_last_selected_source_not_latest_import"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "f6e32b92e36e05aaa97ef50796e05b1453d86dd5477ae76a31523edd159b4a51"
+  },
+  {
+    "requirement_id": "CORE-018",
+    "acceptance_id": "CORE-018-A1",
+    "expected": "恢復加新版本、不改歷史，舊資料保留，過期及跨來源寫入阻擋",
+    "tests": [
+      "test_artwork_recovery.ArtworkRecoveryTests.test_history_restore_adds_revision_and_stale_update_blocks",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_old_labels_migrate_once_without_deleting_legacy",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_cross_source_selection_and_invalid_geometry_do_not_mutate",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_gui_restore_history_preserves_published_template"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "7cc2676defb4103b42294ba2b28f215b5b1bb44c42393d43738744ba35da6baf"
+  },
+  {
+    "requirement_id": "CORE-019",
+    "acceptance_id": "CORE-019-A1",
+    "expected": "來源作品／版次固定，後改標記不改來源，不混配來源 ID",
+    "tests": [
+      "test_artwork_recovery.ArtworkRecoveryTests.test_learned_template_pins_work_revision_and_rejects_wrong_source",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_gui_learning_saves_exact_current_mark_revision"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "2edc81cfb6f26b58cfba9289c12870bd096ae17e324c8b242781c3592adcc001"
+  },
+  {
+    "requirement_id": "CORE-020",
+    "acceptance_id": "CORE-020-A1",
+    "expected": "模擬審核寫入失敗，資料庫與畫面仍是草稿",
+    "tests": [
+      "test_artwork_recovery.ArtworkRecoveryTests.test_publish_event_failure_rolls_back_database_and_memory"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "bf06f7e89c73c664890bdc52a79cfa030dcdbb01636c7d431034fa0e26991d0d"
+  },
+  {
+    "requirement_id": "CORE-021",
+    "acceptance_id": "CORE-021-A1",
+    "expected": "本機複本可在新 Python 程序載入，欄位綁定資產持久保存",
+    "tests": [
+      "test_persistent_fonts.PersistentFontTests.test_copy_reopen_and_original_removal_do_not_lose_font",
+      "test_persistent_fonts.PersistentFontTests.test_new_python_process_loads_persisted_font",
+      "test_persistent_fonts.PersistentFontTests.test_gui_import_binds_file_and_reopens_without_dialog"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "69c8b684d420339eac8592b9067c5dc5fe62f1abeeb3a5bad82da0e960c7c598"
+  },
+  {
+    "requirement_id": "CORE-022",
+    "acceptance_id": "CORE-022-A1",
+    "expected": "未核准、損壞、異動、同名不同檔明確阻擋，登錄失敗不留假資產",
+    "tests": [
+      "test_persistent_fonts.PersistentFontTests.test_unapproved_invalid_and_duplicate_font_protect_catalog",
+      "test_persistent_fonts.PersistentFontTests.test_changed_or_missing_asset_blocks_even_if_system_font_exists",
+      "test_persistent_fonts.PersistentFontTests.test_same_family_different_file_is_not_silently_replaced",
+      "test_persistent_fonts.PersistentFontTests.test_catalog_failure_removes_only_new_asset"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "e98a67eaccad57331f9ad14541abe23fe2cec13a92a685961346dd46d5d7f5af"
+  },
+  {
+    "requirement_id": "CORE-023",
+    "acceptance_id": "CORE-023-A1",
+    "expected": "同來源快取經 hash 核對；異動／損壞 metadata 不可當成功重用；保持原檔只讀並可重新轉換",
+    "tests": [
+      "test_source_cache.SourceCacheTests.test_valid_cache_reused_without_rewriting",
+      "test_source_cache.SourceCacheTests.test_changed_preview_regenerated_original_unchanged",
+      "test_source_cache.SourceCacheTests.test_invalid_metadata_and_foreign_paths_are_not_reused",
+      "test_source_cache.SourceCacheTests.test_changed_vector_asset_regenerated",
+      "test_source_cache.SourceCacheTests.test_failed_regeneration_does_not_restore_corrupt_cache_as_success",
+      "test_source_cache.SourceCacheTests.test_symlink_cache_does_not_overwrite_original"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成來源衍生快取完整性，非完整批次來源重連；checksum非安全簽章",
+    "contract_sha256": "6357a50d6ae5c79a607b10107624d67c172a16714995d6069524f0c731be055b"
+  },
+  {
+    "requirement_id": "GOV-001",
+    "acceptance_id": "GOV-001-A1",
+    "expected": "開發 checkpoint 與安全恢復的約定與有效性檢查通過",
+    "tests": [
+      "test_dev_framework.DevFrameworkTests.test_checkpoint_restore_and_remote_ack",
+      "test_dev_framework.DevFrameworkTests.test_checkpoint_rejects_mismatched_remote_and_existing_id",
+      "test_dev_framework.DevFrameworkTests.test_checkpoint_records_pending_and_clears_after_ack"
+    ],
+    "status": "PASS",
+    "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+    "contract_sha256": "66db1a963b43f428d208cbbccef71f800e2ac9bed39155cc9d83e8d343ef1a41"
+  },
+  {
+    "requirement_id": "GOV-002",
+    "acceptance_id": "GOV-002-A1",
+    "expected": "Human／GPT 開工交接與下一步的約定與有效性檢查通過",
+    "tests": [
+      "test_dev_framework.DevFrameworkTests.test_missing_entry_blocks_work"
+    ],
+    "status": "PASS",
+    "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+    "contract_sha256": "4991a74fd3ac28a5e48a8d229bba3a461957387c9080837754acd1833b5bbfe3"
+  },
+  {
+    "requirement_id": "GOV-003",
+    "acceptance_id": "GOV-003-A1",
+    "expected": "要求與個別證據完成 Gate的約定與有效性檢查通過",
+    "tests": [
+      "test_dev_framework.DevFrameworkTests.test_skipped_or_missing_test_cannot_complete",
+      "test_dev_framework.DevFrameworkTests.test_changed_source_and_attachment_invalidate_evidence",
+      "test_dev_framework.DevFrameworkTests.test_changed_acceptance_cannot_reuse_old_pass"
+    ],
+    "status": "PASS",
+    "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+    "contract_sha256": "a5bae6eaa370647bd14abb665e50c8ac3d4e3871fa9b189a0a38a8f023b9492d"
+  },
+  {
+    "requirement_id": "GOV-004",
+    "acceptance_id": "GOV-004-A1",
+    "expected": "持久 AI 入口与零例行問答的約定與有效性檢查通過",
+    "tests": [
+      "test_dev_framework.DevFrameworkTests.test_missing_entry_blocks_work"
+    ],
+    "status": "PASS",
+    "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+    "contract_sha256": "fd7f805487572524f7715bdfda756a1eda1c8ea1c9432e22183fa71a29748c07"
+  },
+  {
+    "requirement_id": "GOV-005",
+    "acceptance_id": "GOV-005-A1",
+    "expected": "EXE 延後且不自動打包的約定與有效性檢查通過",
+    "tests": [
+      "test_dev_framework.DevFrameworkTests.test_automatic_exe_trigger_is_rejected"
+    ],
+    "status": "PASS",
+    "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+    "contract_sha256": "2c3a3834882cab4ad4afdd7338fe2b2c126a5d6a267a2fca3d678b740de96aee"
+  },
+  {
+    "requirement_id": "CORE-024",
+    "acceptance_id": "CORE-024-A1",
+    "expected": "只接受同SHA-256來源，保留原登錄與作品模板，重開仍保留新位置；拒絕異動和過期寫入，交易失敗無半完成",
+    "tests": [
+      "test_source_relink.SourceRelinkTests.test_moved_source_reopens_with_original_identity_and_history",
+      "test_source_relink.SourceRelinkTests.test_same_name_different_bytes_and_missing_candidate_rejected",
+      "test_source_relink.SourceRelinkTests.test_stale_revision_and_candidate_changed_after_verification_rejected",
+      "test_source_relink.SourceRelinkTests.test_event_failure_rolls_back_link_and_history",
+      "test_source_relink.SourceRelinkTests.test_status_distinguishes_missing_changed_unreadable_and_ok",
+      "test_source_relink.SourceRelinkTests.test_repeated_current_path_is_idempotent_and_wrong_source_proof_rejected",
+      "test_source_relink.SourceRelinkTests.test_gui_background_relink_keeps_selected_work_and_reopens"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成來源單件重連與歷史保留；非完整批次重連或來源內容替換",
+    "contract_sha256": "e00f77a96b21275145fa88735d3b2b6c57715db6ea10d1c3b9037d087df3c456"
+  },
+  {
+    "requirement_id": "CORE-025",
+    "acceptance_id": "CORE-025-A1",
+    "expected": "核准同 hash 才恢復字型複本；不改 catalog／發布模板 pin，損壞留隔離證據，例外回滾及中斷重開核對",
+    "tests": [
+      "test_font_repair.FontRepairTests.test_missing_copy_restored_and_reopened_without_changing_published_pin",
+      "test_font_repair.FontRepairTests.test_corrupted_copy_retained_in_quarantine_and_reference_unchanged",
+      "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes",
+      "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+      "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+      "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+      "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+      "test_font_repair.FontRepairTests.test_healthy_copy_repair_is_idempotent",
+      "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+      "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+      "test_font_repair.FontRepairTests.test_gui_repair_preserves_asset_and_invalidates_previous_candidate"
+    ],
+    "status": "PASS",
+    "scope": "Linux／環境既有字型與匿名模板；非完整字重版本或 Windows 安裝",
+    "contract_sha256": "36c81c42d475d5cbe5076bdbc82de2f3b051f010d6b649435a387d1da9957844"
+  }
+]

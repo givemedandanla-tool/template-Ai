@@ -1,0 +1,11 @@
+# Windows剩餘問題的原生診斷
+
+fac43f21實測175/176完成：174PASS、1個RuntimeQueue案例清理時SQLite仍開啟、1個input-integration模組到180秒。原始結果在windows-native-002-failed。不是產品已發布或已通過全部Windows測試。
+
+SQLite為測試清理順序：addCleanup(other.close)在tearDown後執行，而fixture先temp.cleanup。改在刪資料夾前執行已登記cleanup，不忽略WinError32、不放寬斷言；原9個RuntimeQueue測試已PASS。
+
+Input模組已完成18/19，案例耗時總124.75秒，最後三種格式輸出尚未完成即達原180秒上限；原因仍待分辨。先在全新owned程序單獨執行同一原案例，再讓Windows各GUI模組獨占桌面／剪貼簿與字型服務。保留每個模組原180秒上限，沒有刪除或改寫原176案例。數學函式庫限制每程序1thread，避免CI核心超額競爭，與硬體性能資格分開。
+
+只在精確release-request分支且提交訊息含[native-tests-only]時啟用NativeTestsOnly。此模式安裝同樣固定依賴、執行單一原案例probe與全部176原生測試，僅保存明確標記診斷回執；不執行EXE規格、PyInstaller、package、tag、Release或附件上傳發布步驟。正常模式仍須先有當前同源完整Linux＋原GUI永久證據及嚴格gate，再真正建EXE並逐檔下載校驗。
+
+PS1與測試fixture已改，舊435dc0d8完整證據不能冒充新manifest。Linux回歸在既有4CPU/32GiB環境使用4個獨立Qt程序、每程序1BLASthread，暫存移至本輪自建.cache/test-tmp-006；不與原stock27並行。新完整結果與原GUI、Windows正式模式均須實際通過。診斷可與另一台Linux環境同時執行，沒有子代理、外部模型或新增收費資源。

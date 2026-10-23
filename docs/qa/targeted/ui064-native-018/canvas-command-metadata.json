@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "screens": [
+    "canvas-command-01-focused-mm-nudge-current-id.png",
+    "canvas-command-02-existing-work-undo-redo.png",
+    "canvas-command-03-text-focus-undo-keeps-work.png",
+    "canvas-command-04-unapplied-field-blocks-nudge.png",
+    "canvas-command-05-real-pending-discard-scope.png",
+    "canvas-command-06-real-history-scope-confirmation.png",
+    "canvas-command-07-actual-f1-overview-and-mouse-routes.png",
+    "canvas-command-08-real-delete-preview-no-write.png",
+    "canvas-command-09-locked-delete-remains-blocked.png",
+    "canvas-command-10-stale-source-no-old-key-transaction.png",
+    "canvas-command-11-real-key-conflict-no-save.png",
+    "canvas-command-12-explicit-remap-reopens-from-preferences.png",
+    "canvas-command-13-space-visible-view-only-mode.png",
+    "canvas-command-14-release-restores-exact-tool-and-data.png"
+  ],
+  "actual_gui": true,
+  "qt_errors": [],
+  "scope": "Authored controlled Linux actual Qt key/focus/modal/draft-save/preference operations, no Windows IME/device or private Illustrator qualification",
+  "fixture_preparation": [
+    "Authored demo template only",
+    "Locked scene uses original Main LOCK transaction and explicit save_draft",
+    "Supported draft CAS authors external revision; stale keystroke does not write",
+    "Keymap preference changes are explicit settings saves"
+  ],
+  "paid_services": false,
+  "automatic_training": false
+}

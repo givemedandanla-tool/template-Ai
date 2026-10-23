@@ -1,0 +1,11 @@
+{
+  "kind": "NON_FORMAL_WORKTREE_TARGET_RUN",
+  "status": "FAILED",
+  "tests": 78,
+  "failures": 1,
+  "errors": 0,
+  "log": "docs/evidence/attempts/REMAINING28/relink-integration001-path-reference-fixture.log",
+  "sha256": "70f191ddedbbc057e3164c7128dfc89a0aca346fd0f23da57a7f3d2ef3319ea2",
+  "cause": "New test counted only two cache assets; shared typed path recognizer also correctly includes the explicit current raw source path.",
+  "correction": "Assert exact set image/svg/current_path and all absolute paths, preserving no-hash-as-path validation."
+}

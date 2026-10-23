@@ -1,0 +1,97 @@
+test_actual_native_entry_reuses_canvas_and_keeps_customer_controls_unchanged (test_family_workbench.FamilyWorkbenchTests.test_actual_native_entry_reuses_canvas_and_keeps_customer_controls_unchanged) ... This plugin does not support propagateSizeHints()
+ok
+test_body_case_roundtrip_preserves_explicit_relative_intents (test_family_workbench.FamilyWorkbenchTests.test_body_case_roundtrip_preserves_explicit_relative_intents) ... This plugin does not support propagateSizeHints()
+ok
+test_close_during_worker_waits_for_boundary_and_leaves_resumable_job (test_family_workbench.FamilyWorkbenchTests.test_close_during_worker_waits_for_boundary_and_leaves_resumable_job) ... This plugin does not support propagateSizeHints()
+ok
+test_container_restriction_and_default_semantics_are_actual_draft_commands (test_family_workbench.FamilyWorkbenchTests.test_container_restriction_and_default_semantics_are_actual_draft_commands) ... This plugin does not support propagateSizeHints()
+ok
+test_graphical_batch_preflight_preserves_exact_selection_and_requires_confirmation (test_family_workbench.FamilyWorkbenchTests.test_graphical_batch_preflight_preserves_exact_selection_and_requires_confirmation) ... This plugin does not support propagateSizeHints()
+ok
+test_graphical_order_save_undo_redo_and_difference_review (test_family_workbench.FamilyWorkbenchTests.test_graphical_order_save_undo_redo_and_difference_review) ... This plugin does not support propagateSizeHints()
+ok
+test_native_family_comparison_uses_verified_source_crops_without_global_templates (test_family_workbench.FamilyWorkbenchTests.test_native_family_comparison_uses_verified_source_crops_without_global_templates) ... This plugin does not support propagateSizeHints()
+ok
+test_native_physical_filters_saved_workset_and_joint_variant_views (test_family_workbench.FamilyWorkbenchTests.test_native_physical_filters_saved_workset_and_joint_variant_views) ... This plugin does not support propagateSizeHints()
+ok
+test_recovery_entry_uses_selected_family_source_and_exact_role (test_family_workbench.FamilyWorkbenchTests.test_recovery_entry_uses_selected_family_source_and_exact_role) ... This plugin does not support propagateSizeHints()
+ok
+test_role_tree_and_canvas_selection_are_synchronized (test_family_workbench.FamilyWorkbenchTests.test_role_tree_and_canvas_selection_are_synchronized) ... This plugin does not support propagateSizeHints()
+ok
+test_rule_candidate_requires_review_and_formal_activation_is_still_blocked (test_family_workbench.FamilyWorkbenchTests.test_rule_candidate_requires_review_and_formal_activation_is_still_blocked) ... This plugin does not support propagateSizeHints()
+ok
+test_saved_case_runs_in_worker_and_renders_actual_preview (test_family_workbench.FamilyWorkbenchTests.test_saved_case_runs_in_worker_and_renders_actual_preview) ... This plugin does not support propagateSizeHints()
+ok
+test_saved_workspace_reopens_same_draft_and_query (test_family_workbench.FamilyWorkbenchTests.test_saved_workspace_reopens_same_draft_and_query) ... This plugin does not support propagateSizeHints()
+Timeout (0:01:00)!
+Thread 0x00007f1d86912740 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py", line 220 in _deepcopy_dict
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py", line 136 in deepcopy
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py", line 221 in _deepcopy_dict
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py", line 136 in deepcopy
+  File "/workspace/template-Ai/template_ai/design_observation.py", line 105 in to_dict
+  File "/workspace/template-Ai/template_ai/design_observation.py", line 141 in to_dict
+  File "/workspace/template-Ai/template_ai/design_observation.py", line 322 in build_observation
+  File "/workspace/template-Ai/template_ai/design_observation_store.py", line 22 in _design_observation_document
+  File "/workspace/template-Ai/template_ai/design_learning.py", line 66 in dataset_plan
+  File "/workspace/template-Ai/template_ai/design_learning.py", line 159 in checked_dataset
+  File "/workspace/template-Ai/template_ai/design_learning.py", line 207 in checked_model
+  File "/workspace/template-Ai/template_ai/family_workspace.py", line 99 in resolve
+  File "/workspace/template-Ai/template_ai/family_workbench.py", line 330 in load_family
+  File "/workspace/template-Ai/template_ai/family_workbench.py", line 313 in <lambda>
+  File "/workspace/template-Ai/template_ai/family_workbench.py", line 70 in attempt
+  File "/workspace/template-Ai/template_ai/family_workbench.py", line 313 in selected
+  File "/workspace/template-Ai/template_ai/family_workbench.py", line 300 in refresh
+  File "/workspace/template-Ai/template_ai/family_workbench.py", line 811 in restore
+  File "/workspace/template-Ai/template_ai/family_workbench.py", line 57 in __init__
+  File "/workspace/template-Ai/template_ai/design_learning_dialog.py", line 86 in __init__
+  File "/workspace/template-Ai/tests/test_family_workbench.py", line 67 in test_saved_workspace_reopens_same_draft_and_query
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "<stdin>", line 22 in <module>
+ok
+test_worker_start_failure_releases_existing_job_lease (test_family_workbench.FamilyWorkbenchTests.test_worker_start_failure_releases_existing_job_lease) ... This plugin does not support propagateSizeHints()
+ok
+test_z_source_review_never_assumes_identity_and_commit_invalidates_old_model (test_family_workbench.FamilyWorkbenchTests.test_z_source_review_never_assumes_identity_and_commit_invalidates_old_model) ... This plugin does not support propagateSizeHints()
+ok
+test_actual_native_entry_reuses_canvas_and_keeps_customer_controls_unchanged (test_family_workbench.FamilyWorkbenchTests.test_actual_native_entry_reuses_canvas_and_keeps_customer_controls_unchanged) ... This plugin does not support propagateSizeHints()
+ok
+test_body_case_roundtrip_preserves_explicit_relative_intents (test_family_workbench.FamilyWorkbenchTests.test_body_case_roundtrip_preserves_explicit_relative_intents) ... This plugin does not support propagateSizeHints()
+ok
+test_close_during_worker_waits_for_boundary_and_leaves_resumable_job (test_family_workbench.FamilyWorkbenchTests.test_close_during_worker_waits_for_boundary_and_leaves_resumable_job) ... This plugin does not support propagateSizeHints()
+ok
+test_container_restriction_and_default_semantics_are_actual_draft_commands (test_family_workbench.FamilyWorkbenchTests.test_container_restriction_and_default_semantics_are_actual_draft_commands) ... This plugin does not support propagateSizeHints()
+ok
+test_graphical_batch_preflight_preserves_exact_selection_and_requires_confirmation (test_family_workbench.FamilyWorkbenchTests.test_graphical_batch_preflight_preserves_exact_selection_and_requires_confirmation) ... This plugin does not support propagateSizeHints()
+ok
+test_graphical_order_save_undo_redo_and_difference_review (test_family_workbench.FamilyWorkbenchTests.test_graphical_order_save_undo_redo_and_difference_review) ... This plugin does not support propagateSizeHints()
+ok
+test_native_family_comparison_uses_verified_source_crops_without_global_templates (test_family_workbench.FamilyWorkbenchTests.test_native_family_comparison_uses_verified_source_crops_without_global_templates) ... This plugin does not support propagateSizeHints()
+ok
+test_native_physical_filters_saved_workset_and_joint_variant_views (test_family_workbench.FamilyWorkbenchTests.test_native_physical_filters_saved_workset_and_joint_variant_views) ... This plugin does not support propagateSizeHints()
+ok
+test_recovery_entry_uses_selected_family_source_and_exact_role (test_family_workbench.FamilyWorkbenchTests.test_recovery_entry_uses_selected_family_source_and_exact_role) ... This plugin does not support propagateSizeHints()
+ok
+test_role_tree_and_canvas_selection_are_synchronized (test_family_workbench.FamilyWorkbenchTests.test_role_tree_and_canvas_selection_are_synchronized) ... This plugin does not support propagateSizeHints()
+ok
+test_rule_candidate_requires_review_and_formal_activation_is_still_blocked (test_family_workbench.FamilyWorkbenchTests.test_rule_candidate_requires_review_and_formal_activation_is_still_blocked) ... This plugin does not support propagateSizeHints()
+ok
+test_saved_case_runs_in_worker_and_renders_actual_preview (test_family_workbench.FamilyWorkbenchTests.test_saved_case_runs_in_worker_and_renders_actual_preview) ... This plugin does not support propagateSizeHints()
+ok
+test_saved_workspace_reopens_same_draft_and_query (test_family_workbench.FamilyWorkbenchTests.test_saved_workspace_reopens_same_draft_and_query) ... This plugin does not support propagateSizeHints()
+ok
+test_worker_start_failure_releases_existing_job_lease (test_family_workbench.FamilyWorkbenchTests.test_worker_start_failure_releases_existing_job_lease) ... This plugin does not support propagateSizeHints()
+ok
+test_z_source_review_never_assumes_identity_and_commit_invalidates_old_model (test_family_workbench.FamilyWorkbenchTests.test_z_source_review_never_assumes_identity_and_commit_invalidates_old_model) ... This plugin does not support propagateSizeHints()
+ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 118.596s
+
+OK

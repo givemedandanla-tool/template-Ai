@@ -1,0 +1,28 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+FAIL: test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults (test_output_batch_gui.OutputBatchGuiTests.test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_output_batch_gui.py", line 34, in test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults
+    self.finish(d);self.assertEqual(d.engine.items[0]['status'],'SUCCESS');self.assertTrue((self.output/'FINAL'/'renamed_FINAL.pdf').exists());self.assertTrue(all(row['status']=='SKIPPED' for row in d.engine.items[1:]));self.assertIn('SKIPPED',d.status.text())
+    ^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_output_batch_gui.py", line 26, in finish
+    self.fail('output worker did not finish within bounded test wait: '+job_diagnostics(d.window,'EXPORT')+'; dialog='+d.status.text())
+AssertionError: output worker did not finish within bounded test wait: {'status': '逐檔安全輸出／精確重試 · 背景執行中，完成前不宣稱成功', 'allowed': True, 'reasons': [], 'active_threads': 1, 'waiting_launches': 0, 'owned_jobs': 1, 'policy_error': None, 'library_closed': False}; dialog=確認前不寫檔。新增預設不覆寫；覆寫將保留原檔並重新核對版本，競爭衝突時停止。
+
+======================================================================
+FAIL: test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel (test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_automatic_training.py", line 186, in test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel
+    window.runtime.ready_after=0;self.wait(lambda:not window.busy);self.assertIsNotNone(dialog.report)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_automatic_training.py", line 156, in wait
+    self.fail('Actual background workflow did not finish: '+job_diagnostics(getattr(self,'_gui_wait_window',None)))
+AssertionError: Actual background workflow did not finish: {'status': '掃描及來源預檢 · 等待資源；尚未執行／保存：GUI_STARTUP_WARMUP', 'allowed': True, 'reasons': [], 'active_threads': 1, 'waiting_launches': 0, 'owned_jobs': 1, 'policy_error': None, 'library_closed': False}
+
+----------------------------------------------------------------------
+Ran 17 tests in 42.831s
+
+FAILED (failures=2)

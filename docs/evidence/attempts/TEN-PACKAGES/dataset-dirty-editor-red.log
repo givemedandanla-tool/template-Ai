@@ -1,0 +1,17 @@
+test_learning_result_does_not_save_or_reset_unrelated_dirty_editor (test_dataset_learning.DatasetLearningGuiTests.test_learning_result_does_not_save_or_reset_unrelated_dirty_editor) ... This plugin does not support propagateSizeHints()
+FAIL
+
+======================================================================
+FAIL: test_learning_result_does_not_save_or_reset_unrelated_dirty_editor (test_dataset_learning.DatasetLearningGuiTests.test_learning_result_does_not_save_or_reset_unrelated_dirty_editor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_dataset_learning.py", line 97, in test_learning_result_does_not_save_or_reset_unrelated_dirty_editor
+    self.assertEqual(self.window.library.object_snapshot('TEMPLATE',old.id),before);self.assertEqual(self.window.template,edited);self.assertEqual(self.window.undo_stack,[{'synthetic_pending_edit':True}]);self.assertEqual(len(self.window.library.templates()),2)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'kin[177 chars]'x': 7, 'y': 6, 'w': 70, 'h': 11}, 'index': 0,[1500 chars]': 2} != {'kin[177 chars]'x': 8, 'y': 6, 'w': 70, 'h': 11}, 'index': 0,[1500 chars]': 1}
+Diff is 3658 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 1.355s
+
+FAILED (failures=1)

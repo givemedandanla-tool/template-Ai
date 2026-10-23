@@ -1,0 +1,20 @@
+test_queued_rule_reload_after_real_window_close_has_no_callback_error (__main__.ReadViewSnapshotTests.test_queued_rule_reload_after_real_window_close_has_no_callback_error) ... FAIL
+
+======================================================================
+FAIL: test_queued_rule_reload_after_real_window_close_has_no_callback_error (__main__.ReadViewSnapshotTests.test_queued_rule_reload_after_real_window_close_has_no_callback_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "authored_read_view_close_test", line 82, in test_queued_rule_reload_after_real_window_close_has_no_callback_error
+AssertionError: Lists differ: ['ProgrammingError'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'ProgrammingError'
+
+- ['ProgrammingError']
++ []
+
+----------------------------------------------------------------------
+Ran 1 test in 0.675s
+
+FAILED (failures=1)

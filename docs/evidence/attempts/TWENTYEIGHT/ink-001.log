@@ -1,0 +1,25 @@
+F......This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+...This plugin does not support propagateSizeHints()
+....................This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+..This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+..This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.
+======================================================================
+FAIL: test_exact_fit_italic_render_keeps_same_ink_as_large_unclipped_reference (test_text_ink_bounds.TextInkBoundsTests.test_exact_fit_italic_render_keeps_same_ink_as_large_unclipped_reference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_text_ink_bounds.py", line 24, in test_exact_fit_italic_render_keeps_same_ink_as_large_unclipped_reference
+    self.assertEqual(*images,text)
+AssertionError: b"\xf[801114 chars]xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf[5597247 chars]\xff" != b"\xf[801114 chars]xff\xef\xee\xed\xff\xff\xff\xff\xff\xff\xff\xf[5597247 chars]\xff" : f
+
+----------------------------------------------------------------------
+Ran 39 tests in 11.928s
+
+FAILED (failures=1)

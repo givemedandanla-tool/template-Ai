@@ -1,0 +1,38 @@
+test_actual_root_is_fixed_without_independent_pass_and_cannot_skip_controls (test_quality_repair_gates.QualityRepairGateTests.test_actual_root_is_fixed_without_independent_pass_and_cannot_skip_controls) ... ERROR
+test_identical_actual_pipeline_cannot_be_registered_as_repair_by_renaming (test_quality_repair_gates.QualityRepairGateTests.test_identical_actual_pipeline_cannot_be_registered_as_repair_by_renaming) ... ok
+test_sparse_unaffected_controls_save_failed_receipt_and_block_new_acceptance (test_quality_repair_gates.QualityRepairGateTests.test_sparse_unaffected_controls_save_failed_receipt_and_block_new_acceptance) ... ERROR
+
+======================================================================
+ERROR: test_actual_root_is_fixed_without_independent_pass_and_cannot_skip_controls (test_quality_repair_gates.QualityRepairGateTests.test_actual_root_is_fixed_without_independent_pass_and_cannot_skip_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_repair_gates.py", line 55, in test_actual_root_is_fixed_without_independent_pass_and_cannot_skip_controls
+    gate=self.run_stage(self.gates.protocol_plan(self.candidate['id'],STAGES[0],self.dataset_id,self.policy_id,'Actual bad parser versus repaired parser on exposed original'))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_quality_repair_gates.py", line 49, in run_stage
+    reports=QualityReports(self.library);report=reports.save(reports.plan(protocol['id']),'Reviewer',True)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_reports.py", line 45, in plan
+    side_cases[key] = dict(source_id=item['source_id'], item_id=item['id'], **copy.deepcopy(case))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: dict() got multiple values for keyword argument 'source_id'
+
+======================================================================
+ERROR: test_sparse_unaffected_controls_save_failed_receipt_and_block_new_acceptance (test_quality_repair_gates.QualityRepairGateTests.test_sparse_unaffected_controls_save_failed_receipt_and_block_new_acceptance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_repair_gates.py", line 62, in test_sparse_unaffected_controls_save_failed_receipt_and_block_new_acceptance
+    self.prepare();root=self.run_stage(self.gates.protocol_plan(self.candidate['id'],STAGES[0],self.dataset_id,self.policy_id,'Actual root reproduction first'))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_quality_repair_gates.py", line 49, in run_stage
+    reports=QualityReports(self.library);report=reports.save(reports.plan(protocol['id']),'Reviewer',True)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_reports.py", line 45, in plan
+    side_cases[key] = dict(source_id=item['source_id'], item_id=item['id'], **copy.deepcopy(case))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: dict() got multiple values for keyword argument 'source_id'
+
+----------------------------------------------------------------------
+Ran 3 tests in 26.534s
+
+FAILED (errors=2)

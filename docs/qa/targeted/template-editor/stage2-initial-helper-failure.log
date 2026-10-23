@@ -1,0 +1,47 @@
+........EE..E........
+======================================================================
+ERROR: test_batch_preview_mixed_eligibility_cancel_resume_and_local_undo (test_family_scenarios_batch.FamilyScenarioBatchTests.test_batch_preview_mixed_eligibility_cancel_resume_and_local_undo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_family_scenarios_batch.py", line 60, in test_batch_preview_mixed_eligibility_cancel_resume_and_local_undo
+    paused = self.run_job(job, lambda:True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_family_scenarios_batch.py", line 21, in run_job
+    claimed, token = self.batches.jobs.claim(job['id'], job['revision'])
+    ^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 2)
+
+======================================================================
+ERROR: test_batch_undo_preserves_later_manual_edits_and_plan_tampering_is_refused (test_family_scenarios_batch.FamilyScenarioBatchTests.test_batch_undo_preserves_later_manual_edits_and_plan_tampering_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_family_scenarios_batch.py", line 76, in test_batch_undo_preserves_later_manual_edits_and_plan_tampering_is_refused
+    job = self.batches.submit(plan, 'Reviewer', True); self.run_job(job)
+                                                       ^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_family_scenarios_batch.py", line 21, in run_job
+    claimed, token = self.batches.jobs.claim(job['id'], job['revision'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_jobs.py", line 52, in claim
+    if lease and lease.get('active') and owner_alive(lease.get('owner')):raise ValueError('A design worker is already active')
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: A design worker is already active
+
+======================================================================
+ERROR: test_case_review_job_uses_actual_layout_and_reports_checks_without_qualification (test_family_scenarios_batch.FamilyScenarioBatchTests.test_case_review_job_uses_actual_layout_and_reports_checks_without_qualification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_family_scenarios_batch.py", line 86, in test_case_review_job_uses_actual_layout_and_reports_checks_without_qualification
+    done = self.run_job(job)
+           ^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_family_scenarios_batch.py", line 21, in run_job
+    claimed, token = self.batches.jobs.claim(job['id'], job['revision'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_jobs.py", line 52, in claim
+    if lease and lease.get('active') and owner_alive(lease.get('owner')):raise ValueError('A design worker is already active')
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: A design worker is already active
+
+----------------------------------------------------------------------
+Ran 21 tests in 103.227s
+
+FAILED (errors=3)

@@ -1,0 +1,78 @@
+FFF
+======================================================================
+FAIL: test_empty_document_does_not_load_clustering (test_region_no_clustering.NoClusteringNeededTests.test_empty_document_does_not_load_clustering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_region_no_clustering.py", line 22, in test_empty_document_does_not_load_clustering
+    def test_empty_document_does_not_load_clustering(self):self.assert_no_clustering([])
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_region_no_clustering.py", line 17, in assert_no_clustering
+    result=region_hypotheses(texts,Rect(0,0,90,54))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/source_region_hypotheses.py", line 59, in region_hypotheses
+    from sklearn.cluster import DBSCAN
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_region_no_clustering.py", line 14, in import_local
+    raise AssertionError('Clustering is unnecessary without both size clues and content')
+AssertionError: Clustering is unnecessary without both size clues and content
+
+======================================================================
+FAIL: test_plain_contact_data_does_not_load_clustering (test_region_no_clustering.NoClusteringNeededTests.test_plain_contact_data_does_not_load_clustering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_region_no_clustering.py", line 24, in test_plain_contact_data_does_not_load_clustering
+    self.assert_no_clustering([('name','Alex Example',Rect(1,1,30,5)),('email','alex@example.org',Rect(1,8,40,5))])
+  File "/workspace/template-Ai/tests/test_region_no_clustering.py", line 17, in assert_no_clustering
+    result=region_hypotheses(texts,Rect(0,0,90,54))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/source_region_hypotheses.py", line 59, in region_hypotheses
+    from sklearn.cluster import DBSCAN
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_region_no_clustering.py", line 14, in import_local
+    raise AssertionError('Clustering is unnecessary without both size clues and content')
+AssertionError: Clustering is unnecessary without both size clues and content
+
+======================================================================
+FAIL: test_size_clue_without_content_does_not_load_clustering (test_region_no_clustering.NoClusteringNeededTests.test_size_clue_without_content_does_not_load_clustering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_region_no_clustering.py", line 26, in test_size_clue_without_content_does_not_load_clustering
+    self.assert_no_clustering([('size','90x54mm',Rect(1,1,20,5))])
+  File "/workspace/template-Ai/tests/test_region_no_clustering.py", line 17, in assert_no_clustering
+    result=region_hypotheses(texts,Rect(0,0,90,54))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/source_region_hypotheses.py", line 59, in region_hypotheses
+    from sklearn.cluster import DBSCAN
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_region_no_clustering.py", line 14, in import_local
+    raise AssertionError('Clustering is unnecessary without both size clues and content')
+AssertionError: Clustering is unnecessary without both size clues and content
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.003s
+
+FAILED (failures=3)

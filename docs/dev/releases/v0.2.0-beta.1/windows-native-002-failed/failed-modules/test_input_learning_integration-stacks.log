@@ -1,0 +1,24 @@
+Timeout (0:02:59.722001)!
+Thread 0x000021ec (most recent call first):
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\json\encoder.py", line 258 in iterencode
+  File Windows fatal exception: access violation
+
+Thread 0x000021ec (most recent call first):
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\json\decoder.py", line 353 in raw_decode
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\json\decoder.py", line 337 in decode
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\json\__init__.py", line 346 in loads
+  File "D:\a\template-Ai\template-Ai\template_ai\metadata_record.py", line 12 in training_record
+  File "D:\a\template-Ai\template-Ai\template_ai\training_store.py", line 62 in get
+  File "D:\a\template-Ai\template-Ai\template_ai\design_learning.py", line 204 in checked_model
+  File "D:\a\template-Ai\template-Ai\template_ai\design_session.py", line 347 in export
+  File "D:\a\template-Ai\template-Ai\tests\test_input_learning_integration.py", line 179 in test_shared_learning_preview_preserves_original_pdf_png_jpg_formats
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\unittest\case.py", line 579 in _callTestMethod
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\unittest\case.py", line 623 in run
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\unittest\case.py", line 678 in __call__
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\unittest\suite.py", line 122 in run
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\unittest\suite.py", line 84 in __call__
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\unittest\suite.py", line 122 in run
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\unittest\suite.py", line 84 in __call__
+  File "C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\unittest\runner.py", line 217 in run
+  File "D:\a\template-Ai\template-Ai\tools\evidence_test_worker.py", line 40 in main
+  File "D:\a\template-Ai\template-Ai\tools\evidence_test_worker.py", line 59 in <module>

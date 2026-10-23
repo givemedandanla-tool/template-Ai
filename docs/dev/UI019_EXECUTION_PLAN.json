@@ -1,0 +1,211 @@
+{
+  "parent": "UI-019",
+  "status": "IMPLEMENTED_FULL12_MAPPED_PENDING_IMMUTABLE_FULL_SOURCE",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "original_clauses": [
+    "使用者選擇 **D｜印刷預檢工作台＋即時診斷＋安全輸出**。",
+    "中央提供**可縮放、可平移的完整排版預覽**，支援放大檢查姓名、公司名稱、細小文字、邊緣及**公司 Logo 細節**；可切換裁切線、安全區、印刷範圍等參考疊圖，顯示倍率與實際尺寸。螢幕放大預覽不能冒充實際印刷品質證據。",
+    "右側顯示印前檢查清單、檢查結果（未檢查／通過／警告／阻擋）、實測原因、受影響欄位或物件與可直接定位的修正入口。檢查包含尺寸、裁切、安全區、文字完整、UI-013 的**固定欄位字級**、水平縮放比例與可讀性、字型可用性/嵌入、人物／公司歸屬、物件重疊及格式可輸出性。",
+    "輸出設定提供實際尺寸、所需解析度與 PDF／PNG／JPG 格式等；以使用者選擇的尺寸和輸出格式進行相應的最終驗證。正式輸出前必須以目前有效資料、模板版本、字型、Logo 資產及目標格式取得新鮮驗證結果；驗證失敗則停用正式輸出，只保留標記為診斷用途的預覽。",
+    "**使用者補充且列為必要驗證：可放大查看文字細節，尤其公司 Logo 細節必須保持高保真，不可失真。**",
+    "盡可能使用並保留來源的**原生向量 Logo／輪廓**，PDF 等可支援向量的輸出不得無理由提前點陣化；不得把 Logo 轉成較差品質的低解析預覽資產再當正式輸出來源。",
+    "對 PNG/JPG 或只能取得點陣來源的情況，必須以**實體印刷尺寸下的有效像素密度、邊緣清晰度、幾何比例及實際匯出結果**驗證；不能以插值放大或單純提高檔案 DPI 標記假裝增加原圖不存在的細節。",
+    "保持 Logo 長寬比例、線條、曲線與構圖，不得任意拉伸、平滑、過度壓縮、重畫或改變來源細節。向量化/清晰化若屬推測重建，只能作明確標示、需人工審核的候選，不得宣稱與原圖完全一致。",
+    "需支援選取 Logo 進行**局部放大／實際輸出品質比對**，列出 Logo 來源類型（向量／點陣／未知）、來源可用性與品質檢查結果；介面顯示清晰不代表 PDF 或點陣輸出一定無失真。",
+    "Logo 原始來源不足、缺失、在預定尺寸或格式下細節無法驗證或已確認明顯劣化，須明確警告並依硬性品質條件**阻擋正式輸出**，引導使用者提供更高品質原始 Logo／正確向量來源或採其他合法方案；不得默默用 AI 虛構 Logo 筆畫。",
+    "各格式有不同物理特性：PDF 可保留向量，PNG/JPG 本質是點陣，不能保證任何倍率下永不像素化；驗收目標是符合經驗證的**指定輸出尺寸與印刷用途**且不引入不可接受的細節劣化。具體品質門檻、工具及可達性待實際 PoC／樣張測試後確定，不任意捏造 DPI 下限。",
+    "輸出預檢沿用 UI-014、UI-015、UI-018 的風險／硬性阻擋與候選排序規範；預覽、儲存草稿、顯示檢查清單均**不等於通過驗證或已輸出**。"
+  ],
+  "normative_clause_count": 12,
+  "clause_count_method": "All12 approved bullets including six nested Logo requirements and selected option; omit header and superseded historical no-development footer",
+  "scope_revision": "Digital visual/output validation now; physical printer/material work remains deferred by original gap-report/REV03 and is not a UI019 software blocker",
+  "references": [
+    {
+      "url": "https://raw.githubusercontent.com/opencv/opencv_contrib/4.11.0/modules/quality/src/qualitymse.cpp",
+      "version": "OpenCV contrib4.11.0 public source; reference only, not installed",
+      "bytes": 1708,
+      "sha256": "2da623d301db1f0097f94899f74df06c445c7c78a74fbec87e073cfc782719bb",
+      "review": "Actually read subtract, multiply square, channel mean; report measured MSE/absolute errors without inventing perceptual or printed-quality thresholds"
+    },
+    {
+      "url": "https://github.com/py-pdf/pypdf",
+      "version": "Installed pypdf5.9.0 PageObject.get_contents source actually read",
+      "bytes": 697,
+      "sha256": "3d16e3c7de8a5bd830d26777bfa5b277efb977c07986f3c52d568c2dc2a04c6e",
+      "review": "Reuse original mature PDF ContentStream/resources parser, actual PDF page/embedded font/vector/image evidence; do not build another PDF parser"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/adobe/pdfservices-python-sdk-samples/main/README.md",
+      "version": "Actual fetched public Adobe SDK examples README; content-hash pinned, not current-product certification",
+      "bytes": 26001,
+      "sha256": "8aed35f9e78e08c251bc0f4c3ed941f7294b89ed9e9c8554fe88fcfc52b9a5ed",
+      "review": "Actually read Create Tagged PDF caveat: generating output does not guarantee standards compliance; independent downstream checks remain necessary. Apply separation of output generation, validation and human proof. Reference only; no SDK/API/credential/payment used"
+    }
+  ],
+  "reference_failure": "Official Acrobat Preflight help retrieval returned tunnel403; do not claim that page read. Public Adobe repository read instead.",
+  "math": [
+    "Contain whole mark: scale=min(frameW/cropW,frameH/cropH), preserve exact original group and aspect ratio",
+    "Effective raster sampling PPI=available_source_crop_pixels/(actual_placed_mm/25.4); output sampling demand derives from explicit chosen DPI, not a fabricated universal print threshold",
+    "MSE=sum((reference-output)^2)/(channels*pixels), MAE/max error and exact dimensions reported; no similarity score alone authorizes fidelity",
+    "Exact before/after candidate/input/template/source/font/Logo/size/format/DPI pins and measured encoded readback; bounded pixel budget, no interpolated detail claim"
+  ],
+  "reuse": [
+    "Existing Main.output_canvas, viewport controls, result problem routing/current candidate Gate and single run_job worker; add bounded checklist/detail views, no second editable workbench",
+    "Existing render.draw_logo vector QSvgRenderer/QPdfWriter or exact image; original source contain/crop geometry and logo approvals",
+    "Existing render.export exclusive temporary staging, exact PDF page box and target font-rights Gate; extend final format-specific checks rather than parallel exporter",
+    "Existing pypdf and QtPdf for actual encoded file resources/page/raster readback; Qt images/buffers for measured image differences"
+  ],
+  "audit_findings": [
+    "Original zoom/pan canvas and current candidate Gate exist; complete named digital checklist with exact locator and trim/safe/page overlays missing",
+    "logo_output_proof only checks encoding/dimensions, explicitly not independent fidelity; GUI shows paths rather than selectable actual output crop comparison",
+    "Formal render export rechecks current formal/font/Logo dependencies but lacks complete target-DPI actual encoded quality proof and stale-proof rejection"
+  ],
+  "packages": [
+    "A exact scope/service/formats/checklist/locators and immutable output proof plan",
+    "B original output canvas overlays + current problem routes and full Logo/source/output detail comparison",
+    "C real PDF vector/embedded-font and raster physical sampling/readback safeguards through original exporter",
+    "D authored composite vector/raster/corrupt/upsampled/cross-format PoC, GUI/native individual review, full12 map and current-source regression"
+  ],
+  "planned_tests": [
+    "Current candidate/source/font/Logo/input/size/format/DPI change cannot reuse old proof or enable formal output",
+    "Named checks give exact slots and measured reason; hard failures stay blocked, preview remains explicitly nonformal",
+    "Original vector curves/text-detail composite survive PDF without needless raster XObject; PNG/JPG actual decoding and sampling/geometry compared at selected physical size",
+    "Missing/unknown/raster-upsampled sources do not gain detail via DPI metadata; lossy difference reported rather than hidden",
+    "Original zoom/pan/magnification/actual size and trim/safe/page overlay toggles; selected exact Logo crop source and encoded outputs navigable",
+    "Bounded worker/cancel/stale result/disk failure do not freeze main GUI or claim saved output",
+    "All12 original clauses mapped, original output/Logo/risk regression and actual native images reviewed"
+  ],
+  "checkpoint": "Plan/reference checkpoint before product changes; each recoverable stage and10min persistence",
+  "core_A": {
+    "implementation": "template_ai/digital_preflight.py",
+    "scope": "Exact candidate/input/engine/dependency/format/DPI scope, named original-engine/geometry checks, real source pixel/placed mm sampling, pure vector vs embedded raster SVG, bounded invalid/missing sources. No output or print approval; encoded format remains NOT_CHECKED.",
+    "reuse": "model.overlapping_pairs factors original Rect.intersects predicate into shared streamed iterator; original template_errors unchanged behavior, checklist exact slot IDs",
+    "new_tests": "tests/test_digital_preflight.py:12 actual tests",
+    "evidence": "docs/qa/targeted/ui019-core-002.log:42PASS actualexit0 (new12 plus original layout/risk/proof)",
+    "actual_failure": "00124 tests incl accidentally imported old TestCase,1 actual failure overlap row PASS despite original generic engine failure; shared predicate/IDs fixed, imported fixture now module alias to prevent duplicate execution",
+    "remaining": "B actual original canvas checklist/overlays/Logo detail; C actual encoded vector/font/pixel comparison and original export guards; D PoC/native/full12 and immutable full Gate"
+  },
+  "encoded_preview_WIP": {
+    "implementation": "template_ai/digital_output_proof.py",
+    "reuse": "Original render.export(preview=True) keeps original card body unchanged with diagnostic footer outside; no parallel encoder/exporter",
+    "new_tests": "tests/test_digital_output_proof.py:10, total UI01922 new/catalog1447",
+    "verification": [
+      "docs/qa/targeted/ui019-proof-005.log:36PASS actualexit0",
+      "docs/qa/targeted/ui019-proof-006.log:10PASS actualexit0"
+    ],
+    "behavior": "Single exact selected PDF/PNG/JPG, actual decoded file/page/body, real pypdf fonts/FontFile bytes/vector/image resources; RGB MSE/MAE/max difference excludes row padding,1M-pixel comparison cap explicit NOT_CHECKED no downsampling. Exact selected slot source/current encoded crop+byte/scope seals, corrupt/changed/failed storage cleanup. PNG real pixels match, JPEG measured difference requires review, vector composite standalone PDF has curves and zero image XObjects. Preview page size explicitly differs from unchanged card body; all formal/output/print approval flags False.",
+    "failures": "004 actual ContentStream empty-dict truthiness skipped operators; fixed is not None. QImage format-object equality fixture corrected to canonical actual RGB metrics and same dimensions. Logs retained.",
+    "remaining": "Original checklist/canvas overlay/detail GUI; actual formal format readback/approval gate integration; full composite/source/format PoC, native and original12 map"
+  },
+  "original_GUI_WIP": {
+    "implementation": [
+      "template_ai/digital_preflight_panel.py",
+      "template_ai/preflight_detail.py",
+      "template_ai/gui.py original output button and rerender hook"
+    ],
+    "reuse": "On-demand section in original right property scroll, original Main.output_canvas/viewport/current candidate locator and single run_job. No extra editor/pool/DB/exporter. Source QPicture records original draw_logo vector commands for continuous zoom; actual counterpart uses sealed decoded file ROI.",
+    "new_tests": "tests/test_digital_preflight_gui.py:10 actual GUI, total UI01932 new/catalog1457",
+    "evidence": [
+      "docs/qa/targeted/ui019-gui-008.log:7PASS actualexit0",
+      "docs/qa/targeted/ui019-gui-009.log:10PASS actualexit0"
+    ],
+    "scope": "Named readback checklist/measurements/exact UserRole IDs, format/DPI/source/current selection fences, trim/safe/page view-only overlays, original mode return, actual worker cancel and late-result refusal, source-vs-encoded detail native pan/zoom, exact existing problem locator. Same-candidate rerender preserves unchanged proof; geometry/other context changes clear proof.",
+    "limits": "Formal exporter still uses prior gates; new final format guard/actual composite quality acceptance/PoC/native/full12 not complete. Preview files private TemporaryDirectory outside library assets/backup, no permanent order store."
+  },
+  "formal_guard_first_stage": {
+    "implementation": "template_ai/digital_final.py and original render.export before/after encoding + immediate pre-publication scope check",
+    "new_tests": "tests/test_final_digital_preflight.py:7; total UI01939new/catalog1464",
+    "evidence": [
+      "docs/qa/targeted/ui019-coherent-011.log:62PASS actualexit0 before final guard",
+      "docs/qa/targeted/ui019-final-013.log:45PASS actualexit0"
+    ],
+    "actual_failure": "0127FAIL:5 real absent safeguards (codec true with corrupt PNG, same-size wrong PNG pixels, mutation during codec, corrupt PDF after page box, bool PDF DPI) plus2 fixture metadata/font-height failures corrected; all retained.",
+    "behavior": "Original exclusive safe_publish only after named current physical/source sampling checks, actual target decode/dimensions, actual PDF FontFile bytes, PNG full-resolution canonical RGB equality even beyond diagnostic MSE cap, post-encoding original risk Gate and immediate current-scope check. PDF original QPainter requests LosslessImageRendering. Pure-vector/no-background PDF cannot replace source with image XObjects. Marked previews remain available, no new exporter.",
+    "remaining": "Actual composite source/cross-format PoC and complete JPEG/PDF visual fidelity policy/acceptance, mixed sources/vector resources, native/full12 mapping and GUI resource/performance verification; not print/perceptual certification"
+  },
+  "format_negative_015": {
+    "actual": "9 tests7PASS2FAIL (valid wrongJPEG and readable blankPDF accepted)",
+    "evidence": "docs/qa/targeted/ui019-format-negative-015.log",
+    "next_concrete_design": "docs/dev/wip/UI019_FORMAT_REVIEW_DESIGN.md",
+    "status": "C2_DESIGNED_BEFORE_CODE_NOT_IMPLEMENTED",
+    "new_tests_total": 41,
+    "catalog": 1466
+  },
+  "format_review_C2_API_GUI_WIP": {
+    "new_tests_total": 52,
+    "catalog": 1477,
+    "implementation": "Original render.export exact_preview (preview-only, PREVIEW filename/title/metadata), build_proof exact_file, digital_review confirm/validate/PDF signature, digital_final final full RGB+PDF structure match; original right property actor/evidence/default-no consent/current worker and Main.export_current receipt",
+    "evidence": [
+      "docs/qa/targeted/ui019-format-review-017.log:25PASS actualexit0",
+      "docs/qa/targeted/ui019-review-gui-018.log:10PASS actualexit0",
+      "docs/qa/targeted/ui019-review-gui-019.log:21PASS actualexit0"
+    ],
+    "behavior": "PDF/JPG require literal named current same-format/size/DPI actual exact snapshot review. No perceptual threshold invented; final decoded RGB must match actual inspected encoding and PDF resources/vector histogram/image signatures. PNG original source full RGB checks remain. Receipt RAM scoped, no order DB. Five real GUI cases default-no, actor invalidation, actual original Main reviewed PDF publish preserving template, DPI stale failclosed, late actor race.",
+    "regression_fixture_change": "Original FirstVersion positive PDF/JPG authors now explicitly create actual-format review before publish; original dimensions/content/no-overwrite assertions retained. Negative codec tests obtain valid review BEFORE fault injection so they test actual corruption, not missing consent.",
+    "remaining": "Original batch per-target receipt/API/UI routes and other callers; concrete complex source/font/vector/raster/compression PoC; unsupported source policy; native individual images/full12/current immutable full Gate"
+  },
+  "batch_format_registry_WIP": {
+    "new_tests_total": 58,
+    "catalog": 1483,
+    "implementation": "Original MultiSizeWorkflow format_proof/set_format_review/get_format_review session registry; original execute and OutputBatch before stage/prepublish checks/export use exact key/format/DPI receipt; owned OutputBatchDialog worker copies registry",
+    "evidence": "docs/qa/targeted/ui019-batch-review-021.log:6PASS actualexit0",
+    "behavior": "No current PDF/JPG review => per-row BLOCKED, unrelated PNG/marked previews still succeed. Only reviewed exact format released; DPI/new inputs/other-size/tampering rejected. Direct original MultiSizeWorkflow uses same registry. No parallel order DB.",
+    "remaining": "Original batch GUI per-row actual review entry and shared detail UI; positive legacy multi-size/output fixtures must explicitly review authorized output; other callers/integration/PoC/native/full12 pending"
+  },
+  "batch_original_GUI_WIP": {
+    "status": "IMPLEMENTED_PENDING_NATIVE_FULL_SOURCE",
+    "new_tests": 63,
+    "catalog_tests": 1488,
+    "evidence": [
+      "docs/qa/targeted/ui019-batch-gui-023.log",
+      "docs/qa/targeted/ui019-batch-gui-024.log",
+      "docs/qa/targeted/ui019-batch-coherent-025.log",
+      "docs/qa/targeted/ui019-batch-coherent-026.log"
+    ],
+    "result": "023 actual sort/visible-row identity failure fixed with Qt.UserRole;02416PASS.02529/30 old polling/resource test timeout,02630PASS actualexit0 using original gui_wait/runtime fixture. Original per-row read-only batch actual-format proof/detail/consent, current size/format/DPI registry, worker copies review snapshot and chosen DPI. Explicit workflow close cleans temporary proof directory, no child-close deletion before delivery. Positive fixture author review added; no automatic product consent.",
+    "remaining": "Other positive formal callers, complex SVG/composite source PoC/policy, actual native individual review, full12 mapping and immutable full-source Gate"
+  },
+  "source_PoC_WIP": {
+    "new_tests": 69,
+    "catalog_tests": 1494,
+    "result": "0285/6 true counterexamples,02979PASS/03246PASS actualexit0. SVG supported primitive profile rejects unknown effects/external refs/unpinned text/mixed rasters, bounded iterative XML traversal. Same source checks cover actual background. Full RGB body equality bypasses only diagnostic MSE budget, no downsampling/no fabricated pass. Positive font/background formal tests explicitly source-author review actual format; negative guards unchanged. Original Main close clears session proof.",
+    "poc": "docs/qa/targeted/ui019-source-poc-030/source-poc.json",
+    "individually_viewed_source_images": 4,
+    "native_reviews": [
+      "docs/qa/targeted/ui019-native-031-visual-review.json",
+      "docs/qa/targeted/ui019-native-033-visual-review.json",
+      "docs/qa/targeted/ui019-native-034-visual-review.json"
+    ],
+    "native_status": "CHANGES_REQUIRED; behavior15/15 actualexit0 but visual capture is not yet closure",
+    "reference_failure": "https://doc.qt.io/qt-6.8/svgrendering.html network tunnel403; not claimed read",
+    "next": "Final actual native recapture/current-source coherent test/full12 map; exact source import/print/hardware external boundaries retained"
+  },
+  "full12": {
+    "coverage": "docs/dev/UI019_CLAUSE_COVERAGE.json",
+    "exact_mapped_tests": 42,
+    "coherent_evidence": "docs/qa/targeted/ui019-full12-coherent-037.log",
+    "coherent_actual_exit": 0,
+    "coherent_tests": 173,
+    "new_tests": 70,
+    "catalog_tests": 1496,
+    "native_review": "docs/qa/targeted/ui019-native-036-visual-review.json",
+    "native_individually_reviewed": 15,
+    "native_actual_exit": 0,
+    "legacy_original_capture": "docs/qa/targeted/ui019-original-capture-039/VALIDATION.json",
+    "legacy_original_actual_exit": 0,
+    "legacy_original_screens": 49,
+    "legacy_original_exports": 6,
+    "legacy_screens_visual_review_not_claimed": true,
+    "failed_legacy_receipt": "docs/qa/targeted/ui019-original-capture-038-outcome.json",
+    "remaining": "Current immutable all-parent regression/native/publication Gate. Original small viewport horizontal scroll remains for UI067; physical sample deferredREV03, not software blocker.",
+    "checkpoint_repair": {
+      "failed": "CP-20261016-REMAINING28-UI019-FULL12-TESTED",
+      "replacement": "CP-20261016-REMAINING28-UI019-FULL12-RECEIPT-REPAIR",
+      "privacy_tests": 14,
+      "actual_exit": 0,
+      "evidence": "docs/qa/targeted/ui019-checkpoint-privacy-041.log",
+      "reason": "Git push1264624 actualexit0 but exact readback rejected two ignored .private synthetic capture audits. They were not uploaded. Fixed manifest private/work-library exclusion with04114PASS; old immutable PREPARED record preserved, not acknowledged."
+    }
+  }
+}

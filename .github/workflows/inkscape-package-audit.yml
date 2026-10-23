@@ -1,0 +1,68 @@
+name: Inkscape distribution audit for authorized beta2
+on:
+  workflow_dispatch:
+  push:
+    branches: ['research-request/inkscape-1.4.2-beta2']
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONUTF8: '1'
+      LICENSE_STAGE_CHECK: ${{ contains(github.event.head_commit.message, '[license-stage-check]') }}
+    steps:
+      - name: Preserve source bytes and support archived evidence paths on Windows
+        shell: pwsh
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.longpaths true
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Inspect the same pinned official installation used by beta1
+        if: ${{ !contains(github.event.head_commit.message, '[engine-source-audit]') && !contains(github.event.head_commit.message, '[source-gap-check]') }}
+        shell: pwsh
+        run: |
+          choco install inkscape --version=1.4.2 -y --no-progress
+          if ($LASTEXITCODE -ne 0) { throw 'Pinned Inkscape install failed' }
+          $py = Join-Path $env:pythonLocation 'python.exe'
+          & $py docs/dev/releases/audit_inkscape_distribution.py
+          if ($LASTEXITCODE -ne 0) { throw 'Distribution inventory failed' }
+      - name: Inspect the exact upstream build environment and corresponding sources
+        if: ${{ contains(github.event.head_commit.message, '[engine-source-audit]') }}
+        shell: pwsh
+        run: |
+          $py = Join-Path $env:pythonLocation 'python.exe'
+          & $py docs/dev/releases/audit_inkscape_sources.py
+          if ($LASTEXITCODE -ne 0) { throw 'Upstream source audit failed' }
+      - name: Resolve only the remaining corresponding-source gaps
+        if: ${{ contains(github.event.head_commit.message, '[source-gap-check]') }}
+        shell: pwsh
+        run: |
+          $py = Join-Path $env:pythonLocation 'python.exe'
+          & $py docs/dev/releases/audit_inkscape_source_gaps.py
+          if ($LASTEXITCODE -ne 0) { throw 'Source gap audit failed' }
+      - name: Test only the newly added license assembly and pinned vendor inventory
+        if: ${{ contains(github.event.head_commit.message, '[license-stage-check]') }}
+        shell: pwsh
+        run: |
+          $py = Join-Path $env:pythonLocation 'python.exe'
+          & $py tools/bundled_inkscape_build.py prepare *>&1 | Tee-Object artifacts/inkscape-distribution-audit/license-stage.log
+          if ($LASTEXITCODE -ne 0) { throw 'Pinned engine preparation failed' }
+          & $py docs/dev/releases/add_inkscape_notices.py *>&1 | Tee-Object artifacts/inkscape-distribution-audit/license-stage.log -Append
+          if ($LASTEXITCODE -ne 0) { throw 'Original license preservation failed' }
+          & $py docs/dev/releases/check_inkscape_notice_stage.py *>&1 | Tee-Object artifacts/inkscape-distribution-audit/license-stage.log -Append
+          if ($LASTEXITCODE -ne 0) { throw 'License/vendor manifest check failed' }
+      - name: Persist bounded public-package metadata without a product release
+        if: always()
+        shell: pwsh
+        run: |
+          gh auth setup-git
+          $py = Join-Path $env:pythonLocation 'python.exe'
+          & $py docs/dev/releases/audit_inkscape_distribution.py --persist
+          if ($LASTEXITCODE -ne 0) { throw 'Audit evidence persistence failed' }

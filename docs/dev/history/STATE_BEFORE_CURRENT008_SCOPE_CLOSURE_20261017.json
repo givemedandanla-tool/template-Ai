@@ -1,0 +1,987 @@
+{
+  "schema_version": 1,
+  "repository": "givemedandanla-tool/template-Ai",
+  "working_branch": "dev/v0.1-first-version",
+  "pull_request": 2,
+  "product_version": "0.1.28",
+  "framework_status": "READY",
+  "active_task": "Original28: targeted native pipeline passed after QA wait and explicit format-review repairs; freeze CURRENT008 full1549/native",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT-FULL-SOURCE008.receipt.json",
+  "last_confirmed_commit": "38700310960ad7c77a5f82a71a8798e03f5ae508",
+  "latest_evidence_run": null,
+  "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
+  "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
+  "read_next": [
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+    "docs/dev/REMAINING28_EXECUTION_QUEUE.json",
+    "docs/dev/REMAINING28_EXTERNAL_QUALIFICATION.json"
+  ],
+  "next_tasks": [
+    "Checkpoint/freeze CURRENT007 source; actual GitHub readback; immutable all1549/native capture; preserve failure honestly and close independent scopes only from exact complete claims.",
+    "Validate current publication scope, independent parent claims, preserve unavailable external Windows/nativeAI/hardware evidence explicitly"
+  ],
+  "blocked": [],
+  "deferred": [
+    "REV-03",
+    "UI-048",
+    "UI-056-D"
+  ],
+  "pending_remote": [
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+  ],
+  "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261016-REMAINING28-LAYOUT.json",
+  "progress_report": "docs/dev/PROGRESS.md",
+  "pending_pr_metadata": null,
+  "goal_milestone": "28 original parents goal; historical12/28 from LAYOUT003 only, current-source completion awaits immutable batch; seven implemented pending verification, nine remain to fully implement",
+  "project_goal": "docs/dev/PROJECT_GOAL.md",
+  "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
+  "active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "next_work_package": "Immutable current-source complete regression/native/publication Gate",
+  "three_packages": {
+    "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
+    "completed": 3,
+    "target": 3,
+    "packages": [
+      {
+        "id": "SEMANTIC",
+        "status": "REMOTE_VERIFIED",
+        "requirements": [
+          "CORE-040",
+          "CORE-041"
+        ],
+        "source_commit": "12f02a9056a03310c5412946e1b9792e90e55bdb",
+        "evidence": "docs/evidence/runs/RUN-SEMANTIC-INDEX-001/run.json",
+        "snapshot_commit": "61f8c7e584041cd6d7fedf66dcaf1072d8de56f5"
+      },
+      {
+        "id": "BATCH-IMPORT",
+        "status": "REMOTE_VERIFIED",
+        "requirements": [
+          "CORE-042",
+          "CORE-043"
+        ],
+        "source_commit": "882af2c72693e99db1523d9fe65a3253c7568d15",
+        "evidence": "docs/evidence/runs/RUN-BATCH-IMPORT-001/run.json",
+        "snapshot_commit": "f656abcb9f2b60dbe54056cbe7f0e87a00291f87"
+      },
+      {
+        "id": "EXCEPTION-CENTER",
+        "status": "FUNCTIONALLY_COMPLETED_WITH_USER_AUTHORIZED_PUBLICATION_EXCEPTION",
+        "requirements": [
+          "CORE-044",
+          "CORE-045"
+        ],
+        "source_commit": "192db957a927e6fcdedf7b62ef835748bf238717",
+        "evidence": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
+        "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
+        "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42"
+      }
+    ]
+  },
+  "artifact_upload_blocker": {
+    "status": "CLOSED_FOR_CURRENT_SCOPE_BY_USER_INSTRUCTION",
+    "reason": "使用者明確改為略過證明附件上傳、持久化事件文件並優先開發；不再重試缺少具名payload關聯的binary操作。",
+    "manifest": "docs/dev/PUBLIC_EVIDENCE_APPROVAL_MANIFEST.json",
+    "events": "docs/dev/COPYRIGHT_PRIVACY_EVENTS.md",
+    "code_docs_commit": "e682b1b8f4e3a61b71cfe69dc05627fd8cb09a7d",
+    "current_local_formal": "RUN-TWENTYEIGHT-FULL-002:601PASS/0SKIP/Qt0/capture0/122attachments/source unchanged",
+    "resume": "後續若有新的完整附件保存交付，再依具體檔案及工具能力处理；不因這些證明附件重複停頓開發。",
+    "user_approval": "核准清單中全部90件具體附件",
+    "approval_manifest_commit": "e682b1b8f4e3a61b71cfe69dc05627fd8cb09a7d",
+    "upload_state": "docs/dev/APPROVED_EVIDENCE_UPLOAD_STATE.json",
+    "pending_files_at_recovery": 9,
+    "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
+    "historical_local_formal": "229PASS/0SKIP/60attachments/source unchanged",
+    "latest_metadata_policy": "docs/dev/FULL70_PUBLICATION.json"
+  },
+  "superseded_prepared_checkpoints": [
+    {
+      "id": "CP-20261014-SEMANTIC-VERIFIED",
+      "reason": "Two review blockers required explicit approval; governance changed during pending. New full approved checkpoint replaces it without rewriting historical manifest."
+    },
+    {
+      "id": "CP-20261014-HIDDEN-LOCK-FIXED",
+      "reason": "原完整manifest及ZIP不覆寫；審查期間文件變更，使用者後續核准9件證明附件略過；新明確保存範圍checkpoint取代，不冒稱舊記錄已ack。"
+    },
+    {
+      "id": "CP-20261014-THREE-EVIDENCE-RECOVERY",
+      "reason": "原完整manifest及ZIP不覆寫；審查期間文件變更，使用者後續核准9件證明附件略過；新明確保存範圍checkpoint取代，不冒稱舊記錄已ack。"
+    },
+    {
+      "id": "CP-20261014-TEN-P06-VERIFIED",
+      "reason": "自動審查拒絕新路徑引用舊PNG/PDF/JPG blob；使用者明確略過證明媒体，採新text保存範圍；原PREPARED/ZIP不覆寫、未宣稱ACK。"
+    },
+    {
+      "id": "CP-20261015-SEVENTY-LOCK-SOURCE",
+      "reason": "Automatic review rejected raw owner.token in new audit metadata. Raw001 local-only; sanitized substitute/new safe producer. Immutable CP not acknowledged; no rejected partial tree reused."
+    },
+    {
+      "id": "CP-20261015-RESUME-TEN-PARENTS-BEGIN",
+      "reason": "Environment pre-change checkpoint is preserved; explicit parent scope and baseline were finalized afterwards. New contract checkpoint supersedes it without rewriting the old record."
+    },
+    {
+      "id": "CP-20261016-REMAINING28-UI019-FULL12-TESTED",
+      "reason": "Git push1264624 actualexit0 but exact readback rejected two ignored .private synthetic capture audits. They were not uploaded. Fixed manifest private/work-library exclusion with04114PASS; old immutable PREPARED record preserved, not acknowledged."
+    }
+  ],
+  "evidence_publication": {
+    "policy": "USER_AUTHORIZED_TEXT_METADATA_FIRST",
+    "manifest": "docs/dev/DIAGNOSTIC_REPORTS_PUBLICATION.json",
+    "local_formal": "378PASS/0SKIP/78local attachments/source unchanged",
+    "new_media_uploads": "NONE",
+    "all_attachment_gate_claim": false,
+    "functional_standard_changed": false
+  },
+  "source_checkpoint_scope": {
+    "id": "CP-20261014-THREE-SOURCE-VERIFIED",
+    "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
+    "excluded_attachment_count": 9,
+    "all_code_tests_metadata_included": true,
+    "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
+    "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
+  },
+  "final_verification": "docs/dev/REMAINING28_IDENTITY_VERIFICATION.json",
+  "checkpoint_cadence": "每個可恢復工作包及每10分鐘；如受工具等待影響，記錄實際間隔，不虛報達標。",
+  "ten_packages": {
+    "target": 10,
+    "completed": 10,
+    "baseline_core": 45,
+    "added_core": 20,
+    "contract": "docs/dev/TEN_PACKAGES_DESIGN.md",
+    "packages": [
+      {
+        "sequence": 1,
+        "id": "MARKING-QUALITY",
+        "requirements": [
+          "CORE-046",
+          "CORE-047"
+        ],
+        "status": "COMPLETED_SAVED_SCOPE",
+        "source_commit": "9bf8479aec0f8ca1557e53e8caaa7506707f2637",
+        "evidence": "docs/evidence/runs/RUN-TEN-QUALITY-002/run.json",
+        "tests": 243,
+        "snapshot_commit": "53506ac9d4fddf8572b6243776051b1f5c151728",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P01-VERIFIED.receipt.json"
+      },
+      {
+        "sequence": 2,
+        "id": "ARTWORK-FACTS",
+        "requirements": [
+          "CORE-048",
+          "CORE-049"
+        ],
+        "status": "COMPLETED_SAVED_SCOPE",
+        "source_commit": "37f2752fe15495afc5b6ec0b2fe2c1dbd54dcf1c",
+        "evidence": "docs/evidence/runs/RUN-TEN-FACTS-001/run.json",
+        "tests": 251,
+        "snapshot_commit": "4f9cd84681643a2e772760dc9aea82013aac7e71",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P02-VERIFIED.receipt.json"
+      },
+      {
+        "sequence": 3,
+        "id": "NOISE-AUTHORING",
+        "requirements": [
+          "CORE-050",
+          "CORE-051"
+        ],
+        "status": "COMPLETED_SAVED_SCOPE",
+        "source_commit": "56854cefa88695eaeed2e7924df3c2663ab91b7c",
+        "evidence": "docs/evidence/runs/RUN-TEN-NOISE-AUTHOR-001/run.json",
+        "tests": 259,
+        "snapshot_commit": "e97d8eff7e2e2f029807d5c4a7f2a0c4f639c0dc",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P03-VERIFIED.receipt.json"
+      },
+      {
+        "sequence": 4,
+        "id": "RULE-REVIEW",
+        "requirements": [
+          "CORE-052",
+          "CORE-053"
+        ],
+        "status": "COMPLETED_SAVED_SCOPE",
+        "source_commit": "bd0445c2d3312c28de8bb2c88aa214a0c8b1fa49",
+        "evidence": "docs/evidence/runs/RUN-TEN-RULE-REVIEW-001/run.json",
+        "tests": 267,
+        "snapshot_commit": "aaf524e6fa5903ac061d783418e47981cf001c8c",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P04-VERIFIED.receipt.json"
+      },
+      {
+        "sequence": 5,
+        "id": "AUTO-NOISE",
+        "requirements": [
+          "CORE-054",
+          "CORE-055"
+        ],
+        "status": "COMPLETED_SAVED_SCOPE",
+        "source_commit": "279cddb726f5a1de28c3be26feb563ae92bd269d",
+        "evidence": "docs/evidence/runs/RUN-TEN-AUTO-NOISE-001/run.json",
+        "tests": 275,
+        "snapshot_commit": "139f635a12c91c76204de3143c9f6faa3bff7a0e",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P05-VERIFIED.receipt.json"
+      },
+      {
+        "sequence": 6,
+        "id": "RULE-RECOVERY",
+        "requirements": [
+          "CORE-056",
+          "CORE-057"
+        ],
+        "status": "COMPLETED_SAVED_SCOPE",
+        "source_commit": "814a6e54e7858e797e5027286cf2db2bd6a413c4",
+        "evidence": "docs/evidence/runs/RUN-TEN-NOISE-RECOVERY-001/run.json",
+        "tests": 283,
+        "publication_checkpoint": "CP-20261014-TEN-P06-TEXT-VERIFIED",
+        "snapshot_commit": "10331782141f1fad42bbc49e1383d438ef26988a",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P06-TEXT-VERIFIED.receipt.json"
+      },
+      {
+        "sequence": 7,
+        "id": "TRUSTED-SAMPLES",
+        "requirements": [
+          "CORE-058",
+          "CORE-059"
+        ],
+        "status": "COMPLETED_SAVED_SCOPE",
+        "source_commit": "9ee4bf5d3ddd547fea52c0977eabf8dd537409af",
+        "evidence": "docs/evidence/runs/RUN-TEN-TRUSTED-SAMPLES-001/run.json",
+        "tests": 290,
+        "snapshot_commit": "c3fe284fd14e6475bd3b23f5c759aff041dc8ba2",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P07-TEXT-VERIFIED.receipt.json"
+      },
+      {
+        "sequence": 8,
+        "id": "DATASET-LEARNING",
+        "requirements": [
+          "CORE-060",
+          "CORE-061"
+        ],
+        "status": "COMPLETED_SAVED_SCOPE",
+        "source_commit": "9e6cc9490367473a00aacc9c2929ea1c430423e0",
+        "evidence": "docs/evidence/runs/RUN-TEN-DATASET-LEARNING-002/run.json",
+        "tests": 299,
+        "snapshot_commit": "682bd2b322af65817d700481a53f4bb47b5440be",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P08-TEXT-VERIFIED.receipt.json"
+      },
+      {
+        "sequence": 9,
+        "id": "COVERAGE",
+        "requirements": [
+          "CORE-062",
+          "CORE-063"
+        ],
+        "status": "COMPLETED_SAVED_SCOPE",
+        "source_commit": "188674a019679a733e8213ca4afa448ea75fb929",
+        "evidence": "docs/evidence/runs/RUN-TEN-COVERAGE-001/run.json",
+        "tests": 306,
+        "snapshot_commit": "4410c2b8691f1a132941749320728f7f260d23e1",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P09-TEXT-VERIFIED.receipt.json"
+      },
+      {
+        "sequence": 10,
+        "id": "TRAINING-QUEUE",
+        "requirements": [
+          "CORE-064",
+          "CORE-065"
+        ],
+        "status": "COMPLETED_SAVED_SCOPE",
+        "source_commit": "1278fd2b44f1da5670916c2b2056cf4cd8c909fb",
+        "evidence": "docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/run.json",
+        "tests": 318,
+        "snapshot_commit": "df60e20936b21107f67e030c8e26ec1852ac7fbc",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P10-TEXT-VERIFIED.receipt.json"
+      }
+    ]
+  },
+  "seventy_parents": {
+    "baseline_partial": 53,
+    "target_partial": 70,
+    "achieved_partial": 70,
+    "new_scoped_core": 16,
+    "new_governance": 1,
+    "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+    "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
+    "tests": 348,
+    "status": "COMPLETED_SAVED_SCOPE",
+    "snapshot_commit": "24a3f40d69907c51c87d3a9c718ecd77f79c1153",
+    "checkpoint": "docs/checkpoints/CP-20261015-SEVENTY-VERIFIED.receipt.json",
+    "publication_scope_gate": "PASS",
+    "clean_text_gate": "PASS"
+  },
+  "external_validation_gaps": [
+    {
+      "id": "REV-02",
+      "reason": "全面真實 AI 視覺一致尚缺合法匿名來源及可信參考",
+      "resume_when": "取得指定樣本與參考；先做不依賴樣本的核心"
+    },
+    {
+      "id": "REV-04",
+      "reason": "VivoBook 型號及指定參考設備尚未實測",
+      "resume_when": "有設備與規格"
+    }
+  ],
+  "previous_goal_milestones": [
+    {
+      "id": "CORE-040..045",
+      "status": "FUNCTIONALLY_COMPLETED_SELF_VERIFIED",
+      "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
+      "source_commit": "192db957a927e6fcdedf7b62ef835748bf238717",
+      "evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
+      "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json"
+    },
+    {
+      "id": "SEVENTY-PARENTS",
+      "status": "COMPLETED_SAVED_SCOPE",
+      "contract": "docs/dev/SEVENTY_PARENTS_CONTRACT.json",
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence_run": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
+      "snapshot_commit": "24a3f40d69907c51c87d3a9c718ecd77f79c1153",
+      "parent_partial": 70,
+      "parent_full": 0
+    }
+  ],
+  "design_proposals": [
+    {
+      "id": "PROPOSAL-UI066-R1R2-20261015",
+      "status": "IMPLEMENTED_SELF_VERIFIED_REMOTE_SAVED",
+      "requirements": [
+        "UI-066-R1",
+        "UI-066-R2"
+      ],
+      "document": "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md",
+      "base_commit": "ae1db49469f546e6b9ac7ad715304112f4ce527d",
+      "source_evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
+      "functional_counts_changed": true,
+      "decision_pending": null,
+      "confirmed_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md",
+      "adoption_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md"
+    }
+  ],
+  "confirmed_diagnostic_requirement": {
+    "decision": "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md",
+    "in_app_readable": true,
+    "outside_app_saved_readable": true,
+    "implementation_status": "COMPLETED_SAVED_SCOPE",
+    "whole_proposal_adopted": false,
+    "functional_completion_delta": 2,
+    "adoption_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md",
+    "design_adopted": true
+  },
+  "full70_goal": "docs/dev/FULL_70_COMPLETION_PLAN.json",
+  "external_resource_request": {
+    "reason": "REV04要求指定設備實測，環境僅Linux且無配置外部裝置／憑證／連線",
+    "requested": "ASUS VivoBook完整型號CPU/RAM/GPU/Windows與兩目標機實測方式；async文字詢問，其他工作持續",
+    "status": "AWAITING_INFORMATION_NOT_GLOBAL_BLOCKER"
+  },
+  "resumed_ten_parent_target": {
+    "contract": "docs/dev/FIXED70_NEXT_TEN_CONTRACT.json",
+    "target_ids": [
+      "UI-043",
+      "UI-045",
+      "UI-020",
+      "UI-021",
+      "UI-022",
+      "UI-023",
+      "UI-024",
+      "UI-025",
+      "UI-026",
+      "UI-027"
+    ],
+    "completed": []
+  },
+  "continuation_policy": "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+  "pending_revalidation_ids": [
+    "CORE-001",
+    "CORE-002",
+    "CORE-003",
+    "CORE-004",
+    "CORE-005",
+    "CORE-006",
+    "CORE-007",
+    "CORE-008",
+    "CORE-009",
+    "CORE-010",
+    "CORE-011",
+    "CORE-012",
+    "CORE-013",
+    "CORE-014",
+    "CORE-015",
+    "CORE-016",
+    "CORE-017",
+    "CORE-018",
+    "CORE-019",
+    "CORE-020",
+    "CORE-021",
+    "CORE-022",
+    "CORE-023",
+    "CORE-024",
+    "CORE-025",
+    "CORE-026",
+    "CORE-027",
+    "CORE-028",
+    "CORE-029",
+    "CORE-030",
+    "CORE-031",
+    "CORE-032",
+    "CORE-033",
+    "CORE-034",
+    "CORE-035",
+    "CORE-036",
+    "CORE-037",
+    "CORE-038",
+    "CORE-039",
+    "CORE-040",
+    "CORE-041",
+    "CORE-042",
+    "CORE-043",
+    "CORE-044",
+    "CORE-045",
+    "CORE-046",
+    "CORE-047",
+    "CORE-048",
+    "CORE-049",
+    "CORE-050",
+    "CORE-051",
+    "CORE-052",
+    "CORE-053",
+    "CORE-054",
+    "CORE-055",
+    "CORE-056",
+    "CORE-057",
+    "CORE-058",
+    "CORE-059",
+    "CORE-060",
+    "CORE-061",
+    "CORE-062",
+    "CORE-063",
+    "CORE-064",
+    "CORE-065",
+    "CORE-066",
+    "CORE-067",
+    "CORE-068",
+    "CORE-069",
+    "CORE-070",
+    "CORE-071",
+    "CORE-072",
+    "CORE-073",
+    "CORE-074",
+    "CORE-075",
+    "CORE-076",
+    "CORE-077",
+    "CORE-078",
+    "CORE-079",
+    "CORE-080",
+    "CORE-081",
+    "CORE-082",
+    "CORE-083",
+    "CORE-084",
+    "CORE-085",
+    "CORE-086",
+    "CORE-087",
+    "GOV-001",
+    "GOV-002",
+    "GOV-003",
+    "GOV-004",
+    "GOV-005",
+    "GOV-006",
+    "GOV-007",
+    "UI-001",
+    "UI-002",
+    "UI-003",
+    "UI-004",
+    "UI-005",
+    "UI-006",
+    "UI-007",
+    "UI-008",
+    "UI-009",
+    "UI-010",
+    "UI-011",
+    "UI-012",
+    "UI-013",
+    "UI-014",
+    "UI-015",
+    "UI-016",
+    "UI-017",
+    "UI-018",
+    "UI-020",
+    "UI-021",
+    "UI-022",
+    "UI-023",
+    "UI-024",
+    "UI-025",
+    "UI-026",
+    "UI-027",
+    "UI-028",
+    "UI-029",
+    "UI-030",
+    "UI-033",
+    "UI-034",
+    "UI-035",
+    "UI-036",
+    "UI-037",
+    "UI-038",
+    "UI-039",
+    "UI-040",
+    "UI-041",
+    "UI-042",
+    "UI-043",
+    "UI-044",
+    "UI-045",
+    "UI-046",
+    "UI-047",
+    "UI-049",
+    "UI-050",
+    "UI-051",
+    "UI-052",
+    "UI-053",
+    "UI-054",
+    "UI-055",
+    "UI-056",
+    "UI-057",
+    "UI-058",
+    "UI-066-R1",
+    "UI-066-R2",
+    "UI-059",
+    "UI-060A"
+  ],
+  "last_formal_validation": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
+  "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
+  "publication_status": {
+    "run": "RUN-REMAINING28-LAYOUT-003",
+    "remote_verified": true,
+    "publication_scope_gate": "PASS",
+    "publication_commit": "406699e23e0ad8597ecda7a6fdc3dd34dfee589d",
+    "publication_tree": "64807ab8fb1ce25ac14dcd8890ca9b89a465f177",
+    "new_run_all_attachments_published": true,
+    "attachment_count": 204,
+    "gate_log": "docs/qa/targeted/layout003-publication-gate-001.log",
+    "previous_explicit_media_exceptions_unchanged": true
+  },
+  "cloud_environment_configuration": {
+    "status": "DRAFT_SAVED_AND_READ_BACK_REQUIRES_PUBLISH",
+    "receipt": "docs/dev/CLOUD_CONFIG_DRAFT_RECEIPT.json",
+    "fresh_task_restore_verified": false
+  },
+  "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
+  "resume_command": ".venv/bin/python tools/resume_status.py",
+  "planned_evidence_run": "RUN-REMAINING28-CURRENT-008",
+  "previous_formal_validations": [
+    {
+      "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
+      "source_commit": "3cd2c22dd1a4529450e62a22a62e944aac179c1c",
+      "tests": 498,
+      "passed": 498,
+      "skipped": 0,
+      "source_unchanged": true,
+      "registered_parent_clauses": 87
+    },
+    {
+      "run": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-001/run.json",
+      "status": "FAIL",
+      "passed": 617,
+      "tests": 619,
+      "unhandled_runtime_errors": 0,
+      "reason": "GUI comparison UNKNOWN label; new imported-font export-rights premise missing in legacy repair fixture"
+    }
+  ],
+  "last_completed_contract": "docs/dev/FIXED70_NEXT_TWENTYEIGHT_CONTRACT.json",
+  "twentyeight_parent_result": {
+    "completed": 28,
+    "total": 28,
+    "parent_counts": {
+      "VERIFIED": 44,
+      "PARTIAL": 28,
+      "DEFERRED": 3
+    },
+    "core_verified": 87,
+    "governance_verified": 7,
+    "source_commit": "81f73e03449bbe2abb79251d2ec8919662b5ab2c",
+    "evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+    "publication_scope_gate": "PASS",
+    "remote_verified_checkpoint": "docs/checkpoints/CP-20261015-TWENTYEIGHT-COMPLETE.receipt.json",
+    "remote_verified_snapshot_commit": "6262fe8b431733dc3945c3619a7ba2db1c9d2688"
+  },
+  "previous_final_verification": "docs/dev/TWENTYEIGHT_FINAL_VERIFICATION.json",
+  "remaining28_result": {
+    "verified": 12,
+    "remaining": 16,
+    "new_original_parents": 0,
+    "revised_original_parents": 12,
+    "completed_original_parent_ids": [
+      "UI-046",
+      "UI-047",
+      "UI-049",
+      "UI-050",
+      "UI-051",
+      "UI-052",
+      "UI-053",
+      "UI-054",
+      "UI-055",
+      "UI-056",
+      "UI-057",
+      "UI-058"
+    ],
+    "parent_counts": {
+      "verified": 56,
+      "partial": 16,
+      "deferred": 3
+    },
+    "core_verified": 87,
+    "governance_verified": 7,
+    "full_original_clauses": 120
+  },
+  "checkpoint_cadence_deviation": {
+    "last_checkpoint_verified_utc": "2026-10-15T17:28:24.486163+00:00",
+    "observed_utc": "2026-10-15T18:27:36.011789+00:00",
+    "latest_remote_commit": "e828c2e4ce1109b4254701c6806a3a98b85c9c4d",
+    "reason": "GUI/source integration checkpoint exceeded 10 minutes; recorded actual gap, immediate WIP preservation; no claim cadence was met"
+  },
+  "latest_verification": {
+    "id": "RUN-REMAINING28-CURRENT-006",
+    "source_commit": "5650e3535f2a777d365c5ce6ee6adeeba734216d",
+    "status": "FAIL",
+    "software_execution_status": "FAIL",
+    "test_count": 1541,
+    "passed": 1540,
+    "planned_test_count": 1548,
+    "not_completed_test_count": 7,
+    "unhandled_runtime_errors": 1,
+    "source_unchanged": true,
+    "capture_exit_code": 1,
+    "actual_exit": 1,
+    "native_capture_executed": false,
+    "failed_modules": [
+      {
+        "module": "test_diagnostic_reports",
+        "expected": 30,
+        "completed": 23,
+        "missing_test_ids": [
+          "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+          "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+          "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+          "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+          "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+          "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+          "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+        ],
+        "exit_code": -11,
+        "timed_out": false
+      },
+      {
+        "module": "test_seventy_ui",
+        "expected": 11,
+        "completed": 11,
+        "missing_test_ids": [],
+        "exit_code": 1,
+        "timed_out": false
+      }
+    ]
+  },
+  "failed_evidence_runs": [
+    "docs/evidence/runs/RUN-REMAINING28-WATCH-001/run.json",
+    "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json",
+    {
+      "id": "RUN-REMAINING28-LAYOUT-002",
+      "source_commit": "86cf4bc06d7c3093be475a606eee8df072285b1b",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
+      "test_count": 1078,
+      "passed": 1076,
+      "failed_ids": [
+        "test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel",
+        "test_output_batch_gui.OutputBatchGuiTests.test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults"
+      ],
+      "actual_parent_exit": 1,
+      "source_unchanged": true,
+      "qt_uncaught": 0,
+      "capture_not_run_due_failed_tests": true,
+      "counts_as_completed": false
+    },
+    {
+      "run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-004/run.json",
+      "source_commit": "57f15cc810be18a0f13e16537ae6e8b5af18bea8",
+      "status": "FAIL",
+      "test_count": 1534,
+      "passed": 1507,
+      "not_completed": 9,
+      "runtime_module_failures": 1,
+      "source_unchanged": true,
+      "actual_exit": 1,
+      "native_capture_executed": false
+    },
+    {
+      "id": "RUN-REMAINING28-CURRENT-006",
+      "source_commit": "5650e3535f2a777d365c5ce6ee6adeeba734216d",
+      "status": "FAIL",
+      "software_execution_status": "FAIL",
+      "test_count": 1541,
+      "passed": 1540,
+      "planned_test_count": 1548,
+      "not_completed_test_count": 7,
+      "unhandled_runtime_errors": 1,
+      "source_unchanged": true,
+      "capture_exit_code": 1,
+      "actual_exit": 1,
+      "native_capture_executed": false,
+      "failed_modules": [
+        {
+          "module": "test_diagnostic_reports",
+          "expected": 30,
+          "completed": 23,
+          "missing_test_ids": [
+            "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+            "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+            "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+            "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+          ],
+          "exit_code": -11,
+          "timed_out": false
+        },
+        {
+          "module": "test_seventy_ui",
+          "expected": 11,
+          "completed": 11,
+          "missing_test_ids": [],
+          "exit_code": 1,
+          "timed_out": false
+        }
+      ]
+    }
+  ],
+  "active_work_package_plan": "docs/dev/CURRENT005_FIXTURE_DISPOSAL_PLAN.json",
+  "formal_execution_watch": {
+    "run_id": "RUN-REMAINING28-LAYOUT-003",
+    "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f",
+    "status": "PREVIOUS_FULL_PASS_NEW_SOURCE_WIP",
+    "owners": [
+      {
+        "pid": 527766,
+        "create_time": 1792149834.72,
+        "cmdline": [
+          ".venv/bin/python",
+          "tools/run_evidence.py",
+          "--run-id",
+          "RUN-REMAINING28-LAYOUT-003",
+          "--source-commit",
+          "842392433a96d09633fa051e41eb19fdfc48c82f",
+          "--commit-json",
+          ".checkpoints/native-readback/commit.json",
+          "--tree-json",
+          ".checkpoints/native-readback/tree.json"
+        ],
+        "ppid": 527760
+      }
+    ],
+    "source_frozen": false,
+    "do_not_finalize_before_actual_exit_zero": true,
+    "parent_log": "docs/qa/targeted/remaining28-layout-003-parent.log",
+    "parent_exit": "docs/qa/targeted/remaining28-layout-003-parent-exit.txt",
+    "live_directory": ".checkpoints/formal-live/RUN-REMAINING28-LAYOUT-003",
+    "progress": {
+      "phase": "TEST_MODULES_FINISHED",
+      "current_test": null,
+      "started": 1078,
+      "completed": 1078,
+      "passed": 1078,
+      "failed_ids": [],
+      "planned_tests": 1078,
+      "formal_complete": false,
+      "updated_at": "2026-10-16T11:40:41.107914+00:00"
+    },
+    "source_manifest_unchanged_now": true,
+    "checkpoint_orchestrator_temporarily_paused": false,
+    "actual_parent_exit": 0,
+    "capture_exit_code": 0,
+    "tests_passed": 1078,
+    "modules_healthy": 140
+  },
+  "abandoned_preparations": [
+    {
+      "checkpoint": "CP-20261016-REMAINING28-UI053-MAPPING-ADAPTER-WIP",
+      "reason": "Incorrect unverified base SHA entered; no remote acknowledgement. Superseded by -002; original PREPARED manifest and local ZIP retained.",
+      "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
+    },
+    {
+      "checkpoint": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+      "reason": "Precheckpoint governance correctly found latest failed007 stale after capture tool code change; source pending current008, no current valid run",
+      "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
+    }
+  ],
+  "current_work": "Immutable007all1549PASS but captureFAIL preserved. Targeted023first19native exits0 +026tail4exits0 all required files;025sixactualformat exportsPASS.02715criticalimages individually viewedPASS, otherimages process-only. Current008 full mandatory.",
+  "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
+  "interrupted_evidence_runs": [
+    {
+      "folder": "docs/evidence/runs/RUN-REMAINING28-QUALITY-002",
+      "metadata": "docs/evidence/runs/RUN-REMAINING28-QUALITY-002/native-interruption.json",
+      "actual_exit_code": 139,
+      "source_commit": "f7fd4536acf1ec3834027384e6951341e1506db4"
+    },
+    {
+      "folder": "docs/evidence/runs/RUN-REMAINING28-QUALITY-003",
+      "metadata": "docs/evidence/runs/RUN-REMAINING28-QUALITY-003/controlled-stop.json",
+      "actual_exit_code": 130,
+      "source_commit": "012c71724bd5b8e18a93afe8d098f40e03506153"
+    },
+    {
+      "folder": "docs/evidence/runs/RUN-REMAINING28-QUALITY-004",
+      "metadata": "docs/evidence/runs/RUN-REMAINING28-QUALITY-004/controlled-stop.json",
+      "actual_exit_code": 130,
+      "source_commit": "95d11c53942c7b6ef20d0d65d8724829de24b75e"
+    },
+    {
+      "run": "RUN-REMAINING28-REPAIR-001",
+      "source_commit": "3fb28a69d3a23df944105f98718cf839da022f08",
+      "actual_parent_exit": 130,
+      "status": "CONTROLLED_STOP_AFTER_KNOWN_GUI_FAILURE_NOT_PASS",
+      "completed": 437,
+      "passed": 436,
+      "failed_ids": [
+        "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source"
+      ],
+      "raw_files": 275,
+      "raw_bytes": 533397,
+      "record": "docs/evidence/runs/RUN-REMAINING28-REPAIR-001/controlled-stop.json",
+      "not_pass": true
+    },
+    {
+      "run_id": "RUN-REMAINING28-LAYOUT-001",
+      "reason": "Uncovered UI058 pre-existing manual geometry auto-adoption and GUI recovery snapshot preservation gaps discovered by source review; no completion claim",
+      "source_commit": "4bb32a98004fa7a55f535cf410714aa603971949",
+      "audit": "docs/qa/targeted/remaining28-layout-001-controlled-interruption.json",
+      "counts_as_completed": false
+    },
+    {
+      "status": "INTERRUPTED_NOT_VERIFIED",
+      "source_commit": "6b01d84d4225cec31c13ff050d3a2c1540c88c88",
+      "actual_exit": 130,
+      "source_unchanged_at_interruption": true,
+      "last_progress": {
+        "phase": "RUNNING_OWNED_TEST_MODULE",
+        "current_test": "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_per_object_width_composition_preserves_individual_sizes_and_fixed_font_owner",
+        "started": 69,
+        "completed": 68,
+        "passed": 68,
+        "failed_ids": [],
+        "planned_tests": 1548,
+        "formal_complete": false,
+        "updated_at": "2026-10-17T02:12:03.437122+00:00"
+      },
+      "owned_pid": 743063,
+      "create_time": 1792202899.73,
+      "exact_argv_verified_before_SIGINT": true,
+      "remaining_owned_module_workers": [],
+      "reason": "backup_center fixture tearDown enters original closeEvent busy information modal; module deadline already made current batch impossible to pass. Parent SIGINT uses original runner exception cleanup of its own child group.",
+      "diagnostics": "docs/qa/targeted/current005-interrupted-012",
+      "native_captures_executed": false
+    }
+  ],
+  "checkpoint_cadence_events": [
+    {
+      "at": "2026-10-16T07:20Z",
+      "checkpoint": "CP-20261016-REMAINING28-UI054-FULL11-SOURCE-FREEZE",
+      "status": "REMOTE_VERIFIED_AFTER_CORRECTION_NOT_STRICT_10MIN_CADENCE_PASS",
+      "reason": "First readback correctly rejected two generated progress files omitted from commit; f3609df adds exact prepared files, original prepared manifest preserved and ACK succeeded; delay exceeds10min, no false cadencePASS."
+    },
+    {
+      "stage": "UI032-HOST-SOURCE-GUARDS-WIP",
+      "event": "DISK_FULL_RECOVERY",
+      "detail": "251local sourceZIPs used29GiB/root32G. Sandboxed bwrap failed ENOSPC. Read-only df/du then scoped archive move required escalated execution only because sandbox could not start; auto review allowed. 57acked hash/manifest matched old archives moved to/tmp with copies retained; no current source/QA/unacknowledged archives removed. Normal sandbox recovered. No strict <=10min cadence claim for this incident."
+    },
+    {
+      "stage": "UI032-CURRENT-DIGITAL-TESTED-WIP",
+      "event": "LONG_COHERENT_TARGETED_VERIFICATION",
+      "detail": "016actual245tests475.301s and subsequent isolated fixture rechecks completed before source/log/checkpoint mutation. No strict <=10min cadence claim for this stage; current production source already ACK0e5ec89. Future long targeted logs should be outside checkpoint source while active, then copied after actual exit; final immutable run keeps strict source freeze."
+    },
+    {
+      "date": "2026-10-17",
+      "scope": "REV capability audit/full original registration before current full run",
+      "status": "DEVIATION_RECORDED",
+      "reason": "Single70s targeted rerun plus original-clause/source-pin registration exceeded approximate10min checkpoint spacing; no strict cadence PASS claimed",
+      "recovery": "Freeze and save checkpoint now; no running owned test/capture"
+    },
+    {
+      "date": "2026-10-17",
+      "scope": "RUN-REMAINING28-CURRENT-004 immutable full test execution",
+      "status": "DEVIATION_RECORDED",
+      "reason": "No source/docs/snapshot mutation during active full test/evidence writer; GitHub checkpoint saved at actual completion instead of mid-run unstable snapshot",
+      "strict_10min_pass_claimed": false
+    },
+    {
+      "date": "2026-10-17",
+      "scope": "CURRENT004 isolated153 and native smoke/source-preview visual repair",
+      "elapsed_since_previous_ack_seconds": 1167,
+      "status": "DEVIATION_RECORDED",
+      "reason": "Sequential owned tests/captures frozen until actual exit, followed by native visual repair; checkpoint now before full005. No strict10min claim."
+    },
+    {
+      "date": "2026-10-17",
+      "scope": "Immutable CURRENT006 full execution",
+      "status": "DEVIATION_RECORDED",
+      "reason": "Frozen all-source test/evidence writer until actual exit, checkpoint at completion; no strict10min claim"
+    }
+  ],
+  "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
+  "next_step": "Freeze CP-20261017-REMAINING28-CURRENT-FULL-SOURCE008, remote verify; run immutable CURRENT008 all1549+23actual native processes, then publication and independent scopes; missing external5 remain",
+  "current_work_package": "Original28 full software regression and external qualification",
+  "checkpoint_cadence_note": "CURRENT007 immutable full run held source frozen beyond10minutes; actual duration from owned timestamp and run metadata. Delayed checkpoint until all writers exited; no strict10minutePASS.",
+  "implementation_pending_original_parents": [
+    "UI-059",
+    "UI-060A",
+    "UI-061",
+    "UI-062",
+    "UI-063",
+    "UI-064",
+    "UI-065",
+    "UI-052-REVIEW",
+    "UI-019",
+    "UI-032",
+    "UI-031",
+    "UI-066",
+    "UI-067",
+    "REV-01"
+  ],
+  "latest_targeted_verification": {
+    "native_023_first19": "PASS",
+    "native_026_tail4": "PASS",
+    "actual_exit_026": 0,
+    "actual_formats_025": 6,
+    "reviewed_images_027": 15,
+    "full_current_source": "PENDING008",
+    "all28_complete": false
+  },
+  "checkpoint_superseded": [
+    {
+      "id": "CP-20261016-REMAINING28-UI059-NATIVE-DEPENDENCY-WIP",
+      "status": "READBACK_FAILED_MUTABLE_CAPTURE_LOG",
+      "replacement": "CP-20261016-REMAINING28-UI059-NATIVE-SNAPSHOT-REPAIR",
+      "reason": "Capture019 log completed after snapshot preparation; actual latest source pushed at fc486182d4f29ddd7a179fb5230531039a0cd55c but old snapshot unacknowledged. Preserve immutable failed record; fresh stable snapshot supersedes pending obligation."
+    },
+    {
+      "id": "CP-20261016-REMAINING28-UI019-FULL12-TESTED",
+      "status": "READBACK_FAILED_PRIVATE_CAPTURE_MANIFEST",
+      "replacement": "CP-20261016-REMAINING28-UI019-FULL12-RECEIPT-REPAIR",
+      "reason": "Git push1264624 actualexit0 but exact readback rejected two ignored .private synthetic capture audits. They were not uploaded. Fixed manifest private/work-library exclusion with04114PASS; old immutable PREPARED record preserved, not acknowledged."
+    }
+  ],
+  "local_checkpoint_cache_relocation": {
+    "record": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261016.json",
+    "moved_archives": 57,
+    "moved_bytes": 4342089253,
+    "destination": "/tmp/template-ai-acknowledged-checkpoint-archives-20261016",
+    "policy": "Keep latest8 confirmed plus all unacknowledged at original location; moved archives retained with exact SHA/manifest matched REMOTE_VERIFIED receipts. For old local restore copy verified archive back into original .checkpoints/ID/source.zip; remote Git remains authoritative.",
+    "free_after_bytes": 4308742144
+  },
+  "current_targeted_run": "docs/qa/targeted/current007-native-tail-026",
+  "local_checkpoint_cache_relocation_history": [
+    {
+      "journal": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261017.json",
+      "archives": 25,
+      "bytes": 2145498863,
+      "copies_retained": true
+    }
+  ],
+  "current_evidence_validity": "NO_CURRENT_COMPLETE_RUN: capture tool source changed after failed007; historical all1549PASS preserved,008 required"
+}

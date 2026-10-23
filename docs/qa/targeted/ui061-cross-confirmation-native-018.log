@@ -1,0 +1,52 @@
+======================================================================
+ERROR: test_actual_confirmation_applies_safe90_only_and_failed100_keeps_original (test_candidate_sync_gui.CandidateSyncGuiTests.test_actual_confirmation_applies_safe90_only_and_failed100_keeps_original)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_candidate_sync_gui.py", line 20, in setUp
+    fixture.CandidateSyncBatchTests.setUp(self);self.w=MainWindow(self.library.root);controlled_resources(self.w);self.w.adopt_input_graph(self.graph.data);self.d=MultiSizeDialog(self.w);self.d.show()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_candidate_sync_batch.py", line 12, in setUp
+    fixture.MultiSizeTests.setUp(self);self.alternate=copy.deepcopy(self.templates[0]);self.alternate.id=new_id();self.alternate.family_id=new_id();self.alternate.name='Synthetic alternative90';self.alternate.slots[0].rect.x+=2;self.library.publish(self.alternate);self.entries=self.workflow.calculate([[90,54],[100,60]]);self.a=self.adapter(0);self.source_index=next(i for i,c in enumerate(self.a.candidates) if c.template.id==self.templates[0].id);self.b_index=next(i for i,c in enumerate(self.a.candidates) if c.template.id==self.alternate.id);self.c=self.adapter(1);slot=self.a.candidates[self.source_index].template.slots[0]
+                                                                                                                                                                                                                                                                                                                                         ^^^^^^^^^^^^
+AttributeError: 'CandidateSyncGuiTests' object has no attribute 'adapter'
+
+======================================================================
+ERROR: test_cancel_resource_wait_cross_keeps_all_old_targets (test_candidate_sync_gui.CandidateSyncGuiTests.test_cancel_resource_wait_cross_keeps_all_old_targets)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_candidate_sync_gui.py", line 20, in setUp
+    fixture.CandidateSyncBatchTests.setUp(self);self.w=MainWindow(self.library.root);controlled_resources(self.w);self.w.adopt_input_graph(self.graph.data);self.d=MultiSizeDialog(self.w);self.d.show()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_candidate_sync_batch.py", line 12, in setUp
+    fixture.MultiSizeTests.setUp(self);self.alternate=copy.deepcopy(self.templates[0]);self.alternate.id=new_id();self.alternate.family_id=new_id();self.alternate.name='Synthetic alternative90';self.alternate.slots[0].rect.x+=2;self.library.publish(self.alternate);self.entries=self.workflow.calculate([[90,54],[100,60]]);self.a=self.adapter(0);self.source_index=next(i for i,c in enumerate(self.a.candidates) if c.template.id==self.templates[0].id);self.b_index=next(i for i,c in enumerate(self.a.candidates) if c.template.id==self.alternate.id);self.c=self.adapter(1);slot=self.a.candidates[self.source_index].template.slots[0]
+                                                                                                                                                                                                                                                                                                                                         ^^^^^^^^^^^^
+AttributeError: 'CandidateSyncGuiTests' object has no attribute 'adapter'
+
+======================================================================
+ERROR: test_controls_changed_after_preview_do_not_start_or_mutate_any_target (test_candidate_sync_gui.CandidateSyncGuiTests.test_controls_changed_after_preview_do_not_start_or_mutate_any_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_candidate_sync_gui.py", line 20, in setUp
+    fixture.CandidateSyncBatchTests.setUp(self);self.w=MainWindow(self.library.root);controlled_resources(self.w);self.w.adopt_input_graph(self.graph.data);self.d=MultiSizeDialog(self.w);self.d.show()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_candidate_sync_batch.py", line 12, in setUp
+    fixture.MultiSizeTests.setUp(self);self.alternate=copy.deepcopy(self.templates[0]);self.alternate.id=new_id();self.alternate.family_id=new_id();self.alternate.name='Synthetic alternative90';self.alternate.slots[0].rect.x+=2;self.library.publish(self.alternate);self.entries=self.workflow.calculate([[90,54],[100,60]]);self.a=self.adapter(0);self.source_index=next(i for i,c in enumerate(self.a.candidates) if c.template.id==self.templates[0].id);self.b_index=next(i for i,c in enumerate(self.a.candidates) if c.template.id==self.alternate.id);self.c=self.adapter(1);slot=self.a.candidates[self.source_index].template.slots[0]
+                                                                                                                                                                                                                                                                                                                                         ^^^^^^^^^^^^
+AttributeError: 'CandidateSyncGuiTests' object has no attribute 'adapter'
+
+======================================================================
+ERROR: test_source_registry_changes_during_actual_worker_reject_both_target_results (test_candidate_sync_gui.CandidateSyncGuiTests.test_source_registry_changes_during_actual_worker_reject_both_target_results)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_candidate_sync_gui.py", line 20, in setUp
+    fixture.CandidateSyncBatchTests.setUp(self);self.w=MainWindow(self.library.root);controlled_resources(self.w);self.w.adopt_input_graph(self.graph.data);self.d=MultiSizeDialog(self.w);self.d.show()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_candidate_sync_batch.py", line 12, in setUp
+    fixture.MultiSizeTests.setUp(self);self.alternate=copy.deepcopy(self.templates[0]);self.alternate.id=new_id();self.alternate.family_id=new_id();self.alternate.name='Synthetic alternative90';self.alternate.slots[0].rect.x+=2;self.library.publish(self.alternate);self.entries=self.workflow.calculate([[90,54],[100,60]]);self.a=self.adapter(0);self.source_index=next(i for i,c in enumerate(self.a.candidates) if c.template.id==self.templates[0].id);self.b_index=next(i for i,c in enumerate(self.a.candidates) if c.template.id==self.alternate.id);self.c=self.adapter(1);slot=self.a.candidates[self.source_index].template.slots[0]
+                                                                                                                                                                                                                                                                                                                                         ^^^^^^^^^^^^
+AttributeError: 'CandidateSyncGuiTests' object has no attribute 'adapter'
+
+----------------------------------------------------------------------
+Ran 16 tests in 17.614s
+
+FAILED (errors=4)

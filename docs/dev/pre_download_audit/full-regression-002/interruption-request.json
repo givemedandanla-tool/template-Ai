@@ -1,0 +1,11 @@
+{
+  "runner_pid": 1031079,
+  "owned_command": [
+    ".venv/bin/python",
+    "docs/dev/pre_download_audit/run_local_audit.py",
+    "--output",
+    "docs/dev/pre_download_audit/full-regression-002"
+  ],
+  "reason": "Preserve intermediate failure and repair a missed report reader plus reproduced QObject.event collision before final full regression",
+  "action": "SIGINT to own runner; evidence_modules BaseException handler stops its owned child group"
+}

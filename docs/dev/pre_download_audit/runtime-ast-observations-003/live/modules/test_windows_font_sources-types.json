@@ -1,0 +1,262 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_windows_font_sources.py": {
+      "source_sha256": "b4950a9f971da707e2b3242a1197ecd257b7af04bc53bcaf888a2491c9ca4593",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 4,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_font_center.py": {
+      "source_sha256": "639249a2f368e127a6a5b37a2dc1417739eed9af3b16c56c34c7e3d01d4406db",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 19,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/fonts.py": {
+      "source_sha256": "13068091887cde61d9efc460ef14bbd1f9cd9965d03c56b7ca54ae5193fd0138",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 16,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/font_catalog.py": {
+      "source_sha256": "72e233d426762d5e3dc237b437537fd9b3af2c733bd85583e94a89d2b0e132cb",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 12,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/font_dialog.py": {
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/gui.py": {
+      "source_sha256": "ba0ebc0ebee4df3593798dd4b27a8e016826d10c2bd41aa85a51d4922ade9658",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 212,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/layout.py": {
+      "source_sha256": "875862aa49c51fc19a8e7633dca6be8c2d6a14156dd244bd077e9c4c361e88fe",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/render.py": {
+      "source_sha256": "8209686d71ca5ee2dae2771954afcff0c6579914b0107834a01da8718ce332f8",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 4,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/windows_font_sources.py": {
+      "source_sha256": "6b4b6a3890a3e8b1aee13bf3de6c7f55da0ba33b2764dff4704b9258996e0406",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 26,
+      "skipped_target_keys": [
+        [
+          "D-APP-04171",
+          "value",
+          null
+        ]
+      ],
+      "unmatched_ranges": [
+        [
+          34,
+          12,
+          34,
+          43
+        ]
+      ]
+    },
+    "/workspace/template-Ai/template_ai/font_evidence.py": {
+      "source_sha256": "8b617d07575e254d51c85ca71b882d8cab7c7902b4cbf579faedc3d5378637b7",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-01561": {
+      "visits": 10,
+      "values": {
+        "receiver": {
+          "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2": 5
+        },
+        "member_value": {
+          "builtins.int": 5
+        }
+      },
+      "member_checks": {
+        "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2:True": 5
+      },
+      "test_contexts": [
+        "test_windows_font_sources.WindowsFontSourceTests.test_actual_registered_source_file_does_not_prove_current_qt_face_or_licence",
+        "test_windows_font_sources.WindowsFontSourceTests.test_duplicate_registry_entries_share_byte_budget_without_losing_scopes",
+        "test_windows_font_sources.WindowsFontSourceTests.test_mutated_during_actual_parse_is_not_retained_as_current_source",
+        "test_windows_font_sources.WindowsFontSourceTests.test_original_inventory_distinguishes_registered_file_qt_candidate_and_use_rights"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01562": {
+      "visits": 10,
+      "values": {
+        "receiver": {
+          "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2": 5
+        },
+        "member_value": {
+          "builtins.int": 5
+        }
+      },
+      "member_checks": {
+        "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2:True": 5
+      },
+      "test_contexts": [
+        "test_windows_font_sources.WindowsFontSourceTests.test_actual_registered_source_file_does_not_prove_current_qt_face_or_licence",
+        "test_windows_font_sources.WindowsFontSourceTests.test_duplicate_registry_entries_share_byte_budget_without_losing_scopes",
+        "test_windows_font_sources.WindowsFontSourceTests.test_mutated_during_actual_parse_is_not_retained_as_current_source",
+        "test_windows_font_sources.WindowsFontSourceTests.test_original_inventory_distinguishes_registered_file_qt_candidate_and_use_rights"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-04170": {
+      "visits": 25,
+      "values": {
+        "value": {
+          "builtins.dict": 5,
+          "builtins.int": 5
+        },
+        "operator_left": {
+          "builtins.int": 5
+        },
+        "operator_right": {
+          "builtins.int": 5
+        },
+        "operation": {
+          "builtins.int": 5
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_windows_font_sources.WindowsFontSourceTests.test_actual_registered_source_file_does_not_prove_current_qt_face_or_licence",
+        "test_windows_font_sources.WindowsFontSourceTests.test_budget_exhaustion_is_partial_not_empty_complete_source_proof",
+        "test_windows_font_sources.WindowsFontSourceTests.test_duplicate_registry_entries_share_byte_budget_without_losing_scopes",
+        "test_windows_font_sources.WindowsFontSourceTests.test_mutated_during_actual_parse_is_not_retained_as_current_source",
+        "test_windows_font_sources.WindowsFontSourceTests.test_original_inventory_distinguishes_registered_file_qt_candidate_and_use_rights"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-04171": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "builtins.dict": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_windows_font_sources.WindowsFontSourceTests.test_actual_registered_source_file_does_not_prove_current_qt_face_or_licence",
+        "test_windows_font_sources.WindowsFontSourceTests.test_duplicate_registry_entries_share_byte_budget_without_losing_scopes",
+        "test_windows_font_sources.WindowsFontSourceTests.test_mutated_during_actual_parse_is_not_retained_as_current_source",
+        "test_windows_font_sources.WindowsFontSourceTests.test_original_inventory_distinguishes_registered_file_qt_candidate_and_use_rights"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-04179": {
+      "visits": 24,
+      "values": {
+        "value": {
+          "builtins.dict": 6,
+          "builtins.list": 6
+        },
+        "argument": {
+          "builtins.list": 6
+        },
+        "call_result": {
+          "builtins.list": 6
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_windows_font_sources.WindowsFontSourceTests.test_actual_registered_source_file_does_not_prove_current_qt_face_or_licence",
+        "test_windows_font_sources.WindowsFontSourceTests.test_budget_exhaustion_is_partial_not_empty_complete_source_proof",
+        "test_windows_font_sources.WindowsFontSourceTests.test_duplicate_registry_entries_share_byte_budget_without_losing_scopes",
+        "test_windows_font_sources.WindowsFontSourceTests.test_mutated_during_actual_parse_is_not_retained_as_current_source",
+        "test_windows_font_sources.WindowsFontSourceTests.test_original_inventory_distinguishes_registered_file_qt_candidate_and_use_rights",
+        "test_windows_font_sources.WindowsFontSourceTests.test_source_outside_known_directory_or_network_is_rejected_before_font_read"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-11736": {
+      "visits": 35,
+      "values": {
+        "call_receiver": {
+          "builtins.module": 7
+        },
+        "value": {
+          "builtins.module": 7,
+          "pathlib.PosixPath": 7
+        },
+        "argument": {
+          "pathlib.PosixPath": 7
+        },
+        "call_result": {
+          "pathlib.PosixPath": 7
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_windows_font_sources.WindowsFontSourceTests.test_actual_registered_source_file_does_not_prove_current_qt_face_or_licence",
+        "test_windows_font_sources.WindowsFontSourceTests.test_budget_exhaustion_is_partial_not_empty_complete_source_proof",
+        "test_windows_font_sources.WindowsFontSourceTests.test_duplicate_registry_entries_share_byte_budget_without_losing_scopes",
+        "test_windows_font_sources.WindowsFontSourceTests.test_mutated_during_actual_parse_is_not_retained_as_current_source",
+        "test_windows_font_sources.WindowsFontSourceTests.test_nonwindows_source_catalog_is_explicitly_unavailable_without_native_io",
+        "test_windows_font_sources.WindowsFontSourceTests.test_original_inventory_distinguishes_registered_file_qt_candidate_and_use_rights",
+        "test_windows_font_sources.WindowsFontSourceTests.test_source_outside_known_directory_or_network_is_rejected_before_font_read"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

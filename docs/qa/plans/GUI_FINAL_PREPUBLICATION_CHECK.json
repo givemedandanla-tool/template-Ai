@@ -1,0 +1,7 @@
+{
+  "status": "CORRECTLY_BLOCKED_PENDING_FINAL_REMOTE_EVIDENCE",
+  "command": "dev_governance.py check --require-evidence --publication-scope",
+  "reason": "New397 proof attachments not yet covered by last REMOTE_VERIFIED checkpoint;final proof must be persisted before governance PASS",
+  "software_proof_verified": true,
+  "action": "Prepare final checkpoint,commit/push,exact Git readback and receipt,then rerun governance only;do not rerun software"
+}

@@ -1,0 +1,44 @@
+{
+  "status": "PASS_DOCUMENT_CONTRACT_CONSISTENCY_ONLY",
+  "executed_at": "2026-10-18T06:55:53.849448+00:00",
+  "baseline_commit": "7ee844f18ae0853f5759b96c32b9da6c7de840e8",
+  "decision": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
+  "approval": "User confirmed design principle; engineering remains proposed/not implemented",
+  "work_packages": 8,
+  "planned_acceptance": 50,
+  "original_acceptance_unchanged": true,
+  "implementation": 0,
+  "verified": 0,
+  "feature_groups": [
+    "structure",
+    "typography",
+    "equivalence",
+    "grammar",
+    "evidence"
+  ],
+  "equivalence_stages": [
+    "STRUCTURAL_ROLE_COMPATIBILITY",
+    "CURRENT_INPUT_BINDING_FEASIBILITY"
+  ],
+  "local_links_checked": 11,
+  "core_tests_tools_dependencies_changed": false,
+  "old_requirement_registry_unchanged": true,
+  "legacy_progress": {
+    "original_topics": 75,
+    "verified": 69,
+    "partial": 3,
+    "deferred": 3,
+    "CORE_verified": 87,
+    "GOV_verified": 7
+  },
+  "checks": [
+    "JSON parse and shared decision references",
+    "Approved design versus implementation status separation",
+    "Original50criteria and statuses byte-equivalent as parsed",
+    "Joint structure/typography feature groups and conditional binding stages",
+    "Plan/review/handoff/STATE linked",
+    "Local links resolve",
+    "No core,tests,tools or dependency changes; no feature tests/training run"
+  ],
+  "expected_followup": "Actual AI-LEARN-01 implementation; do not count this document as feature completion"
+}

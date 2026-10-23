@@ -1,0 +1,194 @@
+{
+  "status": "RESEARCH_BASELINE_NOT_IMPLEMENTATION",
+  "checked_at": "2026-10-18T11:50:16.897198+00:00",
+  "prior_reference_manifest": "docs/dev/AI_CROSS_WORK_ENGINEERING_REFERENCES.json",
+  "qt_pin": {
+    "repository": "https://github.com/qt/qtbase.git",
+    "tag": "v6.8.3",
+    "tag_object": "4606ef4436469d631d8f15f5a312c9af206ecc43",
+    "peeled_commit": "c07c2d5a527a644d36e7853d55132ae38921682f",
+    "method": "actual git ls-remote tag and peeled commit"
+  },
+  "records": [
+    {
+      "id": "figma_types",
+      "pinned_url": "https://raw.githubusercontent.com/figma/plugin-typings/dff4874ca083e18cd74835fd5afc5079d46866b7/plugin-api.d.ts",
+      "commit_sha": "dff4874ca083e18cd74835fd5afc5079d46866b7",
+      "license_scope": "Public commercial Auto Layout/components/binding schema;MIT",
+      "checked_utc": "2026-10-18T11:48:03.690008+00:00",
+      "http_status": 200,
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "bytes": 505244,
+      "sha256": "46685808f4994664397367ff855ff87619f8177370da572f7d3acfd2553dc95a",
+      "matches_prior_snapshot": true,
+      "reviewed_sections": [
+        "layoutMode7744,primaryAxisSizingMode7781,layoutWrap7879 signatures",
+        "componentPropertyDefinitions/addComponentProperty selected lines9717-9745"
+      ]
+    },
+    {
+      "id": "figma_license",
+      "pinned_url": "https://raw.githubusercontent.com/figma/plugin-typings/dff4874ca083e18cd74835fd5afc5079d46866b7/LICENSE",
+      "commit_sha": "dff4874ca083e18cd74835fd5afc5079d46866b7",
+      "license_scope": "MIT",
+      "checked_utc": "2026-10-18T11:48:03.690867+00:00",
+      "http_status": 200,
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "bytes": 1068,
+      "sha256": "47d92f1103b396b08991cb1237b99dfd96729d62952a64b5895c7ddf8af5a682",
+      "matches_prior_snapshot": true,
+      "reviewed_sections": [
+        "MIT declaration and permission;matches previously reviewed full licensed snapshot"
+      ]
+    },
+    {
+      "id": "qt_textlayout",
+      "pinned_url": "https://raw.githubusercontent.com/qt/qtbase/c07c2d5a527a644d36e7853d55132ae38921682f/src/gui/text/qtextlayout.cpp",
+      "commit_sha": "c07c2d5a527a644d36e7853d55132ae38921682f",
+      "license_scope": "Qt6.8.3 public text-layout source;SPDX in file",
+      "checked_utc": "2026-10-18T11:48:03.691424+00:00",
+      "http_status": 200,
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "bytes": 117368,
+      "sha256": "34af72a5bd2e42dfee5d4386b905adacaf2078a22435994a839f46db45bc1a9e",
+      "matches_prior_snapshot": null,
+      "reviewed_sections": [
+        "SPDX header",
+        "GlyphRunRetrievalFlag documentation276-308",
+        "createLine around783",
+        "boundingRect around876",
+        "glyphRuns around1009"
+      ]
+    },
+    {
+      "id": "qt_glyphrun",
+      "pinned_url": "https://raw.githubusercontent.com/qt/qtbase/c07c2d5a527a644d36e7853d55132ae38921682f/src/gui/text/qglyphrun.h",
+      "commit_sha": "c07c2d5a527a644d36e7853d55132ae38921682f",
+      "license_scope": "Qt6.8.3 public glyph-run API;SPDX in file",
+      "checked_utc": "2026-10-18T11:48:03.691842+00:00",
+      "http_status": 200,
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "bytes": 2579,
+      "sha256": "e096dd9855589b576ca7639519684e2ac36731274c1b687392c325356444138c",
+      "matches_prior_snapshot": null,
+      "reviewed_sections": [
+        "SPDX header",
+        "positions/stringIndexes/sourceString/boundingRect public API43-81"
+      ]
+    },
+    {
+      "id": "sklearn_hdbscan",
+      "pinned_url": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/25dee604bae18205b01548348388baf7a1cdfe0e/sklearn/cluster/_hdbscan/hdbscan.py",
+      "commit_sha": "25dee604bae18205b01548348388baf7a1cdfe0e",
+      "license_scope": "scikit-learn1.7.2;BSD3-Clause",
+      "checked_utc": "2026-10-18T11:48:03.980714+00:00",
+      "http_status": 200,
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "bytes": 41019,
+      "sha256": "a10b843050096568db7ce7f7e208658151269f9b5006d49ea72f74b1c0741d52",
+      "matches_prior_snapshot": true,
+      "reviewed_sections": [
+        "HDBSCAN docstring and min_cluster_size/min_samples420-454"
+      ]
+    },
+    {
+      "id": "sklearn_ransac",
+      "pinned_url": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/25dee604bae18205b01548348388baf7a1cdfe0e/sklearn/linear_model/_ransac.py",
+      "commit_sha": "25dee604bae18205b01548348388baf7a1cdfe0e",
+      "license_scope": "scikit-learn1.7.2;BSD3-Clause",
+      "checked_utc": "2026-10-18T11:48:03.986038+00:00",
+      "http_status": 200,
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "bytes": 25733,
+      "sha256": "80980f5464051a9444a12412040cfe7fd02bf23f968112d0dfc6dff478ad6e42",
+      "matches_prior_snapshot": true,
+      "reviewed_sections": [
+        "residual_threshold and MAD semantics121-135"
+      ]
+    },
+    {
+      "id": "layoutdm_readme",
+      "pinned_url": "https://raw.githubusercontent.com/CyberAgentAILab/layout-dm/873b5eebe4c61862e5c08a10859accf65a168dfd/README.md",
+      "commit_sha": "873b5eebe4c61862e5c08a10859accf65a168dfd",
+      "license_scope": "LayoutDM research reference;codeApache2,weights/data separate",
+      "checked_utc": "2026-10-18T11:48:03.987161+00:00",
+      "http_status": 200,
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "bytes": 4081,
+      "sha256": "68c3b057b491d6bc9debfaa51e9b5c7bb2cbb563f814262618de2a452e1a00a0",
+      "matches_prior_snapshot": true,
+      "reviewed_sections": [
+        "conditional inference modes64-83",
+        "dependency versions from README"
+      ]
+    },
+    {
+      "id": "kiwi_readme",
+      "pinned_url": "https://raw.githubusercontent.com/nucleic/kiwi/728f5661fdd021c68dac1b914b3c8610a46b2e7e/README.rst",
+      "commit_sha": "728f5661fdd021c68dac1b914b3c8610a46b2e7e",
+      "license_scope": "Kiwi1.4.9;BSD3-Clause",
+      "checked_utc": "2026-10-18T11:48:04.005855+00:00",
+      "http_status": 200,
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "bytes": 1230,
+      "sha256": "9a4762e7639f1896584cf37679102be008a7e4e39a66c1e17f305672ce20c9c4",
+      "matches_prior_snapshot": true,
+      "reviewed_sections": [
+        "Cassowary implementation and Python bindings12-27"
+      ]
+    },
+    {
+      "path": "pypdf/_page.py",
+      "pinned_url": "https://raw.githubusercontent.com/py-pdf/pypdf/2a91bd4d0b5bda90f2eae741e383813b6cda9721/pypdf/_page.py",
+      "bytes": 88960,
+      "sha256": "7d41ab88c6e159fc1c84247b2d1501f1b79322cf3bf8fe553c8d6729fe65bcf1",
+      "id": "pypdf_5_9_0_pypdf__page_py",
+      "commit_sha": "2a91bd4d0b5bda90f2eae741e383813b6cda9721",
+      "version": "5.9.0",
+      "license_scope": "BSD-3-Clause; pinned existing dependency",
+      "checked_utc": "2026-10-19T05:17:14.305289+00:00",
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "reviewed_sections": [
+        "PageObject._extract_text visitor context and font dictionaries"
+      ]
+    },
+    {
+      "path": "pypdf/_cmap.py",
+      "pinned_url": "https://raw.githubusercontent.com/py-pdf/pypdf/2a91bd4d0b5bda90f2eae741e383813b6cda9721/pypdf/_cmap.py",
+      "bytes": 18938,
+      "sha256": "9add400d631f532ac0e19fe449d8a360e64cd400515f71fceb73ad6c8af4fa90",
+      "id": "pypdf_5_9_0_pypdf__cmap_py",
+      "commit_sha": "2a91bd4d0b5bda90f2eae741e383813b6cda9721",
+      "version": "5.9.0",
+      "license_scope": "BSD-3-Clause; pinned existing dependency",
+      "checked_utc": "2026-10-19T05:17:14.305289+00:00",
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "reviewed_sections": [
+        "Type1 mapping fallback and embedded FontFile access"
+      ]
+    },
+    {
+      "path": "LICENSE",
+      "pinned_url": "https://raw.githubusercontent.com/py-pdf/pypdf/2a91bd4d0b5bda90f2eae741e383813b6cda9721/LICENSE",
+      "bytes": 1605,
+      "sha256": "a97ac230e5f33ef10a5367a850eb01f91f1a0b064e34742c7794d2294557f524",
+      "id": "pypdf_5_9_0_LICENSE",
+      "commit_sha": "2a91bd4d0b5bda90f2eae741e383813b6cda9721",
+      "version": "5.9.0",
+      "license_scope": "BSD-3-Clause; pinned existing dependency",
+      "checked_utc": "2026-10-19T05:17:14.305289+00:00",
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "reviewed_sections": [
+        "Complete BSD-3-Clause terms"
+      ]
+    }
+  ],
+  "reuse_limits": [
+    "Figma public component/layout schema is design reference,not its private AI training",
+    "Qt public glyph-run API is shaping evidence,not source font recovery",
+    "HDBSCAN forms candidate families,not semantic truth or edit permission",
+    "RANSAC residual threshold is not a confidence or capacity bound",
+    "LayoutDM conditional research is optional later,not installed or trained",
+    "No source code copied,dependency installed,private asset uploaded or paid service used"
+  ]
+}

@@ -1,0 +1,21 @@
+test_source_gold_dependency_suspends_existing_accepted_runtime_without_rewriting_it (test_major_review_dependencies.MajorGoldDeploymentTests.test_source_gold_dependency_suspends_existing_accepted_runtime_without_rewriting_it) ... Fontconfig error: No writable cache directories
+ERROR
+test_actual_source_training_quarantines_same_parameter_model_aliases (test_major_review_dependencies.MajorModelDependencyTests.test_actual_source_training_quarantines_same_parameter_model_aliases) ... ok
+test_actual_rule_evidence_quarantines_equivalent_approved_rule_ids (test_major_review_dependencies.MajorRuleDependencyTests.test_actual_rule_evidence_quarantines_equivalent_approved_rule_ids) ... ok
+
+======================================================================
+ERROR: test_source_gold_dependency_suspends_existing_accepted_runtime_without_rewriting_it (test_major_review_dependencies.MajorGoldDeploymentTests.test_source_gold_dependency_suspends_existing_accepted_runtime_without_rewriting_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_major_review_dependencies.py", line 51, in test_source_gold_dependency_suspends_existing_accepted_runtime_without_rewriting_it
+    self.assertTrue(any(n['key']=='DEPLOYMENT:'+event['id'] for n in value['dependency_nodes']))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_major_review_dependencies.py", line 51, in <genexpr>
+    self.assertTrue(any(n['key']=='DEPLOYMENT:'+event['id'] for n in value['dependency_nodes']))
+                                                ~~~~~^^^^^^
+KeyError: 'id'
+
+----------------------------------------------------------------------
+Ran 3 tests in 9.259s
+
+FAILED (errors=1)

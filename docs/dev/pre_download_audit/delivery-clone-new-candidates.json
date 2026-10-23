@@ -1,0 +1,30 @@
+[
+  {
+    "scope": "tests",
+    "index": 6,
+    "kind": "renamed",
+    "paths": [
+      "tests/test_background_context.py",
+      "tests/test_local_visual_binding.py"
+    ],
+    "start": [
+      8,
+      16
+    ],
+    "fragment": "from PySide6.QtWidgets import QApplication,QDialog,QDialogButtonBox\nfrom template_ai.gui import MainWindow\nfrom template_ai.demo import demo_template\nfrom template_ai.importer import import_file\nfrom template_ai.background import make_background\nfrom gui_wait import dispose_main_window\nfrom runtime_fixture import controlled_resources\nAPP=QApplication.instance() or QApplication([])\n\nclass BackgroundContextTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory"
+  },
+  {
+    "scope": "tests",
+    "index": 7,
+    "kind": "renamed",
+    "paths": [
+      "tests/test_background_context.py",
+      "tests/test_work_load_atomicity.py"
+    ],
+    "start": [
+      9,
+      8
+    ],
+    "fragment": "from template_ai.gui import MainWindow\nfrom template_ai.demo import demo_template\nfrom template_ai.importer import import_file\nfrom template_ai.background import make_background\nfrom gui_wait import dispose_main_window\nfrom runtime_fixture import controlled_resources\nAPP=QApplication.instance() or QApplication([])\n\nclass BackgroundContextTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name)"
+  }
+]

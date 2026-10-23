@@ -1,0 +1,46 @@
+test_old_mode_pending_values_are_retained_as_conflict_without_retargeting_new_source (test_property_form_versions.PropertyFormVersionTests.test_old_mode_pending_values_are_retained_as_conflict_without_retargeting_new_source) ... Fontconfig error: No writable cache directories
+FAIL
+test_old_mode_values_and_undo_are_not_restored_into_newer_same_id_source (test_property_form_versions.PropertyFormVersionTests.test_old_mode_values_and_undo_are_not_restored_into_newer_same_id_source) ... FAIL
+test_unfinished_numeric_input_blocks_apply_without_fake_history (test_property_form_versions.PropertyFormVersionTests.test_unfinished_numeric_input_blocks_apply_without_fake_history) ... FAIL
+test_unfinished_numeric_input_is_pending_and_stay_preserves_it (test_property_form_versions.PropertyFormVersionTests.test_unfinished_numeric_input_is_pending_and_stay_preserves_it) ... FAIL
+
+======================================================================
+FAIL: test_old_mode_pending_values_are_retained_as_conflict_without_retargeting_new_source (test_property_form_versions.PropertyFormVersionTests.test_old_mode_pending_values_are_retained_as_conflict_without_retargeting_new_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_property_form_versions.py", line 24, in test_old_mode_pending_values_are_retained_as_conflict_without_retargeting_new_source
+    self.assertEqual(w.coords[0].value(),current.rect.x);self.assertIsNotNone(w.pending_property_conflict);self.assertEqual(w.pending_property_conflict['values']['coords'][0],77);self.assertEqual(current.rect.x,11)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 77.0 != 11
+
+======================================================================
+FAIL: test_old_mode_values_and_undo_are_not_restored_into_newer_same_id_source (test_property_form_versions.PropertyFormVersionTests.test_old_mode_values_and_undo_are_not_restored_into_newer_same_id_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_property_form_versions.py", line 21, in test_old_mode_values_and_undo_are_not_restored_into_newer_same_id_source
+    self.assertEqual(w.coords[0].value(),current.rect.x);self.assertFalse(w.navigation.pending_form());self.assertEqual(w.undo_stack,[])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 8.0 != 11
+
+======================================================================
+FAIL: test_unfinished_numeric_input_blocks_apply_without_fake_history (test_property_form_versions.PropertyFormVersionTests.test_unfinished_numeric_input_blocks_apply_without_fake_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_property_form_versions.py", line 26, in test_unfinished_numeric_input_blocks_apply_without_fake_history
+    w=self.w;editor=w.coords[0].lineEdit();editor.selectAll();QTest.keyClicks(editor,'-');self.assertFalse(w.coords[0].hasAcceptableInput());before=w.template.to_dict();count=len(w.undo_stack)
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unfinished_numeric_input_is_pending_and_stay_preserves_it (test_property_form_versions.PropertyFormVersionTests.test_unfinished_numeric_input_is_pending_and_stay_preserves_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_property_form_versions.py", line 30, in test_unfinished_numeric_input_is_pending_and_stay_preserves_it
+    w=self.w;editor=w.coords[0].lineEdit();editor.selectAll();QTest.keyClicks(editor,'-');self.assertTrue(w.navigation.pending_form())
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.122s
+
+FAILED (failures=4)

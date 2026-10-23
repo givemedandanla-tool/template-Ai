@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/run_evidence.py", line 278, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/template-Ai/tools/run_evidence.py", line 129, in main
+    result,runtime_errors,module_log=run_modules(list(test_catalog(unittest.defaultTestLoader.discover(str(ROOT/'tests')))),live)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/evidence_modules.py", line 81, in run_modules
+    time.sleep(.05)
+KeyboardInterrupt

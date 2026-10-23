@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/dev_governance.py", line 189, in <module>
+    main()
+  File "/workspace/template-Ai/tools/dev_governance.py", line 184, in main
+    result = render() if args.command == "render" else check(require_evidence=args.require_evidence, publication_scope=args.publication_scope)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/dev_governance.py", line 143, in check
+    latest, _ = verify_run(root, state["latest_evidence_run"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/dev_governance.py", line 31, in verify_run
+    raise ValueError("證據已過期：程式／測試／fixture 已變更，需重新驗證")
+ValueError: 證據已過期：程式／測試／fixture 已變更，需重新驗證

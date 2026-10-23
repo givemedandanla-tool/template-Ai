@@ -1,0 +1,12 @@
+{
+  "root": "BUG-PREFLIGHT-IMPORT-006",
+  "before": "Plain existing GUI test reproduced 30s timeout twice; third control stack shows sklearn initialization in region_hypotheses before no-clue early return",
+  "minimal_before": {
+    "FAIL": 3
+  },
+  "minimal_after": {
+    "PASS": 3
+  },
+  "full_gui_after": "RUNNING; no increased test deadlines",
+  "scope": "Only delay optional DBSCAN import until real size+content clustering is required; no model/geometry rule changes"
+}

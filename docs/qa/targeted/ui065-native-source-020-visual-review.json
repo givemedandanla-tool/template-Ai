@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "review": "All12 actual PNG individually opened and visually inspected",
+  "scope": "UI065 source-stage only, controlled authored Linux; candidate/size/recovery/full25/Windows/private Illustrator qualification not asserted",
+  "screens": [
+    {
+      "file": "batch-correction-01-loaded-coverage-no-global-claim.png",
+      "sha256": "4db2f0c20ce5508b5634a3267718a7971a083acc87b1f430eabf82f4f0f58800",
+      "observation": "Loaded source coverage not global scan; no implicit selection"
+    },
+    {
+      "file": "batch-correction-02-filtered-hidden-explicit-selection.png",
+      "sha256": "6cf3551ebb8fbd6ecb190485892ab4523dc18792fb06dec9206626e64dd098b6",
+      "observation": "Filter keeps three checked IDs including two hidden; exact keys"
+    },
+    {
+      "file": "batch-correction-03-real-preflight-fixed-font-differences.png",
+      "sha256": "abb31ff327dabe567354b78c7cb9bdcf3092575732b722ee24fbc3d530920b62",
+      "observation": "Two legal fixed-point changes and one locked manual review, current original scope"
+    },
+    {
+      "file": "batch-correction-04-real-cancel-scope-confirmation.png",
+      "sha256": "d434740c0158bf24f09ab4d0e3f8036894898a8028c0608ad7c0f8839284a2b5",
+      "observation": "Actual No confirmation, no writes"
+    },
+    {
+      "file": "batch-correction-05-real-approved-fixed-scope.png",
+      "sha256": "d434740c0158bf24f09ab4d0e3f8036894898a8028c0608ad7c0f8839284a2b5",
+      "observation": "Actual Yes fixed scope"
+    },
+    {
+      "file": "batch-correction-06-real-shared-worker-processing.png",
+      "sha256": "dc86b6c0cf815b84363ace368f8a04f3dcf19b447230c4f74e4735d152871557",
+      "observation": "Real existing single worker processing held before original write"
+    },
+    {
+      "file": "batch-correction-07-partial-results-no-full-pass.png",
+      "sha256": "a09d3062b974ae9996dc5a073caf2a8369eb670c5df862b09179307de8435f21",
+      "observation": "Two appliedpending/one manual, no fullPASS"
+    },
+    {
+      "file": "batch-correction-08-real-safe-retry-confirmation.png",
+      "sha256": "d434740c0158bf24f09ab4d0e3f8036894898a8028c0608ad7c0f8839284a2b5",
+      "observation": "Actual samebatch retry confirmation"
+    },
+    {
+      "file": "batch-correction-09-operation-readback-no-duplicate-write.png",
+      "sha256": "4edf55d304e1449cc3422954b2378aa1b1b365ef4737716e95900b90b753c3f6",
+      "observation": "Existing opIDs read back, zero additional revisions"
+    },
+    {
+      "file": "batch-correction-10-real-single-transaction-inverse-scope.png",
+      "sha256": "3d008a2e0c5e3d2d3f04f13667b302785eddf6c7c262a91ca39fc9076e55431c",
+      "observation": "Exact single original atomic transaction inverse confirmation"
+    },
+    {
+      "file": "batch-correction-11-single-inverse-retains-other-success.png",
+      "sha256": "5016ed69cc6c84102402e3eaad3bb7d52f92bd674f4ee37daf894a6d87e3b8c2",
+      "observation": "Only selected inverse, other success retained, counts truthful"
+    },
+    {
+      "file": "batch-correction-12-exact-locked-source-existing-location.png",
+      "sha256": "4cb38e81f38f9bfa1702eef3b67a089afb926f12933657d556e83adfa39b057c",
+      "observation": "Exact locked source selected; original widgets stable and readonly, no movement permission changed"
+    }
+  ]
+}

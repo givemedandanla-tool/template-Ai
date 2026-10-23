@@ -1,0 +1,355 @@
+{
+  "id": "UI054-ROOT-CAUSE-REPAIR-EXACT11",
+  "status": "FULL11_SOFTWARE_SELF_VERIFIED",
+  "original_clauses": [
+    "**使用者決策 D｜根因分析＋安全增量修復＋獨立再驗收＋版本回退**。沿用 UI-052 已確認的「重大錯誤跨批次重審與暫停信任」、UI-053 獨立樣本分類品質驗收及 UI-051 低配公平佇列，形成**發現問題 → 查證根因 → 產生隔離修復候選 → 有界增量驗證／訓練 → 獨立品質再驗收 → 人工批准啟用／維持舊版 → 可追溯安全回退**的 GUI 閉環。**任何 AI 自行提出的修復不得直接改寫正式模型、核准規則、原始 Illustrator、客戶主檔或已發布模板**。這是 GUI 需求決策，不代表已實作。",
+    "**問題輸入與對應證據**：可從 UI-053 分類誤判／漏判詳情、UI-052 重大錯誤重審、UI-004／UI-005 例外中心及 UI-038／UI-039 原畫布開啟既有修復工作台。保留實際錯誤來源、`source_file_id`、`content_id`、`artwork_id`、人物／公司／複合 Logo／標記框、受影響客戶及確切 `style_version_id`、模型／解析器／OCR／正式規則版本、可核實的人工正確答案與發生條件；依類型顯示**根因候選及證據充足程度**，不能把 AI 推測當成已找到根因。",
+    "**先辨識問題在哪一層**：區分來源損壞／不完整、作品切分邊界錯誤、原生 Illustrator 文字與效果解析、OCR 誤判、欄位／人物／公司語意配對、雜訊規則誤排除、完整公司 Logo 圖文損壞、跨尺寸 Logo 庫錯用、來源客戶身分／模板版次混配、模型本身辨識退步及測試標註真值有疑義。GUI 提供「檢查原稿與真值」「檢視相關規則／模型版本」「分析來源依賴與影響」；**若真值不明或來源不可驗，停止自動修復並交人工核對**，不能透過錯誤答案反向污染模型。",
+    "**影響範圍與修復計畫預覽**：由既有來源索引、規則／模型版本、`training_checkpoints`、標記修正及已發布模板來源反查**直接依賴、可能受影響、證據不足及未掃描的歷史來源／作品／尺寸／客戶關聯**；展示候選修改內容、預計重驗／重訓樣本、需要人工審核的項目、與未受影響快取／已核准模板的差異、資源預估與不可自動修復的阻斷。對疑似**嚴重且普遍存在於歷史已核准作品**的錯誤，提議並經使用者確認後啟動 UI-052 跨批次重審及暫停信任，不能只修一筆訓練樣本就讓已受污染的正式來源繼續自動推薦。",
+    "**修復候選與正式版本隔離**：人工更正一個人物電話或 Logo 框位，只修正已確認的作品／來源標記，不會自動變成全部檔案通用規則。若提出可重用的 OCR／欄位配對／雜訊規則或新模型，應產生**新的不可混淆候選版本**，記錄與既有核准基準的差異、來源證據、適用條件、正反例與相依版本；規則仍遵守 UI-007／UI-008／UI-041 的獨立核准及安全回滾。禁止在候選驗證前覆寫唯一的已接受模型、正式規則、原始 `.ai`、已確認客戶或發布樣式。",
+    "**安全增量修復及再訓練**：依根因與依賴版本，優先只重分析／重訓**真正受影響的來源、作品、規則與必要回歸對照**；不可為修一個欄位在低配電腦上無條件重新訓練整個歷史庫。對共享內容但不同客戶編號的來源，解析快取可以共用，**客戶歸屬／人工核准證據不得互相複製**。受 UI-051 有界工作數、CPU／RAM／磁碟背壓及 UI-042 持久檢查點約束，可暫停、失敗隔離、重試和重啟續跑；硬碟寫入失敗或中斷不得把半完成候選說成驗證合格。",
+    "**避免訓練／驗收污染**：從 UI-053 的**訓練集、調參集、真正獨立保留測試集**分離出修復用可核准資料；不得因某個 holdout 失敗就直接將其人工真值偷偷寫回同一輪訓練，再用同一保留集宣稱改善。若保留測試集被用來調整候選，其獨立性已破壞，須明確標註**該保留測試已失效／需要新獨立資料**，並以相同且可核實口徑比較前後模型；標註不足、樣本數過少或高風險真值不明只能顯示證據不足。",
+    "**驗收順序與不可略過的 Gate**：候選修復完成先執行針對根因的可重現回歸案例，再對未受影響的關鍵既有類別做**反向退步檢查**（人物／電話歸屬、單檔多作品切分、完整複合 Logo、卡片物理尺寸、客戶來源版本）；最後依 UI-053 正規流程執行有效獨立資料集驗收。GUI 分開顯示**原問題是否修復／是否產生新嚴重錯誤／新舊版本各分類表現／保留測試有效性／仍待 UI-052 重審的歷史項目**。**修好了原錯誤不等於品質 PASS；UI-052 重審完成也不等於 UI-053 新模型獨立驗收 PASS**。",
+    "**正式採用、維持及安全回退**：品質未達標、重要類別退步、標註或獨立測試不足、需人工審核的歷史高風險項目未解時，維持**候選 FAIL／REVIEW_REQUIRED／NOT_VERIFIED**，阻擋候選作為已接受的自動正式推薦／永久學習規則，不自動合併或覆寫舊版。只有相關規則核准、必要 UI-052 影響重審、UI-053 有效獨立品質驗收以及人工選定的 exact 候選版本均符合條件，才可提出**明確的正式啟用確認**並保存模型＋規則＋解析器＋資料集／標註＋來源／Gate 的版本憑證。若新版本部署後暴露退步，顯示**安全回退候選**與受影響版型／作品預覽，核對目標舊版本**本身仍有有效證據且不存在已確認的系統性嚴重錯誤**，才能恢復到可信狀態；若舊版也有問題，兩版皆不得冒充安全，應保留阻斷與待人工處置。",
+    "**人機介面與風險提示**：在同一既有訓練／例外／品質中心提供「待修問題」「根因與影響」「候選修復計畫」「增量處理進度」「前後品質差異」「可核准／阻擋原因」「回退／恢復」分頁；每項含來源定位、負面案例、必要人工核對、狀態及下一步。避免新增與 UI-052 重審或 UI-053 評估重複的另一套真實資料庫／品質引擎；只以既有 `review_events`、`training_checkpoints`、內容／來源索引及核准規則／模型版本增加必要修復憑證。",
+    "**發布與資料安全界線**：任何模型修復／回退都**不代表已輸出成品、正式 Illustrator 原稿、客戶主檔、已發布模板會被無聲改寫**，亦不能略過 UI-010 模板核准、UI-013 固定字級、UI-019／UI-023 公司 Logo 及印前 Gate。若修復涉及客戶資料變更仍走 UI-045／UI-046 受控修訂。UI-043 不增設購買分類，UI-048 完整登入／權限 GUI 仍留到最後功能階段；測試資料本機保存並以合成／合法去識別樣本為主，不上傳原稿及個資至 GitHub。"
+  ],
+  "original_parent_sha256": "13e2c0f1dee610fa6485a53f806bef1dadacd9f0c920a32953851121af942498",
+  "references": [
+    {
+      "url": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/1.7.2/sklearn/naive_bayes.py",
+      "version": "1.7.2",
+      "bytes": 55949,
+      "sha256": "ee265c08217b2b4a0543bd984cb11a962b4d2f4c9a8150332e84f1364b5d37ec",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED",
+      "reuse": "Reuse existing local CharacterModel sufficient-count classifier; train only explicitly approved affected/control text scope, never blindly rescan wholehistory or copyholdout labels; do not install sklearn"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mlflow/mlflow/v2.22.0/mlflow/entities/model_registry/model_version.py",
+      "version": "2.22.0",
+      "bytes": 6602,
+      "sha256": "6dd9f72f4cb36ba92fe096fa18b083d435e11c749b0625e00e1b46eb612bcb37",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED",
+      "reuse": "Use actual model version identifiers distinct from movable approved deployment references; reuse existing TrainingStore append-only history and CAS, no MLflow installation/server/parallel registry"
+    }
+  ],
+  "existing_references": "docs/dev/REMAINING28_ENGINEERING_BASIS.json:NetworkX3.5 connected dependency groups and AWS ModelQualityMonitor separated truth/baseline/constraints",
+  "reuse": [
+    "TrainingStore sameSQLite append-only events/CAS and existing source/FACTS/sample/model/rule identities",
+    "QualityDiagnostics exact source/result/Gold evidence; QualityRechecks historical impact/quarantine",
+    "QualityPipelines real executable/versioned parameters; QualityProtocols/Sets explicit diagnostic vs independent use",
+    "EvaluationJobs existing shared FIFO/process isolation/resource admission/pause/cancel/restart",
+    "SemanticLearning selected confirmed TRAIN/VALIDATION scopes; no generic architecture mutation",
+    "Existing source-facts/noise/exception/customer editing flows, not direct repair writes"
+  ],
+  "math": [
+    "Directed dependency reachability defines bounded affected set; unknown historical dependencies remain explicit potential/unscanned, not safe",
+    "Ordered state machine requires reproducible root-case regression then unaffected critical controls then fresh independent holdout; no average score erases critical regression",
+    "One immutable candidate/version with optimistic CAS approval pointer; rollback revalidates target evidence, does not presume older safe",
+    "Independent groups retain UI053 whole-source correlation and Wilson uncertainty; training/diagnostic subsets never qualify independent quality"
+  ],
+  "packages": [
+    "Exact immutable issue evidence and root-cause hypotheses with explicit uncertainty/source checks",
+    "Impact and bounded explicit repair plan; critical system-wide problems invoke existing UI052 confirmed recheck",
+    "Isolated real model/parser/OCR/rule candidate versions and bounded training/reanalysis jobs; no early production mutation",
+    "Ordered actual diagnostic root case, negative controls and independent evaluation receipts; holdout-exposure permanently retained",
+    "Explicit exact-version activation and trustworthy rollback pointer; actual future-source pipeline routing with fail-closed runtime",
+    "Same-center lazy paged native GUI with all existing entrypoints; persistence/cancel/disk/audit/clone safety regression"
+  ],
+  "unresolved_design": [
+    "Need isolated approved rule candidates that actual quality inference can execute before permanent activation, while existing normal ACTIVE rules remain exact and historical support refs valid",
+    "Deployment must route actual automatic source analysis through frozen accepted pipeline, not merely save a display-only pointer",
+    "Candidate training must use explicit limited confirmed text scope in shared bounded worker, without reusing exposed holdout as TRAIN",
+    "Source/Gold ambiguity or missing original blocks automatic repair; safe manual correction route remains available"
+  ],
+  "nonclaims": [
+    "No application/test/tool/acceptance edits during UI053 frozen-source formal; documentation drafts unexecuted",
+    "No parent completion from this plan",
+    "No paid API/model/server, new service, EXE, main merge or subagent",
+    "No production accuracy calibration, actual native Illustrator corpus/Windows/referencehardware or independent review"
+  ],
+  "design_notes_pending_implementation": [
+    "Exposed HOLDOUT root cases require a distinct REPAIR_DIAGNOSTIC fixed protocol: readonly replay allowed only as descriptive evidence, permanently no independence/quality-pass claim; never reassign exposed holdout to TRAIN/VALIDATION. Existing QualityProtocols/Sets/EvaluationJobs engine must be extended, not replaced.",
+    "Ordered receipts: root-case replay fixed/new/still-failing; explicit unaffected controls covering person/contact/multiwork/wholeLogo/physicalsize/customer versions; then fresh unrelated unexposed HOLDOUT ordinary UI053 pair. Missing domains/unknown truth block release, not automatic threshold defaults.",
+    "Isolated approved rules need actual source/counterexample review and a new RULE version state outside ACTIVE, executable only via explicit frozen candidate selection. Version immutable; later exact deployment pointer selects approved versions without rewriting their quality pins. Existing RULE dependencies/source guards must continue to work; historical ACTIVE normal rules remain supported.",
+    "Real deployment pointer must route future AutomaticTraining source-only hypotheses through actual accepted QualityPipelines.predict_source, retaining existing no-confirmed-fact-overwrite, sourcecache guards and changed-pointer CAS. Runtime invalid/withdrawn/knownbad pipeline stops, no automatic unsafe fallback.",
+    "Bounded selected-scope semantic retraining should reuse shared FIFO/process supervisor and SemanticLearning.train, preferably one explicit new job adapter with atomic candidate/job/lease receipt; no duplicate scheduler. No warm-start claim unless actual counts delta is implemented; bounded selected-scope retrain is distinct from fullhistory retrain.",
+    "Potential positive synthetic fixture: actual known baseline cannot classify an unprefixed unseen Chinese jobtitle; separately authored TRAIN/VALIDATION title/address examples train existing CharacterModel. Exposed failed root truth is never passed to trainer. New frozen model should fix actual source prediction; same authored source includes unaffected Name/contact/company/wholeLogo/mm/customer controls. Synthetic lenient explicit policy exercises state transitions only, not production calibration.",
+    "Use existing QualityRechecks exact/legacy-potential history impacts and new explicit human FACTS resolution, preserving historical quarantine and closed receipts. A repaired row alone never clears model/component quarantine; new effective params/version required.",
+    "Keep parser/model/rule fingerprints (not IDs/names), Gold rights/currentsource proofs, finite schema validation, 50row pagination, canonical case receipts and unsaved-fact navigation guards.",
+    "Chosen reuse: semantic repair training is an explicit operation on existing AUTO_JOB (scope includes training/root-review digests), reusing AutomaticTraining claim/finish, shared worker lease, runtime child supervisor, cancel/pause/restart/restore; no fourth job kind/new queue. Model+candidate+finaljob+lease atomic commit; exact bounded TRAIN/VALIDATION inputs only. Draft unexecuted, must integrate and test."
+  ],
+  "drafts": [
+    "docs/dev/wip/UI054_QUALITY_REPAIRS_DRAFT.py",
+    "docs/dev/wip/UI054_REPAIR_TRAINING_DRAFT.py",
+    "docs/dev/wip/UI054_RULE_CANDIDATES_DRAFT.py"
+  ],
+  "draft_limits": [
+    "Only ast.parse syntax checked; never imported/executed or copied into actual application",
+    "Issue draft still needs current Gold/domain truth and external exception integration tests; no completeness claim",
+    "Training draft reuses actual AUTO_JOB claim/finish/sharedlease/child/runtime protocol; integration into claim/run plus mode scope validation still NOT DONE",
+    "Need all root/control/replay/independent receipts, actual isolated rule selection and runtime deployment/rollback, GUI/entrypoints/negative tests before full11 acceptance"
+  ],
+  "gui_release_design": "docs/dev/UI054_RELEASE_AND_GUI_DESIGN.md",
+  "shared_command_transport": "Extend existing quality_command REPAIR_* routing and reuse QualityPanel.request/owned subprocess transport; no third command protocol/scheduler",
+  "actual_provenance_reuse": "UI053 actualAUTO analysis_version/analysis_evidence source model now captured separately from active model; sameweights otherversions remainpotential; reuse current majorrecheck dependency resolver",
+  "first_package": {
+    "requirement": "UI-054",
+    "acceptance": "原11全文不縮減；先問題憑證／根因候選與目前來源人工真值有效性，未知阻擋，不當成已證實根因",
+    "tests": [
+      "Actual critical source/result canonical issue, not handfilled predictions",
+      "Human source/facts/Gold freshness, no automatic source/customer/template mutation",
+      "Explicit source/truth review flags, disputed truth and incomplete source blocked",
+      "Stale preview / invented case / late audit transaction rollback /50row paging",
+      "Then extract/reuse existing major impact resolver for generic repair scope"
+    ],
+    "checkpoint": "CP-20261016-REMAINING28-UI054-START",
+    "status": "IMPLEMENTED_TARGETED_15PASS_PENDING_FULL_ORIGINAL11",
+    "actual_implementation": [
+      "template_ai/quality_repairs.py",
+      "template_ai/quality_rechecks.py"
+    ],
+    "targeted_evidence": "docs/qa/targeted/ui054-issue-impact-002.log"
+  },
+  "next_package": "Freeze source/acceptance, push/native readback, actual full formal run and publication Gate; then8of28 and continue20",
+  "semantic_candidate_package": {
+    "status": "IMPLEMENTED_LEGACY43PASS_RECOVERY7PASS_PENDING_FULL11",
+    "implementation": [
+      "template_ai/quality_repair_training.py",
+      "template_ai/automatic_training.py",
+      "template_ai/semantic_learning.py",
+      "template_ai/runtime_queue.py"
+    ],
+    "tests": "docs/qa/targeted/ui054-semantic-candidate-002.log",
+    "scope": "Explicitselected TRAIN/VALIDATION,existingAUTO_JOB sharedlease/FIFO/child;immutableisolatedmodel,notqualityoractivation",
+    "pending": [
+      "Isolated approvedrules with sharedchecks and actualfrozenexecution",
+      "Descriptive root replay/unaffectedcontrols/freshindependentacceptance",
+      "Actualdeployment/rollback,sevenpageGUI/allentrypoints/fulloriginal11formal"
+    ],
+    "recovery_evidence": "docs/qa/targeted/ui054-semantic-recovery-006.log"
+  },
+  "isolated_rule_package": {
+    "status": "IMPLEMENTED_TARGETED25PASS_PENDING_FULL11",
+    "implementation": [
+      "template_ai/quality_repair_rules.py",
+      "template_ai/noise_review.py",
+      "template_ai/noise_recovery.py",
+      "template_ai/quality_rules.py",
+      "template_ai/quality_reports.py",
+      "template_ai/quality_groups.py"
+    ],
+    "evidence": "docs/qa/targeted/ui054-isolated-rules-003.log",
+    "scope": "Shared risk checks, root NOISE_RULE review, immutable isolated RULE/current origin locks, explicit frozen execution only, quality approval separated from production, permanent historical TRAIN exposure; ordinary version/review bypass blocked",
+    "not_claimed": "No UI054 parent closure/deployment/whole quality acceptance"
+  },
+  "replay_package": {
+    "status": "IMPLEMENTED_TARGETED9PASS_EXPANDED36PASS_PENDING_FULL11",
+    "implementation": [
+      "template_ai/quality_protocol.py",
+      "template_ai/quality_sets.py",
+      "template_ai/quality_jobs.py",
+      "template_ai/quality_statistics.py"
+    ],
+    "evidence": [
+      "docs/qa/targeted/ui054-exposed-replay-001.log",
+      "docs/qa/targeted/ui054-exposed-replay-002.log"
+    ],
+    "scope": "Existing source-only FIFO evaluation; exact actual-failure/root-review/origin dataset; permanent HOLDOUT role/exposure/consumption untouched. Diagnostic output always quality_pass false, independent confidence suppressed; no fresh acceptance claim. Current source/truth/root/pipeline pins rechecked."
+  },
+  "source_impact_package": {
+    "status": "IMPLEMENTED_TARGETED13PASS_PENDING_FULL11",
+    "implementation": [
+      "template_ai/quality_rechecks.py",
+      "template_ai/quality_repairs.py"
+    ],
+    "evidence": "docs/qa/targeted/ui054-source-impact-001.log",
+    "scope": "Bounded NetworkX directed descendants: all same-content source works, actual historical TRAIN/VALIDATION model inputs, actual current/historical AUTO model producers, template versions/styles/customers; missing revisions and descendants POTENTIAL; unrecorded legacy UNKNOWN; source issues need no invented pipeline. No automatic writes/training/quarantine."
+  },
+  "ordered_gate_package": {
+    "status": "IMPLEMENTED_ROOT3PASS_COMBINED17PASS_CONTROLS_POSITIVE_CHAIN_PENDING",
+    "implementation": [
+      "template_ai/quality_repair_gates.py",
+      "template_ai/quality_protocol.py",
+      "template_ai/quality_reports.py"
+    ],
+    "evidence": "docs/qa/targeted/ui054-ordered-gates-003.log",
+    "scope": "Immutable exact pipeline candidate; actual root-fault replay fixes omitted source; predeclared same-candidate ordered root/control/independent stages, direct previous PASS and dataset unrelatedness/time constraints. Sparse controls persist FAIL and block final stage; identical version rename rejected. Actual omitted-source test exposed existing source_id duplicate merge bug, fixed with source receipt consistency guard.",
+    "pending": [
+      "Explicit new current Gold binding after re-review updates FACTS; no exposure reset",
+      "Full positive critical-controls/fresh-independent chain",
+      "Actual deployment/rollback, seven pages/full original11/formal"
+    ]
+  },
+  "truth_rebind_package": {
+    "status": "IMPLEMENTED13PASS_CANDIDATE_RULE_GATE15PASS_PENDING_FULL11",
+    "implementation": [
+      "template_ai/quality_repair_truth.py",
+      "template_ai/quality_repairs.py",
+      "template_ai/quality_protocol.py",
+      "template_ai/quality_repair_gates.py"
+    ],
+    "evidence": [
+      "docs/qa/targeted/ui054-current-truth-001.log",
+      "docs/qa/targeted/ui054-current-truth-002.log"
+    ],
+    "scope": "Explicit current same-content HOLDOUT Gold binding after human fact re-review; old immutable failure retained, exposure/role/consumption never reset; new root review can run actual descriptive replay, stale changes and late audit fail closed.",
+    "pending": "Full positive critical-controls/fresh-independent chain, actualdeployment/rollback and seven pages/all original11"
+  },
+  "release_draft": {
+    "path": "docs/dev/wip/UI054_RELEASES_DRAFT.py",
+    "status": "HISTORICAL_DRAFT_PROMOTED_WITH_REVIEW_CHANGES_AND_ACTUAL32PASS_ACTIVE_MODULE_IS_AUTHORITY",
+    "review_required": [
+      "CAS immutable deployment and current quality trust",
+      "Actual AUTO preflight/job pipeline pins and frozen source execution; no version switching",
+      "Backup restore revalidation marker; actual rollback target proof/late audit failure tests",
+      "Full positive ordered chain with actual multiwork/critical controls"
+    ]
+  },
+  "runtime_release_package": {
+    "status": "IMPLEMENTED_TARGETED32PASS_FULL_REPAIR_CHAIN_GUI_PENDING",
+    "implementation": [
+      "template_ai/quality_repair_releases.py",
+      "template_ai/automatic_training.py",
+      "template_ai/runtime_queue.py",
+      "template_ai/relational_backup.py"
+    ],
+    "evidence": "docs/qa/targeted/ui054-runtime-deployment-002.log",
+    "scope": "Immutable deployment event +atomic CAS pointer; existing accepted initial baseline only before repairissues. Repair deployment requires last ordered independent Gate and reviewed current historical impact/no pending highrisk. Actual AUTO preflight/job/queue pins frozen source pipeline; pointer changes never switch queued exact version. Actual owned child execution, late audit rollback, withdrawn proof and actual critical same-parser quarantine block old fallback; actualencryptedrestore requires explicit deploymentrevalidation. No model/rule/original/customer/template silent writes.",
+    "limits": [
+      "Authored intentionally lenient local software safety policy, not production calibration/nativeIllustrator/hardware",
+      "Full positive repair DEPLOY ordered chain still pending (initialbaseline and trusted rollback tested)",
+      "Sevenpages/all entrypoints and entire original11 formal pending"
+    ]
+  },
+  "full_positive_chain_package": {
+    "status": "IMPLEMENTED_FULL_ACTUAL_CHAIN_PLUS4CASE98_939S_PASS_GUI_PENDING",
+    "evidence": [
+      "docs/qa/targeted/ui054-full-ordered-deploy-003.log",
+      "docs/qa/targeted/ui054-full-ordered-deploy-004.log"
+    ],
+    "scope": "Actual deliberately faulty frozen parser→repaired source ROOT→unrelated two-column VALIDATION with real single-file multiworks +phone/person/wholeLogo/mm/customer controls→fresh authored portrait HOLDOUT→explicitqualitydecision/impactreview/repairDEPLOY. Positive TP required on baseline and candidate required critical classes; physicalmm within policy. Independent groups remain correlated within authored families; intentionally lenient synthetic policy tests software transitions only, not productionaccuracy/nativeAI/hardware.",
+    "execution": "First fullchain143.902s PASS; removed duplicate recursive stage_context/checked_gate calls already freshly validated by authoritative QualityReports→protocol.validity→check_metadata, no checks skipped or cross-call cache; complete4cases98.939s PASS.",
+    "retained_failures": "001fixtureGold stale sourceinventory ERROR;002assertion identifiescorrectguard; fixed all sourceworks beforeGold confirmation.",
+    "pending": [
+      "Separate fullchain module and stale prior-root regression after optimization",
+      "Actual exception entry and fullsource/rule/sample impact edges",
+      "Sevenpages/allentrypoints/fulloriginal11formal"
+    ]
+  },
+  "gui_backend_package": {
+    "status": "IMPLEMENTED_FULLCHAIN_STALE11PASS_ENTRIES2PASS_COMMANDS5PASS_GUI_PENDING",
+    "implementation": [
+      "template_ai/quality_repair_commands.py",
+      "template_ai/quality_command.py",
+      "template_ai/quality_rechecks.py",
+      "template_ai/quality_repairs.py",
+      "template_ai/quality_repair_releases.py"
+    ],
+    "evidence": [
+      "docs/qa/targeted/ui054-full-chain-stale-impact-001.log",
+      "docs/qa/targeted/ui054-exception-rule-sample-001.log",
+      "docs/qa/targeted/ui054-shared-repair-commands-002.log"
+    ],
+    "scope": "Bounded own fullchain module +actual withdraw priorRootGold blocks finalGate/activeevent. Actual persisted AUTO_UNIT issue entry; directed historical RULE exactrevision→SAMPLE→DATASET→actualgeometrytemplate; adoption impact includes selected model/rule actualsupport sources and original rules. Existing quality_command/ownedchild transport routes REPAIR operations, no newtransport/DB/worker.50paged globallysearched catalog, HOLDOUT/related conflicts disabled, defaults unselected, modelweights/images notloaded; backend rechecksselectedactualsources.",
+    "remaining": "Seven realQt pages and all entrypoints/unsaved guard/captures, full original11 acceptance/formal then remaining20parents"
+  },
+  "native_gui_package": {
+    "status": "IMPLEMENTED_NATIVE7PAGES_BASIC4PASS_FULL_ROUTE_GUI_CAPTURE_PENDING",
+    "implementation": [
+      "template_ai/quality_repair_dialog.py",
+      "template_ai/quality_panel.py",
+      "template_ai/training_facts_panel.py",
+      "template_ai/training_exceptions_panel.py",
+      "template_ai/quality_repairs.py"
+    ],
+    "evidence": "docs/qa/targeted/ui054-seven-page-gui-002.log",
+    "scope": "Seven actual lazy native scrollpages using existing QualityPanel.request; source/facts, persisted exception, qualitycase and cross-recheck adapters; default unselected TRAIN/VALIDATION/unchecked humantruth/confirmation; actual owned preview/confirm; edited inputs invalidate preview; 50sourcecatalog and50known-impact pages; shared training/evaluation FIFO/runtime controls; same candidate/root checks; unsaved human editor/context close guard. Cross-recheck uses actual QUALITY_WORK_QUARANTINE receipt because header intentionally omits rows.",
+    "pending": [
+      "All actual route/candidate/train/rule/stage/report/deployment/rollback GUI interactions and screenshot inspection",
+      "Refine actual labels/pagination edge states and root source missingfailure nextstep",
+      "Complete exact original11 acceptance and full formal source freeze/run/publicationGate"
+    ]
+  },
+  "native_critical_actions_package": {
+    "status": "IMPLEMENTED_NATIVE4PASS_PLUS15REGRESSIONPASS_CAPTURE_PENDING",
+    "evidence": [
+      "docs/qa/targeted/ui054-native-critical-actions-002.log",
+      "docs/qa/targeted/ui054-native-critical-actions-003.log"
+    ],
+    "scope": "Actual TRAIN/VALIDATION GUIrolechoices→owned command→sharedFIFO/child→isolatedmodel receipt; actual HIGHrule failed review reaches childdialog/clearsapproval then explicitdetailreview produces isolated rule; actual persisted cross-recheck proof and qualityside currentData; native exactreport qualitypreview/confirm and expected reportdigest inside transaction, neveractivation. Jobprogress reads only50 SQLite metadata rows during busy training, no competing source worker/weights/images.",
+    "retained_failure": "001first GUIaction training itself succeeded but progress refresh competed with stillfinishingworker; fixed direct bounded readonly job_status reused by command, not testdelay masking.",
+    "pending": [
+      "Reuse existingversion GUI to choose exact isolatedapprovedrules, no rawidtyping",
+      "Separate currentcase/recheck visual route scope and allcapturedscreens",
+      "Alloriginal11formal/Gate beforeparentclosure"
+    ]
+  },
+  "exact_rule_import_canvas_package": {
+    "status": "IMPLEMENTED_NATIVE9PASS_PREVIOUS11PASS_SCREENSHOT_FULL11FORMAL_PENDING",
+    "evidence": [
+      "docs/qa/targeted/ui054-exact-rule-native-001.log",
+      "docs/qa/targeted/ui054-import-canvas-exact-rule-001.log"
+    ],
+    "scope": "Existing QualitySetupDialog reused from RepairDialog for actualversion selection. Bounded50paged approved ACTIVE/isolatedRULE literal chooser, defaults unselected, exactrevision/currentstate guard, no rawidtyping; actual freeze/predict source tested and remains not active. Candidate origin repair_candidate_id exactlink rejects copiedid. Selectedqualitycase takes priority over stale oldrecheck; separate explicit persistentrecheck action. Actual unsupported import batch/item/no-work proof stays MANUAL_SOURCE_RECOVERY_REQUIRED and blocks candidate/known-impact claim; importcenter and originalcanvas route same workbench.",
+    "pending": [
+      "Seven actual persisted-state Qt screenshots/visual inspection/aggregate capture",
+      "Original11 exact fullacceptance then sourcefreeze/fullformal/Gate",
+      "Remaining20parents after8of28verified"
+    ]
+  },
+  "preliminary_capture_package": {
+    "status": "ACTUAL7SCREEN_CAPTURE_PASS_VISUALLY_REVIEWED_LAYOUT_PROFILE_FIX_PENDING",
+    "evidence": "docs/qa/ui054-native-capture-002/remaining28-repair-capture.json",
+    "code": "tools/capture_quality_repair.py",
+    "scope": "Actual full ordered frozen parser chain/deployment and separate explicitly-labelled semantic issue via sharedFIFO/realchild; accepted parser vs PENDINGsemantic distinct; actualqualitywithdrawal blocks rollback. Reused shared actual_chain helper, no copied predictions. Seven real native images reviewed and published, no realsource/PII.",
+    "actual": {
+      "preparation_seconds": 59.93915438799013,
+      "max_gui_tick_gap_ms": 2456.0802249907283,
+      "peak_parent_rss_bytes": 182976512
+    },
+    "limitations": [
+      "Controlled admission safety workflow, not hardware calibration/nativeIllustrator/productionaccuracy",
+      "Capture includes synchronous backend pin assertion during GUI timer, remove duplicate test-only operation before accurate GUI-only measurement",
+      "Observed narrow table columns/too-short visible source/impact rows and raw progress IDs; fix layout/names and recapture beforefinal",
+      "First capture001 importhelper namespace error retained;002 actualPASS, notfullparentclosure"
+    ]
+  },
+  "full_acceptance_coverage": "docs/dev/UI054_FULL_ACCEPTANCE_COVERAGE.json",
+  "reviewed_capture_package": {
+    "status": "ACTUAL7PAGE_CAPTURE_PASS_ALL_VISUALLY_REVIEWED",
+    "evidence": "docs/qa/ui054-native-capture-003/remaining28-repair-capture.json",
+    "preparation_seconds": 57.50560211199627,
+    "max_gui_tick_gap_ms": 65.05689199548215,
+    "peak_parent_rss_bytes": 180183040,
+    "admission": "CONTROLLED_WORKFLOW_NOT_HARDWARE_CALIBRATION",
+    "regression": "docs/qa/targeted/ui054-native-layout-progress-001.log",
+    "scope": "Readable source/impact table height+stretch, named source/progress, rawapproval data preserved; actualowned STATUS pin removes duplicate direct test-only backend assertion from GUI timing. Separate repair capture process added formalaggregate, same120s bound/no test weakened."
+  },
+  "formal_repair001_interruption": {
+    "source_commit": "3fb28a69d3a23df944105f98718cf839da022f08",
+    "parent_exit": 130,
+    "completed": 437,
+    "passed": 436,
+    "failed_test": "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source",
+    "exact_original_delay_cause": "NOT_CAPTURED; GUI workflow used live host/startup admission,10s wait unrelated to cancel assertion",
+    "evidence": "docs/evidence/runs/RUN-REMAINING28-REPAIR-001/controlled-stop.json",
+    "fix": "Workflow-only AutomaticTrainingGuiTests uses existing controlled_resources; actualforced60s startup gate blocks preflight then explicitrelease reaches confirmation cancel with no jobs/sources. Actualruntime sampling/pressure tests unchanged.",
+    "targeted": "docs/qa/targeted/ui054-cold-preflight-admission-001.log",
+    "targeted_tests": 32,
+    "source_frozen_next": "RUN-REMAINING28-REPAIR-002"
+  },
+  "formal_verification": {
+    "run": "RUN-REMAINING28-REPAIR-003",
+    "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08",
+    "tests": 1001,
+    "modules": 126,
+    "uncaught_errors": 0,
+    "capture_exit": 0,
+    "parent_exit": 0,
+    "source_unchanged": true,
+    "seven_native_pages_visually_reviewed": true,
+    "attachments": 174,
+    "external_production_native_and_hardware_claims": false
+  }
+}

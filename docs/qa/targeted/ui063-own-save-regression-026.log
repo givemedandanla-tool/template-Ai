@@ -1,0 +1,26 @@
+test_successful_explicit_apply_does_not_archive_its_own_values_as_a_version_conflict (test_property_form_versions.PropertyFormVersionTests.test_successful_explicit_apply_does_not_archive_its_own_values_as_a_version_conflict) ... Fontconfig error: No writable cache directories
+FAIL
+test_save_draft_with_unapplied_fields_keeps_them_pending_without_claiming_saved (test_property_form_versions.PropertyFormVersionTests.test_save_draft_with_unapplied_fields_keeps_them_pending_without_claiming_saved) ... FAIL
+
+======================================================================
+FAIL: test_successful_explicit_apply_does_not_archive_its_own_values_as_a_version_conflict (test_property_form_versions.PropertyFormVersionTests.test_successful_explicit_apply_does_not_archive_its_own_values_as_a_version_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_property_form_versions.py", line 52, in test_successful_explicit_apply_does_not_archive_its_own_values_as_a_version_conflict
+    w=self.w;w.coords[0].setValue(9);w.apply_properties();APP.processEvents();self.assertEqual(w.template.slots[0].rect.x,9);self.assertIsNone(w.pending_property_conflict);self.assertFalse(w.navigation.pending_form())
+                                                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'slot_id': '1ffd23c3842c41a7bd5a1a120417d911', 'mode': 1, 'root': '/tmp/tmpdpurrwjn/data', 'values': {'coords': [9.0, 6.0, 70.0, 11.0], 'kind': 'name', 'owner': 'p1', 'index': 1, 'font': 'Noto Sans CJK TC', 'pt': 18.0, 'color': '#111827', 'scale': 85.0, 'align': 'left', 'required': True, 'incomplete': {}}} is not None
+
+======================================================================
+FAIL: test_save_draft_with_unapplied_fields_keeps_them_pending_without_claiming_saved (test_property_form_versions.PropertyFormVersionTests.test_save_draft_with_unapplied_fields_keeps_them_pending_without_claiming_saved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_property_form_versions.py", line 55, in test_save_draft_with_unapplied_fields_keeps_them_pending_without_claiming_saved
+    self.assertEqual(w.coords[0].value(),10);self.assertTrue(w.navigation.pending_form());self.assertEqual(w.library.object_snapshot('TEMPLATE',self.draft.id),before);self.assertIn('待套用',w.statusBar().currentMessage())
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 8.0 != 10
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.713s
+
+FAILED (failures=2)

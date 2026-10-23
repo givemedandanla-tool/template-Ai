@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/runtime_supervisor.py": {
+      "source_sha256": "854e96ca5f724fbe544cfb2f50f8a6f5e8ab18ec0bb226259593945fde153694",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 10,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/runtime_resources.py": {
+      "source_sha256": "0cd828b1f3735af5b9540f62ba575471c9db642e3f646cf864e8c9694512d283",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 14,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/batch_import.py": {
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 0,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation_store.py": {
+      "source_sha256": "884945432fa826422293d05131c1bfa2caf8b7229ac6c424facf08e27dd8bc2d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation.py": {
+      "source_sha256": "255e58b284a97d510f3aba40932fa61451eee8d8a12371e8743f1b64f93fa603",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 13,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-03575": {
+      "visits": 34,
+      "values": {
+        "value": {
+          "builtins.dict": 17,
+          "builtins.int": 17
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_conflicting_other_window_policy_is_not_overwritten",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_delayed_input_events_do_not_touch_destroyed_widgets_or_closed_context",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_failed_policy_audit_rolls_back_persistence_but_keeps_safe_unpersisted_local_pause",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_gui_heartbeat_and_foreground_priority_are_measured_without_reading_key_text",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_invalid_persisted_policy_pauses_background_without_silently_resetting_it",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_library_close_and_project_switch_stop_admission_without_sqlite_from_worker",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_raw_sqlite_close_stops_probe_and_timer_without_late_ui_database_errors"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-03576": {
+      "visits": 16,
+      "values": {
+        "value": {
+          "template_ai.runtime_supervisor.RuntimeSupervisor": 4,
+          "builtins.method": 4
+        },
+        "call_receiver": {
+          "template_ai.runtime_supervisor.RuntimeSupervisor": 4
+        },
+        "call_result": {
+          "builtins.float": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_gui_heartbeat_and_foreground_priority_are_measured_without_reading_key_text"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-03577": {
+      "visits": 25,
+      "values": {
+        "value": {
+          "template_ai.runtime_supervisor.RuntimeSupervisor": 5,
+          "builtins.dict": 5
+        },
+        "operator_left": {
+          "builtins.int": 5
+        },
+        "operator_right": {
+          "builtins.int": 5
+        },
+        "operation": {
+          "builtins.int": 5
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_conflicting_other_window_policy_is_not_overwritten",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_failed_policy_audit_rolls_back_persistence_but_keeps_safe_unpersisted_local_pause",
+        "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

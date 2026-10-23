@@ -1,0 +1,418 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_font_center.py": {
+      "source_sha256": "639249a2f368e127a6a5b37a2dc1417739eed9af3b16c56c34c7e3d01d4406db",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 19,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/fonts.py": {
+      "source_sha256": "13068091887cde61d9efc460ef14bbd1f9cd9965d03c56b7ca54ae5193fd0138",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 16,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/font_catalog.py": {
+      "source_sha256": "72e233d426762d5e3dc237b437537fd9b3af2c733bd85583e94a89d2b0e132cb",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 12,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/font_dialog.py": {
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/gui.py": {
+      "source_sha256": "ba0ebc0ebee4df3593798dd4b27a8e016826d10c2bd41aa85a51d4922ade9658",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 212,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/layout.py": {
+      "source_sha256": "875862aa49c51fc19a8e7633dca6be8c2d6a14156dd244bd077e9c4c361e88fe",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/render.py": {
+      "source_sha256": "8209686d71ca5ee2dae2771954afcff0c6579914b0107834a01da8718ce332f8",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 4,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/font_evidence.py": {
+      "source_sha256": "8b617d07575e254d51c85ca71b882d8cab7c7902b4cbf579faedc3d5378637b7",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/batch_import.py": {
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 0,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-01481": {
+      "visits": 5,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.float": 1
+        },
+        "operator_left": {
+          "builtins.float": 1
+        },
+        "operator_right": {
+          "builtins.int": 1
+        },
+        "operation": {
+          "builtins.float": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_missing_glyph_and_covered_glyph_filters_keep_unmeasured_unknown"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01482": {
+      "visits": 5,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.float": 1
+        },
+        "operator_left": {
+          "builtins.float": 1
+        },
+        "operator_right": {
+          "builtins.int": 1
+        },
+        "operation": {
+          "builtins.float": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_missing_glyph_and_covered_glyph_filters_keep_unmeasured_unknown"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01483": {
+      "visits": 5,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.float": 1
+        },
+        "operator_left": {
+          "builtins.float": 1
+        },
+        "operator_right": {
+          "builtins.int": 1
+        },
+        "operation": {
+          "builtins.float": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_missing_glyph_and_covered_glyph_filters_keep_unmeasured_unknown"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01561": {
+      "visits": 14,
+      "values": {
+        "receiver": {
+          "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2": 7
+        },
+        "member_value": {
+          "builtins.int": 7
+        }
+      },
+      "member_checks": {
+        "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2:True": 7
+      },
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_missing_glyph_and_covered_glyph_filters_keep_unmeasured_unknown",
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font",
+        "test_font_center_filters.FontCenterFilterTests.test_import_or_system_availability_does_not_imply_recorded_use_rights"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01562": {
+      "visits": 14,
+      "values": {
+        "receiver": {
+          "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2": 7
+        },
+        "member_value": {
+          "builtins.int": 7
+        }
+      },
+      "member_checks": {
+        "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2:True": 7
+      },
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_missing_glyph_and_covered_glyph_filters_keep_unmeasured_unknown",
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font",
+        "test_font_center_filters.FontCenterFilterTests.test_import_or_system_availability_does_not_imply_recorded_use_rights"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01622": {
+      "visits": 12,
+      "values": {
+        "value": {
+          "builtins.dict": 3,
+          "builtins.list": 3
+        },
+        "argument": {
+          "builtins.list": 3
+        },
+        "call_result": {
+          "builtins.int": 3
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01623": {
+      "visits": 9,
+      "values": {
+        "value": {
+          "builtins.type": 3,
+          "builtins.dict": 3
+        },
+        "call_result": {
+          "builtins.dict": 3
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01624": {
+      "visits": 6,
+      "values": {
+        "container": {
+          "builtins.list": 3
+        },
+        "result": {
+          "builtins.dict": 3
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01625": {
+      "visits": 12,
+      "values": {
+        "value": {
+          "builtins.dict": 3,
+          "builtins.list": 3
+        },
+        "argument": {
+          "builtins.dict": 3
+        },
+        "call_result": {
+          "builtins.dict": 3
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01626": {
+      "visits": 16,
+      "values": {
+        "value": {
+          "builtins.dict": 4,
+          "builtins.list": 4
+        },
+        "argument": {
+          "builtins.list": 4
+        },
+        "call_result": {
+          "builtins.int": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_missing_glyph_and_covered_glyph_filters_keep_unmeasured_unknown",
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font",
+        "test_font_center_filters.FontCenterFilterTests.test_import_or_system_availability_does_not_imply_recorded_use_rights"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01627": {
+      "visits": 12,
+      "values": {
+        "value": {
+          "builtins.type": 4,
+          "builtins.dict": 4
+        },
+        "call_result": {
+          "builtins.dict": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_missing_glyph_and_covered_glyph_filters_keep_unmeasured_unknown",
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font",
+        "test_font_center_filters.FontCenterFilterTests.test_import_or_system_availability_does_not_imply_recorded_use_rights"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01628": {
+      "visits": 8,
+      "values": {
+        "container": {
+          "builtins.list": 4
+        },
+        "result": {
+          "builtins.dict": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_missing_glyph_and_covered_glyph_filters_keep_unmeasured_unknown",
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font",
+        "test_font_center_filters.FontCenterFilterTests.test_import_or_system_availability_does_not_imply_recorded_use_rights"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01629": {
+      "visits": 16,
+      "values": {
+        "value": {
+          "builtins.dict": 4,
+          "builtins.list": 4
+        },
+        "argument": {
+          "builtins.dict": 4
+        },
+        "call_result": {
+          "builtins.dict": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_missing_glyph_and_covered_glyph_filters_keep_unmeasured_unknown",
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font",
+        "test_font_center_filters.FontCenterFilterTests.test_import_or_system_availability_does_not_imply_recorded_use_rights"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07487": {
+      "visits": 20,
+      "values": {
+        "call_receiver": {
+          "template_ai.fonts.FontManager": 4
+        },
+        "value": {
+          "pathlib.PosixPath": 4,
+          "builtins.dict": 4
+        },
+        "argument": {
+          "pathlib.PosixPath": 4
+        },
+        "call_result": {
+          "builtins.dict": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_center_filters.FontCenterFilterTests.test_actual_missing_glyph_and_covered_glyph_filters_keep_unmeasured_unknown",
+        "test_font_center_filters.FontCenterFilterTests.test_actual_recorded_raster_and_pdf_rights_are_separate_filters",
+        "test_font_center_filters.FontCenterFilterTests.test_changed_asset_is_not_listed_as_authorized_healthy_font",
+        "test_font_center_filters.FontCenterFilterTests.test_import_or_system_availability_does_not_imply_recorded_use_rights"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

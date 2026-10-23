@@ -1,0 +1,32 @@
+{"stage": "AUTHORED_SOURCE", "completed": 1, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 2, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 3, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 4, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 5, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 6, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 7, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 8, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 9, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 10, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 11, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 12, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 13, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 14, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 15, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 16, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 17, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 18, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 19, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 20, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 21, "total": 22}
+{"stage": "AUTHORED_SOURCE", "completed": 22, "total": 22}
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/local_learning_selftest.py", line 137, in <module>
+    args=parser.parse_args();print(json.dumps(run(args.directory,args.font,progress=lambda value:print(json.dumps(value),flush=True)),ensure_ascii=False))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/local_learning_selftest.py", line 110, in run
+    session=sessions.create(graph,case['width_mm'],case['height_mm'],'SYNTHETIC_KNOWN_TRUTH',model['id'],policy)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_session.py", line 59, in create
+    raise ValueError('Session requires a versioned core policy')
+ValueError: Session requires a versioned core policy

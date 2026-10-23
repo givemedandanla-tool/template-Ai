@@ -1,0 +1,27 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+main geometry (2, 2, 960, 640) visible (0, 0, 960, 640) hint (1046, 683) min (960, 640)
+tab geometry (189, 0, 753, 479) visible (0, 0, 753, 479) hint (839, 505) min (0, 0)
+scroll geometry (0, 0, 749, 436) visible (0, 0, 749, 436) hint (70, 70) min (0, 0)
+viewport geometry (1, 1, 733, 420) visible (0, 0, 0, 0) hint (-1, -1) min (0, 0)
+canvas geometry (297, 0, 804, 360) visible (22, 0, 733, 1) hint (70, 70) min (0, 240)
+canvas mapped (707, 463) content (1119, 859)
+AFTER_REVEAL (22, 0, 733, 1)
+scrollvalues 223 328
+F
+======================================================================
+FAIL: test_small_window_keeps_visible_canvas_and_reachable_existing_controls (test_workbench_navigation.WorkbenchNavigationTests.test_small_window_keeps_visible_canvas_and_reachable_existing_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/debug_input_viewport.py", line 6, in wrapped
+    try:original(self)
+        ^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_workbench_navigation.py", line 174, in test_small_window_keeps_visible_canvas_and_reachable_existing_controls
+    self.assertTrue(wait_for_gui(lambda:w.output_canvas.visibleRegion().boundingRect().height()>=180,2))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 3.043s
+
+FAILED (failures=1)

@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "goal": "TEN_NEW_COMPLETE_WORK_PACKAGES",
+  "completed_saved_packages": 10,
+  "packages": [
+    {
+      "sequence": 1,
+      "id": "MARKING-QUALITY",
+      "requirements": [
+        "CORE-046",
+        "CORE-047"
+      ],
+      "status": "COMPLETED_SAVED_SCOPE",
+      "source_commit": "9bf8479aec0f8ca1557e53e8caaa7506707f2637",
+      "evidence": "docs/evidence/runs/RUN-TEN-QUALITY-002/run.json",
+      "tests": 243,
+      "snapshot_commit": "53506ac9d4fddf8572b6243776051b1f5c151728",
+      "checkpoint": "docs/checkpoints/CP-20261014-TEN-P01-VERIFIED.receipt.json"
+    },
+    {
+      "sequence": 2,
+      "id": "ARTWORK-FACTS",
+      "requirements": [
+        "CORE-048",
+        "CORE-049"
+      ],
+      "status": "COMPLETED_SAVED_SCOPE",
+      "source_commit": "37f2752fe15495afc5b6ec0b2fe2c1dbd54dcf1c",
+      "evidence": "docs/evidence/runs/RUN-TEN-FACTS-001/run.json",
+      "tests": 251,
+      "snapshot_commit": "4f9cd84681643a2e772760dc9aea82013aac7e71",
+      "checkpoint": "docs/checkpoints/CP-20261014-TEN-P02-VERIFIED.receipt.json"
+    },
+    {
+      "sequence": 3,
+      "id": "NOISE-AUTHORING",
+      "requirements": [
+        "CORE-050",
+        "CORE-051"
+      ],
+      "status": "COMPLETED_SAVED_SCOPE",
+      "source_commit": "56854cefa88695eaeed2e7924df3c2663ab91b7c",
+      "evidence": "docs/evidence/runs/RUN-TEN-NOISE-AUTHOR-001/run.json",
+      "tests": 259,
+      "snapshot_commit": "e97d8eff7e2e2f029807d5c4a7f2a0c4f639c0dc",
+      "checkpoint": "docs/checkpoints/CP-20261014-TEN-P03-VERIFIED.receipt.json"
+    },
+    {
+      "sequence": 4,
+      "id": "RULE-REVIEW",
+      "requirements": [
+        "CORE-052",
+        "CORE-053"
+      ],
+      "status": "COMPLETED_SAVED_SCOPE",
+      "source_commit": "bd0445c2d3312c28de8bb2c88aa214a0c8b1fa49",
+      "evidence": "docs/evidence/runs/RUN-TEN-RULE-REVIEW-001/run.json",
+      "tests": 267,
+      "snapshot_commit": "aaf524e6fa5903ac061d783418e47981cf001c8c",
+      "checkpoint": "docs/checkpoints/CP-20261014-TEN-P04-VERIFIED.receipt.json"
+    },
+    {
+      "sequence": 5,
+      "id": "AUTO-NOISE",
+      "requirements": [
+        "CORE-054",
+        "CORE-055"
+      ],
+      "status": "COMPLETED_SAVED_SCOPE",
+      "source_commit": "279cddb726f5a1de28c3be26feb563ae92bd269d",
+      "evidence": "docs/evidence/runs/RUN-TEN-AUTO-NOISE-001/run.json",
+      "tests": 275,
+      "snapshot_commit": "139f635a12c91c76204de3143c9f6faa3bff7a0e",
+      "checkpoint": "docs/checkpoints/CP-20261014-TEN-P05-VERIFIED.receipt.json"
+    },
+    {
+      "sequence": 6,
+      "id": "RULE-RECOVERY",
+      "requirements": [
+        "CORE-056",
+        "CORE-057"
+      ],
+      "status": "COMPLETED_SAVED_SCOPE",
+      "source_commit": "814a6e54e7858e797e5027286cf2db2bd6a413c4",
+      "evidence": "docs/evidence/runs/RUN-TEN-NOISE-RECOVERY-001/run.json",
+      "tests": 283,
+      "publication_checkpoint": "CP-20261014-TEN-P06-TEXT-VERIFIED",
+      "snapshot_commit": "10331782141f1fad42bbc49e1383d438ef26988a",
+      "checkpoint": "docs/checkpoints/CP-20261014-TEN-P06-TEXT-VERIFIED.receipt.json"
+    },
+    {
+      "sequence": 7,
+      "id": "TRUSTED-SAMPLES",
+      "requirements": [
+        "CORE-058",
+        "CORE-059"
+      ],
+      "status": "COMPLETED_SAVED_SCOPE",
+      "source_commit": "9ee4bf5d3ddd547fea52c0977eabf8dd537409af",
+      "evidence": "docs/evidence/runs/RUN-TEN-TRUSTED-SAMPLES-001/run.json",
+      "tests": 290,
+      "snapshot_commit": "c3fe284fd14e6475bd3b23f5c759aff041dc8ba2",
+      "checkpoint": "docs/checkpoints/CP-20261014-TEN-P07-TEXT-VERIFIED.receipt.json"
+    },
+    {
+      "sequence": 8,
+      "id": "DATASET-LEARNING",
+      "requirements": [
+        "CORE-060",
+        "CORE-061"
+      ],
+      "status": "COMPLETED_SAVED_SCOPE",
+      "source_commit": "9e6cc9490367473a00aacc9c2929ea1c430423e0",
+      "evidence": "docs/evidence/runs/RUN-TEN-DATASET-LEARNING-002/run.json",
+      "tests": 299,
+      "snapshot_commit": "682bd2b322af65817d700481a53f4bb47b5440be",
+      "checkpoint": "docs/checkpoints/CP-20261014-TEN-P08-TEXT-VERIFIED.receipt.json"
+    },
+    {
+      "sequence": 9,
+      "id": "COVERAGE",
+      "requirements": [
+        "CORE-062",
+        "CORE-063"
+      ],
+      "status": "COMPLETED_SAVED_SCOPE",
+      "source_commit": "188674a019679a733e8213ca4afa448ea75fb929",
+      "evidence": "docs/evidence/runs/RUN-TEN-COVERAGE-001/run.json",
+      "tests": 306,
+      "snapshot_commit": "4410c2b8691f1a132941749320728f7f260d23e1",
+      "checkpoint": "docs/checkpoints/CP-20261014-TEN-P09-TEXT-VERIFIED.receipt.json"
+    },
+    {
+      "sequence": 10,
+      "id": "TRAINING-QUEUE",
+      "requirements": [
+        "CORE-064",
+        "CORE-065"
+      ],
+      "status": "COMPLETED_SAVED_SCOPE",
+      "source_commit": "1278fd2b44f1da5670916c2b2056cf4cd8c909fb",
+      "evidence": "docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/run.json",
+      "tests": 318,
+      "snapshot_commit": "df60e20936b21107f67e030c8e26ec1852ac7fbc",
+      "checkpoint": "docs/checkpoints/CP-20261014-TEN-P10-TEXT-VERIFIED.receipt.json"
+    }
+  ],
+  "version": "0.1.24",
+  "source_commit": "1278fd2b44f1da5670916c2b2056cf4cd8c909fb",
+  "evidence_run": "docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/run.json",
+  "tests": {
+    "total": 318,
+    "pass": 318,
+    "skip": 0,
+    "scope": "Linux offscreen actual Qt, anonymous synthetic SVG; SELF_VERIFIED"
+  },
+  "local_attachment_count": 71,
+  "ten_workflow_gui_audit": "docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/ten-packages-audit.json",
+  "groups": {
+    "topic": {
+      "total": 75,
+      "verified": 0,
+      "implemented_pending": 0,
+      "partial": 53,
+      "in_progress": 0,
+      "not_implemented": 17,
+      "blocked": 2,
+      "deferred": 3,
+      "not_complete": 75,
+      "has_implementation": 53
+    },
+    "core": {
+      "total": 65,
+      "verified": 65,
+      "implemented_pending": 0,
+      "partial": 0,
+      "in_progress": 0,
+      "not_implemented": 0,
+      "blocked": 0,
+      "deferred": 0,
+      "not_complete": 0,
+      "has_implementation": 65
+    },
+    "governance": {
+      "total": 6,
+      "verified": 6,
+      "implemented_pending": 0,
+      "partial": 0,
+      "in_progress": 0,
+      "not_implemented": 0,
+      "blocked": 0,
+      "deferred": 0,
+      "not_complete": 0,
+      "has_implementation": 6
+    }
+  },
+  "delta": {
+    "core_verified_before": 45,
+    "core_verified_after": 65,
+    "new_core": 20,
+    "new_core_completed": 20,
+    "new_core_remaining": 0,
+    "governance_verified": 6,
+    "original_parent_full_verified": 0,
+    "tests_before": 229,
+    "tests_after": 318
+  },
+  "clean_text_checkout_gate": {
+    "status": "PASS",
+    "requirements": 146,
+    "completed_scoped": 71,
+    "parent_topics": 75,
+    "tests_known": 318
+  },
+  "checkpoint_receipt": "docs/checkpoints/CP-20261014-TEN-P10-TEXT-VERIFIED.receipt.json",
+  "snapshot_commit": "df60e20936b21107f67e030c8e26ec1852ac7fbc",
+  "metadata_publication_policy": "docs/dev/TEN_PACKAGES_PUBLICATION.json",
+  "media_publication_event_report": "docs/dev/COPYRIGHT_PRIVACY_EVENTS.md",
+  "all_media_publication_claim": false,
+  "main_unchanged": "436ca2d7db10fab3de3d9700538dee701cd81a97",
+  "pr_number": 2,
+  "pr_merged": false,
+  "cadence": "docs/dev/TEN_PACKAGES_CHECKPOINT_CADENCE.json",
+  "limitations": [
+    "Original 75 parent requirements remain 0 fully complete / 53 partial / 17 not implemented / 2 blocked / 3 deferred.",
+    "No neural model or independent visual equivalence claim, actual Windows/RTX5050/VivoBook/physical print remain unverified.",
+    "No EXE, no automatic main merge, no real PII/private original/restricted font uploads."
+  ]
+}

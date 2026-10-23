@@ -1,0 +1,251 @@
+Owned module test_batch_candidate_adapter
+Timeout (0:01:00)!
+Thread 0x00007fec1c0b2740 (most recent call first):
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/tables/_c_m_a_p.py", line 22 in _make_map
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/tables/_c_m_a_p.py", line 1187 in decompile
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/tables/_c_m_a_p.py", line 291 in ensureDecompiled
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/tables/_c_m_a_p.py", line 302 in __getattr__
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/tables/_c_m_a_p.py", line 192 in decompile
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/ttFont.py", line 475 in _readTable
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/ttFont.py", line 458 in __getitem__
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/ttFont.py", line 839 in getBestCmap
+  File "/workspace/template-Ai/template_ai/font_evidence.py", line 51 in inspect_font
+  File "/workspace/template-Ai/template_ai/fonts.py", line 135 in import_font
+  File "/workspace/template-Ai/tests/authored_font_fixture.py", line 29 in bind_authored_fonts
+  File "/workspace/template-Ai/tests/sync_workflow_fixture.py", line 32 in __init__
+  File "/workspace/template-Ai/tests/test_batch_candidate_adapter.py", line 13 in setUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 586 in _callSetUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 630 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 30 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 46 in <module>
+
+Owned module test_candidate_results
+Timeout (0:01:00)!
+Thread 0x00007fe2cd057740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/background.py", line 15 in file_digest
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 32 in asset_health
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 38 in raw_asset
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 191 in analyze_font
+  File "/workspace/template-Ai/template_ai/render.py", line 24 in prepared_text_metrics
+  File "/workspace/template-Ai/template_ai/render.py", line 36 in draw_text
+  File "/workspace/template-Ai/template_ai/render.py", line 168 in paint_candidate
+  File "/workspace/template-Ai/template_ai/render.py", line 191 in render_image
+  File "/workspace/template-Ai/template_ai/gui.py", line 2075 in choose_candidate
+  File "/workspace/template-Ai/template_ai/layout_session.py", line 168 in adopt
+  File "/workspace/template-Ai/template_ai/layout_session.py", line 109 in progress
+  File "/workspace/template-Ai/tests/gui_wait.py", line 9 in wait_layout
+  File "/workspace/template-Ai/tests/test_candidate_results.py", line 14 in ready
+  File "/workspace/template-Ai/tests/test_candidate_results.py", line 28 in test_nonfinite_score_is_not_ranked_as_safe_confidence
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 30 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 46 in <module>
+
+Owned module test_digital_preflight_gui
+Timeout (0:01:00)!
+Thread 0x00007f6d8f9306c0 (most recent call first):
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 40 in raw_asset
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 191 in analyze_font
+  File "/workspace/template-Ai/template_ai/layout.py", line 56 in text_geometry
+  File "/workspace/template-Ai/template_ai/text_policy.py", line 17 in evaluate
+  File "/workspace/template-Ai/template_ai/text_policy.py", line 18 in tracking_geometry
+  File "/workspace/template-Ai/template_ai/layout.py", line 172 in generate
+  File "/workspace/template-Ai/template_ai/multi_size.py", line 67 in calculate
+  File "/workspace/template-Ai/template_ai/multi_size_dialog.py", line 126 in operation
+  File "/workspace/template-Ai/template_ai/multi_size_dialog.py", line 83 in worker
+  File "/workspace/template-Ai/template_ai/gui.py", line 42 in run
+
+Thread 0x00007f6d9b677740 (most recent call first):
+  File "/workspace/template-Ai/tests/gui_wait.py", line 37 in wait_for_gui
+  File "/workspace/template-Ai/tests/sync_workflow_fixture.py", line 37 in wait
+  File "/workspace/template-Ai/tests/sync_workflow_fixture.py", line 35 in __init__
+  File "/workspace/template-Ai/tests/test_digital_preflight_gui.py", line 12 in setUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 586 in _callSetUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 630 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 30 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 46 in <module>
+
+Owned module test_family_review_extensions
+Timeout (0:01:00)!
+Thread 0x00007f8e5238f740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/background.py", line 14 in <lambda>
+  File "/workspace/template-Ai/template_ai/background.py", line 14 in file_digest
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 32 in asset_health
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 38 in raw_asset
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 191 in analyze_font
+  File "/workspace/template-Ai/template_ai/render.py", line 24 in prepared_text_metrics
+  File "/workspace/template-Ai/template_ai/design_synthesis.py", line 306 in synthesize
+  File "/workspace/template-Ai/template_ai/family_scenarios.py", line 117 in run
+  File "/workspace/template-Ai/template_ai/family_batch.py", line 95 in execute_family_item
+  File "/workspace/template-Ai/template_ai/design_evaluation.py", line 148 in execute_item
+  File "/workspace/template-Ai/template_ai/design_jobs.py", line 124 in run_design_job
+  File "/workspace/template-Ai/tests/test_family_review_extensions.py", line 66 in test_full_source_review_freezes_all_members_and_resumes_after_actual_first_layout
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 30 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 46 in <module>
+
+Owned module test_family_scenarios_batch
+Timeout (0:01:00)!
+Thread 0x00007f8419f1b740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/background.py", line 14 in <lambda>
+  File "/workspace/template-Ai/template_ai/background.py", line 14 in file_digest
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 32 in asset_health
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 44 in raw_asset
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 191 in analyze_font
+  File "/workspace/template-Ai/template_ai/layout.py", line 56 in text_geometry
+  File "/workspace/template-Ai/template_ai/design_synthesis.py", line 303 in synthesize
+  File "/workspace/template-Ai/template_ai/family_scenarios.py", line 117 in run
+  File "/workspace/template-Ai/tests/test_family_scenarios_batch.py", line 38 in test_case_change_and_draft_change_invalidate_current_results_but_preserve_history
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 30 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 46 in <module>
+
+Owned module test_family_workbench
+Timeout (0:01:00)!
+Thread 0x00007f38301bc740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/storage.py", line 27 in __init__
+  File "/workspace/template-Ai/tests/family_fixture.py", line 28 in setUp
+  File "/workspace/template-Ai/tests/test_family_workbench.py", line 21 in setUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 586 in _callSetUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 630 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 30 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 46 in <module>
+
+Owned module test_first_version
+Timeout (0:01:00)!
+Thread 0x00007f0bcbcac740 (most recent call first):
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/tables/_c_m_a_p.py", line 1180 in decompile
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/tables/_c_m_a_p.py", line 291 in ensureDecompiled
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/tables/_c_m_a_p.py", line 302 in __getattr__
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/tables/_c_m_a_p.py", line 192 in decompile
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/ttFont.py", line 475 in _readTable
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/ttFont.py", line 458 in __getitem__
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/fontTools/ttLib/ttFont.py", line 839 in getBestCmap
+  File "/workspace/template-Ai/template_ai/font_evidence.py", line 51 in inspect_font
+  File "/workspace/template-Ai/tests/authored_font_fixture.py", line 25 in bind_authored_fonts
+  File "/workspace/template-Ai/tests/test_first_version.py", line 41 in setUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 586 in _callSetUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 630 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 30 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 46 in <module>
+
+Owned module test_local_acceptance
+Timeout (0:01:00)!
+Thread 0x00007f9a6644f740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/background.py", line 15 in file_digest
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 32 in asset_health
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 38 in raw_asset
+  File "/workspace/template-Ai/template_ai/font_catalog.py", line 191 in analyze_font
+  File "/workspace/template-Ai/template_ai/render.py", line 24 in prepared_text_metrics
+  File "/workspace/template-Ai/template_ai/design_synthesis.py", line 306 in synthesize
+  File "/workspace/template-Ai/template_ai/design_evaluation.py", line 174 in execute_item
+  File "/workspace/template-Ai/template_ai/design_jobs.py", line 124 in run_design_job
+  File "/workspace/template-Ai/tools/local_learning_selftest.py", line 105 in run
+  File "/workspace/template-Ai/tests/test_local_acceptance.py", line 12 in test_actual_source_learning_capacity_novel_input_preview_and_stable_output
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 30 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 46 in <module>
+
+Owned module test_quality_repair_full_chain
+Timeout (0:01:00)!
+Thread 0x00007f284cda0740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/background.py", line 15 in file_digest
+  File "/workspace/template-Ai/template_ai/quality_engine.py", line 21 in source_manifest
+  File "/workspace/template-Ai/template_ai/quality_engine.py", line 50 in verify
+  File "/workspace/template-Ai/template_ai/quality_pipeline.py", line 81 in validity
+  File "/workspace/template-Ai/template_ai/quality_protocol.py", line 116 in validity
+  File "/workspace/template-Ai/template_ai/quality_reports.py", line 16 in plan
+  File "/workspace/template-Ai/template_ai/quality_repair_gates.py", line 99 in plan
+  File "/workspace/template-Ai/template_ai/quality_repair_gates.py", line 55 in checked_gate
+  File "/workspace/template-Ai/template_ai/quality_repair_gates.py", line 75 in stage_context
+  File "/workspace/template-Ai/template_ai/quality_protocol.py", line 103 in check_metadata
+  File "/workspace/template-Ai/template_ai/quality_protocol.py", line 112 in validity
+  File "/workspace/template-Ai/template_ai/quality_reports.py", line 16 in plan
+  File "/workspace/template-Ai/template_ai/quality_repair_gates.py", line 99 in plan
+  File "/workspace/template-Ai/template_ai/quality_repair_gates.py", line 148 in confirm
+  File "/workspace/template-Ai/tests/test_quality_repair_gates.py", line 56 in run_stage
+  File "/workspace/template-Ai/tests/quality_repair_acceptance_fixture.py", line 79 in actual_chain
+  File "/workspace/template-Ai/tests/test_quality_repair_full_chain.py", line 15 in test_full_actual_ordered_control_independent_chain_and_repair_deployment
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 30 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 46 in <module>
+
+Owned module test_sync_workflow
+Timeout (0:01:00)!
+Thread 0x00007f9356e75740 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/selectors.py", line 415 in select
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2115 in _communicate
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1209 in communicate
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 550 in run
+  File "/workspace/template-Ai/template_ai/importer.py", line 75 in _run
+  File "/workspace/template-Ai/template_ai/importer.py", line 175 in import_file
+  File "/workspace/template-Ai/tests/sync_workflow_fixture.py", line 24 in __init__
+  File "/workspace/template-Ai/tests/test_sync_workflow.py", line 16 in setUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 586 in _callSetUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 630 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 30 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 46 in <module>

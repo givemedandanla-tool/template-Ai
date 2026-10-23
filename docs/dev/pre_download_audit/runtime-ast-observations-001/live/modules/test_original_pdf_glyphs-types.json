@@ -1,0 +1,1112 @@
+{
+  "schema": 1,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_original_pdf_glyphs.py": {
+      "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 71,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/original_pdf_glyphs.py": {
+      "source_sha256": "680d64eaac2818e12702a654dcb02dfd547f76e24e728e72b81858752b36de8a",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 14,
+      "skipped_target_keys": [
+        [
+          "D-APP-02700",
+          "value",
+          null
+        ]
+      ],
+      "unmatched_ranges": [
+        [
+          107,
+          87,
+          107,
+          108
+        ]
+      ]
+    },
+    "/workspace/template-Ai/template_ai/design_observation.py": {
+      "source_sha256": "255e58b284a97d510f3aba40932fa61451eee8d8a12371e8743f1b64f93fa603",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 13,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/original_text_observation.py": {
+      "source_sha256": "c93207d78df03439e7bb9d304fa6baff6c4b35f3b75ba74b1c3491302f27f8c0",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 12,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-00934": {
+      "visits": 28,
+      "values": {
+        "value": {
+          "template_ai.design_observation.ObservedScalar": 14,
+          "builtins.float": 14
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_anisotropic_transform_keeps_original_tf_without_inventing_unique_effective_pt",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_invisible_text_and_viewport_mismatch_are_not_visible_original_design_proof",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_uniform_cm_and_user_unit_produce_physical_pt_and_rotated_canvas"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-00935": {
+      "visits": 65,
+      "values": {
+        "value": {
+          "template_ai.design_observation.ObservedScalar": 13,
+          "builtins.float": 13
+        },
+        "operator_left": {
+          "builtins.float": 13
+        },
+        "operator_right": {
+          "builtins.float": 13
+        },
+        "operation": {
+          "builtins.float": 13
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_invisible_text_and_viewport_mismatch_are_not_visible_original_design_proof",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_uniform_cm_and_user_unit_produce_physical_pt_and_rotated_canvas"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02699": {
+      "visits": 128,
+      "values": {
+        "receiver": {
+          "builtins.list": 64
+        },
+        "member_value": {
+          "builtins.builtin_function_or_method": 64
+        }
+      },
+      "member_checks": {
+        "builtins.list:True": 64
+      },
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02700": {
+      "visits": 86,
+      "values": {
+        "value": {
+          "builtins.dict": 86
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_anisotropic_transform_keeps_original_tf_without_inventing_unique_effective_pt",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_invisible_text_and_viewport_mismatch_are_not_visible_original_design_proof",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_uniform_cm_and_user_unit_produce_physical_pt_and_rotated_canvas"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02701": {
+      "visits": 128,
+      "values": {
+        "value": {
+          "builtins.tuple": 64
+        },
+        "argument": {
+          "builtins.tuple": 32
+        },
+        "call_result": {
+          "builtins.tuple": 32
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02703": {
+      "visits": 128,
+      "values": {
+        "value": {
+          "builtins.int": 51
+        },
+        "operator_left": {
+          "builtins.int": 26
+        },
+        "operator_right": {
+          "builtins.int": 26
+        },
+        "operation": {
+          "builtins.int": 25
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02707": {
+      "visits": 56,
+      "values": {
+        "value": {
+          "builtins.dict": 14,
+          "builtins.list": 14
+        },
+        "argument": {
+          "builtins.list": 14
+        },
+        "call_result": {
+          "builtins.tuple": 14
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_anisotropic_transform_keeps_original_tf_without_inventing_unique_effective_pt",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_invisible_text_and_viewport_mismatch_are_not_visible_original_design_proof",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids",
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_uniform_cm_and_user_unit_produce_physical_pt_and_rotated_canvas"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02709": {
+      "visits": 6,
+      "values": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.list": 2
+        },
+        "iterable": {
+          "builtins.list": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02712": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.str": 1
+        },
+        "argument": {
+          "builtins.tuple": 1
+        },
+        "call_result": {
+          "template_ai.design_observation.ObservedScalar": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02714": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.list": 1
+        },
+        "iterable": {
+          "builtins.list": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02715": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.list": 1
+        },
+        "iterable": {
+          "builtins.list": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08721": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08722": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08723": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1,
+          "builtins.method": 1
+        },
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08727": {
+      "visits": 4,
+      "values": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "value": {
+          "builtins.float": 1
+        },
+        "argument": {
+          "builtins.float": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08728": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1,
+          "builtins.method": 1
+        },
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08732": {
+      "visits": 4,
+      "values": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "value": {
+          "builtins.float": 1
+        },
+        "argument": {
+          "builtins.float": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08737": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08738": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08745": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1,
+          "builtins.method": 1
+        },
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08749": {
+      "visits": 4,
+      "values": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "value": {
+          "builtins.float": 1
+        },
+        "argument": {
+          "builtins.float": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08754": {
+      "visits": 5,
+      "values": {
+        "value": {
+          "builtins.dict": 2
+        },
+        "operator_left": {
+          "builtins.float": 1
+        },
+        "operator_right": {
+          "builtins.float": 1
+        },
+        "operation": {
+          "builtins.float": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08763": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_uniform_cm_and_user_unit_produce_physical_pt_and_rotated_canvas"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08764": {
+      "visits": 5,
+      "values": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.float": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_uniform_cm_and_user_unit_produce_physical_pt_and_rotated_canvas"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08766": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_uniform_cm_and_user_unit_produce_physical_pt_and_rotated_canvas"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08768": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_anisotropic_transform_keeps_original_tf_without_inventing_unique_effective_pt"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08769": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_anisotropic_transform_keeps_original_tf_without_inventing_unique_effective_pt"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08776": {
+      "visits": 5,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.float": 1
+        },
+        "operator_left": {
+          "builtins.float": 1
+        },
+        "operator_right": {
+          "builtins.int": 1
+        },
+        "operation": {
+          "builtins.float": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_invisible_text_and_viewport_mismatch_are_not_visible_original_design_proof"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08777": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_invisible_text_and_viewport_mismatch_are_not_visible_original_design_proof"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08778": {
+      "visits": 5,
+      "values": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_invisible_text_and_viewport_mismatch_are_not_visible_original_design_proof"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08780": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        },
+        "result": {
+          "builtins.str": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_invisible_text_and_viewport_mismatch_are_not_visible_original_design_proof"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08781": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08782": {
+      "visits": 5,
+      "values": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08784": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        },
+        "result": {
+          "builtins.str": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08785": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08786": {
+      "visits": 5,
+      "values": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08788": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        },
+        "result": {
+          "builtins.str": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08789": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08790": {
+      "visits": 5,
+      "values": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.float": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08792": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08795": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08796": {
+      "visits": 5,
+      "values": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.float": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08798": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08800": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08801": {
+      "visits": 5,
+      "values": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 1
+        },
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.float": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08803": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08805": {
+      "visits": 8,
+      "values": {
+        "container": {
+          "builtins.dict": 2
+        },
+        "result": {
+          "builtins.str": 2
+        },
+        "call_receiver": {
+          "builtins.str": 2
+        },
+        "call_result": {
+          "builtins.bool": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08809": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.type": 1,
+          "builtins.dict": 1
+        },
+        "call_result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08811": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.dict": 1
+        },
+        "call_result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

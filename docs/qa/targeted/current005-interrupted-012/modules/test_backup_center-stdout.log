@@ -1,0 +1,18 @@
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+Traceback (most recent call last):
+  File "/workspace/template-Ai/template_ai/gui.py", line 918, in <lambda>
+    QTimer.singleShot(500,self,lambda:launch(True));return
+                                      ^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 914, in launch
+    if cancel.is_set():failed('已取消尚未啟動的工作；沒有新增成果');return
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 905, in failed
+    (on_error or getattr(callback,'error',None) or self.error)(text)
+  File "/workspace/template-Ai/template_ai/backup_center.py", line 235, in <lambda>
+    if getattr(self.window,'runtime',None):self.window.run_job(message,run,finished,resource_kind='RESTORE',cancel=self.cancel_event,on_error=lambda error:finished(dict(error=error)))
+                                                                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/backup_center.py", line 220, in finished
+    self.running=False;self.tabs.setEnabled(True);self.progress.setRange(0,1);self.progress.setValue(0)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (PySide6.QtWidgets.QTabWidget) already deleted.

@@ -1,0 +1,45 @@
+[
+  {
+    "id": "PROBE-RELATIVE-PROTECTED-PAIR",
+    "status": "PASS",
+    "seconds": 0.8057207649981137,
+    "details": {
+      "protected_relations": [
+        "ABOVE"
+      ],
+      "all_retained": true,
+      "requested_relation": "PHONE_BELOW_EMAIL",
+      "input_graph_unchanged": true,
+      "same_family": true
+    }
+  },
+  {
+    "id": "PROBE-PROTECTED-ROLE-NEGATIVE",
+    "status": "PASS",
+    "seconds": 0.0009128439996857196,
+    "details": {
+      "rejected": true,
+      "original_session_unchanged": true
+    }
+  },
+  {
+    "id": "PROBE-LEGACY-CALIBRATION-AND-PREVIEW",
+    "status": "FAIL",
+    "seconds": 0.07026366100762971,
+    "details": {
+      "error_type": "OperationalError",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/template-Ai/docs/dev/non_code_audit/run_semantic_probes.py\", line 33, in probe\n    details=action();status='PASS'\n            ^^^^^^^^\n  File \"/workspace/template-Ai/docs/dev/non_code_audit/run_semantic_probes.py\", line 107, in legacy_calibration\n    current=sessions.current(identity);sessions.confirm(identity,current['revision'],'Synthetic author')\n                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/template-Ai/template_ai/design_session.py\", line 306, in confirm\n    with self.store.transaction():\n         ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/workspace/template-Ai/template_ai/training_store.py\", line 78, in transaction\n    self.db.execute('BEGIN IMMEDIATE')\nsqlite3.OperationalError: cannot start a transaction within a transaction\n"
+    }
+  },
+  {
+    "id": "PROBE-NEW-VALUES-NO-SOURCE-PAGE-BACKGROUND",
+    "status": "PASS",
+    "seconds": 0.44483351398957893,
+    "details": {
+      "source_page_not_copied_as_background": true,
+      "exact_new_values": true,
+      "old_authored_training_text_not_in_dynamic_output": true,
+      "scope": "Authored learned-core fixture;not arbitrary private raster detection."
+    }
+  }
+]

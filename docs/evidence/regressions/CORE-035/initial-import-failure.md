@@ -1,0 +1,3 @@
+# 首次測試匯入失敗
+
+首次 test_font_review discover 在comparison_view.py工具列函數tuple漏一個結尾括號時產生SyntaxError，1個loader ERROR；沒有進入產品驗收。修正括號後原23個測試全部通過。原/tmp log被第二次命令覆写，這份紀錄是從已回傳的工具輸出記下原因，不冒稱保留原始完整log。後續具名新6組對照測試均PASS；正式證據另凍結來源後執行。

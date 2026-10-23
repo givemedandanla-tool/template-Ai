@@ -1,0 +1,26 @@
+{
+  "name": "report-regression",
+  "command": [
+    "/workspace/template-Ai/.venv/bin/python",
+    "-m",
+    "unittest",
+    "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+    "-v"
+  ],
+  "qt_platform": "xcb",
+  "PYTHONPATH": "tests:.",
+  "exit_code": 0,
+  "test_ids": [
+    "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success"
+  ],
+  "expected_test_count": 1,
+  "tests_run": 1,
+  "unittest_seconds": 4.067,
+  "elapsed_seconds": 4.488,
+  "source_manifest_before": "4fe43caa061a7730637fb2969d96bb29add47d7e6e0fd5626d58d3d3a38d9498",
+  "source_manifest_after": "4fe43caa061a7730637fb2969d96bb29add47d7e6e0fd5626d58d3d3a38d9498",
+  "source_unchanged": true,
+  "runtime_error_lines": [],
+  "log": "report-regression.log",
+  "status": "PASS"
+}

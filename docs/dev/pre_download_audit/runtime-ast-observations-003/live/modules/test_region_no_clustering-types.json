@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/source_region_hypotheses.py": {
+      "source_sha256": "729ddfffc537eebfbe937afe38a1476761f778dc38326bb5f9e927e22c54a3c4",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/batch_import.py": {
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 0,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation_store.py": {
+      "source_sha256": "884945432fa826422293d05131c1bfa2caf8b7229ac6c424facf08e27dd8bc2d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation.py": {
+      "source_sha256": "255e58b284a97d510f3aba40932fa61451eee8d8a12371e8743f1b64f93fa603",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 13,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-03663": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.type": 1,
+          "builtins.dict": 1
+        },
+        "call_result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_region_no_clustering.NoClusteringNeededTests.test_size_clue_without_content_does_not_load_clustering"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-03664": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.function": 1,
+          "builtins.dict": 1
+        },
+        "call_result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_region_no_clustering.NoClusteringNeededTests.test_size_clue_without_content_does_not_load_clustering"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

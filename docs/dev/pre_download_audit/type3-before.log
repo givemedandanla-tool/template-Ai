@@ -1,0 +1,35 @@
+test_type3_anisotropic_matrix_never_invents_physical_point_size (type3_draft.Type3GlyphUnknownTests.test_type3_anisotropic_matrix_never_invents_physical_point_size) ... ERROR
+test_type3_default_matrix_remains_unknown_without_exception (type3_draft.Type3GlyphUnknownTests.test_type3_default_matrix_remains_unknown_without_exception) ... ERROR
+
+======================================================================
+ERROR: test_type3_anisotropic_matrix_never_invents_physical_point_size (type3_draft.Type3GlyphUnknownTests.test_type3_anisotropic_matrix_never_invents_physical_point_size)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_type3_glyph_unknown.py.txt", line 39, in test_type3_anisotropic_matrix_never_invents_physical_point_size
+    self.check_unknown(.002)
+  File "docs/dev/pre_download_audit/prepared-fixes/test_type3_glyph_unknown.py.txt", line 29, in check_unknown
+    data,source=type3_pdf(scale_x);result=extract_pdf_glyphs(source,data);self.assertEqual(result['glyph_count'],1);run=result['runs'][0]
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/original_pdf_glyphs.py", line 152, in extract_pdf_glyphs
+    effective=unknown('pt',basis='UNSUPPORTED_FONT_MATRIX')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unknown() got an unexpected keyword argument 'basis'
+
+======================================================================
+ERROR: test_type3_default_matrix_remains_unknown_without_exception (type3_draft.Type3GlyphUnknownTests.test_type3_default_matrix_remains_unknown_without_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_type3_glyph_unknown.py.txt", line 36, in test_type3_default_matrix_remains_unknown_without_exception
+    self.check_unknown(.001)
+  File "docs/dev/pre_download_audit/prepared-fixes/test_type3_glyph_unknown.py.txt", line 29, in check_unknown
+    data,source=type3_pdf(scale_x);result=extract_pdf_glyphs(source,data);self.assertEqual(result['glyph_count'],1);run=result['runs'][0]
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/original_pdf_glyphs.py", line 152, in extract_pdf_glyphs
+    effective=unknown('pt',basis='UNSUPPORTED_FONT_MATRIX')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unknown() got an unexpected keyword argument 'basis'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.033s
+
+FAILED (errors=2)

@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "id": "RUN-GUI-OFFLINE-ALL-002",
+  "created_utc": "2026-10-20T09:35:26.596139+00:00",
+  "source_commit": "9f6e7f66cdc558475fe3dd65a0e8dc114bb8ac95",
+  "source_manifest_sha256": "a979c760fb7f5470bfdd0553a6d1a731657b8803a2a4d1b4d9f2254683f237d7",
+  "source_unchanged": true,
+  "status": "FAIL",
+  "software_execution_status": "FAIL",
+  "unhandled_runtime_errors": 9,
+  "test_count": 1849,
+  "passed": 1845,
+  "capture_exit_code": 1,
+  "tests_sha256": "b9e4817e1b5cffed075bc48d25cd992293a7b403f06bf807d75235cc15f008f0",
+  "attachments": {
+    "test-modules.json": {
+      "bytes": 122230,
+      "sha256": "155935bfa9185d6a6d856f595fd372800ad67b2ce420e65cbb8e36269dcd7b8d",
+      "mime": "application/json"
+    },
+    "claims.json": {
+      "bytes": 2552219,
+      "sha256": "27f8be1e1e81f593d889b5d07b40d95d9f4e573df6e42e32013672dc80c844d7",
+      "mime": "application/json"
+    },
+    "tree.json": {
+      "bytes": 2143483,
+      "sha256": "6d9e1416b3a88d5a37ad27195ff88148e4fe37139665af0367cc62a9e797bcf4",
+      "mime": "application/json"
+    },
+    "capture.log": {
+      "bytes": 55,
+      "sha256": "3bd6a10f7caf96e91bc85af78c0cae82c45f4a25f0f349f0379e44e25318b093",
+      "mime": "text/plain"
+    },
+    "fixed70-ten-parent-audit.json": {
+      "bytes": 346033,
+      "sha256": "cad83d4d81573ec70098a6c70a1bb95291e76f37959f8b345949688b50c0874f",
+      "mime": "application/json"
+    },
+    "seventy-parent-audit.json": {
+      "bytes": 34845,
+      "sha256": "f13dddcfec3346d9f4cb6d804e408e2ee0cf359b67f46e444b4a80371bcd715e",
+      "mime": "application/json"
+    },
+    "test-catalog.json": {
+      "bytes": 224428,
+      "sha256": "b8276868de54050e0126138aadb2cef14f8f01361d2a85264d805fa94981d14e",
+      "mime": "application/json"
+    },
+    "remaining28-full-parent-audit.json": {
+      "bytes": 760388,
+      "sha256": "f9507c860def74c81cbe1acf4822334176777cdacd7ab84a7fba5d65b96c3a00",
+      "mime": "application/json"
+    },
+    "source-manifest.json": {
+      "bytes": 121751,
+      "sha256": "3548af4c34f20588a2928aeb8e76514de9c455ed23bf456c4596eca3070e015b",
+      "mime": "application/json"
+    },
+    "tests.json": {
+      "bytes": 378856,
+      "sha256": "b9e4817e1b5cffed075bc48d25cd992293a7b403f06bf807d75235cc15f008f0",
+      "mime": "application/json"
+    },
+    "test-progress.json": {
+      "bytes": 788,
+      "sha256": "4783ca397abe13d42ed833ff1343526b2cabaa50878fb854a85efe398666f6bd",
+      "mime": "application/json"
+    },
+    "tests.log": {
+      "bytes": 459942,
+      "sha256": "0611a3345418237db4e9963e29955dfc0e3a52fff64c32dd97abbb427aed05a6",
+      "mime": "text/plain"
+    },
+    "junit.xml": {
+      "bytes": 377125,
+      "sha256": "7a887b27acd650226d094ed7cfb9b0e55b486e1c01e949b564a9f5b4f0dbdb47",
+      "mime": "application/xml"
+    },
+    "fixed70-twentyeight-parent-audit.json": {
+      "bytes": 1243329,
+      "sha256": "f8aaa33f97d22f6012e96a55d600047a3b79257e57af019a1fa42759978314c9",
+      "mime": "application/json"
+    },
+    "supplemental-source-before.json": {
+      "bytes": 29193,
+      "sha256": "b41fd687f55c0650f69a979bf7d36c2398e7c962db751520f08fd2ae12798e16",
+      "mime": "application/json"
+    },
+    "runtime-errors.json": {
+      "bytes": 3855,
+      "sha256": "20195ddc047d4c3b04fd81489c58ed41e40543ce3cd21f288fb4b21f38cc5b5f",
+      "mime": "application/json"
+    },
+    "test-progress.jsonl": {
+      "bytes": 336278,
+      "sha256": "5487692be23604a91b1bfd0ac0c30c13f554343a78d137f9d9ccff286ed3cf47",
+      "mime": "text/plain"
+    },
+    "timeout-stacks.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mime": "text/plain"
+    },
+    "commit.json": {
+      "bytes": 201,
+      "sha256": "84bc67b9dbb4146e5366eaf675499dff605c59e3c74ead1dc9a4f9f13f852c8d",
+      "mime": "application/json"
+    }
+  },
+  "environment": {
+    "python": "3.12.14",
+    "os": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "PySide6": "6.8.3",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+    "qt_platform": "offscreen"
+  },
+  "command": "python tools/run_evidence.py --run-id RUN-GUI-OFFLINE-ALL-002 --source-commit 9f6e7f66cdc558475fe3dd65a0e8dc114bb8ac95 --commit-json <readback> --tree-json <readback> --module-timeout 600 --module-workers 3",
+  "review_level": "SELF_VERIFIED",
+  "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
+  "not_verified": [
+    "真實私人 Illustrator 全面視覺一致",
+    "VivoBook／RTX 5050",
+    "實體印刷",
+    "Windows EXE",
+    "獨立覆核"
+  ],
+  "test_execution_strategy": "PARALLEL_OWNED_FRESH_MODULE_PROCESSES",
+  "test_module_workers": 3,
+  "test_module_count": 236,
+  "planned_test_count": 1849,
+  "not_completed_test_count": 0
+}

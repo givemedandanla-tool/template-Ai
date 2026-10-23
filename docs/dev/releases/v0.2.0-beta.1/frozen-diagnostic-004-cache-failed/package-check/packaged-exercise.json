@@ -1,0 +1,44 @@
+{
+  "status": "FAIL",
+  "version": "0.2.0-beta.1",
+  "phase": "exercise",
+  "checks": [
+    "version_in_actual_window",
+    "actual_executable_trains_frozen_synthetic_dataset",
+    "input_generate_embedded_preview",
+    "confirm_actual_preview",
+    "drag_targets_visible_in_actual_viewport",
+    "real_pointer_drag_preserves_data_invalidates_confirmation",
+    "content_correction_clears_stale_preview",
+    "regenerate_latest_input",
+    "allowed_preview_export_matches_saved_bytes",
+    "unqualified_formal_export_still_refused",
+    "frozen_json_pipe_worker"
+  ],
+  "resource_measurement": "SYNTHETIC_FIXED_LOAD_NOT_HARDWARE_PERFORMANCE",
+  "scope": "ACTUAL_EXECUTABLE_AUTHORED_FIXTURES_NOT_REAL_CORPUS_QUALIFICATION",
+  "failure_type": "RuntimeError",
+  "failure_check": "after:frozen_json_pipe_worker",
+  "failure_location": [
+    {
+      "module": "release_check.py",
+      "function": "run",
+      "line": 211
+    },
+    {
+      "module": "release_check.py",
+      "function": "_pause_worker",
+      "line": 285
+    },
+    {
+      "module": "release_check.py",
+      "function": "checked",
+      "line": 63
+    },
+    {
+      "module": "release_check.py",
+      "function": "require",
+      "line": 14
+    }
+  ]
+}

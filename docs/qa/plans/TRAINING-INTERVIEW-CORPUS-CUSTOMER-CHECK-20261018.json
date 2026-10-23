@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "checked_utc": "2026-10-18T15:49:07.126807+00:00",
+  "baseline_commit": "4f5cd4ce83f61017f3fa4863f264dadfbeb37429",
+  "decision": "docs/decisions/2026-10-18-AI-CORPUS-CUSTOMER-IDENTITY-AND-REVIEW.md",
+  "scope": "User fact persistence and existing source/schema inspection,not private corpus import or feature execution",
+  "checks": {
+    "all8packages50clauses_unchanged": true,
+    "original_todos_unchanged": true,
+    "counts_zero": true,
+    "only_user_reported_qualification": true,
+    "format_font_unknown_preserved": true,
+    "version_followup_pending": true,
+    "decision_exists": true,
+    "handoff_bounded": true,
+    "reviewed_code_files_unchanged": true,
+    "requirements_registry_unchanged": true
+  },
+  "reviewed_source_sha256": {
+    "template_ai/storage.py": "977ba394dad8606face9481fdef5fe531656f5bef15dd62a263a1715aa65f224",
+    "template_ai/customers.py": "3a7948459cd959e628a2c255863ea43b93ee6ba0ea35ca2f77def54597be23c6",
+    "template_ai/customer_candidates.py": "217e38ebe26508259ced24c44e54ce009aee6320ccb977bbc965b742e3a60bb1",
+    "template_ai/training_store.py": "7f7c70653960d543472f7ecabaf248d50f4f186abb7069a2bd12fe87d4dd275e",
+    "template_ai/quality_groups.py": "58196dfdd92fb757147cbdcaf7e8e3181c14eab79ce9942c5d4fa27c8c9e368d"
+  },
+  "feature_implementation": 0,
+  "model_training": 0,
+  "new_feature_tests": 0,
+  "design_todos_completed": 0
+}
