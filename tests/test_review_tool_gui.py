@@ -1,6 +1,7 @@
 """Actual small-tool window acceptance; no substituted window or parser."""
 import json
 import hashlib
+from copy import deepcopy
 from pathlib import Path
 import tempfile
 import unittest
@@ -35,6 +36,79 @@ def wait_until(predicate, milliseconds=90000):
 
 
 class ReviewToolGuiTests(unittest.TestCase):
+    def test_more_menu_adopts_only_new_works_and_preserves_human_corrections(self):
+        """A compatible authored packet exercises the real More-menu slot."""
+        from template_ai.review_tool.window import ReviewWindow
+        with tempfile.TemporaryDirectory(prefix='review-adopt-new-works-') as raw:
+            root = Path(raw)
+            source = root / 'synthetic.svg'
+            source.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="60mm" '
+                              'height="30mm" viewBox="0 0 60 30"/>', encoding='utf-8')
+            preview = root / 'preview.png'
+            image = QImage(600, 300, QImage.Format.Format_RGB32)
+            image.fill(Qt.GlobalColor.white)
+            self.assertTrue(image.save(str(preview)))
+            window = ReviewWindow(root / 'data')
+            try:
+                window.resize(1440, 1000)
+                window.show()
+                APP.processEvents()
+                window.add_files([str(source)])
+                source_id = window.store.sources()[0]['id']
+                packet = {'schema_version': 1, 'analysis_version': 'AUTHORED_COMPATIBLE_V1',
+                    'status': 'ANALYSED',
+                    'source': {'id': source_id, 'path': str(source),
+                               'hash': hashlib.sha256(source.read_bytes()).hexdigest()},
+                    'pages': [{'id': 'same-page', 'page': 1, 'image': str(preview),
+                               'image_hash': hashlib.sha256(preview.read_bytes()).hexdigest(),
+                               'width_mm': 60., 'height_mm': 30., 'calibrated': True}],
+                    'works': [{'id': 'original-work', 'page_id': 'same-page', 'page': 1,
+                               'crop': {'x': 0., 'y': 0., 'w': 30., 'h': 30.},
+                               'fields': [{'id': 'original-field', 'text': 'PREDICTED',
+                                           'kind': 'name',
+                                           'rect': {'x': 3., 'y': 5., 'w': 20., 'h': 5.}}]}],
+                    'issues': [], 'capabilities': {'ocr_requested': False}}
+                window.store.apply_analysis(source_id, packet)
+                original_work = window.store.works(source_id)[0]
+                work_id, field_id = original_work['id'], original_work['fields'][0]['id']
+                window.select_work(work_id)
+                window.select_field(field_id)
+                window.text_edit.setPlainText('HUMAN_CORRECTION')
+                window.review_combo.setCurrentIndex(window.review_combo.findData('REVIEWED'))
+                APP.processEvents()
+                self.assertFalse(window.apply_field_button.visibleRegion().isEmpty())
+                QTest.mouseClick(window.apply_field_button, Qt.MouseButton.LeftButton)
+                self.assertEqual(window.store.get_field(work_id, field_id)['text'], 'HUMAN_CORRECTION')
+                protected_work = deepcopy(window.store.get_work(work_id))
+                rerun = deepcopy(packet)
+                rerun['works'][0]['fields'][0]['text'] = 'NEW_PREDICTION_MUST_NOT_OVERWRITE'
+                rerun['works'].append({'id': 'newly-found-work', 'page_id': 'same-page', 'page': 1,
+                                      'crop': {'x': 30., 'y': 0., 'w': 30., 'h': 30.},
+                                      'fields': [{'id': 'newly-found-field', 'text': 'NEW WORK',
+                                                  'kind': 'name',
+                                                  'rect': {'x': 2., 'y': 4., 'w': 20., 'h': 5.}}]})
+                window.store.apply_analysis(source_id, rerun)
+                self.assertIsInstance(window.store.get_source(source_id)['pending_analysis_version'], str)
+                self.assertEqual(len(window.store.works(source_id)), 1)
+                action = next(action for action in window.more_button.menu().actions()
+                              if action.text() == '加入重新判讀新找到的作品')
+                action.trigger()
+                APP.processEvents()
+                self.assertEqual(len(window.store.works(source_id)), 2)
+                self.assertEqual(window.store.get_work(work_id), protected_work)
+                self.assertEqual(window.tree.topLevelItem(0).childCount(), 2)
+                adopted_ids = [work['id'] for work in window.store.works(source_id)]
+                action.trigger()
+                APP.processEvents()
+                self.assertEqual([work['id'] for work in window.store.works(source_id)], adopted_ids)
+                self.assertEqual(window.store.get_work(work_id), protected_work)
+                self.assertEqual(window.tree.topLevelItem(0).childCount(), 2)
+                self.assertIn('0 份', window.notice.text())
+            finally:
+                window.save_progress()
+                window.close()
+                APP.processEvents()
+
     def test_first_window_is_visible_and_numeric_overview_is_hidden(self):
         from template_ai.review_tool.window import ReviewWindow
         with tempfile.TemporaryDirectory(prefix='review-first-window-') as raw:
