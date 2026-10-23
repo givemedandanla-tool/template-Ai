@@ -1,3 +1,11 @@
+# 目前階段：獨立核對工具首版 Windows 發布
+
+元件實作已提交，Linux相關核心＋真Qt共166項獨立模組測試通過，0失敗／0錯誤／0skip；詳見releases/review-v0.1.0-beta.1/LOCAL_VALIDATION.md。版本review-v0.1.0-beta.1，入口review_app.py，EXE TemplateAIReview.exe。下一步是精確request分支Windows CI、真正EXE操作與兩次GitHub下載校驗，未完成前不能稱已發布。
+
+數據／原稿／人修分層，unknown不猜，More可明確追加重新判讀新找到的同頁作品；新頁續跑保留既有人修。首版OCR執行器仍選配但模型隨包；學習／模板產出不是本元件範圍。既有未提交timeout/adopt/full-run成果保留。舊全產品governance來源證據過期未升級，元件採獨立release policy。
+
+---
+
 # 當前工作：最小作品判讀核對工具首版
 
 2026-10-23使用者已授權製作第一版並發布到GitHub，取代下列歷史僅討論限制。讀STATE.review_tool_release_request、analysis_review_ui/FIRST_RELEASE_PLAN.md。獨立分支feature/review-tool-v0.1.0，根入口review_app.py，模組template_ai/review_tool，版本review-v0.1.0-beta.1；新資料目錄隔離，不改舊版或main。當前實作／驗收／發布仍進行中，尚未交付EXE。

@@ -11,3 +11,5 @@
 首版Tesseract執行器選配；已附固定中／英模型，但沒有執行器時明確UNKNOWN，人工補標可用。Windows、實際Release下載須管線成功後才標完成。
 
 沒有購買／啟用試用／額外API或模型服務；使用既有Codex能力、免費本機工具與公開倉庫標準GitHub Windows runner。帳戶實際帳單未查核，不承諾帳戶整體零帳單。
+
+正式Linux隔離執行：166項通過、0失敗、0錯誤、0跳過，16個獨立程序模組。來源2e3677ba339bb0a1f6633272c8ea6886fee6d8b8，來源manifest a0eeee325e02b155bf90b11e161127400dd684a639a413ee1715a914cc0eb2db；包含6項GUI回歸。Windows仍須獨立通過。

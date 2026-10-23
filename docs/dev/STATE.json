@@ -2149,11 +2149,20 @@
     "authorization": "User requests first version published to GitHub after UI discussion",
     "authorized_utc": "2026-10-23T18:54:05.645182+00:00",
     "source_commit": null,
-    "status": "SOURCE_IMPLEMENTED_WINDOWS_VALIDATION_PENDING",
+    "status": "WINDOWS_RELEASE_VALIDATION_PENDING",
     "plan": "docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md",
     "do_not_overwrite_old_release": true,
     "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
     "user_request": "還有要說明的嗎？沒有的話，可以產出第一版發佈到github上了？",
-    "published": false
+    "published": false,
+    "local_tests": {
+      "passed": 166,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "source_commit": "2e3677ba339bb0a1f6633272c8ea6886fee6d8b8",
+      "report": "docs/dev/releases/review-v0.1.0-beta.1/local-source-evidence/isolated-source-tests.json"
+    },
+    "source_checkpoint": "docs/checkpoints/CP-20261023-REVIEW-SOURCE-001.receipt.json"
   }
 }
