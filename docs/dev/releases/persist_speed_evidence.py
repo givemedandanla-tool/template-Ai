@@ -43,7 +43,7 @@ def main(phase='final'):
         else:git(folder,'checkout','--orphan','evidence')
         target=folder/report['path']
         target.mkdir(parents=True,exist_ok=False)
-        allowed=['release-timings.json','cache-transfer-timings.json','cache-inputs.json','cache-local-warm.json',
+        allowed=['release-timings.json','cache-transfer-timings.json','cache-inputs.json','cache-local-warm.json','cache-prebuild.json',
                  'cache-budget.json','release-impact-plan.json','release-manifest.json','SHA256SUMS.txt',
                  'corresponding-source-verification.json','governance-gate.json','installed-dependencies.txt',
                  'admin-tests.json',

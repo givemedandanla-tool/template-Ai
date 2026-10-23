@@ -48,7 +48,10 @@ def external(name, phase, status):
     start=json.loads(marker.read_text())
     report=folder/'cache-transfer-timings.json'
     rows=json.loads(report.read_text()) if report.exists() else []
-    rows.append(dict(name=name,status=status,seconds=time.perf_counter()-start['perf_counter']))
+    row=dict(name=name,status=status,seconds=time.perf_counter()-start['perf_counter'])
+    if name=='actions-restore':
+        row['cache_hit']=os.environ.get('CACHE_ACTION_HIT')=='true' if status=='success' else None
+    rows.append(row)
     write(report,rows)
 
 

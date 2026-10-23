@@ -87,10 +87,10 @@ class EngineTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name)
         (self.root/'tools').mkdir();(self.root/'docs/dev/releases').mkdir(parents=True)
-        (self.root/'tools/inkscape_distribution_lock.json').write_bytes(b'authored-source-map')
+        (self.root/'tools/inkscape_distribution_lock.json').write_bytes(b'{"source": "authored"}\n')
         (self.root/'docs/dev/releases/INKSCAPE_REDISTRIBUTION.md').write_bytes(b'authored-notice')
         self.files={'bin/inkscape.exe':b'MZ_SYNTHETIC_NOT_EXECUTABLE',
-                    'TEMPLATE_AI_SOURCE_MAP.json':b'authored-source-map',
+                    'TEMPLATE_AI_SOURCE_MAP.json':b'{"source": "authored"}\n',
                     'TEMPLATE_AI_REDISTRIBUTION.md':b'authored-notice'}
         value=dict(version='1.4.2',executable='bin/inkscape.exe',files=[
             dict(path=n,bytes=len(b),sha256=hashlib.sha256(b).hexdigest()) for n,b in self.files.items()])
@@ -117,6 +117,17 @@ class EngineTests(unittest.TestCase):
     def test_source_map_mismatch_rejected(self):
         dest=self.extract();(self.root/'tools/inkscape_distribution_lock.json').write_bytes(b'new-map')
         with self.assertRaises(ValueError):cache.validate_engine(dest,self.pin,root=self.root)
+    def test_pinned_windows_crlf_source_map_matches_git_lf_semantics(self):
+        dest=self.extract();path=dest/'TEMPLATE_AI_SOURCE_MAP.json'
+        path.write_bytes(self.files['TEMPLATE_AI_SOURCE_MAP.json'].replace(b'\n',b'\r\n'))
+        manifest=json.loads((dest/'manifest.json').read_bytes())
+        row=next(r for r in manifest['files'] if r['path']=='TEMPLATE_AI_SOURCE_MAP.json')
+        row.update(bytes=path.stat().st_size,sha256=cache.sha(path))
+        (dest/'manifest.json').write_text(json.dumps(manifest))
+        pin=dict(self.pin,manifest_sha256=cache.sha(dest/'manifest.json'))
+        self.assertEqual(cache.validate_engine(dest,pin,root=self.root)['files'],3)
+        path.write_bytes(path.read_bytes().replace(b'authored',b'changed'))
+        with self.assertRaises(ValueError):cache.validate_engine(dest,pin,root=self.root)
     def test_zip_slip_rejected_before_any_write(self):
         with zipfile.ZipFile(self.archive,'w') as z:
             for n,b in self.files.items():
@@ -200,6 +211,23 @@ class GuardTests(unittest.TestCase):
                 raise RuntimeError('authored failure')
             saved=json.loads((Path(raw)/'timing.json').read_text());row=saved['stages'][0]
             self.assertEqual(row['status'],'FAIL');self.assertGreaterEqual(row['seconds'],0)
+    def test_build_continuation_requires_current_source_and_verified_inputs(self):
+        with tempfile.TemporaryDirectory() as raw:
+            path=Path(raw)/'timing.json';r=pipeline.Stages(path,'synthetic')
+            r.data['status']='INPUTS_VERIFIED_NOT_PRODUCT_VALIDATED';r.save()
+            self.assertEqual(pipeline.Stages(path,'synthetic',resume=True).data['status'],'INPUTS_VERIFIED_NOT_PRODUCT_VALIDATED')
+            data=json.loads(path.read_text());data['source_commit']='0'*40;path.write_text(json.dumps(data))
+            with self.assertRaises(ValueError):pipeline.Stages(path,'synthetic',resume=True)
+            data['source_commit']=r.data['source_commit'];data['status']='FAILED_NOT_VERIFIED';path.write_text(json.dumps(data))
+            with self.assertRaises(ValueError):pipeline.Stages(path,'synthetic',resume=True)
+    def test_real_published_source_map_matches_windows_serializer(self):
+        root=cache.ROOT
+        value=json.loads((root/'tools/inkscape_distribution_lock.json').read_bytes())
+        generated=(json.dumps(value,ensure_ascii=False,indent=2)+'\n').replace('\n','\r\n').encode()
+        manifest=json.loads((root/'docs/dev/releases/v0.2.0-beta.2/windows-native-004/release-manifest.json').read_bytes())
+        row=next(r for r in manifest['package_files'] if r['path']=='engines/inkscape/TEMPLATE_AI_SOURCE_MAP.json')
+        self.assertEqual(hashlib.sha256(generated).hexdigest(),row['sha256'])
+        self.assertEqual(len(generated),row['bytes'])
     def test_sha_locked_engine_and_all_dependencies_current(self):
         wheels,assets=cache.load_locks();self.assertEqual(len(wheels['wheels']),27)
         self.assertEqual(assets['engine']['files'],11837)

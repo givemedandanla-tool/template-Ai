@@ -5,10 +5,10 @@
 ## 快取規則
 
 - `.github/windows-wheels-lock.json`固定現有27個Windows cp311/x64 wheel版本、官方URL、大小與SHA，及需求檔hash。逐檔驗證後以`--no-index --require-hashes --no-deps`離線安裝並`pip check`，日常不解析最新版。
-- `.github/release-assets-lock.json`綁定beta.2已公開資產。只從固定ZIP取出11837份Inkscape元件；不重用舊TemplateAI.exe。pin、來源map、聲明、完整清單及每檔hash全驗，拒絕額外檔／符號連結／路徑越界。新產品仍乾淨PyInstaller建置，不快取venv、測試資料、模型、整個workspace或舊成品。
+- `.github/release-assets-lock.json`綁定beta.2已公開資產。只從固定ZIP取出11837份Inkscape元件；不重用舊TemplateAI.exe。pin、來源map、聲明、完整清單及每檔hash全驗，拒絕額外檔／符號連結／路徑越界。新產品仍乾淨PyInstaller建置，不快取venv、測試資料、模型、整個workspace或舊成品。vendor每檔bytes／SHA保持精確；原Windows生成的CRLF來源JSON與Git LF lock另以解析內容比對，不把合法換行差異當工具版本改變。
 - 未改元件時重用同一份來源ZIP，仍用原125來源物件驗證器核對。新Release的說明、manifest及SOURCE_DOWNLOADS.json清楚連結原公開ZIP；不必每版再上傳相同908MB。原引擎散佈檔保留首次beta.2原始bytes，後續來源位置以上述明確連結為準。元件／鎖檔／授權內容變更須重新審查pin，不能改hash求過關。
 - key綁定平台、Python完整版本與完整鎖檔內容。命中只代表輸入可重用，不代表測試通過；每次再驗hash。一般損壞可重新取得，異常檔案型別或多出檔案停止，最多3次下載，不放寬TLS／完整性。
-- 只用GitHub標準免費cache，先讀使用量、要求公開repo；既有用量須≤8GiB且本cache≤2GiB，保留10GiB預設內的餘裕。無法確認時不新增cache，繼續已驗證公開附件／本地重用。不修改quota、帳務或刪別人的cache。Actions版本也固定commit。
+- 只用GitHub標準免費cache，先讀使用量、要求公開repo；既有用量須≤8GiB且本cache≤2GiB，保留10GiB預設內的餘裕。無法確認時不新增cache，繼續已驗證公開附件／本地重用。不修改quota、帳務或刪別人的cache。Actions版本也固定commit。輸入、安裝與工具guard通過後就保存，產品仍未驗收；後續產品失敗不抹去已驗證輸入。續接build須同一source commit及INPUTS_VERIFIED狀態，並再次驗輸入。
 
 ## 修改影響與不可省略項
 

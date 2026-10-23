@@ -2005,7 +2005,7 @@
     "automatic_selector_implemented": false
   },
   "release_speed_optimization": {
-    "status": "IMPLEMENTED_LOCAL34_PASS_PENDING_NATIVE",
+    "status": "LOCAL37_PASS_RETRY_NATIVE_AFTER_CRLF_MAP_CONTRACT_FIX",
     "baseline_commit": "f97479b40fa46ef1465500f0207e2edfd0a290a3",
     "published_baseline": "v0.2.0-beta.2",
     "plan": "docs/dev/releases/RELEASE_SPEED_PLAN.md",
@@ -2015,6 +2015,13 @@
     "policy": "docs/dev/releases/RELEASE_SPEED_POLICY.md",
     "release_request": null,
     "workflow": ".github/workflows/optimized-release.yml",
-    "source_manifest_unchanged": "f1a2cf7a817e7e3d0dca43ff93458f52d1526638aa816e7d223204f6abdf2908"
+    "source_manifest_unchanged": "f1a2cf7a817e7e3d0dca43ff93458f52d1526638aa816e7d223204f6abdf2908",
+    "native_attempt_001": {
+      "source_commit": "c6bfd14b1926510a948f87c4faae836d75041d08",
+      "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39893971598",
+      "status": "FAILED_BEFORE_PRODUCT_TESTS",
+      "report": "docs/dev/releases/release-speed-validation/windows-native-001",
+      "cause": "Pinned Windows-generated JSON source map uses CRLF while Git lock uses LF; exact vendor hashes were valid. Keep manifest/file hashes, compare parsed source-map contents."
+    }
   }
 }

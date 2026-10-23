@@ -1878,3 +1878,5 @@ Frozen trace002/f967/run39807865848：已下載及驗證原授權242檔，實際
 2026-10-22 beta.2已公開並下載驗證：af97b108／run39810636090，Windows199＋真正EXE21＋引擎5全PASS，24包內呼叫，13060檔公開下載匹配，125來源與242授權驗證。原45秒C診斷AV已由45秒GIL安全dump排除，本次64秒跨45後通過，原240硬期限與斷言保留。來源1986為保留失敗的同bytes環境復驗彙整；原外部資格／goal FAIL不升級。詳releases/v0.2.0-beta.2/DELIVERY_REPORT，後續為本地副本實測及手動安全報告。無新收費功能／代理，未合併main或覆寫舊tag。
 
 2026-10-23修正版加速實作checkpoint：27官方wheel固定版本+SHA；已公開beta2引擎及125來源ZIP重用／再驗；AST base∪head保守影響選測＋雜湊契約、核心／未知完整；GitHubcache用量安全邊界、stage耗時與新版本明確授權guard。新產品bytes／原tools／原1986測試未改，code manifest仍f1a2；行政工具34案PASS／0skip，本輪待Windows冷原生建置＋第二runner遠端熱cache驗證，不發布新產品／不改舊tag／附件。
+
+加速native001/c6bfd14b/run39893971598在59秒輸入準備因ValueError停止、未跑產品測試／EXE；原報告保留。根因已用真beta2 manifest重現：包內SOURCE_MAP由Windows寫CRLF，sha b8d3db…／48199bytes；Git lock LF為bc0271…／47178。保留vendor manifest與每檔精確SHA，另以JSON語意核對Git lock，非改hash求過。新增CRLF、真正發布map serializer及same-source phase續接防護，共37行政案例PASS／0skip（local003），舊34／35保留。輸入階段通過便保存cache，與產品PASS分開；再同source build-only重新驗inputs後跑原Windows／EXE。新增error_message與bounded traceback，下一重試native002。

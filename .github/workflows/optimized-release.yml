@@ -63,20 +63,21 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Cache preflight failed' }
           python docs/dev/releases/release_actions_support.py start --name actions-restore
       - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
-        if: env.RELEASE_MODE == 'publish'
         id: restore
         continue-on-error: true
         with:
           path: ${{ runner.temp }}/template-ai-verified-inputs
           key: ${{ steps.inputs.outputs.key }}
       - name: Record restore timing without claiming a skipped restore hit
+        env:
+          CACHE_ACTION_HIT: ${{ steps.restore.outputs.cache-hit }}
         shell: pwsh
         run: python docs/dev/releases/release_actions_support.py finish --name actions-restore --status '${{ steps.restore.outcome }}'
-      - name: Build, original tests, actual EXE and byte verification
+      - name: Verify inputs, offline installation and tool guards before caching
         shell: pwsh
         run: |
-          python docs/dev/releases/release_pipeline.py --mode $env:RELEASE_MODE --cache '${{ runner.temp }}/template-ai-verified-inputs' --base $env:RELEASE_BASELINE
-          if ($LASTEXITCODE -ne 0) { throw 'Verified release pipeline failed' }
+          python docs/dev/releases/release_pipeline.py --mode $env:RELEASE_MODE --cache '${{ runner.temp }}/template-ai-verified-inputs' --base $env:RELEASE_BASELINE --prepare-only
+          if ($LASTEXITCODE -ne 0) { throw 'Verified input stage failed' }
       - name: Start cache-save measurement
         if: success()
         shell: pwsh
@@ -92,6 +93,11 @@ jobs:
         if: success()
         shell: pwsh
         run: python docs/dev/releases/release_actions_support.py finish --name actions-save --status '${{ steps.save.outcome }}'
+      - name: Original tests, clean build, actual EXE and complete byte verification
+        shell: pwsh
+        run: |
+          python docs/dev/releases/release_pipeline.py --mode $env:RELEASE_MODE --cache '${{ runner.temp }}/template-ai-verified-inputs' --base $env:RELEASE_BASELINE --build-only
+          if ($LASTEXITCODE -ne 0) { throw 'Verified release build failed' }
       - name: Preserve bounded evidence independently of product Release
         if: always()
         env:
@@ -137,6 +143,8 @@ jobs:
           key: ${{ needs.native.outputs.key }}
           fail-on-cache-miss: true
       - name: Require exact remote hit and verify every input again
+        env:
+          CACHE_ACTION_HIT: ${{ steps.restore.outputs.cache-hit }}
         shell: pwsh
         run: |
           if ('${{ steps.restore.outputs.cache-hit }}' -ne 'true') { throw 'Exact remote cache hit not observed' }

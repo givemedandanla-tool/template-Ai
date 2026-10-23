@@ -14,6 +14,7 @@ import sys
 import tempfile
 import threading
 import time
+import traceback
 import urllib.request
 
 from release_cache import ROOT, cache_key, install_dependencies, load_locks, prepare, sha, write
@@ -21,11 +22,17 @@ from release_impact import make_plan
 
 
 class Stages:
-    def __init__(self, path, mode):
+    def __init__(self, path, mode, resume=False):
         self.path = Path(path)
         self.data = dict(schema_version=1, mode=mode,
                          source_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
                          started_utc=datetime.now(timezone.utc).isoformat(), stages=[], status='RUNNING')
+        if resume:
+            previous=json.loads(self.path.read_text())
+            if (previous['source_commit'] != self.data['source_commit'] or previous['mode'] != mode
+                    or previous['status'] != 'INPUTS_VERIFIED_NOT_PRODUCT_VALIDATED'):
+                raise ValueError('Build continuation requires the same-source verified input stage')
+            self.data=previous
         self.save()
 
     def save(self):
@@ -39,7 +46,7 @@ class Stages:
         try:
             yield row
         except BaseException as error:
-            row.update(status='FAIL', error_type=type(error).__name__)
+            row.update(status='FAIL', error_type=type(error).__name__, error_message=str(error)[:300])
             raise
         else:
             row['status'] = 'PASS'
@@ -196,13 +203,59 @@ def execute(args):
     publication_preflight(__version__, args.mode)
     output = ROOT/'artifacts'
     output.mkdir(exist_ok=True)
-    recorder = Stages(output/'release-timings.json', args.mode)
+    if args.prepare_only and args.build_only or args.warm_check_only and (args.prepare_only or args.build_only):
+        raise ValueError('Incompatible pipeline stages')
+    recorder = Stages(output/'release-timings.json', args.mode, resume=args.build_only)
     scratch = Path(os.environ['RUNNER_TEMP']).resolve()/'template-ai-ci'
     scratch.mkdir(exist_ok=True)
     os.environ['TMP'] = os.environ['TEMP'] = str(scratch.resolve())
     tempfile.tempdir = None
     os.environ['TEMPLATE_AI_ALLOW_INITIAL_ABSENCE'] = 'true'
     try:
+        if args.build_only:
+            with recorder.stage('inputs_revalidated_after_cache_save'):
+                prepare(args.cache,output/'cache-prebuild.json')
+            plan=json.loads((output/'release-impact-plan.json').read_text())
+        else:
+            prepare_inputs(args,output,recorder)
+            if args.warm_check_only:return
+            if args.prepare_only:
+                recorder.data['status']='INPUTS_VERIFIED_NOT_PRODUCT_VALIDATED'
+                return
+            plan=json.loads((output/'release-impact-plan.json').read_text())
+        os.environ['TEMPLATE_AI_INKSCAPE'] = str(ROOT/'build/inkscape-staged/bin/inkscape.exe')
+        with recorder.stage('original_windows_regression'):
+            command = [sys.executable,'docs/dev/releases/run_windows_case_audit.py','--output','artifacts/source-tests','--workers','1']
+            for module in plan['selected_windows_modules']:
+                command += ['--module',module]
+            run(command,'windows-source-tests')
+        with recorder.stage('clean_pyinstaller_build'):
+            run([sys.executable,'tools/windows_release.py','spec'],'spec')
+            run([sys.executable,'docs/dev/releases/configure_frozen_utf8.py'],'utf8-build-policy')
+            run([sys.executable,'-m','PyInstaller','--noconfirm','--clean','build/release/TemplateAI.spec'],'pyinstaller')
+            run([sys.executable,'tools/bundled_inkscape_build.py','install'],'engine-install')
+        with recorder.stage('actual_frozen_exe21_engine5'):
+            run([sys.executable,'docs/dev/releases/run_frozen_probe.py','--executable','dist/TemplateAI/TemplateAI.exe',
+                 '--output','artifacts/package-check'],'actual-exe')
+        with recorder.stage('package_inventory_and_checksums'):
+            run([sys.executable,'tools/windows_release.py','package'],'package')
+        if args.mode == 'publish':
+            publish(__version__, recorder)
+            recorder.data['status'] = 'RELEASE_PUBLISHED_DOWNLOAD_VERIFIED'
+        else:
+            with recorder.stage('actual_loopback_transfer_and_original_verifier'):
+                loopback_download_verify()
+            recorder.data['status'] = 'VALIDATION_PASS_NO_TAG_OR_RELEASE_CREATED'
+    except BaseException:
+        recorder.data['status'] = 'FAILED_NOT_VERIFIED'
+        (output/'pipeline-error.log').write_text(traceback.format_exc()[-8000:],encoding='utf-8')
+        raise
+    finally:
+        recorder.data['finished_utc'] = datetime.now(timezone.utc).isoformat()
+        recorder.save()
+
+
+def prepare_inputs(args,output,recorder):
         with recorder.stage('verified_input_prepare') as stage:
             report = prepare(args.cache, output/'cache-inputs.json')
             stage.update(downloaded_bytes=report['downloaded_bytes'], objects=report['files'])
@@ -232,35 +285,6 @@ def execute(args):
         with recorder.stage('source_governance'):
             run([sys.executable,'tools/dev_governance.py','check','--require-evidence','--publication-scope'],
                 'source-governance', stdout=Path('artifacts/governance-gate.json'))
-        os.environ['TEMPLATE_AI_INKSCAPE'] = str(ROOT/'build/inkscape-staged/bin/inkscape.exe')
-        with recorder.stage('original_windows_regression'):
-            command = [sys.executable,'docs/dev/releases/run_windows_case_audit.py','--output','artifacts/source-tests','--workers','1']
-            for module in plan['selected_windows_modules']:
-                command += ['--module',module]
-            run(command,'windows-source-tests')
-        with recorder.stage('clean_pyinstaller_build'):
-            run([sys.executable,'tools/windows_release.py','spec'],'spec')
-            run([sys.executable,'docs/dev/releases/configure_frozen_utf8.py'],'utf8-build-policy')
-            run([sys.executable,'-m','PyInstaller','--noconfirm','--clean','build/release/TemplateAI.spec'],'pyinstaller')
-            run([sys.executable,'tools/bundled_inkscape_build.py','install'],'engine-install')
-        with recorder.stage('actual_frozen_exe21_engine5'):
-            run([sys.executable,'docs/dev/releases/run_frozen_probe.py','--executable','dist/TemplateAI/TemplateAI.exe',
-                 '--output','artifacts/package-check'],'actual-exe')
-        with recorder.stage('package_inventory_and_checksums'):
-            run([sys.executable,'tools/windows_release.py','package'],'package')
-        if args.mode == 'publish':
-            publish(__version__, recorder)
-            recorder.data['status'] = 'RELEASE_PUBLISHED_DOWNLOAD_VERIFIED'
-        else:
-            with recorder.stage('actual_loopback_transfer_and_original_verifier'):
-                loopback_download_verify()
-            recorder.data['status'] = 'VALIDATION_PASS_NO_TAG_OR_RELEASE_CREATED'
-    except BaseException:
-        recorder.data['status'] = 'FAILED_NOT_VERIFIED'
-        raise
-    finally:
-        recorder.data['finished_utc'] = datetime.now(timezone.utc).isoformat()
-        recorder.save()
 
 
 if __name__ == '__main__':
@@ -269,4 +293,6 @@ if __name__ == '__main__':
     parser.add_argument('--cache', type=Path, required=True)
     parser.add_argument('--base', default='auto')
     parser.add_argument('--warm-check-only', action='store_true')
+    parser.add_argument('--prepare-only',action='store_true')
+    parser.add_argument('--build-only',action='store_true')
     execute(parser.parse_args())

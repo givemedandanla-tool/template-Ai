@@ -17,3 +17,5 @@ v0.2.0-beta.2已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED，詳[交付報告](releases
 2026-10-23新任務：使用者授權優化修正版速度；先讀STATE.release_speed_optimization與releases/RELEASE_SPEED_PLAN.md。做驗證快取、影響規則、耗時、冷熱Windows診斷，不發新產品版、不動舊tag／附件。既有beta.2交付與外部限制保留。
 
 加速實作已就緒待原生驗證：optimized-release.yml僅專用speed-check／新request或人工觸發；release_cache／impact／pipeline及固定27輪子+資產pin已接。行政工具34 PASS／0skip，actionlint1.7.7 PASS；產品與原tools／1986測試code f1a2未變。下一push release-speed-check/20261023-001，先等native完整199＋EXE21／引擎5與loopback下載，再等第二runner真正遠端cache hit。沒有新Release授權，release_request=null；保留beta2標籤／附件。證據分支release-speed-evidence/v1，不能把loopback或warm-input檢查冒稱公開Release／第二次EXE驗收。
+
+加速native001/c6bfd14b/run39893971598在59秒輸入準備因ValueError停止、未跑產品測試／EXE；原報告保留。根因已用真beta2 manifest重現：包內SOURCE_MAP由Windows寫CRLF，sha b8d3db…／48199bytes；Git lock LF為bc0271…／47178。保留vendor manifest與每檔精確SHA，另以JSON語意核對Git lock，非改hash求過。新增CRLF、真正發布map serializer及same-source phase續接防護，共37行政案例PASS／0skip（local003），舊34／35保留。輸入階段通過便保存cache，與產品PASS分開；再同source build-only重新驗inputs後跑原Windows／EXE。新增error_message與bounded traceback，下一重試native002。

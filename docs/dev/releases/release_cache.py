@@ -137,7 +137,10 @@ def validate_engine(folder, pin, *, root=ROOT):
             raise ValueError('Engine content differs: '+name)
     if actual != set(expected) | {'manifest.json'}:
         raise ValueError('Unlisted engine payload')
-    if (folder/'TEMPLATE_AI_SOURCE_MAP.json').read_bytes() != (root/'tools/inkscape_distribution_lock.json').read_bytes():
+    # The original Windows builder writes this JSON with CRLF, while the Git
+    # lock is LF. Its EXACT vendor bytes were already checked against the
+    # pinned manifest; compare the current source-map meaning independently.
+    if json.loads((folder/'TEMPLATE_AI_SOURCE_MAP.json').read_bytes()) != json.loads((root/'tools/inkscape_distribution_lock.json').read_bytes()):
         raise ValueError('Engine source map changed')
     if (folder/'TEMPLATE_AI_REDISTRIBUTION.md').read_bytes() != (root/'docs/dev/releases/INKSCAPE_REDISTRIBUTION.md').read_bytes():
         raise ValueError('Engine licensing instructions changed')
