@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import textwrap
+import types
 import unittest
 from unittest.mock import patch
 import zipfile
@@ -232,6 +233,83 @@ class ReviewReleaseTests(unittest.TestCase):
         self.assertEqual(row['name'],'package_preflight');self.assertEqual(row['status'],'FAIL')
         self.assertEqual(row['error_type'],'FileNotFoundError')
         self.assertEqual(list(self.build.glob('*.zip')),[])
+
+    def installed_sklearn_fixture(self):
+        package=self.root/'authored site-packages/sklearn'
+        testfile=package/'datasets/tests/data/openml/id_1/api-v1-jd-1.json.gz'
+        runtime=package/'datasets/data/iris.csv'
+        for path,content in [(package/'__init__.py',b'# authored installed package fixture'),
+                (testfile,b'AUTHORED_PUBLIC_TEST_FIXTURE'),(runtime,b'AUTHORED_RUNTIME_DATA')]:
+            path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(content)
+        lock=self.root/'.github/windows-wheels-lock.json';lock.parent.mkdir()
+        lock.write_text(json.dumps(dict(wheels=[dict(name='scikit-learn',version='1.7.2',sha256='a'*64)])))
+        distribution=types.SimpleNamespace(version='1.7.2',locate_file=lambda name:package.parent/name)
+        original_find=importlib.util.find_spec
+        for guard in [patch.object(release,'ROOT',self.root),
+                patch('importlib.metadata.distribution',return_value=distribution),
+                patch('importlib.util.find_spec',side_effect=lambda name:types.SimpleNamespace(origin=str(package/'__init__.py')) if name=='sklearn' else original_find(name))]:
+            guard.start();self.addCleanup(guard.stop)
+        rows=[('sklearn/datasets/tests/data/openml/id_1/api-v1-jd-1.json.gz',str(testfile),'DATA'),
+              ('sklearn/datasets/data/iris.csv',str(runtime),'DATA')]
+        return package,testfile,runtime,rows,distribution
+
+    def test_build_filter_only_excludes_verified_installed_upstream_test_data(self):
+        package,testfile,runtime,rows,_=self.installed_sklearn_fixture()
+        rows[0]=(rows[0][0].replace('/','\\'),rows[0][1],rows[0][2])
+        kept=[('sklearn_extra/datasets/tests/example.json',str(testfile),'DATA'),
+              ('sklearn/datasets/testsupport/example.json',str(testfile),'DATA'),
+              ('template_ai/tests/example.json',str(testfile),'DATA'),
+              ('other/tests/example.json',str(testfile),'DATA'),
+              ('licenses/scikit-learn/LICENSE',str(package/'__init__.py'),'DATA')]
+        report=self.build/'upstream-build-exclusions.json'
+        self.assertEqual(release.filter_upstream_test_data(rows+kept,report),rows[1:]+kept)
+        value=json.loads(report.read_text())
+        self.assertEqual(value['removed_entries'],1);self.assertEqual(value['distribution']['version'],'1.7.2')
+        self.assertTrue(value['distribution']['import_origin_matches_installed_distribution'])
+        self.assertEqual(value['removed'][0]['sha256'],release.sha(testfile))
+        self.assertEqual(value['removed'][0]['bytes'],testfile.stat().st_size)
+        self.assertEqual(value['removed'][0]['source_relative'],'sklearn/datasets/tests/data/openml/id_1/api-v1-jd-1.json.gz')
+        self.assertEqual(runtime.read_bytes(),b'AUTHORED_RUNTIME_DATA')
+
+    def test_build_filter_rejects_private_or_mismatched_source_instead_of_hiding_it(self):
+        package,_,_,rows,_=self.installed_sklearn_fixture()
+        outside=self.root/'PRIVATE_AUTHORED_NOT_CUSTOMER_DATA.json.gz';outside.write_bytes(b'authored private decoy')
+        different=package/'datasets/tests/data/different.json.gz';different.write_bytes(b'other test fixture')
+        for source in [outside,different]:
+            report=self.build/'rejected-filter.json'
+            with self.subTest(source=source.name),self.assertRaisesRegex(ValueError,'source differs'):
+                release.filter_upstream_test_data([(rows[0][0],str(source),'DATA')],report)
+            self.assertFalse(report.exists())
+
+    def test_build_filter_rejects_changed_installed_distribution_version(self):
+        _,_,_,rows,distribution=self.installed_sklearn_fixture();distribution.version='9.9.9'
+        with self.assertRaisesRegex(ValueError,'fixed build dependency version'):
+            release.filter_upstream_test_data(rows,self.build/'changed-filter.json')
+
+    def test_generated_spec_executes_real_filter_before_collect(self):
+        _,_,_,rows,_=self.installed_sklearn_fixture()
+        pin=self.root/'build/release/inkscape-runtime-pin.json';pin.parent.mkdir(parents=True)
+        pin.write_text(json.dumps(dict(version='1.4.2',manifest_sha256='b'*64)))
+        specdir=self.root/'build/review-release'
+        with patch.object(release,'BUILD',specdir):release.make_spec()
+        class AuthoredAnalysis:
+            def __init__(self,*args,**kwargs):
+                self.datas=list(rows);self.pure=[];self.scripts=[];self.binaries=[]
+        hooks=types.ModuleType('PyInstaller.utils.hooks')
+        hooks.collect_submodules=lambda *args,**kwargs:[]
+        hooks.copy_metadata=lambda *args,**kwargs:[]
+        hooks.collect_data_files=lambda *args,**kwargs:[]
+        modules={'PyInstaller':types.ModuleType('PyInstaller'),'PyInstaller.utils':types.ModuleType('PyInstaller.utils'),
+                 'PyInstaller.utils.hooks':hooks,'review_release':release}
+        namespace=dict(SPECPATH=str(specdir),Analysis=AuthoredAnalysis,PYZ=lambda *a,**k:object(),
+                       EXE=lambda *a,**k:object(),COLLECT=lambda *a,**k:object())
+        previous=list(sys.path)
+        try:
+            with patch.dict(sys.modules,modules):exec(compile((specdir/'TemplateAIReview.spec').read_text(),'<authored-spec-wire-test>','exec'),namespace)
+        finally:sys.path[:]=previous
+        self.assertEqual(namespace['a'].datas,rows[1:])
+        report=json.loads((self.root/'artifacts/review-release/upstream-build-exclusions.json').read_text())
+        self.assertEqual(report['removed_entries'],1);self.assertEqual(report['kept_entries'],1)
 
 
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "source_commit": "6a68c1d1454880056d991859d2ffeb7c6746bc27",
+  "stages": [
+    {
+      "name": "verified_fixed_inputs",
+      "started_utc": "2026-10-23T20:32:47.504799+00:00",
+      "status": "PASS",
+      "seconds": 46.40575
+    },
+    {
+      "name": "pinned_public_ocr_models",
+      "started_utc": "2026-10-23T20:33:33.937130+00:00",
+      "status": "PASS",
+      "seconds": 1.69565
+    },
+    {
+      "name": "isolated_current_component_tests",
+      "started_utc": "2026-10-23T20:33:36.150158+00:00",
+      "status": "PASS",
+      "seconds": 123.849684
+    },
+    {
+      "name": "clean_pyinstaller_build",
+      "started_utc": "2026-10-23T20:35:40.544482+00:00",
+      "status": "PASS",
+      "seconds": 66.244417
+    },
+    {
+      "name": "verified_engine_and_models_install",
+      "started_utc": "2026-10-23T20:36:46.814100+00:00",
+      "status": "PASS",
+      "seconds": 8.484317
+    },
+    {
+      "name": "actual_normal_startup_and_visible_window",
+      "started_utc": "2026-10-23T20:36:55.843871+00:00",
+      "status": "PASS",
+      "seconds": 1.031641
+    },
+    {
+      "name": "actual_exe_ui_worker_and_reopen",
+      "started_utc": "2026-10-23T20:36:56.899558+00:00",
+      "status": "PASS",
+      "seconds": 38.416673
+    },
+    {
+      "name": "package_preflight",
+      "started_utc": "2026-10-23T20:37:35.641417+00:00",
+      "status": "FAIL",
+      "error_type": "ValueError",
+      "message": "Unexpected private/development payload: _internal/sklearn/datasets/tests/data/openml/id_1/api-v1-jd-1.json.gz",
+      "seconds": 5.920148
+    }
+  ]
+}

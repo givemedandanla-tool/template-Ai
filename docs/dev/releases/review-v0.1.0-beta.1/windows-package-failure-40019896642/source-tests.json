@@ -1,0 +1,203 @@
+{
+  "status": "PASS",
+  "scope": "INDEPENDENT_REVIEW_COMPONENT_NOT_OLDER_FULL_PRODUCT",
+  "modules": [
+    {
+      "module": "test_bundled_inkscape",
+      "tests_run": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 0.495824
+    },
+    {
+      "module": "test_import_exceptions",
+      "tests_run": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 46.336481
+    },
+    {
+      "module": "test_import_pages",
+      "tests_run": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 4.489423
+    },
+    {
+      "module": "test_inkscape_cache_identity",
+      "tests_run": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 3.494213
+    },
+    {
+      "module": "test_original_pdf_glyphs",
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 0.246456
+    },
+    {
+      "module": "test_original_text_observation",
+      "tests_run": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 0.209929
+    },
+    {
+      "module": "test_review_analysis",
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [
+        {
+          "test": "test_actual_ocr_on_raster_does_not_fabricate_physical_sizes (test_review_analysis.ReviewAnalysisTests.test_actual_ocr_on_raster_does_not_fabricate_physical_sizes)",
+          "reason": "actual Tesseract is required"
+        }
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 18.708942
+    },
+    {
+      "module": "test_review_canvas",
+      "tests_run": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 0.706949
+    },
+    {
+      "module": "test_review_font_dialog",
+      "tests_run": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 1.061539
+    },
+    {
+      "module": "test_review_jobs",
+      "tests_run": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 5.388791
+    },
+    {
+      "module": "test_review_ledger",
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 20.089777
+    },
+    {
+      "module": "test_review_release",
+      "tests_run": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 6.344292
+    },
+    {
+      "module": "test_review_session",
+      "tests_run": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 0.393433
+    },
+    {
+      "module": "test_review_tool_gui",
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 14.81602
+    },
+    {
+      "module": "test_semantic_fields",
+      "tests_run": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 0.082377
+    },
+    {
+      "module": "test_source_region_hypotheses",
+      "tests_run": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 0.772089
+    }
+  ],
+  "modules_not_run": [],
+  "timeout_modules": [],
+  "required_reused_core_modules": [
+    "test_import_pages",
+    "test_import_exceptions",
+    "test_original_pdf_glyphs",
+    "test_original_text_observation",
+    "test_source_region_hypotheses",
+    "test_semantic_fields",
+    "test_inkscape_cache_identity",
+    "test_bundled_inkscape"
+  ],
+  "component_modules": [
+    "test_review_analysis",
+    "test_review_canvas",
+    "test_review_font_dialog",
+    "test_review_jobs",
+    "test_review_ledger",
+    "test_review_release",
+    "test_review_session",
+    "test_review_tool_gui"
+  ],
+  "test_counts_complete": true,
+  "tests_run": 177,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 1,
+  "source_commit": "6a68c1d1454880056d991859d2ffeb7c6746bc27",
+  "source_manifest_sha256": "0274416a0dc4d6cd7437fd055136c30cb91afead8089716c00725237f906ccda",
+  "source_unchanged_during_run": true,
+  "platform": "Windows-10-10.0.26100-SP0",
+  "real_corpus_qualified": false
+}

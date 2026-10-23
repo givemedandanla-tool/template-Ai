@@ -127,6 +127,47 @@ def prepare(cache):
         install(BUILD / 'ocr-models')
 
 
+def filter_upstream_test_data(datas, report_path):
+    """Exclude only the confirmed hook-collected sklearn dataset test fixtures."""
+    import importlib.metadata
+    import importlib.util
+    distribution = importlib.metadata.distribution('scikit-learn')
+    origin = importlib.util.find_spec('sklearn')
+    package = Path(distribution.locate_file('sklearn')).resolve(strict=True)
+    if origin is None or not origin.origin or Path(origin.origin).resolve(strict=True).parent != package:
+        raise ValueError('Installed sklearn import origin differs from distribution metadata')
+    wheels = json.loads((ROOT / '.github/windows-wheels-lock.json').read_text(encoding='utf-8'))['wheels']
+    pins = [row for row in wheels if row['name'] == 'scikit-learn']
+    if len(pins) != 1 or distribution.version != pins[0]['version']:
+        raise ValueError('Installed sklearn differs from the fixed build dependency version')
+    tests_root = (package / 'datasets/tests').resolve(strict=True)
+    if not tests_root.is_dir() or not tests_root.is_relative_to(package):
+        raise ValueError('Installed sklearn dataset test directory is invalid')
+    kept, removed = [], []
+    for row in datas:
+        destination = PurePosixPath(str(row[0]).replace('\\', '/'))
+        if destination.parts[:3] != ('sklearn', 'datasets', 'tests') or len(destination.parts) < 4:
+            kept.append(row)
+            continue
+        if '..' in destination.parts or len(row) != 3 or row[2] != 'DATA':
+            raise ValueError('Unexpected sklearn dataset test data destination/type')
+        source = Path(row[1])
+        if source.is_symlink() or not source.is_file():
+            raise ValueError('Sklearn test fixture source must be an installed regular file')
+        source = source.resolve(strict=True)
+        if (not source.is_relative_to(tests_root)
+                or source.relative_to(tests_root).parts != destination.parts[3:]):
+            raise ValueError('Sklearn test fixture source differs from its installed dataset test path: '+destination.as_posix())
+        removed.append(dict(destination=destination.as_posix(), source_relative='sklearn/'+source.relative_to(package).as_posix(),
+            bytes=source.stat().st_size, sha256=sha(source), type=row[2]))
+    write(report_path, dict(schema_version=1, status='PASS', policy='EXCLUDE_CONFIRMED_UPSTREAM_DATASET_TEST_FIXTURES_ONLY',
+        reason='PyInstaller sklearn hook collected development fixtures; runtime data and the private-payload guard stay unchanged.',
+        distribution=dict(name='scikit-learn', version=distribution.version, locked_wheel_sha256=pins[0]['sha256'],
+            import_origin_matches_installed_distribution=True),
+        input_entries=len(datas), kept_entries=len(kept), removed_entries=len(removed), removed=removed))
+    return kept
+
+
 def make_spec():
     BUILD.mkdir(parents=True, exist_ok=True)
     pin = json.loads((ROOT / 'build/release/inkscape-runtime-pin.json').read_text(encoding='utf-8'))
@@ -139,6 +180,8 @@ def make_spec():
 from PyInstaller.utils.hooks import collect_submodules, copy_metadata, collect_data_files
 import sys
 root = Path(SPECPATH).parent.parent
+sys.path.insert(0, str(root/'tools'))
+from review_release import filter_upstream_test_data
 datas = [(str(p), p.parent.relative_to(root).as_posix()) for p in sorted((root/'template_ai').rglob('*.py'))]
 datas += [(str(p), p.parent.relative_to(root).as_posix()) for p in sorted((root/'template_ai/review_tool/icons').rglob('*')) if p.is_file()]
 datas += [(str(root/'review_app.py'), '.'), (str(root/'build/review-release/release-info.json'), '.')]
@@ -152,6 +195,7 @@ if python_license.is_file(): datas += [(str(python_license), 'licenses/python')]
 a = Analysis([str(root/'review_app.py')], pathex=[str(root)], binaries=[], datas=datas,
     hiddenimports=collect_submodules('template_ai.review_tool'), hookspath=[], hooksconfig={}, runtime_hooks=[],
     excludes=['pytest','ruff','pyright','jscpd','IPython','matplotlib','tkinter'], noarchive=False)
+a.datas = filter_upstream_test_data(a.datas, root/'artifacts/review-release/upstream-build-exclusions.json')
 pyz = PYZ(a.pure)
 exe = EXE(pyz,a.scripts,[],exclude_binaries=True,name='TemplateAIReview',debug=False,
     bootloader_ignore_signals=False,strip=False,upx=False,console=True,hide_console='hide-early')

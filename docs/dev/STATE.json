@@ -794,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Monitor review Windows run40019896642 at source6a68c1d1",
+  "next_step": "Push exact upstream test-data build filter, then monitor Windows review release",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2149,7 +2149,7 @@
     "authorization": "User requests first version published to GitHub after UI discussion",
     "authorized_utc": "2026-10-23T18:54:05.645182+00:00",
     "source_commit": null,
-    "status": "PACKAGE_PREFLIGHT_DIAGNOSIS_RUNNING",
+    "status": "EXACT_UPSTREAM_TEST_DATA_FILTER_READY",
     "plan": "docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md",
     "do_not_overwrite_old_release": true,
     "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
@@ -2165,12 +2165,12 @@
     },
     "source_checkpoint": "docs/checkpoints/CP-20261023-REVIEW-WINDOWS-HARNESS-001.receipt.json",
     "windows_run": 40019896642,
-    "candidate_source_commit": "6a68c1d14548",
+    "candidate_source_commit": null,
     "windows_failures_retained": [
       "40013168648 partial: bundled Windows path alias assertion, legacy import GUI FAIL/cleanup hang",
       "40014149436 FAIL: same path assertion and 240s legacy test process timeout; no build/tag/release"
     ],
-    "next_action": "Read run40019896642 package-command-error.log/json if preflight fails; retain all exact-file/privacy/model/source gates. Publish only after successful package and two actual downloads.",
+    "next_action": "Run exact Windows source, frozen EXE, narrow upstream test-data filter audit, unchanged package gates and two actual downloads. No release until all pass.",
     "previous_windows_run": 40017431358,
     "windows_component_source_tests": {
       "source_commit": "446e571648df28727faa6e00d2f27e1113281275",
