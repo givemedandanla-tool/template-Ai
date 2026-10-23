@@ -1,0 +1,39 @@
+{
+  "scope": "TEST_HARNESS_ONLY_NO_PRODUCT_CODE",
+  "validated_utc": "2026-10-23T20:11:59.522300+00:00",
+  "reports": [
+    {
+      "name": "module-final",
+      "exit_code": 0,
+      "elapsed_seconds": 8.689,
+      "log": ".checkpoints/review-import-harness-001/module-final.log"
+    },
+    {
+      "name": "delayed-real-converter-business-pass",
+      "exit_code": 0,
+      "elapsed_seconds": 18.299,
+      "log": ".checkpoints/review-import-harness-001/delayed-real-converter-business-pass.log"
+    },
+    {
+      "name": "old-deadline-failure-cleanup-returns",
+      "exit_code": 0,
+      "elapsed_seconds": 18.65,
+      "log": ".checkpoints/review-import-harness-001/old-deadline-failure-cleanup-returns.log"
+    },
+    {
+      "name": "module-short-prefix-final",
+      "exit_code": 0,
+      "elapsed_seconds": 9.146,
+      "log": ".checkpoints/review-import-harness-001/module-short-prefix-final.log"
+    }
+  ],
+  "assertion_calls_unchanged": 74,
+  "ui_preflight_wait_seconds": 12,
+  "actual_svg_completion_wait_seconds": 210,
+  "cleanup_wait_seconds": 30,
+  "outer_module_timeout_seconds": 240,
+  "old_failure_probe_is_expected_failure_not_product_pass": true,
+  "product_code_changed": false,
+  "final_test_file_sha256": "d04690d17eafd2c31adca9d1a061368958ce36209d347da7ab8b960bbb6b3052",
+  "db_cleanup": "MainWindow.closeEvent closes library; BatchStore shares library.db; delayed probes verified closed and fixture removed"
+}

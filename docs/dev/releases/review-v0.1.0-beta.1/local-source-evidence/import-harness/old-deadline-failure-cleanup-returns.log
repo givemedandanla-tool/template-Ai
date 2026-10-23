@@ -1,0 +1,23 @@
+test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched (__main__.ProbeCase.test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+FAIL
+This plugin does not support propagateSizeHints()
+
+======================================================================
+FAIL: test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched (__main__.ProbeCase.test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_import_exceptions.py", line 154, in test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched
+    self.assertIsNotNone(self.dlg.runner);self.wait_for_conversion(lambda:not self.dlg.runner.running and not self.dlg.runner.busy);b=self.window.import_store.get(self.b['id']);self.assertEqual([r['status'] for r in b['items']],['SUCCESS','READY']);self.assertEqual([r['attempts'] for r in b['items']],[2,0]);self.assertEqual(b['phase'],'PAUSED');self.dlg.runner.close();APP.processEvents();self.assertEqual(self.dlg.table.rowCount(),0)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 15, in wait_for_conversion
+  File "/workspace/template-Ai/tests/test_import_exceptions.py", line 101, in wait_for
+    self.assertTrue(predicate(),self.dlg.status.text())
+AssertionError: False is not true : 已核對舊／新hash差異；仍未解除隔離，須明確確認才只重試所選項。
+
+----------------------------------------------------------------------
+Ran 1 test in 18.450s
+
+FAILED (failures=1)
+{"probe": "synthetic_cold_start_delay_not_windows_timing", "mode": "old-12s", "failures": 1, "errors": 0, "visible_modal_boxes": 0, "library_closed": true, "fixture_removed": true, "actual_converter_calls": 2}

@@ -1,0 +1,12 @@
+test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched (test_import_exceptions.ImportExceptionGuiTests.test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched) ... 
+IMMEDIATE_FAILURE: test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched (test_import_exceptions.ImportExceptionGuiTests.test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched)
+Traceback (most recent call last):
+  File "D:\a\template-Ai\template-Ai\tests\test_import_exceptions.py", line 104, in test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched
+    self.assertIsNotNone(self.dlg.runner);self.wait_for(lambda:not self.dlg.runner.running and not self.dlg.runner.busy);b=self.window.import_store.get(self.b['id']);self.assertEqual([r['status'] for r in b['items']],['SUCCESS','READY']);self.assertEqual([r['attempts'] for r in b['items']],[2,0]);self.assertEqual(b['phase'],'PAUSED');self.dlg.runner.close();APP.processEvents();self.assertEqual(self.dlg.table.rowCount(),0)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\a\template-Ai\template-Ai\tests\test_import_exceptions.py", line 86, in wait_for
+    self.assertTrue(predicate(),self.dlg.status.text())
+AssertionError: False is not true : 已核對舊／新hash差異；仍未解除隔離，須明確確認才只重試所選項。
+FAIL
+
+RELEASE_MODULE_TIMEOUT: {"module": "test_import_exceptions", "process_tree_cleanup": {"observed_descendants": 0, "remaining_pids": [], "root_pid": 8772, "status": "STOPPED"}, "timeout_seconds": 240}

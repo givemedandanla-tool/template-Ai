@@ -1,6 +1,7 @@
 import copy
 import os
 from pathlib import Path
+import shutil
 import tempfile
 import time
 import unittest
@@ -17,6 +18,17 @@ from template_ai.model import Rect
 from template_ai.demo import demo_template
 from template_ai.gui import MainWindow
 APP=QApplication.instance() or QApplication([])
+
+# 12 seconds is the original UI/preflight polling helper, not an agreed import
+# performance SLA. This fixture is SVG: import_file makes two real Inkscape
+# commands (each bounded at 90s), a version query (10s), then local save/callbacks.
+# Give only that real-conversion completion wait the corresponding finite budget.
+# The existing isolated-module watchdog stays at 240s. In the worst case,
+# conversion + cleanup + other tests may hit that outer bound and must remain
+# ERROR with owned-tree cleanup, never be reclassified as a successful run.
+UI_WAIT_SECONDS = 12
+SVG_CONVERSION_WAIT_SECONDS = 2 * 90 + 10 + 20
+CLEANUP_WAIT_SECONDS = 30
 
 
 def svg(path,color='red'):
@@ -79,11 +91,51 @@ class ImportExceptionTests(unittest.TestCase):
 
 class ImportExceptionGuiTests(unittest.TestCase):
     def setUp(self):
-        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.window=MainWindow(self.root/'data');self.addCleanup(lambda:self.window.close());self.paths=[svg(self.root/'a.svg'),svg(self.root/'b.svg','blue')];self.b=failed_batch(self.window.import_store,self.paths);self.dlg=ImportExceptionDialog(self.window);self.dlg.show();APP.processEvents();self.addCleanup(lambda:self.dlg.close())
-    def wait_for(self,predicate):
-        end=time.monotonic()+12
+        # Keep the original short tempfile naming convention on Windows; a
+        # descriptive prefix would unnecessarily lengthen converter cache paths.
+        self.root=Path(tempfile.mkdtemp())
+        self.window=None;self.dlg=None;self._widgets_cleaned=False
+        self.addCleanup(self.cleanup_widgets)
+        self.window=MainWindow(self.root/'data');self.paths=[svg(self.root/'a.svg'),svg(self.root/'b.svg','blue')];self.b=failed_batch(self.window.import_store,self.paths);self.dlg=ImportExceptionDialog(self.window);self.dlg.show();APP.processEvents()
+    def wait_for(self,predicate,timeout=UI_WAIT_SECONDS):
+        end=time.monotonic()+timeout
         while not predicate() and time.monotonic()<end:QTest.qWait(10)
         self.assertTrue(predicate(),self.dlg.status.text())
+    def wait_for_conversion(self,predicate):
+        started=time.monotonic()
+        try:self.wait_for(predicate,timeout=SVG_CONVERSION_WAIT_SECONDS)
+        finally:print('REAL_SVG_RETRY_COMPLETION_WAIT elapsed_seconds='
+            +format(time.monotonic()-started,'.3f')+' deadline_seconds='
+            +str(SVG_CONVERSION_WAIT_SECONDS)+' outer_module_seconds=240',flush=True)
+    def cleanup_widgets(self):
+        if self._widgets_cleaned:return
+        window=self.window;dlg=self.dlg;runner=getattr(dlg,'runner',None)
+        if runner and (runner.running or runner.busy):runner.cancel()
+        # Preflight can still be waiting for resource admission without a batch
+        # runner. Cancel only this window's owned pending launches as well.
+        if window:
+            for cancel in list(window._waiting_launches.values()):cancel.set()
+        def busy():
+            return (bool(window and window.busy) or bool(dlg and dlg.busy)
+                    or bool(runner and (runner.running or runner.busy)))
+        end=time.monotonic()+CLEANUP_WAIT_SECONDS
+        while busy() and time.monotonic()<end:QTest.qWait(10)
+        if busy():
+            # Do not invoke closeEvent/inform while busy: its genuine safety
+            # QMessageBox masks the test's original failure. Leave owned files
+            # and workers for the isolated module parent's bounded tree cleanup.
+            result=getattr(self._outcome,'result',None)
+            if result is not None:result.stop()
+            raise RuntimeError('Import GUI cleanup deadline: host_busy='+str(bool(window and window.busy))
+                +', dialog_busy='+str(bool(dlg and dlg.busy))
+                +', runner_busy='+str(bool(runner and runner.busy)))
+        if runner:runner.close()
+        if dlg:dlg.close()
+        APP.processEvents()
+        if window:window.close()
+        APP.processEvents()
+        shutil.rmtree(self.root)
+        self._widgets_cleaned=True
     def select(self):self.dlg.table.selectRow(0);APP.processEvents()
     def test_real_search_sort_filter_and_exact_source_navigation(self):
         from template_ai.importer import import_file
@@ -101,7 +153,7 @@ class ImportExceptionGuiTests(unittest.TestCase):
         with patch.object(QMessageBox,'question',return_value=QMessageBox.No):QTest.mouseClick(self.dlg.apply_button,Qt.LeftButton)
         self.assertIsNone(self.dlg.runner)
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.dlg.apply_button,Qt.LeftButton)
-        self.assertIsNotNone(self.dlg.runner);self.wait_for(lambda:not self.dlg.runner.running and not self.dlg.runner.busy);b=self.window.import_store.get(self.b['id']);self.assertEqual([r['status'] for r in b['items']],['SUCCESS','READY']);self.assertEqual([r['attempts'] for r in b['items']],[2,0]);self.assertEqual(b['phase'],'PAUSED');self.dlg.runner.close();APP.processEvents();self.assertEqual(self.dlg.table.rowCount(),0)
+        self.assertIsNotNone(self.dlg.runner);self.wait_for_conversion(lambda:not self.dlg.runner.running and not self.dlg.runner.busy);b=self.window.import_store.get(self.b['id']);self.assertEqual([r['status'] for r in b['items']],['SUCCESS','READY']);self.assertEqual([r['attempts'] for r in b['items']],[2,0]);self.assertEqual(b['phase'],'PAUSED');self.dlg.runner.close();APP.processEvents();self.assertEqual(self.dlg.table.rowCount(),0)
     def test_background_failure_and_late_apply_failure_controls_recover(self):
         self.select();self.paths[0].unlink();self.dlg.preview_retry();self.wait_for(lambda:not self.dlg.busy);self.assertIsNone(self.dlg.plan);self.assertTrue(self.dlg.reload_button.isEnabled());svg(self.paths[0]);self.dlg.preview_retry();self.wait_for(lambda:not self.dlg.busy);self.assertIsNotNone(self.dlg.plan)
         with patch.object(self.window.library,'event',side_effect=RuntimeError('late exception audit')),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):self.dlg.apply_retry()

@@ -1,0 +1,79 @@
+{
+  "checkpoint_id": "CP-20261023-REVIEW-WINDOWS-HARNESS-001",
+  "phase": "PREPARED",
+  "kind": "INDEPENDENT_REVIEW_WINDOWS_TEST_HARNESS",
+  "base_commit": "f1e2297892c6edcb04a036efbea1e885d11af9fc",
+  "source_files": {
+    "docs/dev/STATE.json": {
+      "bytes": 109183,
+      "sha256": "ec5a4c07b1f31d7dc3f11637e638e5cc16b1e757e4111a7ff05dbcf17d960195",
+      "git_blob_sha1": "942f194d285fb8420b2de9c9f2dc8c3da3eb1d36"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.1/LOCAL_VALIDATION.md": {
+      "bytes": 4668,
+      "sha256": "4f2ff36e29d39001491fbd05ebe0df12a24ff07c09c65ae647b54e3cd74d3963",
+      "git_blob_sha1": "07db737dd02705304afbf986c6bcfbec0827c35a"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.1/local-source-evidence/import-harness/delayed-real-converter-business-pass.log": {
+      "bytes": 741,
+      "sha256": "bf951cd1fde4b52b3376d7fa43e25ffabff063b082ffabf5589b51fae3a50431",
+      "git_blob_sha1": "f06bf0f69b2045bbbb1a20cd5d901c0cf9b328a5"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.1/local-source-evidence/import-harness/module-final.log": {
+      "bytes": 2825,
+      "sha256": "c7d73c08f08b77490438722527fffee1a849cba514c4f092b27454e750fabd1d",
+      "git_blob_sha1": "db0254ed755f964e2746535848dfe9a9e0306285"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.1/local-source-evidence/import-harness/module-short-prefix-final.log": {
+      "bytes": 2825,
+      "sha256": "9dce9d9e4f5a1aeb822b43c509e398e2894e02addf2014a9cf61bc8afaa15b70",
+      "git_blob_sha1": "20a51ff04a7310addafb62ab3abed0c2fed97200"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.1/local-source-evidence/import-harness/old-deadline-failure-cleanup-returns.log": {
+      "bytes": 2114,
+      "sha256": "b29a0a288e41db104f0f4160b3ea04e315cb308f4ab9157c5477e491b7a5b62c",
+      "git_blob_sha1": "1beaa9759931586a1168313e5c856eb7d38b3b25"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.1/local-source-evidence/import-harness/summary.json": {
+      "bytes": 1437,
+      "sha256": "d01d716d91539d5e64080880a19ba18651f38e3c8e97de09a3544f6f205b1625",
+      "git_blob_sha1": "a304d582f0931869cbacce7ca7da638ac9288d51"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.1/windows-failure-40015130560/release-timings.json": {
+      "bytes": 744,
+      "sha256": "af496b8d121719d4479d8d36180c2537eed2e7b32ee0e81f76e87b0287609f46",
+      "git_blob_sha1": "31969eb17bbbb64f33a694a42e493a9f6474132f"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.1/windows-failure-40015130560/source-tests.json": {
+      "bytes": 5203,
+      "sha256": "ee54e46da24dcba627447b5bea23c36741a6f8102c703080ba6c1ed809460f38",
+      "git_blob_sha1": "3c5f1299a46b96fae62cd55eb41e30107360142d"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.1/windows-failure-40015130560/source-tests/test_import_exceptions.json": {
+      "bytes": 413,
+      "sha256": "74b9ccc65b70f64357f418d15467b8ddbc2e680b507cb8097e2309031b5ef273",
+      "git_blob_sha1": "726e8ce565e0ab23d70fc418e959d9a590d8b024"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.1/windows-failure-40015130560/source-tests/test_import_exceptions.log": {
+      "bytes": 1664,
+      "sha256": "21fa0eee1e4f3da78ed0b80472ebf04fb814fb0f793821e1dcaa67238abee44e",
+      "git_blob_sha1": "3c9ab81bae40d0cc948924233731c2b55beb94b7"
+    },
+    "tests/test_import_exceptions.py": {
+      "bytes": 16968,
+      "sha256": "d04690d17eafd2c31adca9d1a061368958ce36209d347da7ab8b960bbb6b3052",
+      "git_blob_sha1": "4ace9f090827cc8ca7344527a2d3b75c44b5242b"
+    }
+  },
+  "source_manifest_sha256": "2d6ffe2ace89c0ee095b3dfe184be3529dc9e5e7b1fd824a8e80fdb5cc304df3",
+  "next_step": "Native Windows source gates, clean EXE, actual EXE workflow, package, real draft/public downloads; publish only on PASS.",
+  "validation": {
+    "legacy_gui_tests_passed": 12,
+    "original_assert_asts_preserved": 74,
+    "real_conversion_delay_positive": "PASS",
+    "old_wait_negative": "EXPECTED_FAIL_NO_MODAL",
+    "outer_module_timeout_seconds": 240,
+    "product_programs_changed": false
+  },
+  "qualification": "OLDER_PRODUCT_AND_PRIVATE_CORPUS_UNCHANGED"
+}
