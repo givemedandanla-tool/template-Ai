@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "version": "0.1.0-beta.1",
+  "actual_frozen_executable": false,
+  "fixture": "AUTHORED_REVIEW_ACCEPTANCE_V1",
+  "fixture_types": [
+    "CALIBRATED_SVG",
+    "PDF_COMPATIBLE_AI_SIMULATION",
+    "OUTLINED_TEXT_SVG"
+  ],
+  "worker_mode": "ACTUAL_QPROCESS",
+  "checks": [
+    "actual_review_window_opens",
+    "technical_overview_hidden_initially",
+    "actual_add_files_entry_registers_three_sources",
+    "actual_qprocess_analysis_completes",
+    "gui_event_loop_remains_responsive",
+    "svg_and_pdf_compatible_ai_have_real_previews",
+    "actual_vector_analysis_executes",
+    "actual_ocr_reads_authored_outline_source",
+    "real_missing_ocr_worker_preserves_explicit_fallback",
+    "manual_annotation_works_when_ocr_executable_is_missing",
+    "canvas_click_updates_actual_editor",
+    "actual_editor_applies_content_kind_owner_and_sharing",
+    "original_prediction_remains_separate",
+    "actual_canvas_draw_creates_manual_annotation",
+    "actual_canvas_resize_updates_annotation_only",
+    "actual_remove_button_removes_only_annotation",
+    "actual_undo_button_restores_removed_annotation",
+    "actual_multiselection_retains_both_relation_endpoints",
+    "actual_relation_dialog_creates_group",
+    "overview_preserves_visible_original",
+    "actual_overview_row_draws_linked_dimensions",
+    "canvas_selection_updates_overview_without_leaving_mode",
+    "completion_does_not_silently_review_unchecked",
+    "explicit_unknown_survives_human_completion",
+    "actual_save_button_persists_session",
+    "actual_window_reopens_saved_corrections",
+    "unknown_is_not_replaced_by_defaults_after_reopen",
+    "source_ids_and_work_ids_survive_reopen",
+    "actual_discard_does_not_save_draft_on_worker_stop",
+    "safe_diagnostic_excludes_private_content_and_paths",
+    "all_authored_sources_remain_byte_identical"
+  ],
+  "check_details": {
+    "actual_review_window_opens": {
+      "status": "PASS"
+    },
+    "technical_overview_hidden_initially": {
+      "status": "PASS"
+    },
+    "actual_add_files_entry_registers_three_sources": {
+      "status": "PASS"
+    },
+    "actual_qprocess_analysis_completes": {
+      "gui_timer_events": 24
+    },
+    "gui_event_loop_remains_responsive": {
+      "status": "PASS"
+    },
+    "svg_and_pdf_compatible_ai_have_real_previews": {
+      "status": "PASS"
+    },
+    "worker_capabilities": [
+      {
+        "inkscape_conversion_executed": true,
+        "inkscape_runtime": {
+          "executable_sha256": "a1db427b1666d73e477a841b925f2bc44185623cd178cd007f6da3ca8ab4c873",
+          "origin": "EXTERNAL",
+          "policy": "SOURCE_EXTERNAL",
+          "version": "1.4"
+        },
+        "local_only": true,
+        "native_illustrator_mapping": "UNKNOWN",
+        "ocr_available": null,
+        "ocr_executed": false,
+        "ocr_requested": true,
+        "unknowns_are_not_zero": true,
+        "vector_analysis_executed": true
+      },
+      {
+        "inkscape_conversion_executed": true,
+        "inkscape_runtime": {
+          "executable_sha256": "a1db427b1666d73e477a841b925f2bc44185623cd178cd007f6da3ca8ab4c873",
+          "origin": "EXTERNAL",
+          "policy": "SOURCE_EXTERNAL",
+          "version": "1.4"
+        },
+        "local_only": true,
+        "native_illustrator_mapping": "UNKNOWN",
+        "ocr_available": null,
+        "ocr_executed": false,
+        "ocr_requested": true,
+        "unknowns_are_not_zero": true,
+        "vector_analysis_executed": true
+      },
+      {
+        "inkscape_conversion_executed": true,
+        "inkscape_runtime": {
+          "executable_sha256": "a1db427b1666d73e477a841b925f2bc44185623cd178cd007f6da3ca8ab4c873",
+          "origin": "EXTERNAL",
+          "policy": "SOURCE_EXTERNAL",
+          "version": "1.4"
+        },
+        "local_only": true,
+        "native_illustrator_mapping": "UNKNOWN",
+        "ocr_available": true,
+        "ocr_executed": true,
+        "ocr_languages": [
+          "chi_tra",
+          "eng"
+        ],
+        "ocr_requested": true,
+        "unknowns_are_not_zero": true,
+        "vector_analysis_executed": true
+      }
+    ],
+    "actual_vector_analysis_executes": {
+      "status": "PASS"
+    },
+    "actual_ocr_reads_authored_outline_source": {
+      "status": "PASS"
+    },
+    "real_missing_ocr_worker_preserves_explicit_fallback": {
+      "status": "PASS"
+    },
+    "manual_annotation_works_when_ocr_executable_is_missing": {
+      "status": "PASS"
+    },
+    "canvas_click_updates_actual_editor": {
+      "status": "PASS"
+    },
+    "actual_editor_applies_content_kind_owner_and_sharing": {
+      "status": "PASS"
+    },
+    "original_prediction_remains_separate": {
+      "status": "PASS"
+    },
+    "actual_canvas_draw_creates_manual_annotation": {
+      "status": "PASS"
+    },
+    "actual_canvas_resize_updates_annotation_only": {
+      "status": "PASS"
+    },
+    "actual_remove_button_removes_only_annotation": {
+      "status": "PASS"
+    },
+    "actual_undo_button_restores_removed_annotation": {
+      "status": "PASS"
+    },
+    "actual_multiselection_retains_both_relation_endpoints": {
+      "status": "PASS"
+    },
+    "actual_relation_dialog_creates_group": {
+      "status": "PASS"
+    },
+    "overview_preserves_visible_original": {
+      "status": "PASS"
+    },
+    "actual_overview_row_draws_linked_dimensions": {
+      "status": "PASS"
+    },
+    "canvas_selection_updates_overview_without_leaving_mode": {
+      "status": "PASS"
+    },
+    "completion_does_not_silently_review_unchecked": {
+      "status": "PASS"
+    },
+    "explicit_unknown_survives_human_completion": {
+      "status": "PASS"
+    },
+    "actual_save_button_persists_session": {
+      "status": "PASS"
+    },
+    "actual_window_reopens_saved_corrections": {
+      "status": "PASS"
+    },
+    "unknown_is_not_replaced_by_defaults_after_reopen": {
+      "status": "PASS"
+    },
+    "source_ids_and_work_ids_survive_reopen": {
+      "status": "PASS"
+    },
+    "actual_discard_does_not_save_draft_on_worker_stop": {
+      "saved_snapshot_byte_identical": true,
+      "actual_owned_worker_stopped": true,
+      "actual_close_dialog_used": true
+    },
+    "safe_diagnostic_excludes_private_content_and_paths": {
+      "status": "PASS"
+    },
+    "all_authored_sources_remain_byte_identical": {
+      "status": "PASS"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "source-004-synthetic/01-empty-window.png",
+      "sha256": "13495da0e15baf8ca603e663e122565828cfb70e6c949d4eb562d6fcc889b794",
+      "kind": "ACTUAL_QT_WINDOW"
+    },
+    {
+      "path": "source-004-synthetic/05-no-ocr-manual-fallback.png",
+      "sha256": "262a81f090b6a992c2458110cd436a19053d6137bd10e3a10a06b6e4605f60c4",
+      "kind": "ACTUAL_QT_WINDOW"
+    },
+    {
+      "path": "source-004-synthetic/02-overview-dimensions.png",
+      "sha256": "036a1c30a3e8d591f1c4880a95050e49097edc12e777431b9dfef98639f61a60",
+      "kind": "ACTUAL_QT_WINDOW"
+    },
+    {
+      "path": "source-004-synthetic/03-saved-review.png",
+      "sha256": "508cef550c1e593bc7bf797ad4c00dfcdb41d05d27ef95265ebba52dd786efe2",
+      "kind": "ACTUAL_QT_WINDOW"
+    },
+    {
+      "path": "source-004-synthetic/04-reopened-window.png",
+      "sha256": "2901fdc818603897d8d95c56c2231a83211450ee24049c08caf77d523736d1e5",
+      "kind": "ACTUAL_QT_WINDOW"
+    }
+  ],
+  "source_unchanged": true,
+  "private_data_included": false,
+  "real_corpus_qualified": false,
+  "native_illustrator_private_format_qualified": false,
+  "os_native_file_picker_automated": false,
+  "ocr_scope": "ACTUAL_LOCAL_OCR_EXECUTED_ON_AUTHORED_OUTLINES",
+  "elapsed_seconds": 4.308
+}

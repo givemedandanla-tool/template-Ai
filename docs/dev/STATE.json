@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "repository": "givemedandanla-tool/template-Ai",
-  "working_branch": "dev/v0.1-first-version",
+  "working_branch": "feature/review-tool-v0.1.0",
   "pull_request": 2,
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "ANALYSIS_REVIEW_UI_SCREEN_DESIGN_DISCUSSION",
+  "active_task": "ANALYSIS_REVIEW_TOOL_FIRST_RELEASE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261023-IMPORT-ZERO-SOURCE-001.receipt.json",
   "last_confirmed_commit": "155c7daff076517dd91fb63be27b1ec4630f98b7",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
@@ -18,10 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Read docs/dev/analysis_review_ui/DESIGN.md and its button/observation contracts; preserve approved B workspace plus C guidance.",
-    "Discuss first-open/resume screen, window/scaling and source-file/multiple-artwork list structure, then processing/review/overview/save states.",
-    "Keep numeric measurements hidden by default with linked overview; preserve original artwork, human revisions, unknowns and private local data.",
-    "Keep original product checkpoints and unfinished bugfix evidence separate; no new EXE, training or product qualification from this documentation."
+    "Implement independent local review tool using approved B+C UI and explicit review/export state.",
+    "Validate real Qt and Windows EXE paths, local analysis, annotations, overview, persistence and safe reports.",
+    "Publish new review-v0.1.0-beta.1 prerelease and verify downloaded bytes; preserve old releases and private data."
   ],
   "blocked": [
     {
@@ -795,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Discuss actual minimal review UI screen by screen after design persistence; do not start AI training or implement product yet.",
+  "next_step": "Implement independent local review tool using approved B+C UI and explicit review/export state.",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2129,11 +2128,11 @@
     ]
   },
   "analysis_review_redesign": {
-    "status": "APPROVED_PRINCIPLES_SCREEN_DETAILS_PENDING_NOT_IMPLEMENTED",
+    "status": "FIRST_VERSION_IMPLEMENTATION_AUTHORIZED",
     "design_contract": "docs/dev/analysis_review_ui/DESIGN_CONTRACT.json",
     "decision": "docs/decisions/2026-10-23-ANALYSIS-REVIEW-UI-FIRST.md",
     "main_document": "docs/dev/analysis_review_ui/DESIGN.md",
-    "scope": "DOCUMENTATION_AND_UI_DISCUSSION_ONLY",
+    "scope": "INDEPENDENT_COMPONENT_IMPLEMENTATION_AND_FIRST_BETA_RELEASE",
     "layout": "B_WITH_C_STEP_GUIDANCE",
     "latest_user_wording": "UI supersedes preceding AI message",
     "document_checkpoint": "CP-20261023-ANALYSIS-REVIEW-UI-DESIGN-001",
@@ -2142,5 +2141,19 @@
     "document_receipt": "docs/checkpoints/CP-20261023-ANALYSIS-REVIEW-UI-DESIGN-001.receipt.json",
     "document_snapshot_commit": "3fdadb200c6c7c396eb677611eba493e7888ab05",
     "document_readback": "docs/dev/analysis_review_ui/persistence/DESIGN_SOURCE_READBACK.json"
+  },
+  "review_tool_release_request": {
+    "version": "0.1.0-beta.1",
+    "tag": "review-v0.1.0-beta.1",
+    "component": "TemplateAIReview",
+    "authorization": "User requests first version published to GitHub after UI discussion",
+    "authorized_utc": "2026-10-23T18:54:05.645182+00:00",
+    "source_commit": null,
+    "status": "SOURCE_IMPLEMENTED_WINDOWS_VALIDATION_PENDING",
+    "plan": "docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md",
+    "do_not_overwrite_old_release": true,
+    "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
+    "user_request": "還有要說明的嗎？沒有的話，可以產出第一版發佈到github上了？",
+    "published": false
   }
 }

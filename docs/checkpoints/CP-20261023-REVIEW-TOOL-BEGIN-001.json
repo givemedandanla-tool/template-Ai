@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261023-REVIEW-TOOL-BEGIN-001",
+  "kind": "COMPONENT_IMPLEMENTATION_BEGIN",
+  "phase": "BASELINE_RECORDED",
+  "base_commit": "3274d2f945486fdc10d158de5352127f06223e84",
+  "created_utc": "2026-10-23T18:54:05.647404+00:00",
+  "authorization": {
+    "version": "0.1.0-beta.1",
+    "tag": "review-v0.1.0-beta.1",
+    "component": "TemplateAIReview",
+    "authorization": "User requests first version published to GitHub after UI discussion",
+    "authorized_utc": "2026-10-23T18:54:05.645182+00:00",
+    "source_commit": null,
+    "status": "AUTHORIZED_IMPLEMENTATION_PENDING",
+    "plan": "docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md",
+    "do_not_overwrite_old_release": true
+  },
+  "preexisting_working_paths": [
+    " M docs/dev/STATE.json",
+    " M docs/dev/bugfixes/import-zero-fields-20261023/adopt_source.py",
+    "?? docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md",
+    "?? docs/dev/bugfixes/import-zero-fields-20261023/TRAINING_TIMEOUT_FINDINGS.md",
+    "?? docs/evidence/runs/RUN-IMPORT-ZERO-FIELDS-001/",
+    "?? template_ai/review_tool/"
+  ],
+  "product_qualification": "NOT_YET_VERIFIED",
+  "next_step": "Implement independent local review tool using approved B+C UI and explicit review/export state.",
+  "original_product_checkpoint_unchanged": true
+}

@@ -1,3 +1,11 @@
+# 當前工作：最小作品判讀核對工具首版
+
+2026-10-23使用者已授權製作第一版並發布到GitHub，取代下列歷史僅討論限制。讀STATE.review_tool_release_request、analysis_review_ui/FIRST_RELEASE_PLAN.md。獨立分支feature/review-tool-v0.1.0，根入口review_app.py，模組template_ai/review_tool，版本review-v0.1.0-beta.1；新資料目錄隔離，不改舊版或main。當前實作／驗收／發布仍進行中，尚未交付EXE。
+
+B工作台＋C引導、肉眼資訊／歸屬常用、數據總覽雙向定位、原稿及人修保護、未知留缺失都有效。模型學習／模板產出不在首版範圍。發布須真Windows EXE、明確source／manifest與下載校驗。原未提交timeout/adopt/full-run成果與產品主checkpoint保持原狀。
+
+---
+
 # 當前精簡交接：最小作品判讀核對工具
 
 ## 當前指令與範圍

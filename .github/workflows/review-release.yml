@@ -1,0 +1,105 @@
+name: Artwork review tool Windows beta
+on:
+  push:
+    branches: ['release-request/review-v0.1.0-beta.1']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: artwork-review-first-beta
+  cancel-in-progress: false
+jobs:
+  windows:
+    if: github.event.repository.private == false
+    runs-on: windows-latest
+    timeout-minutes: 75
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONUTF8: '1'
+      QT_QPA_PLATFORM: windows
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      REVIEW_RELEASE_PUBLISH_ALLOWED: ${{ github.event_name == 'push' && github.ref == 'refs/heads/release-request/review-v0.1.0-beta.1' && contains(github.event.head_commit.message, '[publish-review]') && 'true' || 'false' }}
+    steps:
+      - name: Preserve source bytes and long Windows paths
+        shell: pwsh
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.longpaths true
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Verify authorization and included-cache budget
+        id: inputs
+        shell: pwsh
+        run: |
+          gh auth setup-git
+          python docs/dev/releases/release_actions_support.py preflight --output artifacts/review-release/cache-budget.json
+          if ($LASTEXITCODE -ne 0) { throw 'Cache preflight failed' }
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
+        id: restore
+        continue-on-error: true
+        with:
+          path: ${{ runner.temp }}/template-ai-review-fixed-inputs
+          key: ${{ steps.inputs.outputs.key }}
+      - name: Verify fixed inputs and install dependencies offline
+        shell: pwsh
+        run: |
+          python tools/review_release.py prepare --cache '${{ runner.temp }}/template-ai-review-fixed-inputs'
+          if ($LASTEXITCODE -ne 0) { throw 'Fixed inputs failed' }
+      - uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830
+        if: success() && steps.inputs.outputs.save_allowed == 'true' && steps.restore.outputs.cache-hit != 'true'
+        continue-on-error: true
+        with:
+          path: ${{ runner.temp }}/template-ai-review-fixed-inputs
+          key: ${{ steps.inputs.outputs.key }}
+      - name: Run isolated component regressions on Windows
+        shell: pwsh
+        run: |
+          python tools/review_release.py test
+          if ($LASTEXITCODE -ne 0) { throw 'Current component tests failed' }
+      - name: Build a clean onedir application with verified Inkscape and OCR data
+        shell: pwsh
+        run: |
+          python tools/review_release.py build
+          if ($LASTEXITCODE -ne 0) { throw 'Clean application build failed' }
+      - name: Exercise the actual EXE, worker, annotations and reopen
+        shell: pwsh
+        run: |
+          python tools/review_release.py exercise
+          if ($LASTEXITCODE -ne 0) { throw 'Actual EXE acceptance failed' }
+      - name: Package only accepted bytes and produce complete hashes
+        shell: pwsh
+        run: |
+          python tools/review_release.py package
+          if ($LASTEXITCODE -ne 0) { throw 'Package gate failed' }
+      - name: Publish only this explicitly authorized immutable review beta
+        if: success() && env.REVIEW_RELEASE_PUBLISH_ALLOWED == 'true'
+        shell: pwsh
+        run: |
+          python tools/review_release.py publish
+          if ($LASTEXITCODE -ne 0) { throw 'Release/download gate failed; existing draft/tag retained' }
+      - name: Persist bounded public evidence in a separate branch
+        if: always()
+        shell: pwsh
+        run: |
+          python tools/review_release.py persist-evidence
+          if ($LASTEXITCODE -ne 0) { throw 'Evidence persistence failed' }
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: review-windows-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            artifacts/review-release/
+            !artifacts/review-release/draft-download/*.zip
+            !artifacts/review-release/public-download/*.zip
+          if-no-files-found: error
+          retention-days: 14

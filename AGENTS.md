@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新授權：製作並發布最小判讀核對工具首版
+
+使用者於2026-10-23授權第一版發布，取代前段僅討論限制。依docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md與STATE.review_tool_release_request，獨立review_app.py／TemplateAIReview.exe／review-v0.1.0-beta.1。feature/review-tool-v0.1.0以既有dev正確來源為基底；release-request精確分支才建置／發布，不合併main，不覆寫舊版。原稿／舊DB不變，私有資料仍本地。真正Qt／Windows EXE／下載校驗通過後才交付，不能以新component驗收取代舊完整產品資格。
+
 ## 最新使用者方向：先討論最小判讀核對工具的實機 UI
 
 2026-10-23使用者因流程複雜要求UI先行，已選B原稿中心工作台＋C步驟引導。先讀[設計基準](docs/dev/analysis_review_ui/DESIGN.md)、[按鈕草案](docs/dev/analysis_review_ui/BUTTONS_AND_STATES.md)與[觀察資料契約](docs/dev/analysis_review_ui/OBSERVATION_CONTRACT.md)。日常只處理肉眼可見內容及歸屬，數據自動保存且預設隱藏；「查看全部判讀資料」與中央原稿雙向定位／框選／關係視覺化。
