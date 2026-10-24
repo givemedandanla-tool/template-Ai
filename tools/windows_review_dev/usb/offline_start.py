@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import ctypes
 import hashlib
 import json
@@ -51,7 +52,7 @@ def safe_member(root, name):
     return target
 
 
-def verify_bundle(root):
+def verify_bundle(root, progress=False):
     manifest = json.loads((root / 'transfer-manifest.json').read_text(encoding='utf-8'))
     if manifest.get('branch') != BRANCH or manifest.get('schema_version') != 1:
         raise ValueError('Wrong branch or transfer format')
@@ -59,10 +60,12 @@ def verify_bundle(root):
     names = [row['path'] for row in entries]
     if not entries or len(names) != len(set(n.casefold() for n in names)):
         raise ValueError('Empty or duplicate manifest')
-    for row in entries:
+    for index, row in enumerate(entries, 1):
         path = safe_member(root, row['path'])
         if not path.is_file() or path.stat().st_size != row['bytes'] or digest(path) != row['sha256']:
             raise ValueError('Missing or changed transfer file: ' + row['path'])
+        if progress and index % 2000 == 0:
+            print(f'完整性檢查：{index}/{len(entries)} 個檔案', flush=True)
     required = {'python/python.exe', 'python/pythonw.exe', 'inkscape/bin/inkscape.exe',
                 'source/review_app.py', 'source/requirements-lock.txt', 'offline-requirements.txt'}
     if not required <= set(names):
@@ -84,15 +87,22 @@ def new_install(base):
 
 def clone_transfer(bundle, target, manifest):
     # Exact manifest allowlist: extra USB files, originals, databases and logs never copied.
-    for row in manifest['files']:
+    total = len(manifest['files'])
+    def copy_one(row):
         src = safe_member(bundle, row['path'])
         dest = safe_member(target, row['path'])
         dest.parent.mkdir(parents=True, exist_ok=True)
         with src.open('rb') as source, dest.open('xb') as output:
             shutil.copyfileobj(source, output, 1024 * 1024)
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        jobs = [pool.submit(copy_one, row) for row in manifest['files']]
+        for index, future in enumerate(as_completed(jobs), 1):
+            future.result()
+            if index % 2000 == 0:
+                print(f'複製本機環境：{index}/{total} 個檔案', flush=True)
     with (bundle / 'transfer-manifest.json').open('rb') as source, (target / 'transfer-manifest.json').open('xb') as output:
         shutil.copyfileobj(source, output)
-    verify_bundle(target)
+    verify_bundle(target, progress=True)
 
 
 def child_env(target):
@@ -225,7 +235,7 @@ def main(argv=None):
         raise RuntimeError('Windows x64 is required')
     bundle = args.bundle.resolve()
     print('核對隨身碟來源與工具完整性（不連網）…', flush=True)
-    manifest, identity = verify_bundle(bundle)
+    manifest, identity = verify_bundle(bundle, progress=True)
     if args.check_transfer:
         print('TRANSFER_VERIFIED: ' + identity)
         return 0
@@ -233,6 +243,7 @@ def main(argv=None):
     state_home.mkdir(parents=True, exist_ok=True)
     index = state_home / (identity[:20] + '.json')
     with exclusive_lock(state_home / (identity[:20] + '.lock')):
+        needs_copy = False
         if index.exists():
             receipt = json.loads(index.read_text(encoding='utf-8'))
             if receipt.get('manifest_sha256') != identity:
@@ -243,7 +254,7 @@ def main(argv=None):
             if gui_running(target):
                 print('review-tool 已在執行，請使用現有視窗。')
                 return 0
-            _, local_identity = verify_bundle(target)
+            _, local_identity = verify_bundle(target, progress=True)
             if local_identity != identity:
                 raise RuntimeError('Local source changed; existing files left unchanged')
         else:
@@ -255,11 +266,13 @@ def main(argv=None):
                 except PermissionError:
                     target = new_install(Path(os.environ['LOCALAPPDATA']) / 'TR')
             print('新的本機環境：' + str(target), flush=True)
-            clone_transfer(bundle, target, manifest)
+            needs_copy = True
         logs = target / 'diagnostics' / (time.strftime('%Y%m%d-%H%M%S-') + uuid.uuid4().hex[:6])
         logs.mkdir(parents=True, exist_ok=False)
         print('本機診斷：' + str(logs), flush=True)
         try:
+            if needs_copy:
+                clone_transfer(bundle, target, manifest)
             if not index.exists():
                 prepare_environment(target, logs)
                 write_new(index, {'manifest_sha256': identity, 'installation': str(target)})
@@ -288,4 +301,10 @@ if __name__ == '__main__':
         raise SystemExit(main())
     except Exception as error:
         print('未完成：' + str(error), file=sys.stderr)
+        try:
+            failure = Path(os.environ['LOCALAPPDATA']) / 'TemplateAIReviewUSB/failures' / (uuid.uuid4().hex + '.local.json')
+            write_new(failure, {'error': str(error), 'private_log_do_not_upload': True})
+            print('失敗記錄：' + str(failure), file=sys.stderr)
+        except OSError:
+            pass
         raise SystemExit(2)

@@ -6,6 +6,7 @@ Supply a verified official Python NuGet archive, official Inkscape MSI and publi
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 from email.parser import BytesParser
 import hashlib
 import json
@@ -41,7 +42,8 @@ def export_source(repo, output, commit):
         header, encoded_name = entry.split(b'\t', 1)
         mode, kind, expected = header.decode('ascii').split()
         name = encoded_name.decode('utf-8')
-        if kind != 'blob' or mode != '100644' or Path(name).suffix.lower() not in SOURCE_SUFFIXES:
+        icon = name.startswith('template_ai/review_tool/icons/') and (name.endswith('.svg') or Path(name).name == 'LICENSE')
+        if kind != 'blob' or mode not in ('100644', '100755') or not (Path(name).suffix.lower() in SOURCE_SUFFIXES or icon):
             raise ValueError('Unexpected source file in export: ' + name)
         data = safe_member(repo, name).read_bytes()
         def git_blob(value):
@@ -98,6 +100,7 @@ def copy_engine(extracted, output):
     if len(candidates) != 1:
         raise ValueError('Official Inkscape archive has an unexpected layout')
     engine = candidates[0].parent.parent
+    pairs = []
     for path in sorted(engine.rglob('*')):
         if path.is_symlink():
             raise ValueError('Unexpected vendor symbolic link')
@@ -111,7 +114,13 @@ def copy_engine(extracted, output):
             raise ValueError('Font file requires explicit review; not copied: ' + rel.as_posix())
         dest = output / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(path, dest)
+        pairs.append((path, dest))
+    def copy_one(pair):
+        source, dest = pair
+        with source.open('rb') as a, dest.open('xb') as b:
+            shutil.copyfileobj(a, b, 1024 * 1024)
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        list(pool.map(copy_one, pairs))
 
 
 def main():

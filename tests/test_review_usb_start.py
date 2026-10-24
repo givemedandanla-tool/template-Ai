@@ -214,12 +214,47 @@ class UsbStartTests(unittest.TestCase):
         with patch.object(prepare, 'git', return_value=listing), self.assertRaises(ValueError):
             prepare.export_source(self.root, self.root/'source', 'a'*40)
 
+    def test_source_export_keeps_only_scoped_icons_and_notices(self):
+        for name in ['template_ai/review_tool/icons/LICENSE', 'template_ai/review_tool/icons/file.svg']:
+            raw = b'synthetic icon or license'
+            sha = hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+            path = self.root/name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(raw)
+            listing = ('100644 blob '+sha+'\t'+name+'\0').encode()
+            with patch.object(prepare, 'git', return_value=listing):
+                prepare.export_source(self.root, self.root/'source', 'a'*40)
+            self.assertEqual((self.root/'source'/name).read_bytes(), raw)
+        for name in ['template_ai/private.svg', 'template_ai/font.ttf', 'template_ai/private.pdf']:
+            listing = ('100644 blob '+'a'*40+'\t'+name+'\0').encode()
+            with self.subTest(name=name), patch.object(prepare, 'git', return_value=listing), self.assertRaises(ValueError):
+                prepare.export_source(self.root, self.root/'source', 'a'*40)
+
     def test_python_wrong_archive_hash_rejected_without_extract(self):
         archive = self.root/'fake.zip'
         archive.write_bytes(b'synthetic')
         with self.assertRaises(ValueError):
             prepare.python_runtime(archive, self.root/'runtime', '0'*64)
         self.assertFalse((self.root/'runtime').exists())
+
+    def test_removable_install_destination_rejected(self):
+        with patch.object(start.ctypes, 'windll', create=True) as dll:
+            dll.kernel32.GetDriveTypeW.return_value = 2
+            with self.assertRaises(ValueError):
+                start.new_install(self.root/'disk')
+
+    def test_copy_failure_keeps_local_diagnostic(self):
+        target = self.root/'partial'
+        target.mkdir()
+        with patch.dict(os.environ, {'LOCALAPPDATA': str(self.root/'state')}), \
+                patch.object(start, 'new_install', return_value=target), \
+                patch.object(start, 'clone_transfer', side_effect=OSError('synthetic disk full')):
+            with self.assertRaises(OSError):
+                start.main(['--bundle', str(self.bundle), '--local-root', str(self.root)])
+        failures = list((target/'diagnostics').glob('*/failure.local.json'))
+        self.assertEqual(len(failures), 1)
+        self.assertIn('synthetic disk full', failures[0].read_text())
+        self.assertFalse((target/'environment-ready.json').exists())
 
 
 if __name__ == '__main__':
