@@ -1,0 +1,58 @@
+{
+  "platform": "windows",
+  "synthetic_only": true,
+  "integrated": true,
+  "canary_count": 1,
+  "directwrite_count": 0,
+  "font_warning_count": 0,
+  "other_message_count": 0,
+  "breakpoints": [
+    {
+      "breakpoint": "visible_pdf_page:classification",
+      "line": 85,
+      "page": 1,
+      "page_count": 1,
+      "visible_characters": 301,
+      "language": "en"
+    },
+    {
+      "breakpoint": "visible_pdf_page:classification",
+      "line": 85,
+      "page": 1,
+      "page_count": 1,
+      "visible_characters": 112,
+      "language": "zh-Hant"
+    },
+    {
+      "breakpoint": "visible_pdf_page:classification",
+      "line": 85,
+      "page": 1,
+      "page_count": 1,
+      "visible_characters": 46,
+      "language": null
+    }
+  ],
+  "pdf_cases": [
+    {
+      "fixture": "english",
+      "language": "en",
+      "expected": "en",
+      "classification_pass": true,
+      "real_analysis_notice_rejected": true
+    },
+    {
+      "fixture": "traditional",
+      "language": "zh-Hant",
+      "expected": "zh-Hant",
+      "classification_pass": true,
+      "real_analysis_notice_rejected": true
+    },
+    {
+      "fixture": "normal",
+      "language": null,
+      "expected": null,
+      "classification_pass": true
+    }
+  ],
+  "private_text_paths_fonts_in_summary": false
+}

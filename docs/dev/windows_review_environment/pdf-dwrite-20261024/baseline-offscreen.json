@@ -1,0 +1,56 @@
+{
+  "platform": "offscreen",
+  "synthetic_only": true,
+  "integrated": false,
+  "canary_count": 1,
+  "directwrite_count": 0,
+  "font_warning_count": 2,
+  "other_message_count": 5,
+  "breakpoints": [
+    {
+      "breakpoint": "visible_pdf_page:classification",
+      "line": 85,
+      "page": 1,
+      "page_count": 1,
+      "visible_characters": 0,
+      "language": null
+    },
+    {
+      "breakpoint": "visible_pdf_page:classification",
+      "line": 85,
+      "page": 1,
+      "page_count": 1,
+      "visible_characters": 0,
+      "language": null
+    },
+    {
+      "breakpoint": "visible_pdf_page:classification",
+      "line": 85,
+      "page": 1,
+      "page_count": 1,
+      "visible_characters": 0,
+      "language": null
+    }
+  ],
+  "pdf_cases": [
+    {
+      "fixture": "english",
+      "language": null,
+      "expected": "en",
+      "classification_pass": false
+    },
+    {
+      "fixture": "traditional",
+      "language": null,
+      "expected": "zh-Hant",
+      "classification_pass": false
+    },
+    {
+      "fixture": "normal",
+      "language": null,
+      "expected": null,
+      "classification_pass": true
+    }
+  ],
+  "private_text_paths_fonts_in_summary": false
+}

@@ -15,7 +15,10 @@ def main(request_path) -> int:
     """Called by review_app.py --analysis-worker; never opens the main window."""
     from ..offline_runtime import assert_local_document, assert_local_path, enable_offline_guard
     enable_offline_guard()
+    diagnostics = None
     try:
+        from .diagnostics import start_diagnostics
+        diagnostics = start_diagnostics(role='worker')
         path=Path(request_path).resolve();assert_local_path(path)
         if not path.is_file() or path.is_symlink() or path.stat().st_size>65536:
             raise ValueError('工作參數不存在或超出支援範圍')
@@ -50,6 +53,9 @@ def main(request_path) -> int:
             _emit(dict(type='error',code=type(error).__name__,
                        message='這個檔案尚未完成判讀；原稿保持不變，可重試或匯出問題報告。'))
         return 1
+    finally:
+        if diagnostics:
+            diagnostics.close()
 
 
 if __name__=='__main__':

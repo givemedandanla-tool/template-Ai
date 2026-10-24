@@ -1,0 +1,28 @@
+{
+  "result": "NOT_REPRODUCED",
+  "meaning": "No actual DirectWrite warning before or after diagnostic integration; no claimed DirectWrite root-cause fix.",
+  "canary_before": 1,
+  "canary_after": 1,
+  "original_user_trigger_covered": false,
+  "raw_logs_uploaded": false,
+  "cases": [
+    {
+      "mode": "gui",
+      "directwrite_before": 0,
+      "directwrite_after": 0,
+      "font_messages_before": 0,
+      "font_messages_after": 0,
+      "write_errors": 0,
+      "dropped_messages": 0
+    },
+    {
+      "mode": "worker",
+      "directwrite_before": 0,
+      "directwrite_after": 0,
+      "font_messages_before": 1,
+      "font_messages_after": 1,
+      "write_errors": 0,
+      "dropped_messages": 0
+    }
+  ]
+}

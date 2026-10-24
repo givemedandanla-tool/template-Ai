@@ -1,0 +1,48 @@
+{
+  "component": "review-tool",
+  "branch": "feature/review-tool-v0.1.0",
+  "baseline_commit": "f7f26c52de0e6ff4a08850e12a8450dc2a142be7",
+  "requirements": [
+    {
+      "id": "REVIEW-PDF-WINDOWS-001",
+      "acceptance": "Synthetic visible English/Traditional notice excluded before import; native Windows regression preserves normal and mixed artwork; inspect real classification breakpoint."
+    },
+    {
+      "id": "REVIEW-DWRITE-DIAG-001",
+      "acceptance": "Opt-in Qt message capture before QApplication in GUI and worker; same synthetic Windows probe before/after; canary proves capture; NOT_REPRODUCED if no real DirectWrite warning."
+    },
+    {
+      "id": "REVIEW-SYNC-001",
+      "acceptance": "Component-only checkpoint, GitHub exact-byte readback and local branch/index alignment."
+    }
+  ],
+  "baseline": {
+    "native_pdf_tests": {
+      "run": 14,
+      "passed": 14,
+      "seconds": 409.869
+    },
+    "offscreen_fixture_text_characters": [
+      0,
+      0,
+      0
+    ],
+    "windows_fixture_text_characters": [
+      301,
+      112,
+      46
+    ],
+    "native_probe_directwrite_messages": 0,
+    "native_probe_font_messages": 0,
+    "offscreen_probe_directwrite_messages": 0,
+    "offscreen_probe_font_messages": 2,
+    "requirements_status_changes": 0,
+    "product_features_added": 0
+  },
+  "limits": [
+    "No OCR engine/models configured; authored OCR observation test is not OCR accuracy.",
+    "No private artwork/fonts/customer data; raw Qt logs stay ignored/local.",
+    "No main merge, packaging or release; beta.2 remains unchanged.",
+    "Do not alter existing PDF signatures without a failing real-input counterexample."
+  ]
+}

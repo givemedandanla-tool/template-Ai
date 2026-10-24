@@ -1,11 +1,11 @@
-# 當前：Windows review 開發環境可啟動；PDF／OCR 尚待處理
+# 當前：review-tool Windows PDF 回歸通過；DirectWrite 未能重現
 
-分支 `feature/review-tool-v0.1.0`；實測來源 `684ebb0bb5f18e8b171180661c69f1b633c22b48`，source `0.1.0-beta.3.dev1`。先讀 STATE.review_windows_environment、[環境報告](windows_review_environment/REPORT.md)及[可攜式設定](../../tools/windows_review_dev/README.md)。checkpoint `CP-20261024-REVIEW-WINDOWS-ENV-001`；確切提交與讀回狀態以 STATE 及 receipt 為準。
+分支 `feature/review-tool-v0.1.0`，source `0.1.0-beta.3.dev1`。先讀 [部件狀態](windows_review_environment/pdf-dwrite-20261024/STATE.json) 與 [本輪報告](windows_review_environment/pdf-dwrite-20261024/REPORT.md)。checkpoint `CP-20261024-REVIEW-PDF-DWRITE-002`，精確 snapshot／收據以 STATE 為準。
 
-Windows 原生 GUI、`review_app.py:78` 斷點及獨立 pythonw 啟動通過，stdio 9 項與暗 palette 1 項 PASS。PDF 模組 14 測例摘要為 2 failure／4 error／5 skip，含 cleanup 重複失敗；不能推算通過數。初次 PATH 缺 Inkscape，已補設定但未重跑。Tesseract／英繁中模型未配置，完整 OCR 未就緒。本輪只準備環境及同步，沒有修改產品邏輯。
+舊 beta.2 判讀模組隔離對照會把合成提示頁當 1 件作品；目前來源正確排除，中斷點確認可見文字分類。Windows 原生回歸 31 PASS／0 skip（PDF14、診斷7、stdio9、暗選單1）。修正測試啟動器的 offscreen 空白 fixture 與過短模組時限，沒有放寬產品判讀規則。
 
-使用者已核准同步環境、結果與交接並讀回；不合併 main、不打包發布，私人作品／字型／客戶資料不得上傳。每階段依既有 checkpoint 規則保存並讀回。本機工具與資料仍留本機。從不同電腦的空目錄取得確認提交，依工具指南重建，不覆寫既有檔案。
+新增本機 Qt 診斷選項，真正 GUI、worker、獨立 pythonw 均已驗。加入診斷前後 DirectWrite 皆 0，canary 成功；worker 仍有 1 筆非 DirectWrite 字型記錄。只能稱 NOT_REPRODUCED，不能稱原使用者情境已完全修復。原始記錄含潛在字型名稱／路徑，只留本機；GitHub 僅存匿名計數與合成證據。
 
-下一步保留失敗證據，依後續指令處理 Windows PDF 提示頁測試及 OCR 引擎缺口。現有原始碼三項修正見 STATE.review_source_maintenance；舊 Linux 141PASS/1skip 與 source Qt35checks 不是本輪 Windows 全驗。已發布 review-v0.1.0-beta.2 及其資格／tag／附件不變。私人作品、字型、訓練、實印與新 EXE 均未增加資格。
+下一步回到 review-tool 開發；如原 DirectWrite 情境再現，開啟 --diagnostics-dir 在本機取得證據後修正。OCR／英繁中模型未配置，raster 測試用合成 OCR observations，不升真正 OCR 資格。已發布 beta.2、舊完整產品資格與外部驗證不變。
 
-使用者最新收斂：只做 review-tool 部件同步與開發；依[部件同步規則](windows_review_environment/SYNC_POLICY.md)及 STATE.review_tool_sync 接續，不擴大成完整 template-Ai 開發。初始化快照已讀回：`7542bc3b6a0c62cef291a70521983325f7d775b9`，`CP-20261024-REVIEW-WINDOWS-ENV-001`；收據另筆保存。
+使用者已授權此部件開發與 GitHub 同步。依[部件規則](windows_review_environment/SYNC_POLICY.md)保存、讀回、對齊本機；不合併 main、不打包發布，不上傳私人作品、字型、客戶資料，不自動擴大成完整 template-Ai 工作。環境初始失敗保留於上層歷史報告，不覆寫成 PASS。

@@ -18,6 +18,7 @@ def default_data_dir():
 def main():
     parser = argparse.ArgumentParser(description='離線作品判讀與核對')
     parser.add_argument('--data-dir')
+    parser.add_argument('--diagnostics-dir', help='本機 Qt 診斷目錄（可能含字型名稱／路徑，請勿上傳原始記錄）')
     parser.add_argument('--analysis-worker', help=argparse.SUPPRESS)
     parser.add_argument('--release-check', help=argparse.SUPPRESS)
     parser.add_argument('--capture', help=argparse.SUPPRESS)
@@ -33,13 +34,15 @@ def main():
         return WORKER_STDOUT_UNAVAILABLE
     from template_ai.offline_runtime import assert_local_path, enable_offline_guard
     enable_offline_guard()
-    for value in (args.data_dir, args.analysis_worker, args.release_check, args.capture):
+    for value in (args.data_dir, args.analysis_worker, args.release_check, args.capture, args.diagnostics_dir):
         if value:
             assert_local_path(value)
     engine_root = Path(sys.executable).parent if getattr(sys, 'frozen', False) else Path(__file__).parent
     tessdata = engine_root / 'engines/ocr-models'
     if tessdata.is_dir():
         os.environ.setdefault('TEMPLATE_AI_TESSDATA', str(tessdata))
+    if args.diagnostics_dir:
+        os.environ['TEMPLATE_AI_REVIEW_DIAGNOSTICS_DIR'] = str(Path(args.diagnostics_dir).absolute())
     if args.analysis_worker:
         from template_ai.review_tool.worker import main as worker
         return worker(args.analysis_worker)
@@ -47,6 +50,8 @@ def main():
         from template_ai.review_tool.release_check import run
         return run(args.release_check)
 
+    from template_ai.review_tool.diagnostics import start_diagnostics
+    diagnostics = start_diagnostics(role='gui')
     from PySide6.QtCore import QTimer, Qt
     from PySide6.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget
     from template_ai.review_tool.ui_font import configure_ui_font
@@ -117,7 +122,11 @@ def main():
             report.clicked.connect(report_failure)
             layout.addWidget(report)
     QTimer.singleShot(0, start)
-    return app.exec()
+    try:
+        return app.exec()
+    finally:
+        if diagnostics:
+            diagnostics.close()
 
 
 if __name__ == '__main__':

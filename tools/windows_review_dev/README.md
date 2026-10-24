@@ -38,3 +38,10 @@ $env:PYTHONUTF8 = '1'
 本輪來源啟動／中斷點／pythonw 已通過，stdio 9 項與暗選單 1 項測試通過；PDF 模組有 2 個 failure 事件、4 個 error 事件、5 個 skip（14 測例，包含同一測例 cleanup 再失敗，不能直接相減算成功數）。首次該模組測試的 PATH 未含 Inkscape；後續設定已補上，並未重跑 PDF 模組。沒有宣稱三項回饋完整驗收。
 
 同步只包含此可攜式設定、固定版本、匿名文字結果、STATE／交接與 checkpoint；`.tools`、`.venv`、快取、local-data、私人字型與作品留在本機。原始碼同步不產生新版軟體；已發布 `review-v0.1.0-beta.2` 保持不變。完整結果見 `docs/dev/windows_review_environment/REPORT.md`。
+
+
+## 後續 Windows PDF／DirectWrite 驗證（2026-10-24）
+
+上節初次失敗保留為歷史。最新 run_checks.py 改為 Windows 原生平台並增加診斷測試；31項通過（PDF14、診斷7、stdio9、暗選單1）。PDF模組上限600秒（實測基線410秒），未改產品逾時或判讀斷言。詳見 [本輪報告](../../docs/dev/windows_review_environment/pdf-dwrite-20261024/REPORT.md)。
+
+以 --diagnostics-dir .local-dev/qt-logs 或 TEMPLATE_AI_REVIEW_DIAGNOSTICS_DIR 明確開啟 Qt 記錄，GUI與worker在 QApplication 前安裝；預設關閉、不配置主控台。每程序新建受限大小JSONL，可能含字型名稱／路徑，原始檔不得上傳。合成 probe_pdf_fonts.py 的 --root . --output .local-dev/new-probe --integrated 可重跑斷點與canary；輸出目錄必須不存在。此次真實 DirectWrite 前後皆0，記為未重現；不宣稱原情境已修復。

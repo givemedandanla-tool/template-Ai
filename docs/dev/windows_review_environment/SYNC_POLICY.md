@@ -27,4 +27,9 @@
 
 ## 目前待辦
 
-開發環境可啟動及除錯；PDF 提示頁回歸未通過，OCR 尚未配置。這次同步沒有修復產品問題、沒有新增產品功能或提升需求完成數。舊完整治理檢查的來源過期失敗亦保留；不得為了同步把它改成 PASS。
+本輪原生 Windows 31 項回歸通過，PDF14項全過；舊 offscreen 空白 fixture 失敗保留。DirectWrite 原情境未能重現，已具備本機診斷；OCR 未配置。見 [本輪報告](pdf-dwrite-20261024/REPORT.md)。不升舊完整產品或 EXE 資格。
+
+
+## 最小化共享歷史 payload（2026-10-24）
+
+自動審核要求本輪勿重傳整份共享歷史 AGENTS／STATE／WORK_LOG。三者與遠端基底保持一致；只更新精簡交接及 review 專屬 [STATE.json](pdf-dwrite-20261024/STATE.json)。本輪 checkpoint／收據寫入該部件狀態；新的交接是目前進度入口，舊共享 STATE 指標保留歷史用途。依然使用 dev_checkpoint.prepare／acknowledge，以不含全域 STATE 的明確部件 view 驗證，不能覆寫舊完整產品資格或冒稱未同步的 checkpoint 已確認。
