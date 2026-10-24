@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "source_commit": "c46aaaa4ba0cb649feca0dc66d5a645681c027c2",
+  "stages": [
+    {
+      "name": "verified_fixed_inputs",
+      "started_utc": "2026-10-24T02:30:16.942471+00:00",
+      "status": "PASS",
+      "seconds": 68.914423
+    },
+    {
+      "name": "pinned_public_ocr_models",
+      "started_utc": "2026-10-24T02:31:25.897843+00:00",
+      "status": "PASS",
+      "seconds": 3.228899
+    },
+    {
+      "name": "pinned_ocr_corresponding_sources",
+      "started_utc": "2026-10-24T02:31:29.166867+00:00",
+      "status": "PASS",
+      "seconds": 1.305421
+    },
+    {
+      "name": "pinned_bundled_ocr_runtime",
+      "started_utc": "2026-10-24T02:31:30.514909+00:00",
+      "status": "PASS",
+      "seconds": 2.656919
+    },
+    {
+      "name": "isolated_current_component_tests",
+      "started_utc": "2026-10-24T02:31:34.120992+00:00",
+      "status": "FAIL",
+      "error_type": "RuntimeError",
+      "message": "Component tests failed; original per-module results retained",
+      "seconds": 249.075755
+    }
+  ]
+}
