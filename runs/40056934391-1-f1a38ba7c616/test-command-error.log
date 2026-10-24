@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "D:\a\template-Ai\template-Ai\tools\review_release.py", line 755, in entrypoint
+    return main(arguments)
+           ^^^^^^^^^^^^^^^
+  File "D:\a\template-Ai\template-Ai\tools\review_release.py", line 716, in main
+    elif args.command == 'test':source_tests()
+                                ^^^^^^^^^^^^^^
+  File "D:\a\template-Ai\template-Ai\tools\review_release.py", line 374, in source_tests
+    raise RuntimeError('Component tests failed; original per-module results retained')
+RuntimeError: Component tests failed; original per-module results retained
