@@ -9,3 +9,5 @@
 下一步先解決原生文字轉換，再驗現代文字／字型缺失／圖片／透明度／多畫板等必要保真條件，之後才接 review-tool。原始碼 source 仍 0.1.0-beta.3.dev1；已發布 beta.2 不變。原 PDF 提示頁攔截、短路徑設定及失敗介面修正保留。DirectWrite 未重現，OCR 未配置。
 
 本輪未用私人作品／字型，下載源碼、wheel、生成 AI／SVG 及原始記錄只留本機。只同步工具／匿名證據／部件交接。依 [部件規則](windows_review_environment/SYNC_POLICY.md) 讀回對齊；共享歷史 AGENTS／STATE／WORK_LOG 不更新。不合併 main、不打包發布。
+
+快照已讀回：`519c5575b007fb6d361196174248951d0dc0703f`；明確部件清單＋checkpoint 逐 blob 相符，全部變更檔逐 byte／SHA256 相符。收據另筆提交後完成本機 HEAD 對齊。
