@@ -60,12 +60,16 @@ def verify_bundle(root, progress=False):
     names = [row['path'] for row in entries]
     if not entries or len(names) != len(set(n.casefold() for n in names)):
         raise ValueError('Empty or duplicate manifest')
-    for index, row in enumerate(entries, 1):
+    def verify_one(row):
         path = safe_member(root, row['path'])
         if not path.is_file() or path.stat().st_size != row['bytes'] or digest(path) != row['sha256']:
             raise ValueError('Missing or changed transfer file: ' + row['path'])
-        if progress and index % 2000 == 0:
-            print(f'完整性檢查：{index}/{len(entries)} 個檔案', flush=True)
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = [pool.submit(verify_one, row) for row in entries]
+        for index, future in enumerate(as_completed(futures), 1):
+            future.result()
+            if progress and index % 2000 == 0:
+                print(f'完整性檢查：{index}/{len(entries)} 個檔案', flush=True)
     required = {'python/python.exe', 'python/pythonw.exe', 'inkscape/bin/inkscape.exe',
                 'source/review_app.py', 'source/requirements-lock.txt', 'offline-requirements.txt'}
     if not required <= set(names):

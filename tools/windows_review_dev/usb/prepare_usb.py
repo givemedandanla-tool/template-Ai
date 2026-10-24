@@ -163,10 +163,11 @@ def main():
         if name.endswith('.cmd'):
             data = data.replace(b'\r\n', b'\n').replace(b'\n', b'\r\n')
         (output / name).write_bytes(data)
-    files = []
-    for path in sorted(output.rglob('*')):
-        if path.is_file():
-            files.append({'path': path.relative_to(output).as_posix(), 'bytes': path.stat().st_size, 'sha256': digest(path)})
+    paths = [path for path in output.rglob('*') if path.is_file()]
+    def file_row(path):
+        return {'path': path.relative_to(output).as_posix(), 'bytes': path.stat().st_size, 'sha256': digest(path)}
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        files = sorted(pool.map(file_row, paths), key=lambda row: row['path'])
     write_new(output / 'transfer-manifest.json', {'schema_version': 1, 'component': 'review-tool', 'branch': BRANCH,
               'source_commit': commit, 'offline': True, 'source_transfer_not_exe_release': True,
               'private_data_included': False, 'dependencies': lock, 'files': files})
