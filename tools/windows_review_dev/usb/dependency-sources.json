@@ -1,0 +1,16 @@
+{
+  "python": {
+    "version": "3.11.9",
+    "url": "https://www.nuget.org/api/v2/package/python/3.11.9",
+    "sha256": "9283876d58c017e0e846f95b490da3bca0fc0a6ee1134b2870677cfb7eec3c67"
+  },
+  "inkscape": {
+    "version": "1.4.4",
+    "url": "https://media.inkscape.org/dl/resources/file/inkscape-1.4.4_2026-05-05_dcaf3e7-x64.signed_xMx7DJV.msi",
+    "sha256": "2fa033e95113ae83d6430b2479e7e63e4266d0632a5b03f99ee3db9360e3b8b8",
+    "hash_reference": "https://github.com/microsoft/winget-pkgs/blob/master/manifests/i/Inkscape/Inkscape/1.4.4/Inkscape.Inkscape.installer.yaml",
+    "use": "Administrative extraction to a new local directory only; retain vendor licenses; no system installation, no user profile copy."
+  },
+  "python_packages": "Existing requirements-lock.txt plus pywin32 311; download public wheels on preparation machine, hash-lock complete resolved wheel set; target uses no-index and require-hashes.",
+  "scope": "Personal local USB source transfer. No product EXE build, public distribution or release. Existing third-party notices retained."
+}

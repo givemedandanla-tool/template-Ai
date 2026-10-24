@@ -1,0 +1,20 @@
+{
+  "component": "review-tool",
+  "requirement": "REVIEW-USB-START-01",
+  "branch": "feature/review-tool-v0.1.0",
+  "base_commit": "c7b6f457fa08f351555e72904027034bef2222db",
+  "checkpoint": "CP-20261025-REVIEW-USB-001",
+  "request": "Create one-click environment preparation and source launch on another Windows x64 computer with Illustrator; allow USB transfer without GitHub downloads.",
+  "acceptance": [
+    "Copy only allowlisted committed source and clean public dependencies to a new USB directory",
+    "Target requires neither Git, system Python nor network downloads",
+    "Verify transfer manifest, create isolated local runtime, install pinned wheels offline with hashes",
+    "Run existing real-Illustrator synthetic smoke before first GUI launch; fail closed",
+    "Preserve original files, previous installations and local diagnostic runs; prevent duplicate GUI sessions",
+    "Keep GUI independent of setup console; provide repeat launch and synthetic re-test",
+    "Windows tests include corrupted transfer, path traversal, failed smoke, offline environment and missing Illustrator",
+    "Real Adobe success and visual fidelity remain pending on an Illustrator-equipped machine"
+  ],
+  "constraints": ["No main merge", "No executable build or release", "No private works, fonts, customers, databases or raw logs uploaded", "No shared historical AGENTS/STATE/WORK_LOG updates"],
+  "governance_baseline": "Global dev_governance check already fails with stale historical evidence before edits; use scoped component evidence, do not upgrade full-product qualification."
+}
