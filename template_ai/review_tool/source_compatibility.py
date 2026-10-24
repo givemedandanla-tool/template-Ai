@@ -14,7 +14,8 @@ import unicodedata
 MAX_VISIBLE_CHARACTERS = 16_384
 ISSUE_CODE = 'ILLUSTRATOR_PDF_PLACEHOLDER'
 SAFE_MESSAGE = ('目前讀到的是 Illustrator 的 PDF 相容性提示頁，還不是作品內容。'
-                '請用 Illustrator 開啟原檔，另存一份副本並勾選「建立 PDF 相容檔案」，'
+                '若本機已安裝 Illustrator，可從「更多」選擇「使用 Illustrator 匯入 AI（實驗性）」產生副本；'
+                '也可用 Illustrator 另存副本並勾選「建立 PDF 相容檔案」，'
                 '再加入副本重新判讀；也可另存可信 PDF／SVG。原檔保持不變。')
 
 

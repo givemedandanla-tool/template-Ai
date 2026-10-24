@@ -16,6 +16,7 @@ from PySide6.QtWidgets import (
 from . import __version__
 from .canvas import ReviewCanvas
 from .jobs import AnalysisJobs
+from .illustrator_bridge import IllustratorBridge, BridgeError
 from .session import SessionStore
 
 
@@ -42,6 +43,9 @@ class ReviewWindow(QMainWindow):
         self.root = Path(data_dir)
         self.store = SessionStore(self.root)
         self.jobs = AnalysisJobs(self.root / 'cache', self)
+        self.illustrator = IllustratorBridge(self.root / 'illustrator', self)
+        self.illustrator.ready.connect(self._illustrator_ready)
+        self.illustrator.failure.connect(self.notify)
         self.current_source_id = None
         self.current_work_id = None
         self.current_field_id = None
@@ -135,7 +139,9 @@ class ReviewWindow(QMainWindow):
         self.pause_button.hide()
         self.more_button = self._button('更多', QStyle.StandardPixmap.SP_FileDialogDetailedView)
         menu = QMenu(self)
-        for text, callback in [('重試失敗檔案', self.retry_failed), ('重新判讀目前檔案', self.reanalyse_current),
+        for text, callback in [('使用 Illustrator 匯入 AI（實驗性）', self.import_with_illustrator),
+                               ('停止等候 Illustrator', self.stop_illustrator),
+                               ('重試失敗檔案', self.retry_failed), ('重新判讀目前檔案', self.reanalyse_current),
                                ('加入重新判讀新找到的作品', self.adopt_new_works),
                                ('調整作品範圍', self.adjust_work_bounds), ('停止本次判讀', self.stop_analysis),
                                ('匯出完整觀察資料（僅本機）', self.export_observations),
@@ -338,11 +344,47 @@ class ReviewWindow(QMainWindow):
         self._update_save_state()
         return added
 
+    def import_with_illustrator(self):
+        if self.illustrator.is_running() or self.jobs.is_running():
+            self.notify('請先等候目前的判讀或 Illustrator 工作完成。')
+            return
+        from .illustrator_bridge import available, MESSAGES
+        if not available():
+            self.notify(MESSAGES['NOT_INSTALLED'])
+            return
+        path, _ = QFileDialog.getOpenFileName(self, '使用本機 Illustrator 產生 PDF 副本', '', 'Illustrator 原檔 (*.ai)')
+        if not path:
+            return
+        self.commit_field()
+        try:
+            self.illustrator.start(path)
+        except BridgeError as error:
+            self.notify(str(error))
+            return
+        self.notify('正在等候 Illustrator 產生副本。請切換到 Illustrator 處理提示；原檔與既有核對紀錄保留。可從「更多」停止等候。')
+
+    def stop_illustrator(self):
+        self.illustrator.stop()
+
+    def _illustrator_ready(self, path, provenance):
+        added = self.add_files([path])
+        if not added:
+            return
+        added[0]['derived_from'] = {
+            'method': 'illustrator-pdf-copy',
+            'source_path': provenance['request']['source'],
+            'source_sha256': provenance['source_sha256'],
+            'output_sha256': provenance['output_sha256'],
+            'visual_fidelity': 'NOT_VERIFIED',
+        }
+        self.select_source(added[0]['id'])
+        self.notify('Illustrator PDF 副本已加入。請點「開始判讀」，再對照 Illustrator 核對文字、字型、圖片與畫板；轉檔成功尚不代表外觀完全一致。')
+
     def start_analysis(self, sources=None):
         if isinstance(sources, bool):
             sources = None
-        if self.jobs.is_running():
-            self.notify('目前已有判讀工作。可以暫停或等候完成。')
+        if self.jobs.is_running() or self.illustrator.is_running():
+            self.notify('目前已有判讀或 Illustrator 工作。請等候完成或停止目前工作。')
             return
         self.commit_field()
         if sources is None:
@@ -952,6 +994,10 @@ class ReviewWindow(QMainWindow):
         QDesktopServices.openUrl(QUrl.fromLocalFile(str(self.root.resolve())))
 
     def closeEvent(self, event):
+        if self.illustrator.is_running():
+            self.notify('Illustrator 仍在處理。請先從「更多」停止等候，再關閉 review-tool；Illustrator 視窗會保留。')
+            event.ignore()
+            return
         if self._allow_close:
             event.accept()
             return

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "component": "review-tool",
+  "branch": "feature/review-tool-v0.1.0",
+  "base_commit": "f0aaddd9dd87f76d9ea85853bfd633548906c942",
+  "status": "PREPARED",
+  "checkpoint": "CP-20261025-REVIEW-ILLUSTRATOR-002",
+  "active_contract": "docs/dev/windows_review_environment/illustrator-20261025/CONTRACT.json",
+  "report": "docs/dev/windows_review_environment/illustrator-20261025/REPORT.md",
+  "requirement": "REVIEW-ILLUSTRATOR-BRIDGE-01",
+  "implementation": "OPTIONAL_EXPERIMENTAL_INTERFACE_INTEGRATED",
+  "windows_regression": {
+    "platform": "native Windows",
+    "python": "3.11.9",
+    "qt": "6.8.3",
+    "passed": 56,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "groups": [
+      {
+        "group": "Illustrator adapter, UI and COM boundary",
+        "passed": 26
+      },
+      {
+        "group": "PDF compatibility",
+        "passed": 17
+      },
+      {
+        "group": "Jobs and failed-source UI",
+        "passed": 13
+      }
+    ],
+    "jsx_control_flow": {
+      "scenarios": 14,
+      "passed": 14,
+      "included_in_one_python_test": true,
+      "synthetic_adobe_dom": true
+    },
+    "native_com_host": {
+      "pywin32": "311",
+      "actual_missing_registration": "NOT_INSTALLED",
+      "installed_illustrator_execution": "NOT_RUN"
+    },
+    "real_illustrator_fidelity": "NOT_VERIFIED",
+    "raw_logs_uploaded": false,
+    "earlier_attempts": [
+      "Initial PowerShell host blocked by machine script execution policy; replaced by optional Python COM without changing policy",
+      "Actual pywin32 API inspection corrected a mock-only CLSID method assumption; real missing-registration smoke now passes",
+      "Combined pre-existing regression completed: 30 PASS in 913.777 seconds. Redundant isolated retry was stopped after primary completion; its partial output is not counted."
+    ]
+  },
+  "real_illustrator": "NOT_INSTALLED_NOT_VERIFIED",
+  "native_inkscape_importer": "NOT_INTEGRATED_TEXT_LOSS",
+  "next_step": "On a Windows machine with Illustrator, install optional COM requirement, run synthetic smoke.py, then compare text/fonts/images/transparency/all artboards before private-file qualification.",
+  "directwrite": "NOT_REPRODUCED_PREVIOUS_TASK",
+  "full_ocr": "NOT_CONFIGURED",
+  "source_version": "0.1.0-beta.3.dev1",
+  "private_data_upload": false,
+  "main_merge": false,
+  "package_release": false
+}

@@ -1,0 +1,41 @@
+{
+  "platform": "native Windows",
+  "python": "3.11.9",
+  "qt": "6.8.3",
+  "passed": 56,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "groups": [
+    {
+      "group": "Illustrator adapter, UI and COM boundary",
+      "passed": 26
+    },
+    {
+      "group": "PDF compatibility",
+      "passed": 17
+    },
+    {
+      "group": "Jobs and failed-source UI",
+      "passed": 13
+    }
+  ],
+  "jsx_control_flow": {
+    "scenarios": 14,
+    "passed": 14,
+    "included_in_one_python_test": true,
+    "synthetic_adobe_dom": true
+  },
+  "native_com_host": {
+    "pywin32": "311",
+    "actual_missing_registration": "NOT_INSTALLED",
+    "installed_illustrator_execution": "NOT_RUN"
+  },
+  "real_illustrator_fidelity": "NOT_VERIFIED",
+  "raw_logs_uploaded": false,
+  "earlier_attempts": [
+    "Initial PowerShell host blocked by machine script execution policy; replaced by optional Python COM without changing policy",
+    "Actual pywin32 API inspection corrected a mock-only CLSID method assumption; real missing-registration smoke now passes",
+    "Combined pre-existing regression completed: 30 PASS in 913.777 seconds. Redundant isolated retry was stopped after primary completion; its partial output is not counted."
+  ]
+}

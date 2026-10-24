@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261025-REVIEW-ILLUSTRATOR-002",
+  "created_utc": "2026-10-24T17:08:14.374624+00:00",
+  "base_commit": "f0aaddd9dd87f76d9ea85853bfd633548906c942",
+  "phase": "PREPARED",
+  "summary": "Optional local Illustrator PDF-copy interface; Windows 56 pass; actual Adobe fidelity pending",
+  "requirement_ids": [
+    "REVIEW-ILLUSTRATOR-BRIDGE-01",
+    "REVIEW-SYNC-001"
+  ],
+  "next_step": "On a Windows machine with Illustrator, install optional COM requirement, run synthetic smoke.py, then compare text/fonts/images/transparency/all artboards before private-file qualification.",
+  "source_files": {
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 1814,
+      "sha256": "8873ff575a1d4eabcb587ff71c1eb59742621e4707379d17e853eba55c4b32a9",
+      "git_blob_sha1": "705409eb09946a662818efb18fd846ebd67dc05a"
+    },
+    "docs/dev/windows_review_environment/SYNC_POLICY.md": {
+      "bytes": 4446,
+      "sha256": "2c13f46d5edca1b9a7b5892179755994bef1fa3ef6c3fceb9bc2dffad736fc9c",
+      "git_blob_sha1": "6c7e211f70b55a8e7e3881aa5d207a3edcf9d69e"
+    },
+    "docs/dev/windows_review_environment/illustrator-20261025/CONTRACT.json": {
+      "bytes": 1010,
+      "sha256": "6d190b266698de0eb0854dc89a3387a91370d0d995cdd7001c5b712d478ce8c2",
+      "git_blob_sha1": "a5199e25b0a167713c7ddbc93520a39a27011684"
+    },
+    "docs/dev/windows_review_environment/illustrator-20261025/REPORT.md": {
+      "bytes": 2762,
+      "sha256": "b4babd3269d5a23a300848880d91c9975294922d15cc43058859dd97e38366dd",
+      "git_blob_sha1": "34549d0074f7ee0c383b5b8fd86032bedd31980b"
+    },
+    "docs/dev/windows_review_environment/illustrator-20261025/RESEARCH.json": {
+      "bytes": 1954,
+      "sha256": "cb1b7d14e8c4d2a20ee1b9622b2414768ba94aa7c991773bb7e265e15621ef90",
+      "git_blob_sha1": "aa5e28a31996aafed602fce145a0d96363ed1be9"
+    },
+    "docs/dev/windows_review_environment/illustrator-20261025/STATE.json": {
+      "bytes": 2380,
+      "sha256": "2d1c14f6264180955c02372c1447c293070431587b29f59ff164f4d1497def15",
+      "git_blob_sha1": "f835e672e6a563aeac8c0e22626ccf4cb74197bc"
+    },
+    "docs/dev/windows_review_environment/illustrator-20261025/windows-regression.json": {
+      "bytes": 1223,
+      "sha256": "c49f2c10e433f1665ecff700a62e9a0e5bb933c3632ecad704e1f15c970f29b2",
+      "git_blob_sha1": "201f747a95d198c0f1a5b8997bc3bf29737ef16b"
+    },
+    "template_ai/review_tool/illustrator_bridge.py": {
+      "bytes": 9908,
+      "sha256": "5029c0477c825b215dcbd16edc80a2c44a4d575b102b6d7a7cb1d539bc1c67f8",
+      "git_blob_sha1": "7bc0941962f2eca86bb3d166ca4014442d797342"
+    },
+    "template_ai/review_tool/illustrator_export.jsx": {
+      "bytes": 2390,
+      "sha256": "e45938740dbb7933586fcbe4ad144c0d715444d37e498d9476894d434cf8b35d",
+      "git_blob_sha1": "2d84ae795778e5e026451f47e80ef2c4212d796e"
+    },
+    "template_ai/review_tool/illustrator_host.py": {
+      "bytes": 2332,
+      "sha256": "cf182b192ff797a1606b82bf81612538cc267cbe71fa4cbe7eb7a0e794e8c938",
+      "git_blob_sha1": "cbf0b4832c146e792c2b63190038aa1f9d720128"
+    },
+    "template_ai/review_tool/source_compatibility.py": {
+      "bytes": 4728,
+      "sha256": "953e7a6148064b62030cb1f0d580a0d71e86d005dda51f7e85fa18550a351d51",
+      "git_blob_sha1": "5ef21d13833c51e17a7cd682c8e6ff04e8865236"
+    },
+    "template_ai/review_tool/window.py": {
+      "bytes": 54784,
+      "sha256": "c5fa4b643fa59413f0d894e4f09e2cd1af582aed44439c11b76f650e3fabaf40",
+      "git_blob_sha1": "bc1d999477e065555d28947de906a4c912d96cf1"
+    },
+    "tests/test_review_illustrator_bridge.py": {
+      "bytes": 14793,
+      "sha256": "276669b92042f11d08493ef5cb979fb9c0d0798cfb13de6fc86739177f29e255",
+      "git_blob_sha1": "9bde9c43d1d3c4e2e60ff6f2c7b36119739ba2a8"
+    },
+    "tools/windows_review_dev/illustrator_bridge/README.md": {
+      "bytes": 4884,
+      "sha256": "ae13614befb95648813724fec268f113964d8d14ebfc18db8dc055389396a29e",
+      "git_blob_sha1": "edc6e9b8e18638c4f5578287419be68bc72664a6"
+    },
+    "tools/windows_review_dev/illustrator_bridge/create_fixture.jsx": {
+      "bytes": 1385,
+      "sha256": "418bb3e607ca1d4fd9a935474285853d119c914146651f603d51c9764f6536f2",
+      "git_blob_sha1": "24247aeae04f726188377fec60c52272fcbedb0e"
+    },
+    "tools/windows_review_dev/illustrator_bridge/jsx_harness.cjs": {
+      "bytes": 2839,
+      "sha256": "c202a00a61e994a7ab18eae939261eb60476f2ccf698c400d8af3e8f4996c9cd",
+      "git_blob_sha1": "f10ec24c525c188d8b60a9a64c57a2338c79b579"
+    },
+    "tools/windows_review_dev/illustrator_bridge/requirements.txt": {
+      "bytes": 39,
+      "sha256": "7251cd3bd760cdef8290aab0f25266c88d8776dee5c36bff351f334a0273c830",
+      "git_blob_sha1": "218f50f4d491beea23d0e8577372708e71f823b9"
+    },
+    "tools/windows_review_dev/illustrator_bridge/smoke.py": {
+      "bytes": 4521,
+      "sha256": "1f6b068d460113c33f0d4a1d68a8773c290b37a9ee003d0ca980bab174c45452",
+      "git_blob_sha1": "a877616a18c93d7ff5308dac1e465f2bb5e90e5f"
+    }
+  },
+  "source_manifest_sha256": "782890b9f43cf624302400f5b14439652e57fff3490d5025443c5445e0aad5eb",
+  "local_snapshot": {
+    "path": ".checkpoints\\CP-20261025-REVIEW-ILLUSTRATOR-002\\source.zip",
+    "sha256": "3875bb64ca9070e212ac6c085cd12477662b40b412f161e560d3ca32310f9fc7"
+  },
+  "remote_confirmation": "尚未確認；本機快照不能冒稱已在 GitHub 保存",
+  "snapshot_scope": {
+    "component": "review-tool",
+    "explicit_files": 18,
+    "private_data_included": false,
+    "shared_historical_files_uploaded": false,
+    "complete_remote_base_retained": true,
+    "state": "docs/dev/windows_review_environment/illustrator-20261025/STATE.json"
+  }
+}

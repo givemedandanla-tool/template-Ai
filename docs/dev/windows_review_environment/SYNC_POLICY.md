@@ -27,8 +27,8 @@
 
 ## 目前待辦
 
-最新原生 AI 隔離驗收見 [報告](native-ai-20261025/REPORT.md)／[狀態](native-ai-20261025/STATE.json)：5 PASS／2 FAIL，文字遺失，尚未整合產品；既有 Windows 回歸 30 PASS。使用者只有 Inkscape，不要求 Illustrator。需補齊原生文字及必要保真驗收後才整合，不能把成功輸出 SVG 當成完整作品。
+最新 [Illustrator 接口報告](illustrator-20261025/REPORT.md)／[狀態](illustrator-20261025/STATE.json)：依最新使用者要求新增選配本機接口，Windows 56 PASS；此機無 Illustrator，Adobe 真實轉檔與保真待異地合成實測。先前原生 Inkscape AI 擴充仍因文字遺失未整合。
 
 ## 最小化共享歷史 payload（2026-10-24）
 
-自動審核要求本輪勿重傳整份共享歷史 AGENTS／STATE／WORK_LOG。三者與遠端基底保持一致；只更新精簡交接及 review 專屬 [STATE.json](native-ai-20261025/STATE.json)。本輪 checkpoint／收據寫入該部件狀態；新的交接是目前進度入口，舊共享 STATE 指標保留歷史用途。依然使用 dev_checkpoint.prepare／acknowledge，以不含全域 STATE 的明確部件 view 驗證，不能覆寫舊完整產品資格或冒稱未同步的 checkpoint 已確認。
+自動審核要求本輪勿重傳整份共享歷史 AGENTS／STATE／WORK_LOG。三者與遠端基底保持一致；只更新精簡交接及 review 專屬 [STATE.json](illustrator-20261025/STATE.json)。本輪 checkpoint／收據寫入該部件狀態；新的交接是目前進度入口，舊共享 STATE 指標保留歷史用途。依然使用 dev_checkpoint.prepare／acknowledge，以不含全域 STATE 的明確部件 view 驗證，不能覆寫舊完整產品資格或冒稱未同步的 checkpoint 已確認。

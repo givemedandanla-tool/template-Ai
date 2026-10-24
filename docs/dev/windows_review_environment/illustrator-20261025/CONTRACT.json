@@ -1,0 +1,20 @@
+{
+  "component": "review-tool",
+  "requirement": "REVIEW-ILLUSTRATOR-BRIDGE-01",
+  "base_commit": "f0aaddd9dd87f76d9ea85853bfd633548906c942",
+  "checkpoint": "CP-20261025-REVIEW-ILLUSTRATOR-002",
+  "requested": "Build an optional local Illustrator interface for Windows machines with Illustrator installed.",
+  "acceptance": [
+    "User-invoked asynchronous conversion to a separate PDF source",
+    "Original bytes and existing Illustrator documents preserved",
+    "All artboards, no silent warning suppression, explicit visual fidelity review",
+    "Reject missing Illustrator, malformed PDF, placeholder, cancellation, timeout and source changes",
+    "Synthetic Windows adapter/UI/regression tests; real Illustrator qualification remains pending on this host"
+  ],
+  "constraints": [
+    "No private works or fonts in tests or upload",
+    "No main merge or packaging/release",
+    "No automatic native Inkscape fallback",
+    "Global historical AGENTS/STATE/WORK_LOG unchanged"
+  ]
+}
