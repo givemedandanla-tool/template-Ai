@@ -1,0 +1,143 @@
+{
+  "checked_at": "2026-10-24T20:17:59.608826+08:00",
+  "result": "DEVELOPMENT_GUI_AND_BREAKPOINT_READY_OCR_INCOMPLETE_PDF_REGRESSION_NOT_PASSED",
+  "repository": "https://github.com/givemedandanla-tool/template-Ai",
+  "branch": "feature/review-tool-v0.1.0",
+  "commit": "684ebb0bb5f18e8b171180661c69f1b633c22b48",
+  "source_version": "0.1.0-beta.3.dev1",
+  "published_version_unchanged": "review-v0.1.0-beta.2",
+  "working_directory": "<PROJECT_ROOT>",
+  "git": {
+    "version": "git version 2.53.0.windows.3",
+    "tracked_or_untracked_changes": "",
+    "sparse_checkout": true,
+    "shallow": true
+  },
+  "python": {
+    "version": "3.11.9",
+    "architecture": "64bit",
+    "executable": "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+    "distribution": "Official CPython NuGet 3.11.9 x64"
+  },
+  "runtime_dependency_pins": {
+    "PySide6": "6.8.3",
+    "PySide6_Addons": "6.8.3",
+    "PySide6_Essentials": "6.8.3",
+    "shiboken6": "6.8.3",
+    "cryptography": "46.0.3",
+    "cffi": "2.1.1",
+    "pycparser": "3.11",
+    "pypdf": "5.9.0",
+    "phonenumbers": "9.0.16",
+    "kiwisolver": "1.4.9",
+    "fonttools": "4.60.1",
+    "psutil": "7.2.2",
+    "networkx": "3.5",
+    "scikit-learn": "1.7.2",
+    "numpy": "2.3.5",
+    "scipy": "1.16.3",
+    "joblib": "1.5.2",
+    "threadpoolctl": "3.6.0",
+    "pdfminer.six": "20260107",
+    "charset-normalizer": "3.4.4"
+  },
+  "debugpy": "1.8.22",
+  "vscode": {
+    "version": "1.143.1",
+    "portable": true,
+    "archive_sha256": "b4f9643b8a549ca2c85a1bbc9063fc76f1e08fc0036a7f6a1a181cdc05235eca",
+    "authenticode": "Microsoft Corporation / Valid",
+    "extensions": [
+      "ms-python.python@2026.10.0",
+      "ms-python.debugpy@2026.6.0",
+      "ms-python.vscode-pylance@2026.4.1",
+      "ms-python.vscode-python-envs@1.40.0"
+    ]
+  },
+  "quality_tools": {
+    "ruff": "0.17.1",
+    "pyright": "1.1.414",
+    "jscpd": "5.4.1"
+  },
+  "inkscape": {
+    "version": "1.4.4",
+    "path": "C:\\Program Files\\Inkscape\\bin\\inkscape.com",
+    "source_local": true
+  },
+  "ocr": {
+    "tesseract": "NOT_FOUND_IN_CHECKED_LOCATIONS",
+    "language_models": "NOT_CONFIGURED",
+    "full_ocr_ready": false
+  },
+  "verification": {
+    "locked_dependency_check": "PASS",
+    "pip_check": "PASS",
+    "native_gui": "PASS",
+    "debugger": {
+      "status": "PASS",
+      "scope": "Review tool native Windows source startup and debugger; synthetic empty data only",
+      "listen": "127.0.0.1:59019",
+      "breakpoint": {
+        "file": "review_app.py",
+        "line": 78,
+        "function": "start"
+      },
+      "offline_guard_active": true,
+      "exit_code": 0,
+      "capture": "native-debugger-gui.png"
+    },
+    "detached_pythonw_launcher": "PASS_AFTER_LOCAL_CRLF_BATCH_CONFIGURATION",
+    "related_tests": [
+      {
+        "name": "stdio",
+        "exit_code": 0,
+        "seconds": 3.08,
+        "summary": [
+          "",
+          "----------------------------------------------------------------------",
+          "Ran 9 tests in 1.343s",
+          "",
+          "OK"
+        ]
+      },
+      {
+        "name": "source-compatibility",
+        "exit_code": 1,
+        "seconds": 57.92,
+        "summary": [
+          "    process.finished.connect(lambda code, state: self._process_finished(process, generation, code, state))",
+          "                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+          "  File \"<PROJECT_ROOT>\\template_ai\\review_tool\\jobs.py\", line 386, in _process_finished",
+          "    self._timer.stop()",
+          "RuntimeError: Internal C++ object (PySide6.QtCore.QTimer) already deleted."
+        ]
+      },
+      {
+        "name": "dark-menu",
+        "exit_code": 0,
+        "seconds": 1.77,
+        "summary": [
+          "",
+          "----------------------------------------------------------------------",
+          "Ran 1 test in 0.438s",
+          "",
+          "OK"
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "PDF compatibility module did not pass: 14 tests, 2 failure events, 4 error events, 5 skips. Some test cases also errored during cleanup; counts are not mutually exclusive.",
+    "The first PDF test run did not discover Inkscape through PATH; launch/test scripts now include its existing local bin path. PDF tests have not been rerun after this PATH addition.",
+    "PDF visible-text KeyError and Traditional Chinese notice classification failure, worker timing/file locks and deleted QTimer need focused investigation; no source fix was made here.",
+    "Full historical evidence was not downloaded; full legacy governance check cannot pass in this sparse checkout.",
+    "No private artwork, font, customer data, training, printing or new EXE qualification."
+  ],
+  "source_modified": false,
+  "packaged": false,
+  "published": false,
+  "private_data_uploaded": false,
+  "scope": "Windows native review-tool source environment; synthetic/empty data only; not product/frozen-EXE qualification",
+  "test_source_commit": "684ebb0bb5f18e8b171180661c69f1b633c22b48",
+  "github_sync_authorized": true
+}

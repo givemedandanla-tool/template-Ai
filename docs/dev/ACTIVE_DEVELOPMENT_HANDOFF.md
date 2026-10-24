@@ -1,11 +1,9 @@
-# 當前：原始碼直接啟動與三項回饋修正，待 Windows 本機驗證
+# 當前：Windows review 開發環境可啟動；PDF／OCR 尚待處理
 
-先讀 STATE.review_source_maintenance、[修正報告](bugfixes/review-source-maintenance-20261024/REPORT.md)與[原始碼啟動／更新](analysis_review_ui/SOURCE_RUN_AND_UPDATE.md)。分支feature/review-tool-v0.1.0，source開發版0.1.0-beta.3.dev1；本輪不打包、不發布、不改舊tag。
+分支 `feature/review-tool-v0.1.0`；實測來源 `684ebb0bb5f18e8b171180661c69f1b633c22b48`，source `0.1.0-beta.3.dev1`。先讀 STATE.review_windows_environment、[環境報告](windows_review_environment/REPORT.md)及[可攜式設定](../../tools/windows_review_dev/README.md)。checkpoint `CP-20261024-REVIEW-WINDOWS-ENV-001`；確切提交與讀回狀態以 STATE 及 receipt 為準。
 
-修正：已知AI PDF相容提示頁不當作品、混合頁保留正常部分與固定安全錯誤指示；暗系統下選單明確淺色；GUI subsystem＋只恢復父重導worker管道、介面字型選擇。新版判讀口徑3，不靜默接舊分析，原稿及人工修訂保留。
+Windows 原生 GUI、`review_app.py:78` 斷點及獨立 pythonw 啟動通過，stdio 9 項與暗 palette 1 項 PASS。PDF 模組 14 測例摘要為 2 failure／4 error／5 skip，含 cleanup 重複失敗；不能推算通過數。初次 PATH 缺 Inkscape，已補設定但未重跑。Tesseract／英繁中模型未配置，完整 OCR 未就緒。本輪只準備環境及同步，沒有修改產品邏輯。
 
-本輪9模組隔離：141PASS/1Windows pythonw skip/0failure/0error；真正source Qt35checks PASS、實際QProcess與兩語OCR通過。Linux source不當Windows/EXE驗收。新START_REVIEW_WINDOWS.bat是判讀入口，PREPARE_WINDOWS只準備固定依賴；舊START_WINDOWS是完整產品。Git更新指定提交，避免手工混換檔案；引擎與模型沿用本機明確路徑，不必每次下載。
+使用者已核准同步環境、結果與交接並讀回；不合併 main、不打包發布，私人作品／字型／客戶資料不得上傳。每階段依既有 checkpoint 規則保存並讀回。本機工具與資料仍留本機。從不同電腦的空目錄取得確認提交，依工具指南重建，不覆寫既有檔案。
 
-下一步在Windows準備原始碼環境，驗pythonw/字型/背景IPC再使用本機作品副本；雲端無法存取C槽。發布EXE相關修正仍需未來真正Windows frozen驗收。PRIVATE作品/字庫/硬體/AI訓練/印前及舊完整產品資格不升；原未提交timeout/adopt成果保留，不讀私人作品、不新付費。
-
-已發布review-v0.1.0-beta.2仍是source6fd0b1435a8ebd1f384b2f76ceaa85dcbc2fba60／run40057767083：Windows270與真EXE40、兩次下載校驗PASS，僅屬該舊成品。STATE.review_tool_release_request及[原交付報告](releases/review-v0.1.0-beta.2/DELIVERY_REPORT.md)保留，不以舊資格覆蓋本輪新source。
+下一步保留失敗證據，依後續指令處理 Windows PDF 提示頁測試及 OCR 引擎缺口。現有原始碼三項修正見 STATE.review_source_maintenance；舊 Linux 141PASS/1skip 與 source Qt35checks 不是本輪 Windows 全驗。已發布 review-v0.1.0-beta.2 及其資格／tag／附件不變。私人作品、字型、訓練、實印與新 EXE 均未增加資格。

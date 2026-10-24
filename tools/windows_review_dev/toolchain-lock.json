@@ -1,0 +1,30 @@
+{
+  "platform": "Windows x64",
+  "python": {
+    "version": "3.11.9",
+    "url": "https://www.nuget.org/api/v2/package/python/3.11.9",
+    "archive_sha256": "9283876d58c017e0e846f95b490da3bca0fc0a6ee1134b2870677cfb7eec3c67",
+    "directory": ".tools/python311",
+    "executable": "tools/python.exe"
+  },
+  "vscode": {
+    "version": "1.143.1",
+    "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/e646868227c3e3a9e3f24277c8c7220be42c0be7/VSCode-win32-x64-1.143.1.zip",
+    "archive_sha256": "b4f9643b8a549ca2c85a1bbc9063fc76f1e08fc0036a7f6a1a181cdc05235eca",
+    "directory": ".tools/vscode",
+    "portable_data_directory": ".tools/vscode/data"
+  },
+  "vscode_extensions_observed": ["ms-python.python@2026.10.0", "ms-python.debugpy@2026.6.0", "ms-python.vscode-pylance@2026.4.1", "ms-python.vscode-python-envs@1.40.0"],
+  "node": {
+    "version": "24.19.0",
+    "url": "https://nodejs.org/dist/v24.19.0/node-v24.19.0-win-x64.zip",
+    "archive_sha256": "57f71ab3652e797d84acddc79c81cc9ff1c6ddb2a1974cdb83f00fee9bff4c73",
+    "directory": ".tools/node-v24.19.0-win-x64"
+  },
+  "git_observed": "2.53.0.windows.3",
+  "inkscape_observed": "1.4.4",
+  "runtime_dependencies": "requirements-lock.txt",
+  "debug_dependencies": "tools/windows_review_dev/requirements-debug.txt",
+  "quality_tool_pins": "docs/dev/debug_tooling/",
+  "ocr": "NOT_CONFIGURED; reuse explicitly selected beta.2 bundled Tesseract and eng/chi_tra models when available; do not claim full OCR readiness"
+}

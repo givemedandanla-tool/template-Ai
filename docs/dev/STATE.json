@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "REVIEW_SOURCE_MAINTENANCE_WINDOWS_PENDING",
+  "active_task": "REVIEW_WINDOWS_ENV_READY_PDF_OCR_PENDING",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261023-IMPORT-ZERO-SOURCE-001.receipt.json",
   "last_confirmed_commit": "155c7daff076517dd91fb63be27b1ec4630f98b7",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Prepare Windows source environment with fixed Python dependencies; start independent review entry, not legacy app",
-    "Verify source-mode pythonw, native Windows font and worker pipe round trip; keep private works local",
-    "Review these fixes locally before any new EXE build/release; beta.2 tag/assets remain unchanged"
+    "Use the Windows review-source development environment and the verified checkpoint; preserve existing local data",
+    "Investigate the preserved PDF compatibility failures and retest with Inkscape on PATH when assigned",
+    "Configure explicitly selected Tesseract/eng/chi_tra before full OCR verification; no new EXE/release authorization"
   ],
   "blocked": [
     {
@@ -44,7 +44,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261024-REVIEW-WINDOWS-ENV-001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -2347,5 +2349,27 @@
     "checkpoint": "docs/checkpoints/CP-20261024-REVIEW-SOURCE-MAINTENANCE-001.receipt.json",
     "source_snapshot_commit": "cdb5fa4a2281b8d3b36745b758b81617a01e184c",
     "receipt": "docs/checkpoints/CP-20261024-REVIEW-SOURCE-MAINTENANCE-001.receipt.json"
+  },
+  "review_windows_environment": {
+    "status": "SOURCE_STARTUP_DEBUGGER_VERIFIED_LIMITATIONS_OPEN",
+    "source_commit": "684ebb0bb5f18e8b171180661c69f1b633c22b48",
+    "source_version": "0.1.0-beta.3.dev1",
+    "branch": "feature/review-tool-v0.1.0",
+    "report": "docs/dev/windows_review_environment/REPORT.md",
+    "tooling": "tools/windows_review_dev/README.md",
+    "checkpoint": "CP-20261024-REVIEW-WINDOWS-ENV-001",
+    "sync_phase": "PREPARED",
+    "github_sync_authorized": true,
+    "native_gui": "PASS",
+    "debugger": "PASS",
+    "detached_pythonw": "PASS",
+    "stdio_tests_passed": 9,
+    "dark_menu_tests_passed": 1,
+    "pdf_regression": "NOT_PASSED",
+    "full_ocr": "NOT_CONFIGURED",
+    "product_features_added": 0,
+    "product_source_modified": false,
+    "package_release_authorized": false,
+    "private_data_uploaded": false
   }
 }

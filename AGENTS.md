@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新維護：Windows review 本機環境與已核准同步
+
+2026-10-24先讀STATE.review_windows_environment及[環境報告](docs/dev/windows_review_environment/REPORT.md)。指定feature/review-tool-v0.1.0；原生GUI／斷點／pythonw通過，stdio9與暗選單1項PASS，PDF回歸未通過、OCR未配置。使用者已核准同步本輪環境／結果／交接與遠端讀回；不合併main、不打包發布、私人資料不上傳。本輪新增可攜式Windows設定，不改產品邏輯；不把此窄驗證升為完整產品或EXE資格。
+
 ## 最新維護：原始碼直接啟動與三項回饋修正
 
 2026-10-24本輪依使用者指示使用GitHub維護，不打包不發布。source開發版0.1.0-beta.3.dev1；先讀STATE.review_source_maintenance、[報告](docs/dev/bugfixes/review-source-maintenance-20261024/REPORT.md)及[原始碼指南](docs/dev/analysis_review_ui/SOURCE_RUN_AND_UPDATE.md)。新增START_REVIEW_WINDOWS.bat；舊START_WINDOWS.bat是完整產品。9個隔離模組141PASS/1Windows skip/0fail，真source Qt35checks通過，非Windows/EXE資格。源碼修提示頁誤判與固定安全IPC指示、暗palette選單、GUI-subsystem/worker pipes與介面字型。Windows pythonw/原生字型/包內通訊仍待驗；不自動開下一次build/tag/Release。已發布beta.2與其收據不變，私人檔與原未提交timeout/adopt保留。

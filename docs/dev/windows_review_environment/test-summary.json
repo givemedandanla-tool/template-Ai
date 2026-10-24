@@ -1,0 +1,38 @@
+[
+  {
+    "name": "stdio",
+    "exit_code": 0,
+    "seconds": 3.08,
+    "summary": [
+      "",
+      "----------------------------------------------------------------------",
+      "Ran 9 tests in 1.343s",
+      "",
+      "OK"
+    ]
+  },
+  {
+    "name": "source-compatibility",
+    "exit_code": 1,
+    "seconds": 57.92,
+    "summary": [
+      "    process.finished.connect(lambda code, state: self._process_finished(process, generation, code, state))",
+      "                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "  File \"<PROJECT_ROOT>\\template_ai\\review_tool\\jobs.py\", line 386, in _process_finished",
+      "    self._timer.stop()",
+      "RuntimeError: Internal C++ object (PySide6.QtCore.QTimer) already deleted."
+    ]
+  },
+  {
+    "name": "dark-menu",
+    "exit_code": 0,
+    "seconds": 1.77,
+    "summary": [
+      "",
+      "----------------------------------------------------------------------",
+      "Ran 1 test in 0.438s",
+      "",
+      "OK"
+    ]
+  }
+]

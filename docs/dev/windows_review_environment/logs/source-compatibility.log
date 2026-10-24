@@ -1,0 +1,175 @@
+test_actual_english_pdf_notice_is_rejected_before_import_or_ocr (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_actual_english_pdf_notice_is_rejected_before_import_or_ocr) ... ERROR
+test_actual_traditional_pdf_visible_text_is_detected (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_actual_traditional_pdf_visible_text_is_detected) ... FAIL
+test_header_and_source_type_do_not_guess_private_ai_payload (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_header_and_source_type_do_not_guess_private_ai_payload) ... ok
+test_mixed_pages_preserve_only_normal_page_in_both_orders (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_mixed_pages_preserve_only_normal_page_in_both_orders) ... skipped 'actual Inkscape is required'
+test_normal_illustrator_references_and_partial_messages_are_not_blocked (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_normal_illustrator_references_and_partial_messages_are_not_blocked) ... ok
+test_normal_pdf_mentioning_illustrator_keeps_real_artwork (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_normal_pdf_mentioning_illustrator_keeps_real_artwork) ... skipped 'actual Inkscape is required'
+test_notice_in_pdf_metadata_is_not_mistaken_for_visible_warning (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_notice_in_pdf_metadata_is_not_mistaken_for_visible_warning) ... skipped 'actual Inkscape is required'
+test_parent_maps_only_known_codes_and_never_relays_child_text (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_parent_maps_only_known_codes_and_never_relays_child_text) ... ok
+test_raster_pdf_uses_late_strong_visible_ocr_check (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_raster_pdf_uses_late_strong_visible_ocr_check) ... skipped 'actual Inkscape is required'
+test_real_worker_error_reaches_parent_with_actionable_safe_message (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_real_worker_error_reaches_parent_with_actionable_safe_message) ... FAIL
+test_real_worker_error_reaches_parent_with_actionable_safe_message (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_real_worker_error_reaches_parent_with_actionable_safe_message) ... ERROR
+test_signatures_require_multiple_visible_warning_clauses (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_signatures_require_multiple_visible_warning_clauses) ... ok
+test_svg_even_with_complete_warning_is_not_misclassified_as_native_ai (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_svg_even_with_complete_warning_is_not_misclassified_as_native_ai) ... skipped 'actual Inkscape is required'
+test_visible_text_classification_is_bounded (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_visible_text_classification_is_bounded) ... ok
+test_worker_reports_specific_safe_recovery_and_no_result (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_worker_reports_specific_safe_recovery_and_no_result) ... ERROR
+test_worker_reports_specific_safe_recovery_and_no_result (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_worker_reports_specific_safe_recovery_and_no_result) ... ERROR
+
+======================================================================
+ERROR: test_actual_english_pdf_notice_is_rejected_before_import_or_ocr (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_actual_english_pdf_notice_is_rejected_before_import_or_ocr)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\tests\test_review_source_compatibility.py", line 111, in test_actual_english_pdf_notice_is_rejected_before_import_or_ocr
+    analyse_file(path, self.root / 'cache')
+  File "<PROJECT_ROOT>\template_ai\review_tool\analysis.py", line 350, in analyse_file
+    page = dict(id=page_id, page=page_number, image=source['image'],
+                                                    ~~~~~~^^^^^^^^^
+KeyError: 'image'
+
+======================================================================
+ERROR: test_real_worker_error_reaches_parent_with_actionable_safe_message (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_real_worker_error_reaches_parent_with_actionable_safe_message)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 632, in _rmtree_unsafe
+    os.unlink(fullname)
+PermissionError: [WinError 32] 程序無法存取檔案，因為檔案正由另一個程序使用。: '<LOCAL_USER>\\AppData\\Local\\Temp\\tmpkzqjehy3\\worker-notice.ai'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\tests\test_review_source_compatibility.py", line 47, in tearDown
+    self.temp.cleanup()
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\tempfile.py", line 947, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\tempfile.py", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 787, in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 634, in _rmtree_unsafe
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\tempfile.py", line 893, in onerror
+    _os.unlink(path)
+PermissionError: [WinError 32] 程序無法存取檔案，因為檔案正由另一個程序使用。: '<LOCAL_USER>\\AppData\\Local\\Temp\\tmpkzqjehy3\\worker-notice.ai'
+
+======================================================================
+ERROR: test_worker_reports_specific_safe_recovery_and_no_result (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_worker_reports_specific_safe_recovery_and_no_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\tests\test_review_source_compatibility.py", line 236, in test_worker_reports_specific_safe_recovery_and_no_result
+    process = subprocess.run([sys.executable, '-m', 'template_ai.review_tool.worker', str(request)],
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\subprocess.py", line 1630, in _communicate
+    raise TimeoutExpired(self.args, orig_timeout)
+subprocess.TimeoutExpired: Command '['<PROJECT_ROOT>\\.venv\\Scripts\\python.exe', '-m', 'template_ai.review_tool.worker', '<LOCAL_USER>\\AppData\\Local\\Temp\\tmpdgn7xh0d\\request.json']' timed out after 45 seconds
+
+======================================================================
+ERROR: test_worker_reports_specific_safe_recovery_and_no_result (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_worker_reports_specific_safe_recovery_and_no_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 636, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 32] 程序無法存取檔案，因為檔案正由另一個程序使用。: '<LOCAL_USER>\\AppData\\Local\\Temp\\tmpdgn7xh0d\\cache\\assets\\0e58dbb164beef6251c562d6832842c6c6b136e9d04e4472ccd4890669cbd4ed-p1-visual-import-0.2.0-dual-recovery-r44363ac401448fc8602ea2d2c0976fa0'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\tempfile.py", line 893, in onerror
+    _os.unlink(path)
+PermissionError: [WinError 5] 存取被拒。: '<LOCAL_USER>\\AppData\\Local\\Temp\\tmpdgn7xh0d\\cache\\assets\\0e58dbb164beef6251c562d6832842c6c6b136e9d04e4472ccd4890669cbd4ed-p1-visual-import-0.2.0-dual-recovery-r44363ac401448fc8602ea2d2c0976fa0'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 636, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 32] 程序無法存取檔案，因為檔案正由另一個程序使用。: '<LOCAL_USER>\\AppData\\Local\\Temp\\tmpdgn7xh0d\\cache\\assets\\0e58dbb164beef6251c562d6832842c6c6b136e9d04e4472ccd4890669cbd4ed-p1-visual-import-0.2.0-dual-recovery-r44363ac401448fc8602ea2d2c0976fa0'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\tempfile.py", line 893, in onerror
+    _os.unlink(path)
+PermissionError: [WinError 5] 存取被拒。: '<LOCAL_USER>\\AppData\\Local\\Temp\\tmpdgn7xh0d\\cache\\assets\\0e58dbb164beef6251c562d6832842c6c6b136e9d04e4472ccd4890669cbd4ed-p1-visual-import-0.2.0-dual-recovery-r44363ac401448fc8602ea2d2c0976fa0'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\tests\test_review_source_compatibility.py", line 47, in tearDown
+    self.temp.cleanup()
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\tempfile.py", line 947, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\tempfile.py", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 787, in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 638, in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\tempfile.py", line 919, in onerror
+    cls._rmtree(path, ignore_errors=ignore_errors,
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\tempfile.py", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 787, in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 638, in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\tempfile.py", line 919, in onerror
+    cls._rmtree(path, ignore_errors=ignore_errors,
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\tempfile.py", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 787, in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 638, in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "<PROJECT_ROOT>\.tools\python311\tools\Lib\shutil.py", line 636, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 32] 程序無法存取檔案，因為檔案正由另一個程序使用。: '<LOCAL_USER>\\AppData\\Local\\Temp\\tmpdgn7xh0d\\cache\\assets\\0e58dbb164beef6251c562d6832842c6c6b136e9d04e4472ccd4890669cbd4ed-p1-visual-import-0.2.0-dual-recovery-r44363ac401448fc8602ea2d2c0976fa0'
+
+======================================================================
+FAIL: test_actual_traditional_pdf_visible_text_is_detected (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_actual_traditional_pdf_visible_text_is_detected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\tests\test_review_source_compatibility.py", line 119, in test_actual_traditional_pdf_visible_text_is_detected
+    self.assertEqual(visible_pdf_page(path, 1), {'page_count': 1, 'language': 'zh-Hant'})
+AssertionError: {'page_count': 1, 'language': None} != {'page_count': 1, 'language': 'zh-Hant'}
+- {'language': None, 'page_count': 1}
+?              ^^ ^
+
++ {'language': 'zh-Hant', 'page_count': 1}
+?              ^^^^^^ ^^
+
+
+======================================================================
+FAIL: test_real_worker_error_reaches_parent_with_actionable_safe_message (test_review_source_compatibility.ReviewSourceCompatibilityTests.test_real_worker_error_reaches_parent_with_actionable_safe_message)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\tests\test_review_source_compatibility.py", line 194, in test_real_worker_error_reaches_parent_with_actionable_safe_message
+    self.assertFalse(jobs.is_running(), 'Actual source worker did not finish within 10 seconds')
+AssertionError: True is not false : Actual source worker did not finish within 10 seconds
+
+----------------------------------------------------------------------
+Ran 14 tests in 56.073s
+
+FAILED (failures=2, errors=4, skipped=5)
+Traceback (most recent call last):
+  File "<PROJECT_ROOT>\template_ai\review_tool\jobs.py", line 196, in <lambda>
+    process.finished.connect(lambda code, state: self._process_finished(process, generation, code, state))
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PROJECT_ROOT>\template_ai\review_tool\jobs.py", line 386, in _process_finished
+    self._timer.stop()
+RuntimeError: Internal C++ object (PySide6.QtCore.QTimer) already deleted.
