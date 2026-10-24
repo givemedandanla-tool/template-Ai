@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "source_commit": "6e62fd51310101f46d561851faf2892cf4cf2323",
+  "stages": [
+    {
+      "name": "verified_fixed_inputs",
+      "started_utc": "2026-10-24T02:05:34.108883+00:00",
+      "status": "PASS",
+      "seconds": 83.164574
+    },
+    {
+      "name": "pinned_public_ocr_models",
+      "started_utc": "2026-10-24T02:06:57.303530+00:00",
+      "status": "PASS",
+      "seconds": 1.403629
+    },
+    {
+      "name": "pinned_ocr_corresponding_sources",
+      "started_utc": "2026-10-24T02:06:58.738473+00:00",
+      "status": "FAIL",
+      "error_type": "ValueError",
+      "message": "OCR notice is not a regular repository file",
+      "seconds": 0.04623
+    }
+  ]
+}
