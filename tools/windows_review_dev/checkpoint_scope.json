@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "component": "review-tool",
+  "branch": "feature/review-tool-v0.1.0",
+  "root_entry": "review_app.py",
+  "source_prefixes": [
+    "template_ai/review_tool/"
+  ],
+  "test_patterns": [
+    "tests/test_review_*.py"
+  ],
+  "tooling_prefixes": [
+    "tools/windows_review_dev/"
+  ],
+  "documentation_prefixes": [
+    "docs/dev/windows_review_environment/",
+    "docs/dev/analysis_review_ui/"
+  ],
+  "shared_handoff_files": [
+    "AGENTS.md",
+    "docs/dev/STATE.json",
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+    "docs/dev/WORK_LOG.md"
+  ],
+  "shared_dependency_changes": "Explicitly enumerate and justify direct review-tool impact before inclusion",
+  "checkpoint_state": "review_tool_sync",
+  "scope_is_allowlist_index_not_automatic_git_add": true,
+  "excluded_local_prefixes": [
+    ".venv/",
+    ".tools/",
+    ".cache/",
+    ".local-dev/",
+    "local-data/"
+  ],
+  "private_files_fonts_customers_upload_allowed": false,
+  "merge_main": false,
+  "package_release": false
+}

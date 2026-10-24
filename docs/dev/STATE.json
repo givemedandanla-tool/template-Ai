@@ -6,8 +6,8 @@
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
   "active_task": "REVIEW_WINDOWS_ENV_READY_PDF_OCR_PENDING",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261023-IMPORT-ZERO-SOURCE-001.receipt.json",
-  "last_confirmed_commit": "155c7daff076517dd91fb63be27b1ec4630f98b7",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261024-REVIEW-WINDOWS-ENV-001.receipt.json",
+  "last_confirmed_commit": "7542bc3b6a0c62cef291a70521983325f7d775b9",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
   "exe_policy": "EXPLICIT_V0_2_0_BETA_2_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -44,9 +44,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261024-REVIEW-WINDOWS-ENV-001"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -2358,7 +2356,7 @@
     "report": "docs/dev/windows_review_environment/REPORT.md",
     "tooling": "tools/windows_review_dev/README.md",
     "checkpoint": "CP-20261024-REVIEW-WINDOWS-ENV-001",
-    "sync_phase": "PREPARED",
+    "sync_phase": "REMOTE_VERIFIED",
     "github_sync_authorized": true,
     "native_gui": "PASS",
     "debugger": "PASS",
@@ -2370,6 +2368,24 @@
     "product_features_added": 0,
     "product_source_modified": false,
     "package_release_authorized": false,
-    "private_data_uploaded": false
+    "private_data_uploaded": false,
+    "snapshot_commit": "7542bc3b6a0c62cef291a70521983325f7d775b9",
+    "receipt": "docs/checkpoints/CP-20261024-REVIEW-WINDOWS-ENV-001.receipt.json"
+  },
+  "review_tool_sync": {
+    "scope": "REVIEW_TOOL_COMPONENT_ONLY",
+    "branch": "feature/review-tool-v0.1.0",
+    "policy": "docs/dev/windows_review_environment/SYNC_POLICY.md",
+    "scope_config": "tools/windows_review_dev/checkpoint_scope.json",
+    "last_confirmed_checkpoint": "docs/checkpoints/CP-20261024-REVIEW-WINDOWS-ENV-001.receipt.json",
+    "last_confirmed_snapshot_commit": "7542bc3b6a0c62cef291a70521983325f7d775b9",
+    "status": "REMOTE_VERIFIED",
+    "local_alignment": "VERIFY_AFTER_RECEIPT_COMMIT",
+    "user_priority": "Keep local review-tool progress consistent with GitHub; complete component sync foundations and return to review-tool development promptly",
+    "whole_project_development_authorized": false,
+    "main_merge_authorized": false,
+    "package_release_authorized": false,
+    "private_data_upload_authorized": false,
+    "routine_sync": "While an authorized development task is active, checkpoint at recoverable milestones and about every 10 minutes; no unattended scheduler created"
   }
 }

@@ -7,3 +7,5 @@ Windows 原生 GUI、`review_app.py:78` 斷點及獨立 pythonw 啟動通過，s
 使用者已核准同步環境、結果與交接並讀回；不合併 main、不打包發布，私人作品／字型／客戶資料不得上傳。每階段依既有 checkpoint 規則保存並讀回。本機工具與資料仍留本機。從不同電腦的空目錄取得確認提交，依工具指南重建，不覆寫既有檔案。
 
 下一步保留失敗證據，依後續指令處理 Windows PDF 提示頁測試及 OCR 引擎缺口。現有原始碼三項修正見 STATE.review_source_maintenance；舊 Linux 141PASS/1skip 與 source Qt35checks 不是本輪 Windows 全驗。已發布 review-v0.1.0-beta.2 及其資格／tag／附件不變。私人作品、字型、訓練、實印與新 EXE 均未增加資格。
+
+使用者最新收斂：只做 review-tool 部件同步與開發；依[部件同步規則](windows_review_environment/SYNC_POLICY.md)及 STATE.review_tool_sync 接續，不擴大成完整 template-Ai 開發。初始化快照已讀回：`7542bc3b6a0c62cef291a70521983325f7d775b9`，`CP-20261024-REVIEW-WINDOWS-ENV-001`；收據另筆保存。
