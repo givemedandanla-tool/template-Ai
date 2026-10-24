@@ -172,6 +172,7 @@ def _ocr_observations(source, cap) -> tuple[list, dict]:
     """Run actual local OCR, reusing the existing bounded TSV parser."""
     from ..quality_ocr import parse_tsv
     from ..background import file_digest
+    from ..ocr_runtime import model_directory, processing_error, uses_model_stage
     from PySide6.QtGui import QImageReader
     languages = [x for x in ('chi_tra', 'eng') if x in cap.get('languages', [])]
     if not cap.get('available') or not languages:
@@ -190,10 +191,11 @@ def _ocr_observations(source, cap) -> tuple[list, dict]:
     command += ['-l', '+'.join(languages), '--psm', '11',
                 '-c', 'tessedit_create_tsv=1', '-c', 'tessedit_create_txt=0']
     env = os.environ.copy();env['OMP_THREAD_LIMIT'] = '1'
-    with Path(source['image']).open('rb') as input_image, \
+    with model_directory(cap.get('data_dir'), require_fixed=(cap.get('runtime') or {}).get('origin') == 'BUNDLED') as model_cwd, \
+            Path(source['image']).open('rb') as input_image, \
             tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
         process = subprocess.Popen(command, stdin=input_image, stdout=output, stderr=errors, env=env,
-                                   cwd=cap.get('data_dir'),
+                                   cwd=model_cwd,
                                    creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
         start=time.monotonic()
         try:
@@ -209,7 +211,8 @@ def _ocr_observations(source, cap) -> tuple[list, dict]:
                 stop_tree(process)
             process.wait()
         if process.returncode or os.fstat(output.fileno()).st_size > 1_048_576:
-            raise ValueError('本機文字辨識失敗或超出輸出預算')
+            errors.seek(0)
+            raise processing_error(errors.read(65_536).decode('utf-8', 'replace'))
         output.seek(0);raw = output.read(1_048_577).decode('utf-8', 'strict')
     lines = parse_tsv(raw, size.width(), size.height(), source['width_mm'], source['height_mm'])
     models = []
@@ -219,6 +222,8 @@ def _ocr_observations(source, cap) -> tuple[list, dict]:
     proof = dict(status='OCR_CANDIDATE_NOT_SOURCE_TEXT', languages=languages, models=models,
                  executable_sha256=file_digest(cap['executable']), psm=11,
                  image_transport='STDIN_BINARY_IMAGE',
+                 model_transport='VERIFIED_SHORT_LOCAL_STAGE' if cap.get('data_dir') and uses_model_stage()
+                                 else 'DIRECT_LOCAL_DIRECTORY',
                  runtime=deepcopy(cap.get('runtime', {})),
                  calibration='OCR_SCORES_ARE_NOT_PROBABILITY_OF_CORRECT_IDENTITY')
     return lines, proof
@@ -374,7 +379,7 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
                         candidates=ocr_candidates
                 except Exception as error:
                     packet['issues'].append(_issue('OCR_FAILED', '文字辨識未完成，可直接在原稿補上文字標記',
-                                                          page=page_number, detail=type(error).__name__))
+                                                          page=page_number, detail=getattr(error,'code',type(error).__name__)))
             else:
                 packet['issues'].append(_issue('OCR_UNAVAILABLE',
                     cap.get('reason') or '尚無可用的本機文字辨識配套；仍可查看原稿並人工補上文字標記',

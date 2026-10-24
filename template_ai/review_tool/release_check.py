@@ -337,10 +337,69 @@ def physical_ocr_fault(executable, scratch, mode):
 
 
 @contextmanager
+def copied_source_ocr_runtime(capability, scratch):
+    """Verify and copy a source-only stage before a destructive fault probe.
+
+    A developer's explicitly pinned stage may be named ``ocr-runtime`` and may
+    live outside a packaged engines/ tree. Never mutate that original stage.
+    The worker still uses the normal full manifest/model verification on a new
+    owned copy, with only documented source-development selectors changed.
+    """
+    from ..ocr_runtime import resolve_runtime
+
+    _require(not getattr(sys, 'frozen', False), 'A frozen application cannot select a source OCR copy')
+    scratch = Path(scratch).resolve()
+    authored = scratch.parent
+    _require((authored / 'SYNTHETIC_ONLY').read_text(encoding='ascii') == 'NO_PRIVATE_DATA',
+             'Source OCR fault copies require an owned authored acceptance directory')
+    selected = resolve_runtime()
+    identity = capability.get('runtime', {})
+    _require(selected.get('origin') == 'BUNDLED' and selected.get('policy') == 'BUNDLED_ONLY'
+             and Path(selected['executable']).resolve() == Path(capability['executable']).resolve()
+             and selected['executable_sha256'] == identity.get('executable_sha256')
+             and selected['runtime_manifest_sha256'] == identity.get('runtime_manifest_sha256'),
+             'The source OCR stage no longer matches its verified capability')
+    source = Path(selected['executable']).resolve().parent
+    owned = scratch / 'source-negative-package/engines/tesseract'
+    _require(not owned.exists() and not owned.is_relative_to(source),
+             'Source OCR fault copy must be new and outside the original stage')
+    shutil.copytree(source, owned)
+    pin = dict(version=selected['version'], executable_sha256=selected['executable_sha256'],
+               manifest_sha256=selected['runtime_manifest_sha256'], files=selected['verified_files'])
+    pin_file = scratch / 'source-negative-package/ocr-runtime-pin.json'
+    pin_file.write_text(json.dumps(pin), encoding='utf-8')
+    changes = {'TEMPLATE_AI_BUNDLED_TESSERACT_ROOT': str(owned),
+               'TEMPLATE_AI_BUNDLED_TESSERACT_PIN': str(pin_file),
+               'TEMPLATE_AI_TESSDATA': selected['data_dir']}
+    previous = {key: os.environ.get(key) for key in changes}
+    try:
+        os.environ.update(changes)
+        # This validates every copied runtime byte and the unchanged model
+        # directory through the same resolver used by the real child worker.
+        verified_copy = resolve_runtime()
+        _require(verified_copy['runtime_manifest_sha256'] == selected['runtime_manifest_sha256']
+                 and verified_copy['executable_sha256'] == selected['executable_sha256'],
+                 'The copied source OCR runtime differs from its exact original pin')
+        yield verified_copy
+    finally:
+        for key, value in previous.items():
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value
+
+
+@contextmanager
 def missing_ocr_runtime(capability, scratch):
     if capability.get('runtime', {}).get('origin') == 'BUNDLED':
-        with physical_ocr_fault(capability['executable'], scratch, 'MISSING_EXECUTABLE'):
-            yield
+        if getattr(sys, 'frozen', False):
+            with physical_ocr_fault(capability['executable'], scratch, 'MISSING_EXECUTABLE'):
+                yield
+        else:
+            with copied_source_ocr_runtime(capability, scratch) as owned:
+                with physical_ocr_fault(owned['executable'], Path(scratch) / 'copied-quarantine',
+                                        'MISSING_EXECUTABLE'):
+                    yield
     else:
         # Explicit local selection is a documented source-development feature.
         # A frozen acceptance run is never allowed to use this branch.

@@ -55,7 +55,11 @@ class LogoOcrTests(unittest.TestCase):
         real_temporary=tempfile.TemporaryDirectory
         real_run=subprocess.run
         def local_temporary(**kwargs):
-            return real_temporary(prefix='中文ROI-',dir=deep)
+            # Force only the ROI cache deep. The independently owned model
+            # stage must keep its short path, including on native Windows.
+            if kwargs.get('prefix')=='template-ai-ocr-':
+                return real_temporary(prefix='中文ROI-',dir=deep)
+            return real_temporary(**kwargs)
         with patch('template_ai.logo_ocr.tempfile.TemporaryDirectory',side_effect=local_temporary), \
                 patch('template_ai.logo_ocr.subprocess.run',wraps=real_run) as launched:
             result=recognize(payload)

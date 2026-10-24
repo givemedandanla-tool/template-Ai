@@ -2,15 +2,18 @@
 import hashlib
 import json
 from pathlib import Path
-from contextlib import redirect_stdout
+from contextlib import contextmanager, redirect_stdout
 import io
+import os
+import shutil
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from template_ai.review_tool.release_check import (
     _AUTHORED_CJK_SVG_PATH, assert_bundled_ocr, assert_positive_ocr, authored_ocr_sources,
-    authored_ocr_failure_diagnostics, physical_ocr_fault,
+    authored_ocr_failure_diagnostics, missing_ocr_runtime, physical_ocr_fault,
 )
 from template_ai.ocr_runtime import VERSION
 
@@ -206,6 +209,83 @@ class ReviewOcrBundleEvidenceTests(unittest.TestCase):
 
 
 class ReviewOcrPhysicalFaultTests(unittest.TestCase):
+    @contextmanager
+    def source_stage_fixture(self):
+        """Integrity fixture only; these bytes are deliberately not real OCR."""
+        from template_ai import ocr_runtime
+
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            stage = root / 'build/review-release/ocr-runtime'
+            stage.mkdir(parents=True)
+            executable = stage / 'tesseract.exe'
+            executable.write_bytes(b'SYNTHETIC_NOT_EXECUTABLE')
+            manifest = stage / 'BUNDLED_RUNTIME.json'
+            manifest.write_text(json.dumps(dict(schema_version=1, kind='BUNDLED_TESSERACT_RUNTIME',
+                version=VERSION, executable='tesseract.exe', files=[dict(path='tesseract.exe',
+                    bytes=executable.stat().st_size, sha256=hashlib.sha256(executable.read_bytes()).hexdigest())])),
+                encoding='utf-8')
+            pin = root / 'source-pin.json'
+            pin.write_text(json.dumps(dict(version=VERSION, files=1,
+                manifest_sha256=hashlib.sha256(manifest.read_bytes()).hexdigest(),
+                executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest())), encoding='utf-8')
+            models = root / 'unchanged-models'
+            models.mkdir()
+            model_pins = {}
+            for name in ocr_runtime.MODEL_BLOBS:
+                data = ('SYNTHETIC_NOT_A_TRAINED_MODEL:' + name).encode()
+                (models / name).write_bytes(data)
+                model_pins[name] = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+            authored = root / 'authored'
+            authored.mkdir()
+            (authored / 'SYNTHETIC_ONLY').write_text('NO_PRIVATE_DATA', encoding='ascii')
+            selectors = {'TEMPLATE_AI_BUNDLED_TESSERACT_ROOT': str(stage),
+                         'TEMPLATE_AI_BUNDLED_TESSERACT_PIN': str(pin), 'TEMPLATE_AI_TESSDATA': str(models)}
+            with patch.dict(ocr_runtime.MODEL_BLOBS, model_pins, clear=True), patch.dict(os.environ, selectors):
+                selected = ocr_runtime.resolve_runtime()
+                capability = dict(executable=selected['executable'], runtime=ocr_runtime.runtime_report(selected))
+                yield root, stage, models, authored, capability, selectors
+
+    def test_source_stage_fault_uses_verified_owned_copy_and_restores_environment(self):
+        from template_ai import ocr_runtime
+
+        with self.source_stage_fixture() as (root, stage, models, authored, capability, selectors):
+            original = {path.name: path.read_bytes() for path in stage.iterdir()}
+            with self.assertRaisesRegex(RuntimeError, 'authored probe interruption'):
+                with missing_ocr_runtime(capability, authored / 'ocr-quarantine'):
+                    owned = Path(os.environ['TEMPLATE_AI_BUNDLED_TESSERACT_ROOT'])
+                    self.assertTrue(owned.is_relative_to(authored))
+                    self.assertEqual(owned.parts[-2:], ('engines', 'tesseract'))
+                    self.assertFalse((owned / 'tesseract.exe').exists())
+                    self.assertTrue((stage / 'tesseract.exe').is_file())
+                    self.assertEqual(Path(os.environ['TEMPLATE_AI_TESSDATA']), models)
+                    with self.assertRaises(ocr_runtime.OcrRuntimeError):
+                        ocr_runtime.resolve_runtime()
+                    raise RuntimeError('authored probe interruption')
+            self.assertEqual({key: os.environ[key] for key in selectors}, selectors)
+            self.assertEqual({path.name: path.read_bytes() for path in stage.iterdir()}, original)
+            self.assertEqual((owned / 'tesseract.exe').read_bytes(), original['tesseract.exe'])
+            self.assertEqual(ocr_runtime.resolve_runtime()['executable'], str((stage / 'tesseract.exe').resolve()))
+
+    def test_changed_source_copy_is_rejected_before_probe_and_original_is_untouched(self):
+        from template_ai import ocr_runtime
+
+        original_copytree = shutil.copytree
+
+        def changed_copy(source, destination):
+            result = original_copytree(source, destination)
+            (Path(destination) / 'tesseract.exe').write_bytes(b'AUTHORED_BAD_COPY')
+            return result
+
+        with self.source_stage_fixture() as (root, stage, models, authored, capability, selectors):
+            before = (stage / 'tesseract.exe').read_bytes()
+            with patch('template_ai.review_tool.release_check.shutil.copytree', side_effect=changed_copy):
+                with self.assertRaises(ocr_runtime.OcrRuntimeError):
+                    with missing_ocr_runtime(capability, authored / 'ocr-quarantine'):
+                        self.fail('A changed copied executable must not reach the fault probe')
+            self.assertEqual((stage / 'tesseract.exe').read_bytes(), before)
+            self.assertEqual({key: os.environ[key] for key in selectors}, selectors)
+
     def test_physical_missing_and_corruption_restore_exact_original_bytes_after_failure(self):
         with tempfile.TemporaryDirectory() as raw:
             root = Path(raw)

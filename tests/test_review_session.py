@@ -267,6 +267,17 @@ class ReviewSessionTests(unittest.TestCase):
         for value in (private, 'CUSTOMER_SECRET', str(self.root), 'private-person@example.com'):
             self.assertNotIn(value, encoded)
 
+    def test_safe_report_keeps_controlled_processing_failure_without_raw_stderr(self):
+        packet = result()
+        packet['issues'] = [{'code': 'OCR_FAILED', 'detail': 'OCR_MODEL_INITIALIZATION_FAILED',
+                             'summary': 'PRIVATE_CUSTOMER C:/private/eng.traineddata'},
+                            {'code': 'OCR_FAILED', 'detail': {'stderr': 'PRIVATE_CUSTOMER'}}]
+        self.store.apply_analysis(self.source_id, packet)
+        report = self.store.safe_report()
+        self.assertEqual(report['ocr_error_counts'], {'OCR_MODEL_INITIALIZATION_FAILED': 1, 'OCR_FAILED': 1})
+        self.assertNotIn('PRIVATE_CUSTOMER', json.dumps(report))
+        self.assertNotIn('C:/private', json.dumps(report))
+
     def test_safe_report_ocr_identity_is_bounded_and_uses_latest_observation(self):
         packet = result()
         packet['capabilities'] = {'ocr_runtime': {

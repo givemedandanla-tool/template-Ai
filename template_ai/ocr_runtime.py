@@ -8,6 +8,7 @@ frozen applications and does not weaken the distributed package's policy.
 from __future__ import annotations
 
 import hashlib
+from contextlib import contextmanager
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -15,6 +16,7 @@ import re
 import shutil
 import stat
 import sys
+import tempfile
 
 VERSION = '5.4.0.20240606'
 MODEL_COMMIT = '65727574dfcd264acbb0c3e07860e4e9e9b22185'
@@ -30,6 +32,99 @@ class OcrRuntimeError(ValueError):
     def __init__(self, code, message, origin='BUNDLED'):
         super().__init__(message)
         self.code, self.origin = code, origin
+
+
+class OcrProcessingError(ValueError):
+    """A controlled failure code; raw CLI stderr never enters private reports."""
+    def __init__(self, code, message):
+        self.code = code
+        super().__init__('[' + code + '] ' + message)
+
+
+def processing_error(stderr):
+    value = stderr.lower()
+    if any(marker in value for marker in ('error opening data file', 'failed loading language',
+                                          "couldn't load any languages", 'failed to init api')):
+        return OcrProcessingError('OCR_MODEL_INITIALIZATION_FAILED',
+            '文字辨識無法載入固定語言資料；原稿仍保留，可人工標記並匯出問題報告。')
+    if any(marker in value for marker in ('cannot read input file', 'error in pixread', 'image file cannot')):
+        return OcrProcessingError('OCR_IMAGE_INPUT_FAILED',
+            '文字辨識無法讀取這份預覽；原稿仍保留，可人工標記並匯出問題報告。')
+    return OcrProcessingError('OCR_PROCESS_FAILED',
+        '文字辨識未完成；原稿仍保留，可人工標記並匯出問題報告。')
+
+
+def uses_model_stage():
+    return sys.platform == 'win32'
+
+
+def _short_model_path(path):
+    value = str(path)
+    if sys.platform == 'win32':
+        import ctypes
+        buffer = ctypes.create_unicode_buffer(32768)
+        short_path = ctypes.windll.kernel32.GetShortPathNameW
+        short_path.argtypes = [ctypes.c_wchar_p, ctypes.c_wchar_p, ctypes.c_uint32]
+        short_path.restype = ctypes.c_uint32
+        length = short_path(value, buffer, len(buffer))
+        if 0 < length < len(buffer):
+            value = buffer.value
+        if not value.isascii() or len(value) >= 240:
+            raise ValueError('No short local model directory is available')
+    return value
+
+
+@contextmanager
+def model_directory(data_dir, *, require_fixed=False):
+    """Stage selected model bytes for Windows CRT interoperability.
+
+    Packaged/staged bundles require the fixed official weights. Source-only
+    custom models keep their exact selected bytes instead of changing models.
+    No work image, text, customer data or new weights enter this directory.
+    Callers must keep this context open until the owned child has stopped.
+    Source-mode engines using their default system directory remain supported.
+    """
+    if not data_dir or not uses_model_stage():
+        yield data_dir
+        return
+    temporary = None
+    try:
+        source_root = Path(data_dir)
+        from .offline_runtime import assert_local_path
+        assert_local_path(source_root)
+        temporary = tempfile.TemporaryDirectory(prefix='ta-ocr-')
+        stage = Path(temporary.name)
+        assert_local_path(stage)
+        present = 0
+        for language in ('eng', 'chi_tra'):
+            name = language + '.traineddata'
+            source = source_root / name
+            if not source.exists():
+                continue
+            if source.is_symlink() or not source.is_file() or source.stat().st_size > 20_000_000:
+                raise ValueError('Model file is not a bounded regular file')
+            raw = source.read_bytes()
+            blob = hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
+            if require_fixed and blob != MODEL_BLOBS[name]:
+                raise ValueError('Model differs from the fixed public weights')
+            target = stage / name
+            with target.open('xb') as output:
+                output.write(raw)
+            if _sha(target) != hashlib.sha256(raw).hexdigest():
+                raise ValueError('Staged model bytes changed')
+            present += 1
+        if not present:
+            raise ValueError('No fixed language model is available')
+        directory = _short_model_path(stage)
+    except (OSError, ValueError, KeyError) as error:
+        if temporary is not None:
+            temporary.cleanup()
+        raise OcrProcessingError('OCR_MODEL_STAGE_UNAVAILABLE',
+            '固定文字辨識資料尚未準備成功；原稿仍保留，可人工標記並匯出問題報告。') from error
+    try:
+        yield directory
+    finally:
+        temporary.cleanup()
 
 
 def _sha(path):

@@ -99,14 +99,22 @@ class OcrRuntimeTests(unittest.TestCase):
 
     def test_selected_bundle_is_the_actual_language_probe_command(self):
         result = subprocess.CompletedProcess([], 0, 'List of available languages (2):\nchi_tra\neng\n', '')
-        with self.frozen(), patch('template_ai.logo_ocr.subprocess.run', return_value=result) as run:
+        inspected = []
+        def probe(*args, **kwargs):
+            directory = Path(kwargs['cwd'])
+            for language in ('eng', 'chi_tra'):
+                name = language + '.traineddata'
+                self.assertEqual((directory / name).read_bytes(), (self.models / name).read_bytes())
+            inspected.append(True)
+            return result
+        with self.frozen(), patch('template_ai.logo_ocr.subprocess.run', side_effect=probe) as run:
             context = capability()
         self.assertTrue(context['available'])
         self.assertEqual(set(context['languages']), {'eng', 'chi_tra'})
         command = run.call_args.args[0]
         self.assertTrue(Path(command[0]).samefile(self.executable))
         self.assertEqual(command[command.index('--tessdata-dir') + 1], '.')
-        self.assertTrue(Path(run.call_args.kwargs['cwd']).samefile(self.models))
+        self.assertEqual(inspected, [True])
         self.assertEqual(context['runtime']['state'], 'READY')
         self.assertNotIn(str(self.root), json.dumps(context['runtime']))
 
@@ -182,6 +190,49 @@ class OcrRuntimeTests(unittest.TestCase):
         self.assertFalse(context['available'])
         self.assertEqual(context['runtime']['origin'], 'ENV_LOCAL')
         which.assert_not_called()
+
+    def test_fixed_model_stage_preserves_exact_bytes_and_cleans_on_child_failure(self):
+        from template_ai.ocr_runtime import model_directory
+        directory = None
+        with patch('template_ai.ocr_runtime.uses_model_stage', return_value=True):
+            with self.assertRaisesRegex(RuntimeError, 'synthetic child failed'):
+                with model_directory(str(self.models), require_fixed=True) as selected:
+                    directory = Path(selected)
+                    self.assertNotEqual(directory, self.models)
+                    self.assertEqual({p.name for p in directory.iterdir()},
+                                     {'eng.traineddata', 'chi_tra.traineddata'})
+                    for name in ('eng.traineddata', 'chi_tra.traineddata'):
+                        self.assertEqual((directory / name).read_bytes(), (self.models / name).read_bytes())
+                    raise RuntimeError('synthetic child failed')
+        self.assertIsNotNone(directory)
+        self.assertFalse(directory.exists())
+
+    def test_fixed_model_stage_rejects_changed_weights_and_source_custom_preserves_selection(self):
+        from template_ai.ocr_runtime import model_directory, OcrProcessingError
+        changed = self.models / 'eng.traineddata'
+        changed.write_bytes(b'SOURCE_ONLY_CUSTOM_MODEL_NEVER_REPLACED')
+        with patch('template_ai.ocr_runtime.uses_model_stage', return_value=True):
+            with self.assertRaises(OcrProcessingError) as failed:
+                with model_directory(str(self.models), require_fixed=True):
+                    self.fail('Modified bundled model was accepted')
+            self.assertEqual(failed.exception.code, 'OCR_MODEL_STAGE_UNAVAILABLE')
+            self.assertNotIn(str(self.root), str(failed.exception))
+            with model_directory(str(self.models), require_fixed=False) as selected:
+                self.assertEqual((Path(selected) / changed.name).read_bytes(), changed.read_bytes())
+        self.assertEqual(changed.read_bytes(), b'SOURCE_ONLY_CUSTOM_MODEL_NEVER_REPLACED')
+
+    def test_default_source_model_location_needs_no_stage_or_new_model_selection(self):
+        with patch('template_ai.ocr_runtime.uses_model_stage', return_value=True), \
+                patch('template_ai.ocr_runtime.tempfile.TemporaryDirectory') as temporary:
+            with ocr_runtime.model_directory(None) as selected:
+                self.assertIsNone(selected)
+        temporary.assert_not_called()
+
+    def test_processing_error_classifies_model_failure_without_private_stderr(self):
+        error = ocr_runtime.processing_error('Error opening data file C:/PRIVATE_CUSTOMER/fonts/eng.traineddata')
+        self.assertEqual(error.code, 'OCR_MODEL_INITIALIZATION_FAILED')
+        self.assertNotIn('PRIVATE_CUSTOMER', str(error))
+        self.assertNotIn('C:/', str(error))
 
 
 class ActualLocalLanguageLoaderTests(unittest.TestCase):

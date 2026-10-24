@@ -180,7 +180,16 @@ class ReviewAnalysisTests(unittest.TestCase):
                             model_dir / (language + '.traineddata'))
         selected = dict(cap, data_dir=str(model_dir.resolve()))
         real_popen = subprocess.Popen
-        with patch('template_ai.review_tool.analysis.subprocess.Popen', wraps=real_popen) as launched:
+        staged = []
+        def launch(*args, **kwargs):
+            directory = Path(kwargs['cwd'])
+            for language in ('eng', 'chi_tra'):
+                name = language + '.traineddata'
+                self.assertEqual((directory / name).read_bytes(), (model_dir / name).read_bytes())
+            staged.append(directory)
+            return real_popen(*args, **kwargs)
+        with patch('template_ai.ocr_runtime.uses_model_stage', return_value=True), \
+                patch('template_ai.review_tool.analysis.subprocess.Popen', side_effect=launch) as launched:
             lines, proof = _ocr_observations({'image': str(image), 'width_mm': 120., 'height_mm': 40.}, selected)
         text = ' '.join(line['text'] for line in lines)
         self.assertIn('HELLO', text)
@@ -188,7 +197,9 @@ class ReviewAnalysisTests(unittest.TestCase):
         self.assertGreater(len(str(image.resolve())), 260)
         self.assertEqual(launched.call_args.args[0][1:3], ['stdin', 'stdout'])
         self.assertTrue(Path(launched.call_args.kwargs['stdin'].name).samefile(image))
-        self.assertTrue(Path(launched.call_args.kwargs['cwd']).samefile(model_dir))
+        self.assertEqual(len(staged), 1)
+        self.assertFalse(staged[0].exists())
+        self.assertEqual(proof['model_transport'], 'VERIFIED_SHORT_LOCAL_STAGE')
         self.assertEqual(proof['image_transport'], 'STDIN_BINARY_IMAGE')
         self.assertEqual(set(proof['languages']), {'eng', 'chi_tra'})
         for line in lines:

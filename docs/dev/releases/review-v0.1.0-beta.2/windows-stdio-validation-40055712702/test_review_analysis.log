@@ -1,0 +1,35 @@
+test_actual_ocr_binary_stdin_handles_deep_unicode_image_and_model_paths (test_review_analysis.ReviewAnalysisTests.test_actual_ocr_binary_stdin_handles_deep_unicode_image_and_model_paths) ... 
+IMMEDIATE_ERROR: test_actual_ocr_binary_stdin_handles_deep_unicode_image_and_model_paths (test_review_analysis.ReviewAnalysisTests.test_actual_ocr_binary_stdin_handles_deep_unicode_image_and_model_paths)
+Traceback (most recent call last):
+  File "D:\a\template-Ai\template-Ai\tests\test_review_analysis.py", line 184, in test_actual_ocr_binary_stdin_handles_deep_unicode_image_and_model_paths
+    lines, proof = _ocr_observations({'image': str(image), 'width_mm': 120., 'height_mm': 40.}, selected)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\a\template-Ai\template-Ai\template_ai\review_tool\analysis.py", line 212, in _ocr_observations
+    raise ValueError('本機文字辨識失敗或超出輸出預算')
+ValueError: 本機文字辨識失敗或超出輸出預算
+ERROR
+test_actual_ocr_on_raster_does_not_fabricate_physical_sizes (test_review_analysis.ReviewAnalysisTests.test_actual_ocr_on_raster_does_not_fabricate_physical_sizes) ... ok
+test_missing_ocr_keeps_manual_work_instead_of_empty_success (test_review_analysis.ReviewAnalysisTests.test_missing_ocr_keeps_manual_work_instead_of_empty_success) ... ok
+test_real_page_one_survives_injected_second_page_import_failure (test_review_analysis.ReviewAnalysisTests.test_real_page_one_survives_injected_second_page_import_failure) ... ok
+test_real_svg_geometry_semantics_original_immutable_and_unknown_typography (test_review_analysis.ReviewAnalysisTests.test_real_svg_geometry_semantics_original_immutable_and_unknown_typography) ... ok
+test_real_two_page_pdf_preserves_page_identity_and_preview (test_review_analysis.ReviewAnalysisTests.test_real_two_page_pdf_preserves_page_identity_and_preview) ... ok
+test_reanalysis_has_stable_work_and_field_ids (test_review_analysis.ReviewAnalysisTests.test_reanalysis_has_stable_work_and_field_ids) ... ok
+test_unframed_multiple_size_notes_are_review_candidates (test_review_analysis.ReviewAnalysisTests.test_unframed_multiple_size_notes_are_review_candidates) ... ok
+test_worker_invalid_request_error_is_content_free (test_review_analysis.ReviewAnalysisTests.test_worker_invalid_request_error_is_content_free) ... ok
+test_worker_uses_real_json_lines_protocol_and_actual_analysis (test_review_analysis.ReviewAnalysisTests.test_worker_uses_real_json_lines_protocol_and_actual_analysis) ... ok
+
+======================================================================
+ERROR: test_actual_ocr_binary_stdin_handles_deep_unicode_image_and_model_paths (test_review_analysis.ReviewAnalysisTests.test_actual_ocr_binary_stdin_handles_deep_unicode_image_and_model_paths)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\a\template-Ai\template-Ai\tests\test_review_analysis.py", line 184, in test_actual_ocr_binary_stdin_handles_deep_unicode_image_and_model_paths
+    lines, proof = _ocr_observations({'image': str(image), 'width_mm': 120., 'height_mm': 40.}, selected)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\a\template-Ai\template-Ai\template_ai\review_tool\analysis.py", line 212, in _ocr_observations
+    raise ValueError('本機文字辨識失敗或超出輸出預算')
+ValueError: 本機文字辨識失敗或超出輸出預算
+
+----------------------------------------------------------------------
+Ran 10 tests in 21.400s
+
+FAILED (errors=1)

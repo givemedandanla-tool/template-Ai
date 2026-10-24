@@ -13,7 +13,8 @@ from PySide6.QtGui import QImageReader
 
 from .logo_assets import errors
 from .model import Rect
-from .ocr_runtime import OcrRuntimeError, resolve_runtime, runtime_report
+from .ocr_runtime import (OcrRuntimeError, OcrProcessingError, model_directory,
+                          processing_error, resolve_runtime, runtime_report)
 
 
 def capability():
@@ -25,8 +26,13 @@ def capability():
     executable=selected['executable'];data=selected.get('data_dir')
     identity=runtime_report(selected)
     command=[executable]+(['--tessdata-dir','.'] if data else [])+['--list-langs']
-    try:result=subprocess.run(command,capture_output=True,text=True,encoding='utf-8',errors='replace',
-                              timeout=10,cwd=data,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+    try:
+        with model_directory(data, require_fixed=selected['origin']=='BUNDLED') as model_cwd:
+            result=subprocess.run(command,capture_output=True,text=True,encoding='utf-8',errors='replace',
+                                  timeout=10,cwd=model_cwd,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+    except OcrProcessingError as error:
+        identity.update(state='UNAVAILABLE',error_code=error.code)
+        return dict(available=False,reason=str(error),languages=[],runtime=identity)
     except (OSError,subprocess.TimeoutExpired):
         identity.update(state='UNAVAILABLE',error_code='OCR_EXECUTION_UNAVAILABLE')
         return dict(available=False,reason='本機OCR執行檔不可用／逾時，未假稱已辨識',languages=[],runtime=identity)
@@ -69,11 +75,13 @@ def recognize(asset):
         # 自訂語言資料目錄沒有系統 configs/tsv；直接使用官方輸出參數。
         command+=['-l','+'.join(context['languages']),'--psm','11',
                   '-c','tessedit_create_tsv=1','-c','tessedit_create_txt=0']
-        with source.open('rb') as input_image:
+        with model_directory(context['data_dir'],
+                             require_fixed=(context.get('runtime') or {}).get('origin')=='BUNDLED') as model_cwd, \
+                source.open('rb') as input_image:
             result=subprocess.run(command,stdin=input_image,capture_output=True,text=True,encoding='utf-8',
-                timeout=30,env=environment,cwd=context['data_dir'],
+                timeout=30,env=environment,cwd=model_cwd,
                 creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
-    if result.returncode:raise ValueError('本機OCR處理失敗，未建立身分／核准資料')
+    if result.returncode:raise processing_error(result.stderr)
     if len(result.stdout.encode())>1_048_576:raise ValueError('OCR文字超出單次metadata預算')
     if not result.stdout.startswith('level\tpage_num\t'):
         raise ValueError('OCR沒有回傳有效TSV結果，未將空輸出假稱辨識成功')

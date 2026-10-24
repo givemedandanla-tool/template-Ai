@@ -888,7 +888,9 @@ class SessionStore:
         ocr_identities, ocr_errors = {}, {}
         safe_errors = {'BUNDLED_OCR_RUNTIME_INVALID', 'BUNDLED_OCR_LANGUAGES_INVALID',
                        'OCR_EXECUTION_UNAVAILABLE', 'OCR_LANGUAGES_UNAVAILABLE',
-                       'LOCAL_OCR_UNAVAILABLE', 'OCR_RUNTIME_UNAVAILABLE', 'OCR_FAILED'}
+                       'LOCAL_OCR_UNAVAILABLE', 'OCR_RUNTIME_UNAVAILABLE', 'OCR_FAILED',
+                       'OCR_MODEL_STAGE_UNAVAILABLE', 'OCR_MODEL_INITIALIZATION_FAILED',
+                       'OCR_IMAGE_INPUT_FAILED', 'OCR_PROCESS_FAILED'}
         for source in self.sources():
             key = source.get("status")
             key = key if key in SOURCE_STATES else "OTHER"
@@ -922,7 +924,9 @@ class SessionStore:
             source_errors = {safe['error_code']} if safe.get('error_code') else set()
             for issue in source.get('issues', []):
                 if isinstance(issue, dict):
-                    code = issue.get('detail') if issue.get('code') == 'OCR_UNAVAILABLE' else issue.get('code')
+                    code = (issue.get('detail') if issue.get('code') in ('OCR_UNAVAILABLE', 'OCR_FAILED')
+                            and isinstance(issue.get('detail'), str)
+                            and issue['detail'] in safe_errors else issue.get('code'))
                     if isinstance(code, str) and code in safe_errors:
                         source_errors.add(code)
             for code in source_errors:
