@@ -1,0 +1,18 @@
+{
+  "component": "review-tool",
+  "requirement": "REVIEW-USB-START-01",
+  "phase": "SOURCE_READY_OFFLINE_VALIDATION_PENDING",
+  "checkpoint": "CP-20261025-REVIEW-USB-002",
+  "unit_tests": {
+    "passed": 22,
+    "failures": 0,
+    "skipped": 0
+  },
+  "changes": "Replace git archive lazy prefetch with local allowlisted files verified against committed Git blob hashes; no historical download.",
+  "dependencies": "Official Python and Inkscape SHA256 verified; 21 public locked wheels downloaded locally.",
+  "previous_attempt": "Initial source archive triggered unrelated Git promisor download, stopped only task-owned child process; no source file overwritten.",
+  "real_illustrator": "NOT_INSTALLED_NOT_VERIFIED",
+  "private_data_uploaded": false,
+  "packaged": false,
+  "released": false
+}

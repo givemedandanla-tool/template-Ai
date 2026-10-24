@@ -1,10 +1,9 @@
 """Synthetic boundary regression for offline source transfer and local launch."""
 import importlib.util
-import io
 import json
 import os
 from pathlib import Path
-import tarfile
+import hashlib
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -195,12 +194,24 @@ class UsbStartTests(unittest.TestCase):
         self.assertTrue((logs/'launch.json').exists())
 
     def test_source_export_rejects_private_document(self):
-        stream = io.BytesIO()
-        with tarfile.open(fileobj=stream, mode='w') as archive:
-            entry = tarfile.TarInfo('template_ai/private.ai')
-            entry.size = 1
-            archive.addfile(entry, io.BytesIO(b'x'))
-        with patch.object(prepare, 'git', return_value=stream.getvalue()), self.assertRaises(ValueError):
+        listing = b'100644 blob ' + b'a'*40 + b'\ttemplate_ai/private.ai\0'
+        with patch.object(prepare, 'git', return_value=listing), self.assertRaises(ValueError):
+            prepare.export_source(self.root, self.root/'source', 'a'*40)
+
+    def test_source_export_uses_local_commit_verified_bytes(self):
+        raw = b'print(1)\n'
+        sha = hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+        listing = ('100644 blob '+sha+'\treview_app.py\0').encode()
+        (self.root/'review_app.py').write_bytes(raw.replace(b'\n', b'\r\n'))
+        with patch.object(prepare, 'git', return_value=listing) as git:
+            prepare.export_source(self.root, self.root/'source', 'a'*40)
+        self.assertEqual((self.root/'source/review_app.py').read_bytes(), raw)
+        self.assertEqual(git.call_args.args[1], 'ls-tree')
+
+    def test_source_export_rejects_changed_local_source(self):
+        listing = b'100644 blob ' + b'a'*40 + b'\treview_app.py\0'
+        (self.root/'review_app.py').write_bytes(b'changed')
+        with patch.object(prepare, 'git', return_value=listing), self.assertRaises(ValueError):
             prepare.export_source(self.root, self.root/'source', 'a'*40)
 
     def test_python_wrong_archive_hash_rejected_without_extract(self):

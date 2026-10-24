@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261025-REVIEW-USB-002",
+  "created_utc": "2026-10-24T18:28:07.881589+00:00",
+  "base_commit": "baf27c03afa5d9f44afdecd59d7f312e68dcd535",
+  "phase": "PREPARED",
+  "summary": "Offline exporter avoids historical prefetch; 22 Windows boundary tests pass",
+  "requirement_ids": [
+    "REVIEW-USB-START-01"
+  ],
+  "next_step": "Validate offline fresh environment and synthetic GUI; actual Adobe success pending on target machine; deliver source transfer only.",
+  "source_files": {
+    "docs/checkpoints/CP-20261025-REVIEW-USB-001.receipt.json": {
+      "bytes": 751,
+      "sha256": "242614174117f62f403d3f66a52aab547e541c5db362b1f1b379fe5ae09c36c4",
+      "git_blob_sha1": "d0450e0d623e38ee92d92a6017c630ab1149e8ba"
+    },
+    "docs/dev/windows_review_environment/usb-20261025/CONTRACT.json": {
+      "bytes": 1586,
+      "sha256": "65baae5f6e7664a5228149e8fdceb7f59946cb4757210b17b7e968b52ca40b5b",
+      "git_blob_sha1": "a458f1da9e67494672760bd78f33bbf5bb29b721"
+    },
+    "docs/dev/windows_review_environment/usb-20261025/VALIDATION_PENDING.json": {
+      "bytes": 794,
+      "sha256": "90d539eaf3a3973cee25f66b87af2b93b7fe367effa1f86781cc592ea7c43da8",
+      "git_blob_sha1": "1046f1117fcc8fc9edc57a69a63e933446af1a2e"
+    },
+    "tests/test_review_usb_start.py": {
+      "bytes": 10785,
+      "sha256": "6401673f6434aa9d7eab1e96974114277d1edc3bcd22e0e2c900182ddd16768b",
+      "git_blob_sha1": "9e45dd9a2a2df5823b6bc8ca499cf35092fb7cf5"
+    },
+    "tools/windows_review_dev/usb/README.txt": {
+      "bytes": 3487,
+      "sha256": "03c6ee326c81dd613988919e71aa2959c2d7c19c1602dc0847ccaf2b22a270ab",
+      "git_blob_sha1": "93bd6087c309606903f1b4f7e6578e82152ab3e5"
+    },
+    "tools/windows_review_dev/usb/RETEST_ILLUSTRATOR.cmd": {
+      "bytes": 72,
+      "sha256": "95e9202e416d3d27f8c081974756227a7297327b70df913722888cea54c29726",
+      "git_blob_sha1": "2fc8cf6b8a460d77ba1bd856cf4e4a730e652296"
+    },
+    "tools/windows_review_dev/usb/START_REVIEW.cmd": {
+      "bytes": 395,
+      "sha256": "94ff199d9dcdf38ef20a0ec0370ac4c91a7b6dca67931b5a0149bba7e82b4f74",
+      "git_blob_sha1": "cf4f86e9bdba4eda4052c91e9e3062d85211d89d"
+    },
+    "tools/windows_review_dev/usb/dependency-sources.json": {
+      "bytes": 1066,
+      "sha256": "e7b2cb7f2dd3243b26ec8c953d48cbbbb87ca6106af2599816e09fb5671de026",
+      "git_blob_sha1": "fa15e834abee1ff5e450cb311a6d988a0f3c682a"
+    },
+    "tools/windows_review_dev/usb/gui_session.py": {
+      "bytes": 943,
+      "sha256": "a5f5ce1f23a61a820d54a9ff68cf6a952642eb68142fdc50216906a41469dc14",
+      "git_blob_sha1": "d0df1ab544c383f17ccba027f196fa73ae8419f8"
+    },
+    "tools/windows_review_dev/usb/offline_start.py": {
+      "bytes": 13965,
+      "sha256": "b322974f56b0e0fbe48b99c4fa540d05860cf7e231341458aa8b1727bde10247",
+      "git_blob_sha1": "d555e2a050fe59ffc4b256a99630fba1c0724870"
+    },
+    "tools/windows_review_dev/usb/prepare_usb.py": {
+      "bytes": 8565,
+      "sha256": "53e2dff5d06d443c2bdf8e7808c63ed46fab1b650d32a6c8b6626b15862dde02",
+      "git_blob_sha1": "d1d7ce0c8f98ba518cb539d9b32f0ea9ba5a5ac4"
+    }
+  },
+  "source_manifest_sha256": "4905491e4639895a728ace0809425503998850b8c8ffd610287216d0c0a175be",
+  "local_snapshot": {
+    "path": ".checkpoints\\CP-20261025-REVIEW-USB-002\\source.zip",
+    "sha256": "ed0db275c489b24d9446312d36e0490b6baf2634de0ff1072baa868db080a846"
+  },
+  "remote_confirmation": "尚未確認；本機快照不能冒稱已在 GitHub 保存"
+}

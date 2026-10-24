@@ -8,14 +8,12 @@ from __future__ import annotations
 import argparse
 from email.parser import BytesParser
 import hashlib
-import io
 import json
 import os
 from pathlib import Path
 import re
 import shutil
 import subprocess
-import tarfile
 import tempfile
 import zipfile
 
@@ -29,21 +27,33 @@ SOURCE_SUFFIXES = {'.py', '.jsx', '.cjs', '.json', '.md', '.txt', '.bat', '.cmd'
 
 
 def git(repo, *args):
-    return subprocess.check_output(['git', '-C', str(repo), *args], stderr=subprocess.PIPE)
+    return subprocess.check_output(['git', '-C', str(repo), *args], stderr=subprocess.PIPE, timeout=120,
+                                   env=dict(os.environ, GIT_NO_LAZY_FETCH='1', GIT_TERMINAL_PROMPT='0'))
 
 
 def export_source(repo, output, commit):
-    raw = git(repo, 'archive', '--format=tar', commit, '--', *SOURCE_PATHS)
-    with tarfile.open(fileobj=io.BytesIO(raw)) as archive:
-        for member in archive:
-            if member.isdir():
-                continue
-            if not member.isfile() or Path(member.name).suffix.lower() not in SOURCE_SUFFIXES:
-                raise ValueError('Unexpected source file in export: ' + member.name)
-            target = safe_member(output, member.name)
-            target.parent.mkdir(parents=True, exist_ok=True)
-            with archive.extractfile(member) as source, target.open('xb') as dest:
-                shutil.copyfileobj(source, dest)
+    # git archive can prefetch unrelated blobs in a partial clone. Read only local
+    # allowlisted working files, checking every byte against the committed tree.
+    raw = git(repo, 'ls-tree', '-rz', '--full-tree', commit, '--', *SOURCE_PATHS)
+    if not raw:
+        raise ValueError('No committed source files')
+    for entry in raw.rstrip(b'\0').split(b'\0'):
+        header, encoded_name = entry.split(b'\t', 1)
+        mode, kind, expected = header.decode('ascii').split()
+        name = encoded_name.decode('utf-8')
+        if kind != 'blob' or mode != '100644' or Path(name).suffix.lower() not in SOURCE_SUFFIXES:
+            raise ValueError('Unexpected source file in export: ' + name)
+        data = safe_member(repo, name).read_bytes()
+        def git_blob(value):
+            return hashlib.sha1(b'blob ' + str(len(value)).encode() + b'\0' + value).hexdigest()
+        if git_blob(data) != expected:
+            data = data.replace(b'\r\n', b'\n')
+            if git_blob(data) != expected:
+                raise ValueError('Local source does not match commit: ' + name)
+        target = safe_member(output, name)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with target.open('xb') as stream:
+            stream.write(data)
 
 
 def python_runtime(archive, output, expected):
