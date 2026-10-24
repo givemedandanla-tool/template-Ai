@@ -3,7 +3,7 @@
   "component": "review-tool",
   "branch": "feature/review-tool-v0.1.0",
   "base_commit": "55b86bd9a99886bb0b75efa846d7ff9e3406419f",
-  "status": "PREPARED",
+  "status": "REMOTE_VERIFIED",
   "checkpoint": "CP-20261024-REVIEW-MANUAL-FAILURE-001",
   "active_contract": "docs/dev/windows_review_environment/manual-failure-20261024/CONTRACT.json",
   "report": "docs/dev/windows_review_environment/manual-failure-20261024/REPORT.md",
@@ -58,5 +58,8 @@
   "main_merge": false,
   "package_release": false,
   "next_step": "Restart corrected source GUI in a fresh short local session after user saves/closes old window; test a PDF-compatible copy and original font trigger; preserve old data.",
-  "shared_state_policy": "Shared historical AGENTS/STATE/WORK_LOG remain unchanged; use this component state and ACTIVE_DEVELOPMENT_HANDOFF.md."
+  "shared_state_policy": "Shared historical AGENTS/STATE/WORK_LOG remain unchanged; use this component state and ACTIVE_DEVELOPMENT_HANDOFF.md.",
+  "snapshot_commit": "6e8300e020d13545d7ce3a9050be566499008032",
+  "receipt": "docs/checkpoints/CP-20261024-REVIEW-MANUAL-FAILURE-001.receipt.json",
+  "local_alignment": "VERIFY_AFTER_RECEIPT_COMMIT"
 }

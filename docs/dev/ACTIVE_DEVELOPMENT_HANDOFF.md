@@ -9,3 +9,5 @@
 新修正需重啟；正常保存／關閉舊視窗後用新短資料目錄測試，保留舊誤判結果和人工修訂。原檔另存 PDF 相容副本後再判讀。DirectWrite 仍未重現，診斷開啟供本機操作取證；OCR／英繁中模型未配置，未升 EXE／完整產品資格。
 
 使用者已授權此部件開發與 GitHub 同步；依 [部件規則](windows_review_environment/SYNC_POLICY.md) 保存、讀回、對齊。共享歷史 AGENTS／STATE／WORK_LOG 不更新；不合併 main、不打包發布、不擴大部件範圍。
+
+快照已讀回：`6e8300e020d13545d7ce3a9050be566499008032`；102 個部件檔案＋checkpoint 逐 blob 相符，13 個變更檔逐 byte／SHA256 相符。收據另筆提交後完成本機 HEAD 對齊。
