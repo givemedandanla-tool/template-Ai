@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from contextlib import contextmanager
+import csv
 import hashlib
 import json
 import math
@@ -87,6 +88,87 @@ def assert_positive_ocr(source):
                 real_corpus_qualified=False)
 
 
+def authored_ocr_failure_diagnostics(source, authored_root, capability):
+    """Bounded diagnostics only for this module's positively authored fixtures.
+
+    Logs persist even when a unittest later removes its TemporaryDirectory.
+    Never call this for user artwork: the sentinel and source allowlist below
+    are required before reading or printing any recognized text.
+    """
+    from PySide6.QtGui import QImageReader
+
+    root = Path(authored_root).resolve()
+    path = Path(source.get('path', '')).resolve()
+    allowed = {'DEMO-bilingual-outline.svg', 'DEMO-bilingual-raster.pdf'}
+    _require((root / 'SYNTHETIC_ONLY').read_text(encoding='ascii') == 'NO_PRIVATE_DATA'
+             and path.parent == root and path.name in allowed,
+             'OCR text diagnostics are restricted to the authored acceptance fixtures')
+    fields = [field for work in source.get('works', []) for field in work.get('fields', [])]
+    diagnostic = dict(schema_version=1, scope='AUTHORED_FIXTURE_ONLY_NOT_USER_DATA',
+        fixture_name=path.name, source_sha256=_digest(path), expected_text=list(_OCR_EXPECTED_TEXT),
+        capability=source.get('analysis', {}).get('capabilities', {}),
+        actual_fields=[dict(text=str(field.get('text', ''))[:160], rect=field.get('rect'),
+                            classification=field.get('prediction', {}).get('classification'),
+                            kind=field.get('kind')) for field in fields[:30]],
+        actual_fields_count=len(fields), fields_truncated=len(fields) > 30,
+        issue_codes=[row.get('code') for row in source.get('issues', [])][:30], pages=[])
+    try:
+        version = subprocess.run([capability['executable'], '--version'], capture_output=True,
+            text=True, encoding='utf-8', errors='replace', timeout=5,
+            creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+        diagnostic['actual_runtime_version'] = version.stdout.splitlines()[:2]
+        diagnostic['runtime_version_exit_code'] = version.returncode
+    except (OSError, ValueError, subprocess.TimeoutExpired, KeyError) as error:
+        diagnostic['runtime_version_error_type'] = type(error).__name__
+    for page in source.get('analysis', {}).get('pages', [])[:2]:
+        image = Path(page['image']).resolve()
+        image.relative_to(root)
+        reader = QImageReader(str(image));size = reader.size()
+        proof = page.get('ocr_evidence') or {}
+        row = dict(image_sha256=_digest(image), width_pixels=size.width(), height_pixels=size.height(),
+                   width_mm=page.get('width_mm'), height_mm=page.get('height_mm'),
+                   renderer_identity=page.get('renderer_identity'), ocr_evidence=proof)
+        diagnostic['pages'].append(row)
+        # Replay is explicitly identified: original raw TSV is not retained by
+        # the product adapter. Keep word/block/line IDs to expose split lines.
+        languages = proof.get('languages') or [language for language in ('chi_tra', 'eng')
+                                               if language in capability.get('languages', [])]
+        command = [capability.get('executable', ''), str(image), 'stdout']
+        if capability.get('data_dir'):
+            command += ['--tessdata-dir', capability['data_dir']]
+        command += ['-l', '+'.join(languages), '--psm', '11',
+                    '-c', 'tessedit_create_tsv=1', '-c', 'tessedit_create_txt=0']
+        try:
+            environment = os.environ.copy();environment['OMP_THREAD_LIMIT'] = '1'
+            replay = subprocess.run(command, capture_output=True, text=True, encoding='utf-8',
+                errors='replace', timeout=15, env=environment,
+                creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+            words = []
+            for word in csv.DictReader(replay.stdout[:1_048_576].splitlines(), delimiter='\t'):
+                if (word.get('text') or '').strip():
+                    words.append({key: str(word.get(key, ''))[:80] for key in (
+                        'text', 'level', 'page_num', 'block_num', 'par_num', 'line_num',
+                        'word_num', 'left', 'top', 'width', 'height', 'conf')})
+                    if len(words) >= 64:
+                        break
+            row['diagnostic_replay'] = dict(not_original_invocation=True, languages=languages,
+                exit_code=replay.returncode, words=words, maximum_words=64,
+                output_truncated=len(replay.stdout) > 1_048_576)
+        except (OSError, ValueError, subprocess.TimeoutExpired) as error:
+            row['diagnostic_replay'] = dict(not_original_invocation=True, languages=languages,
+                                            error_type=type(error).__name__)
+    # All text above comes only from this positively authored synthetic source.
+    # Technical paths in renderer metadata are unnecessary; retain safe hashes.
+    for row in diagnostic['pages']:
+        renderer = row.get('renderer_identity') or {}
+        row['renderer_identity'] = {key: renderer[key] for key in (
+            'version', 'origin', 'policy', 'executable_sha256') if key in renderer}
+    # ASCII JSON survives redirected Windows cp1252 consoles; its Unicode
+    # escapes retain every actual Chinese character for later exact decoding.
+    print('AUTHORED_OCR_FAILURE_DIAGNOSTICS:' + json.dumps(diagnostic, ensure_ascii=True), flush=True)
+    return diagnostic
+
+
 def assert_bundled_ocr(source, pin, model_manifest, version_line):
     """Bind actual worker inference to the release's exact binary and models."""
     from ..ocr_runtime import VERSION
@@ -129,7 +211,7 @@ def assert_bundled_ocr(source, pin, model_manifest, version_line):
 
 def authored_ocr_sources(root):
     """Same authored bilingual artwork as vector outlines and raster pixels."""
-    from PySide6.QtCore import QMarginsF, QRectF, QSizeF
+    from PySide6.QtCore import QBuffer, QByteArray, QIODevice, QMarginsF, QRectF, QSizeF
     from PySide6.QtGui import QFont, QImage, QPainter, QPainterPath, QPageSize, QPdfWriter
     from PySide6.QtSvg import QSvgRenderer
 
@@ -160,7 +242,10 @@ def authored_ocr_sources(root):
     # containing only these raster pixels exercises that supported path without
     # broadening the product's import contract or hiding a text layer.
     raster_pdf = root / 'DEMO-bilingual-raster.pdf'
-    writer = QPdfWriter(str(raster_pdf))
+    pdf_bytes = QByteArray()
+    device = QBuffer(pdf_bytes)
+    _require(device.open(QIODevice.OpenModeFlag.WriteOnly), 'Authored PDF memory buffer could not be opened')
+    writer = QPdfWriter(device)
     writer.setResolution(72)
     writer.setPageSize(QPageSize(QSizeF(60, 30), QPageSize.Unit.Millimeter))
     writer.setPageMargins(QMarginsF(0, 0, 0, 0))
@@ -168,6 +253,10 @@ def authored_ocr_sources(root):
     _require(painter.isActive(), 'Authored raster-only PDF could not be created')
     painter.drawImage(QRectF(0, 0, writer.width(), writer.height()), image)
     painter.end()
+    del painter
+    del writer
+    device.close()
+    raster_pdf.write_bytes(bytes(pdf_bytes))
     return [outline, raster_pdf]
 
 
@@ -549,7 +638,21 @@ def run(output_path):
             actual_bilingual = bilingual.store.sources()
             for expected_source in bilingual_sources:
                 actual = next(row for row in actual_bilingual if row['name'] == expected_source.name)
-                proof = assert_positive_ocr(actual)
+                try:
+                    proof = assert_positive_ocr(actual)
+                except Exception:
+                    diagnostic = {'scope': 'AUTHORED_FIXTURE_ONLY_NOT_USER_DATA', 'fixtures': []}
+                    for diagnostic_source in actual_bilingual:
+                        try:
+                            diagnostic['fixtures'].append(authored_ocr_failure_diagnostics(
+                                diagnostic_source, root, local_ocr))
+                        except Exception as diagnostic_error:
+                            diagnostic['fixtures'].append({'diagnostic_error_type': type(diagnostic_error).__name__})
+                            print('AUTHORED_OCR_DIAGNOSTIC_ERROR:' + type(diagnostic_error).__name__, flush=True)
+                    result['ocr_failure_diagnostics'] = diagnostic
+                    (root / 'authored-ocr-failure.json').write_text(
+                        json.dumps(diagnostic, ensure_ascii=False, indent=2), encoding='utf-8')
+                    raise
                 checked('actual_bilingual_ocr_reads_authored_' + (
                     'outlines' if expected_source.suffix == '.svg' else 'raster'), **proof)
             checked('actual_ocr_candidates_keep_ownership_unknown', all(

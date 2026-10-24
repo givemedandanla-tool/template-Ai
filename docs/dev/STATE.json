@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Monitor Windowsrun40052634649 source6e62fd51310101f46d561851faf2892cf4cf2323",
-    "Require actual frozen bundled bilingual OCR, physical missing/corrupt fallback, original package guards",
-    "Verify six public Release assets including OCR sources; save final handoff and native Git receipt"
+    "Monitor exact source576d17eba41e57ad14f985ebf14eb389cc29098d Windowsrun40053298537",
+    "Require actual bundled bilingual OCR + missing/corrupt fallback and original package guards",
+    "Verify six Release assets twice, including each OCR source archive; save final GitHub checkpoint"
   ],
   "blocked": [
     {
@@ -794,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Verify all 75 pinned notices are committed; rerun exact beta.2 Windows gates",
+  "next_step": "Run corrected Windows PDF test and exact Chinese OCR acceptance; inspect bounded authored-only TSV evidence on any mismatch",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2149,7 +2149,7 @@
     "authorization": "User explicitly requests bundled OCR executable and republish",
     "authorized_utc": "2026-10-24T01:45:40.901142+00:00",
     "source_commit": null,
-    "status": "WINDOWS_NOTICE_TRACKING_FIX_READY",
+    "status": "WINDOWS_PDF_LIFETIME_AND_BOUNDED_OCR_DIAGNOSTICS_READY",
     "plan": "docs/dev/releases/review-v0.1.0-beta.2/IMPLEMENTATION_AND_VALIDATION_PLAN.md",
     "do_not_overwrite_old_release": true,
     "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
@@ -2168,10 +2168,12 @@
     "runtime_version": "5.4.0.20240606",
     "ocr_runtime_files": 107,
     "ocr_source_archives": 25,
-    "windows_run": 40052634649,
-    "candidate_source_commit": "6e62fd51310101f46d561851faf2892cf4cf2323",
-    "previous_windows_run": 40052634649,
-    "windows_failure": "Pinned zstd/build/LICENSE absent from Git due to generic build ignore; no build/tag/release"
+    "windows_run": 40053298537,
+    "candidate_source_commit": "576d17eba41e57ad14f985ebf14eb389cc29098d",
+    "previous_windows_run": 40053298537,
+    "windows_failure": "260 complete, 258 pass: PDF fixture handle lifetime and exact Chinese OCR fixture mismatch; no build/tag/release",
+    "local_recovery": ".checkpoints/review-beta2-local-recovery/RECOVERY.json",
+    "github_authorization": "RESTORED_ACTUAL_READ_AND_PUSH_CONFIRMED"
   },
   "review_tool_release_history": [
     {

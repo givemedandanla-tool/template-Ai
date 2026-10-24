@@ -2,12 +2,15 @@
 import hashlib
 import json
 from pathlib import Path
+from contextlib import redirect_stdout
+import io
+import sys
 import tempfile
 import unittest
 
 from template_ai.review_tool.release_check import (
     _AUTHORED_CJK_SVG_PATH, assert_bundled_ocr, assert_positive_ocr, authored_ocr_sources,
-    physical_ocr_fault,
+    authored_ocr_failure_diagnostics, physical_ocr_fault,
 )
 from template_ai.ocr_runtime import VERSION
 
@@ -88,6 +91,7 @@ class ReviewOcrPositiveEvidenceTests(unittest.TestCase):
     def test_bilingual_sources_enter_actual_import_contract_and_raster_pdf_has_no_text_layer(self):
         from PySide6.QtWidgets import QApplication
         from PySide6.QtPdf import QPdfDocument
+        from PySide6.QtCore import QBuffer, QIODevice
         from template_ai.review_tool.session import SessionStore
 
         app = QApplication.instance() or QApplication([])
@@ -97,11 +101,41 @@ class ReviewOcrPositiveEvidenceTests(unittest.TestCase):
             self.assertNotIn('<text', sources[0].read_text(encoding='utf-8'))
             session = SessionStore(Path(raw) / 'data')
             self.assertEqual(len(session.add_files([str(path) for path in sources])), 2)
+            # QFile-backed PDF objects can retain a Windows handle until their
+            # C++ destructor runs. Read the real file bytes into an owned memory
+            # device and explicitly release the document before temp cleanup.
+            device = QBuffer()
+            device.setData(sources[1].read_bytes())
+            self.assertTrue(device.open(QIODevice.OpenModeFlag.ReadOnly))
             document = QPdfDocument()
-            self.assertEqual(document.load(str(sources[1])), QPdfDocument.Error.None_)
-            self.assertEqual(document.getAllText(0).text(), '')
-            document.close()
+            try:
+                document.load(device)
+                self.assertEqual(document.status(), QPdfDocument.Status.Ready)
+                selection = document.getAllText(0)
+                self.assertEqual(selection.text(), '')
+                del selection
+            finally:
+                document.close()
+                del document
+                device.close()
         self.assertIsNotNone(app)
+
+    def test_failure_diagnostics_print_bounded_authored_text_and_refuse_nonfixture_data(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            source = authored_positive_source()
+            source['path'] = str(root / 'DEMO-bilingual-outline.svg')
+            Path(source['path']).write_text('<svg/>', encoding='utf-8')
+            with self.assertRaises(FileNotFoundError):
+                authored_ocr_failure_diagnostics(source, root, {'executable': sys.executable})
+            (root / 'SYNTHETIC_ONLY').write_text('NO_PRIVATE_DATA', encoding='ascii')
+            log = io.StringIO()
+            with redirect_stdout(log):
+                diagnostic = authored_ocr_failure_diagnostics(source, root, {'executable': sys.executable})
+            self.assertEqual(diagnostic['actual_fields'][0]['text'], '測試有限公司')
+            self.assertIn('AUTHORED_OCR_FAILURE_DIAGNOSTICS:', log.getvalue())
+            self.assertEqual(diagnostic['scope'], 'AUTHORED_FIXTURE_ONLY_NOT_USER_DATA')
+            self.assertNotIn(str(root), log.getvalue())
 
 
 class ReviewOcrBundleEvidenceTests(unittest.TestCase):
