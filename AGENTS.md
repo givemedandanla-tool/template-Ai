@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新授權：隨包OCR執行器並發布beta.2
+
+2026-10-24使用者要求「加入ocr執行器，然後再次發佈」。依STATE.review_tool_release_request／releases/review-v0.1.0-beta.2/IMPLEMENTATION_AND_VALIDATION_PLAN.md執行，授權新review-v0.1.0-beta.2；舊beta.1不可覆寫。包內Tesseract與固定中英文模型、本機離線、版本／清單完整性、真正Windows EXE雙語正向辨識、缺／壞退路、原包裝與兩次下載均須驗證。未完成不稱已發布。只改OCR整合必要範圍，不合併main、不自動開發下一部件、私人資料仍本地。
+
 ## 最新交付：最小判讀核對工具首版已發布
 
 2026-10-23，review-v0.1.0-beta.1已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED。來源1562f4d09ed64564f100885f9ddcb6a7efb6e1db／Windows run40021575484 success：181項相關來源測試（180PASS、1選配OCRskip）、真正EXE32項、草稿與公開下載各13,094檔校驗PASS。先讀STATE.review_tool_release_request與[交付報告](docs/dev/releases/review-v0.1.0-beta.1/DELIVERY_REPORT.md)、QUICK_START.md。

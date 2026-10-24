@@ -222,6 +222,79 @@ class ReviewSessionTests(unittest.TestCase):
         reopened = SessionStore(self.store.root)
         self.assertEqual(reopened.get_field("work-1", "field-1")["text"], "private-person@example.com")
 
+    def test_prebundled_analysis_stays_readable_but_cannot_merge_new_engine_results(self):
+        from template_ai.review_tool.analysis import VERSION
+        old, updated = partial_and_full()
+        self.assertNotEqual(old['analysis_version'], VERSION)
+        self.store.apply_analysis(self.source_id, old)
+        self.store.update_field('work-1', 'field-1', text='KEEP OLD VERSION HUMAN EDIT')
+        protected = deepcopy(self.store.get_work('work-1'))
+        updated['analysis_version'] = VERSION
+        self.store.apply_analysis(self.source_id, updated)
+        pending = self.store.get_source(self.source_id)['pending_analysis_version']
+        self.assertEqual(len(self.store.works()), 1)
+        self.assertEqual(self.store.get_work('work-1'), protected)
+        with self.assertRaisesRegex(ValueError, '分析器或資料口徑不同'):
+            self.store.adopt_new_unseen_works(self.source_id, pending)
+        self.store.save()
+        reopened = SessionStore(self.store.root)
+        self.assertEqual(reopened.get_work('work-1'), protected)
+        self.assertEqual(reopened.get_source(self.source_id)['analysis']['analysis_version'],
+                         'review-observations-1')
+        with self.assertRaisesRegex(ValueError, '分析器或資料口徑不同'):
+            reopened.adopt_new_unseen_works(self.source_id, pending)
+
+    def test_safe_report_carries_ocr_failure_codes_but_drops_malicious_private_fields(self):
+        packet = result()
+        private = '/private/CUSTOMER_SECRET/font/customer.ttf'
+        packet['capabilities'] = {'ocr_runtime': {
+            'state': 'UNAVAILABLE', 'origin': 'BUNDLED', 'policy': 'BUNDLED_ONLY',
+            'error_code': 'BUNDLED_OCR_RUNTIME_INVALID',
+            'executable': private, 'data_dir': private, 'reason': private,
+            'version': private, 'executable_sha256': private,
+            'model_sha256': {private: private}, 'customer': private}}
+        packet['issues'] = [{'code': 'OCR_UNAVAILABLE', 'summary': private,
+                             'detail': 'BUNDLED_OCR_RUNTIME_INVALID'},
+                            {'code': private, 'summary': private, 'detail': private}]
+        self.store.apply_analysis(self.source_id, packet)
+        report = self.store.safe_report()
+        self.assertEqual(report['ocr_error_counts'], {'BUNDLED_OCR_RUNTIME_INVALID': 1})
+        self.assertEqual(report['ocr_runtime_summaries'], [{
+            'state': 'UNAVAILABLE', 'origin': 'BUNDLED', 'policy': 'BUNDLED_ONLY',
+            'error_code': 'BUNDLED_OCR_RUNTIME_INVALID', 'source_count': 1}])
+        self.assertIn('人工標記', report['ocr_summary'])
+        encoded = json.dumps(report, ensure_ascii=False)
+        for value in (private, 'CUSTOMER_SECRET', str(self.root), 'private-person@example.com'):
+            self.assertNotIn(value, encoded)
+
+    def test_safe_report_ocr_identity_is_bounded_and_uses_latest_observation(self):
+        packet = result()
+        packet['capabilities'] = {'ocr_runtime': {
+            'state': 'READY', 'origin': 'BUNDLED', 'policy': 'BUNDLED_ONLY',
+            'version': '5.4.0.20240606', 'executable_sha256': 'a' * 64,
+            'runtime_manifest_sha256': 'b' * 64, 'verified_files': 27,
+            'error_code': '/private/secret.txt'}}
+        self.store.apply_analysis(self.source_id, packet)
+        report = self.store.safe_report()
+        identity = report['ocr_runtime_summaries'][0]
+        self.assertEqual(identity['version'], '5.4.0.20240606')
+        self.assertEqual(identity['executable_sha256'], 'a' * 64)
+        self.assertEqual(identity['verified_files'], 27)
+        self.assertNotIn('error_code', identity)
+        self.assertEqual(report['ocr_error_counts'], {})
+        # A subsequent result is held separately after human correction. The
+        # diagnostic must describe that latest engine failure, not hide it
+        # behind the older active work's successful observation.
+        self.store.update_field('work-1', 'field-1', text='KEEP HUMAN EDIT')
+        packet['capabilities']['ocr_runtime'] = {
+            'state': 'UNAVAILABLE', 'origin': 'BUNDLED', 'policy': 'BUNDLED_ONLY',
+            'error_code': 'BUNDLED_OCR_LANGUAGES_INVALID'}
+        self.store.apply_analysis(self.source_id, packet)
+        latest = self.store.safe_report()
+        self.assertEqual(latest['ocr_error_counts'], {'BUNDLED_OCR_LANGUAGES_INVALID': 1})
+        self.assertEqual(self.store.get_field('work-1', 'field-1')['text'], 'KEEP HUMAN EDIT')
+        self.assertNotIn('KEEP HUMAN EDIT', json.dumps(latest))
+
     def test_private_package_and_safe_report_have_different_privacy_boundaries(self):
         self.analyse()
         self.store.add_owner("SENSITIVE OWNER NAME")

@@ -12,6 +12,7 @@ import json
 import math
 import os
 from pathlib import Path
+import re
 import tempfile
 import uuid
 
@@ -884,10 +885,48 @@ class SessionStore:
     def safe_report(self):
         """No names, paths, text, raw errors, font identities, IDs, or source hashes."""
         states = {}
+        ocr_identities, ocr_errors = {}, {}
+        safe_errors = {'BUNDLED_OCR_RUNTIME_INVALID', 'BUNDLED_OCR_LANGUAGES_INVALID',
+                       'OCR_EXECUTION_UNAVAILABLE', 'OCR_LANGUAGES_UNAVAILABLE',
+                       'LOCAL_OCR_UNAVAILABLE', 'OCR_RUNTIME_UNAVAILABLE', 'OCR_FAILED'}
         for source in self.sources():
             key = source.get("status")
             key = key if key in SOURCE_STATES else "OTHER"
             states[key] = states.get(key, 0) + 1
+            versions = source.get('analysis_versions') or []
+            latest = versions[-1].get('result') if versions else source.get('analysis')
+            capabilities = latest.get('capabilities', {}) if isinstance(latest, dict) else {}
+            runtime = capabilities.get('ocr_runtime', {}) if isinstance(capabilities, dict) else {}
+            safe = {}
+            if isinstance(runtime, dict) and runtime:
+                for name, allowed in {'state': {'READY', 'UNAVAILABLE'},
+                                      'origin': {'BUNDLED', 'ENV_LOCAL', 'SYSTEM_PATH', 'UNKNOWN'},
+                                      'policy': {'BUNDLED_ONLY', 'SOURCE_LOCAL'},
+                                      'error_code': safe_errors}.items():
+                    if isinstance(runtime.get(name), str) and runtime[name] in allowed:
+                        safe[name] = runtime[name]
+                version = runtime.get('version')
+                if isinstance(version, str) and re.fullmatch(r'[0-9]{1,3}(?:\.[0-9]{1,12}){1,4}', version):
+                    safe['version'] = version
+                for name in ('executable_sha256', 'runtime_manifest_sha256'):
+                    value = runtime.get(name)
+                    if isinstance(value, str) and re.fullmatch('[0-9a-f]{64}', value):
+                        safe[name] = value
+                count = runtime.get('verified_files')
+                if type(count) is int and 0 < count <= 4096:
+                    safe['verified_files'] = count
+                if safe:
+                    identity = _canonical(safe).decode('utf-8')
+                    row = ocr_identities.setdefault(identity, dict(safe, source_count=0))
+                    row['source_count'] += 1
+            source_errors = {safe['error_code']} if safe.get('error_code') else set()
+            for issue in source.get('issues', []):
+                if isinstance(issue, dict):
+                    code = issue.get('detail') if issue.get('code') == 'OCR_UNAVAILABLE' else issue.get('code')
+                    if isinstance(code, str) and code in safe_errors:
+                        source_errors.add(code)
+            for code in source_errors:
+                ocr_errors[code] = ocr_errors.get(code, 0) + 1
         works = self.works()
         fields = [field for work in works for field in work.get("fields", [])]
         return {"schema_version": 1, "tool": "TemplateAIReview", "session_schema": SCHEMA_VERSION,
@@ -898,4 +937,10 @@ class SessionStore:
                                         for state in sorted(REVIEW_STATES)},
                 "has_unsaved_changes": self.dirty, "backup_recovered": self.recovery_notice is not None,
                 "interrupted_source_count": len(self.interrupted_sources),
+                "ocr_runtime_summaries": [ocr_identities[key] for key in sorted(ocr_identities)],
+                "ocr_error_counts": ocr_errors,
+                "ocr_summary": ("文字辨識配套需要處理；原稿及人工標記仍可使用。請保留本機資料，將這份報告交給維護者。"
+                                if ocr_errors or any(row.get('state') == 'UNAVAILABLE' for row in ocr_identities.values())
+                                else "已記錄文字辨識配套資訊；判讀結果仍需人工核對。"
+                                if ocr_identities else "尚無文字辨識配套紀錄；有原始向量文字時不一定需要文字辨識。"),
                 "training_admission": "NOT_GRANTED_BY_REVIEW"}

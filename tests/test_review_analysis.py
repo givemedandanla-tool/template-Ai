@@ -174,7 +174,8 @@ class ReviewAnalysisTests(unittest.TestCase):
 
     def test_missing_ocr_keeps_manual_work_instead_of_empty_success(self):
         self.source=self.make_image()
-        with patch.dict(os.environ,{'PATH':'/nonexistent','TEMPLATE_AI_TESSERACT':'/nonexistent/tesseract'}):
+        with patch.dict(os.environ,{'PATH':'/nonexistent','TEMPLATE_AI_TESSERACT':'/nonexistent/tesseract',
+                                  'TEMPLATE_AI_BUNDLED_TESSERACT_ROOT':''}):
             result=self.analyse(ocr=True)
         self.assertFalse(result['capabilities']['ocr_available'])
         self.assertFalse(result['capabilities']['ocr_executed'])

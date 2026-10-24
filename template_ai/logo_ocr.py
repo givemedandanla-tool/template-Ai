@@ -5,7 +5,6 @@ import json
 import math
 import os
 from pathlib import Path
-import shutil
 import subprocess
 import tempfile
 
@@ -14,22 +13,35 @@ from PySide6.QtGui import QImageReader
 
 from .logo_assets import errors
 from .model import Rect
+from .ocr_runtime import OcrRuntimeError, resolve_runtime, runtime_report
 
 
 def capability():
-    executable=os.environ.get('TEMPLATE_AI_TESSERACT') or shutil.which('tesseract')
-    configured=os.environ.get('TEMPLATE_AI_TESSDATA')
-    local=Path(__file__).resolve().parents[1]/'local-data/tessdata'
-    data=Path(configured) if configured else local if local.is_dir() else None
-    if not executable:return dict(available=False,reason='未安裝本機Tesseract；原向量／人工核對路徑仍可使用',languages=[])
-    command=[executable]+(['--tessdata-dir',str(data)] if data else [])+['--list-langs']
-    try:result=subprocess.run(command,capture_output=True,text=True,timeout=10)
+    try:
+        selected=resolve_runtime()
+    except (OcrRuntimeError, OSError, ValueError) as error:
+        reason=str(error) if isinstance(error,OcrRuntimeError) else '本機文字辨識配套不可用；仍可人工標記。'
+        return dict(available=False,reason=reason,languages=[],runtime=runtime_report(error=error))
+    executable=selected['executable'];data=selected.get('data_dir')
+    identity=runtime_report(selected)
+    command=[executable]+(['--tessdata-dir',data] if data else [])+['--list-langs']
+    try:result=subprocess.run(command,capture_output=True,text=True,encoding='utf-8',errors='replace',
+                              timeout=10,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     except (OSError,subprocess.TimeoutExpired):
-        return dict(available=False,reason='本機OCR執行檔不可用／逾時，未假稱已辨識',languages=[])
-    if result.returncode:return dict(available=False,reason='本機OCR語言資料不可讀',languages=[])
+        identity.update(state='UNAVAILABLE',error_code='OCR_EXECUTION_UNAVAILABLE')
+        return dict(available=False,reason='本機OCR執行檔不可用／逾時，未假稱已辨識',languages=[],runtime=identity)
+    if result.returncode:
+        identity.update(state='UNAVAILABLE',error_code='OCR_LANGUAGES_UNAVAILABLE')
+        return dict(available=False,reason='本機OCR語言資料不可讀',languages=[],runtime=identity)
     available=[value.strip() for value in result.stdout.splitlines()[1:] if value.strip() in ('eng','chi_tra')]
-    return dict(available=bool(available),executable=executable,data_dir=str(data) if data else None,
-                languages=available,reason='本機文字線索；非原生可編輯文字或公司身分證明')
+    if selected['origin']=='BUNDLED' and set(available)!={'eng','chi_tra'}:
+        identity.update(state='UNAVAILABLE',error_code='BUNDLED_OCR_LANGUAGES_INVALID')
+        return dict(available=False,languages=[],runtime=identity,
+                    reason='內附文字辨識未能載入英文與繁體中文；請重新完整解壓，仍可人工標記。')
+    if not available:identity.update(state='UNAVAILABLE',error_code='OCR_LANGUAGES_UNAVAILABLE')
+    return dict(available=bool(available),executable=executable,data_dir=data,
+                languages=available,runtime=identity,
+                reason='本機文字線索；非原生可編輯文字或公司身分證明')
 
 
 def recognize(asset):

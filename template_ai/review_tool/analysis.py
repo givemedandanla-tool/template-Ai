@@ -18,7 +18,7 @@ import tempfile
 import time
 from typing import Callable
 
-VERSION = 'review-observations-1'
+VERSION = 'review-observations-2-bundled-ocr'
 MAX_PAGES = 100
 MAX_FIELDS = 4000
 # These are bounds for actual phases, not fake heartbeats.  Conversion can make
@@ -213,6 +213,7 @@ def _ocr_observations(source, cap) -> tuple[list, dict]:
         models.append(dict(language=lang, sha256=file_digest(file) if file and file.is_file() else None))
     proof = dict(status='OCR_CANDIDATE_NOT_SOURCE_TEXT', languages=languages, models=models,
                  executable_sha256=file_digest(cap['executable']), psm=11,
+                 runtime=deepcopy(cap.get('runtime', {})),
                  calibration='OCR_SCORES_ARE_NOT_PROBABILITY_OF_CORRECT_IDENTITY')
     return lines, proof
 
@@ -352,6 +353,7 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
                 cap=_ocr_capability()
                 packet['capabilities']['ocr_available']=cap.get('available', False)
                 packet['capabilities']['ocr_languages']=cap.get('languages', [])
+                packet['capabilities']['ocr_runtime']=deepcopy(cap.get('runtime', {}))
             if cap.get('available'):
                 progress('ocr', '正在以本機文字辨識補充候選', page_number, page_count)
                 try:
@@ -369,7 +371,8 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
                                                           page=page_number, detail=type(error).__name__))
             else:
                 packet['issues'].append(_issue('OCR_UNAVAILABLE',
-                    '尚無可用的本機文字辨識配套；仍可查看原稿並人工補上文字標記', page=page_number))
+                    cap.get('reason') or '尚無可用的本機文字辨識配套；仍可查看原稿並人工補上文字標記',
+                    page=page_number, detail=(cap.get('runtime') or {}).get('error_code')))
         if not candidates:
             candidates=[dict(key='manual-page', crop=dict(x=0., y=0., w=source['width_mm'], h=source['height_mm']),
                              observations=[], slots=[], evidence=dict(state='MANUAL_RANGE_REVIEW_REQUIRED'))]

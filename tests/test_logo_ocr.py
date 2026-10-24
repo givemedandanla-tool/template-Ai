@@ -50,7 +50,8 @@ class LogoOcrTests(unittest.TestCase):
         with self.assertRaises(ValueError):annotate(self.store,candidate['id'],candidate['revision'])
 
     def test_missing_engine_and_changed_source_never_fabricate_ocr(self):
-        with patch.dict('os.environ',{'TEMPLATE_AI_TESSERACT':str(self.root/'missing-tesseract')}):
+        with patch.dict('os.environ',{'TEMPLATE_AI_TESSERACT':str(self.root/'missing-tesseract'),
+                                     'TEMPLATE_AI_BUNDLED_TESSERACT_ROOT':''}):
             self.assertFalse(capability()['available'])
             with self.assertRaises(ValueError):recognize(self.payload)
         Path(self.payload['image']).write_bytes(b'not an image')

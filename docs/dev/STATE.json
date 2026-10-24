@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "ANALYSIS_REVIEW_TOOL_AWAITING_LOCAL_FEEDBACK",
+  "active_task": "REVIEW_BETA2_BUNDLED_OCR_RELEASE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261023-IMPORT-ZERO-SOURCE-001.receipt.json",
   "last_confirmed_commit": "155c7daff076517dd91fb63be27b1ec4630f98b7",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "User local one-file analysis, annotation, save and reopen",
-    "Use More > Export problem report for feedback; private files remain local",
-    "Maintain review component version separately; do not rebuild or overwrite published tag, merge main or start training component automatically"
+    "Pin and safely stage trusted OCR Windows executable and notices",
+    "Connect bundled-only frozen resolution and real bilingual OCR acceptance",
+    "Publish new beta after Windows and two full download gates; persist and read back"
   ],
   "blocked": [
     {
@@ -794,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Use review-v0.1.0-beta.1 locally on one artwork copy; return safe report and exact step if needed",
+  "next_step": "Finish fixed OCR source/notice inventory; run exact Windows EXE bilingual OCR and publish new beta",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2128,7 +2128,7 @@
     ]
   },
   "analysis_review_redesign": {
-    "status": "FIRST_RELEASE_PUBLISHED_AWAITING_LOCAL_FEEDBACK",
+    "status": "BETA2_BUNDLED_OCR_IMPLEMENTATION_AUTHORIZED",
     "design_contract": "docs/dev/analysis_review_ui/DESIGN_CONTRACT.json",
     "decision": "docs/decisions/2026-10-23-ANALYSIS-REVIEW-UI-FIRST.md",
     "main_document": "docs/dev/analysis_review_ui/DESIGN.md",
@@ -2143,82 +2143,98 @@
     "document_readback": "docs/dev/analysis_review_ui/persistence/DESIGN_SOURCE_READBACK.json"
   },
   "review_tool_release_request": {
-    "version": "0.1.0-beta.1",
-    "tag": "review-v0.1.0-beta.1",
+    "version": "0.1.0-beta.2",
+    "tag": "review-v0.1.0-beta.2",
     "component": "TemplateAIReview",
-    "authorization": "User requests first version published to GitHub after UI discussion",
-    "authorized_utc": "2026-10-23T18:54:05.645182+00:00",
-    "source_commit": "1562f4d09ed64564f100885f9ddcb6a7efb6e1db",
-    "status": "RELEASE_PUBLISHED_DOWNLOAD_VERIFIED",
-    "plan": "docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md",
+    "authorization": "User explicitly requests bundled OCR executable and republish",
+    "authorized_utc": "2026-10-24T01:45:40.901142+00:00",
+    "source_commit": null,
+    "status": "CORE_TESTED_ASSEMBLING_LICENSED_WINDOWS_BUNDLE",
+    "plan": "docs/dev/releases/review-v0.1.0-beta.2/IMPLEMENTATION_AND_VALIDATION_PLAN.md",
     "do_not_overwrite_old_release": true,
     "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
-    "user_request": "還有要說明的嗎？沒有的話，可以產出第一版發佈到github上了？",
-    "published": true,
-    "local_tests": {
-      "passed": 168,
-      "failures": 0,
-      "errors": 0,
-      "skipped": 0,
-      "source_commit": "a7f6ede8f0c14b70c0c14822b59f89ca8a26c1d3",
-      "report": "docs/dev/releases/review-v0.1.0-beta.1/local-source-evidence/isolated-source-tests-final.json"
-    },
-    "source_checkpoint": "docs/checkpoints/CP-20261023-REVIEW-FIRST-RELEASE-DELIVERED-001.receipt.json",
-    "windows_run": 40021575484,
-    "candidate_source_commit": "1562f4d09ed64564f100885f9ddcb6a7efb6e1db",
-    "windows_failures_retained": [
-      "40013168648 partial: bundled Windows path alias assertion, legacy import GUI FAIL/cleanup hang",
-      "40014149436 FAIL: same path assertion and 240s legacy test process timeout; no build/tag/release"
-    ],
-    "next_action": "User local one-file review/save/reopen and safe report; preserve tag and built source. No next component without new direction.",
-    "previous_windows_run": 40017431358,
-    "windows_component_source_tests": {
-      "source_commit": "446e571648df28727faa6e00d2f27e1113281275",
-      "review_modules_passed": 8,
-      "review_tests_run": 103,
-      "review_tests_skipped": 1,
-      "all_modules_complete": 16,
-      "all_modules_passed": 15,
-      "overall": "FAIL_LEGACY_GUI_TIMEOUT",
-      "report": "docs/dev/releases/review-v0.1.0-beta.1/windows-failure-40015130560/source-tests.json"
-    },
-    "qualified_previous_source": {
-      "commit": "b9b3160563bdc3e92df4d32a76cbb0fc9a1c5e9e",
-      "windows_tests_run": 173,
-      "failures": 0,
-      "errors": 0,
-      "skipped": 1,
+    "user_request": "加入ocr執行器，然後再次發佈",
+    "published": false
+  },
+  "review_tool_release_history": [
+    {
+      "version": "0.1.0-beta.1",
+      "tag": "review-v0.1.0-beta.1",
+      "component": "TemplateAIReview",
+      "authorization": "User requests first version published to GitHub after UI discussion",
+      "authorized_utc": "2026-10-23T18:54:05.645182+00:00",
+      "source_commit": "1562f4d09ed64564f100885f9ddcb6a7efb6e1db",
+      "status": "RELEASE_PUBLISHED_DOWNLOAD_VERIFIED",
+      "plan": "docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md",
+      "do_not_overwrite_old_release": true,
+      "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
+      "user_request": "還有要說明的嗎？沒有的話，可以產出第一版發佈到github上了？",
+      "published": true,
+      "local_tests": {
+        "passed": 168,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "source_commit": "a7f6ede8f0c14b70c0c14822b59f89ca8a26c1d3",
+        "report": "docs/dev/releases/review-v0.1.0-beta.1/local-source-evidence/isolated-source-tests-final.json"
+      },
+      "source_checkpoint": "docs/checkpoints/CP-20261023-REVIEW-FIRST-RELEASE-DELIVERED-001.receipt.json",
+      "windows_run": 40021575484,
+      "candidate_source_commit": "1562f4d09ed64564f100885f9ddcb6a7efb6e1db",
+      "windows_failures_retained": [
+        "40013168648 partial: bundled Windows path alias assertion, legacy import GUI FAIL/cleanup hang",
+        "40014149436 FAIL: same path assertion and 240s legacy test process timeout; no build/tag/release"
+      ],
+      "next_action": "User local one-file review/save/reopen and safe report; preserve tag and built source. No next component without new direction.",
+      "previous_windows_run": 40017431358,
+      "windows_component_source_tests": {
+        "source_commit": "446e571648df28727faa6e00d2f27e1113281275",
+        "review_modules_passed": 8,
+        "review_tests_run": 103,
+        "review_tests_skipped": 1,
+        "all_modules_complete": 16,
+        "all_modules_passed": 15,
+        "overall": "FAIL_LEGACY_GUI_TIMEOUT",
+        "report": "docs/dev/releases/review-v0.1.0-beta.1/windows-failure-40015130560/source-tests.json"
+      },
+      "qualified_previous_source": {
+        "commit": "b9b3160563bdc3e92df4d32a76cbb0fc9a1c5e9e",
+        "windows_tests_run": 173,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1,
+        "actual_exe_checks": 32,
+        "normal_startup_seconds": 1.311096,
+        "release_published": false,
+        "blocker": "Package preflight failure before former timing/error capture"
+      },
+      "published_at": "2026-10-23T20:56:17Z",
+      "release_url": "https://github.com/givemedandanla-tool/template-Ai/releases/tag/review-v0.1.0-beta.1",
+      "delivery_report": "docs/dev/releases/review-v0.1.0-beta.1/DELIVERY_REPORT.md",
+      "delivery_evidence": "docs/dev/releases/review-v0.1.0-beta.1/windows-published-40021575484/delivery.json",
+      "source_tests": {
+        "tests_run": 181,
+        "passed": 180,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1,
+        "modules": 16
+      },
       "actual_exe_checks": 32,
-      "normal_startup_seconds": 1.311096,
-      "release_published": false,
-      "blocker": "Package preflight failure before former timing/error capture"
-    },
-    "published_at": "2026-10-23T20:56:17Z",
-    "release_url": "https://github.com/givemedandanla-tool/template-Ai/releases/tag/review-v0.1.0-beta.1",
-    "delivery_report": "docs/dev/releases/review-v0.1.0-beta.1/DELIVERY_REPORT.md",
-    "delivery_evidence": "docs/dev/releases/review-v0.1.0-beta.1/windows-published-40021575484/delivery.json",
-    "source_tests": {
-      "tests_run": 181,
-      "passed": 180,
-      "failures": 0,
-      "errors": 0,
-      "skipped": 1,
-      "modules": 16
-    },
-    "actual_exe_checks": 32,
-    "package_file_count": 13094,
-    "download_phases_verified": [
-      "draft",
-      "public"
-    ],
-    "archive": {
-      "name": "TemplateAIReview-v0.1.0-beta.1-windows-x64.zip",
-      "bytes": 319256683,
-      "sha256": "86d6fd93020c12b26ad9147114f6ce2e5618918397e36fe33e8ef14e77e5153d"
-    },
-    "user_local_confirmation": false,
-    "delivery_remote_status": "REMOTE_VERIFIED",
-    "delivery_snapshot_commit": "094aec264bc85e10ccf3a887d91586fefeeb4bc6",
-    "delivery_readback": "docs/dev/releases/review-v0.1.0-beta.1/persistence/DELIVERY_SOURCE_READBACK.json"
-  }
+      "package_file_count": 13094,
+      "download_phases_verified": [
+        "draft",
+        "public"
+      ],
+      "archive": {
+        "name": "TemplateAIReview-v0.1.0-beta.1-windows-x64.zip",
+        "bytes": 319256683,
+        "sha256": "86d6fd93020c12b26ad9147114f6ce2e5618918397e36fe33e8ef14e77e5153d"
+      },
+      "user_local_confirmation": false,
+      "delivery_remote_status": "REMOTE_VERIFIED",
+      "delivery_snapshot_commit": "094aec264bc85e10ccf3a887d91586fefeeb4bc6",
+      "delivery_readback": "docs/dev/releases/review-v0.1.0-beta.1/persistence/DELIVERY_SOURCE_READBACK.json"
+    }
+  ]
 }
