@@ -43,3 +43,5 @@ GUI subsystem 的 PE header 與 spec guard 已加入下一次發布驗收；本�
 未啟用新付費服務、試用、API key 或額外額度；正常功能不連網下載。GitHub僅推送維護分支，不觸發已核對的發布分支工作流程。
 
 下一步是在 Windows 準備原始碼環境，以合成資料驗證這三項，再使用本機作品副本；需要 EXE 時另開新版本，不能覆寫 beta.2。
+
+GitHub來源保存已確認：`cdb5fa4a2281b8d3b36745b758b81617a01e184c`；checkpoint `CP-20261024-REVIEW-SOURCE-MAINTENANCE-001`，55件含checkpoint記錄逐blob一致，獨立原生Git完整tree讀回，scoped恢復ZIP逐檔hash通過。收據僅屬本輪來源保存，不升Windows或新EXE資格。
