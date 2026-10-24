@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Pin and safely stage trusted OCR Windows executable and notices",
-    "Connect bundled-only frozen resolution and real bilingual OCR acceptance",
-    "Publish new beta after Windows and two full download gates; persist and read back"
+    "Monitor Windowsrun40052634649 source6e62fd51310101f46d561851faf2892cf4cf2323",
+    "Require actual frozen bundled bilingual OCR, physical missing/corrupt fallback, original package guards",
+    "Verify six public Release assets including OCR sources; save final handoff and native Git receipt"
   ],
   "blocked": [
     {
@@ -794,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Monitor exact beta.2 Windows build, actual bundled bilingual OCR and both full Release downloads",
+  "next_step": "Verify all 75 pinned notices are committed; rerun exact beta.2 Windows gates",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2149,7 +2149,7 @@
     "authorization": "User explicitly requests bundled OCR executable and republish",
     "authorized_utc": "2026-10-24T01:45:40.901142+00:00",
     "source_commit": null,
-    "status": "WINDOWS_RELEASE_CANDIDATE_READY",
+    "status": "WINDOWS_NOTICE_TRACKING_FIX_READY",
     "plan": "docs/dev/releases/review-v0.1.0-beta.2/IMPLEMENTATION_AND_VALIDATION_PLAN.md",
     "do_not_overwrite_old_release": true,
     "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
@@ -2167,7 +2167,11 @@
     },
     "runtime_version": "5.4.0.20240606",
     "ocr_runtime_files": 107,
-    "ocr_source_archives": 25
+    "ocr_source_archives": 25,
+    "windows_run": 40052634649,
+    "candidate_source_commit": "6e62fd51310101f46d561851faf2892cf4cf2323",
+    "previous_windows_run": 40052634649,
+    "windows_failure": "Pinned zstd/build/LICENSE absent from Git due to generic build ignore; no build/tag/release"
   },
   "review_tool_release_history": [
     {

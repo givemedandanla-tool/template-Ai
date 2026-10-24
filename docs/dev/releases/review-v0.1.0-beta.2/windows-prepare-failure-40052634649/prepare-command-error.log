@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "D:\a\template-Ai\template-Ai\tools\review_release.py", line 754, in entrypoint
+    return main(arguments)
+           ^^^^^^^^^^^^^^^
+  File "D:\a\template-Ai\template-Ai\tools\review_release.py", line 713, in main
+    prepare(args.cache, args.ocr_cache)
+  File "D:\a\template-Ai\template-Ai\tools\review_release.py", line 136, in prepare
+    source_record = prepare_sources(Path(ocr_cache or Path(cache) / 'ocr'), OUTPUT)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\a\template-Ai\template-Ai\tools\tesseract_sources.py", line 191, in prepare
+    documents = _documents(lock)
+                ^^^^^^^^^^^^^^^^
+  File "D:\a\template-Ai\template-Ai\tools\tesseract_sources.py", line 133, in _documents
+    raise ValueError('OCR notice is not a regular repository file')
+ValueError: OCR notice is not a regular repository file
