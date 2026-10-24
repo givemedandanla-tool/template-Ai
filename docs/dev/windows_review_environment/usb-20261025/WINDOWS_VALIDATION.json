@@ -1,0 +1,59 @@
+{
+  "component": "review-tool",
+  "requirement": "REVIEW-USB-START-01",
+  "platform": "native Windows x64",
+  "source_commit": "f8bb3a135a5bd173423470583b57ffd19a3bb605",
+  "unit_tests": {
+    "passed": 27,
+    "failures": 0,
+    "skipped": 0
+  },
+  "fresh_setup": {
+    "fresh_offline_environment": "PASS",
+    "locked_dependencies": 21,
+    "pip_check": "PASS",
+    "bundled_inkscape": "PASS",
+    "real_illustrator_missing_gate": "PASS_EXPECTED_NOT_RUN",
+    "gui_blocked_without_illustrator": true,
+    "repeated_launch_same_environment": "PASS",
+    "existing_synthetic_progress_preserved": true,
+    "old_diagnostics_preserved": true,
+    "new_diagnostic_runs": 2,
+    "real_cmd_launcher_transfer_check": "PASS",
+    "downloads_on_target": false,
+    "actual_adobe_success": "NOT_RUN_NOT_INSTALLED",
+    "elapsed_seconds": 599.9
+  },
+  "native_runtime": {
+    "synthetic_pdf_pipeline": {
+      "status": "PASS",
+      "synthetic_only": true,
+      "pages": 2,
+      "expected_text_preserved": true,
+      "ocr": false,
+      "source_unchanged": true,
+      "inkscape_selected_from_isolated_transfer": true
+    },
+    "native_windows_qt_ui_capture": "PASS",
+    "native_ui_clean_exit": true,
+    "pythonw_detached_console_handle_zero": true,
+    "qt_diagnostics_retained_locally": true,
+    "private_files_used": false,
+    "actual_adobe_success": "NOT_RUN_NOT_INSTALLED",
+    "elapsed_seconds": 192.7,
+    "earlier_attempt": "Standalone console harness used DETACHED_PROCESS and exited with Windows control-C status 0xC000013A; log retained. Re-run uses product CREATE_NO_WINDOW for console workers and DETACHED only for pythonw."
+  },
+  "real_illustrator_conversion": "NOT_RUN_NOT_INSTALLED_ON_DEVELOPMENT_HOST",
+  "manual_private_fidelity": "NOT_VERIFIED",
+  "full_ocr": "NOT_CONFIGURED",
+  "global_governance": "PRE_EXISTING_STALE_FULL_PRODUCT_EVIDENCE_FAILURE_UNCHANGED",
+  "raw_logs_uploaded": false,
+  "private_works_used": false,
+  "private_fonts_copied": false,
+  "earlier_attempts": [
+    "Stopped task-owned Git archive historical prefetch; replaced by local committed-file hash checks.",
+    "Added explicitly scoped UI SVG icons and LICENSE; arbitrary design and font files remain rejected.",
+    "Preserved interrupted serial-hash and partial parallel-copy outputs locally; bounded hashing and fixed Windows concurrent canonical-path false rejections.",
+    "Automatic approval review rejected generic copy and shared-handoff edits; used exclusive creation and new component handoff instead."
+  ]
+}

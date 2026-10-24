@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261025-REVIEW-USB-003",
+  "created_utc": "2026-10-24T19:18:29.573949+00:00",
+  "base_commit": "f8bb3a135a5bd173423470583b57ffd19a3bb605",
+  "phase": "PREPARED",
+  "summary": "Offline USB source environment verified on Windows; 27 regression tests; actual Illustrator remains target-machine qualification",
+  "requirement_ids": [
+    "REVIEW-USB-START-01"
+  ],
+  "next_step": "Copy complete USB source directory to an Illustrator-equipped Windows x64 machine; first launch runs real Adobe synthetic qualification before GUI. Manually compare visual fidelity.",
+  "source_files": {
+    "docs/dev/REVIEW_TOOL_USB_HANDOFF.md": {
+      "bytes": 451,
+      "sha256": "f31056d09134782c9bc3841a0c32fd0d0253445ca8cb89e0bb9362f8c80a6ee8",
+      "git_blob_sha1": "512a38fe91b9d6cf0474492ca348115ed3b735e5"
+    },
+    "docs/dev/windows_review_environment/usb-20261025/CONTRACT.json": {
+      "bytes": 1586,
+      "sha256": "65baae5f6e7664a5228149e8fdceb7f59946cb4757210b17b7e968b52ca40b5b",
+      "git_blob_sha1": "a458f1da9e67494672760bd78f33bbf5bb29b721"
+    },
+    "docs/dev/windows_review_environment/usb-20261025/FINAL_HANDOFF.md": {
+      "bytes": 1951,
+      "sha256": "d58006a59e68b74e699140c14eb630a67bb1de331a8d131d258d120948734eb4",
+      "git_blob_sha1": "b633d12133b0e6f6f7e570428d455705b6ab0bb4"
+    },
+    "docs/dev/windows_review_environment/usb-20261025/FINAL_STATE.json": {
+      "bytes": 1132,
+      "sha256": "4d54491e163b6d5c4f641db8c7fff92681c3c0b3c642620bf0000fe26d36b4aa",
+      "git_blob_sha1": "8591838ed58c39d7024dbc0544ba318b75f4b715"
+    },
+    "docs/dev/windows_review_environment/usb-20261025/REPORT.md": {
+      "bytes": 2852,
+      "sha256": "89d5071bc787b98377164fb3a73033219280d848217a1c92d5d03e1bb9b11ea3",
+      "git_blob_sha1": "7bfc2d299b40210fbadebf720cebe3a5cebbecc8"
+    },
+    "docs/dev/windows_review_environment/usb-20261025/TRANSFER_VERIFICATION.json": {
+      "bytes": 330,
+      "sha256": "6c6645c357d9306ca9d62b344f6730f645ee47bf772c6ea4fdba87114923c16a",
+      "git_blob_sha1": "a15f8c2ba36c800669dd32ab6907545dc2d7af33"
+    },
+    "docs/dev/windows_review_environment/usb-20261025/WINDOWS_VALIDATION.json": {
+      "bytes": 2518,
+      "sha256": "00a7fa4f1c914306bbbad9a74d2a59d907c76e5def51db2ed065564d6e826fde",
+      "git_blob_sha1": "786838ec4aa781aac08020028ce254e16f2b699e"
+    },
+    "tests/test_review_usb_start.py": {
+      "bytes": 14370,
+      "sha256": "8f3b2ebc4269723659d9233457a423173844332333552b0076c0c33d4398a98e",
+      "git_blob_sha1": "be6b6029620d835cb0aac7cac804c22e4d8ffb42"
+    },
+    "tools/windows_review_dev/usb/README.txt": {
+      "bytes": 3487,
+      "sha256": "03c6ee326c81dd613988919e71aa2959c2d7c19c1602dc0847ccaf2b22a270ab",
+      "git_blob_sha1": "93bd6087c309606903f1b4f7e6578e82152ab3e5"
+    },
+    "tools/windows_review_dev/usb/RETEST_ILLUSTRATOR.cmd": {
+      "bytes": 72,
+      "sha256": "95e9202e416d3d27f8c081974756227a7297327b70df913722888cea54c29726",
+      "git_blob_sha1": "2fc8cf6b8a460d77ba1bd856cf4e4a730e652296"
+    },
+    "tools/windows_review_dev/usb/START_REVIEW.cmd": {
+      "bytes": 395,
+      "sha256": "94ff199d9dcdf38ef20a0ec0370ac4c91a7b6dca67931b5a0149bba7e82b4f74",
+      "git_blob_sha1": "cf4f86e9bdba4eda4052c91e9e3062d85211d89d"
+    },
+    "tools/windows_review_dev/usb/dependency-sources.json": {
+      "bytes": 1066,
+      "sha256": "e7b2cb7f2dd3243b26ec8c953d48cbbbb87ca6106af2599816e09fb5671de026",
+      "git_blob_sha1": "fa15e834abee1ff5e450cb311a6d988a0f3c682a"
+    },
+    "tools/windows_review_dev/usb/gui_session.py": {
+      "bytes": 943,
+      "sha256": "a5f5ce1f23a61a820d54a9ff68cf6a952642eb68142fdc50216906a41469dc14",
+      "git_blob_sha1": "d0df1ab544c383f17ccba027f196fa73ae8419f8"
+    },
+    "tools/windows_review_dev/usb/offline_start.py": {
+      "bytes": 15497,
+      "sha256": "c998fa30ca07ed9d87c23a8616679fe9f7fe4669a8a7fe03035c41f344e1203c",
+      "git_blob_sha1": "6dbc733f86f2216b15ea96cd1a71de1dd448e355"
+    },
+    "tools/windows_review_dev/usb/prepare_usb.py": {
+      "bytes": 9159,
+      "sha256": "f18faa094accf0fa3eb9d51569b3be144781d78dd5832ea43a95205f197d8fc8",
+      "git_blob_sha1": "fdedcbe3b50935d73210c0a5c7870b17c55e169a"
+    }
+  },
+  "source_manifest_sha256": "b4e72505340f9e259e4878bf551490e3555a75d05082c06e41b62246de0fe49a",
+  "local_snapshot": {
+    "path": ".checkpoints\\CP-20261025-REVIEW-USB-003\\source.zip",
+    "sha256": "13ff98588bf0d63de4c23fac822e4795e9803a272ffbe4d68463cfc3e49f9346"
+  },
+  "remote_confirmation": "尚未確認；本機快照不能冒稱已在 GitHub 保存"
+}
