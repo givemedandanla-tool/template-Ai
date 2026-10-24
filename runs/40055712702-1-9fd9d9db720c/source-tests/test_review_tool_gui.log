@@ -1,0 +1,43 @@
+test_actual_window_worker_review_overview_save_and_reopen (test_review_tool_gui.ReviewToolGuiTests.test_actual_window_worker_review_overview_save_and_reopen) ... review-release-check: actual_review_window_opens
+review-release-check: technical_overview_hidden_initially
+review-release-check: actual_add_files_entry_registers_three_sources
+review-release-check: actual_qprocess_analysis_completes
+review-release-check: gui_event_loop_remains_responsive
+review-release-check: svg_and_pdf_compatible_ai_have_real_previews
+review-release-check: actual_vector_analysis_executes
+review-release-check: actual_ocr_reads_authored_outline_source
+review-release-check: actual_bilingual_ocr_reads_authored_outlines
+review-release-check: actual_bilingual_ocr_reads_authored_raster
+review-release-check: actual_ocr_candidates_keep_ownership_unknown
+review-release-check: actual_ocr_owner_assignment_survives_save_and_reopen
+
+IMMEDIATE_FAILURE: test_actual_window_worker_review_overview_save_and_reopen (test_review_tool_gui.ReviewToolGuiTests.test_actual_window_worker_review_overview_save_and_reopen)
+Traceback (most recent call last):
+  File "D:\a\template-Ai\template-Ai\tests\test_review_tool_gui.py", line 265, in test_actual_window_worker_review_overview_save_and_reopen
+    self.assertEqual(exit_code, 0, result.get('error'))
+AssertionError: 1 != 0 : {'type': 'RuntimeError', 'message': 'OCR fault probe may only touch the owned staged bundled runtime'}
+FAIL
+test_add_button_rejects_invalid_batches_without_losing_existing_review (test_review_tool_gui.ReviewToolGuiTests.test_add_button_rejects_invalid_batches_without_losing_existing_review)
+Only the OS picker is patched; the actual Add button and slot run. ... ok
+test_authored_uncalibrated_record_manual_annotation_does_not_become_verified_millimetres (test_review_tool_gui.ReviewToolGuiTests.test_authored_uncalibrated_record_manual_annotation_does_not_become_verified_millimetres)
+An explicit missing-metadata fixture, not a claimed PNG input route. ... ok
+test_close_return_keeps_unsaved_work_then_save_and_exit_preserves_it (test_review_tool_gui.ReviewToolGuiTests.test_close_return_keeps_unsaved_work_then_save_and_exit_preserves_it) ... ok
+test_discard_while_real_worker_runs_does_not_save_uncommitted_changes (test_review_tool_gui.ReviewToolGuiTests.test_discard_while_real_worker_runs_does_not_save_uncommitted_changes) ... ok
+test_first_window_is_visible_and_numeric_overview_is_hidden (test_review_tool_gui.ReviewToolGuiTests.test_first_window_is_visible_and_numeric_overview_is_hidden) ... ok
+test_more_menu_adopts_only_new_works_and_preserves_human_corrections (test_review_tool_gui.ReviewToolGuiTests.test_more_menu_adopts_only_new_works_and_preserves_human_corrections)
+A compatible authored packet exercises the real More-menu slot. ... ok
+test_small_window_keeps_review_actions_visible_and_hides_them_in_overview (test_review_tool_gui.ReviewToolGuiTests.test_small_window_keeps_review_actions_visible_and_hides_them_in_overview)
+No scrolling is needed to set review state or apply a correction. ... ok
+
+======================================================================
+FAIL: test_actual_window_worker_review_overview_save_and_reopen (test_review_tool_gui.ReviewToolGuiTests.test_actual_window_worker_review_overview_save_and_reopen)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\a\template-Ai\template-Ai\tests\test_review_tool_gui.py", line 265, in test_actual_window_worker_review_overview_save_and_reopen
+    self.assertEqual(exit_code, 0, result.get('error'))
+AssertionError: 1 != 0 : {'type': 'RuntimeError', 'message': 'OCR fault probe may only touch the owned staged bundled runtime'}
+
+----------------------------------------------------------------------
+Ran 8 tests in 17.499s
+
+FAILED (failures=1)
