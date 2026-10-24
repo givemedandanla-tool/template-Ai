@@ -280,7 +280,12 @@ class AnalysisJobs(QObject):
                 from .source_compatibility import ISSUE_CODE, SAFE_MESSAGE
                 # Only a known code selects fixed product wording. Never relay
                 # arbitrary child messages, which may contain private artwork.
-                self._failure_message = (SAFE_MESSAGE if event.get('code') == ISSUE_CODE else
+                messages = {
+                    ISSUE_CODE: SAFE_MESSAGE,
+                    'FileNotFoundError': ('本機檔案或快取無法建立／讀取；請確認原稿仍存在、資料目錄可寫入，'
+                                         '並改用較短的本機路徑後重試。原稿保持不變。'),
+                }
+                self._failure_message = messages.get(event.get('code'),
                     '這個檔案尚未完成判讀；原稿保持不變，可重試或匯出問題報告。')
             else:
                 raise ValueError('unknown event')

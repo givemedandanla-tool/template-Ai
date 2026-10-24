@@ -1,13 +1,11 @@
-# 當前：review-tool Windows PDF 回歸通過；DirectWrite 未能重現
+# 當前：review-tool 繁中提示頁漏判及失敗介面已修正
 
-分支 `feature/review-tool-v0.1.0`，source `0.1.0-beta.3.dev1`。先讀 [部件狀態](windows_review_environment/pdf-dwrite-20261024/STATE.json) 與 [本輪報告](windows_review_environment/pdf-dwrite-20261024/REPORT.md)。checkpoint `CP-20261024-REVIEW-PDF-DWRITE-002`，精確 snapshot／收據以 STATE 為準。
+分支 `feature/review-tool-v0.1.0`；source `0.1.0-beta.3.dev1`，已發布 beta.2 不變。先讀 [部件狀態](windows_review_environment/manual-failure-20261024/STATE.json) 與 [修正報告](windows_review_environment/manual-failure-20261024/REPORT.md)。checkpoint `CP-20261024-REVIEW-MANUAL-FAILURE-001`；精確 snapshot／收據以部件 STATE 為準。
 
-舊 beta.2 判讀模組隔離對照會把合成提示頁當 1 件作品；目前來源正確排除，中斷點確認可見文字分類。Windows 原生回歸 31 PASS／0 skip（PDF14、診斷7、stdio9、暗選單1）。修正測試啟動器的 offscreen 空白 fixture 與過短模組時限，沒有放寬產品判讀規則。
+使用者實測補足舊合成測試缺口：繁中「未附帶 PDF 內容」未列入提示頁簽章，雖完成判讀仍被當作品。已加入精確措辭且保留產品／選項／重新儲存多重條件。另修 null analysis 選取例外及失敗訊息，人工測試改用短資料路徑；不宣稱全面長路徑支援。不能把程序完成當作品正確。
 
-新增本機 Qt 診斷選項，真正 GUI、worker、獨立 pythonw 均已驗。加入診斷前後 DirectWrite 皆 0，canary 成功；worker 仍有 1 筆非 DirectWrite 字型記錄。只能稱 NOT_REPRODUCED，不能稱原使用者情境已完全修復。原始記錄含潛在字型名稱／路徑，只留本機；GitHub 僅存匿名計數與合成證據。
+本輪 Windows 30 PASS／0 skip（PDF17、Jobs10、失敗介面3）。保留 red 重現與早先 PATH 缺 Inkscape 的 skip，補正後真引擎通過。實際檔案只在本機覆驗 worker 拒絕提示頁、無 result／0 作品、原稿不變；私人資料與原始記錄不上傳。
 
-下一步回到 review-tool 開發；如原 DirectWrite 情境再現，開啟 --diagnostics-dir 在本機取得證據後修正。OCR／英繁中模型未配置，raster 測試用合成 OCR observations，不升真正 OCR 資格。已發布 beta.2、舊完整產品資格與外部驗證不變。
+新修正需重啟；正常保存／關閉舊視窗後用新短資料目錄測試，保留舊誤判結果和人工修訂。原檔另存 PDF 相容副本後再判讀。DirectWrite 仍未重現，診斷開啟供本機操作取證；OCR／英繁中模型未配置，未升 EXE／完整產品資格。
 
-使用者已授權此部件開發與 GitHub 同步。依[部件規則](windows_review_environment/SYNC_POLICY.md)保存、讀回、對齊本機；不合併 main、不打包發布，不上傳私人作品、字型、客戶資料，不自動擴大成完整 template-Ai 工作。環境初始失敗保留於上層歷史報告，不覆寫成 PASS。
-
-本輪快照已讀回：`939b83d4c73a0b015c7eb5a45936c227d10781da`，`CP-20261024-REVIEW-PDF-DWRITE-002`；97個部件檔案＋checkpoint逐blob一致、21個變更檔逐byte/SHA256一致。收據另筆保存，本機與最終收據提交完成後對齊。共享歷史STATE不更新，改讀上列部件狀態。
+使用者已授權此部件開發與 GitHub 同步；依 [部件規則](windows_review_environment/SYNC_POLICY.md) 保存、讀回、對齊。共享歷史 AGENTS／STATE／WORK_LOG 不更新；不合併 main、不打包發布、不擴大部件範圍。

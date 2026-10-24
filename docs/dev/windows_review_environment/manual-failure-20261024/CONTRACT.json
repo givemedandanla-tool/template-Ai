@@ -1,0 +1,29 @@
+{
+  "component": "review-tool",
+  "base_commit": "55b86bd9a99886bb0b75efa846d7ff9e3406419f",
+  "symptom": "Local cache path failure and null-analysis UI exception; subsequent completed analysis still misclassified a Traditional Chinese Illustrator PDF notice.",
+  "acceptance": [
+    "Synthetic null/failed sources remain selectable and preserve recovery guidance.",
+    "Known missing-file/cache error maps to fixed safe guidance without child text.",
+    "Manual Windows session uses short local data/cache paths; original source and old session preserved.",
+    "Recognize the exact missing Traditional Chinese notice clause while retaining product/option/remedy checks.",
+    "Synthetic visible PDF and candidate tests reject repeated notices before artwork assembly; ordinary and mixed-page artwork remains valid."
+  ],
+  "baseline": {
+    "synthetic_tests": 3,
+    "failures": 1,
+    "errors": 2,
+    "local_short_cache_replay": "RESULT_RETURNED_BUT_NOTICE_MISCLASSIFIED; completion alone is not correctness",
+    "original_local_source_unchanged": true,
+    "notice_variant_red": {
+      "tests": 3,
+      "failures": 2,
+      "errors": 0
+    }
+  },
+  "privacy": "No private inputs, raw logs, filenames, fonts, hashes of private inputs or extracted content in GitHub.",
+  "limits": [
+    "No claim of general arbitrary-length Windows path support.",
+    "No package/release/main merge."
+  ]
+}

@@ -54,7 +54,8 @@ def placeholder_language(text: str) -> str | None:
                 'illustratornativeformatoptionsdialogbox'))):
         return 'en'
     if (any(phrase in compact for phrase in (
-            '未開啟pdf內容', '未啟用pdf內容', '未包含pdf內容', '不含pdf內容', '沒有pdf內容'))
+            '未開啟pdf內容', '未啟用pdf內容', '未包含pdf內容', '未附帶pdf內容',
+            '不含pdf內容', '沒有pdf內容'))
             and '建立pdf相容檔案' in compact
             and any(phrase in compact for phrase in (
                 '重新儲存', '再儲存', '另存新檔', '原生格式選項'))):

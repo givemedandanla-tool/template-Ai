@@ -485,7 +485,7 @@ class ReviewWindow(QMainWindow):
             self.select_work(data[1]) if data[0] == 'work' else self.select_source(data[1])
 
     def _page(self, source, work=None):
-        pages = source.get('analysis', {}).get('pages', [])
+        pages = (source.get('analysis') or {}).get('pages', [])
         if work:
             for page in pages:
                 if page.get('id') == work.get('page_id') or page.get('page') == work.get('page'):
@@ -510,6 +510,9 @@ class ReviewWindow(QMainWindow):
             self.canvas.set_work({'crop': {'x': 0, 'y': 0, 'w': page['width_mm'], 'h': page['height_mm']}})
             self.canvas.set_fields([{'id': 'work:' + w['id'], 'rect': w['crop'], 'label': w.get('name', '作品')}
                                     for w in self.store.works(source_id) if w.get('page') == page.get('page')])
+        elif source.get('status') == 'FAILED':
+            self.notify((source.get('stage_message') or '這個檔案判讀失敗，原稿保持不變。')
+                        + ' 可從「更多」重試失敗檔案或匯出問題報告。')
         else:
             self.notify('這個檔案尚未判讀；點擊「開始判讀」取得預覽與作品範圍。')
         self._update_save_state()

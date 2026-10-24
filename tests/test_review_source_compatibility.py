@@ -19,7 +19,7 @@ from template_ai.review_tool.analysis import analyse_file
 from template_ai.review_tool.source_compatibility import (
     ISSUE_CODE, MAX_VISIBLE_CHARACTERS, SAFE_MESSAGE,
     ReviewSourceCompatibilityError, pdf_backed_source,
-    placeholder_language, visible_pdf_page,
+    placeholder_language, visible_pdf_page, candidate_placeholder_language,
 )
 
 
@@ -102,6 +102,33 @@ class ReviewSourceCompatibilityTests(unittest.TestCase):
         svg = self.root / 'notice.svg'
         svg.write_text(ENGLISH)
         self.assertFalse(pdf_backed_source(svg))
+
+    def test_traditional_unattached_tiled_pdf_is_rejected_before_import(self):
+        # Authored wording variant and repeated blocks; no user artwork copied.
+        text = TRADITIONAL.replace('未開啟 PDF 內容', '未附帶 PDF 內容')
+        path = self.pdf([text * 3], name='synthetic-repeated-notice.ai')
+        before = path.read_bytes()
+        self.assertEqual(visible_pdf_page(path, 1)['language'], 'zh-Hant')
+        with patch('template_ai.importer.import_file') as importer:
+            with self.assertRaises(ReviewSourceCompatibilityError):
+                analyse_file(path, self.root / 'cache', ocr=False)
+        importer.assert_not_called()
+        self.assertEqual(path.read_bytes(), before)
+        self.assertFalse(list((self.root / 'cache').rglob('review-packet*.json')))
+
+    def test_traditional_unattached_visible_candidates_are_detected(self):
+        text = TRADITIONAL.replace('未開啟 PDF 內容', '未附帶 ＰＤＦ 內容')
+        candidates = [{'observations': [dict(object_type='TEXT', text=text[i:i+7])
+                                       for i in range(0, len(text), 7)]}]
+        self.assertEqual(candidate_placeholder_language(candidates), 'zh-Hant')
+
+    def test_traditional_unattached_partial_clauses_remain_allowed(self):
+        for text in ('Adobe Illustrator 未附帶 PDF 內容，請詢問設計師',
+                     'Adobe Illustrator 建立 PDF 相容檔案並重新儲存的教學',
+                     'Adobe Illustrator 未附帶 PDF 內容，建立 PDF 相容檔案',
+                     '未附帶 PDF 內容，建立 PDF 相容檔案，重新儲存'):
+            with self.subTest(text=text):
+                self.assertIsNone(placeholder_language(text))
 
     def test_actual_english_pdf_notice_is_rejected_before_import_or_ocr(self):
         path = self.pdf([ENGLISH])

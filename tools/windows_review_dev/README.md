@@ -45,3 +45,6 @@ $env:PYTHONUTF8 = '1'
 上節初次失敗保留為歷史。最新 run_checks.py 改為 Windows 原生平台並增加診斷測試；31項通過（PDF14、診斷7、stdio9、暗選單1）。PDF模組上限600秒（實測基線410秒），未改產品逾時或判讀斷言。詳見 [本輪報告](../../docs/dev/windows_review_environment/pdf-dwrite-20261024/REPORT.md)。
 
 以 --diagnostics-dir .local-dev/qt-logs 或 TEMPLATE_AI_REVIEW_DIAGNOSTICS_DIR 明確開啟 Qt 記錄，GUI與worker在 QApplication 前安裝；預設關閉、不配置主控台。每程序新建受限大小JSONL，可能含字型名稱／路徑，原始檔不得上傳。合成 probe_pdf_fonts.py 的 --root . --output .local-dev/new-probe --integrated 可重跑斷點與canary；輸出目錄必須不存在。此次真實 DirectWrite 前後皆0，記為未重現；不宣稱原情境已修復。
+
+
+手動除錯資料／快取請使用短路徑，例如另建 `.local-dev/r1`，搭配 `--data-dir .local-dev/r1 --diagnostics-dir .local-dev/q1`；不要接到現存工作階段。匯入器會產生長雜湊子路徑，過深的時間戳／工作區層級可能撞上 Windows 路徑限制；這是目前限制，並非任意長路徑已受支援。舊結果保留，修正後的新判讀用新工作階段確認；提示頁需要在 Illustrator 另存 PDF 相容副本才能取得作品。最新證據見 `docs/dev/windows_review_environment/manual-failure-20261024/REPORT.md`。

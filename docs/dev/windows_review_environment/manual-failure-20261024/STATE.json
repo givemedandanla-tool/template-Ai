@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "component": "review-tool",
+  "branch": "feature/review-tool-v0.1.0",
+  "base_commit": "55b86bd9a99886bb0b75efa846d7ff9e3406419f",
+  "status": "PREPARED",
+  "checkpoint": "CP-20261024-REVIEW-MANUAL-FAILURE-001",
+  "active_contract": "docs/dev/windows_review_environment/manual-failure-20261024/CONTRACT.json",
+  "report": "docs/dev/windows_review_environment/manual-failure-20261024/REPORT.md",
+  "verification": {
+    "platform": "native Windows",
+    "unique_tests": 30,
+    "passed": 30,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "groups": [
+      {
+        "group": "PDF compatibility",
+        "run": 17,
+        "passed": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "group": "Jobs and failed-source UI",
+        "run": 13,
+        "passed": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "prior_red": {
+      "null_analysis": {
+        "tests": 3,
+        "failures": 1,
+        "errors": 2
+      },
+      "notice_variant": {
+        "tests": 3,
+        "failures": 2,
+        "errors": 0
+      }
+    },
+    "earlier_jobs_skip": {
+      "reason": "Inkscape absent from test PATH",
+      "resolved_by": "Correct configured PATH; full real-engine test passed"
+    },
+    "synthetic_only": true,
+    "raw_logs_uploaded": false
+  },
+  "directwrite": "NOT_REPRODUCED",
+  "original_user_directwrite_trigger_verified": false,
+  "full_ocr": "NOT_CONFIGURED",
+  "private_data_upload": false,
+  "main_merge": false,
+  "package_release": false,
+  "next_step": "Restart corrected source GUI in a fresh short local session after user saves/closes old window; test a PDF-compatible copy and original font trigger; preserve old data.",
+  "shared_state_policy": "Shared historical AGENTS/STATE/WORK_LOG remain unchanged; use this component state and ACTIVE_DEVELOPMENT_HANDOFF.md."
+}

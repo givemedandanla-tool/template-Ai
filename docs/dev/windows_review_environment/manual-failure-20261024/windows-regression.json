@@ -1,0 +1,44 @@
+{
+  "platform": "native Windows",
+  "unique_tests": 30,
+  "passed": 30,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "groups": [
+    {
+      "group": "PDF compatibility",
+      "run": 17,
+      "passed": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "group": "Jobs and failed-source UI",
+      "run": 13,
+      "passed": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "prior_red": {
+    "null_analysis": {
+      "tests": 3,
+      "failures": 1,
+      "errors": 2
+    },
+    "notice_variant": {
+      "tests": 3,
+      "failures": 2,
+      "errors": 0
+    }
+  },
+  "earlier_jobs_skip": {
+    "reason": "Inkscape absent from test PATH",
+    "resolved_by": "Correct configured PATH; full real-engine test passed"
+  },
+  "synthetic_only": true,
+  "raw_logs_uploaded": false
+}
