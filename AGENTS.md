@@ -11,9 +11,11 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
-## 最新授權：隨包OCR執行器並發布beta.2
+## 最新交付：OCR隨包beta.2已公開發布
 
-2026-10-24使用者要求「加入ocr執行器，然後再次發佈」。依STATE.review_tool_release_request／releases/review-v0.1.0-beta.2/IMPLEMENTATION_AND_VALIDATION_PLAN.md執行，授權新review-v0.1.0-beta.2；舊beta.1不可覆寫。包內Tesseract與固定中英文模型、本機離線、版本／清單完整性、真正Windows EXE雙語正向辨識、缺／壞退路、原包裝與兩次下載均須驗證。未完成不稱已發布。只改OCR整合必要範圍，不合併main、不自動開發下一部件、私人資料仍本地。
+2026-10-24 review-v0.1.0-beta.2已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED。精確source6fd0b1435a8ebd1f384b2f76ceaa85dcbc2fba60／Windows run40057767083 success；270來源測試、真EXE40、兩次各13,203程式檔及25OCRsourcearchives/75notices校驗PASS。先讀STATE.review_tool_release_request與[交付報告](docs/dev/releases/review-v0.1.0-beta.2/DELIVERY_REPORT.md)、QUICK_START.md。
+
+Tesseract與固定英/繁中模型、Inkscape隨包，使用者不需另裝OCR；私人資料本地離線。Windows長中文路徑以原PNG stdin與原模型受驗短暫存處理，字串/模型/幾何斷言未放寬。舊人修保留、不默默合併舊新判讀。下一步等待本地一份作品與安全報告，維護同一review版本系列；不覆寫已發布tag、不合併main、不自行開發下一部件。合成驗證不升私人AI/字庫/硬體/新手/實印/AI訓練或舊完整產品資格；以下授權與首版狀態為歷史。
 
 ## 最新交付：最小判讀核對工具首版已發布
 

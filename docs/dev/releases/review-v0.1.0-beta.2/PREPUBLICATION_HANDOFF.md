@@ -1,0 +1,11 @@
+# 當前：OCR beta.2第六輪Windows驗證
+
+精確source6fd0b1435a8ebd1f384b2f76ceaa85dcbc2fba60／run40057767083。beta.2未發布，beta.1保留；仍須source→首次真正frozenEXE→package→六附件草稿與公開兩次實際下載，才可交付。
+
+第五run40056934391/sourcef1a38ba7：22模組270項269PASS/1FAIL/0error/skip/timeout。Windows產品功能全部正向：深中文影像＋模型、strict英/繁中SVG/PDF、modelstage、完整GUI含人工歸屬保存重開與缺壞退路。唯一unit把resolved ownedroot與TempDir8.3別名作字面contains而誤拒；最新只修test比較owned/authored雙resolve、models.samefile，hostguard與產品code不變。本地offscreen18PASS，首次缺LinuxQPA而abort不作測試結果。
+
+產品IO：原PNG binary stdin不改pixels/psm；受驗模型原bytes在Win private短tempstage，副本SHA及BUNDLE官方blob確認、child停止後清理。source負向probe對SYNTHETIC_ONLY下驗證的runtime copy動作；frozen直接驗真正包內engines/tesseract。SRC自選模型保原bytes，無外部fallback。75local tests+18faultunits已PASS，Windows最終以本輪為準。
+
+前run40055712702已證明STDIN修通Windows精確雙語，剩models及probe已第五輪通過；更早c46的CLIexit1非錯字、PDFhandle改QBuffer、漏空zstd/build/LICENSE已追蹤75/75。原始失敗證據在版本目錄，全部代碼/授權凍結。
+
+runtime107entries+manifest108files，25對應sources260799778bytes／75notices及兩固定模型；sourceZIP另附。若fail讀review-release-evidence/v0.1.0-beta.2/runs/40057767083-1-6fd0b1435a8e小JSON/log。完成後finalreport/精簡handoff/checkpoint/nativeGit讀回。main、私人資料、原未提交timeout/adopt成果保留，無新付費API/資源。

@@ -1,0 +1,671 @@
+{
+  "status": "PASS",
+  "component": "TemplateAIReview",
+  "version": "0.1.0-beta.2",
+  "source_commit": "6fd0b1435a8ebd1f384b2f76ceaa85dcbc2fba60",
+  "source_tests": {
+    "status": "PASS",
+    "scope": "INDEPENDENT_REVIEW_COMPONENT_NOT_OLDER_FULL_PRODUCT",
+    "modules": [
+      {
+        "module": "test_bundled_inkscape",
+        "tests_run": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 0.74649
+      },
+      {
+        "module": "test_bundled_tesseract",
+        "tests_run": 19,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 0.693792
+      },
+      {
+        "module": "test_import_exceptions",
+        "tests_run": 12,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 66.851859
+      },
+      {
+        "module": "test_import_pages",
+        "tests_run": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 8.549522
+      },
+      {
+        "module": "test_inkscape_cache_identity",
+        "tests_run": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 6.379623
+      },
+      {
+        "module": "test_logo_ocr",
+        "tests_run": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 4.216968
+      },
+      {
+        "module": "test_ocr_runtime",
+        "tests_run": 19,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 0.95854
+      },
+      {
+        "module": "test_original_pdf_glyphs",
+        "tests_run": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 0.437192
+      },
+      {
+        "module": "test_original_text_observation",
+        "tests_run": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 0.454054
+      },
+      {
+        "module": "test_quality_ocr",
+        "tests_run": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 23.26081
+      },
+      {
+        "module": "test_review_analysis",
+        "tests_run": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 39.441063
+      },
+      {
+        "module": "test_review_canvas",
+        "tests_run": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 1.425294
+      },
+      {
+        "module": "test_review_font_dialog",
+        "tests_run": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 1.862212
+      },
+      {
+        "module": "test_review_jobs",
+        "tests_run": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 8.602555
+      },
+      {
+        "module": "test_review_ledger",
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 34.638405
+      },
+      {
+        "module": "test_review_ocr_acceptance",
+        "tests_run": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 0.617396
+      },
+      {
+        "module": "test_review_release",
+        "tests_run": 33,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 6.757483
+      },
+      {
+        "module": "test_review_session",
+        "tests_run": 32,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 0.598004
+      },
+      {
+        "module": "test_review_tool_gui",
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 34.966129
+      },
+      {
+        "module": "test_semantic_fields",
+        "tests_run": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 0.15895
+      },
+      {
+        "module": "test_source_region_hypotheses",
+        "tests_run": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 1.451425
+      },
+      {
+        "module": "test_tesseract_sources",
+        "tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": [],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 0.334077
+      }
+    ],
+    "modules_not_run": [],
+    "timeout_modules": [],
+    "required_reused_core_modules": [
+      "test_import_pages",
+      "test_import_exceptions",
+      "test_original_pdf_glyphs",
+      "test_original_text_observation",
+      "test_source_region_hypotheses",
+      "test_semantic_fields",
+      "test_inkscape_cache_identity",
+      "test_bundled_inkscape",
+      "test_logo_ocr",
+      "test_quality_ocr",
+      "test_ocr_runtime",
+      "test_bundled_tesseract",
+      "test_tesseract_sources"
+    ],
+    "component_modules": [
+      "test_review_analysis",
+      "test_review_canvas",
+      "test_review_font_dialog",
+      "test_review_jobs",
+      "test_review_ledger",
+      "test_review_ocr_acceptance",
+      "test_review_release",
+      "test_review_session",
+      "test_review_tool_gui"
+    ],
+    "test_counts_complete": true,
+    "tests_run": 270,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "source_commit": "6fd0b1435a8ebd1f384b2f76ceaa85dcbc2fba60",
+    "source_manifest_sha256": "854b3ca5defb116aa0bc0befd6d8f772ef516b30bde41ac628494820d7a32309",
+    "source_unchanged_during_run": true,
+    "platform": "Windows-10-10.0.26100-SP0",
+    "real_corpus_qualified": false
+  },
+  "actual_exe": {
+    "status": "PASS",
+    "version": "0.1.0-beta.2",
+    "source_commit": "6fd0b1435a8ebd1f384b2f76ceaa85dcbc2fba60",
+    "source_manifest_sha256": "854b3ca5defb116aa0bc0befd6d8f772ef516b30bde41ac628494820d7a32309",
+    "source_unchanged_during_run": true,
+    "actual_frozen_executable": true,
+    "executable_sha256": "21df7f9e278c83d3b497a4bb035eee8f100e4be0cfb125f4de7d9fe6ee99930c",
+    "normal_startup": {
+      "status": "PASS",
+      "normal_entrypoint": true,
+      "exit_code": 0,
+      "seconds": 1.291258,
+      "capture": "empty-startup.png",
+      "capture_sha256": "b16b9d9751f5ef17a51dd5910890765f780a67c7910ac103ff9c02ee55103bc3",
+      "data_scope": "ISOLATED_SYNTHETIC_EMPTY_DATA"
+    },
+    "acceptance": {
+      "schema_version": 1,
+      "status": "PASS",
+      "version": "0.1.0-beta.2",
+      "actual_frozen_executable": true,
+      "fixture": "AUTHORED_REVIEW_ACCEPTANCE_V1",
+      "fixture_types": [
+        "CALIBRATED_SVG",
+        "PDF_COMPATIBLE_AI_SIMULATION",
+        "OUTLINED_TEXT_SVG",
+        "BILINGUAL_OUTLINED_TEXT_SVG",
+        "RASTER_ONLY_PDF"
+      ],
+      "worker_mode": "ACTUAL_QPROCESS",
+      "checks": [
+        "actual_review_window_opens",
+        "technical_overview_hidden_initially",
+        "actual_add_files_entry_registers_three_sources",
+        "actual_qprocess_analysis_completes",
+        "gui_event_loop_remains_responsive",
+        "svg_and_pdf_compatible_ai_have_real_previews",
+        "actual_vector_analysis_executes",
+        "actual_worker_uses_bundled_inkscape",
+        "actual_ocr_reads_authored_outline_source",
+        "actual_bilingual_ocr_reads_authored_outlines",
+        "actual_bilingual_ocr_reads_authored_raster",
+        "actual_ocr_candidates_keep_ownership_unknown",
+        "actual_bundled_ocr_binary_and_models_match_release",
+        "clean_host_has_no_ocr_on_path_or_standard_locations",
+        "actual_ocr_owner_assignment_survives_save_and_reopen",
+        "real_missing_ocr_worker_preserves_explicit_fallback",
+        "manual_annotation_works_when_ocr_executable_is_missing",
+        "real_corrupt_bundled_ocr_preserves_explicit_fallback",
+        "manual_annotation_works_when_bundled_ocr_manifest_is_corrupt",
+        "canvas_click_updates_actual_editor",
+        "actual_editor_applies_content_kind_owner_and_sharing",
+        "original_prediction_remains_separate",
+        "actual_canvas_draw_creates_manual_annotation",
+        "actual_canvas_resize_updates_annotation_only",
+        "actual_remove_button_removes_only_annotation",
+        "actual_undo_button_restores_removed_annotation",
+        "actual_multiselection_retains_both_relation_endpoints",
+        "actual_relation_dialog_creates_group",
+        "overview_preserves_visible_original",
+        "actual_overview_row_draws_linked_dimensions",
+        "canvas_selection_updates_overview_without_leaving_mode",
+        "completion_does_not_silently_review_unchecked",
+        "explicit_unknown_survives_human_completion",
+        "actual_save_button_persists_session",
+        "actual_window_reopens_saved_corrections",
+        "unknown_is_not_replaced_by_defaults_after_reopen",
+        "source_ids_and_work_ids_survive_reopen",
+        "actual_discard_does_not_save_draft_on_worker_stop",
+        "safe_diagnostic_excludes_private_content_and_paths",
+        "all_authored_sources_remain_byte_identical"
+      ],
+      "check_details": {
+        "actual_review_window_opens": {
+          "status": "PASS"
+        },
+        "technical_overview_hidden_initially": {
+          "status": "PASS"
+        },
+        "actual_add_files_entry_registers_three_sources": {
+          "status": "PASS"
+        },
+        "actual_qprocess_analysis_completes": {
+          "gui_timer_events": 499
+        },
+        "gui_event_loop_remains_responsive": {
+          "status": "PASS"
+        },
+        "svg_and_pdf_compatible_ai_have_real_previews": {
+          "status": "PASS"
+        },
+        "worker_capabilities": [
+          {
+            "inkscape_conversion_executed": true,
+            "inkscape_runtime": {
+              "executable_sha256": "08eca52941dc5d77c2934080a33a8540107381f8939120a780628062341e0e64",
+              "manifest_sha256": "3eb82c7d72cf6360ab4ecc6b711b53bde4496db3e85a27b452cc7b5db61663ef",
+              "origin": "BUNDLED",
+              "policy": "BUNDLED_ONLY",
+              "verified_files": 11837,
+              "version": "1.4.2"
+            },
+            "local_only": true,
+            "native_illustrator_mapping": "UNKNOWN",
+            "ocr_available": null,
+            "ocr_executed": false,
+            "ocr_requested": true,
+            "unknowns_are_not_zero": true,
+            "vector_analysis_executed": true
+          },
+          {
+            "inkscape_conversion_executed": true,
+            "inkscape_runtime": {
+              "executable_sha256": "08eca52941dc5d77c2934080a33a8540107381f8939120a780628062341e0e64",
+              "manifest_sha256": "3eb82c7d72cf6360ab4ecc6b711b53bde4496db3e85a27b452cc7b5db61663ef",
+              "origin": "BUNDLED",
+              "policy": "BUNDLED_ONLY",
+              "verified_files": 11837,
+              "version": "1.4.2"
+            },
+            "local_only": true,
+            "native_illustrator_mapping": "UNKNOWN",
+            "ocr_available": null,
+            "ocr_executed": false,
+            "ocr_requested": true,
+            "unknowns_are_not_zero": true,
+            "vector_analysis_executed": true
+          },
+          {
+            "inkscape_conversion_executed": true,
+            "inkscape_runtime": {
+              "executable_sha256": "08eca52941dc5d77c2934080a33a8540107381f8939120a780628062341e0e64",
+              "manifest_sha256": "3eb82c7d72cf6360ab4ecc6b711b53bde4496db3e85a27b452cc7b5db61663ef",
+              "origin": "BUNDLED",
+              "policy": "BUNDLED_ONLY",
+              "verified_files": 11837,
+              "version": "1.4.2"
+            },
+            "local_only": true,
+            "native_illustrator_mapping": "UNKNOWN",
+            "ocr_available": true,
+            "ocr_executed": true,
+            "ocr_languages": [
+              "chi_tra",
+              "eng"
+            ],
+            "ocr_requested": true,
+            "ocr_runtime": {
+              "executable_sha256": "babb405f4366b480d02cd8ff2bac8d497170f6c1711ce6f3d5d8bf0fb7fa6ed9",
+              "model_commit": "65727574dfcd264acbb0c3e07860e4e9e9b22185",
+              "model_sha256": {
+                "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+                "chi_tra.traineddata": "529c5b5797d64b126065cd55f2bb4c7fd7b15790798091b1ff259941a829330b",
+                "eng.traineddata": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"
+              },
+              "origin": "BUNDLED",
+              "policy": "BUNDLED_ONLY",
+              "runtime_manifest_sha256": "f3bd40f08b3ecaec6711bf5c8632935228a20e494763b49660cfeb2104f781fa",
+              "state": "READY",
+              "verified_files": 107,
+              "version": "5.4.0.20240606"
+            },
+            "unknowns_are_not_zero": true,
+            "vector_analysis_executed": true
+          }
+        ],
+        "actual_vector_analysis_executes": {
+          "status": "PASS"
+        },
+        "actual_worker_uses_bundled_inkscape": {
+          "status": "PASS"
+        },
+        "actual_ocr_reads_authored_outline_source": {
+          "status": "PASS"
+        },
+        "actual_bilingual_ocr_reads_authored_outlines": {
+          "expected_text": [
+            "測試有限公司",
+            "REVIEW DEMO",
+            "0900-000-000",
+            "hello@example.com"
+          ],
+          "matches": {
+            "測試有限公司": [
+              "ocr-69f198508acc48164e6d329c"
+            ],
+            "REVIEW DEMO": [
+              "ocr-2238b42d05781f4731ade313"
+            ],
+            "0900-000-000": [
+              "ocr-638ec28ff8a044890fa73c46"
+            ],
+            "hello@example.com": [
+              "ocr-3631db874f485d566da3dad6"
+            ]
+          },
+          "owner": "UNKNOWN_UNTIL_HUMAN_ASSIGNMENT",
+          "geometry": "ACTUAL_POSITIVE_LINE_BOUNDS",
+          "real_corpus_qualified": false
+        },
+        "actual_bilingual_ocr_reads_authored_raster": {
+          "expected_text": [
+            "測試有限公司",
+            "REVIEW DEMO",
+            "0900-000-000",
+            "hello@example.com"
+          ],
+          "matches": {
+            "測試有限公司": [
+              "ocr-b5cf0b0303e8da7c7e6bc8e1"
+            ],
+            "REVIEW DEMO": [
+              "ocr-7fe78888fb8e419da21bf85f"
+            ],
+            "0900-000-000": [
+              "ocr-9f9682d9ee17f0c987a8037e"
+            ],
+            "hello@example.com": [
+              "ocr-a7fdb7ed0943104ad9474fb0"
+            ]
+          },
+          "owner": "UNKNOWN_UNTIL_HUMAN_ASSIGNMENT",
+          "geometry": "ACTUAL_POSITIVE_LINE_BOUNDS",
+          "real_corpus_qualified": false
+        },
+        "actual_ocr_candidates_keep_ownership_unknown": {
+          "status": "PASS"
+        },
+        "actual_bundled_ocr_binary_and_models_match_release": {
+          "version": "5.4.0.20240606",
+          "runtime_origin": "BUNDLED",
+          "models": [
+            "eng",
+            "chi_tra"
+          ],
+          "executable_sha256": "babb405f4366b480d02cd8ff2bac8d497170f6c1711ce6f3d5d8bf0fb7fa6ed9",
+          "runtime_manifest_sha256": "f3bd40f08b3ecaec6711bf5c8632935228a20e494763b49660cfeb2104f781fa",
+          "model_sha256": {
+            "chi_tra": "529c5b5797d64b126065cd55f2bb4c7fd7b15790798091b1ff259941a829330b",
+            "eng": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"
+          },
+          "actual_version_output": "tesseract v5.4.0.20240606",
+          "image_transport": "STDIN_BINARY_IMAGE"
+        },
+        "clean_host_has_no_ocr_on_path_or_standard_locations": {
+          "system_ocr_on_path": false,
+          "standard_ocr_installations": 0
+        },
+        "actual_ocr_owner_assignment_survives_save_and_reopen": {
+          "original_owner": "UNKNOWN",
+          "current_owner": "EXPLICIT_HUMAN_ASSIGNMENT"
+        },
+        "real_missing_ocr_worker_preserves_explicit_fallback": {
+          "status": "PASS"
+        },
+        "manual_annotation_works_when_ocr_executable_is_missing": {
+          "status": "PASS"
+        },
+        "real_corrupt_bundled_ocr_preserves_explicit_fallback": {
+          "status": "PASS"
+        },
+        "manual_annotation_works_when_bundled_ocr_manifest_is_corrupt": {
+          "status": "PASS"
+        },
+        "canvas_click_updates_actual_editor": {
+          "status": "PASS"
+        },
+        "actual_editor_applies_content_kind_owner_and_sharing": {
+          "status": "PASS"
+        },
+        "original_prediction_remains_separate": {
+          "status": "PASS"
+        },
+        "actual_canvas_draw_creates_manual_annotation": {
+          "status": "PASS"
+        },
+        "actual_canvas_resize_updates_annotation_only": {
+          "status": "PASS"
+        },
+        "actual_remove_button_removes_only_annotation": {
+          "status": "PASS"
+        },
+        "actual_undo_button_restores_removed_annotation": {
+          "status": "PASS"
+        },
+        "actual_multiselection_retains_both_relation_endpoints": {
+          "status": "PASS"
+        },
+        "actual_relation_dialog_creates_group": {
+          "status": "PASS"
+        },
+        "overview_preserves_visible_original": {
+          "status": "PASS"
+        },
+        "actual_overview_row_draws_linked_dimensions": {
+          "status": "PASS"
+        },
+        "canvas_selection_updates_overview_without_leaving_mode": {
+          "status": "PASS"
+        },
+        "completion_does_not_silently_review_unchecked": {
+          "status": "PASS"
+        },
+        "explicit_unknown_survives_human_completion": {
+          "status": "PASS"
+        },
+        "actual_save_button_persists_session": {
+          "status": "PASS"
+        },
+        "actual_window_reopens_saved_corrections": {
+          "status": "PASS"
+        },
+        "unknown_is_not_replaced_by_defaults_after_reopen": {
+          "status": "PASS"
+        },
+        "source_ids_and_work_ids_survive_reopen": {
+          "status": "PASS"
+        },
+        "actual_discard_does_not_save_draft_on_worker_stop": {
+          "saved_snapshot_byte_identical": true,
+          "actual_owned_worker_stopped": true,
+          "actual_close_dialog_used": true
+        },
+        "safe_diagnostic_excludes_private_content_and_paths": {
+          "status": "PASS"
+        },
+        "all_authored_sources_remain_byte_identical": {
+          "status": "PASS"
+        }
+      },
+      "artifacts": [
+        {
+          "path": "result-synthetic\\01-empty-window.png",
+          "sha256": "5534977c14a33ce9f2ecf9af9c3666f57ff1f0e678be32d20975954066451b84",
+          "kind": "ACTUAL_QT_WINDOW"
+        },
+        {
+          "path": "result-synthetic\\06-bilingual-ocr-positive.png",
+          "sha256": "6fbba0776427501cefa9d2521c3256e7a1a6ec84427b0758fa59e687d300aff0",
+          "kind": "ACTUAL_QT_WINDOW"
+        },
+        {
+          "path": "result-synthetic\\05-no-ocr-manual-fallback.png",
+          "sha256": "0d1015fbb77e8ad9528e53ffe000675e9df7a4461934f0185b61622a805710f1",
+          "kind": "ACTUAL_QT_WINDOW"
+        },
+        {
+          "path": "result-synthetic\\07-corrupt-ocr-manual-fallback.png",
+          "sha256": "6a26f2f5f4dc8455b51f87986eeed2fc712b118bc7a3f4e6aff4a460b2cd5b03",
+          "kind": "ACTUAL_QT_WINDOW"
+        },
+        {
+          "path": "result-synthetic\\02-overview-dimensions.png",
+          "sha256": "64f27fe9decd2e9c043a21e417fd01abca57f726458bf5f212e490f692ed2738",
+          "kind": "ACTUAL_QT_WINDOW"
+        },
+        {
+          "path": "result-synthetic\\03-saved-review.png",
+          "sha256": "f77bc003533da6a9a768853490445d9fb1ef11d5960799bd9648824c8449ce16",
+          "kind": "ACTUAL_QT_WINDOW"
+        },
+        {
+          "path": "result-synthetic\\04-reopened-window.png",
+          "sha256": "b13a4d6034659b906855168b1b2f9172c1d73bb686ae14579649965723e1fa3e",
+          "kind": "ACTUAL_QT_WINDOW"
+        }
+      ],
+      "source_unchanged": true,
+      "private_data_included": false,
+      "real_corpus_qualified": false,
+      "native_illustrator_private_format_qualified": false,
+      "os_native_file_picker_automated": false,
+      "bundled_ocr": {
+        "status": "PASS",
+        "required": true,
+        "english_positive": true,
+        "traditional_chinese_positive": true,
+        "missing_corrupt_fallback_verified": true,
+        "models": [
+          "eng",
+          "chi_tra"
+        ],
+        "version": "5.4.0.20240606",
+        "runtime_origin": "BUNDLED",
+        "executable_sha256": "babb405f4366b480d02cd8ff2bac8d497170f6c1711ce6f3d5d8bf0fb7fa6ed9",
+        "runtime_manifest_sha256": "f3bd40f08b3ecaec6711bf5c8632935228a20e494763b49660cfeb2104f781fa",
+        "model_sha256": {
+          "chi_tra": "529c5b5797d64b126065cd55f2bb4c7fd7b15790798091b1ff259941a829330b",
+          "eng": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"
+        },
+        "actual_version_output": "tesseract v5.4.0.20240606",
+        "image_transport": "STDIN_BINARY_IMAGE"
+      },
+      "ocr_scope": "BUNDLED_BILINGUAL_OCR_ACTUAL_OUTLINE_AND_RASTER_POSITIVE",
+      "elapsed_seconds": 119.859
+    }
+  },
+  "product_scope": "ARTWORK_ANALYSIS_REVIEW_ONLY_NOT_OLDER_TRAINING_OR_LAYOUT_PRODUCT",
+  "private_data_included": false,
+  "real_corpus_qualified": false
+}
