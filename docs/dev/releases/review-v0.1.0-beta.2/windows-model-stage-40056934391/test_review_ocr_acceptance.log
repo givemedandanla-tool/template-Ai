@@ -1,0 +1,37 @@
+test_absent_hashes_cannot_match_each_other_and_pass (test_review_ocr_acceptance.ReviewOcrBundleEvidenceTests.test_absent_hashes_cannot_match_each_other_and_pass) ... ok
+test_actual_version_binary_manifest_and_both_inference_models_match (test_review_ocr_acceptance.ReviewOcrBundleEvidenceTests.test_actual_version_binary_manifest_and_both_inference_models_match) ... ok
+test_host_engine_wrong_version_and_changed_models_cannot_pass (test_review_ocr_acceptance.ReviewOcrBundleEvidenceTests.test_host_engine_wrong_version_and_changed_models_cannot_pass) ... ok
+test_changed_source_copy_is_rejected_before_probe_and_original_is_untouched (test_review_ocr_acceptance.ReviewOcrPhysicalFaultTests.test_changed_source_copy_is_rejected_before_probe_and_original_is_untouched) ... ok
+test_fault_probe_refuses_external_or_system_executable (test_review_ocr_acceptance.ReviewOcrPhysicalFaultTests.test_fault_probe_refuses_external_or_system_executable) ... ok
+test_physical_missing_and_corruption_restore_exact_original_bytes_after_failure (test_review_ocr_acceptance.ReviewOcrPhysicalFaultTests.test_physical_missing_and_corruption_restore_exact_original_bytes_after_failure) ... ok
+test_source_stage_fault_uses_verified_owned_copy_and_restores_environment (test_review_ocr_acceptance.ReviewOcrPhysicalFaultTests.test_source_stage_fault_uses_verified_owned_copy_and_restores_environment) ... 
+IMMEDIATE_FAILURE: test_source_stage_fault_uses_verified_owned_copy_and_restores_environment (test_review_ocr_acceptance.ReviewOcrPhysicalFaultTests.test_source_stage_fault_uses_verified_owned_copy_and_restores_environment)
+Traceback (most recent call last):
+  File "D:\a\template-Ai\template-Ai\tests\test_review_ocr_acceptance.py", line 257, in test_source_stage_fault_uses_verified_owned_copy_and_restores_environment
+    self.assertTrue(owned.is_relative_to(authored))
+AssertionError: False is not true
+FAIL
+test_bilingual_sources_enter_actual_import_contract_and_raster_pdf_has_no_text_layer (test_review_ocr_acceptance.ReviewOcrPositiveEvidenceTests.test_bilingual_sources_enter_actual_import_contract_and_raster_pdf_has_no_text_layer) ... ok
+test_both_actual_language_models_are_required (test_review_ocr_acceptance.ReviewOcrPositiveEvidenceTests.test_both_actual_language_models_are_required) ... ok
+test_chinese_tokenization_spaces_do_not_change_expected_glyphs (test_review_ocr_acceptance.ReviewOcrPositiveEvidenceTests.test_chinese_tokenization_spaces_do_not_change_expected_glyphs) ... ok
+test_complete_authored_observation_accepts_actual_expected_candidates (test_review_ocr_acceptance.ReviewOcrPositiveEvidenceTests.test_complete_authored_observation_accepts_actual_expected_candidates) ... ok
+test_embedded_six_glyph_outlines_match_recorded_open_font_provenance (test_review_ocr_acceptance.ReviewOcrPositiveEvidenceTests.test_embedded_six_glyph_outlines_match_recorded_open_font_provenance) ... ok
+test_failure_diagnostics_print_bounded_authored_text_and_refuse_nonfixture_data (test_review_ocr_acceptance.ReviewOcrPositiveEvidenceTests.test_failure_diagnostics_print_bounded_authored_text_and_refuse_nonfixture_data) ... ok
+test_ocr_execution_flag_or_unrelated_nonempty_text_cannot_replace_expected_text (test_review_ocr_acceptance.ReviewOcrPositiveEvidenceTests.test_ocr_execution_flag_or_unrelated_nonempty_text_cannot_replace_expected_text) ... ok
+test_ocr_text_must_reach_existing_semantic_recognizer (test_review_ocr_acceptance.ReviewOcrPositiveEvidenceTests.test_ocr_text_must_reach_existing_semantic_recognizer) ... ok
+test_source_text_or_fabricated_owner_cannot_masquerade_as_ocr_candidate (test_review_ocr_acceptance.ReviewOcrPositiveEvidenceTests.test_source_text_or_fabricated_owner_cannot_masquerade_as_ocr_candidate) ... ok
+test_whole_page_and_out_of_bounds_manual_fallback_are_rejected (test_review_ocr_acceptance.ReviewOcrPositiveEvidenceTests.test_whole_page_and_out_of_bounds_manual_fallback_are_rejected) ... ok
+test_wrong_chinese_word_does_not_count_as_bilingual_success (test_review_ocr_acceptance.ReviewOcrPositiveEvidenceTests.test_wrong_chinese_word_does_not_count_as_bilingual_success) ... ok
+
+======================================================================
+FAIL: test_source_stage_fault_uses_verified_owned_copy_and_restores_environment (test_review_ocr_acceptance.ReviewOcrPhysicalFaultTests.test_source_stage_fault_uses_verified_owned_copy_and_restores_environment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\a\template-Ai\template-Ai\tests\test_review_ocr_acceptance.py", line 257, in test_source_stage_fault_uses_verified_owned_copy_and_restores_environment
+    self.assertTrue(owned.is_relative_to(authored))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 18 tests in 3.349s
+
+FAILED (failures=1)

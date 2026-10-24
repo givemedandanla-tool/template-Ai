@@ -254,11 +254,11 @@ class ReviewOcrPhysicalFaultTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'authored probe interruption'):
                 with missing_ocr_runtime(capability, authored / 'ocr-quarantine'):
                     owned = Path(os.environ['TEMPLATE_AI_BUNDLED_TESSERACT_ROOT'])
-                    self.assertTrue(owned.is_relative_to(authored))
+                    self.assertTrue(owned.resolve().is_relative_to(authored.resolve()))
                     self.assertEqual(owned.parts[-2:], ('engines', 'tesseract'))
                     self.assertFalse((owned / 'tesseract.exe').exists())
                     self.assertTrue((stage / 'tesseract.exe').is_file())
-                    self.assertEqual(Path(os.environ['TEMPLATE_AI_TESSDATA']), models)
+                    self.assertTrue(Path(os.environ['TEMPLATE_AI_TESSDATA']).samefile(models))
                     with self.assertRaises(ocr_runtime.OcrRuntimeError):
                         ocr_runtime.resolve_runtime()
                     raise RuntimeError('authored probe interruption')

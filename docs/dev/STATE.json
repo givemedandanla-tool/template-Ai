@@ -794,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Run exact Windows verified short model stage and owned source fault probe; require all source/EXE/download gates",
+  "next_step": "Run exact Windows with canonical path identity test; build/exercise/package/publish/download only on PASS",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2149,7 +2149,7 @@
     "authorization": "User explicitly requests bundled OCR executable and republish",
     "authorized_utc": "2026-10-24T01:45:40.901142+00:00",
     "source_commit": null,
-    "status": "WINDOWS_SHORT_MODEL_STAGE_AND_OWNED_PROBE_READY",
+    "status": "WINDOWS_PATH_IDENTITY_ASSERTION_READY",
     "plan": "docs/dev/releases/review-v0.1.0-beta.2/IMPLEMENTATION_AND_VALIDATION_PLAN.md",
     "do_not_overwrite_old_release": true,
     "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
@@ -2168,13 +2168,13 @@
     "runtime_version": "5.4.0.20240606",
     "ocr_runtime_files": 107,
     "ocr_source_archives": 25,
-    "windows_run": 40055712702,
+    "windows_run": 40056934391,
     "candidate_source_commit": null,
-    "previous_windows_run": 40055712702,
-    "windows_failure": "Deep Unicode model directory actual test; source-mode owned negative-fault probe rejects stage path",
+    "previous_windows_run": 40056934391,
+    "windows_failure": "Only unit test compares 8.3 short alias to resolved long name lexically; product guards unchanged",
     "local_recovery": ".checkpoints/review-beta2-local-recovery/RECOVERY.json",
     "github_authorization": "RESTORED_ACTUAL_READ_AND_PUSH_CONFIRMED",
-    "windows_positive": "Exact bilingual SVG and raster PDF, ownership/manual save and reopen PASS via binary image STDIN"
+    "windows_positive": "269/270 passed; actual deep Unicode image/models and complete bilingual GUI including physical source fault fallback PASS"
   },
   "review_tool_release_history": [
     {

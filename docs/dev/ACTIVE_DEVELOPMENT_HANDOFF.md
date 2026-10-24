@@ -1,11 +1,13 @@
-# 當前：OCR beta.2第四輪Windows驗證
+# 當前：OCR beta.2第五輪Windows驗證
 
-精確source9fd9d9db720c83b5666b1de74dd7f4c5671e0b65／run40055712702。使用者授權隨包OCR並再次發布，beta.2未發布，beta.1保留。
+精確sourcef1a38ba7c6164a46209a6198aa6f83997720650c／run40056934391。beta.2未發布、beta.1保留。代碼/來源全凍結並推feature/exactrequest；本輪修正Windows受驗model短暫存及source fault ownedcopy。
 
-最新IO修正：PNG原bytes由Python二進位fd送Tesseract stdin stdout，先釋放QImageReader；固定modeldir作cwd／--tessdata-dir .，保留pixels、psm、模型、原中文條件及timeouts。analysis10＋Logo6＋resolver15＋obsunit16＋GUI8全部PASS（真GUI35checks6.891秒），新增>320字含中文image／model路徑真辨識與bounds/原bytes保護。frozen＋package proof強制STDIN_BINARY_IMAGE。
+最新本機回歸75PASS（resolver19/session32/Logo6/analysis10/GUI8，內含真GUI35checks），另obsnegativeguard18PASS。Win把選中模型原bytes複製到owned短temp，原/副SHA、BUNDLE官方blob驗證，不換模型；child停止才清理。SOURCE_EXTERNAL自選模型仍保留原bytes。受控MODEL/IMAGE/PROCESS錯碼不帶private stderr。圖片維持STDIN_BINARY_IMAGE，pixels/psm/中文條件不變。
 
-第三run40054323702/c46aaaa4：261項260PASS/1FAIL/0skip/error/timeout，PDF問題已過；兩媒體均OCR_FAILED，CLI重播exit1無fields，runtime/modelhash/version全正確。影像路徑推算258短名→261長名有WinMAX_PATH風險，尚須當輪before/after證據。新增diagnostic只固定合成白名單，記錄legacy filename與stdin兩種replay stderr／words/bboxes/path長度/Unicode、version/modelhash；不將重播當releaseproof。
+source負向probe先正式驗真stage，再copy到本次SYNTHETIC_ONLY/.../engines/tesseract並照pin全驗，僅隔離副本exe、finally還原env；frozen仍物理驗真正包內engines/tesseract、hostguard不放寬。
 
-若第四輪仍FAIL，讀review-release-evidence/v0.1.0-beta.2/runs/40055712702-1-9fd9d9db720c/source-tests/test_review_tool_gui.log的ASCIIJSON。來源先全PASS→真正EXE包內雙語雙媒體＋實體缺壞人工退路→原private payload gate→六附件草稿與公開兩次下載逐檔/來源ZIP內檔校驗→finalcheckpoint/nativeGit讀回才交付。
+第四run40055712702/source9fd9d9db：263項261PASS/1failure/1error/0skip/timeout，Windows精確英/繁中SVG＋點陣PDF及owner人工保存重開已PASS（stdin修通原CLI exit1）；剩深中文modeldir與CI sourceguard，皆本輪處理。此前sourcec46原先兩媒體CLIexit1（非錯字）、source576 PDFhandle已QBuffer修、source6e62缺zstd/build/LICENSE已精確追蹤75/75。原始失敗保留版本目錄。
 
-source25archives260799778bytes及75notices已精確固定，runtime107entries+manifest108files，模型單份engines/ocr-models；源碼附件另附。第一run缺被build忽略的zstd/build/LICENSE已固定追蹤75/75；第二runPDF暫存handle已改QBuffer通過；GitHub401已恢復。原失敗證據在版本目錄，所有source已推feature/exactrequest。main、私有作品／DB／模型、原未提交timeout/adopt工作不變；無新付費API或資源。
+下一步所有source→真EXE包內雙語雙媒體、實體缺/壞人工退路→原private payload gate→六附件草稿/公開兩次逐檔及25sourceZIP內檔驗證→finalcheckpoint+原生Git讀回才交付。失敗讀review-release-evidence/v0.1.0-beta.2/runs/40056934391-1-f1a38ba7c616小型JSON/log。
+
+runtime107entries+manifest108files，source25archives260799778bytes與75notices，原模型單份engines/ocr-models；新增sources ZIP另附。GitHub短暫401已實際恢復。main、私人資料、原未提交timeout/adopt成果不變；無新付費API/資源。
