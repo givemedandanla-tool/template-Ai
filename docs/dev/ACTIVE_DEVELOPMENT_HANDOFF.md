@@ -9,3 +9,5 @@ Windows 最終 56 PASS／0 skip（接口 26、PDF 17、Jobs/UI 13），接口測
 下一步：有 Illustrator 的機器依指南安裝選配 COM 套件並跑 smoke.py，以新短路徑建立兩畫板合成 AI，確認自動與人工目視結果，再測缺字型／連結、已有未保存文件及取消。原 Inkscape 原生 AI 擴充仍因文字遺失而未接入。DirectWrite 未重現；完整 OCR 未配置。
 
 源碼仍 0.1.0-beta.3.dev1，既有 beta.2 發布不變。不合併 main、不打包發布，私人資料不上傳。依 [同步規則](windows_review_environment/SYNC_POLICY.md) 讀回；共享歷史 AGENTS／STATE／WORK_LOG 不更新。精確提交／收據以本部件 STATE 為準。
+
+快照已讀回：`94fc1be90356fc8290d9f77764ee94e4f06f73f5`；明確部件清單＋checkpoint 逐 blob 相符，全部變更檔逐 byte／SHA256 相符。收據另筆提交後完成本機 HEAD 對齊。
