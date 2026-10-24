@@ -177,18 +177,23 @@ def _ocr_observations(source, cap) -> tuple[list, dict]:
     if not cap.get('available') or not languages:
         return [], dict(status='UNAVAILABLE', reason=cap.get('reason'))
     reader = QImageReader(source['image']);size = reader.size()
+    # Qt can retain an input handle on Windows. OCR receives these exact file
+    # bytes via Python's Unicode/long-path-aware open, never a C filename API.
+    del reader
     if not size.isValid() or size.width()*size.height() > 12_000_000:
         raise ValueError('文字辨識預覽無效或超過像素預算')
-    command = [cap['executable'], source['image'], 'stdout']
+    command = [cap['executable'], 'stdin', 'stdout']
     if cap.get('data_dir'):
-        command += ['--tessdata-dir', cap['data_dir']]
+        command += ['--tessdata-dir', '.']
     # Bundled language-only directories do not contain Tesseract config files.
     # Explicit variables work offline with just the pinned language models.
     command += ['-l', '+'.join(languages), '--psm', '11',
                 '-c', 'tessedit_create_tsv=1', '-c', 'tessedit_create_txt=0']
     env = os.environ.copy();env['OMP_THREAD_LIMIT'] = '1'
-    with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
-        process = subprocess.Popen(command, stdout=output, stderr=errors, env=env,
+    with Path(source['image']).open('rb') as input_image, \
+            tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
+        process = subprocess.Popen(command, stdin=input_image, stdout=output, stderr=errors, env=env,
+                                   cwd=cap.get('data_dir'),
                                    creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
         start=time.monotonic()
         try:
@@ -213,6 +218,7 @@ def _ocr_observations(source, cap) -> tuple[list, dict]:
         models.append(dict(language=lang, sha256=file_digest(file) if file and file.is_file() else None))
     proof = dict(status='OCR_CANDIDATE_NOT_SOURCE_TEXT', languages=languages, models=models,
                  executable_sha256=file_digest(cap['executable']), psm=11,
+                 image_transport='STDIN_BINARY_IMAGE',
                  runtime=deepcopy(cap.get('runtime', {})),
                  calibration='OCR_SCORES_ARE_NOT_PROBABILITY_OF_CORRECT_IDENTITY')
     return lines, proof

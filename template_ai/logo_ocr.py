@@ -24,9 +24,9 @@ def capability():
         return dict(available=False,reason=reason,languages=[],runtime=runtime_report(error=error))
     executable=selected['executable'];data=selected.get('data_dir')
     identity=runtime_report(selected)
-    command=[executable]+(['--tessdata-dir',data] if data else [])+['--list-langs']
+    command=[executable]+(['--tessdata-dir','.'] if data else [])+['--list-langs']
     try:result=subprocess.run(command,capture_output=True,text=True,encoding='utf-8',errors='replace',
-                              timeout=10,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+                              timeout=10,cwd=data,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     except (OSError,subprocess.TimeoutExpired):
         identity.update(state='UNAVAILABLE',error_code='OCR_EXECUTION_UNAVAILABLE')
         return dict(available=False,reason='本機OCR執行檔不可用／逾時，未假稱已辨識',languages=[],runtime=identity)
@@ -52,6 +52,7 @@ def recognize(asset):
     reader=QImageReader(asset['image']);size=reader.size()
     if not size.isValid() or size.width()*size.height()>12_000_000:raise ValueError('OCR圖片超出1200萬像素預算')
     image=reader.read()
+    del reader
     if image.isNull():raise ValueError('OCR來源圖片不可讀')
     width,height=asset['source_width_mm'],asset['source_height_mm']
     crop=Rect(**asset['crop']) if asset.get('crop') else Rect(0,0,width,height)
@@ -63,13 +64,15 @@ def recognize(asset):
     with tempfile.TemporaryDirectory(prefix='template-ai-ocr-') as directory:
         source=Path(directory)/'region.png'
         if not image.copy(region).save(str(source),'PNG'):raise ValueError('OCR暫存失敗')
-        command=[context['executable'],str(source),'stdout']
-        if context['data_dir']:command+=['--tessdata-dir',context['data_dir']]
+        command=[context['executable'],'stdin','stdout']
+        if context['data_dir']:command+=['--tessdata-dir','.']
         # 自訂語言資料目錄沒有系統 configs/tsv；直接使用官方輸出參數。
         command+=['-l','+'.join(context['languages']),'--psm','11',
                   '-c','tessedit_create_tsv=1','-c','tessedit_create_txt=0']
-        result=subprocess.run(command,capture_output=True,text=True,timeout=30,env=environment,
-            creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+        with source.open('rb') as input_image:
+            result=subprocess.run(command,stdin=input_image,capture_output=True,text=True,encoding='utf-8',
+                timeout=30,env=environment,cwd=context['data_dir'],
+                creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     if result.returncode:raise ValueError('本機OCR處理失敗，未建立身分／核准資料')
     if len(result.stdout.encode())>1_048_576:raise ValueError('OCR文字超出單次metadata預算')
     if not result.stdout.startswith('level\tpage_num\t'):
@@ -88,6 +91,7 @@ def recognize(asset):
                                   w=w*width/image.width(),h=h*height/image.height())))
     if errors(asset,False):raise ValueError('OCR期間來源已變更，線索不可使用')
     return dict(method='TESSERACT_LOCAL_OCR_CLUES_ONLY',languages=context['languages'],words=words,
+        image_transport='STDIN_BINARY_IMAGE',
         missing_languages=[language for language in ('eng','chi_tra') if language not in context['languages']],
         native_editability='UNKNOWN',company_identity='UNCONFIRMED',
         scope='Hints only; not field truth, logo reconstruction, company merge or publication approval')

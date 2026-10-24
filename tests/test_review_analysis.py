@@ -159,6 +159,49 @@ class ReviewAnalysisTests(unittest.TestCase):
         self.assertTrue(any(i['code']=='PAGE_IMPORT_FAILED' and i['page']==2 for i in result['issues']))
 
     @unittest.skipUnless(shutil.which('tesseract'), 'actual Tesseract is required')
+    def test_actual_ocr_binary_stdin_handles_deep_unicode_image_and_model_paths(self):
+        from template_ai.review_tool.analysis import _ocr_capability, _ocr_observations
+        cap = _ocr_capability()
+        self.assertTrue(cap['available'], cap.get('reason'))
+        original = self.make_image()
+        deep = self.root / '中文影像'
+        while len(str(deep.resolve())) < 320:
+            deep /= 'deep-image-location-' + 'a' * 24
+        deep.mkdir(parents=True)
+        image = deep / '待判讀的測試圖片.png'
+        shutil.copyfile(original, image)
+        before = image.read_bytes()
+        model_dir = self.root / '繁體模型'
+        while len(str(model_dir.resolve())) < 220:
+            model_dir /= 'fixed-model-location-' + 'b' * 18
+        model_dir.mkdir(parents=True)
+        for language in ('eng', 'chi_tra'):
+            shutil.copyfile(Path(cap['data_dir']) / (language + '.traineddata'),
+                            model_dir / (language + '.traineddata'))
+        selected = dict(cap, data_dir=str(model_dir.resolve()))
+        real_popen = subprocess.Popen
+        with patch('template_ai.review_tool.analysis.subprocess.Popen', wraps=real_popen) as launched:
+            lines, proof = _ocr_observations({'image': str(image), 'width_mm': 120., 'height_mm': 40.}, selected)
+        text = ' '.join(line['text'] for line in lines)
+        self.assertIn('HELLO', text)
+        self.assertIn('EXAMPLE', text)
+        self.assertGreater(len(str(image.resolve())), 260)
+        self.assertEqual(launched.call_args.args[0][1:3], ['stdin', 'stdout'])
+        self.assertTrue(Path(launched.call_args.kwargs['stdin'].name).samefile(image))
+        self.assertTrue(Path(launched.call_args.kwargs['cwd']).samefile(model_dir))
+        self.assertEqual(proof['image_transport'], 'STDIN_BINARY_IMAGE')
+        self.assertEqual(set(proof['languages']), {'eng', 'chi_tra'})
+        for line in lines:
+            rect = line['rect']
+            self.assertGreater(rect['w'], 0)
+            self.assertGreater(rect['h'], 0)
+            self.assertGreaterEqual(rect['x'], 0)
+            self.assertGreaterEqual(rect['y'], 0)
+            self.assertLessEqual(rect['x'] + rect['w'], 120.)
+            self.assertLessEqual(rect['y'] + rect['h'], 40.)
+        self.assertEqual(image.read_bytes(), before)
+
+    @unittest.skipUnless(shutil.which('tesseract'), 'actual Tesseract is required')
     def test_actual_ocr_on_raster_does_not_fabricate_physical_sizes(self):
         self.source=self.make_image()
         result=self.analyse(ocr=True)

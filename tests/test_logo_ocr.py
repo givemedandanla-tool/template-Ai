@@ -1,6 +1,8 @@
 """實際 Tesseract 推論與版本／來源保護；不是以模擬字串代替OCR驗證。"""
 from pathlib import Path
 import tempfile
+import shutil
+import subprocess
 import unittest
 from unittest.mock import patch
 import sys
@@ -40,6 +42,36 @@ class LogoOcrTests(unittest.TestCase):
             rect=word['source_region_mm'];self.assertGreater(rect['w'],0);self.assertGreater(rect['h'],0)
             self.assertGreaterEqual(rect['x'],0);self.assertLessEqual(rect['x']+rect['w'],100)
         self.assertEqual(self.library.logos(),[])
+
+    def test_actual_logo_ocr_stdin_preserves_pixels_in_deep_unicode_roi_cache(self):
+        deep=self.root/'中文來源與暫存'
+        while len(str(deep.resolve()))<320:deep/='deep-ocr-roi-'+'x'*30
+        deep.mkdir(parents=True)
+        original=deep/'測試圖片.png'
+        shutil.copyfile(self.payload['image'],original)
+        payload=checked_payload(dict(image=str(original),svg='',source_width_mm=100,
+                                     source_height_mm=30,crop=None))
+        before=original.read_bytes()
+        real_temporary=tempfile.TemporaryDirectory
+        real_run=subprocess.run
+        def local_temporary(**kwargs):
+            return real_temporary(prefix='中文ROI-',dir=deep)
+        with patch('template_ai.logo_ocr.tempfile.TemporaryDirectory',side_effect=local_temporary), \
+                patch('template_ai.logo_ocr.subprocess.run',wraps=real_run) as launched:
+            result=recognize(payload)
+        words=' '.join(row['text'] for row in result['words']).upper()
+        self.assertIn('EXAMPLE',words);self.assertIn('BRAND',words)
+        inference=next(call for call in launched.call_args_list if call.args[0][1:3]==['stdin','stdout'])
+        self.assertGreater(len(inference.kwargs['stdin'].name),260)
+        self.assertEqual(result['image_transport'],'STDIN_BINARY_IMAGE')
+        self.assertEqual(result['company_identity'],'UNCONFIRMED')
+        self.assertEqual(original.read_bytes(),before)
+        for word in result['words']:
+            rect=word['source_region_mm']
+            self.assertGreater(rect['w'],0);self.assertGreater(rect['h'],0)
+            self.assertGreaterEqual(rect['x'],0);self.assertGreaterEqual(rect['y'],0)
+            self.assertLessEqual(rect['x']+rect['w'],100)
+            self.assertLessEqual(rect['y']+rect['h'],30)
 
     def test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image(self):
         candidate=self.store.propose(self.payload,90,54);before=Path(self.payload['image']).read_bytes()

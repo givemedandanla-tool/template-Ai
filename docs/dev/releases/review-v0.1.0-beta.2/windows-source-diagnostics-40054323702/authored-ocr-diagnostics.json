@@ -1,0 +1,174 @@
+{
+  "scope": "DERIVED_FROM_AUTHORED_ONLY_CI_LOG",
+  "fixtures": [
+    {
+      "schema_version": 1,
+      "scope": "AUTHORED_FIXTURE_ONLY_NOT_USER_DATA",
+      "fixture_name": "DEMO-bilingual-outline.svg",
+      "source_sha256": "88d95f8e4236c4392276adf0b0b2e8f2a78736ef437e866af4d4eb5aac64e2ec",
+      "expected_text": [
+        "測試有限公司",
+        "REVIEW DEMO",
+        "0900-000-000",
+        "hello@example.com"
+      ],
+      "capability": {
+        "inkscape_conversion_executed": false,
+        "inkscape_runtime": {
+          "executable_sha256": "08eca52941dc5d77c2934080a33a8540107381f8939120a780628062341e0e64",
+          "origin": "EXTERNAL",
+          "policy": "SOURCE_EXTERNAL",
+          "version": "1.4.2"
+        },
+        "local_only": true,
+        "native_illustrator_mapping": "UNKNOWN",
+        "ocr_available": true,
+        "ocr_executed": true,
+        "ocr_languages": [
+          "chi_tra",
+          "eng"
+        ],
+        "ocr_requested": true,
+        "ocr_runtime": {
+          "executable_sha256": "babb405f4366b480d02cd8ff2bac8d497170f6c1711ce6f3d5d8bf0fb7fa6ed9",
+          "model_commit": "65727574dfcd264acbb0c3e07860e4e9e9b22185",
+          "model_sha256": {
+            "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+            "chi_tra.traineddata": "529c5b5797d64b126065cd55f2bb4c7fd7b15790798091b1ff259941a829330b",
+            "eng.traineddata": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"
+          },
+          "origin": "BUNDLED",
+          "policy": "BUNDLED_ONLY",
+          "runtime_manifest_sha256": "f3bd40f08b3ecaec6711bf5c8632935228a20e494763b49660cfeb2104f781fa",
+          "state": "READY",
+          "verified_files": 107,
+          "version": "5.4.0.20240606"
+        },
+        "unknowns_are_not_zero": true,
+        "vector_analysis_executed": true
+      },
+      "actual_fields": [],
+      "actual_fields_count": 0,
+      "fields_truncated": false,
+      "issue_codes": [
+        "OCR_FAILED"
+      ],
+      "pages": [
+        {
+          "image_sha256": "07a2c6c8ce90b8b5d7fdf18d2c1b484992f45139f617764e7c2e34c560f3aef0",
+          "width_pixels": 1600,
+          "height_pixels": 800,
+          "width_mm": 60.0,
+          "height_mm": 30.0,
+          "renderer_identity": {
+            "version": "1.4.2",
+            "policy": "SOURCE_EXTERNAL",
+            "executable_sha256": "08eca52941dc5d77c2934080a33a8540107381f8939120a780628062341e0e64"
+          },
+          "ocr_evidence": {},
+          "diagnostic_replay": {
+            "not_original_invocation": true,
+            "languages": [
+              "chi_tra",
+              "eng"
+            ],
+            "exit_code": 1,
+            "words": [],
+            "maximum_words": 64,
+            "output_truncated": false
+          }
+        }
+      ],
+      "actual_runtime_version": [
+        "tesseract v5.4.0.20240606",
+        " leptonica-1.84.1"
+      ],
+      "runtime_version_exit_code": 0
+    },
+    {
+      "schema_version": 1,
+      "scope": "AUTHORED_FIXTURE_ONLY_NOT_USER_DATA",
+      "fixture_name": "DEMO-bilingual-raster.pdf",
+      "source_sha256": "d22d45201f701214cd5ffe1ad1fe86f9fe4573887476cfff77ed5839279c028d",
+      "expected_text": [
+        "測試有限公司",
+        "REVIEW DEMO",
+        "0900-000-000",
+        "hello@example.com"
+      ],
+      "capability": {
+        "inkscape_conversion_executed": false,
+        "inkscape_runtime": {
+          "executable_sha256": "08eca52941dc5d77c2934080a33a8540107381f8939120a780628062341e0e64",
+          "origin": "EXTERNAL",
+          "policy": "SOURCE_EXTERNAL",
+          "version": "1.4.2"
+        },
+        "local_only": true,
+        "native_illustrator_mapping": "UNKNOWN",
+        "ocr_available": true,
+        "ocr_executed": true,
+        "ocr_languages": [
+          "chi_tra",
+          "eng"
+        ],
+        "ocr_requested": true,
+        "ocr_runtime": {
+          "executable_sha256": "babb405f4366b480d02cd8ff2bac8d497170f6c1711ce6f3d5d8bf0fb7fa6ed9",
+          "model_commit": "65727574dfcd264acbb0c3e07860e4e9e9b22185",
+          "model_sha256": {
+            "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+            "chi_tra.traineddata": "529c5b5797d64b126065cd55f2bb4c7fd7b15790798091b1ff259941a829330b",
+            "eng.traineddata": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"
+          },
+          "origin": "BUNDLED",
+          "policy": "BUNDLED_ONLY",
+          "runtime_manifest_sha256": "f3bd40f08b3ecaec6711bf5c8632935228a20e494763b49660cfeb2104f781fa",
+          "state": "READY",
+          "verified_files": 107,
+          "version": "5.4.0.20240606"
+        },
+        "unknowns_are_not_zero": true,
+        "vector_analysis_executed": false
+      },
+      "actual_fields": [],
+      "actual_fields_count": 0,
+      "fields_truncated": false,
+      "issue_codes": [
+        "VECTOR_ANALYSIS_UNAVAILABLE",
+        "OCR_FAILED"
+      ],
+      "pages": [
+        {
+          "image_sha256": "d98137a1cc3c4b7dc9537edc32255a35e457b18d6f4cc5baea7fe3659c1611aa",
+          "width_pixels": 1600,
+          "height_pixels": 800,
+          "width_mm": 59.97222222222222,
+          "height_mm": 29.98611111111111,
+          "renderer_identity": {
+            "version": "1.4.2",
+            "policy": "SOURCE_EXTERNAL",
+            "executable_sha256": "08eca52941dc5d77c2934080a33a8540107381f8939120a780628062341e0e64"
+          },
+          "ocr_evidence": {},
+          "diagnostic_replay": {
+            "not_original_invocation": true,
+            "languages": [
+              "chi_tra",
+              "eng"
+            ],
+            "exit_code": 1,
+            "words": [],
+            "maximum_words": 64,
+            "output_truncated": false
+          }
+        }
+      ],
+      "actual_runtime_version": [
+        "tesseract v5.4.0.20240606",
+        " leptonica-1.84.1"
+      ],
+      "runtime_version_exit_code": 0
+    }
+  ]
+}

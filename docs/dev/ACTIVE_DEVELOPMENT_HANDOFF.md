@@ -1,9 +1,11 @@
-# 當前：OCR beta.2新版Windows驗證中
+# 當前：OCR beta.2第三輪Windows驗證
 
-最新source576d17eba41e57ad14f985ebf14eb389cc29098d，run40053298537。使用者已授權隨包OCR並再次發布，新review-v0.1.0-beta.2；未通過全部gate前不得稱已發布。
+最新source c46aaaa4ba0cb649feca0dc66d5a645681c027c2／run40054323702。新review-v0.1.0-beta.2未發布，beta.1保留。
 
-第一run40052634649／source6e62fd51 prepare失敗，固定75notice只74進Git（zstd/build/LICENSE被build忽略）。已精確強制加入合法0bytes notice，不改hash／檢查；推前identity423files／75notice committed PASS。GitHub認證一度401，實際read＋push已恢復，不需API key。原fail trace保留版本目錄。
+第二run40053298537（576d17e）prepare/cache PASS，22模組260項：258PASS／1FAIL／1ERROR／0skip。PDF暫存清理WinError32，現fixture以QBuffer寫入／讀取並finally close/delete；真GUI未認出精確繁中字串，現只增加固定合成來源白名單之有界actualfield/previewhash/model/lang/runtime/TSVlineID診斷，原中文要求與產品演算法不變。16unit與35真來源GUI PASS。
 
-代碼／源碼／授權全凍結。核心60、background10、OCR驗收單元15、真來源GUI35、builder19、sources8、release guards33項各自PASS，不能當Windows成品。runtime27PE+notices共108files；固定25對應sourcearchives另附，模型維持單份engines/ocr-models。
+下一步若第三run來源失敗，從review-release-evidence/v0.1.0-beta.2/runs/40054323702-1-c46aaaa4ba0c/source-tests/test_review_tool_gui.log讀ASCIIJSON實際兩媒體候選及TSV。語言排序已排除：review analysis固定chi_tra+eng。要分辨漏字／分行／預覽，不盲改模型／閾值或降低條件。PDF問題也須真Windows通過。
 
-下一步精確Windows22相關隔離模組／真EXE包內雙語雙媒體／缺壞人工退路／原package gate／六附件草稿與公開兩次實際下載，完成後finalcheckpoint+原生Git讀回。beta.1不覆寫、main不合併；舊產品／私人AI／硬體／實印資格不升級。原timeout/adopt未提交工作保留。私人作品仍本機，沒有新付費API／資源。
+第一run缺固定空notice zstd/build/LICENSE，已精確納入Git，全75notice及identity423PASS；GitHub短暫401已實際read/push恢復。25corresponding sources／75notices與runtime107檔均固定，source附件實驗全驗。代碼/來源全已推feature＋exactrequest，原始失敗見版本目錄。
+
+全source→真EXE包內英/繁中兩媒體+實體缺壞人工退路→原private包裝gate→六附件兩次真下載→finalcheckpoint/nativeGit讀回才交付。main、私人作品／字型／DB、原未提交timeout/adopt工作不變；沒有新增付費API或資源。

@@ -105,7 +105,8 @@ class OcrRuntimeTests(unittest.TestCase):
         self.assertEqual(set(context['languages']), {'eng', 'chi_tra'})
         command = run.call_args.args[0]
         self.assertTrue(Path(command[0]).samefile(self.executable))
-        self.assertTrue(Path(command[command.index('--tessdata-dir') + 1]).samefile(self.models))
+        self.assertEqual(command[command.index('--tessdata-dir') + 1], '.')
+        self.assertTrue(Path(run.call_args.kwargs['cwd']).samefile(self.models))
         self.assertEqual(context['runtime']['state'], 'READY')
         self.assertNotIn(str(self.root), json.dumps(context['runtime']))
 

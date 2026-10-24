@@ -121,6 +121,8 @@ class ReviewOcrPositiveEvidenceTests(unittest.TestCase):
         self.assertIsNotNone(app)
 
     def test_failure_diagnostics_print_bounded_authored_text_and_refuse_nonfixture_data(self):
+        from PySide6.QtGui import QImage
+
         with tempfile.TemporaryDirectory() as raw:
             root = Path(raw)
             source = authored_positive_source()
@@ -129,6 +131,11 @@ class ReviewOcrPositiveEvidenceTests(unittest.TestCase):
             with self.assertRaises(FileNotFoundError):
                 authored_ocr_failure_diagnostics(source, root, {'executable': sys.executable})
             (root / 'SYNTHETIC_ONLY').write_text('NO_PRIVATE_DATA', encoding='ascii')
+            image = root / 'preview.png'
+            pixels = QImage(8, 8, QImage.Format.Format_RGB32)
+            pixels.fill('white')
+            self.assertTrue(pixels.save(str(image)))
+            source['analysis']['pages'] = [dict(image=str(image), width_mm=2., height_mm=2.)]
             log = io.StringIO()
             with redirect_stdout(log):
                 diagnostic = authored_ocr_failure_diagnostics(source, root, {'executable': sys.executable})
@@ -136,6 +143,18 @@ class ReviewOcrPositiveEvidenceTests(unittest.TestCase):
             self.assertIn('AUTHORED_OCR_FAILURE_DIAGNOSTICS:', log.getvalue())
             self.assertEqual(diagnostic['scope'], 'AUTHORED_FIXTURE_ONLY_NOT_USER_DATA')
             self.assertNotIn(str(root), log.getvalue())
+            page = diagnostic['pages'][0]
+            self.assertEqual(page['image_path_features']['basename'], 'preview.png')
+            self.assertEqual(page['image_path_features']['resolved_length'], len(str(image.resolve())))
+            for key, transport in (('diagnostic_replay', 'LEGACY_FILENAME'),
+                                   ('diagnostic_stdin_replay', 'STDIN_BINARY_IMAGE')):
+                replay = page[key]
+                self.assertEqual(replay['image_transport'], transport)
+                self.assertTrue(replay['not_release_qualification'])
+                self.assertEqual(replay['image_sha256'], page['image_sha256'])
+                self.assertNotEqual(replay['exit_code'], 0)  # Python is deliberately not an OCR engine.
+                self.assertTrue(replay['stderr'])
+                self.assertLessEqual(len(replay['stderr']), 4096)
 
 
 class ReviewOcrBundleEvidenceTests(unittest.TestCase):
@@ -149,6 +168,7 @@ class ReviewOcrBundleEvidenceTests(unittest.TestCase):
             executable_sha256=pin['executable_sha256'], runtime_manifest_sha256=pin['manifest_sha256'],
             verified_files=27)
         source['analysis']['pages'] = [dict(ocr_evidence=dict(executable_sha256='a' * 64,
+            image_transport='STDIN_BINARY_IMAGE',
             models=[dict(language='eng', sha256='c' * 64), dict(language='chi_tra', sha256='d' * 64)]))]
         return source, pin, models
 
@@ -159,7 +179,7 @@ class ReviewOcrBundleEvidenceTests(unittest.TestCase):
         self.assertEqual(proof['models'], ['eng', 'chi_tra'])
 
     def test_host_engine_wrong_version_and_changed_models_cannot_pass(self):
-        for mutation in ('host', 'version', 'binary', 'model', 'no-proof'):
+        for mutation in ('host', 'version', 'binary', 'model', 'filename', 'no-proof'):
             source, pin, models = self.fixture()
             version = 'tesseract v' + VERSION
             if mutation == 'host':
@@ -170,6 +190,8 @@ class ReviewOcrBundleEvidenceTests(unittest.TestCase):
                 source['analysis']['capabilities']['ocr_runtime']['executable_sha256'] = 'e' * 64
             elif mutation == 'model':
                 source['analysis']['pages'][0]['ocr_evidence']['models'].pop()
+            elif mutation == 'filename':
+                source['analysis']['pages'][0]['ocr_evidence']['image_transport'] = 'LEGACY_FILENAME'
             else:
                 source['analysis']['pages'] = []
             with self.subTest(mutation=mutation), self.assertRaises(RuntimeError):

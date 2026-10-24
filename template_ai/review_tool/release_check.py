@@ -121,42 +121,63 @@ def authored_ocr_failure_diagnostics(source, authored_root, capability):
     except (OSError, ValueError, subprocess.TimeoutExpired, KeyError) as error:
         diagnostic['runtime_version_error_type'] = type(error).__name__
     for page in source.get('analysis', {}).get('pages', [])[:2]:
-        image = Path(page['image']).resolve()
+        given_image = str(page['image'])
+        image = Path(given_image).resolve()
         image.relative_to(root)
         reader = QImageReader(str(image));size = reader.size()
+        del reader
         proof = page.get('ocr_evidence') or {}
         row = dict(image_sha256=_digest(image), width_pixels=size.width(), height_pixels=size.height(),
                    width_mm=page.get('width_mm'), height_mm=page.get('height_mm'),
-                   renderer_identity=page.get('renderer_identity'), ocr_evidence=proof)
+                   renderer_identity=page.get('renderer_identity'), ocr_evidence=proof,
+                   image_path_features=dict(given_length=len(given_image), resolved_length=len(str(image)),
+                       basename=image.name, has_non_ascii=not str(image).isascii(),
+                       given_has_extended_prefix=given_image.startswith('\\\\?\\'),
+                       resolved_has_extended_prefix=str(image).startswith('\\\\?\\'),
+                       resolved_at_or_over_windows_max_path=len(str(image)) >= 260))
         diagnostic['pages'].append(row)
         # Replay is explicitly identified: original raw TSV is not retained by
         # the product adapter. Keep word/block/line IDs to expose split lines.
         languages = proof.get('languages') or [language for language in ('chi_tra', 'eng')
                                                if language in capability.get('languages', [])]
-        command = [capability.get('executable', ''), str(image), 'stdout']
+        arguments = []
+        working_directory = capability.get('data_dir')
         if capability.get('data_dir'):
-            command += ['--tessdata-dir', capability['data_dir']]
-        command += ['-l', '+'.join(languages), '--psm', '11',
-                    '-c', 'tessedit_create_tsv=1', '-c', 'tessedit_create_txt=0']
-        try:
-            environment = os.environ.copy();environment['OMP_THREAD_LIMIT'] = '1'
-            replay = subprocess.run(command, capture_output=True, text=True, encoding='utf-8',
-                errors='replace', timeout=15, env=environment,
-                creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
-            words = []
-            for word in csv.DictReader(replay.stdout[:1_048_576].splitlines(), delimiter='\t'):
-                if (word.get('text') or '').strip():
-                    words.append({key: str(word.get(key, ''))[:80] for key in (
-                        'text', 'level', 'page_num', 'block_num', 'par_num', 'line_num',
-                        'word_num', 'left', 'top', 'width', 'height', 'conf')})
-                    if len(words) >= 64:
-                        break
-            row['diagnostic_replay'] = dict(not_original_invocation=True, languages=languages,
-                exit_code=replay.returncode, words=words, maximum_words=64,
-                output_truncated=len(replay.stdout) > 1_048_576)
-        except (OSError, ValueError, subprocess.TimeoutExpired) as error:
-            row['diagnostic_replay'] = dict(not_original_invocation=True, languages=languages,
-                                            error_type=type(error).__name__)
+            arguments += ['--tessdata-dir', '.']
+        arguments += ['-l', '+'.join(languages), '--psm', '11',
+                      '-c', 'tessedit_create_tsv=1', '-c', 'tessedit_create_txt=0']
+        for transport, key in (('LEGACY_FILENAME', 'diagnostic_replay'),
+                               ('STDIN_BINARY_IMAGE', 'diagnostic_stdin_replay')):
+            command = [capability.get('executable', ''),
+                       str(image) if transport == 'LEGACY_FILENAME' else 'stdin', 'stdout'] + arguments
+            try:
+                environment = os.environ.copy();environment['OMP_THREAD_LIMIT'] = '1'
+                with image.open('rb') as binary_image:
+                    replay = subprocess.run(command, capture_output=True, text=True, encoding='utf-8',
+                        errors='replace', timeout=15, env=environment, cwd=working_directory,
+                        stdin=binary_image if transport == 'STDIN_BINARY_IMAGE' else None,
+                        creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+                words = []
+                for word in csv.DictReader(replay.stdout[:1_048_576].splitlines(), delimiter='\t'):
+                    if (word.get('text') or '').strip():
+                        words.append({name: str(word.get(name, ''))[:80] for name in (
+                            'text', 'level', 'page_num', 'block_num', 'par_num', 'line_num',
+                            'word_num', 'left', 'top', 'width', 'height', 'conf')})
+                        if len(words) >= 64:
+                            break
+                stderr = replay.stderr
+                for sensitive in (str(image), given_image, str(root), capability.get('data_dir'),
+                                  capability.get('executable')):
+                    if sensitive:
+                        stderr = stderr.replace(str(sensitive), '<AUTHORED_LOCAL_PATH>')
+                row[key] = dict(not_original_invocation=True, not_release_qualification=True,
+                    image_transport=transport, languages=languages, model_directory_mode='CWD_DOT',
+                    image_sha256=row['image_sha256'], exit_code=replay.returncode, words=words,
+                    maximum_words=64, output_truncated=len(replay.stdout) > 1_048_576,
+                    stderr=stderr[:4096], stderr_truncated=len(stderr) > 4096)
+            except (OSError, ValueError, subprocess.TimeoutExpired) as error:
+                row[key] = dict(not_original_invocation=True, not_release_qualification=True,
+                    image_transport=transport, languages=languages, error_type=type(error).__name__)
     # All text above comes only from this positively authored synthetic source.
     # Technical paths in renderer metadata are unnecessary; retain safe hashes.
     for row in diagnostic['pages']:
@@ -199,6 +220,8 @@ def assert_bundled_ocr(source, pin, model_manifest, version_line):
               if page.get('ocr_evidence')]
     _require(proofs, 'Actual worker did not preserve OCR invocation evidence')
     for proof in proofs:
+        _require(proof.get('image_transport') == 'STDIN_BINARY_IMAGE',
+                 'Actual bundled OCR did not use the path-safe binary image input')
         _require(proof.get('executable_sha256') == pin['executable_sha256']
                  and {row['language']: row['sha256'] for row in proof.get('models', [])}
                  == expected_models,
@@ -206,7 +229,8 @@ def assert_bundled_ocr(source, pin, model_manifest, version_line):
     return dict(version=VERSION, runtime_origin='BUNDLED', models=['eng', 'chi_tra'],
                 executable_sha256=pin['executable_sha256'],
                 runtime_manifest_sha256=pin['manifest_sha256'],
-                model_sha256=expected_models, actual_version_output=version_line.strip())
+                model_sha256=expected_models, actual_version_output=version_line.strip(),
+                image_transport='STDIN_BINARY_IMAGE')
 
 
 def authored_ocr_sources(root):

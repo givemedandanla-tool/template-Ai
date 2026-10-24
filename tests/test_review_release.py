@@ -54,7 +54,8 @@ class ReviewReleaseTests(unittest.TestCase):
 
     def ocr_proof(self):
         pin = dict(version='5.4.0.20240606', executable_sha256='c'*64, manifest_sha256='d'*64)
-        detail = dict(status='PASS', required=True, runtime_origin='BUNDLED', english_positive=True,
+        detail = dict(status='PASS', required=True, runtime_origin='BUNDLED',
+            image_transport='STDIN_BINARY_IMAGE', english_positive=True,
             traditional_chinese_positive=True, missing_corrupt_fallback_verified=True,
             models=['eng', 'chi_tra'], version=pin['version'], executable_sha256='c'*64,
             runtime_manifest_sha256='d'*64)
@@ -70,7 +71,7 @@ class ReviewReleaseTests(unittest.TestCase):
 
     def test_legacy_optional_or_host_ocr_cannot_qualify_new_bundle(self):
         report, pin = self.ocr_proof()
-        for change in [{}, {'runtime_origin':'HOST'}, {'models':['eng']}, {'required':'true'}]:
+        for change in [{}, {'runtime_origin':'HOST'}, {'models':['eng']}, {'required':'true'}, {'image_transport':'LEGACY_FILENAME'}]:
             detail = {} if not change else dict(report['bundled_ocr'], **change)
             with self.subTest(change=change), self.assertRaisesRegex(ValueError, 'positively verify'):
                 release.validate_bundled_ocr_acceptance(dict(bundled_ocr=detail), pin)

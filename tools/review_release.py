@@ -428,6 +428,7 @@ def validate_bundled_ocr_acceptance(report, pin):
     detail = report.get('bundled_ocr', {})
     if (not isinstance(detail, dict) or detail.get('status') != 'PASS'
             or detail.get('required') is not True or detail.get('runtime_origin') != 'BUNDLED'
+            or detail.get('image_transport') != 'STDIN_BINARY_IMAGE'
             or detail.get('english_positive') is not True
             or detail.get('traditional_chinese_positive') is not True
             or detail.get('missing_corrupt_fallback_verified') is not True
