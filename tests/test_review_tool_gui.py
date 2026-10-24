@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 
 from PySide6.QtCore import QEventLoop, QTimer, Qt
-from PySide6.QtGui import QImage
+from PySide6.QtGui import QColor, QImage, QPalette
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication, QMessageBox
 
@@ -37,6 +37,93 @@ def wait_until(predicate, milliseconds=90000):
 
 
 class ReviewToolGuiTests(unittest.TestCase):
+    def test_popup_menus_remain_readable_with_dark_system_palette(self):
+        """Render both real menus, including selected and unavailable items."""
+        from template_ai.review_tool.window import ReviewWindow
+
+        def luminance(color):
+            channels = [channel / 255 for channel in color.getRgb()[:3]]
+            channels = [c / 12.92 if c <= .04045 else ((c + .055) / 1.055) ** 2.4
+                        for c in channels]
+            return sum(c * weight for c, weight in zip(channels, [.2126, .7152, .0722]))
+
+        def contrast(first, second):
+            light, dark = sorted([luminance(first), luminance(second)], reverse=True)
+            return (light + .05) / (dark + .05)
+
+        def rendered_contrast(menu, action, expected_background):
+            rect = menu.actionGeometry(action)
+            self.assertFalse(rect.isEmpty())
+            snapshot = menu.grab()
+            ratio = snapshot.devicePixelRatio()
+            image = snapshot.toImage()
+            background = image.pixelColor(round((rect.left() + 4) * ratio),
+                                          round(rect.center().y() * ratio))
+            self.assertEqual(background.name(), expected_background)
+            colors = {image.pixelColor(x, y).rgba()
+                      for x in range(round((rect.left() + 14) * ratio),
+                                     round((rect.right() - 14) * ratio))
+                      for y in range(round((rect.top() + 4) * ratio),
+                                     round((rect.bottom() - 4) * ratio))}
+            return max(contrast(QColor.fromRgba(color), background) for color in colors)
+
+        original_palette = QPalette(APP.palette())
+        dark_palette = QPalette(original_palette)
+        for group in (QPalette.ColorGroup.Active, QPalette.ColorGroup.Inactive,
+                      QPalette.ColorGroup.Disabled):
+            for role in (QPalette.ColorRole.Window, QPalette.ColorRole.Base,
+                         QPalette.ColorRole.Button):
+                dark_palette.setColor(group, role, QColor('#111111'))
+            for role in (QPalette.ColorRole.WindowText, QPalette.ColorRole.Text,
+                         QPalette.ColorRole.ButtonText):
+                dark_palette.setColor(group, role, QColor('#eeeeee'))
+        APP.setPalette(dark_palette)
+        try:
+            with tempfile.TemporaryDirectory(prefix='review-dark-menu-') as raw:
+                window = ReviewWindow(Path(raw))
+                try:
+                    window.show()
+                    APP.processEvents()
+                    for button in (window.more_button, window.add_mark_button):
+                        with self.subTest(menu=button.text()):
+                            menu = button.menu()
+                            original_actions = [(action, action.isEnabled())
+                                                for action in menu.actions()]
+                            separator = menu.addSeparator()
+                            unavailable = menu.addAction('Unavailable synthetic action')
+                            unavailable.setEnabled(False)
+                            menu.popup(button.mapToGlobal(button.rect().bottomLeft()))
+                            APP.processEvents()
+                            menu.setActiveAction(None)
+                            self.assertGreaterEqual(rendered_contrast(
+                                menu, menu.actions()[0], '#ffffff'), 7)
+                            self.assertGreaterEqual(rendered_contrast(
+                                menu, unavailable, '#ffffff'), 4.5)
+                            menu.setActiveAction(menu.actions()[0])
+                            APP.processEvents()
+                            self.assertGreaterEqual(rendered_contrast(
+                                menu, menu.actions()[0], '#e8f0ff'), 7)
+                            rect = menu.actionGeometry(separator)
+                            self.assertFalse(rect.isEmpty())
+                            snapshot = menu.grab()
+                            ratio = snapshot.devicePixelRatio()
+                            image = snapshot.toImage()
+                            separator_colors = {
+                                image.pixelColor(round(rect.center().x() * ratio), y).name()
+                                for y in range(round(rect.top() * ratio),
+                                               round((rect.bottom() + 1) * ratio))}
+                            self.assertIn('#dfe5ed', separator_colors)
+                            self.assertFalse(unavailable.isEnabled())
+                            self.assertEqual(original_actions,
+                                             [(action, action.isEnabled())
+                                              for action, _ in original_actions])
+                            menu.hide()
+                finally:
+                    window.close()
+                    APP.processEvents()
+        finally:
+            APP.setPalette(original_palette)
+
     def test_add_button_rejects_invalid_batches_without_losing_existing_review(self):
         """Only the OS picker is patched; the actual Add button and slot run."""
         from template_ai.review_tool.window import ReviewWindow

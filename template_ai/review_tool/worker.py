@@ -32,6 +32,8 @@ def main(request_path) -> int:
         # and font/Qt initialization outside the responsive main UI process.
         from PySide6.QtWidgets import QApplication
         application=QApplication.instance() or QApplication(['TemplateAI-Review-Worker'])
+        from .ui_font import configure_ui_font
+        configure_ui_font(application)
         from .analysis import analyse_file
         result=analyse_file(request['path'],request['cache_dir'],
                             progress_callback=lambda event:_emit(dict(type='progress',**event)),
@@ -41,8 +43,12 @@ def main(request_path) -> int:
     except Exception as error:
         # Raw exception text can contain customer strings or paths. Keep it in
         # local logs only if a caller separately opts in; safe IPC has a code.
-        _emit(dict(type='error',code=type(error).__name__,
-                   message='這個檔案尚未完成判讀；原稿保持不變，可重試或匯出問題報告。'))
+        from .source_compatibility import ReviewSourceCompatibilityError
+        if isinstance(error, ReviewSourceCompatibilityError):
+            _emit(dict(type='error', code=error.code, message=error.safe_message))
+        else:
+            _emit(dict(type='error',code=type(error).__name__,
+                       message='這個檔案尚未完成判讀；原稿保持不變，可重試或匯出問題報告。'))
         return 1
 
 

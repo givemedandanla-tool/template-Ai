@@ -214,7 +214,7 @@ a = Analysis([str(root/'review_app.py')], pathex=[str(root)], binaries=[], datas
 a.datas = filter_upstream_test_data(a.datas, root/'artifacts/review-release/upstream-build-exclusions.json')
 pyz = PYZ(a.pure)
 exe = EXE(pyz,a.scripts,[],exclude_binaries=True,name='TemplateAIReview',debug=False,
-    bootloader_ignore_signals=False,strip=False,upx=False,console=True,hide_console='hide-early')
+    bootloader_ignore_signals=False,strip=False,upx=False,console=False)
 coll = COLLECT(exe,a.binaries,a.datas,strip=False,upx=False,name='TemplateAIReview')
 '''
     (BUILD / 'TemplateAIReview.spec').write_text(spec, encoding='utf-8')
@@ -374,10 +374,34 @@ def source_tests():
             raise RuntimeError('Component tests failed; original per-module results retained')
 
 
+def verify_windowed_executable(executable):
+    """Bounded PE inspection: a hidden console build is not a GUI build."""
+    with Path(executable).open('rb') as stream:
+        dos = stream.read(64)
+        if len(dos) != 64 or dos[:2] != b'MZ':
+            raise ValueError('A complete Windows PE executable is required')
+        offset = int.from_bytes(dos[60:64], 'little')
+        if not 64 <= offset <= 1024 * 1024:
+            raise ValueError('Windows PE header offset is outside the bounded range')
+        stream.seek(offset)
+        header = stream.read(94)
+    if (len(header) != 94 or header[:4] != b'PE\0\0'
+            or int.from_bytes(header[4:6], 'little') != 0x8664
+            or int.from_bytes(header[20:22], 'little') < 70
+            or int.from_bytes(header[24:26], 'little') != 0x20B):
+        raise ValueError('A complete x64 Windows PE32+ executable is required')
+    subsystem = int.from_bytes(header[92:94], 'little')
+    if subsystem != 2:  # IMAGE_SUBSYSTEM_WINDOWS_GUI
+        raise ValueError('Review executable must use Windows GUI subsystem 2, not a console')
+    return dict(status='PASS', machine='AMD64', subsystem=2,
+                subsystem_name='WINDOWS_GUI', console_subsystem=False)
+
+
 def exercise(executable):
     executable = Path(executable).resolve()
-    if os.name != 'nt' or not executable.is_file() or executable.read_bytes()[:2] != b'MZ':
+    if os.name != 'nt' or not executable.is_file():
         raise ValueError('A real frozen Windows executable is required')
+    gui_subsystem = verify_windowed_executable(executable)
     start = identity()
     out = OUTPUT / 'actual-exe'
     out.mkdir(parents=True, exist_ok=False)
@@ -409,7 +433,8 @@ def exercise(executable):
             raise RuntimeError('Actual executable acceptance failed; preserve its diagnostics')
         proof = dict(status='PASS', version=version(), source_commit=start['source_commit'],
             source_manifest_sha256=start['source_manifest_sha256'], source_unchanged_during_run=start == identity(),
-            actual_frozen_executable=True, executable_sha256=sha(executable), normal_startup=startup_proof, acceptance=value)
+            actual_frozen_executable=True, executable_sha256=sha(executable),
+            windows_gui_subsystem=gui_subsystem, normal_startup=startup_proof, acceptance=value)
         write(OUTPUT / 'actual-exe.json', proof)
         if not proof['source_unchanged_during_run']:
             raise RuntimeError('Source changed while testing actual executable')

@@ -506,6 +506,11 @@ class SessionStore:
             raise ValueError("判讀結果的狀態不正確。")
         source["issues"] = deepcopy(original.get("issues", []))
         source["stage_message"] = ("新判讀版本已保留，人工修正維持原樣" if modified else "判讀完成，等待核對")
+        if source["status"] == "PARTIAL":
+            if any(issue.get("code") == "ILLUSTRATOR_PDF_PLACEHOLDER" for issue in source["issues"]):
+                source["stage_message"] += "；部分頁面是 Illustrator 提示頁，請用原檔另存 PDF 相容副本後再判讀。"
+            else:
+                source["stage_message"] += "；部分內容仍需處理，請查看問題紀錄。"
         candidate = dict(self.data, sources=[source if row["id"] == source_id else row
                                             for row in self.sources()])
         _validate(candidate)

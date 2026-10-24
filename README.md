@@ -1,5 +1,9 @@
 # Template AI
 
+目前獨立的「作品判讀與核對」工具以 `feature/review-tool-v0.1.0` 維護；已發布 EXE 為 `review-v0.1.0-beta.2`。
+要省去日常反覆打包，可依[原始碼啟動與更新指南](docs/dev/analysis_review_ui/SOURCE_RUN_AND_UPDATE.md)準備環境後，使用 `START_REVIEW_WINDOWS.bat`。
+原始碼開發版與已發布 EXE 分開記錄；下方 `START_WINDOWS.bat` 及舊版下載屬完整產品。
+
 Windows x64內部實測版 **v0.2.0-beta.2 已發佈**：[下載完整ZIP（約317 MB）](https://github.com/givemedandanla-tool/template-Ai/releases/download/v0.2.0-beta.2/TemplateAI-v0.2.0-beta.2-windows-x64.zip)。完整解壓後執行TemplateAI/TemplateAI.exe，保留_internal與engines；不需另裝Python或Inkscape，固定使用包內1.4.2。199項Windows來源與真正EXE21檢查通過，公開下載13060檔校驗通過。私人作品／實機效能與印刷資格待本機回饋。見[本版交付報告](docs/dev/releases/v0.2.0-beta.2/DELIVERY_REPORT.md)及[使用說明](docs/dev/releases/WINDOWS_BETA_QUICK_START.md)；下方較早功能紀錄保留歷史脈絡。
 
 

@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "REVIEW_BETA2_AWAITING_LOCAL_FEEDBACK",
+  "active_task": "REVIEW_SOURCE_MAINTENANCE_WINDOWS_PENDING",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261023-IMPORT-ZERO-SOURCE-001.receipt.json",
   "last_confirmed_commit": "155c7daff076517dd91fb63be27b1ec4630f98b7",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "User local one-file analysis, annotation, save/reopen",
-    "Use More > Export problem report for exact step/version feedback; private works remain local",
-    "Maintain published review version separately; no overwrite/main merge/next component automatically"
+    "Prepare Windows source environment with fixed Python dependencies; start independent review entry, not legacy app",
+    "Verify source-mode pythonw, native Windows font and worker pipe round trip; keep private works local",
+    "Review these fixes locally before any new EXE build/release; beta.2 tag/assets remain unchanged"
   ],
   "blocked": [
     {
@@ -794,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Download review-v0.1.0-beta.2 into a new folder; test one private artwork locally and return safe report if needed",
+  "next_step": "Use source-run guide on Windows; no EXE packaging or publication authorized in this maintenance task",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2309,5 +2309,41 @@
       "delivery_snapshot_commit": "094aec264bc85e10ccf3a887d91586fefeeb4bc6",
       "delivery_readback": "docs/dev/releases/review-v0.1.0-beta.1/persistence/DELIVERY_SOURCE_READBACK.json"
     }
-  ]
+  ],
+  "review_source_maintenance": {
+    "status": "SOURCE_VALIDATED_WINDOWS_PENDING",
+    "source_version": "0.1.0-beta.3.dev1",
+    "branch": "feature/review-tool-v0.1.0",
+    "published_exe_unchanged": "review-v0.1.0-beta.2",
+    "report": "docs/dev/bugfixes/review-source-maintenance-20261024/REPORT.md",
+    "guide": "docs/dev/analysis_review_ui/SOURCE_RUN_AND_UPDATE.md",
+    "tests": {
+      "modules": 9,
+      "tests_run": 142,
+      "passed": 141,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 1,
+      "skip_reason": "Native Windows pythonw unavailable in Linux executor",
+      "actual_source_qt_checks": 35,
+      "source_ui_status": "PASS",
+      "windows_native_verified": false,
+      "actual_new_exe_verified": false
+    },
+    "fixed_in_source": [
+      "Known Illustrator PDF compatibility notice exclusion and actionable safe IPC error",
+      "Explicit readable menu colors under dark system palette",
+      "GUI-subsystem packaging, redirected worker pipe bootstrap and installed interface font choice"
+    ],
+    "qualifications_unchanged": [
+      "Real private artworks",
+      "User Windows hardware/fonts",
+      "AI learning and production prepress",
+      "Published beta.2 executable bytes"
+    ],
+    "packaged": false,
+    "published": false,
+    "source_snapshot_status": "PREPARED",
+    "checkpoint": "docs/checkpoints/CP-20261024-REVIEW-SOURCE-MAINTENANCE-001.receipt.json"
+  }
 }

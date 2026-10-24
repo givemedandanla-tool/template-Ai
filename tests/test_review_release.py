@@ -46,6 +46,35 @@ class ReviewReleaseTests(unittest.TestCase):
                 (folder/name).write_text('authored companion '+name,encoding='utf-8')
         return archive
 
+    def authored_pe_header(self, *, subsystem=2, machine=0x8664):
+        # An isolated PE-header fixture, never represented as a working EXE.
+        payload=bytearray(128+94)
+        payload[:2]=b'MZ';payload[60:64]=(128).to_bytes(4,'little')
+        payload[128:132]=b'PE\0\0'
+        payload[132:134]=machine.to_bytes(2,'little')
+        payload[148:150]=(240).to_bytes(2,'little')
+        payload[152:154]=(0x20B).to_bytes(2,'little')
+        payload[220:222]=subsystem.to_bytes(2,'little')
+        target=self.root/'authored-header-only.exe';target.write_bytes(payload)
+        return target
+
+    def test_gui_header_guard_rejects_console_even_if_window_could_be_hidden(self):
+        target=self.authored_pe_header(subsystem=3)
+        with self.assertRaisesRegex(ValueError,'GUI subsystem 2'):
+            release.verify_windowed_executable(target)
+
+    def test_gui_header_guard_records_gui_subsystem(self):
+        proof=release.verify_windowed_executable(self.authored_pe_header())
+        self.assertEqual(proof,dict(status='PASS',machine='AMD64',subsystem=2,
+                                   subsystem_name='WINDOWS_GUI',console_subsystem=False))
+
+    def test_gui_header_guard_rejects_wrong_architecture_and_incomplete_pe(self):
+        with self.assertRaisesRegex(ValueError,'x64 Windows PE32'):
+            release.verify_windowed_executable(self.authored_pe_header(machine=0x14C))
+        target=self.root/'authored-truncated.exe';target.write_bytes(b'MZ')
+        with self.assertRaisesRegex(ValueError,'complete Windows PE'):
+            release.verify_windowed_executable(target)
+
     def test_prepare_cli_passes_isolated_ocr_cache_without_installing(self):
         with patch.object(release, 'prepare') as prepare:
             self.assertEqual(release.main(['prepare', '--cache', str(self.root/'fixed'),
@@ -379,13 +408,16 @@ class ReviewReleaseTests(unittest.TestCase):
         hooks.collect_data_files=lambda *args,**kwargs:[]
         modules={'PyInstaller':types.ModuleType('PyInstaller'),'PyInstaller.utils':types.ModuleType('PyInstaller.utils'),
                  'PyInstaller.utils.hooks':hooks,'review_release':release}
+        executable_options={}
         namespace=dict(SPECPATH=str(specdir),Analysis=AuthoredAnalysis,PYZ=lambda *a,**k:object(),
-                       EXE=lambda *a,**k:object(),COLLECT=lambda *a,**k:object())
+                       EXE=lambda *a,**k:executable_options.update(k),COLLECT=lambda *a,**k:object())
         previous=list(sys.path)
         try:
             with patch.dict(sys.modules,modules):exec(compile((specdir/'TemplateAIReview.spec').read_text(),'<authored-spec-wire-test>','exec'),namespace)
         finally:sys.path[:]=previous
         self.assertEqual(namespace['a'].datas,rows[1:])
+        self.assertIs(executable_options['console'],False)
+        self.assertNotIn('hide_console',executable_options)
         report=json.loads((self.root/'artifacts/review-release/upstream-build-exclusions.json').read_text())
         self.assertEqual(report['removed_entries'],1);self.assertEqual(report['kept_entries'],1)
 

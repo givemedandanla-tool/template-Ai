@@ -103,6 +103,11 @@ class ReviewWindow(QMainWindow):
         self.setStyleSheet('''
         QMainWindow,QWidget{font-family:"Microsoft JhengHei UI","Noto Sans CJK TC";color:#172033;font-size:14px;}
         QMainWindow{background:#f4f6f9;} QLabel#brand{font-size:23px;font-weight:600;}
+        QMenu{background:#ffffff;color:#172033;border:1px solid #d9e0ea;padding:4px 0;}
+        QMenu::item{background:transparent;color:#172033;padding:8px 16px;}
+        QMenu::item:selected:enabled{background:#e8f0ff;color:#153c91;}
+        QMenu::item:disabled{color:#65728a;}
+        QMenu::separator{height:1px;background:#dfe5ed;margin:5px 8px;}
         QPushButton{background:white;border:1px solid #d9e0ea;border-radius:6px;padding:8px 12px;min-height:20px;}
         QPushButton:hover{background:#edf4ff;border-color:#91b4f7;} QPushButton:disabled{color:#929baa;background:#edf0f5;}
         QPushButton#primary{background:#2563eb;color:white;border:1px solid #2563eb;font-weight:600;}

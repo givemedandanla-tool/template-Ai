@@ -1,9 +1,11 @@
-# 當前：OCR隨包版beta.2已公開發布
+# 當前：原始碼直接啟動與三項回饋修正，待 Windows 本機驗證
 
-review-v0.1.0-beta.2已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED。source6fd0b1435a8ebd1f384b2f76ceaa85dcbc2fba60／run40057767083 success：Windows22模組270/270、真EXE40checks、草稿/公開兩次各13,203程式檔＋25來源archive/75notice校驗PASS。
+先讀 STATE.review_source_maintenance、[修正報告](bugfixes/review-source-maintenance-20261024/REPORT.md)與[原始碼啟動／更新](analysis_review_ui/SOURCE_RUN_AND_UPDATE.md)。分支feature/review-tool-v0.1.0，source開發版0.1.0-beta.3.dev1；本輪不打包、不發布、不改舊tag。
 
-先讀[交付報告](releases/review-v0.1.0-beta.2/DELIVERY_REPORT.md)、[第一次使用](releases/review-v0.1.0-beta.2/QUICK_START.md)、STATE.review_tool_release_request。完整解壓到新資料夾，開TemplateAIReview/TemplateAIReview.exe；Inkscape與Tesseract/英繁中模型內附，本機離線。舊人修保留，新判讀口徑另存。
+修正：已知AI PDF相容提示頁不當作品、混合頁保留正常部分與固定安全錯誤指示；暗系統下選單明確淺色；GUI subsystem＋只恢復父重導worker管道、介面字型選擇。新版判讀口徑3，不靜默接舊分析，原稿及人工修訂保留。
 
-下一步等待使用者一份私有作品本地實測與「更多→匯出問題報告」。不覆寫beta.1/beta.2 tag或已確認資料，不合併main、不自動開始AI學習/模板產出部件。語意/字型/字級/間距不確定保留未知。私人AI、字庫/硬體/新手/實印及舊完整產品資格未提升。
+本輪9模組隔離：141PASS/1Windows pythonw skip/0failure/0error；真正source Qt35checks PASS、實際QProcess與兩語OCR通過。Linux source不當Windows/EXE驗收。新START_REVIEW_WINDOWS.bat是判讀入口，PREPARE_WINDOWS只準備固定依賴；舊START_WINDOWS是完整產品。Git更新指定提交，避免手工混換檔案；引擎與模型沿用本機明確路徑，不必每次下載。
 
-修正包括Windows binary STDIN圖片輸入、受驗原模型短私有暫存與清理、source故障隔離副本、PDF測例資源、8.3 path identity及漏入Git空notice。舊失敗與準備歷史詳LOCAL_VALIDATION/PREPUBLICATION_HANDOFF.md，正式結果見windows-published-40057767083及persistence；原始CI證據review-release-evidence/v0.1.0-beta.2。原未提交timeout/adopt成果保留，無新付費API/資源。
+下一步在Windows準備原始碼環境，驗pythonw/字型/背景IPC再使用本機作品副本；雲端無法存取C槽。發布EXE相關修正仍需未來真正Windows frozen驗收。PRIVATE作品/字庫/硬體/AI訓練/印前及舊完整產品資格不升；原未提交timeout/adopt成果保留，不讀私人作品、不新付費。
+
+已發布review-v0.1.0-beta.2仍是source6fd0b1435a8ebd1f384b2f76ceaa85dcbc2fba60／run40057767083：Windows270與真EXE40、兩次下載校驗PASS，僅屬該舊成品。STATE.review_tool_release_request及[原交付報告](releases/review-v0.1.0-beta.2/DELIVERY_REPORT.md)保留，不以舊資格覆蓋本輪新source。

@@ -1891,3 +1891,5 @@ Frozen trace002/f967/run39807865848：已下載及驗證原授權242檔，實際
 2026-10-23最小判讀核對工具設計保存：使用者最後更正為實機UI討論。已確認B工作台＋C引導、常用僅可見資訊與歸屬、隱藏數據總覽與原稿雙向視覺化，並保存能力／觀察契約及按鈕草案、B/C合成概念圖。純文件，不改產品、未執行新產品測試、不發布EXE、不升原功能數／外部資格。既有治理check仍因先前程式變更與舊證據不符而失敗，這輪不以刷新證據求過；原未提交除錯成果保留。文件checkpoint為輔助範圍，不取代產品主收據。下一步逐畫面討論實機UI。
 
 設計文件CP讀回完成：3fdadb200c6c7c396eb677611eba493e7888ab05／CP-20261023-ANALYSIS-REVIEW-UI-DESIGN-001，15件逐blob及checkpoint本身核對，原生獨立Git完整tree確認，文件ZIP隔離還原PASS。收據與STATE設計欄位另存；不取代原產品主checkpoint，不混入先前未提交timeout／adopt／full-run成果。
+
+2026-10-24原始碼維護：使用者暫續GitHub修正且不打包。source0.1.0-beta.3.dev1修AI提示頁誤當作品、暗palette選單、GUI subsystem/worker管道及介面字型，並補安全錯誤白名單映射與PARTIAL提示。新增review來源啟動入口與完整提交更新指南；9模組141PASS/1Windows skip、真source Qt35checks PASS，Windows/新EXE未驗，舊beta.2下載包不變。精確報告/證據見bugfixes/review-source-maintenance-20261024；父需求/CORE/GOV計數差異0。原dirty工作保留；source checkpoint CP-20261024-REVIEW-SOURCE-MAINTENANCE-001不取代舊產品主資格。

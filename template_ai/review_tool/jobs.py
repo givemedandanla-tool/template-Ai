@@ -277,7 +277,11 @@ class AnalysisJobs(QObject):
                 self._full_result_received = True
                 self.result.emit(self._active['id'], result)
             elif kind == 'error':
-                self._failure_message = '這個檔案尚未完成判讀；原稿保持不變，可重試或匯出問題報告。'
+                from .source_compatibility import ISSUE_CODE, SAFE_MESSAGE
+                # Only a known code selects fixed product wording. Never relay
+                # arbitrary child messages, which may contain private artwork.
+                self._failure_message = (SAFE_MESSAGE if event.get('code') == ISSUE_CODE else
+                    '這個檔案尚未完成判讀；原稿保持不變，可重試或匯出問題報告。')
             else:
                 raise ValueError('unknown event')
         except (ValueError, TypeError, UnicodeError, OverflowError):

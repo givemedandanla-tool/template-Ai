@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新維護：原始碼直接啟動與三項回饋修正
+
+2026-10-24本輪依使用者指示使用GitHub維護，不打包不發布。source開發版0.1.0-beta.3.dev1；先讀STATE.review_source_maintenance、[報告](docs/dev/bugfixes/review-source-maintenance-20261024/REPORT.md)及[原始碼指南](docs/dev/analysis_review_ui/SOURCE_RUN_AND_UPDATE.md)。新增START_REVIEW_WINDOWS.bat；舊START_WINDOWS.bat是完整產品。9個隔離模組141PASS/1Windows skip/0fail，真source Qt35checks通過，非Windows/EXE資格。源碼修提示頁誤判與固定安全IPC指示、暗palette選單、GUI-subsystem/worker pipes與介面字型。Windows pythonw/原生字型/包內通訊仍待驗；不自動開下一次build/tag/Release。已發布beta.2與其收據不變，私人檔與原未提交timeout/adopt保留。
+
 ## 最新交付：OCR隨包beta.2已公開發布
 
 2026-10-24 review-v0.1.0-beta.2已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED。精確source6fd0b1435a8ebd1f384b2f76ceaa85dcbc2fba60／Windows run40057767083 success；270來源測試、真EXE40、兩次各13,203程式檔及25OCRsourcearchives/75notices校驗PASS。先讀STATE.review_tool_release_request與[交付報告](docs/dev/releases/review-v0.1.0-beta.2/DELIVERY_REPORT.md)、QUICK_START.md。

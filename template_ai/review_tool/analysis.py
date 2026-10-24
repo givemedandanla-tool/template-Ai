@@ -18,7 +18,7 @@ import tempfile
 import time
 from typing import Callable
 
-VERSION = 'review-observations-2-bundled-ocr'
+VERSION = 'review-observations-3-source-compatibility'
 MAX_PAGES = 100
 MAX_FIELDS = 4000
 # These are bounds for actual phases, not fake heartbeats.  Conversion can make
@@ -288,6 +288,9 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
     from ..importer import import_file
     from ..source_analysis import analyse_source
     from ..original_text_observation import original_text_observation
+    from .source_compatibility import (ISSUE_CODE, SAFE_MESSAGE,
+        ReviewSourceCompatibilityError, candidate_placeholder_language,
+        pdf_backed_source, visible_pdf_page)
     path = Path(path).resolve();cache_dir = Path(cache_dir).resolve()
     assert_local_document(path);assert_local_path(cache_dir)
     if not path.is_file() or path.stat().st_size > 200_000_000:
@@ -309,7 +312,29 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
     page_count = 1
     page_number = 1
     fields_count = 0
+    pdf_compatibility_source = pdf_backed_source(path)
+    def block_placeholder(page_number, evidence):
+        packet['issues'].append(_issue(ISSUE_CODE, SAFE_MESSAGE, page=page_number,
+                                      detail=evidence))
+        packet['source'].setdefault('blocked_pages', []).append(page_number)
+        packet['capabilities']['source_compatibility'] = dict(
+            status='BLOCKED_PAGES', code=ISSUE_CODE,
+            blocked_pages=list(packet['source']['blocked_pages']),
+            detection='VISIBLE_NOTICE_SIGNATURE', private_data_decoded=False,
+            original_artwork_complete=False, training_qualification='NOT_GRANTED')
+        packet['status'] = 'PARTIAL'
+        progress('validate', f'第 {page_number} 頁是相容性提示，尚未取得作品；請另存 PDF 相容副本',
+                 page_number, page_count)
     while page_number <= min(page_count, MAX_PAGES):
+        if pdf_compatibility_source:
+            direct = visible_pdf_page(path, page_number)
+            if direct.get('page_count'):
+                page_count = direct['page_count']
+                packet['source']['page_count'] = page_count
+            if direct.get('language'):
+                block_placeholder(page_number, 'VISIBLE_PDF_TEXT')
+                page_number += 1
+                continue
         progress('import', f'正在準備第 {page_number} 頁原稿預覽', page_number, page_count)
         try:
             imported = import_file(path, cache_dir/'assets', page=page_number)
@@ -384,6 +409,13 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
                 packet['issues'].append(_issue('OCR_UNAVAILABLE',
                     cap.get('reason') or '尚無可用的本機文字辨識配套；仍可查看原稿並人工補上文字標記',
                     page=page_number, detail=(cap.get('runtime') or {}).get('error_code')))
+        if pdf_compatibility_source:
+            language = candidate_placeholder_language(candidates)
+            if language:
+                block_placeholder(page_number, 'VISIBLE_OBJECT_OR_OCR_TEXT')
+                packet['pages'].pop()
+                page_number += 1
+                continue
         if not candidates:
             candidates=[dict(key='manual-page', crop=dict(x=0., y=0., w=source['width_mm'], h=source['height_mm']),
                              observations=[], slots=[], evidence=dict(state='MANUAL_RANGE_REVIEW_REQUIRED'))]
@@ -437,6 +469,8 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
             f'來源共有 {page_count} 頁，本輪只處理前 {MAX_PAGES} 頁，其餘尚未判讀'))
     if file_digest(path)!=sha:
         raise ValueError('分析期間原稿內容已改變，請重新加入並保留先前人工記錄')
+    if packet['source'].get('blocked_pages') and not packet['pages']:
+        raise ReviewSourceCompatibilityError()
     if packet['issues']:
         packet['status']='PARTIAL'
     packet['capabilities'].setdefault('ocr_available', None)

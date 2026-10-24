@@ -16,15 +16,21 @@ def default_data_dir():
 
 
 def main():
-    for stream in (sys.stdout, sys.stderr):
-        if stream is not None and hasattr(stream, 'reconfigure'):
-            stream.reconfigure(encoding='utf-8', errors='replace')
     parser = argparse.ArgumentParser(description='離線作品判讀與核對')
     parser.add_argument('--data-dir')
     parser.add_argument('--analysis-worker', help=argparse.SUPPRESS)
     parser.add_argument('--release-check', help=argparse.SUPPRESS)
     parser.add_argument('--capture', help=argparse.SUPPRESS)
     args = parser.parse_args()
+    from template_ai.review_tool.stdio import (
+        WORKER_STDOUT_UNAVAILABLE, prepare_standard_streams,
+    )
+    stdout_ready = prepare_standard_streams(
+        redirected=bool(args.analysis_worker or args.release_check))
+    if args.analysis_worker and not stdout_ready:
+        # A windowed worker must not silently lose the JSON protocol and leave
+        # its parent waiting until the stage timeout.
+        return WORKER_STDOUT_UNAVAILABLE
     from template_ai.offline_runtime import assert_local_path, enable_offline_guard
     enable_offline_guard()
     for value in (args.data_dir, args.analysis_worker, args.release_check, args.capture):
@@ -42,12 +48,12 @@ def main():
         return run(args.release_check)
 
     from PySide6.QtCore import QTimer, Qt
-    from PySide6.QtGui import QFont
     from PySide6.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget
+    from template_ai.review_tool.ui_font import configure_ui_font
     app = QApplication.instance() or QApplication(sys.argv[:1])
     app.setApplicationName('TemplateAIReview')
     app.setOrganizationName('TemplateAI')
-    app.setFont(QFont('Microsoft JhengHei UI' if os.name == 'nt' else 'Noto Sans CJK TC', 10))
+    configure_ui_font(app)
     splash = QWidget(None, Qt.WindowType.SplashScreen)
     splash.setWindowTitle('作品判讀與核對：正在開啟')
     splash.setStyleSheet('background:#ffffff;color:#172033;font-size:16px;')

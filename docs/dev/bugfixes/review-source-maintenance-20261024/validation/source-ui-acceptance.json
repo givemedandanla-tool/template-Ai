@@ -1,0 +1,316 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "version": "0.1.0-beta.3.dev1",
+  "actual_frozen_executable": false,
+  "fixture": "AUTHORED_REVIEW_ACCEPTANCE_V1",
+  "fixture_types": [
+    "CALIBRATED_SVG",
+    "PDF_COMPATIBLE_AI_SIMULATION",
+    "OUTLINED_TEXT_SVG",
+    "BILINGUAL_OUTLINED_TEXT_SVG",
+    "RASTER_ONLY_PDF"
+  ],
+  "worker_mode": "ACTUAL_QPROCESS",
+  "checks": [
+    "actual_review_window_opens",
+    "technical_overview_hidden_initially",
+    "actual_add_files_entry_registers_three_sources",
+    "actual_qprocess_analysis_completes",
+    "gui_event_loop_remains_responsive",
+    "svg_and_pdf_compatible_ai_have_real_previews",
+    "actual_vector_analysis_executes",
+    "actual_ocr_reads_authored_outline_source",
+    "actual_bilingual_ocr_reads_authored_outlines",
+    "actual_bilingual_ocr_reads_authored_raster",
+    "actual_ocr_candidates_keep_ownership_unknown",
+    "actual_ocr_owner_assignment_survives_save_and_reopen",
+    "real_missing_ocr_worker_preserves_explicit_fallback",
+    "manual_annotation_works_when_ocr_executable_is_missing",
+    "canvas_click_updates_actual_editor",
+    "actual_editor_applies_content_kind_owner_and_sharing",
+    "original_prediction_remains_separate",
+    "actual_canvas_draw_creates_manual_annotation",
+    "actual_canvas_resize_updates_annotation_only",
+    "actual_remove_button_removes_only_annotation",
+    "actual_undo_button_restores_removed_annotation",
+    "actual_multiselection_retains_both_relation_endpoints",
+    "actual_relation_dialog_creates_group",
+    "overview_preserves_visible_original",
+    "actual_overview_row_draws_linked_dimensions",
+    "canvas_selection_updates_overview_without_leaving_mode",
+    "completion_does_not_silently_review_unchecked",
+    "explicit_unknown_survives_human_completion",
+    "actual_save_button_persists_session",
+    "actual_window_reopens_saved_corrections",
+    "unknown_is_not_replaced_by_defaults_after_reopen",
+    "source_ids_and_work_ids_survive_reopen",
+    "actual_discard_does_not_save_draft_on_worker_stop",
+    "safe_diagnostic_excludes_private_content_and_paths",
+    "all_authored_sources_remain_byte_identical"
+  ],
+  "check_details": {
+    "actual_review_window_opens": {
+      "status": "PASS"
+    },
+    "technical_overview_hidden_initially": {
+      "status": "PASS"
+    },
+    "actual_add_files_entry_registers_three_sources": {
+      "status": "PASS"
+    },
+    "actual_qprocess_analysis_completes": {
+      "gui_timer_events": 25
+    },
+    "gui_event_loop_remains_responsive": {
+      "status": "PASS"
+    },
+    "svg_and_pdf_compatible_ai_have_real_previews": {
+      "status": "PASS"
+    },
+    "worker_capabilities": [
+      {
+        "inkscape_conversion_executed": true,
+        "inkscape_runtime": {
+          "executable_sha256": "a1db427b1666d73e477a841b925f2bc44185623cd178cd007f6da3ca8ab4c873",
+          "origin": "EXTERNAL",
+          "policy": "SOURCE_EXTERNAL",
+          "version": "1.4"
+        },
+        "local_only": true,
+        "native_illustrator_mapping": "UNKNOWN",
+        "ocr_available": null,
+        "ocr_executed": false,
+        "ocr_requested": true,
+        "unknowns_are_not_zero": true,
+        "vector_analysis_executed": true
+      },
+      {
+        "inkscape_conversion_executed": true,
+        "inkscape_runtime": {
+          "executable_sha256": "a1db427b1666d73e477a841b925f2bc44185623cd178cd007f6da3ca8ab4c873",
+          "origin": "EXTERNAL",
+          "policy": "SOURCE_EXTERNAL",
+          "version": "1.4"
+        },
+        "local_only": true,
+        "native_illustrator_mapping": "UNKNOWN",
+        "ocr_available": null,
+        "ocr_executed": false,
+        "ocr_requested": true,
+        "unknowns_are_not_zero": true,
+        "vector_analysis_executed": true
+      },
+      {
+        "inkscape_conversion_executed": true,
+        "inkscape_runtime": {
+          "executable_sha256": "a1db427b1666d73e477a841b925f2bc44185623cd178cd007f6da3ca8ab4c873",
+          "origin": "EXTERNAL",
+          "policy": "SOURCE_EXTERNAL",
+          "version": "1.4"
+        },
+        "local_only": true,
+        "native_illustrator_mapping": "UNKNOWN",
+        "ocr_available": true,
+        "ocr_executed": true,
+        "ocr_languages": [
+          "chi_tra",
+          "eng"
+        ],
+        "ocr_requested": true,
+        "ocr_runtime": {
+          "origin": "SYSTEM_PATH",
+          "policy": "SOURCE_LOCAL",
+          "state": "READY"
+        },
+        "unknowns_are_not_zero": true,
+        "vector_analysis_executed": true
+      }
+    ],
+    "actual_vector_analysis_executes": {
+      "status": "PASS"
+    },
+    "actual_ocr_reads_authored_outline_source": {
+      "status": "PASS"
+    },
+    "actual_bilingual_ocr_reads_authored_outlines": {
+      "expected_text": [
+        "測試有限公司",
+        "REVIEW DEMO",
+        "0900-000-000",
+        "hello@example.com"
+      ],
+      "matches": {
+        "測試有限公司": [
+          "ocr-e48fd95663d4cb3646e7c523"
+        ],
+        "REVIEW DEMO": [
+          "ocr-fc0cbdaac59862a3e0fa03f2"
+        ],
+        "0900-000-000": [
+          "ocr-59d1ffce1ffc41bc2a66d29d"
+        ],
+        "hello@example.com": [
+          "ocr-7524c66447dae624dd8ce049"
+        ]
+      },
+      "owner": "UNKNOWN_UNTIL_HUMAN_ASSIGNMENT",
+      "geometry": "ACTUAL_POSITIVE_LINE_BOUNDS",
+      "real_corpus_qualified": false
+    },
+    "actual_bilingual_ocr_reads_authored_raster": {
+      "expected_text": [
+        "測試有限公司",
+        "REVIEW DEMO",
+        "0900-000-000",
+        "hello@example.com"
+      ],
+      "matches": {
+        "測試有限公司": [
+          "ocr-79b09aa2775ff0927b97322b"
+        ],
+        "REVIEW DEMO": [
+          "ocr-a182f406632bd2237680f85b"
+        ],
+        "0900-000-000": [
+          "ocr-3dafa75bd275218aa00593c3"
+        ],
+        "hello@example.com": [
+          "ocr-710a7ba5b19f50b52a0812da"
+        ]
+      },
+      "owner": "UNKNOWN_UNTIL_HUMAN_ASSIGNMENT",
+      "geometry": "ACTUAL_POSITIVE_LINE_BOUNDS",
+      "real_corpus_qualified": false
+    },
+    "actual_ocr_candidates_keep_ownership_unknown": {
+      "status": "PASS"
+    },
+    "actual_ocr_owner_assignment_survives_save_and_reopen": {
+      "original_owner": "UNKNOWN",
+      "current_owner": "EXPLICIT_HUMAN_ASSIGNMENT"
+    },
+    "real_missing_ocr_worker_preserves_explicit_fallback": {
+      "status": "PASS"
+    },
+    "manual_annotation_works_when_ocr_executable_is_missing": {
+      "status": "PASS"
+    },
+    "canvas_click_updates_actual_editor": {
+      "status": "PASS"
+    },
+    "actual_editor_applies_content_kind_owner_and_sharing": {
+      "status": "PASS"
+    },
+    "original_prediction_remains_separate": {
+      "status": "PASS"
+    },
+    "actual_canvas_draw_creates_manual_annotation": {
+      "status": "PASS"
+    },
+    "actual_canvas_resize_updates_annotation_only": {
+      "status": "PASS"
+    },
+    "actual_remove_button_removes_only_annotation": {
+      "status": "PASS"
+    },
+    "actual_undo_button_restores_removed_annotation": {
+      "status": "PASS"
+    },
+    "actual_multiselection_retains_both_relation_endpoints": {
+      "status": "PASS"
+    },
+    "actual_relation_dialog_creates_group": {
+      "status": "PASS"
+    },
+    "overview_preserves_visible_original": {
+      "status": "PASS"
+    },
+    "actual_overview_row_draws_linked_dimensions": {
+      "status": "PASS"
+    },
+    "canvas_selection_updates_overview_without_leaving_mode": {
+      "status": "PASS"
+    },
+    "completion_does_not_silently_review_unchecked": {
+      "status": "PASS"
+    },
+    "explicit_unknown_survives_human_completion": {
+      "status": "PASS"
+    },
+    "actual_save_button_persists_session": {
+      "status": "PASS"
+    },
+    "actual_window_reopens_saved_corrections": {
+      "status": "PASS"
+    },
+    "unknown_is_not_replaced_by_defaults_after_reopen": {
+      "status": "PASS"
+    },
+    "source_ids_and_work_ids_survive_reopen": {
+      "status": "PASS"
+    },
+    "actual_discard_does_not_save_draft_on_worker_stop": {
+      "saved_snapshot_byte_identical": true,
+      "actual_owned_worker_stopped": true,
+      "actual_close_dialog_used": true
+    },
+    "safe_diagnostic_excludes_private_content_and_paths": {
+      "status": "PASS"
+    },
+    "all_authored_sources_remain_byte_identical": {
+      "status": "PASS"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "source-ui-acceptance-synthetic/01-empty-window.png",
+      "sha256": "8de0599f93e289c2d0dc59a2b9cf739d287ed320345b82604a6dd93210d69220",
+      "kind": "ACTUAL_QT_WINDOW"
+    },
+    {
+      "path": "source-ui-acceptance-synthetic/06-bilingual-ocr-positive.png",
+      "sha256": "0aaf1d9efd72d8200dbb6648dfea238da68c608b0ba5fe04e38799c842c98d2e",
+      "kind": "ACTUAL_QT_WINDOW"
+    },
+    {
+      "path": "source-ui-acceptance-synthetic/05-no-ocr-manual-fallback.png",
+      "sha256": "6abf8d48b1478f3c4bd44ecf5e177fa49d13dcc71d53d03e0400b53083f6d1fd",
+      "kind": "ACTUAL_QT_WINDOW"
+    },
+    {
+      "path": "source-ui-acceptance-synthetic/02-overview-dimensions.png",
+      "sha256": "a6fb8d35695551152b0b99db2f202866ae952ef6e591c16e5e6d002ee55ce8f4",
+      "kind": "ACTUAL_QT_WINDOW"
+    },
+    {
+      "path": "source-ui-acceptance-synthetic/03-saved-review.png",
+      "sha256": "e801c5a46ea8eae4fbf959a8ba47cdf72c3b7cc1bcba8a52fdb9d2995bcc4083",
+      "kind": "ACTUAL_QT_WINDOW"
+    },
+    {
+      "path": "source-ui-acceptance-synthetic/04-reopened-window.png",
+      "sha256": "a28395561adabadb25e03f46c49a19e3dd9c1f8e819449bb2c0c9e0121426786",
+      "kind": "ACTUAL_QT_WINDOW"
+    }
+  ],
+  "source_unchanged": true,
+  "private_data_included": false,
+  "real_corpus_qualified": false,
+  "native_illustrator_private_format_qualified": false,
+  "os_native_file_picker_automated": false,
+  "bundled_ocr": {
+    "status": "SOURCE_LOCAL_POSITIVE_NOT_BUNDLE_QUALIFICATION",
+    "required": false,
+    "english_positive": true,
+    "traditional_chinese_positive": true,
+    "missing_corrupt_fallback_verified": false,
+    "models": [
+      "eng",
+      "chi_tra"
+    ],
+    "runtime_origin": "SYSTEM_PATH"
+  },
+  "ocr_scope": "ACTUAL_LOCAL_OCR_EXECUTED_ON_AUTHORED_OUTLINES",
+  "elapsed_seconds": 6.515
+}
