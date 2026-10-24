@@ -1,0 +1,514 @@
+{
+  "checkpoint_id": "CP-20261024-REVIEW-OCR-RELEASE-CANDIDATE-001",
+  "phase": "PREPARED",
+  "kind": "REVIEW_BETA2_BUNDLED_OCR_RELEASE_CANDIDATE",
+  "base_commit": "bd6e8cc356e6e48b1f5a442d4fafaea66ffb5317",
+  "source_files": {
+    ".github/workflows/review-release.yml": {
+      "bytes": 5288,
+      "sha256": "a9314362a06d54ca14f3a7cc5e294d39008750bde5a752d433d228cbc9d345c2",
+      "git_blob_sha1": "7c1786f99803d74a036dc6159cf4307c43b2bb32"
+    },
+    "docs/THIRD_PARTY.md": {
+      "bytes": 4298,
+      "sha256": "911330a14cafa77080ea6bee6c6e04d99970a6ff2752a4c5d1c912b32e890d4f",
+      "git_blob_sha1": "95dd2aaeed50c6bdf2766063f3b957095c83804f"
+    },
+    "docs/checkpoints/CP-20261024-REVIEW-BUNDLED-OCR-CORE-001.receipt.json": {
+      "bytes": 654,
+      "sha256": "c2453b4ace2b9f0cada6d8e35c2bf6b27a8adfb89f35d41421268c7cd0b0d405",
+      "git_blob_sha1": "ffc155639523ba17e754ebef97b23e34bd8b6bcb"
+    },
+    "docs/dev/STATE.json": {
+      "bytes": 111849,
+      "sha256": "4a17583f0c9dafb1f1331c16427c5ed8cacb8a926d10d2d42efbd1b55e83541a",
+      "git_blob_sha1": "ed1f0f4b38070e52deb69d4c8be2f31bfb49db78"
+    },
+    "docs/dev/releases/release_actions_support.py": {
+      "bytes": 3860,
+      "sha256": "d135cab0fd574911e3437cdb7c8a73a256aaef4192aef37f25fd954bab98981f",
+      "git_blob_sha1": "f7bc184aac401fda254090a890cfcc6f7efe503e"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.2/LOCAL_VALIDATION.md": {
+      "bytes": 2614,
+      "sha256": "51314aab8f4b41e8990363228670ede0d2b67cf97bff2e9002b41c4f319aa452",
+      "git_blob_sha1": "e7f5bc8f657ae514ced57e91885217e8c1674ab3"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.2/local-validation/harness-attempt-001-actual.json": {
+      "bytes": 4003,
+      "sha256": "30af33f3231162eab2e0e94ba8253dda16d1f5bb599926f82bad43bdb6a67562",
+      "git_blob_sha1": "b89a5bd4854bae9caf3ef404654f02c87b11be49"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.2/local-validation/harness-attempt-002-actual.json": {
+      "bytes": 6554,
+      "sha256": "10385b7d972938f6c2229dc26e783c7f3e3528073b8db3c0747c77f74028516f",
+      "git_blob_sha1": "10ecee536f48fb858f8919c4bcf2f7a3424a6166"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.2/local-validation/ocr-source-assembly.json": {
+      "bytes": 8973,
+      "sha256": "a6b3d332464843c7517731f299cd7aa4c5861619db22906f2c02e33382958084",
+      "git_blob_sha1": "039cc6fcdd5d2616932654f21e56d90332ce8381"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.2/local-validation/runtime-assembly.json": {
+      "bytes": 416,
+      "sha256": "b51f35fb660b90a803ab33d9539d2ff5180a8fd49a181c190d84d6728cbb58fc",
+      "git_blob_sha1": "c0be8645c07dde281a69f08c0dee13497dfe8922"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.2/local-validation/runtime-extraction.json": {
+      "bytes": 348,
+      "sha256": "19c2c8e434c0b47c4a569e0626d6b6694a06d21b76862f5b9cd2725119f89e9f",
+      "git_blob_sha1": "98dc20bd17cbbd63af17efe8accb4acad9896960"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.2/local-validation/source-gui-acceptance.json": {
+      "bytes": 10084,
+      "sha256": "a96a93e9b0a70373681e71d454268e0c7f57d486b8989d95b826f7e901726015",
+      "git_blob_sha1": "57178498f939a6be25ef02ff5d29ffac7ef1979c"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.2/persistence/CORE_SOURCE_READBACK.json": {
+      "bytes": 607,
+      "sha256": "ecef343ccb4152475e207f6269857cb29af97b821deabbfab3fba49a2223a9f8",
+      "git_blob_sha1": "0bb142aad33c51071c8d84968cea2d03aa8988e7"
+    },
+    "docs/third_party/tesseract/README.md": {
+      "bytes": 5254,
+      "sha256": "11ebbabb76369bba517869f231160cdb5e9dd77ac4c8768b44b391badaa14464",
+      "git_blob_sha1": "b3a1a2cc37b19af22f6bbb11c0b5e97b59cd9e17"
+    },
+    "docs/third_party/tesseract/REBUILDING.md": {
+      "bytes": 2554,
+      "sha256": "02487b5c21ec2c5680400d35320e684504cab886327467b2c7ef197bae5407bb",
+      "git_blob_sha1": "1302b6b0bd901f77e2ca0a6328c908cad8845369"
+    },
+    "docs/third_party/tesseract/bzip2/LICENSE": {
+      "bytes": 1896,
+      "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3",
+      "git_blob_sha1": "81a37eab7a5be1a34456f38adb74928cc9073e9b"
+    },
+    "docs/third_party/tesseract/expat/AUTHORS": {
+      "bytes": 142,
+      "sha256": "59f14371c6b75912cfebb46e6247ee5146766e803a0365b124e5d3011e7d0877",
+      "git_blob_sha1": "99475bb1b2efae732a3d5da2ad6fe53f81434989"
+    },
+    "docs/third_party/tesseract/expat/COPYING": {
+      "bytes": 1144,
+      "sha256": "122f2c27000472a201d337b9b31f7eb2b52d091b02857061a8880371612d9534",
+      "git_blob_sha1": "ce9e5939291e45f9633f540efc6ae58a26c041ef"
+    },
+    "docs/third_party/tesseract/gcc/COPYING": {
+      "bytes": 18002,
+      "sha256": "231f7edcc7352d7734a96eef0b8030f77982678c516876fcb81e25b32d68564c",
+      "git_blob_sha1": "623b6258a134210f0b0ada106fdaab7f0370d9c5"
+    },
+    "docs/third_party/tesseract/gcc/COPYING.LIB": {
+      "bytes": 26527,
+      "sha256": "a9bdde5616ecdd1e980b44f360600ee8783b1f99b8cc83a2beb163a0a390e861",
+      "git_blob_sha1": "2d2d780e6014b850ca3b8437452e24eba5f96508"
+    },
+    "docs/third_party/tesseract/gcc/COPYING.RUNTIME": {
+      "bytes": 3324,
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "git_blob_sha1": "e1b3c69c179dfaff5744ea4bf853e6b0d90c9ef9"
+    },
+    "docs/third_party/tesseract/gcc/COPYING3": {
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "git_blob_sha1": "94a9ed024d3859793618152ea559a168bbcbb5e2"
+    },
+    "docs/third_party/tesseract/gcc/COPYING3.LIB": {
+      "bytes": 7639,
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+      "git_blob_sha1": "fc8a5de7edf437cdc98a216370faf7c757279bcb"
+    },
+    "docs/third_party/tesseract/gcc/gcc/COPYING": {
+      "bytes": 18002,
+      "sha256": "231f7edcc7352d7734a96eef0b8030f77982678c516876fcb81e25b32d68564c",
+      "git_blob_sha1": "623b6258a134210f0b0ada106fdaab7f0370d9c5"
+    },
+    "docs/third_party/tesseract/gcc/gcc/COPYING.LIB": {
+      "bytes": 26440,
+      "sha256": "32434afcc8666ba060e111d715bfdb6c2d5dd8a35fa4d3ab8ad67d8f850d2f2b",
+      "git_blob_sha1": "ae23fcfda2da8599b52baff4c257847205d78c56"
+    },
+    "docs/third_party/tesseract/gcc/gcc/COPYING3": {
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "git_blob_sha1": "94a9ed024d3859793618152ea559a168bbcbb5e2"
+    },
+    "docs/third_party/tesseract/gcc/gcc/COPYING3.LIB": {
+      "bytes": 7639,
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+      "git_blob_sha1": "fc8a5de7edf437cdc98a216370faf7c757279bcb"
+    },
+    "docs/third_party/tesseract/gcc/include/COPYING": {
+      "bytes": 18002,
+      "sha256": "231f7edcc7352d7734a96eef0b8030f77982678c516876fcb81e25b32d68564c",
+      "git_blob_sha1": "623b6258a134210f0b0ada106fdaab7f0370d9c5"
+    },
+    "docs/third_party/tesseract/gcc/include/COPYING3": {
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "git_blob_sha1": "94a9ed024d3859793618152ea559a168bbcbb5e2"
+    },
+    "docs/third_party/tesseract/gcc/libcody/LICENSE": {
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "git_blob_sha1": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64"
+    },
+    "docs/third_party/tesseract/gcc/libffi/LICENSE": {
+      "bytes": 1132,
+      "sha256": "a61d06e8f7be57928e71e800eb9273b05cb8868c484108afe41e4305bb320dde",
+      "git_blob_sha1": "e4034b09af090e5d0fc55cc6500567672ceadb6c"
+    },
+    "docs/third_party/tesseract/gcc/libffi/LICENSE-BUILDTOOLS": {
+      "bytes": 18698,
+      "sha256": "e67978cd18816c0cb7d29aaaacde7b7447402c2fb321a051698890a8eaedda94",
+      "git_blob_sha1": "d1d626e00859030061ed7b071e84f8f893d84d93"
+    },
+    "docs/third_party/tesseract/gcc/libgo/LICENSE": {
+      "bytes": 1479,
+      "sha256": "2d36597f7117c38b006835ae7f537487207d8ec407aa9d9980794b2030cbc067",
+      "git_blob_sha1": "6a66aea5eafe0ca6a688840c47219556c552488e"
+    },
+    "docs/third_party/tesseract/gcc/libgo/PATENTS": {
+      "bytes": 1303,
+      "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+      "git_blob_sha1": "733099041f84fa1e58611ab2e11af51c1f26d1d2"
+    },
+    "docs/third_party/tesseract/gcc/libiberty/COPYING.LIB": {
+      "bytes": 26440,
+      "sha256": "32434afcc8666ba060e111d715bfdb6c2d5dd8a35fa4d3ab8ad67d8f850d2f2b",
+      "git_blob_sha1": "ae23fcfda2da8599b52baff4c257847205d78c56"
+    },
+    "docs/third_party/tesseract/gcc/libiberty/copying-lib.texi": {
+      "bytes": 26755,
+      "sha256": "684f05578fc861d52339c8db6030000343578c35f024845df753ea43f07e5393",
+      "git_blob_sha1": "66b24b196ca25bd91b6f8c01405d1e26a1460838"
+    },
+    "docs/third_party/tesseract/gcc/libquadmath/COPYING.LIB": {
+      "bytes": 26440,
+      "sha256": "32434afcc8666ba060e111d715bfdb6c2d5dd8a35fa4d3ab8ad67d8f850d2f2b",
+      "git_blob_sha1": "ae23fcfda2da8599b52baff4c257847205d78c56"
+    },
+    "docs/third_party/tesseract/gcc/libsanitizer/LICENSE.TXT": {
+      "bytes": 4506,
+      "sha256": "74c2b24539a53c34abddb559266d89cb653b0198cd2faf9c04763d3223db7f6d",
+      "git_blob_sha1": "f7179425605e425255143641d681118bdc2f8425"
+    },
+    "docs/third_party/tesseract/giflib/COPYING": {
+      "bytes": 1088,
+      "sha256": "0c9b7990ecdca88b676db232c226548ac408b279f550d424d996f0d83591dd8e",
+      "git_blob_sha1": "b9c0b50126076f30f0f9db7e940eac64e60febd6"
+    },
+    "docs/third_party/tesseract/jbigkit/COPYING": {
+      "bytes": 17982,
+      "sha256": "91df39d1816bfb17a4dda2d3d2c83b1f6f2d38d53e53e41e8f97ad5ac46a0cad",
+      "git_blob_sha1": "a43ea2126fb6b114bff5f8e003ee118e045dacf1"
+    },
+    "docs/third_party/tesseract/jbigkit/libjbig/jbig.c": {
+      "bytes": 2634,
+      "sha256": "153d94134ae5375f1b3767855cbda5c92dfc520044db13fb174200221401a310",
+      "git_blob_sha1": "47d7607afddf81683312ad54cc94a29ca612c350"
+    },
+    "docs/third_party/tesseract/leptonica/leptonica-license.txt": {
+      "bytes": 1521,
+      "sha256": "87829abb5bbb00b55a107365da89e9a33f86c4250169e5a1e5588505be7d5806",
+      "git_blob_sha1": "73d44c601c0746534128804c3fb0b93772897f82"
+    },
+    "docs/third_party/tesseract/leptonica/prog/leptonica-license.txt": {
+      "bytes": 1521,
+      "sha256": "87829abb5bbb00b55a107365da89e9a33f86c4250169e5a1e5588505be7d5806",
+      "git_blob_sha1": "73d44c601c0746534128804c3fb0b93772897f82"
+    },
+    "docs/third_party/tesseract/leptonica/src/leptonica-license.txt": {
+      "bytes": 1521,
+      "sha256": "87829abb5bbb00b55a107365da89e9a33f86c4250169e5a1e5588505be7d5806",
+      "git_blob_sha1": "73d44c601c0746534128804c3fb0b93772897f82"
+    },
+    "docs/third_party/tesseract/lerc/LICENSE": {
+      "bytes": 9198,
+      "sha256": "77a8b761727c75e2167b15bfdf61b2c0bcf8792271228bebe80779106ad00671",
+      "git_blob_sha1": "863d15091ebca6473a211f9d99a0051502f63d8b"
+    },
+    "docs/third_party/tesseract/lerc/NOTICE": {
+      "bytes": 679,
+      "sha256": "4b358a6807dec2f782d030d1514ef1a83e1297db8bd8bdd88d6bdc02f82196c2",
+      "git_blob_sha1": "c1b84f6686eac6bcab164301c6a48d0f7b20a6c2"
+    },
+    "docs/third_party/tesseract/libarchive/COPYING": {
+      "bytes": 3086,
+      "sha256": "b2cdf763345de2de34cebf54394df3c61a105c3b71288603c251f2fa638200ba",
+      "git_blob_sha1": "1b9723574a7be8d9c107239fc298723a32c0d5ae"
+    },
+    "docs/third_party/tesseract/libb2/COPYING": {
+      "bytes": 6556,
+      "sha256": "6a1ee543e5282cd9061881edf462e6fdab181f328da71fc2c9a6950a80e94d01",
+      "git_blob_sha1": "2c4afabdb632b5d68e60c9fe9fe0b0819676a729"
+    },
+    "docs/third_party/tesseract/libdeflate/COPYING": {
+      "bytes": 1052,
+      "sha256": "5d246dd2537307b80fed9ba5fdddf5d0fe7a8f023393a071182b9daed56b40fe",
+      "git_blob_sha1": "1f1b81cd5af5998a5d19c00ce49fa9fa67e156f3"
+    },
+    "docs/third_party/tesseract/libiconv/source/AUTHORS": {
+      "bytes": 31,
+      "sha256": "ed10ef2a01effb12849006d43262ffde5cf72a7d5423bbc8aa66fc6959774c0c",
+      "git_blob_sha1": "8bedd79464ab81e2d2fc64f025f6db8a26d87fd0"
+    },
+    "docs/third_party/tesseract/libiconv/source/COPYING": {
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "git_blob_sha1": "94a9ed024d3859793618152ea559a168bbcbb5e2"
+    },
+    "docs/third_party/tesseract/libiconv/source/COPYING.LIB": {
+      "bytes": 26530,
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "git_blob_sha1": "4362b49151d7b34ef83b3067a8f9c9f877d72a0e"
+    },
+    "docs/third_party/tesseract/libiconv/source/README": {
+      "bytes": 5664,
+      "sha256": "dd37af33149d9722d6edca08aeb1e18591dda95bb645d81a2f011a5d83088929",
+      "git_blob_sha1": "e7375cb0ffcfcb98f4c27eea59937c3f711361ce"
+    },
+    "docs/third_party/tesseract/libjpeg-turbo/LICENSE.md": {
+      "bytes": 5620,
+      "sha256": "e548c96c0c09397c94b5c5531836c02ff2c403f1f2b130cad8e3ec9439b5a7cc",
+      "git_blob_sha1": "2204864fa1181019a65317260203fe96f0217e72"
+    },
+    "docs/third_party/tesseract/libjpeg-turbo/README.ijg": {
+      "bytes": 12739,
+      "sha256": "5c1f9094835d21f66ee0e9ce81c57264d2dd50801b19832d6723dc8cdbda080e",
+      "git_blob_sha1": "8f3768265f680292719a5565326b6de6e8c06b72"
+    },
+    "docs/third_party/tesseract/libjpeg-turbo/release/License.rtf": {
+      "bytes": 2178,
+      "sha256": "d26120ab237f87dea10aa4fa7fd4243cadffd26e54eb2f3903d5fb0f8ed336b2",
+      "git_blob_sha1": "5073a27f7a7a3339f8681314194a881da548502b"
+    },
+    "docs/third_party/tesseract/libpng/AUTHORS": {
+      "bytes": 1450,
+      "sha256": "980af1d09d9a1092e35c463776757c90becb07f9879f6549d46e90e22629f4e1",
+      "git_blob_sha1": "544341694a527f1654f2e4d97bc755d7ace5903a"
+    },
+    "docs/third_party/tesseract/libpng/LICENSE": {
+      "bytes": 5345,
+      "sha256": "7317e078e2d3b5d7ba5a6159e650945153262b44b76f6700f8e9edb261c5143e",
+      "git_blob_sha1": "25f298f0fcfd8757bbd9a6386d8fcb2d644cfce9"
+    },
+    "docs/third_party/tesseract/libpng/ci/LICENSE_MIT.txt": {
+      "bytes": 1036,
+      "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1",
+      "git_blob_sha1": "9cf106272ac3b56b0c4c80218e8fc10a664ca5f4"
+    },
+    "docs/third_party/tesseract/libtiff/LICENSE.md": {
+      "bytes": 1164,
+      "sha256": "0780558a8bfba0af1160ec1ff11ade4f41c0d7deafd6ecfc796b492a788e380d",
+      "git_blob_sha1": "55b65673edf0d55ee6aba1afadb84f92794a0786"
+    },
+    "docs/third_party/tesseract/libwebp/AUTHORS": {
+      "bytes": 3048,
+      "sha256": "f9681940f35ab74858ac2717a511fa6237b67f65e99f457c21223e60a851c85a",
+      "git_blob_sha1": "4cbe9766082eae2ebb251aae2dfbd6d19b5f820f"
+    },
+    "docs/third_party/tesseract/libwebp/COPYING": {
+      "bytes": 1496,
+      "sha256": "5aec868f669e384a22372a4e8a1a6cd7d44c64cd451f960ca69cc170d1e13acf",
+      "git_blob_sha1": "7a6f99547d4d6b4c5e6d5321acfaeba313e08de3"
+    },
+    "docs/third_party/tesseract/libwebp/PATENTS": {
+      "bytes": 1436,
+      "sha256": "cc3273e0694ea5896145e0677699b53471b03ea43021ddc50e7923fbb9f5023c",
+      "git_blob_sha1": "caedf607e95ae4c3dc84d057fddcc301cd0e4863"
+    },
+    "docs/third_party/tesseract/lz4/LICENSE": {
+      "bytes": 635,
+      "sha256": "2949fcf758d3c9bcb05f8393ca42cadfa15be04eb4ae4b3327c4ad7957511e1b",
+      "git_blob_sha1": "1b84cc30f0361b13d56bf8c2fbe043493c08fbe6"
+    },
+    "docs/third_party/tesseract/lz4/examples/COPYING": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "git_blob_sha1": "d159169d1050894d3ea3b98e1c965c4058208fe1"
+    },
+    "docs/third_party/tesseract/lz4/lib/LICENSE": {
+      "bytes": 1311,
+      "sha256": "8b58c446121a109ccf32edc094bba3010a3d85e4ee3702950db55e4d3e87736c",
+      "git_blob_sha1": "488491695a6b6984aa3a49a8392b192ed2bcac1d"
+    },
+    "docs/third_party/tesseract/lz4/programs/COPYING": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "git_blob_sha1": "d159169d1050894d3ea3b98e1c965c4058208fe1"
+    },
+    "docs/third_party/tesseract/lz4/tests/COPYING": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "git_blob_sha1": "d159169d1050894d3ea3b98e1c965c4058208fe1"
+    },
+    "docs/third_party/tesseract/openjpeg/LICENSE": {
+      "bytes": 2112,
+      "sha256": "a6af136f3e15038a666b61f376612a07d9a4e48cb7c01adbf3e33b3f14ab49b6",
+      "git_blob_sha1": "e8fa41040dfbe8be524cac5b1bb19d60c6eb0320"
+    },
+    "docs/third_party/tesseract/openssl/LICENSE.txt": {
+      "bytes": 10175,
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "git_blob_sha1": "49cc83d2ee29d13453188217f0e4edd70c7f842f"
+    },
+    "docs/third_party/tesseract/provenance/libiconv-gnu-git-comparison.json": {
+      "bytes": 753,
+      "sha256": "c4e7389e8cebca25b8712e243eae970f3f871255aa463ed57eeebf312280d558",
+      "git_blob_sha1": "e7e4342f59839e0b1732e3a28106df22fb98b2bb"
+    },
+    "docs/third_party/tesseract/tesseract/AUTHORS": {
+      "bytes": 787,
+      "sha256": "720862b7253993b348fe15f37ed6e0d4feb0fc8df8324284d75975d54dd29923",
+      "git_blob_sha1": "9d1e73c3083260ae9485e7d07f6ac1fa271737fb"
+    },
+    "docs/third_party/tesseract/tesseract/LICENSE": {
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "git_blob_sha1": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+    },
+    "docs/third_party/tesseract/winpthreads/AUTHORS": {
+      "bytes": 2398,
+      "sha256": "8f308316e7a94b8410f871868bd3948f126526dc1775aeee97a0e365f9a0fd9f",
+      "git_blob_sha1": "4b40f2beb3cac255a09ff12616c22aa89aa9d80f"
+    },
+    "docs/third_party/tesseract/winpthreads/COPYING": {
+      "bytes": 2326,
+      "sha256": "99a69660981156c21336fdb5661f89341b013c94e4bf9e1c7467b4745718397f",
+      "git_blob_sha1": "28fa9514c036c2ae6a545fc9fe75c37baecf596d"
+    },
+    "docs/third_party/tesseract/winpthreads/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt": {
+      "bytes": 10936,
+      "sha256": "e9b2dc02451ea29092a1f25fa0f3c07207ed421f1807dffb0c4e6dce69dee7bd",
+      "git_blob_sha1": "ca6a077e24b81d4f0ae9b952b6fbcaf370a78d6a"
+    },
+    "docs/third_party/tesseract/winpthreads/COPYING.MinGW-w64/COPYING.MinGW-w64.txt": {
+      "bytes": 5905,
+      "sha256": "f38e6194bd3bfa1b654f118e5acefe0aead437bbe669eee43957ccc65a7127f1",
+      "git_blob_sha1": "decbf46bde9d87a0c2250fe33ece1b7e0724ee6e"
+    },
+    "docs/third_party/tesseract/winpthreads/mingw-w64-libraries/winpthreads/COPYING": {
+      "bytes": 2883,
+      "sha256": "63263614cdd29f2f93cba85e992f041b31f9fc7b4033692f31269489a8a1b177",
+      "git_blob_sha1": "3507701238b798b1ddbf4d5ffe16f285f4458963"
+    },
+    "docs/third_party/tesseract/xz/AUTHORS": {
+      "bytes": 2148,
+      "sha256": "653b31fe6bebcc7fc2aa7089219df259e0d4df88b114c361df51ee6d134ac3c6",
+      "git_blob_sha1": "5eff238ae4132eee0b6fdacf52318afca9756515"
+    },
+    "docs/third_party/tesseract/xz/COPYING": {
+      "bytes": 3885,
+      "sha256": "ee3b35b82f7bb0ba5fd9f13ca34ebbe757a59c05bfde5ab9d50ff4188ed33396",
+      "git_blob_sha1": "aed21531497c0fa049b265e1198f856b9ff35375"
+    },
+    "docs/third_party/tesseract/xz/COPYING.0BSD": {
+      "bytes": 607,
+      "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1",
+      "git_blob_sha1": "4322122aecf1aecff317bd50334ba206dcb9ac41"
+    },
+    "docs/third_party/tesseract/xz/COPYING.GPLv2": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "git_blob_sha1": "d159169d1050894d3ea3b98e1c965c4058208fe1"
+    },
+    "docs/third_party/tesseract/xz/COPYING.GPLv3": {
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "git_blob_sha1": "f288702d2fa16d3cdf0035b15a9fcbc552cd88e7"
+    },
+    "docs/third_party/tesseract/xz/COPYING.LGPLv2.1": {
+      "bytes": 26530,
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "git_blob_sha1": "4362b49151d7b34ef83b3067a8f9c9f877d72a0e"
+    },
+    "docs/third_party/tesseract/zlib/LICENSE": {
+      "bytes": 1002,
+      "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+      "git_blob_sha1": "ab8ee6f71428c3e4646b12b64ad387cde33462e5"
+    },
+    "docs/third_party/tesseract/zstd/COPYING": {
+      "bytes": 18091,
+      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+      "git_blob_sha1": "ecbc0593737be657aef92e3adcf3bcbd6fdb812e"
+    },
+    "docs/third_party/tesseract/zstd/LICENSE": {
+      "bytes": 1549,
+      "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "git_blob_sha1": "75800288cc243f164b9d130f125e2ffae28f8e39"
+    },
+    "template_ai/review_tool/release_check.py": {
+      "bytes": 56631,
+      "sha256": "e2b0545e7229d9055bdeed1cb13ceaf89b9d41797f3f3075d1059d495137a355",
+      "git_blob_sha1": "bad5f6c412abb6dec82fb1d59da1e9edd34387f7"
+    },
+    "tests/fixtures/review_ocr_outline_provenance.json": {
+      "bytes": 1148,
+      "sha256": "49ae0bdffe80c64bb131594aace7f84e8dbeafb784059138c844cdf968d996b8",
+      "git_blob_sha1": "7c1b0af004cb0bbe78ac2b925e58d1a04df3485b"
+    },
+    "tests/test_bundled_tesseract.py": {
+      "bytes": 13875,
+      "sha256": "08205ba2c3e9ca8e443d8ba9cbf923ceb094408d3b960ef2e9bd14f7b1106cba",
+      "git_blob_sha1": "93c8f0a0c28e14ec20365626b9b4e6b5a5b68c09"
+    },
+    "tests/test_review_ocr_acceptance.py": {
+      "bytes": 10117,
+      "sha256": "8cc6d394d5826943fa3a05b083c02b8c78f5e1439572a0dd62e0c9d56affbfdc",
+      "git_blob_sha1": "dfaa10ddcbcdf42036f8e9ed3c74aac119676604"
+    },
+    "tests/test_review_release.py": {
+      "bytes": 25210,
+      "sha256": "8a9572eaaaae993c32f320b96a879dd808616f54dcea2e4b26ae45c6a5f4b4d4",
+      "git_blob_sha1": "8638689bc83bf9fb2818b99a8456e78d0b8dde9a"
+    },
+    "tests/test_tesseract_sources.py": {
+      "bytes": 6944,
+      "sha256": "0ac0a25d13b758d1384300d7db58ce509f4957b95d97960a752dfd158b993451",
+      "git_blob_sha1": "1d40f3eab391a8d8bb652634a1ba1ab9921a327a"
+    },
+    "tools/bundled_tesseract.py": {
+      "bytes": 14024,
+      "sha256": "ae5ab64bc0a0ce6d21ef16aed02b00b67d59d362927df1ef0691aad143614217",
+      "git_blob_sha1": "3a925f7bebf60f61e22f39e54f200a67d40eb58e"
+    },
+    "tools/review_release.py": {
+      "bytes": 45643,
+      "sha256": "a84a8b2e0deb67c80cb72d6190d9e7c76b0b967e4adc8615051b6ffbe6ad7804",
+      "git_blob_sha1": "181acf8024221b76d0087e76de0710ac9569c47d"
+    },
+    "tools/tesseract_distribution_lock.json": {
+      "bytes": 29386,
+      "sha256": "b0ab1162a5aed90cf1e572844b25afcd1795c508600d4129e53b895716949a6b",
+      "git_blob_sha1": "8eae5c94d533ac88e8de001a7b6ceaba831a45f9"
+    },
+    "tools/tesseract_sources.py": {
+      "bytes": 11257,
+      "sha256": "9a116580e91d30f6bce3b39f3b6f69b84cbe39e53277de33f870b83c79d815cf",
+      "git_blob_sha1": "7e7fdc68b6546ac4875cad575ee60d2a5cad7151"
+    },
+    "tools/tesseract_sources_lock.json": {
+      "bytes": 38421,
+      "sha256": "11908656c9c9d9e72f279293149ce46890b7eb330fc2bf18887a80eecda3fbd0",
+      "git_blob_sha1": "c8d9c5e188f044a9b69856779e8040c3164d7517"
+    }
+  },
+  "source_manifest_sha256": "3a59aa92c4caf63c298f19d36cc24f76ffa38a1b27e3a699d4eeefe63bc3b2a7",
+  "next_step": "Monitor exact beta.2 Windows build, actual bundled bilingual OCR and both full Release downloads",
+  "validation": {
+    "passed": 60,
+    "related_jobs_passed": 10,
+    "ocr_acceptance_unit_passed": 15,
+    "source_gui_checks_passed": 35,
+    "runtime_builder_passed": 18,
+    "source_helper_passed": 8,
+    "release_guards_passed": 33
+  },
+  "local_snapshot": {
+    "path": ".checkpoints/CP-20261024-REVIEW-OCR-RELEASE-CANDIDATE-001/source.zip",
+    "sha256": "48088e02315db309dea38f93bbc20145838d1cd1c58dbc9606dde1e94b030238"
+  },
+  "qualification": "WINDOWS_FROZEN_BILINGUAL_OCR_AND_PUBLISHED_DOWNLOADS_PENDING"
+}

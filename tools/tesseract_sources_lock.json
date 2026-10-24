@@ -1,0 +1,962 @@
+{
+  "schema_version": 1,
+  "component": "tesseract-windows-x64-corresponding-source",
+  "legal_status": "REVIEWED",
+  "installer_sha256": "c885fff6998e0608ba4bb8ab51436e1c6775c2bafc2559a19b423e18678b60c9",
+  "archive_count": 25,
+  "source_bytes": 260799778,
+  "archives": [
+    {
+      "component": "bzip2",
+      "version": "1.0.8",
+      "asset_name": "bzip2-1.0.8-6a8690fc.tar.gz",
+      "url": "https://gitlab.com/bzip2/bzip2/-/archive/6a8690fc8d26c815e798c588f796eabe9d684cf0/bzip2-6a8690fc8d26c815e798c588f796eabe9d684cf0.tar.gz",
+      "bytes": 365517,
+      "sha256": "bc40651201886d3e126a8fff33163076e65918d422ce1f18749362984a8ce01d",
+      "runtime_files": [
+        "libbz2-1.dll"
+      ],
+      "license": "bzip2-1.0.6",
+      "recipe": "mingw-w64-bzip2",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "expat",
+      "version": "2.6.2",
+      "asset_name": "expat-2.6.2.tar.xz",
+      "url": "https://github.com/libexpat/libexpat/releases/download/R_2_6_2/expat-2.6.2.tar.xz",
+      "bytes": 485236,
+      "sha256": "ee14b4c5d8908b1bec37ad937607eab183d4d9806a08adee472c3c3121d27364",
+      "runtime_files": [
+        "libexpat-1.dll"
+      ],
+      "license": "MIT",
+      "recipe": "mingw-w64-expat",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "gcc",
+      "version": "14.1.0",
+      "asset_name": "gcc-14.1.0-cd0059a1.tar.gz",
+      "url": "https://github.com/gcc-mirror/gcc/archive/cd0059a1976303638cea95f216de129334fc04d1.tar.gz",
+      "bytes": 144149751,
+      "sha256": "addaea023df10a6df06aa35b274542c399f9e269cfe7733c4123dde94490b08b",
+      "runtime_files": [
+        "libgcc_s_seh-1.dll",
+        "libstdc++-6.dll"
+      ],
+      "license": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "recipe": "mingw-w64-gcc",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "giflib",
+      "version": "5.2.2",
+      "asset_name": "giflib-5.2.2.tar.gz",
+      "url": "https://deb.debian.org/debian/pool/main/g/giflib/giflib_5.2.2.orig.tar.gz",
+      "bytes": 447175,
+      "sha256": "be7ffbd057cadebe2aa144542fd90c6838c6a083b5e8a9048b8ee3b66b29d5fb",
+      "runtime_files": [
+        "libgif-7.dll"
+      ],
+      "license": "MIT",
+      "recipe": "mingw-w64-giflib",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "jbigkit",
+      "version": "2.1",
+      "asset_name": "jbigkit-2.1-source-mirror-e067602d.tar.gz",
+      "url": "https://codeload.github.com/deepin-community/jbigkit/tar.gz/e067602df9affe63f25827e172c44e554d083f55",
+      "bytes": 446817,
+      "sha256": "ac41afe3036b8a65ecb5bf8782f69fb6c4dab57148eba464eea8051b4c44a286",
+      "runtime_files": [
+        "libjbig-0.dll"
+      ],
+      "license": "GPL-2.0-or-later, GPL-3.0 selected for linked runtime redistribution",
+      "recipe": "mingw-w64-jbigkit",
+      "provenance": "fixed_distribution_source_mirror_not_original_upstream_tar_container"
+    },
+    {
+      "component": "leptonica",
+      "version": "1.84.1",
+      "asset_name": "leptonica-1.84.1.tar.gz",
+      "url": "https://github.com/DanBloomberg/leptonica/releases/download/1.84.1/leptonica-1.84.1.tar.gz",
+      "bytes": 14102299,
+      "sha256": "2b3e1254b1cca381e77c819b59ca99774ff43530209b9aeb511e1d46588a64f6",
+      "runtime_files": [
+        "libleptonica-6.dll"
+      ],
+      "license": "BSD-2-Clause",
+      "recipe": "mingw-w64-leptonica",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "lerc",
+      "version": "4.0.0",
+      "asset_name": "lerc-4.0.0.tar.gz",
+      "url": "https://codeload.github.com/Esri/lerc/tar.gz/refs/tags/v4.0.0",
+      "bytes": 4710408,
+      "sha256": "91431c2b16d0e3de6cbaea188603359f87caed08259a645fd5a3805784ee30a0",
+      "runtime_files": [
+        "libLerc.dll"
+      ],
+      "license": "Apache-2.0",
+      "recipe": "mingw-w64-lerc",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "libarchive",
+      "version": "3.7.4",
+      "asset_name": "libarchive-3.7.4.tar.xz",
+      "url": "https://github.com/libarchive/libarchive/releases/download/v3.7.4/libarchive-3.7.4.tar.xz",
+      "bytes": 5417660,
+      "sha256": "f887755c434a736a609cbd28d87ddbfbe9d6a3bb5b703c22c02f6af80a802735",
+      "runtime_files": [
+        "libarchive-13.dll"
+      ],
+      "license": "BSD-2-Clause and included third-party notices",
+      "recipe": "mingw-w64-libarchive",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "libb2",
+      "version": "0.98.1",
+      "asset_name": "libb2-0.98.1.tar.gz",
+      "url": "https://github.com/BLAKE2/libb2/releases/download/v0.98.1/libb2-0.98.1.tar.gz",
+      "bytes": 534928,
+      "sha256": "53626fddce753c454a3fea581cbbc7fe9bbcf0bc70416d48fdbbf5d87ef6c72e",
+      "runtime_files": [
+        "libb2-1.dll"
+      ],
+      "license": "CC0-1.0",
+      "recipe": "mingw-w64-libb2",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "libdeflate",
+      "version": "1.20",
+      "asset_name": "libdeflate-1.20.tar.gz",
+      "url": "https://codeload.github.com/ebiggers/libdeflate/tar.gz/refs/tags/v1.20",
+      "bytes": 194212,
+      "sha256": "ed1454166ced78913ff3809870a4005b7170a6fd30767dc478a09b96847b9c2a",
+      "runtime_files": [
+        "libdeflate.dll"
+      ],
+      "license": "MIT",
+      "recipe": "mingw-w64-libdeflate",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "libiconv",
+      "version": "1.17",
+      "asset_name": "libiconv-1.17-source-mirror-5ab96872.tar.gz",
+      "url": "https://codeload.github.com/winlibs/libiconv/tar.gz/5ab968722f6f1a1343c27669773e3b5cb5138c7c",
+      "bytes": 5289514,
+      "sha256": "6b927376cedbf94801db8274cbc6febbfea448d828d4cfa42ce36c646b8c6359",
+      "runtime_files": [
+        "libiconv-2.dll"
+      ],
+      "license": "LGPL-2.1-or-later for shared library; GPL tools not shipped",
+      "recipe": "mingw-w64-libiconv",
+      "provenance": "fixed_distribution_source_mirror_not_original_upstream_tar_container"
+    },
+    {
+      "component": "libiconv-upstream-crosscheck",
+      "version": "1.17",
+      "asset_name": "libiconv-1.17-gnu-git-mirror-4b9c27be.tar.gz",
+      "url": "https://codeload.github.com/arthenica/libiconv/tar.gz/4b9c27bec873392533dd3ef309cd62962a644e18",
+      "bytes": 4393969,
+      "sha256": "f652b492c4107e3c887d78ae8bc1295dfecca53e932bac92f053fcd4b9a1ffa7",
+      "runtime_files": [],
+      "license": "Source/build provenance; original file licenses apply",
+      "recipe": null,
+      "provenance": "GNU_author_history_crosscheck_704_common_files_identical_to_vanilla_release_mirror"
+    },
+    {
+      "component": "libjpeg-turbo",
+      "version": "3.0.3",
+      "asset_name": "libjpeg-turbo-3.0.3.tar.gz",
+      "url": "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.0.3/libjpeg-turbo-3.0.3.tar.gz",
+      "bytes": 2832827,
+      "sha256": "343e789069fc7afbcdfe44dbba7dbbf45afa98a15150e079a38e60e44578865d",
+      "runtime_files": [
+        "libjpeg-8.dll"
+      ],
+      "license": "BSD-3-Clause AND IJG AND Zlib (see complete upstream LICENSE.md/README.ijg)",
+      "recipe": "mingw-w64-libjpeg-turbo",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "libpng",
+      "version": "1.6.43",
+      "asset_name": "libpng-1.6.43-ed217e3e.tar.gz",
+      "url": "https://github.com/pnggroup/libpng/archive/ed217e3e601d8e462f7fd1e04bed43ac42212429.tar.gz",
+      "bytes": 1555621,
+      "sha256": "3179215477e554acc3630b8a508488ade049a359c75253e377e136add1252c9d",
+      "runtime_files": [
+        "libpng16-16.dll"
+      ],
+      "license": "libpng-2.0",
+      "recipe": "mingw-w64-libpng",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "libtiff",
+      "version": "4.6.0",
+      "asset_name": "libtiff-4.6.0-8b20804f.tar.gz",
+      "url": "https://gitlab.com/libtiff/libtiff/-/archive/8b20804fc0ddeaa93667b799b5e1a2a7dc9e3fb2/libtiff-8b20804fc0ddeaa93667b799b5e1a2a7dc9e3fb2.tar.gz",
+      "bytes": 2392356,
+      "sha256": "1f589c556ff94e3d6e5e5868d3cfae03028a8075643e5b5bf6b320c2c91228d4",
+      "runtime_files": [
+        "libtiff-6.dll"
+      ],
+      "license": "MIT",
+      "recipe": "mingw-w64-libtiff",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "libwebp",
+      "version": "1.4.0",
+      "asset_name": "libwebp-1.4.0.tar.gz",
+      "url": "https://codeload.github.com/webmproject/libwebp/tar.gz/refs/tags/v1.4.0",
+      "bytes": 3800514,
+      "sha256": "12af50c45530f0a292d39a88d952637e43fb2d4ab1883c44ae729840f7273381",
+      "runtime_files": [
+        "libwebp-7.dll",
+        "libwebpmux-3.dll",
+        "libsharpyuv-0.dll"
+      ],
+      "license": "BSD-3-Clause AND upstream patent grant",
+      "recipe": "mingw-w64-libwebp",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "lz4",
+      "version": "1.9.4",
+      "asset_name": "lz4-1.9.4.tar.gz",
+      "url": "https://codeload.github.com/lz4/lz4/tar.gz/refs/tags/v1.9.4",
+      "bytes": 354063,
+      "sha256": "0b0e3aa07c8c063ddf40b082bdf7e37a1562bda40a0ff5272957f3e987e0e54b",
+      "runtime_files": [
+        "liblz4.dll"
+      ],
+      "license": "BSD-2-Clause for library (upstream CLI GPL not shipped)",
+      "recipe": "mingw-w64-lz4",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "msys2-build-recipes",
+      "version": "c6674b1e",
+      "asset_name": "msys2-mingw-recipes-c6674b1e.tar.gz",
+      "url": "https://codeload.github.com/msys2/MINGW-packages/tar.gz/c6674b1e3a9d8301b4e63bb1b1ca3d1ed81fe5bf",
+      "bytes": 21646599,
+      "sha256": "bc51e68c7b62f814e29041b32e58bc5672b07a2ea70b0cf770ec58f70e479ea2",
+      "runtime_files": [],
+      "license": "Source/build provenance; original file licenses apply",
+      "recipe": null,
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "openjpeg",
+      "version": "2.5.2",
+      "asset_name": "openjpeg-2.5.2.tar.gz",
+      "url": "https://codeload.github.com/uclouvain/openjpeg/tar.gz/refs/tags/v2.5.2",
+      "bytes": 1871948,
+      "sha256": "90e3896fed910c376aaf79cdd98bdfdaf98c6472efd8e1debf0a854938cbda6a",
+      "runtime_files": [
+        "libopenjp2-7.dll"
+      ],
+      "license": "BSD-2-Clause",
+      "recipe": "mingw-w64-openjpeg2",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "openssl",
+      "version": "3.3.1",
+      "asset_name": "openssl-3.3.1.tar.gz",
+      "url": "https://github.com/openssl/openssl/releases/download/openssl-3.3.1/openssl-3.3.1.tar.gz",
+      "bytes": 18055752,
+      "sha256": "777cd596284c883375a2a7a11bf5d2786fc5413255efab20c50d6ffe6d020b7e",
+      "runtime_files": [
+        "libcrypto-3-x64.dll"
+      ],
+      "license": "Apache-2.0",
+      "recipe": "mingw-w64-openssl",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "tesseract",
+      "version": "5.4.0.20240606",
+      "asset_name": "tesseract-5.4.0.20240606-38bfd186.tar.gz",
+      "url": "https://codeload.github.com/UB-Mannheim/tesseract/tar.gz/38bfd186cc92e483f24d6257cc4b5e86c4b406b2",
+      "bytes": 8246669,
+      "sha256": "3b881638d41f55d553a063beb5f4f57520d3dbe632469f022920b06b5363fc54",
+      "runtime_files": [
+        "tesseract.exe",
+        "libtesseract-5.dll"
+      ],
+      "license": "Apache-2.0 upstream; bundled linked CLI contains GPL-2.0-or-later JBIG and uses GPL-3.0-compatible redistribution with corresponding source",
+      "recipe": "mingw-w64-tesseract-ocr",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "winpthreads",
+      "version": "12.0.0.r32.gf977e1c38",
+      "asset_name": "mingw-w64-f977e1c3.tar.gz",
+      "url": "https://github.com/mingw-w64/mingw-w64/archive/f977e1c38299fd204b733650cba3726a244face6.tar.gz",
+      "bytes": 14485880,
+      "sha256": "64477c2515bc75c45aadde7db10aa400a1096364cf471e07e55ef1a7a4b70a00",
+      "runtime_files": [
+        "libwinpthread-1.dll"
+      ],
+      "license": "MIT AND BSD-3-Clause-Clear",
+      "recipe": "mingw-w64-winpthreads-git",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "xz",
+      "version": "5.6.2",
+      "asset_name": "xz-5.6.2.tar.xz",
+      "url": "https://github.com/tukaani-project/xz/releases/download/v5.6.2/xz-5.6.2.tar.xz",
+      "bytes": 1307448,
+      "sha256": "a9db3bb3d64e248a0fae963f8fb6ba851a26ba1822e504dc0efd18a80c626caf",
+      "runtime_files": [
+        "liblzma-5.dll"
+      ],
+      "license": "0BSD for liblzma; other source files have licenses listed in COPYING",
+      "recipe": "mingw-w64-xz",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "zlib",
+      "version": "1.3.1",
+      "asset_name": "zlib-1.3.1.tar.xz",
+      "url": "https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.xz",
+      "bytes": 1305740,
+      "sha256": "38ef96b8dfe510d42707d9c781877914792541133e1870841463bfa73f883e32",
+      "runtime_files": [
+        "zlib1.dll"
+      ],
+      "license": "Zlib",
+      "recipe": "mingw-w64-zlib",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    },
+    {
+      "component": "zstd",
+      "version": "1.5.6",
+      "asset_name": "zstd-1.5.6.tar.gz",
+      "url": "https://github.com/facebook/zstd/releases/download/v1.5.6/zstd-1.5.6.tar.gz",
+      "bytes": 2406875,
+      "sha256": "8c29e06cf42aacc1eafc4077ae2ec6c6fcb96a626157e0593d5e82a34fd403c1",
+      "runtime_files": [
+        "libzstd.dll"
+      ],
+      "license": "BSD-3-Clause selected, upstream also offers GPL-2.0-or-later",
+      "recipe": "mingw-w64-zstd",
+      "provenance": "Fixed upstream release archive or precise official commit archive; see URL and recipe snapshot"
+    }
+  ],
+  "notice_files": [
+    {
+      "component": "distribution",
+      "path": "README.md",
+      "bytes": 5254,
+      "sha256": "11ebbabb76369bba517869f231160cdb5e9dd77ac4c8768b44b391badaa14464"
+    },
+    {
+      "component": "distribution",
+      "path": "REBUILDING.md",
+      "bytes": 2554,
+      "sha256": "02487b5c21ec2c5680400d35320e684504cab886327467b2c7ef197bae5407bb"
+    },
+    {
+      "component": "bzip2",
+      "path": "bzip2/LICENSE",
+      "source_archive": "bzip2-1.0.8-6a8690fc.tar.gz",
+      "source_member": "bzip2-6a8690fc8d26c815e798c588f796eabe9d684cf0/LICENSE",
+      "bytes": 1896,
+      "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3"
+    },
+    {
+      "component": "expat",
+      "path": "expat/AUTHORS",
+      "source_archive": "expat-2.6.2.tar.xz",
+      "source_member": "expat-2.6.2/AUTHORS",
+      "bytes": 142,
+      "sha256": "59f14371c6b75912cfebb46e6247ee5146766e803a0365b124e5d3011e7d0877"
+    },
+    {
+      "component": "expat",
+      "path": "expat/COPYING",
+      "source_archive": "expat-2.6.2.tar.xz",
+      "source_member": "expat-2.6.2/COPYING",
+      "bytes": 1144,
+      "sha256": "122f2c27000472a201d337b9b31f7eb2b52d091b02857061a8880371612d9534"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/COPYING",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/COPYING",
+      "bytes": 18002,
+      "sha256": "231f7edcc7352d7734a96eef0b8030f77982678c516876fcb81e25b32d68564c"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/COPYING.LIB",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/COPYING.LIB",
+      "bytes": 26527,
+      "sha256": "a9bdde5616ecdd1e980b44f360600ee8783b1f99b8cc83a2beb163a0a390e861"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/COPYING.RUNTIME",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/COPYING.RUNTIME",
+      "bytes": 3324,
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/COPYING3",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/COPYING3",
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/COPYING3.LIB",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/COPYING3.LIB",
+      "bytes": 7639,
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/gcc/COPYING",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/gcc/COPYING",
+      "bytes": 18002,
+      "sha256": "231f7edcc7352d7734a96eef0b8030f77982678c516876fcb81e25b32d68564c"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/gcc/COPYING.LIB",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/gcc/COPYING.LIB",
+      "bytes": 26440,
+      "sha256": "32434afcc8666ba060e111d715bfdb6c2d5dd8a35fa4d3ab8ad67d8f850d2f2b"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/gcc/COPYING3",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/gcc/COPYING3",
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/gcc/COPYING3.LIB",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/gcc/COPYING3.LIB",
+      "bytes": 7639,
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/include/COPYING",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/include/COPYING",
+      "bytes": 18002,
+      "sha256": "231f7edcc7352d7734a96eef0b8030f77982678c516876fcb81e25b32d68564c"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/include/COPYING3",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/include/COPYING3",
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/libcody/LICENSE",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/libcody/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/libffi/LICENSE",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/libffi/LICENSE",
+      "bytes": 1132,
+      "sha256": "a61d06e8f7be57928e71e800eb9273b05cb8868c484108afe41e4305bb320dde"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/libffi/LICENSE-BUILDTOOLS",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/libffi/LICENSE-BUILDTOOLS",
+      "bytes": 18698,
+      "sha256": "e67978cd18816c0cb7d29aaaacde7b7447402c2fb321a051698890a8eaedda94"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/libgo/LICENSE",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/libgo/LICENSE",
+      "bytes": 1479,
+      "sha256": "2d36597f7117c38b006835ae7f537487207d8ec407aa9d9980794b2030cbc067"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/libgo/PATENTS",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/libgo/PATENTS",
+      "bytes": 1303,
+      "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/libiberty/COPYING.LIB",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/libiberty/COPYING.LIB",
+      "bytes": 26440,
+      "sha256": "32434afcc8666ba060e111d715bfdb6c2d5dd8a35fa4d3ab8ad67d8f850d2f2b"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/libiberty/copying-lib.texi",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/libiberty/copying-lib.texi",
+      "bytes": 26755,
+      "sha256": "684f05578fc861d52339c8db6030000343578c35f024845df753ea43f07e5393"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/libquadmath/COPYING.LIB",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/libquadmath/COPYING.LIB",
+      "bytes": 26440,
+      "sha256": "32434afcc8666ba060e111d715bfdb6c2d5dd8a35fa4d3ab8ad67d8f850d2f2b"
+    },
+    {
+      "component": "gcc",
+      "path": "gcc/libsanitizer/LICENSE.TXT",
+      "source_archive": "gcc-14.1.0-cd0059a1.tar.gz",
+      "source_member": "gcc-cd0059a1976303638cea95f216de129334fc04d1/libsanitizer/LICENSE.TXT",
+      "bytes": 4506,
+      "sha256": "74c2b24539a53c34abddb559266d89cb653b0198cd2faf9c04763d3223db7f6d"
+    },
+    {
+      "component": "giflib",
+      "path": "giflib/COPYING",
+      "source_archive": "giflib-5.2.2.tar.gz",
+      "source_member": "giflib-5.2.2/COPYING",
+      "bytes": 1088,
+      "sha256": "0c9b7990ecdca88b676db232c226548ac408b279f550d424d996f0d83591dd8e"
+    },
+    {
+      "component": "jbigkit",
+      "path": "jbigkit/COPYING",
+      "source_archive": "jbigkit-2.1-source-mirror-e067602d.tar.gz",
+      "source_member": "jbigkit-e067602df9affe63f25827e172c44e554d083f55/COPYING",
+      "bytes": 17982,
+      "sha256": "91df39d1816bfb17a4dda2d3d2c83b1f6f2d38d53e53e41e8f97ad5ac46a0cad"
+    },
+    {
+      "component": "jbigkit",
+      "path": "jbigkit/libjbig/jbig.c",
+      "source_archive": "jbigkit-2.1-source-mirror-e067602d.tar.gz",
+      "source_member": "jbigkit-e067602df9affe63f25827e172c44e554d083f55/libjbig/jbig.c",
+      "bytes": 2634,
+      "sha256": "153d94134ae5375f1b3767855cbda5c92dfc520044db13fb174200221401a310"
+    },
+    {
+      "component": "leptonica",
+      "path": "leptonica/leptonica-license.txt",
+      "source_archive": "leptonica-1.84.1.tar.gz",
+      "source_member": "leptonica-1.84.1/leptonica-license.txt",
+      "bytes": 1521,
+      "sha256": "87829abb5bbb00b55a107365da89e9a33f86c4250169e5a1e5588505be7d5806"
+    },
+    {
+      "component": "leptonica",
+      "path": "leptonica/prog/leptonica-license.txt",
+      "source_archive": "leptonica-1.84.1.tar.gz",
+      "source_member": "leptonica-1.84.1/prog/leptonica-license.txt",
+      "bytes": 1521,
+      "sha256": "87829abb5bbb00b55a107365da89e9a33f86c4250169e5a1e5588505be7d5806"
+    },
+    {
+      "component": "leptonica",
+      "path": "leptonica/src/leptonica-license.txt",
+      "source_archive": "leptonica-1.84.1.tar.gz",
+      "source_member": "leptonica-1.84.1/src/leptonica-license.txt",
+      "bytes": 1521,
+      "sha256": "87829abb5bbb00b55a107365da89e9a33f86c4250169e5a1e5588505be7d5806"
+    },
+    {
+      "component": "lerc",
+      "path": "lerc/LICENSE",
+      "source_archive": "lerc-4.0.0.tar.gz",
+      "source_member": "lerc-4.0.0/LICENSE",
+      "bytes": 9198,
+      "sha256": "77a8b761727c75e2167b15bfdf61b2c0bcf8792271228bebe80779106ad00671"
+    },
+    {
+      "component": "lerc",
+      "path": "lerc/NOTICE",
+      "source_archive": "lerc-4.0.0.tar.gz",
+      "source_member": "lerc-4.0.0/NOTICE",
+      "bytes": 679,
+      "sha256": "4b358a6807dec2f782d030d1514ef1a83e1297db8bd8bdd88d6bdc02f82196c2"
+    },
+    {
+      "component": "libarchive",
+      "path": "libarchive/COPYING",
+      "source_archive": "libarchive-3.7.4.tar.xz",
+      "source_member": "libarchive-3.7.4/COPYING",
+      "bytes": 3086,
+      "sha256": "b2cdf763345de2de34cebf54394df3c61a105c3b71288603c251f2fa638200ba"
+    },
+    {
+      "component": "libb2",
+      "path": "libb2/COPYING",
+      "source_archive": "libb2-0.98.1.tar.gz",
+      "source_member": "libb2-0.98.1/COPYING",
+      "bytes": 6556,
+      "sha256": "6a1ee543e5282cd9061881edf462e6fdab181f328da71fc2c9a6950a80e94d01"
+    },
+    {
+      "component": "libdeflate",
+      "path": "libdeflate/COPYING",
+      "source_archive": "libdeflate-1.20.tar.gz",
+      "source_member": "libdeflate-1.20/COPYING",
+      "bytes": 1052,
+      "sha256": "5d246dd2537307b80fed9ba5fdddf5d0fe7a8f023393a071182b9daed56b40fe"
+    },
+    {
+      "component": "libiconv",
+      "path": "libiconv/source/AUTHORS",
+      "source_archive": "libiconv-1.17-source-mirror-5ab96872.tar.gz",
+      "source_member": "libiconv-5ab968722f6f1a1343c27669773e3b5cb5138c7c/source/AUTHORS",
+      "bytes": 31,
+      "sha256": "ed10ef2a01effb12849006d43262ffde5cf72a7d5423bbc8aa66fc6959774c0c"
+    },
+    {
+      "component": "libiconv",
+      "path": "libiconv/source/COPYING",
+      "source_archive": "libiconv-1.17-source-mirror-5ab96872.tar.gz",
+      "source_member": "libiconv-5ab968722f6f1a1343c27669773e3b5cb5138c7c/source/COPYING",
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "component": "libiconv",
+      "path": "libiconv/source/COPYING.LIB",
+      "source_archive": "libiconv-1.17-source-mirror-5ab96872.tar.gz",
+      "source_member": "libiconv-5ab968722f6f1a1343c27669773e3b5cb5138c7c/source/COPYING.LIB",
+      "bytes": 26530,
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551"
+    },
+    {
+      "component": "libiconv",
+      "path": "libiconv/source/README",
+      "source_archive": "libiconv-1.17-source-mirror-5ab96872.tar.gz",
+      "source_member": "libiconv-5ab968722f6f1a1343c27669773e3b5cb5138c7c/source/README",
+      "bytes": 5664,
+      "sha256": "dd37af33149d9722d6edca08aeb1e18591dda95bb645d81a2f011a5d83088929"
+    },
+    {
+      "component": "libjpeg-turbo",
+      "path": "libjpeg-turbo/LICENSE.md",
+      "source_archive": "libjpeg-turbo-3.0.3.tar.gz",
+      "source_member": "libjpeg-turbo-3.0.3/LICENSE.md",
+      "bytes": 5620,
+      "sha256": "e548c96c0c09397c94b5c5531836c02ff2c403f1f2b130cad8e3ec9439b5a7cc"
+    },
+    {
+      "component": "libjpeg-turbo",
+      "path": "libjpeg-turbo/README.ijg",
+      "source_archive": "libjpeg-turbo-3.0.3.tar.gz",
+      "source_member": "libjpeg-turbo-3.0.3/README.ijg",
+      "bytes": 12739,
+      "sha256": "5c1f9094835d21f66ee0e9ce81c57264d2dd50801b19832d6723dc8cdbda080e"
+    },
+    {
+      "component": "libjpeg-turbo",
+      "path": "libjpeg-turbo/release/License.rtf",
+      "source_archive": "libjpeg-turbo-3.0.3.tar.gz",
+      "source_member": "libjpeg-turbo-3.0.3/release/License.rtf",
+      "bytes": 2178,
+      "sha256": "d26120ab237f87dea10aa4fa7fd4243cadffd26e54eb2f3903d5fb0f8ed336b2"
+    },
+    {
+      "component": "libpng",
+      "path": "libpng/AUTHORS",
+      "source_archive": "libpng-1.6.43-ed217e3e.tar.gz",
+      "source_member": "libpng-ed217e3e601d8e462f7fd1e04bed43ac42212429/AUTHORS",
+      "bytes": 1450,
+      "sha256": "980af1d09d9a1092e35c463776757c90becb07f9879f6549d46e90e22629f4e1"
+    },
+    {
+      "component": "libpng",
+      "path": "libpng/LICENSE",
+      "source_archive": "libpng-1.6.43-ed217e3e.tar.gz",
+      "source_member": "libpng-ed217e3e601d8e462f7fd1e04bed43ac42212429/LICENSE",
+      "bytes": 5345,
+      "sha256": "7317e078e2d3b5d7ba5a6159e650945153262b44b76f6700f8e9edb261c5143e"
+    },
+    {
+      "component": "libpng",
+      "path": "libpng/ci/LICENSE_MIT.txt",
+      "source_archive": "libpng-1.6.43-ed217e3e.tar.gz",
+      "source_member": "libpng-ed217e3e601d8e462f7fd1e04bed43ac42212429/ci/LICENSE_MIT.txt",
+      "bytes": 1036,
+      "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1"
+    },
+    {
+      "component": "libtiff",
+      "path": "libtiff/LICENSE.md",
+      "source_archive": "libtiff-4.6.0-8b20804f.tar.gz",
+      "source_member": "libtiff-8b20804fc0ddeaa93667b799b5e1a2a7dc9e3fb2/LICENSE.md",
+      "bytes": 1164,
+      "sha256": "0780558a8bfba0af1160ec1ff11ade4f41c0d7deafd6ecfc796b492a788e380d"
+    },
+    {
+      "component": "libwebp",
+      "path": "libwebp/AUTHORS",
+      "source_archive": "libwebp-1.4.0.tar.gz",
+      "source_member": "libwebp-1.4.0/AUTHORS",
+      "bytes": 3048,
+      "sha256": "f9681940f35ab74858ac2717a511fa6237b67f65e99f457c21223e60a851c85a"
+    },
+    {
+      "component": "libwebp",
+      "path": "libwebp/COPYING",
+      "source_archive": "libwebp-1.4.0.tar.gz",
+      "source_member": "libwebp-1.4.0/COPYING",
+      "bytes": 1496,
+      "sha256": "5aec868f669e384a22372a4e8a1a6cd7d44c64cd451f960ca69cc170d1e13acf"
+    },
+    {
+      "component": "libwebp",
+      "path": "libwebp/PATENTS",
+      "source_archive": "libwebp-1.4.0.tar.gz",
+      "source_member": "libwebp-1.4.0/PATENTS",
+      "bytes": 1436,
+      "sha256": "cc3273e0694ea5896145e0677699b53471b03ea43021ddc50e7923fbb9f5023c"
+    },
+    {
+      "component": "lz4",
+      "path": "lz4/LICENSE",
+      "source_archive": "lz4-1.9.4.tar.gz",
+      "source_member": "lz4-1.9.4/LICENSE",
+      "bytes": 635,
+      "sha256": "2949fcf758d3c9bcb05f8393ca42cadfa15be04eb4ae4b3327c4ad7957511e1b"
+    },
+    {
+      "component": "lz4",
+      "path": "lz4/examples/COPYING",
+      "source_archive": "lz4-1.9.4.tar.gz",
+      "source_member": "lz4-1.9.4/examples/COPYING",
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    {
+      "component": "lz4",
+      "path": "lz4/lib/LICENSE",
+      "source_archive": "lz4-1.9.4.tar.gz",
+      "source_member": "lz4-1.9.4/lib/LICENSE",
+      "bytes": 1311,
+      "sha256": "8b58c446121a109ccf32edc094bba3010a3d85e4ee3702950db55e4d3e87736c"
+    },
+    {
+      "component": "lz4",
+      "path": "lz4/programs/COPYING",
+      "source_archive": "lz4-1.9.4.tar.gz",
+      "source_member": "lz4-1.9.4/programs/COPYING",
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    {
+      "component": "lz4",
+      "path": "lz4/tests/COPYING",
+      "source_archive": "lz4-1.9.4.tar.gz",
+      "source_member": "lz4-1.9.4/tests/COPYING",
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    {
+      "component": "openjpeg",
+      "path": "openjpeg/LICENSE",
+      "source_archive": "openjpeg-2.5.2.tar.gz",
+      "source_member": "openjpeg-2.5.2/LICENSE",
+      "bytes": 2112,
+      "sha256": "a6af136f3e15038a666b61f376612a07d9a4e48cb7c01adbf3e33b3f14ab49b6"
+    },
+    {
+      "component": "openssl",
+      "path": "openssl/LICENSE.txt",
+      "source_archive": "openssl-3.3.1.tar.gz",
+      "source_member": "openssl-3.3.1/LICENSE.txt",
+      "bytes": 10175,
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+    },
+    {
+      "component": "provenance",
+      "path": "provenance/libiconv-gnu-git-comparison.json",
+      "bytes": 753,
+      "sha256": "c4e7389e8cebca25b8712e243eae970f3f871255aa463ed57eeebf312280d558"
+    },
+    {
+      "component": "tesseract",
+      "path": "tesseract/AUTHORS",
+      "source_archive": "tesseract-5.4.0.20240606-38bfd186.tar.gz",
+      "source_member": "tesseract-38bfd186cc92e483f24d6257cc4b5e86c4b406b2/AUTHORS",
+      "bytes": 787,
+      "sha256": "720862b7253993b348fe15f37ed6e0d4feb0fc8df8324284d75975d54dd29923"
+    },
+    {
+      "component": "tesseract",
+      "path": "tesseract/LICENSE",
+      "source_archive": "tesseract-5.4.0.20240606-38bfd186.tar.gz",
+      "source_member": "tesseract-38bfd186cc92e483f24d6257cc4b5e86c4b406b2/LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "component": "winpthreads",
+      "path": "winpthreads/AUTHORS",
+      "source_archive": "mingw-w64-f977e1c3.tar.gz",
+      "source_member": "mingw-w64-f977e1c38299fd204b733650cba3726a244face6/AUTHORS",
+      "bytes": 2398,
+      "sha256": "8f308316e7a94b8410f871868bd3948f126526dc1775aeee97a0e365f9a0fd9f"
+    },
+    {
+      "component": "winpthreads",
+      "path": "winpthreads/COPYING",
+      "source_archive": "mingw-w64-f977e1c3.tar.gz",
+      "source_member": "mingw-w64-f977e1c38299fd204b733650cba3726a244face6/COPYING",
+      "bytes": 2326,
+      "sha256": "99a69660981156c21336fdb5661f89341b013c94e4bf9e1c7467b4745718397f"
+    },
+    {
+      "component": "winpthreads",
+      "path": "winpthreads/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt",
+      "source_archive": "mingw-w64-f977e1c3.tar.gz",
+      "source_member": "mingw-w64-f977e1c38299fd204b733650cba3726a244face6/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt",
+      "bytes": 10936,
+      "sha256": "e9b2dc02451ea29092a1f25fa0f3c07207ed421f1807dffb0c4e6dce69dee7bd"
+    },
+    {
+      "component": "winpthreads",
+      "path": "winpthreads/COPYING.MinGW-w64/COPYING.MinGW-w64.txt",
+      "source_archive": "mingw-w64-f977e1c3.tar.gz",
+      "source_member": "mingw-w64-f977e1c38299fd204b733650cba3726a244face6/COPYING.MinGW-w64/COPYING.MinGW-w64.txt",
+      "bytes": 5905,
+      "sha256": "f38e6194bd3bfa1b654f118e5acefe0aead437bbe669eee43957ccc65a7127f1"
+    },
+    {
+      "component": "winpthreads",
+      "path": "winpthreads/mingw-w64-libraries/winpthreads/COPYING",
+      "source_archive": "mingw-w64-f977e1c3.tar.gz",
+      "source_member": "mingw-w64-f977e1c38299fd204b733650cba3726a244face6/mingw-w64-libraries/winpthreads/COPYING",
+      "bytes": 2883,
+      "sha256": "63263614cdd29f2f93cba85e992f041b31f9fc7b4033692f31269489a8a1b177"
+    },
+    {
+      "component": "xz",
+      "path": "xz/AUTHORS",
+      "source_archive": "xz-5.6.2.tar.xz",
+      "source_member": "xz-5.6.2/AUTHORS",
+      "bytes": 2148,
+      "sha256": "653b31fe6bebcc7fc2aa7089219df259e0d4df88b114c361df51ee6d134ac3c6"
+    },
+    {
+      "component": "xz",
+      "path": "xz/COPYING",
+      "source_archive": "xz-5.6.2.tar.xz",
+      "source_member": "xz-5.6.2/COPYING",
+      "bytes": 3885,
+      "sha256": "ee3b35b82f7bb0ba5fd9f13ca34ebbe757a59c05bfde5ab9d50ff4188ed33396"
+    },
+    {
+      "component": "xz",
+      "path": "xz/COPYING.0BSD",
+      "source_archive": "xz-5.6.2.tar.xz",
+      "source_member": "xz-5.6.2/COPYING.0BSD",
+      "bytes": 607,
+      "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1"
+    },
+    {
+      "component": "xz",
+      "path": "xz/COPYING.GPLv2",
+      "source_archive": "xz-5.6.2.tar.xz",
+      "source_member": "xz-5.6.2/COPYING.GPLv2",
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    {
+      "component": "xz",
+      "path": "xz/COPYING.GPLv3",
+      "source_archive": "xz-5.6.2.tar.xz",
+      "source_member": "xz-5.6.2/COPYING.GPLv3",
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    },
+    {
+      "component": "xz",
+      "path": "xz/COPYING.LGPLv2.1",
+      "source_archive": "xz-5.6.2.tar.xz",
+      "source_member": "xz-5.6.2/COPYING.LGPLv2.1",
+      "bytes": 26530,
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551"
+    },
+    {
+      "component": "zlib",
+      "path": "zlib/LICENSE",
+      "source_archive": "zlib-1.3.1.tar.xz",
+      "source_member": "zlib-1.3.1/LICENSE",
+      "bytes": 1002,
+      "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243"
+    },
+    {
+      "component": "zstd",
+      "path": "zstd/COPYING",
+      "source_archive": "zstd-1.5.6.tar.gz",
+      "source_member": "zstd-1.5.6/COPYING",
+      "bytes": 18091,
+      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505"
+    },
+    {
+      "component": "zstd",
+      "path": "zstd/LICENSE",
+      "source_archive": "zstd-1.5.6.tar.gz",
+      "source_member": "zstd-1.5.6/LICENSE",
+      "bytes": 1549,
+      "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8"
+    },
+    {
+      "component": "zstd",
+      "path": "zstd/build/LICENSE",
+      "source_archive": "zstd-1.5.6.tar.gz",
+      "source_member": "zstd-1.5.6/build/LICENSE",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "recipe_snapshot": "c6674b1e3a9d8301b4e63bb1b1ca3d1ed81fe5bf",
+  "review_limits": [
+    "Not all DLLs self-report version; fixed installer hashes and dated recipes are retained as provenance",
+    "Commit/distribution mirror archive containers are not falsely claimed to equal original upstream release containers",
+    "No claim of bit-identical rebuild or private OCR/Illustrator accuracy"
+  ]
+}

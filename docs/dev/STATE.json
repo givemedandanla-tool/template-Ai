@@ -794,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Finish fixed OCR source/notice inventory; run exact Windows EXE bilingual OCR and publish new beta",
+  "next_step": "Monitor exact beta.2 Windows build, actual bundled bilingual OCR and both full Release downloads",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2149,12 +2149,25 @@
     "authorization": "User explicitly requests bundled OCR executable and republish",
     "authorized_utc": "2026-10-24T01:45:40.901142+00:00",
     "source_commit": null,
-    "status": "CORE_TESTED_ASSEMBLING_LICENSED_WINDOWS_BUNDLE",
+    "status": "WINDOWS_RELEASE_CANDIDATE_READY",
     "plan": "docs/dev/releases/review-v0.1.0-beta.2/IMPLEMENTATION_AND_VALIDATION_PLAN.md",
     "do_not_overwrite_old_release": true,
     "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
     "user_request": "加入ocr執行器，然後再次發佈",
-    "published": false
+    "published": false,
+    "source_checkpoint": "docs/checkpoints/CP-20261024-REVIEW-BUNDLED-OCR-CORE-001.receipt.json",
+    "local_core_tests": {
+      "passed": 60,
+      "related_jobs_passed": 10,
+      "ocr_acceptance_unit_passed": 15,
+      "source_gui_checks_passed": 35,
+      "runtime_builder_passed": 18,
+      "source_helper_passed": 8,
+      "release_guards_passed": 33
+    },
+    "runtime_version": "5.4.0.20240606",
+    "ocr_runtime_files": 107,
+    "ocr_source_archives": 25
   },
   "review_tool_release_history": [
     {

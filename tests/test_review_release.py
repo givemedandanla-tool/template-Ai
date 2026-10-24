@@ -46,6 +46,82 @@ class ReviewReleaseTests(unittest.TestCase):
                 (folder/name).write_text('authored companion '+name,encoding='utf-8')
         return archive
 
+    def test_prepare_cli_passes_isolated_ocr_cache_without_installing(self):
+        with patch.object(release, 'prepare') as prepare:
+            self.assertEqual(release.main(['prepare', '--cache', str(self.root/'fixed'),
+                '--ocr-cache', str(self.root/'ocr')]), 0)
+            prepare.assert_called_once_with(self.root/'fixed', self.root/'ocr')
+
+    def ocr_proof(self):
+        pin = dict(version='5.4.0.20240606', executable_sha256='c'*64, manifest_sha256='d'*64)
+        detail = dict(status='PASS', required=True, runtime_origin='BUNDLED', english_positive=True,
+            traditional_chinese_positive=True, missing_corrupt_fallback_verified=True,
+            models=['eng', 'chi_tra'], version=pin['version'], executable_sha256='c'*64,
+            runtime_manifest_sha256='d'*64)
+        return dict(bundled_ocr=detail), pin
+
+    def test_bundled_positive_bilingual_ocr_and_fallback_are_required(self):
+        report, pin = self.ocr_proof();release.validate_bundled_ocr_acceptance(report, pin)
+        for key in ['required', 'english_positive', 'traditional_chinese_positive', 'missing_corrupt_fallback_verified']:
+            with self.subTest(key=key):
+                changed, _ = self.ocr_proof();changed['bundled_ocr'][key] = False
+                with self.assertRaisesRegex(ValueError, 'positively verify'):
+                    release.validate_bundled_ocr_acceptance(changed, pin)
+
+    def test_legacy_optional_or_host_ocr_cannot_qualify_new_bundle(self):
+        report, pin = self.ocr_proof()
+        for change in [{}, {'runtime_origin':'HOST'}, {'models':['eng']}, {'required':'true'}]:
+            detail = {} if not change else dict(report['bundled_ocr'], **change)
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, 'positively verify'):
+                release.validate_bundled_ocr_acceptance(dict(bundled_ocr=detail), pin)
+
+    def test_ocr_proof_is_bound_to_exact_runtime_version_and_bytes(self):
+        for key in ['version', 'executable_sha256', 'runtime_manifest_sha256']:
+            report, pin = self.ocr_proof();report['bundled_ocr'][key] = 'other'
+            with self.subTest(key=key), self.assertRaisesRegex(ValueError, 'exact runtime pin'):
+                release.validate_bundled_ocr_acceptance(report, pin)
+
+    def test_ocr_cache_budget_includes_executable_and_all_source_archives(self):
+        from release_actions_support import ocr_input_bytes
+        tools = self.root/'tools';tools.mkdir()
+        (tools/'tesseract_distribution_lock.json').write_text(json.dumps(dict(installer=dict(bytes=50))))
+        (tools/'tesseract_sources_lock.json').write_text(json.dumps(dict(archives=[dict(bytes=100),dict(bytes=5)])))
+        self.assertEqual(ocr_input_bytes(self.root),155)
+        (tools/'tesseract_sources_lock.json').write_text(json.dumps(dict(archives=[dict(bytes=True)])))
+        with self.assertRaisesRegex(ValueError,'positive exact download sizes'):ocr_input_bytes(self.root)
+
+    def fixture_with_ocr_source(self):
+        self.fixture()
+        source = self.download/'ocr-source.zip'
+        with zipfile.ZipFile(source,'w') as archive:
+            archive.writestr('SYNTHETIC_SOURCE.txt','Authored routing test, not genuine upstream source')
+        manifest = json.loads((self.build/'release-manifest.json').read_text())
+        manifest['ocr_corresponding_sources'] = dict(status='PASS',archive=dict(
+            name=source.name,bytes=source.stat().st_size,sha256=release.sha(source)))
+        for directory in [self.build,self.download]:
+            (directory/'release-manifest.json').write_text(json.dumps(manifest))
+        return source
+
+    def test_download_revalidates_ocr_source_through_same_source_guard(self):
+        source = self.fixture_with_ocr_source();calls=[]
+        module=types.ModuleType('tesseract_sources');module.verify=lambda path:calls.append(path)
+        with patch.dict(sys.modules,{'tesseract_sources':module}):release.verify_download(self.download)
+        self.assertEqual(calls,[source])
+        self.assertIn('ocr_corresponding_sources',json.loads((self.download/'download-verification.json').read_text()))
+
+    def test_changed_ocr_source_download_is_rejected_before_verifier(self):
+        source = self.fixture_with_ocr_source();source.write_bytes(source.read_bytes()+b'changed')
+        with self.assertRaisesRegex(ValueError,'OCR corresponding source hash/size'):
+            release.verify_download(self.download)
+
+    def test_ocr_source_verifier_failure_cannot_be_treated_as_pass(self):
+        self.fixture_with_ocr_source();module=types.ModuleType('tesseract_sources')
+        def reject(path):raise ValueError('Actual upstream member differs')
+        module.verify=reject
+        with patch.dict(sys.modules,{'tesseract_sources':module}),self.assertRaisesRegex(ValueError,'Actual upstream'):
+            release.verify_download(self.download)
+        self.assertFalse((self.download/'download-verification.json').exists())
+
     def test_complete_download_checks_real_member_bytes(self):
         self.fixture();release.verify_download(self.download)
         result=json.loads((self.download/'download-verification.json').read_text())
@@ -290,7 +366,8 @@ class ReviewReleaseTests(unittest.TestCase):
         _,_,_,rows,_=self.installed_sklearn_fixture()
         pin=self.root/'build/release/inkscape-runtime-pin.json';pin.parent.mkdir(parents=True)
         pin.write_text(json.dumps(dict(version='1.4.2',manifest_sha256='b'*64)))
-        specdir=self.root/'build/review-release'
+        specdir=self.root/'build/review-release';specdir.mkdir(parents=True)
+        (specdir/'tesseract-runtime-pin.json').write_text(json.dumps(dict(version='5.4.0.20240606',manifest_sha256='c'*64)))
         with patch.object(release,'BUILD',specdir):release.make_spec()
         class AuthoredAnalysis:
             def __init__(self,*args,**kwargs):

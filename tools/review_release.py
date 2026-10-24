@@ -28,7 +28,8 @@ PRODUCT = ROOT / 'dist/TemplateAIReview'
 sys.path[:0] = [str(ROOT), str(ROOT / 'tools'), str(ROOT / 'docs/dev/releases')]
 REUSED_TESTS = ('test_import_pages', 'test_import_exceptions', 'test_original_pdf_glyphs',
     'test_original_text_observation', 'test_source_region_hypotheses', 'test_semantic_fields',
-    'test_inkscape_cache_identity', 'test_bundled_inkscape')
+    'test_inkscape_cache_identity', 'test_bundled_inkscape', 'test_logo_ocr', 'test_quality_ocr',
+    'test_ocr_runtime', 'test_bundled_tesseract', 'test_tesseract_sources')
 
 
 def write(path, value):
@@ -72,8 +73,14 @@ def identity():
     files += [ROOT / name for name in ['review_app.py', 'requirements-lock.txt',
         '.github/windows-wheels-lock.json', '.github/release-assets-lock.json',
         'tools/inkscape_distribution_lock.json', 'tools/review_release.py', 'tools/bundled_inkscape_build.py',
-        'tools/install_ocr_models.py', 'docs/dev/releases/release_cache.py',
+        'tools/install_ocr_models.py', 'tools/bundled_tesseract.py',
+        'tools/tesseract_distribution_lock.json', 'tools/tesseract_sources.py',
+        'tools/tesseract_sources_lock.json', 'docs/dev/OCR_MODEL_LOCK.json',
+        'docs/THIRD_PARTY.md', 'docs/dev/releases/' + tag() + '/QUICK_START.md',
+        'docs/dev/releases/release_cache.py',
         'docs/dev/releases/release_actions_support.py', '.github/workflows/review-release.yml']]
+    files += sorted(p for p in (ROOT / 'docs/third_party/tesseract').rglob('*') if p.is_file())
+    files += sorted(p for p in (ROOT / 'tests/fixtures').glob('review_ocr*') if p.is_file())
     files += sorted((ROOT / 'tests').glob('test_review_*.py'))
     files += [ROOT / 'tests' / (name + '.py') for name in REUSED_TESTS]
     tree = subprocess.check_output(['git', 'ls-tree', '-r', 'HEAD'], cwd=ROOT, text=True).splitlines()
@@ -113,18 +120,25 @@ def stage(name):
         write(path, data)
 
 
-def prepare(cache):
+def prepare(cache, ocr_cache=None):
     if os.name != 'nt':
         raise ValueError('Windows release preparation must run on native Windows')
     from release_cache import prepare as prepare_inputs, install_dependencies
     with stage('verified_fixed_inputs'):
         prepare_inputs(Path(cache), OUTPUT / 'verified-inputs.json')
         install_dependencies(Path(cache))
-    # Public OCR language data is separately pinned by official Git object IDs.
-    # This does not claim that an OCR executable is included.
+    # Public language data and executable are both fixed, verified build inputs.
     from install_ocr_models import install
     with stage('pinned_public_ocr_models'):
         install(BUILD / 'ocr-models')
+    from tesseract_sources import prepare as prepare_sources
+    with stage('pinned_ocr_corresponding_sources'):
+        source_record = prepare_sources(Path(ocr_cache or Path(cache) / 'ocr'), OUTPUT)
+        write(OUTPUT / 'ocr-corresponding-source-verification.json', source_record)
+    from bundled_tesseract import install as install_runtime
+    with stage('pinned_bundled_ocr_runtime'):
+        pin = install_runtime(Path(ocr_cache or Path(cache) / 'ocr'), BUILD / 'ocr-runtime')
+        write(BUILD / 'tesseract-runtime-pin.json', pin)
 
 
 def filter_upstream_test_data(datas, report_path):
@@ -172,10 +186,12 @@ def make_spec():
     BUILD.mkdir(parents=True, exist_ok=True)
     pin = json.loads((ROOT / 'build/release/inkscape-runtime-pin.json').read_text(encoding='utf-8'))
     write(BUILD / 'release-info.json', dict(component='TemplateAIReview', version=version(), tag=tag(),
-        source_commit=commit(), inkscape_runtime=pin, architecture='windows-x64', signed=False,
+        source_commit=commit(), inkscape_runtime=pin,
+        tesseract_runtime=json.loads((BUILD / 'tesseract-runtime-pin.json').read_text(encoding='utf-8')),
+        architecture='windows-x64', signed=False,
         data_schema_policy='INDEPENDENT_REVIEW_SESSION_NO_LEGACY_DATABASE_MIGRATION',
         qualification='INTERNAL_BETA_AWAITING_USER_LOCAL_CONFIRMATION',
-        ocr=dict(runtime='OPTIONAL_LOCAL_TESSERACT_NOT_BUNDLED', public_models='BUNDLED_ENG_CHI_TRA')))
+        ocr=dict(runtime='BUNDLED_TESSERACT_VERIFIED', public_models='BUNDLED_ENG_CHI_TRA')))
     spec = r'''from pathlib import Path
 from PyInstaller.utils.hooks import collect_submodules, copy_metadata, collect_data_files
 import sys
@@ -223,6 +239,7 @@ def build():
         validate_engine(ROOT / 'build/inkscape-staged', assets['engine'])
         shutil.copytree(ROOT / 'build/inkscape-staged', PRODUCT / 'engines/inkscape')
         shutil.copytree(BUILD / 'ocr-models', PRODUCT / 'engines/ocr-models')
+        shutil.copytree(BUILD / 'ocr-runtime', PRODUCT / 'engines/tesseract')
         for src, name in [('docs/dev/releases/' + tag() + '/QUICK_START.md', '使用說明.md'),
                           ('docs/THIRD_PARTY.md', '第三方授權.md')]:
             shutil.copy2(ROOT / src, PRODUCT / name)
@@ -332,7 +349,9 @@ def source_tests():
     env = os.environ.copy()
     env['TEMPLATE_AI_INKSCAPE'] = str(ROOT / 'build/inkscape-staged/bin/inkscape.exe') if os.name == 'nt' else env.get('TEMPLATE_AI_INKSCAPE', shutil.which('inkscape') or '')
     if os.name == 'nt':
-        env['PATH'] = str(ROOT / 'build/inkscape-staged/bin') + os.pathsep + env.get('PATH', '')
+        env['PATH'] = str(BUILD / 'ocr-runtime') + os.pathsep + str(ROOT / 'build/inkscape-staged/bin') + os.pathsep + env.get('PATH', '')
+        env['TEMPLATE_AI_BUNDLED_TESSERACT_ROOT'] = str(BUILD / 'ocr-runtime')
+        env['TEMPLATE_AI_BUNDLED_TESSERACT_PIN'] = str(BUILD / 'tesseract-runtime-pin.json')
     env['TEMPLATE_AI_TESSDATA'] = str(BUILD / 'ocr-models')
     with stage('isolated_current_component_tests'):
         for module in modules:
@@ -404,6 +423,23 @@ def safe_member(name):
     return value.as_posix()
 
 
+def validate_bundled_ocr_acceptance(report, pin):
+    """A manual fallback cannot qualify a release promising bundled OCR."""
+    detail = report.get('bundled_ocr', {})
+    if (not isinstance(detail, dict) or detail.get('status') != 'PASS'
+            or detail.get('required') is not True or detail.get('runtime_origin') != 'BUNDLED'
+            or detail.get('english_positive') is not True
+            or detail.get('traditional_chinese_positive') is not True
+            or detail.get('missing_corrupt_fallback_verified') is not True
+            or not isinstance(detail.get('models'), list)
+            or sorted(detail['models']) != ['chi_tra', 'eng']):
+        raise ValueError('Actual frozen EXE must positively verify bundled English and Traditional Chinese OCR and fallback')
+    for measured, pinned in [('version', 'version'), ('executable_sha256', 'executable_sha256'),
+                             ('runtime_manifest_sha256', 'manifest_sha256')]:
+        if not pin.get(pinned) or detail.get(measured) != pin[pinned]:
+            raise ValueError('Accepted OCR runtime differs from the embedded exact runtime pin')
+
+
 def package_preflight():
     current = identity()
     tests = json.loads((OUTPUT / 'source-tests.json').read_text(encoding='utf-8'))
@@ -416,8 +452,12 @@ def package_preflight():
     exe = PRODUCT / 'TemplateAIReview.exe'
     if sha(exe) != acceptance['executable_sha256']:
         raise ValueError('Accepted executable bytes changed')
+    release_info = json.loads((PRODUCT / 'release-info.json').read_text(encoding='utf-8'))
+    validate_bundled_ocr_acceptance(acceptance.get('acceptance', {}), release_info['tesseract_runtime'])
     from bundled_inkscape_build import vendor_inventory
     vendor = vendor_inventory(PRODUCT)
+    from bundled_tesseract import vendor_inventory as ocr_vendor_inventory
+    vendor |= ocr_vendor_inventory(PRODUCT)
     model_manifest = json.loads((PRODUCT / 'engines/ocr-models/MODEL_MANIFEST.json').read_text(encoding='utf-8'))
     from install_ocr_models import COMMIT as MODEL_COMMIT, FILES as MODEL_FILES
     if (model_manifest.get('commit') != MODEL_COMMIT
@@ -446,6 +486,9 @@ def package_preflight():
             raise ValueError('Unexpected private/development payload: ' + rel)
         entries.append(dict(path=rel, bytes=p.stat().st_size, sha256=sha(p)))
     source = json.loads((ROOT / 'artifacts/corresponding-source-verification.json').read_text(encoding='utf-8'))
+    from tesseract_sources import verify as verify_ocr_sources
+    ocr_source = json.loads((OUTPUT / 'ocr-corresponding-source-verification.json').read_text(encoding='utf-8'))
+    verify_ocr_sources(OUTPUT / safe_member(ocr_source['archive']['name']))
     if source['status'] != 'PASS' or source.get('archives_verified') != 125:
         raise ValueError('Verified Inkscape corresponding sources required')
     if sha(ROOT / 'artifacts' / source['asset']) != source['sha256']:
@@ -461,25 +504,29 @@ def package():
         with zipfile.ZipFile(archive, 'x', zipfile.ZIP_DEFLATED, allowZip64=True) as z:
             for row in entries:
                 z.write(PRODUCT / row['path'], 'TemplateAIReview/' + row['path'])
+        source_record = json.loads((OUTPUT / 'ocr-corresponding-source-verification.json').read_text(encoding='utf-8'))
+        ocr_source = {key: value for key, value in source_record.items() if key != 'archive'}
+        ocr_source['archive'] = {key: source_record['archive'][key] for key in ['name', 'bytes', 'sha256']}
         manifest = dict(schema_version=1, component='TemplateAIReview', version=version(), tag=tag(),
             source_commit=current['source_commit'], source_manifest_sha256=current['source_manifest_sha256'],
             platform='windows-x64', signed=False, package_files=entries, package_file_count=len(entries),
             archive=dict(name=archive.name, bytes=archive.stat().st_size, sha256=sha(archive)),
             source_tests=tests, actual_exe=acceptance, corresponding_sources=source,
-            ocr=dict(runtime='OPTIONAL_LOCAL_TESSERACT_NOT_BUNDLED', public_models='BUNDLED_ENG_CHI_TRA'),
+            ocr_corresponding_sources=ocr_source,
+            ocr=dict(runtime='BUNDLED_TESSERACT_VERIFIED', public_models='BUNDLED_ENG_CHI_TRA'),
             compatibility='Separate review-tool local data. Does not migrate or open older production database.',
             qualification='INTERNAL_BETA_PUBLISHED_AWAITING_USER_LOCAL_CONFIRMATION',
             known_limits=['Private AI fidelity and user Windows hardware remain unqualified.',
                 'Ambiguous font/spacing/structure stay unknown; review is not model training.',
-                'Tesseract executable is optional and not bundled; original-text and manual routes work offline.'])
+                'Bundled Tesseract and models run locally; uncertain results still need human review.'])
         write(OUTPUT / 'release-manifest.json', manifest)
-        write(OUTPUT / 'SOURCE_DOWNLOADS.json', dict(schema_version=1, sources=[source],
-            method='REUSED_UNCHANGED_PUBLIC_CORRESPONDING_SOURCE_ARCHIVE_FULL_125_OBJECT_VERIFICATION'))
+        write(OUTPUT / 'SOURCE_DOWNLOADS.json', dict(schema_version=1, sources=[source, ocr_source],
+            method='VERIFIED_REUSED_INKSCAPE_AND_PINNED_OCR_CORRESPONDING_SOURCES'))
         write(OUTPUT / 'validation-summary.json', dict(status='PASS', component='TemplateAIReview',
             version=version(), source_commit=commit(), source_tests=tests, actual_exe=acceptance,
             product_scope='ARTWORK_ANALYSIS_REVIEW_ONLY_NOT_OLDER_TRAINING_OR_LAYOUT_PRODUCT',
             private_data_included=False, real_corpus_qualified=False))
-        files = [archive, OUTPUT / 'release-manifest.json', OUTPUT / 'SOURCE_DOWNLOADS.json', OUTPUT / 'validation-summary.json']
+        files = [archive, OUTPUT / ocr_source['archive']['name'], OUTPUT / 'release-manifest.json', OUTPUT / 'SOURCE_DOWNLOADS.json', OUTPUT / 'validation-summary.json']
         (OUTPUT / 'SHA256SUMS.txt').write_text(''.join(sha(p) + '  ' + p.name + '\n' for p in files), encoding='utf-8')
 
 
@@ -512,12 +559,20 @@ def verify_download(folder, expected_manifest=None):
                     h.update(block)
             if z.getinfo(name).file_size != row['bytes'] or h.hexdigest() != row['sha256']:
                 raise ValueError('Downloaded member bytes differ: ' + name)
+    ocr_source = reference.get('ocr_corresponding_sources')
+    if ocr_source is not None:
+        source_archive = folder / safe_member(ocr_source['archive']['name'])
+        if source_archive.stat().st_size != ocr_source['archive']['bytes'] or sha(source_archive) != ocr_source['archive']['sha256']:
+            raise ValueError('Downloaded OCR corresponding source hash/size differs')
+        from tesseract_sources import verify as verify_ocr_sources
+        verify_ocr_sources(source_archive)
     for name in ['SOURCE_DOWNLOADS.json', 'validation-summary.json', 'SHA256SUMS.txt']:
         if (folder / name).read_bytes() != (OUTPUT / name).read_bytes():
             raise ValueError('Downloaded companion file differs: ' + name)
     write(folder / 'download-verification.json', dict(status='PASS', component='TemplateAIReview', version=version(),
         source_commit=commit(), archive_sha256=sha(archive), verified_files=len(expected),
-        corresponding_sources=reference['corresponding_sources'], real_corpus_qualified=False))
+        corresponding_sources=reference['corresponding_sources'],
+        ocr_corresponding_sources=ocr_source, real_corpus_qualified=False))
 
 
 def validate_request(request, version_text, source_sha):
@@ -554,6 +609,7 @@ def publish():
     if manifest['source_commit'] != commit():
         raise ValueError('Package is not from this exact commit')
     names = [manifest['archive']['name'], 'release-manifest.json', 'SOURCE_DOWNLOADS.json', 'validation-summary.json', 'SHA256SUMS.txt']
+    names.append(manifest['ocr_corresponding_sources']['archive']['name'])
     with stage('draft_release_download_publish_download'):
         subprocess.run(['git', 'tag', tag(), commit()], cwd=ROOT, check=True)
         subprocess.run(['git', 'push', 'https://github.com/' + repository + '.git', 'refs/tags/' + tag()], cwd=ROOT, check=True, timeout=90)
@@ -646,6 +702,7 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('command', choices=['prepare', 'build', 'test', 'test-one', 'exercise', 'package', 'verify-download', 'publish', 'persist-evidence'])
     p.add_argument('--cache', type=Path)
+    p.add_argument('--ocr-cache', type=Path)
     p.add_argument('--executable', type=Path, default=PRODUCT / 'TemplateAIReview.exe')
     p.add_argument('--output', type=Path)
     p.add_argument('--expected-manifest', type=Path)
@@ -653,7 +710,7 @@ def main(argv=None):
     args = p.parse_args(argv)
     if args.command == 'prepare':
         if args.cache is None:p.error('prepare requires --cache')
-        prepare(args.cache)
+        prepare(args.cache, args.ocr_cache)
     elif args.command == 'build':build()
     elif args.command == 'test':source_tests()
     elif args.command == 'test-one':

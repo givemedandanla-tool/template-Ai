@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "status": "FAIL",
+  "version": "0.1.0-beta.2",
+  "actual_frozen_executable": false,
+  "fixture": "AUTHORED_REVIEW_ACCEPTANCE_V1",
+  "fixture_types": [
+    "CALIBRATED_SVG",
+    "PDF_COMPATIBLE_AI_SIMULATION",
+    "OUTLINED_TEXT_SVG"
+  ],
+  "worker_mode": "ACTUAL_QPROCESS",
+  "checks": [
+    "actual_review_window_opens",
+    "technical_overview_hidden_initially",
+    "actual_add_files_entry_registers_three_sources",
+    "actual_qprocess_analysis_completes",
+    "gui_event_loop_remains_responsive",
+    "svg_and_pdf_compatible_ai_have_real_previews",
+    "actual_vector_analysis_executes",
+    "actual_ocr_reads_authored_outline_source"
+  ],
+  "check_details": {
+    "actual_review_window_opens": {
+      "status": "PASS"
+    },
+    "technical_overview_hidden_initially": {
+      "status": "PASS"
+    },
+    "actual_add_files_entry_registers_three_sources": {
+      "status": "PASS"
+    },
+    "actual_qprocess_analysis_completes": {
+      "gui_timer_events": 24
+    },
+    "gui_event_loop_remains_responsive": {
+      "status": "PASS"
+    },
+    "svg_and_pdf_compatible_ai_have_real_previews": {
+      "status": "PASS"
+    },
+    "worker_capabilities": [
+      {
+        "inkscape_conversion_executed": true,
+        "inkscape_runtime": {
+          "executable_sha256": "a1db427b1666d73e477a841b925f2bc44185623cd178cd007f6da3ca8ab4c873",
+          "origin": "EXTERNAL",
+          "policy": "SOURCE_EXTERNAL",
+          "version": "1.4"
+        },
+        "local_only": true,
+        "native_illustrator_mapping": "UNKNOWN",
+        "ocr_available": null,
+        "ocr_executed": false,
+        "ocr_requested": true,
+        "unknowns_are_not_zero": true,
+        "vector_analysis_executed": true
+      },
+      {
+        "inkscape_conversion_executed": true,
+        "inkscape_runtime": {
+          "executable_sha256": "a1db427b1666d73e477a841b925f2bc44185623cd178cd007f6da3ca8ab4c873",
+          "origin": "EXTERNAL",
+          "policy": "SOURCE_EXTERNAL",
+          "version": "1.4"
+        },
+        "local_only": true,
+        "native_illustrator_mapping": "UNKNOWN",
+        "ocr_available": null,
+        "ocr_executed": false,
+        "ocr_requested": true,
+        "unknowns_are_not_zero": true,
+        "vector_analysis_executed": true
+      },
+      {
+        "inkscape_conversion_executed": true,
+        "inkscape_runtime": {
+          "executable_sha256": "a1db427b1666d73e477a841b925f2bc44185623cd178cd007f6da3ca8ab4c873",
+          "origin": "EXTERNAL",
+          "policy": "SOURCE_EXTERNAL",
+          "version": "1.4"
+        },
+        "local_only": true,
+        "native_illustrator_mapping": "UNKNOWN",
+        "ocr_available": true,
+        "ocr_executed": true,
+        "ocr_languages": [
+          "chi_tra",
+          "eng"
+        ],
+        "ocr_requested": true,
+        "ocr_runtime": {
+          "origin": "SYSTEM_PATH",
+          "policy": "SOURCE_LOCAL",
+          "state": "READY"
+        },
+        "unknowns_are_not_zero": true,
+        "vector_analysis_executed": true
+      }
+    ],
+    "actual_vector_analysis_executes": {
+      "status": "PASS"
+    },
+    "actual_ocr_reads_authored_outline_source": {
+      "status": "PASS"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "actual-synthetic/01-empty-window.png",
+      "sha256": "7ae4b155fe17cf91200a61b6eb8be03be99a889311472c031d1797475cca2c05",
+      "kind": "ACTUAL_QT_WINDOW"
+    }
+  ],
+  "source_unchanged": false,
+  "private_data_included": false,
+  "real_corpus_qualified": false,
+  "native_illustrator_private_format_qualified": false,
+  "os_native_file_picker_automated": false,
+  "bundled_ocr": {
+    "status": "NOT_VERIFIED",
+    "required": false,
+    "english_positive": false,
+    "traditional_chinese_positive": false,
+    "missing_corrupt_fallback_verified": false
+  },
+  "ocr_scope": "ACTUAL_LOCAL_OCR_EXECUTED_ON_AUTHORED_OUTLINES",
+  "error": {
+    "type": "RuntimeError",
+    "message": "背景操作未於限定時間完成"
+  },
+  "elapsed_seconds": 183.309
+}

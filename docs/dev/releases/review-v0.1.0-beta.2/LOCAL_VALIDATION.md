@@ -1,0 +1,15 @@
+# beta.2 來源驗證與限制
+
+核心checkpointbd6e8cc356e6e48b1f5a442d4fafaea66ffb5317已推送並以獨立原生Git讀回。新增固定OCR執行器選擇、整包hash／版本／模型校驗、安全診斷與觀察版本保護。原未提交runtime timeout/adopt成果保留。
+
+核心相關60項PASS（runtime15／analysis9／logo5／session31），另background jobs10PASS；原稿及人修保護、惡意診斷路徑／內容注入反例都通過。執行器builder18項安全測試PASS，固定官方installer抽取27檔PE閉包與原始notices逐檔SHA核對，沒有執行安裝器或要求admin。
+
+新增OCR驗收15項單元PASS；真正ReviewWindow＋QProcess來源模式35checks PASS，雙語SVG外框及純點陣PDF成功辨識英／繁中，取得有效行框、email/mobile候選、owner先未知再人工指定、保存重開。local-validation/source-gui-acceptance.json為真執行結果；bundled_ocr裡明示SOURCE_LOCAL_POSITIVE_NOT_BUNDLE_QUALIFICATION，不能當Windows成品驗收。
+
+來源驗收兩次harness失敗已保留：先把不支援PNG交給GUI造成整批輸入拒絕，改成支援的純點陣PDF；後重開測試窗未保存初始化選取狀態便close引發正確保存提醒，修正驗收收尾保存。沒有擴張產品入口或放寬斷言。中文OCR會插入字間空格，公司尾詞可能仍UNKNOWN；不在本輪更動語意分類法，人工核對流程保留。
+
+Tesseract固定官方文件推薦UB-Mannheim5.4.0.20240606，SHA256 c885fff6998e0608ba4bb8ab51436e1c6775c2bafc2559a19b423e18678b60c9。精確27runtime依賴含不同授權，不能以Apache概括。對應來源鎖25物件260,799,778bytes，固定歷史MSYS2配方／patches與完整notices另附；SourceForge來源403後改可獨立驗證的官方GitHub/GitLab或Debian同SHA原始來源，未繞proxy。
+
+Windows完整來源回歸、真正frozen EXE強制兩語言／兩媒體／缺壞退路、發布包原private guard及兩次真Release下載尚待執行。舊產品全庫過期來源資格／私人AI／硬體／實印／AI學習品質不升級。未用付費API、試用或新付費資源；使用既有Pro/Codex能力、免費工具與公開GitHub標準runner。
+
+發佈前來源附件確認：25archives260,799,778bytes／75份完整notice與建置說明；實際來源ZIP261,642,776bytes、SHA c2c6b5d70d4f6ca4facc4d8a974b399a30442a57f98487965a4ae4f3a74ce5d8，逐內檔驗證PASS。sourcehelper8項、runtimebuilder18項、release整合guards33項PASS；唯讀獨立覆核無接線阻擋。Python3.11語法及相關程式diff檢查通過。尚須精確新來源Windows原生資格。

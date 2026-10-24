@@ -1,0 +1,829 @@
+{
+  "schema_version": 1,
+  "component": "Tesseract OCR runtime",
+  "architecture": "windows-x86_64",
+  "version": "5.4.0.20240606",
+  "legal_status": "REVIEWED",
+  "upstream": {
+    "repository": "https://github.com/UB-Mannheim/tesseract",
+    "tag": "v5.4.0.20240606",
+    "tag_object": "55c4af18dd92ac7551ca1a62357bbbc0baa8db74",
+    "commit": "38bfd186cc92e483f24d6257cc4b5e86c4b406b2",
+    "official_recommendation": "https://github.com/tesseract-ocr/tessdoc/blob/main/Installation.md#windows",
+    "release_id": 159516851,
+    "asset_id": 174449750
+  },
+  "installer": {
+    "url": "https://github.com/UB-Mannheim/tesseract/releases/download/v5.4.0.20240606/tesseract-ocr-w64-setup-5.4.0.20240606.exe",
+    "asset_name": "tesseract-ocr-w64-setup-5.4.0.20240606.exe",
+    "bytes": 50175248,
+    "sha256": "c885fff6998e0608ba4bb8ab51436e1c6775c2bafc2559a19b423e18678b60c9"
+  },
+  "selection": "Exact recursive PE import closure of tesseract.exe; no installer execution, training executables, installer plugins, Java tools or unpinned language data.",
+  "runtime_files": [
+    {
+      "path": "libarchive-13.dll",
+      "bytes": 769154,
+      "sha256": "98b9b7e9259f23eab6749ee25cca2c0643f09df6b23c58229fd43bf6249195e9",
+      "imports": [
+        "ADVAPI32.dll",
+        "libb2-1.dll",
+        "bcrypt.dll",
+        "libbz2-1.dll",
+        "libcrypto-3-x64.dll",
+        "libexpat-1.dll",
+        "libiconv-2.dll",
+        "KERNEL32.dll",
+        "liblz4.dll",
+        "liblzma-5.dll",
+        "msvcrt.dll",
+        "zlib1.dll",
+        "libzstd.dll"
+      ]
+    },
+    {
+      "path": "libb2-1.dll",
+      "bytes": 34372,
+      "sha256": "7fb8418a1172042dab5227fcd466b1bf293737f5b5cf35359e851516227f109c",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libbz2-1.dll",
+      "bytes": 100964,
+      "sha256": "b79cd3a7102e359ef6324e98966a67939e58ec2b651ae2847cae84a4dfa453f7",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libcrypto-3-x64.dll",
+      "bytes": 5130880,
+      "sha256": "c0674a225d30f1642ca1da45ac040a9c1885d8f23883532b42987bae458edc4d",
+      "imports": [
+        "ADVAPI32.dll",
+        "CRYPT32.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "USER32.dll",
+        "WS2_32.dll"
+      ]
+    },
+    {
+      "path": "libdeflate.dll",
+      "bytes": 91035,
+      "sha256": "b6ee7b31a23605d8e8b9be5eae782a3ddf7adf2b7ca2c8e0041bdfd4fe4659ee",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libexpat-1.dll",
+      "bytes": 188909,
+      "sha256": "d9ea333175b1e995bbe6a062567f38ff362f1b2f369fa8ebdb0eeed21813bdc6",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libgcc_s_seh-1.dll",
+      "bytes": 150707,
+      "sha256": "b22b954397a52703579d92db64b57812af70f2afcafe2e742a009c1640b9ec1a",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "libwinpthread-1.dll"
+      ]
+    },
+    {
+      "path": "libgif-7.dll",
+      "bytes": 41367,
+      "sha256": "a1a179853ae6fad8eb045b8e9f12c55e6fc99929446b02fa345512354cf5e582",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libiconv-2.dll",
+      "bytes": 1118202,
+      "sha256": "967189adfbc889fde89aafc867f7a1f02731f8592cf6fd5a4ace1929213e2e13",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libjbig-0.dll",
+      "bytes": 62083,
+      "sha256": "275a827ba6839d47cfdbe059db1b1b403a92ff26e2b76a29362915487868bef2",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libjpeg-8.dll",
+      "bytes": 912746,
+      "sha256": "e44514c4e7753635e79bdb668f1e10315c1a93287f8d044ae74594ed57de619d",
+      "imports": [
+        "libgcc_s_seh-1.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libleptonica-6.dll",
+      "bytes": 2721006,
+      "sha256": "26861baff4d25446a03ed1f6064d2eae7435eddf51bb36af4e634c0eb4eb3af0",
+      "imports": [
+        "GDI32.dll",
+        "libgif-7.dll",
+        "libjpeg-8.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "libopenjp2-7.dll",
+        "libpng16-16.dll",
+        "libtiff-6.dll",
+        "USER32.dll",
+        "libwebp-7.dll",
+        "libwebpmux-3.dll",
+        "zlib1.dll"
+      ]
+    },
+    {
+      "path": "libLerc.dll",
+      "bytes": 761261,
+      "sha256": "4ab688c7c5c4afdfee0f519f942759137067a7876a1c1bb825ee575b0a5760b1",
+      "imports": [
+        "libgcc_s_seh-1.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "libstdc++-6.dll"
+      ]
+    },
+    {
+      "path": "liblz4.dll",
+      "bytes": 147105,
+      "sha256": "1b64d6429ae4aacf9eb35b8158d98556859a5c5e8ee817e155da343e194dd8e3",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "liblzma-5.dll",
+      "bytes": 184667,
+      "sha256": "3a599d97ea4dd002166ee7ffdc527c129d2cf8b05e9152ca7cae006c4187977e",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libopenjp2-7.dll",
+      "bytes": 462194,
+      "sha256": "5ff762ff6d672a06ee502819daf1494aa3aa3acf408805f0429303e026705011",
+      "imports": [
+        "libgcc_s_seh-1.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libpng16-16.dll",
+      "bytes": 247380,
+      "sha256": "f1b0a9d6cf3b8809c22fa0e27b5b82d9357e5bca43ab0ce8762f55fb303ed23f",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "zlib1.dll"
+      ]
+    },
+    {
+      "path": "libsharpyuv-0.dll",
+      "bytes": 57852,
+      "sha256": "60bcc87ac64a834e967e9ec9461be37395dbc090c579f3e23497ef69a5d8323e",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libstdc++-6.dll",
+      "bytes": 2409896,
+      "sha256": "0d9c01ab1771df439c75f144b2d855b4ac400243f006d14d9a043493de628f0d",
+      "imports": [
+        "libgcc_s_seh-1.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "libwinpthread-1.dll"
+      ]
+    },
+    {
+      "path": "libtesseract-5.dll",
+      "bytes": 101471336,
+      "sha256": "279488c41bd341edaa03dcd097faa33604ba330e6254ac97bcaf2229d8d7ac1a",
+      "imports": [
+        "libarchive-13.dll",
+        "libleptonica-6.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "libwinpthread-1.dll",
+        "WS2_32.dll",
+        "libgcc_s_seh-1.dll",
+        "libstdc++-6.dll"
+      ]
+    },
+    {
+      "path": "libtiff-6.dll",
+      "bytes": 576887,
+      "sha256": "e000306d3de299b05ebef443e48c1486d9fa291b0244f6ca6225843b75fdf581",
+      "imports": [
+        "libdeflate.dll",
+        "libjbig-0.dll",
+        "libjpeg-8.dll",
+        "KERNEL32.dll",
+        "libLerc.dll",
+        "liblzma-5.dll",
+        "msvcrt.dll",
+        "libwebp-7.dll",
+        "zlib1.dll",
+        "libzstd.dll"
+      ]
+    },
+    {
+      "path": "libwebp-7.dll",
+      "bytes": 743580,
+      "sha256": "687b8859e1f739dad5800fdc293a6ee1fd0dd4b33380ab283681a5a12eb3d4fa",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "libsharpyuv-0.dll"
+      ]
+    },
+    {
+      "path": "libwebpmux-3.dll",
+      "bytes": 78730,
+      "sha256": "ad10bacecd37b44c7c2c813da098a8bf6a42a3bf0152f7f33726d216815558f9",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "libwebp-7.dll"
+      ]
+    },
+    {
+      "path": "libwinpthread-1.dll",
+      "bytes": 60798,
+      "sha256": "bbcbe5eb8e806f3537585d4c9832b4ee15f86617328a566695d7d3728aa370ee",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "libzstd.dll",
+      "bytes": 1179848,
+      "sha256": "f216ea8efb5b3bb9ad3d938fb9ac07e3b8f78c2c92faab03d2c468d0b6798a5a",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    {
+      "path": "tesseract.exe",
+      "bytes": 1585024,
+      "sha256": "babb405f4366b480d02cd8ff2bac8d497170f6c1711ce6f3d5d8bf0fb7fa6ed9",
+      "imports": [
+        "libtesseract-5.dll",
+        "libarchive-13.dll",
+        "libleptonica-6.dll",
+        "libtiff-6.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "libgcc_s_seh-1.dll",
+        "libstdc++-6.dll"
+      ]
+    },
+    {
+      "path": "zlib1.dll",
+      "bytes": 120814,
+      "sha256": "cb7ab3788d10940df874acd97b1821bbb5ee4a91f3eec11982bb5bf7a3c96443",
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    }
+  ],
+  "system_dlls": [
+    "ADVAPI32.dll",
+    "CRYPT32.dll",
+    "GDI32.dll",
+    "KERNEL32.dll",
+    "USER32.dll",
+    "WS2_32.dll",
+    "bcrypt.dll",
+    "msvcrt.dll"
+  ],
+  "notices": [
+    {
+      "path": "licenses/TESSERACT-APACHE-2.0.txt",
+      "source_member": "doc/LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "licenses/TESSERACT-AUTHORS.txt",
+      "source_member": "doc/AUTHORS",
+      "bytes": 787,
+      "sha256": "720862b7253993b348fe15f37ed6e0d4feb0fc8df8324284d75975d54dd29923"
+    },
+    {
+      "path": "licenses/TESSERACT-UPSTREAM-README.md",
+      "source_member": "doc/README.md",
+      "bytes": 8485,
+      "sha256": "099fb244ec3e34962afc4861a6c8c42d2727c2f834f23071070c6f2d557b164c"
+    }
+  ],
+  "extra_notices": [
+    {
+      "path": "licenses/components/tesseract/AUTHORS",
+      "repository_path": "docs/third_party/tesseract/tesseract/AUTHORS",
+      "bytes": 787,
+      "sha256": "720862b7253993b348fe15f37ed6e0d4feb0fc8df8324284d75975d54dd29923"
+    },
+    {
+      "path": "licenses/components/tesseract/LICENSE",
+      "repository_path": "docs/third_party/tesseract/tesseract/LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "licenses/components/libarchive/COPYING",
+      "repository_path": "docs/third_party/tesseract/libarchive/COPYING",
+      "bytes": 3086,
+      "sha256": "b2cdf763345de2de34cebf54394df3c61a105c3b71288603c251f2fa638200ba"
+    },
+    {
+      "path": "licenses/components/libb2/COPYING",
+      "repository_path": "docs/third_party/tesseract/libb2/COPYING",
+      "bytes": 6556,
+      "sha256": "6a1ee543e5282cd9061881edf462e6fdab181f328da71fc2c9a6950a80e94d01"
+    },
+    {
+      "path": "licenses/components/libdeflate/COPYING",
+      "repository_path": "docs/third_party/tesseract/libdeflate/COPYING",
+      "bytes": 1052,
+      "sha256": "5d246dd2537307b80fed9ba5fdddf5d0fe7a8f023393a071182b9daed56b40fe"
+    },
+    {
+      "path": "licenses/components/expat/COPYING",
+      "repository_path": "docs/third_party/tesseract/expat/COPYING",
+      "bytes": 1144,
+      "sha256": "122f2c27000472a201d337b9b31f7eb2b52d091b02857061a8880371612d9534"
+    },
+    {
+      "path": "licenses/components/expat/AUTHORS",
+      "repository_path": "docs/third_party/tesseract/expat/AUTHORS",
+      "bytes": 142,
+      "sha256": "59f14371c6b75912cfebb46e6247ee5146766e803a0365b124e5d3011e7d0877"
+    },
+    {
+      "path": "licenses/components/libjpeg-turbo/LICENSE.md",
+      "repository_path": "docs/third_party/tesseract/libjpeg-turbo/LICENSE.md",
+      "bytes": 5620,
+      "sha256": "e548c96c0c09397c94b5c5531836c02ff2c403f1f2b130cad8e3ec9439b5a7cc"
+    },
+    {
+      "path": "licenses/components/libjpeg-turbo/README.ijg",
+      "repository_path": "docs/third_party/tesseract/libjpeg-turbo/README.ijg",
+      "bytes": 12739,
+      "sha256": "5c1f9094835d21f66ee0e9ce81c57264d2dd50801b19832d6723dc8cdbda080e"
+    },
+    {
+      "path": "licenses/components/libjpeg-turbo/release/License.rtf",
+      "repository_path": "docs/third_party/tesseract/libjpeg-turbo/release/License.rtf",
+      "bytes": 2178,
+      "sha256": "d26120ab237f87dea10aa4fa7fd4243cadffd26e54eb2f3903d5fb0f8ed336b2"
+    },
+    {
+      "path": "licenses/components/leptonica/leptonica-license.txt",
+      "repository_path": "docs/third_party/tesseract/leptonica/leptonica-license.txt",
+      "bytes": 1521,
+      "sha256": "87829abb5bbb00b55a107365da89e9a33f86c4250169e5a1e5588505be7d5806"
+    },
+    {
+      "path": "licenses/components/leptonica/prog/leptonica-license.txt",
+      "repository_path": "docs/third_party/tesseract/leptonica/prog/leptonica-license.txt",
+      "bytes": 1521,
+      "sha256": "87829abb5bbb00b55a107365da89e9a33f86c4250169e5a1e5588505be7d5806"
+    },
+    {
+      "path": "licenses/components/leptonica/src/leptonica-license.txt",
+      "repository_path": "docs/third_party/tesseract/leptonica/src/leptonica-license.txt",
+      "bytes": 1521,
+      "sha256": "87829abb5bbb00b55a107365da89e9a33f86c4250169e5a1e5588505be7d5806"
+    },
+    {
+      "path": "licenses/components/lerc/LICENSE",
+      "repository_path": "docs/third_party/tesseract/lerc/LICENSE",
+      "bytes": 9198,
+      "sha256": "77a8b761727c75e2167b15bfdf61b2c0bcf8792271228bebe80779106ad00671"
+    },
+    {
+      "path": "licenses/components/lerc/NOTICE",
+      "repository_path": "docs/third_party/tesseract/lerc/NOTICE",
+      "bytes": 679,
+      "sha256": "4b358a6807dec2f782d030d1514ef1a83e1297db8bd8bdd88d6bdc02f82196c2"
+    },
+    {
+      "path": "licenses/components/lz4/LICENSE",
+      "repository_path": "docs/third_party/tesseract/lz4/LICENSE",
+      "bytes": 635,
+      "sha256": "2949fcf758d3c9bcb05f8393ca42cadfa15be04eb4ae4b3327c4ad7957511e1b"
+    },
+    {
+      "path": "licenses/components/lz4/examples/COPYING",
+      "repository_path": "docs/third_party/tesseract/lz4/examples/COPYING",
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    {
+      "path": "licenses/components/lz4/lib/LICENSE",
+      "repository_path": "docs/third_party/tesseract/lz4/lib/LICENSE",
+      "bytes": 1311,
+      "sha256": "8b58c446121a109ccf32edc094bba3010a3d85e4ee3702950db55e4d3e87736c"
+    },
+    {
+      "path": "licenses/components/lz4/programs/COPYING",
+      "repository_path": "docs/third_party/tesseract/lz4/programs/COPYING",
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    {
+      "path": "licenses/components/lz4/tests/COPYING",
+      "repository_path": "docs/third_party/tesseract/lz4/tests/COPYING",
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    {
+      "path": "licenses/components/xz/AUTHORS",
+      "repository_path": "docs/third_party/tesseract/xz/AUTHORS",
+      "bytes": 2148,
+      "sha256": "653b31fe6bebcc7fc2aa7089219df259e0d4df88b114c361df51ee6d134ac3c6"
+    },
+    {
+      "path": "licenses/components/xz/COPYING",
+      "repository_path": "docs/third_party/tesseract/xz/COPYING",
+      "bytes": 3885,
+      "sha256": "ee3b35b82f7bb0ba5fd9f13ca34ebbe757a59c05bfde5ab9d50ff4188ed33396"
+    },
+    {
+      "path": "licenses/components/xz/COPYING.0BSD",
+      "repository_path": "docs/third_party/tesseract/xz/COPYING.0BSD",
+      "bytes": 607,
+      "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1"
+    },
+    {
+      "path": "licenses/components/xz/COPYING.GPLv2",
+      "repository_path": "docs/third_party/tesseract/xz/COPYING.GPLv2",
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    {
+      "path": "licenses/components/xz/COPYING.GPLv3",
+      "repository_path": "docs/third_party/tesseract/xz/COPYING.GPLv3",
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    },
+    {
+      "path": "licenses/components/xz/COPYING.LGPLv2.1",
+      "repository_path": "docs/third_party/tesseract/xz/COPYING.LGPLv2.1",
+      "bytes": 26530,
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551"
+    },
+    {
+      "path": "licenses/components/openjpeg/LICENSE",
+      "repository_path": "docs/third_party/tesseract/openjpeg/LICENSE",
+      "bytes": 2112,
+      "sha256": "a6af136f3e15038a666b61f376612a07d9a4e48cb7c01adbf3e33b3f14ab49b6"
+    },
+    {
+      "path": "licenses/components/libwebp/AUTHORS",
+      "repository_path": "docs/third_party/tesseract/libwebp/AUTHORS",
+      "bytes": 3048,
+      "sha256": "f9681940f35ab74858ac2717a511fa6237b67f65e99f457c21223e60a851c85a"
+    },
+    {
+      "path": "licenses/components/libwebp/COPYING",
+      "repository_path": "docs/third_party/tesseract/libwebp/COPYING",
+      "bytes": 1496,
+      "sha256": "5aec868f669e384a22372a4e8a1a6cd7d44c64cd451f960ca69cc170d1e13acf"
+    },
+    {
+      "path": "licenses/components/libwebp/PATENTS",
+      "repository_path": "docs/third_party/tesseract/libwebp/PATENTS",
+      "bytes": 1436,
+      "sha256": "cc3273e0694ea5896145e0677699b53471b03ea43021ddc50e7923fbb9f5023c"
+    },
+    {
+      "path": "licenses/components/zstd/COPYING",
+      "repository_path": "docs/third_party/tesseract/zstd/COPYING",
+      "bytes": 18091,
+      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505"
+    },
+    {
+      "path": "licenses/components/zstd/LICENSE",
+      "repository_path": "docs/third_party/tesseract/zstd/LICENSE",
+      "bytes": 1549,
+      "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8"
+    },
+    {
+      "path": "licenses/components/zstd/build/LICENSE",
+      "repository_path": "docs/third_party/tesseract/zstd/build/LICENSE",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "licenses/components/zlib/LICENSE",
+      "repository_path": "docs/third_party/tesseract/zlib/LICENSE",
+      "bytes": 1002,
+      "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243"
+    },
+    {
+      "path": "licenses/components/openssl/LICENSE.txt",
+      "repository_path": "docs/third_party/tesseract/openssl/LICENSE.txt",
+      "bytes": 10175,
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+    },
+    {
+      "path": "licenses/components/gcc/COPYING",
+      "repository_path": "docs/third_party/tesseract/gcc/COPYING",
+      "bytes": 18002,
+      "sha256": "231f7edcc7352d7734a96eef0b8030f77982678c516876fcb81e25b32d68564c"
+    },
+    {
+      "path": "licenses/components/gcc/COPYING.LIB",
+      "repository_path": "docs/third_party/tesseract/gcc/COPYING.LIB",
+      "bytes": 26527,
+      "sha256": "a9bdde5616ecdd1e980b44f360600ee8783b1f99b8cc83a2beb163a0a390e861"
+    },
+    {
+      "path": "licenses/components/gcc/COPYING.RUNTIME",
+      "repository_path": "docs/third_party/tesseract/gcc/COPYING.RUNTIME",
+      "bytes": 3324,
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+    },
+    {
+      "path": "licenses/components/gcc/COPYING3",
+      "repository_path": "docs/third_party/tesseract/gcc/COPYING3",
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "path": "licenses/components/gcc/COPYING3.LIB",
+      "repository_path": "docs/third_party/tesseract/gcc/COPYING3.LIB",
+      "bytes": 7639,
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c"
+    },
+    {
+      "path": "licenses/components/gcc/gcc/COPYING",
+      "repository_path": "docs/third_party/tesseract/gcc/gcc/COPYING",
+      "bytes": 18002,
+      "sha256": "231f7edcc7352d7734a96eef0b8030f77982678c516876fcb81e25b32d68564c"
+    },
+    {
+      "path": "licenses/components/gcc/gcc/COPYING.LIB",
+      "repository_path": "docs/third_party/tesseract/gcc/gcc/COPYING.LIB",
+      "bytes": 26440,
+      "sha256": "32434afcc8666ba060e111d715bfdb6c2d5dd8a35fa4d3ab8ad67d8f850d2f2b"
+    },
+    {
+      "path": "licenses/components/gcc/gcc/COPYING3",
+      "repository_path": "docs/third_party/tesseract/gcc/gcc/COPYING3",
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "path": "licenses/components/gcc/gcc/COPYING3.LIB",
+      "repository_path": "docs/third_party/tesseract/gcc/gcc/COPYING3.LIB",
+      "bytes": 7639,
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c"
+    },
+    {
+      "path": "licenses/components/gcc/include/COPYING",
+      "repository_path": "docs/third_party/tesseract/gcc/include/COPYING",
+      "bytes": 18002,
+      "sha256": "231f7edcc7352d7734a96eef0b8030f77982678c516876fcb81e25b32d68564c"
+    },
+    {
+      "path": "licenses/components/gcc/include/COPYING3",
+      "repository_path": "docs/third_party/tesseract/gcc/include/COPYING3",
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "path": "licenses/components/gcc/libcody/LICENSE",
+      "repository_path": "docs/third_party/tesseract/gcc/libcody/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "licenses/components/gcc/libffi/LICENSE",
+      "repository_path": "docs/third_party/tesseract/gcc/libffi/LICENSE",
+      "bytes": 1132,
+      "sha256": "a61d06e8f7be57928e71e800eb9273b05cb8868c484108afe41e4305bb320dde"
+    },
+    {
+      "path": "licenses/components/gcc/libffi/LICENSE-BUILDTOOLS",
+      "repository_path": "docs/third_party/tesseract/gcc/libffi/LICENSE-BUILDTOOLS",
+      "bytes": 18698,
+      "sha256": "e67978cd18816c0cb7d29aaaacde7b7447402c2fb321a051698890a8eaedda94"
+    },
+    {
+      "path": "licenses/components/gcc/libgo/LICENSE",
+      "repository_path": "docs/third_party/tesseract/gcc/libgo/LICENSE",
+      "bytes": 1479,
+      "sha256": "2d36597f7117c38b006835ae7f537487207d8ec407aa9d9980794b2030cbc067"
+    },
+    {
+      "path": "licenses/components/gcc/libgo/PATENTS",
+      "repository_path": "docs/third_party/tesseract/gcc/libgo/PATENTS",
+      "bytes": 1303,
+      "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+    },
+    {
+      "path": "licenses/components/gcc/libiberty/COPYING.LIB",
+      "repository_path": "docs/third_party/tesseract/gcc/libiberty/COPYING.LIB",
+      "bytes": 26440,
+      "sha256": "32434afcc8666ba060e111d715bfdb6c2d5dd8a35fa4d3ab8ad67d8f850d2f2b"
+    },
+    {
+      "path": "licenses/components/gcc/libiberty/copying-lib.texi",
+      "repository_path": "docs/third_party/tesseract/gcc/libiberty/copying-lib.texi",
+      "bytes": 26755,
+      "sha256": "684f05578fc861d52339c8db6030000343578c35f024845df753ea43f07e5393"
+    },
+    {
+      "path": "licenses/components/gcc/libquadmath/COPYING.LIB",
+      "repository_path": "docs/third_party/tesseract/gcc/libquadmath/COPYING.LIB",
+      "bytes": 26440,
+      "sha256": "32434afcc8666ba060e111d715bfdb6c2d5dd8a35fa4d3ab8ad67d8f850d2f2b"
+    },
+    {
+      "path": "licenses/components/gcc/libsanitizer/LICENSE.TXT",
+      "repository_path": "docs/third_party/tesseract/gcc/libsanitizer/LICENSE.TXT",
+      "bytes": 4506,
+      "sha256": "74c2b24539a53c34abddb559266d89cb653b0198cd2faf9c04763d3223db7f6d"
+    },
+    {
+      "path": "licenses/components/winpthreads/AUTHORS",
+      "repository_path": "docs/third_party/tesseract/winpthreads/AUTHORS",
+      "bytes": 2398,
+      "sha256": "8f308316e7a94b8410f871868bd3948f126526dc1775aeee97a0e365f9a0fd9f"
+    },
+    {
+      "path": "licenses/components/winpthreads/COPYING",
+      "repository_path": "docs/third_party/tesseract/winpthreads/COPYING",
+      "bytes": 2326,
+      "sha256": "99a69660981156c21336fdb5661f89341b013c94e4bf9e1c7467b4745718397f"
+    },
+    {
+      "path": "licenses/components/winpthreads/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt",
+      "repository_path": "docs/third_party/tesseract/winpthreads/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt",
+      "bytes": 10936,
+      "sha256": "e9b2dc02451ea29092a1f25fa0f3c07207ed421f1807dffb0c4e6dce69dee7bd"
+    },
+    {
+      "path": "licenses/components/winpthreads/COPYING.MinGW-w64/COPYING.MinGW-w64.txt",
+      "repository_path": "docs/third_party/tesseract/winpthreads/COPYING.MinGW-w64/COPYING.MinGW-w64.txt",
+      "bytes": 5905,
+      "sha256": "f38e6194bd3bfa1b654f118e5acefe0aead437bbe669eee43957ccc65a7127f1"
+    },
+    {
+      "path": "licenses/components/winpthreads/mingw-w64-libraries/winpthreads/COPYING",
+      "repository_path": "docs/third_party/tesseract/winpthreads/mingw-w64-libraries/winpthreads/COPYING",
+      "bytes": 2883,
+      "sha256": "63263614cdd29f2f93cba85e992f041b31f9fc7b4033692f31269489a8a1b177"
+    },
+    {
+      "path": "licenses/components/libtiff/LICENSE.md",
+      "repository_path": "docs/third_party/tesseract/libtiff/LICENSE.md",
+      "bytes": 1164,
+      "sha256": "0780558a8bfba0af1160ec1ff11ade4f41c0d7deafd6ecfc796b492a788e380d"
+    },
+    {
+      "path": "licenses/components/bzip2/LICENSE",
+      "repository_path": "docs/third_party/tesseract/bzip2/LICENSE",
+      "bytes": 1896,
+      "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3"
+    },
+    {
+      "path": "licenses/components/giflib/COPYING",
+      "repository_path": "docs/third_party/tesseract/giflib/COPYING",
+      "bytes": 1088,
+      "sha256": "0c9b7990ecdca88b676db232c226548ac408b279f550d424d996f0d83591dd8e"
+    },
+    {
+      "path": "licenses/components/libpng/AUTHORS",
+      "repository_path": "docs/third_party/tesseract/libpng/AUTHORS",
+      "bytes": 1450,
+      "sha256": "980af1d09d9a1092e35c463776757c90becb07f9879f6549d46e90e22629f4e1"
+    },
+    {
+      "path": "licenses/components/libpng/LICENSE",
+      "repository_path": "docs/third_party/tesseract/libpng/LICENSE",
+      "bytes": 5345,
+      "sha256": "7317e078e2d3b5d7ba5a6159e650945153262b44b76f6700f8e9edb261c5143e"
+    },
+    {
+      "path": "licenses/components/libpng/ci/LICENSE_MIT.txt",
+      "repository_path": "docs/third_party/tesseract/libpng/ci/LICENSE_MIT.txt",
+      "bytes": 1036,
+      "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1"
+    },
+    {
+      "path": "licenses/components/libiconv/source/AUTHORS",
+      "repository_path": "docs/third_party/tesseract/libiconv/source/AUTHORS",
+      "bytes": 31,
+      "sha256": "ed10ef2a01effb12849006d43262ffde5cf72a7d5423bbc8aa66fc6959774c0c"
+    },
+    {
+      "path": "licenses/components/libiconv/source/COPYING",
+      "repository_path": "docs/third_party/tesseract/libiconv/source/COPYING",
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "path": "licenses/components/libiconv/source/COPYING.LIB",
+      "repository_path": "docs/third_party/tesseract/libiconv/source/COPYING.LIB",
+      "bytes": 26530,
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551"
+    },
+    {
+      "path": "licenses/components/libiconv/source/README",
+      "repository_path": "docs/third_party/tesseract/libiconv/source/README",
+      "bytes": 5664,
+      "sha256": "dd37af33149d9722d6edca08aeb1e18591dda95bb645d81a2f011a5d83088929"
+    },
+    {
+      "path": "licenses/components/jbigkit/COPYING",
+      "repository_path": "docs/third_party/tesseract/jbigkit/COPYING",
+      "bytes": 17982,
+      "sha256": "91df39d1816bfb17a4dda2d3d2c83b1f6f2d38d53e53e41e8f97ad5ac46a0cad"
+    },
+    {
+      "path": "licenses/components/jbigkit/libjbig/jbig.c",
+      "repository_path": "docs/third_party/tesseract/jbigkit/libjbig/jbig.c",
+      "bytes": 2634,
+      "sha256": "153d94134ae5375f1b3767855cbda5c92dfc520044db13fb174200221401a310"
+    },
+    {
+      "path": "licenses/components/README.md",
+      "repository_path": "docs/third_party/tesseract/README.md",
+      "bytes": 5254,
+      "sha256": "11ebbabb76369bba517869f231160cdb5e9dd77ac4c8768b44b391badaa14464"
+    },
+    {
+      "path": "licenses/components/REBUILDING.md",
+      "repository_path": "docs/third_party/tesseract/REBUILDING.md",
+      "bytes": 2554,
+      "sha256": "02487b5c21ec2c5680400d35320e684504cab886327467b2c7ef197bae5407bb"
+    },
+    {
+      "path": "licenses/components/provenance/libiconv-gnu-git-comparison.json",
+      "repository_path": "docs/third_party/tesseract/provenance/libiconv-gnu-git-comparison.json",
+      "bytes": 753,
+      "sha256": "c4e7389e8cebca25b8712e243eae970f3f871255aa463ed57eeebf312280d558"
+    },
+    {
+      "path": "licenses/CORRESPONDING_SOURCE_MAP.json",
+      "repository_path": "tools/tesseract_sources_lock.json",
+      "bytes": 38421,
+      "sha256": "11908656c9c9d9e72f279293149ce46890b7eb330fc2bf18887a80eecda3fbd0"
+    }
+  ],
+  "corresponding_sources": [],
+  "corresponding_source_lock": {
+    "repository_path": "tools/tesseract_sources_lock.json",
+    "bytes": 38421,
+    "sha256": "11908656c9c9d9e72f279293149ce46890b7eb330fc2bf18887a80eecda3fbd0"
+  },
+  "redistribution_review": {
+    "basis": "Pinned upstream archives, full component license notices and exact MSYS2 recipe snapshot; 27-file runtime closure maps to corresponding sources.",
+    "limits": [
+      "Not all DLLs self-report version; fixed installer hashes and dated recipes are retained as provenance",
+      "Commit/distribution mirror archive containers are not falsely claimed to equal original upstream release containers",
+      "No claim of bit-identical rebuild or private OCR/Illustrator accuracy"
+    ],
+    "reviewed_source_archives": 25,
+    "source_bytes": 260799778,
+    "runtime_modified": false,
+    "installer_executed": false
+  }
+}

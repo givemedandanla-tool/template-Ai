@@ -15,7 +15,7 @@ Windows 使用 onedir 而非把 Qt 藏在不可替換的靜態產物；保留動
 選型原因：Qt 為成熟跨平台桌面框架，QtPdf／QtSvg／QPdfWriter 能在同一毫米繪圖模型中支援預覽與數位輸出，避免原生 AI 私有結構成為共同依賴。真實樣本仍需視覺核對；有 SVG 來源的 Logo 由 Qt SVG 繪製向量，點陣來源保留點陣身份，不假稱向量化還原。
 
 
-## 本機 OCR 線索（本輪新增）
+## 歷史來源開發環境的本機 OCR 線索
 - Tesseract 5.5.0／Leptonica 1.84.1：Apache-2.0／BSD-style，透過既有本機CLI；不呼叫雲端商用API。
 - tesseract-ocr/tessdata_fast 4.1.0，commit 65727574dfcd264acbb0c3e07860e4e9e9b22185；繁中／英文模型及Apache-2.0 LICENSE由官方Git tree取得預期blob，下載後逐檔驗證；精確hash見docs/dev/OCR_MODEL_LOCK.json。原模型與LICENSE保留ignored local-data/tessdata，未推送GitHub。
 - 重建：確保tesseract CLI可用，執行python tools/install_ocr_models.py；可用TEMPLATE_AI_TESSERACT／TEMPLATE_AI_TESSDATA指定既有本機工具與資料目錄。套件不提供時回報能力未知，不能把英文OCR當繁中已驗證。
@@ -27,3 +27,9 @@ kiwisolver 1.4.9（BSD-3-Clause），重用Cassowary線性約束引擎，require
 ## Windows beta.2 隨包 Inkscape
 
 固定 Inkscape1.4.2，完整官方二進位 GPL-3.0-or-later；個別元件保留各自授權。包內 engines/inkscape 保留官方授權。相同 Release 附125份對應來源物件。詳 docs/dev/releases/INKSCAPE_REDISTRIBUTION.md 與 tools/inkscape_distribution_lock.json。私人字型與作品不隨包。
+
+## 獨立作品核對工具 beta.2 的隨包 OCR
+
+Windows發行包使用官方文件推薦的UB-Mannheim Tesseract 5.4.0.20240606，完整版本／逐檔hash見tools/tesseract_distribution_lock.json。此與上段來源開發主機的5.5.0不同；程式固定使用隨包版本與官方固定英／繁中模型，無雲端API。
+
+Tesseract與必要DLL分別遵循其授權，不能以Tesseract的Apache-2.0概括所有依賴。包內engines/tesseract保存逐項notices／來源資料；相應原始碼與精確建置配方另附於Release的OCR corresponding-source ZIP，取得方式見SOURCE_DOWNLOADS.json。日常只需程式ZIP，無須安裝或解壓原始碼附件。

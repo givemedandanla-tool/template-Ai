@@ -1,12 +1,12 @@
 name: Artwork review tool Windows beta
 on:
   push:
-    branches: ['release-request/review-v0.1.0-beta.1']
+    branches: ['release-request/review-v0.1.0-beta.2']
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: artwork-review-first-beta
+  group: artwork-review-beta-release
   cancel-in-progress: false
 jobs:
   windows:
@@ -23,7 +23,7 @@ jobs:
       OMP_NUM_THREADS: '1'
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
-      REVIEW_RELEASE_PUBLISH_ALLOWED: ${{ github.event_name == 'push' && github.ref == 'refs/heads/release-request/review-v0.1.0-beta.1' && contains(github.event.head_commit.message, '[publish-review]') && 'true' || 'false' }}
+      REVIEW_RELEASE_PUBLISH_ALLOWED: ${{ github.event_name == 'push' && github.ref == 'refs/heads/release-request/review-v0.1.0-beta.2' && contains(github.event.head_commit.message, '[publish-review]') && 'true' || 'false' }}
     steps:
       - name: Preserve source bytes and long Windows paths
         shell: pwsh
@@ -51,10 +51,16 @@ jobs:
         with:
           path: ${{ runner.temp }}/template-ai-review-fixed-inputs
           key: ${{ steps.inputs.outputs.key }}
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
+        id: restore-ocr
+        continue-on-error: true
+        with:
+          path: ${{ runner.temp }}/template-ai-review-ocr-inputs
+          key: review-ocr-windows-x64-${{ hashFiles('tools/tesseract*lock.json') }}
       - name: Verify fixed inputs and install dependencies offline
         shell: pwsh
         run: |
-          python tools/review_release.py prepare --cache '${{ runner.temp }}/template-ai-review-fixed-inputs'
+          python tools/review_release.py prepare --cache '${{ runner.temp }}/template-ai-review-fixed-inputs' --ocr-cache '${{ runner.temp }}/template-ai-review-ocr-inputs'
           if ($LASTEXITCODE -ne 0) { throw 'Fixed inputs failed' }
       - uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830
         if: success() && steps.inputs.outputs.save_allowed == 'true' && steps.restore.outputs.cache-hit != 'true'
@@ -62,12 +68,18 @@ jobs:
         with:
           path: ${{ runner.temp }}/template-ai-review-fixed-inputs
           key: ${{ steps.inputs.outputs.key }}
+      - uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830
+        if: success() && steps.inputs.outputs.ocr_save_allowed == 'true' && steps.restore-ocr.outputs.cache-hit != 'true'
+        continue-on-error: true
+        with:
+          path: ${{ runner.temp }}/template-ai-review-ocr-inputs
+          key: review-ocr-windows-x64-${{ hashFiles('tools/tesseract*lock.json') }}
       - name: Run isolated component regressions on Windows
         shell: pwsh
         run: |
           python tools/review_release.py test
           if ($LASTEXITCODE -ne 0) { throw 'Current component tests failed' }
-      - name: Build a clean onedir application with verified Inkscape and OCR data
+      - name: Build a clean onedir application with verified Inkscape and bundled OCR
         shell: pwsh
         run: |
           python tools/review_release.py build

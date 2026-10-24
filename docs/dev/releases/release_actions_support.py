@@ -16,9 +16,21 @@ def budget(used, required, public):
     return bool(public and type(used) is int and 0 <= used <= 8*1024**3 and required <= 2*1024**3)
 
 
+def ocr_input_bytes(root=ROOT):
+    """Bound the separate OCR cache from its exact binary and source locks."""
+    root = Path(root)
+    binary = json.loads((root/'tools/tesseract_distribution_lock.json').read_text(encoding='utf-8'))
+    sources = json.loads((root/'tools/tesseract_sources_lock.json').read_text(encoding='utf-8'))
+    rows = [binary['installer'], *sources['archives']]
+    if not rows or any(type(row.get('bytes')) is not int or row['bytes'] <= 0 for row in rows):
+        raise ValueError('OCR cache needs positive exact download sizes')
+    return sum(row['bytes'] for row in rows)
+
+
 def preflight(output):
     wheels, assets = load_locks()
     required = sum(row['bytes'] for row in wheels['wheels'])+sum(assets[key]['bytes'] for key in ('engine_archive','sources'))
+    ocr_required = ocr_input_bytes()
     used, public, error = None, False, None
     try:
         def api(path):
@@ -30,12 +42,14 @@ def preflight(output):
         error = type(failure).__name__
     result = dict(cache_key=cache_key(), required_bytes=required, existing_cache_bytes=used,
                   public_repository=public, save_allowed=budget(used,required,public),
+                  ocr_required_bytes=ocr_required, ocr_save_allowed=budget(used, required+ocr_required, public),
                   usage_error_type=error, no_budget_or_billing_settings_changed=True)
     write(output,result)
     if os.environ.get('GITHUB_OUTPUT'):
         with open(os.environ['GITHUB_OUTPUT'],'a') as stream:
             stream.write('key='+result['cache_key']+'\n')
             stream.write('save_allowed='+str(result['save_allowed']).lower()+'\n')
+            stream.write('ocr_save_allowed='+str(result['ocr_save_allowed']).lower()+'\n')
     return result
 
 
