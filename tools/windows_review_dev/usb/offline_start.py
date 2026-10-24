@@ -40,13 +40,20 @@ def safe_member(root, name):
     rel = PurePosixPath(name)
     if not name or '\\' in name or ':' in name or rel.is_absolute() or any(p in ('..', '.', '') for p in name.split('/')):
         raise ValueError('Unsafe manifest path')
-    target = Path(root).joinpath(*rel.parts)
-    resolved = target.resolve()
-    if not resolved.is_relative_to(Path(root).resolve()) or target.is_symlink():
-        raise ValueError('Manifest path leaves its directory')
+    # Names cannot contain an absolute path, drive, dot or parent component.
+    # Resolve the stable root only: resolving a not-yet-created leaf while other
+    # workers mkdir its parents can yield inconsistent Windows canonical paths.
+    root = Path(root).resolve()
+    target = root.joinpath(*rel.parts)
     cursor = target
-    while cursor != Path(root):
-        if cursor.exists() and (cursor.is_symlink() or bool(getattr(cursor.stat(), 'st_file_attributes', 0) & 0x400)):
+    while cursor != root:
+        try:
+            info = cursor.lstat()  # inspect links/junctions themselves, never follow them
+        except FileNotFoundError:
+            cursor = cursor.parent
+            continue
+        import stat
+        if stat.S_ISLNK(info.st_mode) or bool(getattr(info, 'st_file_attributes', 0) & 0x400):
             raise ValueError('Reparse points are not supported')
         cursor = cursor.parent
     return target

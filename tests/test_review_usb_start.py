@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 import hashlib
 import tempfile
+from concurrent.futures import ThreadPoolExecutor
+import subprocess
 import unittest
 from unittest.mock import patch
 
@@ -255,6 +257,32 @@ class UsbStartTests(unittest.TestCase):
         self.assertEqual(len(failures), 1)
         self.assertIn('synthetic disk full', failures[0].read_text())
         self.assertFalse((target/'environment-ready.json').exists())
+
+    def test_parallel_new_directories_do_not_escape_or_false_reject(self):
+        root = self.root/'new concurrent tree'
+        root.mkdir()
+        def create(i):
+            path=start.safe_member(root, f'dir-{i//8}/nested/file-{i}.txt')
+            path.parent.mkdir(parents=True,exist_ok=True)
+            with path.open('xb') as stream:stream.write(b'synthetic')
+            return path
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            paths=list(pool.map(create,range(384)))
+        self.assertEqual(len(paths),384)
+        self.assertTrue(all(p.is_relative_to(root) and p.read_bytes()==b'synthetic' for p in paths))
+
+    @unittest.skipUnless(os.name=='nt','Windows junction boundary')
+    def test_windows_junction_is_rejected_before_reading_payload(self):
+        outside=self.root/'outside';outside.mkdir()
+        link=self.bundle/'junction'
+        result=subprocess.run(['cmd.exe','/d','/c','mklink','/J',str(link),str(outside)],
+                              capture_output=True,creationflags=0x08000000)
+        self.assertEqual(result.returncode,0)
+        try:
+            with self.assertRaises(ValueError):start.safe_member(self.bundle,'junction/private.txt')
+            self.assertEqual(list(outside.iterdir()),[])
+        finally:
+            os.rmdir(link)  # remove only this test's junction, never recurse into its target
 
 
 if __name__ == '__main__':
