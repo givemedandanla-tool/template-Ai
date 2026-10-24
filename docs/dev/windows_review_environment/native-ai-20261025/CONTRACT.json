@@ -1,0 +1,20 @@
+{
+  "component": "review-tool",
+  "base_commit": "33e2152dde48970f99875fff34497bbb7dd66b70",
+  "requested": "Verify official native AI importer with local isolated synthetic data; integrate only if feasible; Windows regression and feature-branch synchronization.",
+  "constraints": [
+    "Only Inkscape installed; no Illustrator dependency",
+    "No private works or fonts used/uploaded",
+    "No main merge, package or release",
+    "Do not treat successful SVG output as complete artwork"
+  ],
+  "acceptance": [
+    "Recover native geometry/colour/size from synthetic AI with PDF notice",
+    "Preserve synthetic native text, including PDF-wrapped native content",
+    "Reject corrupt or absent native data",
+    "Preserve original bytes",
+    "Keep normal review workflows passing"
+  ],
+  "decision": "NOT_INTEGRATED: mandatory text-preservation acceptance fails",
+  "further_work": "Text rendering and broader format/feature fidelity must be implemented and validated before product integration."
+}

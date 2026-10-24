@@ -1,0 +1,50 @@
+{
+  "upstream": {
+    "schema_version": 1,
+    "project": "https://gitlab.com/inkscape/extras/extension-ai",
+    "commit": "1a5f42a0b0407fc869e032420570682048810108",
+    "package": "inkai",
+    "version": "1.2.0",
+    "upstream_maturity": "Pre-Alpha",
+    "license": "GPL-2.0-or-later",
+    "archive_url": "https://gitlab.com/api/v4/projects/40537164/repository/archive.tar.gz?sha=1a5f42a0b0407fc869e032420570682048810108",
+    "archive_sha256": "3726fee8f6c35c13c26ad2155733662532aa4e7ad542a340a52b82b2a97f4e5f",
+    "dependencies": [
+      {
+        "requirement": "pypdf==3.17.4",
+        "wheel": "pypdf-3.17.4-py3-none-any.whl",
+        "sha256": "6aa0f61b33779b64486de3f42835d3668badd48dac4a536aeb87da187a5eacd2",
+        "license": "BSD-3-Clause"
+      },
+      {
+        "requirement": "pyparsing==3.2.5",
+        "wheel": "pyparsing-3.2.5-py3-none-any.whl",
+        "sha256": "e38a4f02064cf41fe6593d328d0512495ad1f3d8a91c4f73fc401b3079a59a5e",
+        "license": "MIT"
+      }
+    ],
+    "tested_host": {
+      "inkscape": "1.4.4",
+      "bundled_python": "3.12.12",
+      "inkex": "1.4.0",
+      "zstandard": "0.25.0",
+      "Pillow": "12.0.0",
+      "lxml": "6.0.2"
+    },
+    "deployment": "ISOLATED_FEASIBILITY_ONLY_NOT_PRODUCT_DEPENDENCY"
+  },
+  "official_sources": [
+    "https://gitlab.com/inkscape/extras/extension-ai/-/blob/1a5f42a0b0407fc869e032420570682048810108/README.md",
+    "https://gitlab.com/inkscape/extras/extension-ai/-/blob/1a5f42a0b0407fc869e032420570682048810108/pyproject.toml",
+    "https://gitlab.com/inkscape/extras/extension-ai/-/blob/1a5f42a0b0407fc869e032420570682048810108/inkai/svg/icontextmanager.py",
+    "https://gitlab.com/inkscape/extras/extension-ai/-/blob/1a5f42a0b0407fc869e032420570682048810108/inkai/svg/contextmanager.py"
+  ],
+  "reused_components": "Official extraction/parser/SVG converter; Inkscape bundled Python and inkex; pinned pure-Python wheels without installation",
+  "engineering_checks": [
+    "Content/colour/geometry and point dimensions, not exit status alone",
+    "Counterexample: same rectangle plus native text loses text without a conversion exception",
+    "Two PDF private compression schemes; original bytes preserved",
+    "One bounded offline Python subprocess per authored synthetic input"
+  ],
+  "license_note": "Official source and notices remain in downloaded archive; no third-party package/font redistribution or product packaging in this checkpoint."
+}

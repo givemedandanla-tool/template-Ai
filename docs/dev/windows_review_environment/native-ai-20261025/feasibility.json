@@ -1,0 +1,163 @@
+{
+  "upstream_commit": "1a5f42a0b0407fc869e032420570682048810108",
+  "platform": "Windows",
+  "cases": [
+    {
+      "case": "plain_geometry",
+      "converted": true,
+      "error_type": null,
+      "source_unchanged": true,
+      "warning_count": 0,
+      "synthetic_input": true,
+      "private_input_used": false,
+      "runtime": {
+        "python": "3.12.12",
+        "inkex": "1.4.0",
+        "pypdf": "3.17.4",
+        "pyparsing": "3.2.5",
+        "zstandard": "0.25.0"
+      },
+      "path_count": 1,
+      "text_elements": 0,
+      "text_retained": false,
+      "size_correct": true,
+      "rectangle_correct": true,
+      "notice_not_used": true,
+      "acceptance_pass": true
+    },
+    {
+      "case": "pdf_zlib_geometry",
+      "converted": true,
+      "error_type": null,
+      "source_unchanged": true,
+      "warning_count": 0,
+      "synthetic_input": true,
+      "private_input_used": false,
+      "runtime": {
+        "python": "3.12.12",
+        "inkex": "1.4.0",
+        "pypdf": "3.17.4",
+        "pyparsing": "3.2.5",
+        "zstandard": "0.25.0"
+      },
+      "path_count": 1,
+      "text_elements": 0,
+      "text_retained": false,
+      "size_correct": true,
+      "rectangle_correct": true,
+      "notice_not_used": true,
+      "acceptance_pass": true
+    },
+    {
+      "case": "pdf_zstd_geometry",
+      "converted": true,
+      "error_type": null,
+      "source_unchanged": true,
+      "warning_count": 0,
+      "synthetic_input": true,
+      "private_input_used": false,
+      "runtime": {
+        "python": "3.12.12",
+        "inkex": "1.4.0",
+        "pypdf": "3.17.4",
+        "pyparsing": "3.2.5",
+        "zstandard": "0.25.0"
+      },
+      "path_count": 1,
+      "text_elements": 0,
+      "text_retained": false,
+      "size_correct": true,
+      "rectangle_correct": true,
+      "notice_not_used": true,
+      "acceptance_pass": true
+    },
+    {
+      "case": "plain_text",
+      "converted": true,
+      "error_type": null,
+      "source_unchanged": true,
+      "warning_count": 6,
+      "synthetic_input": true,
+      "private_input_used": false,
+      "runtime": {
+        "python": "3.12.12",
+        "inkex": "1.4.0",
+        "pypdf": "3.17.4",
+        "pyparsing": "3.2.5",
+        "zstandard": "0.25.0"
+      },
+      "path_count": 1,
+      "text_elements": 0,
+      "text_retained": false,
+      "size_correct": true,
+      "rectangle_correct": true,
+      "notice_not_used": true,
+      "acceptance_pass": false
+    },
+    {
+      "case": "pdf_zlib_text",
+      "converted": true,
+      "error_type": null,
+      "source_unchanged": true,
+      "warning_count": 6,
+      "synthetic_input": true,
+      "private_input_used": false,
+      "runtime": {
+        "python": "3.12.12",
+        "inkex": "1.4.0",
+        "pypdf": "3.17.4",
+        "pyparsing": "3.2.5",
+        "zstandard": "0.25.0"
+      },
+      "path_count": 1,
+      "text_elements": 0,
+      "text_retained": false,
+      "size_correct": true,
+      "rectangle_correct": true,
+      "notice_not_used": true,
+      "acceptance_pass": false
+    },
+    {
+      "case": "corrupt_native",
+      "converted": false,
+      "error_type": "AssertionError",
+      "source_unchanged": true,
+      "warning_count": 0,
+      "synthetic_input": true,
+      "private_input_used": false,
+      "runtime": {
+        "python": "3.12.12",
+        "inkex": "1.4.0",
+        "pypdf": "3.17.4",
+        "pyparsing": "3.2.5",
+        "zstandard": "0.25.0"
+      },
+      "acceptance_pass": true
+    },
+    {
+      "case": "no_private_data",
+      "converted": false,
+      "error_type": "KeyError",
+      "source_unchanged": true,
+      "warning_count": 0,
+      "synthetic_input": true,
+      "private_input_used": false,
+      "runtime": {
+        "python": "3.12.12",
+        "inkex": "1.4.0",
+        "pypdf": "3.17.4",
+        "pyparsing": "3.2.5",
+        "zstandard": "0.25.0"
+      },
+      "acceptance_pass": true
+    }
+  ],
+  "acceptance_passed": 5,
+  "acceptance_failed": 2,
+  "integration_ready": false,
+  "upstream_python_files_verified": 33,
+  "private_files_used": false,
+  "fonts_uploaded": false,
+  "upstream_or_installed_files_modified": false,
+  "isolation": "Inkscape bundled python -I; pinned source and pure-Python wheels; Python socket access denied; one bounded subprocess per case"
+}
