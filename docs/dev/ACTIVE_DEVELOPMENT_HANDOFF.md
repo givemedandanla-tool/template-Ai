@@ -9,3 +9,5 @@
 下一步回到 review-tool 開發；如原 DirectWrite 情境再現，開啟 --diagnostics-dir 在本機取得證據後修正。OCR／英繁中模型未配置，raster 測試用合成 OCR observations，不升真正 OCR 資格。已發布 beta.2、舊完整產品資格與外部驗證不變。
 
 使用者已授權此部件開發與 GitHub 同步。依[部件規則](windows_review_environment/SYNC_POLICY.md)保存、讀回、對齊本機；不合併 main、不打包發布，不上傳私人作品、字型、客戶資料，不自動擴大成完整 template-Ai 工作。環境初始失敗保留於上層歷史報告，不覆寫成 PASS。
+
+本輪快照已讀回：`939b83d4c73a0b015c7eb5a45936c227d10781da`，`CP-20261024-REVIEW-PDF-DWRITE-002`；97個部件檔案＋checkpoint逐blob一致、21個變更檔逐byte/SHA256一致。收據另筆保存，本機與最終收據提交完成後對齊。共享歷史STATE不更新，改讀上列部件狀態。

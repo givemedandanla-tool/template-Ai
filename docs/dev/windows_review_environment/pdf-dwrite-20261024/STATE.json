@@ -3,7 +3,7 @@
   "component": "review-tool",
   "branch": "feature/review-tool-v0.1.0",
   "base_commit": "f7f26c52de0e6ff4a08850e12a8450dc2a142be7",
-  "status": "PREPARED",
+  "status": "REMOTE_VERIFIED",
   "checkpoint": "CP-20261024-REVIEW-PDF-DWRITE-002",
   "active_contract": "docs/dev/windows_review_environment/pdf-dwrite-20261024/CONTRACT.json",
   "report": "docs/dev/windows_review_environment/pdf-dwrite-20261024/REPORT.md",
@@ -13,19 +13,23 @@
     "report": "docs/dev/windows_review_environment/pdf-dwrite-20261024/REPORT.md",
     "contract": "docs/dev/windows_review_environment/pdf-dwrite-20261024/CONTRACT.json",
     "checkpoint": "CP-20261024-REVIEW-PDF-DWRITE-002",
-    "sync_phase": "PREPARED",
+    "sync_phase": "REMOTE_VERIFIED",
     "native_windows_tests_passed": 31,
     "pdf_tests_passed": 14,
     "directwrite": "NOT_REPRODUCED",
     "full_ocr": "NOT_CONFIGURED",
     "original_user_directwrite_trigger_verified": false,
     "private_data_uploaded": false,
-    "package_release_authorized": false
+    "package_release_authorized": false,
+    "snapshot_commit": "939b83d4c73a0b015c7eb5a45936c227d10781da"
   },
   "main_merge": false,
   "package_release": false,
   "private_data_upload": false,
   "shared_state_policy": "Shared STATE/AGENTS/WORK_LOG retained byte-identical to remote base. Latest component state is this file and ACTIVE_DEVELOPMENT_HANDOFF.md.",
   "local_prepared_checkpoint_superseded": "CP-20261024-REVIEW-PDF-DWRITE-001",
-  "superseded_reason": "Automatic approval required minimum component state rather than full shared historical payloads; original local prepared archive retained, not claimed remotely verified."
+  "superseded_reason": "Automatic approval required minimum component state rather than full shared historical payloads; original local prepared archive retained, not claimed remotely verified.",
+  "snapshot_commit": "939b83d4c73a0b015c7eb5a45936c227d10781da",
+  "receipt": "docs/checkpoints/CP-20261024-REVIEW-PDF-DWRITE-002.receipt.json",
+  "local_alignment": "VERIFY_AFTER_RECEIPT_COMMIT"
 }
