@@ -112,6 +112,10 @@ class ReviewWindow(QMainWindow):
         QPushButton:hover{background:#edf4ff;border-color:#91b4f7;} QPushButton:disabled{color:#929baa;background:#edf0f5;}
         QPushButton#primary{background:#2563eb;color:white;border:1px solid #2563eb;font-weight:600;}
         QPushButton#primary:hover{background:#1d4ed8;} QLineEdit,QPlainTextEdit,QComboBox,QListWidget{background:white;border:1px solid #d9e0ea;border-radius:5px;padding:6px;}
+        QComboBox QAbstractItemView{background:#ffffff;color:#172033;border:1px solid #d9e0ea;selection-background-color:#e8f0ff;selection-color:#153c91;outline:0;}
+        QComboBox QAbstractItemView::item{background:#ffffff;color:#172033;}
+        QComboBox QAbstractItemView::item:selected:enabled{background:#e8f0ff;color:#153c91;}
+        QComboBox QAbstractItemView::item:disabled{background:#ffffff;color:#65728a;}
         QTreeWidget{background:white;border:0;outline:none;} QTreeWidget::item{padding:9px 4px;border-bottom:1px solid #f0f3f8;}
         QTreeWidget::item:selected{background:#e8f0ff;color:#153c91;} QHeaderView::section{background:#f6f8fb;border:0;padding:7px;}
         QSplitter::handle{background:#e2e7ef;width:1px;} QScrollArea{border:0;background:white;}

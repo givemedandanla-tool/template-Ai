@@ -1,0 +1,17 @@
+{
+  "requirement": "REVIEW-COMBO-PALETTE-01",
+  "component": "review-tool",
+  "branch": "feature/review-tool-v0.1.0",
+  "base_commit": "a0995d9b5a4a6343f44cfef2211d15e704d2e9b0",
+  "problem": "Combo box popups retain dark Windows backgrounds with dark application text.",
+  "acceptance": [
+    "Actual expanded kind, owner, review-state and font-style lists have readable normal, selected and disabled rows under light and dark palettes.",
+    "Mouse and keyboard selection preserve item values and disabled items remain disabled.",
+    "Existing action menu readability and bounded review component regression pass on Windows."
+  ],
+  "checkpoint": "CP-20261026-REVIEW-COMBO-001",
+  "scope": "Popup presentation and synthetic UI regression only; native engine and document interpretation unchanged.",
+  "privacy": "Synthetic UI inputs; artwork, fonts, engine and raw diagnostics stay local.",
+  "package_release": false,
+  "main_merge": false
+}

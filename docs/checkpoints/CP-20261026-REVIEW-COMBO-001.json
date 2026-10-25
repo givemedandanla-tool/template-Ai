@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261026-REVIEW-COMBO-001",
+  "created_utc": "2026-10-25T16:10:18.701469+00:00",
+  "base_commit": "a0995d9b5a4a6343f44cfef2211d15e704d2e9b0",
+  "phase": "PREPARED",
+  "summary": "Fix actual review combo popup backgrounds under dark Windows palette",
+  "requirement_ids": [
+    "REVIEW-COMBO-PALETTE-01"
+  ],
+  "next_step": "Continue preserved local review session; no packaging or private uploads",
+  "source_files": {
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 4936,
+      "sha256": "0b6717fc453956cb5848c1b2b367cc313c5a3e64810e9536f7af1af94a2d6ffd",
+      "git_blob_sha1": "e4a14b7d43bd08057e057571b84cda48222e6c39"
+    },
+    "docs/dev/windows_review_environment/combo-palette-20261026/CONTRACT.json": {
+      "bytes": 946,
+      "sha256": "fd1530ff5d32e93b98d7d4f68845a19f66b7fa92d91278f2bafdf8bca11c21eb",
+      "git_blob_sha1": "9eb2d8532517c00b5115a4452a58fb03ead3a728"
+    },
+    "docs/dev/windows_review_environment/combo-palette-20261026/EVIDENCE.json": {
+      "bytes": 16925,
+      "sha256": "34344b2a6e496754321944576fb26bbd492967fddba6ce1cc4da3645016d3223",
+      "git_blob_sha1": "e00923b4b7d1c3eb45dfed2489ccf7cf20f858d7"
+    },
+    "docs/dev/windows_review_environment/combo-palette-20261026/REPORT.md": {
+      "bytes": 1836,
+      "sha256": "fe8b4cec36dc6b4f50a2995c063f71f38b04c74fbefe5da64dadb0b82c84660b",
+      "git_blob_sha1": "4ecb7732a965345be2cfc52fb8a6307135ab9229"
+    },
+    "docs/dev/windows_review_environment/combo-palette-20261026/STATE.json": {
+      "bytes": 768,
+      "sha256": "93736eb66408dc8eacc62663eb2e7a89386ed2902218d3167930fab1b0a4c5b8",
+      "git_blob_sha1": "63b0e61c7ea1def6407f7989518e513f605d03ca"
+    },
+    "template_ai/review_tool/window.py": {
+      "bytes": 52939,
+      "sha256": "f1708f1b067f887762da0a57f7880e8b4c65614fbd6f254401ecba2061cf00cc",
+      "git_blob_sha1": "8fd8f98b659a3f1b5d073682e9f3f78b8d648462"
+    },
+    "tests/test_review_combo_palette.py": {
+      "bytes": 6910,
+      "sha256": "c4aa2e4250c8dce23eb1a39fb495f269c3a6dc87416520ee9906708f4c207224",
+      "git_blob_sha1": "881f34dfced51fbd7a36d43ea270b6981392eb01"
+    },
+    "tools/windows_review_dev/run_native_component_tests.py": {
+      "bytes": 2128,
+      "sha256": "d707e72a2b9a7f09584075ab637082911f096f30ce406f56207d5e0b6f0c4978",
+      "git_blob_sha1": "4a43e401c73db58624a1950d42256111c3da9eb4"
+    }
+  },
+  "source_manifest_sha256": "2723c8e3392aff7c67fdee879eec9aa7cfa3400591ba436f23915fe727d7f5ab",
+  "local_snapshot": {
+    "path": ".checkpoints\\CP-20261026-REVIEW-COMBO-001\\source.zip",
+    "sha256": "e2b2d4d817def0dcde525c536b602f045819d5906c794643ae9a3077e27f5ab1"
+  },
+  "remote_confirmation": "尚未確認；本機快照不能冒稱已在 GitHub 保存"
+}

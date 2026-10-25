@@ -1,3 +1,7 @@
+# 最新修正：review-tool 下拉清單白底深字
+
+CP-20261026-REVIEW-COMBO-001。先讀 [配色修正報告](windows_review_environment/combo-palette-20261026/REPORT.md) 與該目錄 STATE。四種下拉清單在淺／深色 palette 的實際展開、文字對比及滑鼠／鍵盤選擇通過；Windows 部件 91 PASS、0 FAIL、0 SKIP。使用者保存關閉後，已沿用原資料與診斷重新啟動修正版。先前 QMenu 測試漏掉 QComboBox，已補回歸；引擎與讀取流程不變。來源仍 dev2，精確版本以 checkpoint 收據為準；私人資料僅本機，不合併 main、不打包發布。
+
 # 最新交付：review-tool 0.1.0-beta.3.dev2 離線原生讀取
 
 CP-20261025-REVIEW-ADOBE-HEADLESS-006。一般判讀已使用零網路能力的每文件獨立 Adobe 程序；原 COM／Inkscape review 路徑停用。89 Windows 元件、六個原生全流程／拒絕情境、四個停止控制、七個真實 GUI 檢查通過；五頁 72／300 dpi 與本機基準一致，最後 GUI DirectWrite 為零。新本機工作階段已啟動。先讀[交付報告](windows_review_environment/adobe-headless-20261025/DELIVERY_REPORT.md)、部件 STATE 與本機指南。私人資料、字型、引擎與原始診斷不上傳；不合併 main、不打包發布。全專案歷史治理資格未升級。

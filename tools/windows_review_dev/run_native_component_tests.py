@@ -5,7 +5,7 @@ repo=Path(__file__).resolve().parents[2];sys.path[:0]=[str(repo),str(repo/'tests
 
 def run(output):
     output.mkdir(exist_ok=False)
-    names=['test_review_native_observation','test_review_illustrator_bridge','test_review_session',
+    names=['test_review_combo_palette','test_review_native_observation','test_review_illustrator_bridge','test_review_session',
         'test_review_canvas','test_review_diagnostics','test_review_failed_source','test_review_stdio',
         'test_original_text_observation','test_source_region_hypotheses',
         'test_review_tool_gui.ReviewToolGuiTests.test_popup_menus_remain_readable_with_dark_system_palette',
