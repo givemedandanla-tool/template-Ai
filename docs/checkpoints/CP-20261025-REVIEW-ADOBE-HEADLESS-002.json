@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261025-REVIEW-ADOBE-HEADLESS-002",
+  "created_utc": "2026-10-25T13:08:15.922695+00:00",
+  "base_commit": "9e32d5a322e2beae86131af202224593ccdf727f",
+  "phase": "PREPARED",
+  "summary": "Preserve partial native networking audit and failed Adobe AppContainer qualification; no product integration claimed",
+  "requirement_ids": [
+    "REVIEW-ADOBE-HEADLESS-01"
+  ],
+  "next_step": "Qualify enforced offline native reading before integrating or removing legacy review routes",
+  "source_files": {
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 2253,
+      "sha256": "f8cccb06cbe8ac31eb69c142e2103e21776950b0cd5d0867dc421715711bde00",
+      "git_blob_sha1": "ac5e9a77eb7ce2ebb38d49b4dc3ac652bf8f82d7"
+    },
+    "docs/dev/windows_review_environment/adobe-headless-20261025/CONTRACT.json": {
+      "bytes": 4111,
+      "sha256": "c2acf297b3c910f8eed056b0e1ef7681c17a1d45fa0e1b2ecf30bcd59bc578b6",
+      "git_blob_sha1": "2339f977bd4813092f8180293793c4eea589ea28"
+    },
+    "docs/dev/windows_review_environment/adobe-headless-20261025/NETWORK_AUDIT.md": {
+      "bytes": 5423,
+      "sha256": "a50009aac8a94b9e50e7ece40d1e81a09dd43042ab6ad883d17303494ce61d6a",
+      "git_blob_sha1": "413d8618fd57a811e8a06d84057bd8a1eb0a2d9e"
+    },
+    "docs/dev/windows_review_environment/adobe-headless-20261025/STATE.json": {
+      "bytes": 1030,
+      "sha256": "b2e057d14ec7beb62de728f422ef91209e3577516597b94bb9a90edf64b28aeb",
+      "git_blob_sha1": "247e91ded8223b785ab074f80795199403d5f73a"
+    }
+  },
+  "source_manifest_sha256": "83abc3cf02456d266bc9688b2d1a92c065b65487f692046c467cbc043853db99",
+  "local_snapshot": {
+    "path": ".checkpoints\\CP-20261025-REVIEW-ADOBE-HEADLESS-002\\source.zip",
+    "sha256": "16b9f3adfc7f8edf2716d9086dee88b46f64df2558b6e943f774939b29482254"
+  },
+  "remote_confirmation": "尚未確認；本機快照不能冒稱已在 GitHub 保存"
+}

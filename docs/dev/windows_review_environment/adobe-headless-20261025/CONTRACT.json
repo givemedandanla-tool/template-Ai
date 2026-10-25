@@ -40,6 +40,10 @@
     {
       "id": "A9",
       "requirement": "Record static provenance/network capabilities and isolated dynamic network-attempt evidence with positive controls; distinguish no observed activity from enforced offline operation."
+    },
+    {
+      "id": "A10",
+      "requirement": "Disable nonessential crash/login/cloud/update entry points in a new isolated runtime copy; enforce OS-level no-outbound-network policy for native reader and descendants. Fail closed if containment unavailable. Include deliberate network-denial tests; carry this boundary forward to future Template AI use without claiming unrelated apps are disconnected."
     }
   ],
   "reuse": [
@@ -64,6 +68,7 @@
   ],
   "user_steering": [
     "Make Adobe the sole AI/PDF/SVG parsing route in review-tool after qualification; remove redundant COM/Inkscape component routes, not unrelated full-product code",
-    "Strictly audit every included component for automatic networking/telemetry before completing integration"
+    "Strictly audit every included component for automatic networking/telemetry before completing integration",
+    "Cut all review-tool and future Template AI Adobe server associations through component minimization and enforceable native-process network isolation; no domain-only blacklists."
   ]
 }

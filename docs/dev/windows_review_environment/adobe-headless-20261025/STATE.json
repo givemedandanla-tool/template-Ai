@@ -2,14 +2,17 @@
   "component": "review-tool",
   "branch": "feature/review-tool-v0.1.0",
   "requirement": "REVIEW-ADOBE-HEADLESS-01",
-  "status": "AUDIT_BEFORE_INTEGRATION",
+  "status": "AUDIT_PARTIAL_NATIVE_CONTAINER_NOT_QUALIFIED",
   "contract": "docs/dev/windows_review_environment/adobe-headless-20261025/CONTRACT.json",
   "base_commit": "7df7a26f3b1995a73e58626edd20bf9c8d77314a",
-  "checkpoint": "CP-20261025-REVIEW-ADOBE-HEADLESS-001",
-  "scope": "opt-in headless local Adobe import and font substitution checks",
+  "checkpoint": "CP-20261025-REVIEW-ADOBE-HEADLESS-002",
+  "scope": "Unified local Adobe AI/PDF/SVG reading, native font checks and enforced network isolation before product integration",
   "private_data_upload": false,
   "engine_or_fonts_upload": false,
   "main_merge": false,
   "package_release": false,
-  "next_step": "Audit native dependency networking, then qualify a unified Adobe AI/PDF/SVG reader before removing old review-tool routes."
+  "next_step": "Diagnose native isolation initialization failure or qualify an enforceable offline alternative; then minimize runtime and integrate native font/geometry/text parsing. Do not silently run uncontained.",
+  "report": "docs/dev/windows_review_environment/adobe-headless-20261025/NETWORK_AUDIT.md",
+  "integration_complete": false,
+  "adobe_dll_modified": false
 }
