@@ -1,0 +1,69 @@
+{
+  "requirement": "REVIEW-ADOBE-HEADLESS-01",
+  "component": "review-tool",
+  "branch": "feature/review-tool-v0.1.0",
+  "base_commit": "7df7a26f3b1995a73e58626edd20bf9c8d77314a",
+  "user_authorization": "Integrate the locally verified headless Adobe reader, one document per process, font checks, Windows synthetic and designated private-file regression, code and sanitized handoff sync only.",
+  "acceptance": [
+    {
+      "id": "A1",
+      "requirement": "Explicit local configuration, pinned supported runtime; no Adobe engine, fonts, private sources or raw diagnostics in Git."
+    },
+    {
+      "id": "A2",
+      "requirement": "Each document has a fresh hidden worker, unique output and isolated preferences; batch executes sequentially with cancellation and a bounded timeout."
+    },
+    {
+      "id": "A3",
+      "requirement": "Check native font substitution after open; missing fonts or unavailable checking blocks adoption and reports useful local details. Test missing-font behavior."
+    },
+    {
+      "id": "A4",
+      "requirement": "Never alter source bytes or overwrite prior results. Validate output PDF, all expected artboards, source hash and absence of compatibility notice before adoption."
+    },
+    {
+      "id": "A5",
+      "requirement": "Expose an opt-in review UI action, preserve existing work and provenance, and prevent overlapping analysis/import operations."
+    },
+    {
+      "id": "A6",
+      "requirement": "Windows regression includes synthetic geometry, missing-font/error/cancel/timeout controls, and designated private local AI through the integrated path. Keep exact results and failures local; publish only sanitized aggregates."
+    },
+    {
+      "id": "A7",
+      "requirement": "Compare integrated output against verified local reference without claiming all AI versions, effects, or original Illustrator visual fidelity."
+    },
+    {
+      "id": "A8",
+      "requirement": "Checkpoint and exact GitHub commit/tree/file readback on the feature branch; no main merge, package or release."
+    },
+    {
+      "id": "A9",
+      "requirement": "Record static provenance/network capabilities and isolated dynamic network-attempt evidence with positive controls; distinguish no observed activity from enforced offline operation."
+    }
+  ],
+  "reuse": [
+    "Existing Qt QProcess bridge lifecycle and PDF validation",
+    "Version-pinned local AILib initialization, file path ABI and PDF writer proof",
+    "AI Font Suite 6 CountFonts / GetFontIsSubstituted"
+  ],
+  "references": [
+    "https://ai-sdk-2020.84.nz/html/struct_a_i_font_suite",
+    "https://ai-sdk-2020.84.nz/html/struct_a_i_document_suite"
+  ],
+  "baseline": {
+    "repository_clean": true,
+    "global_governance": "Existing legacy evidence stale before this change; not passed or upgraded by this component work",
+    "scope_policy": "docs/dev/windows_review_environment/SYNC_POLICY.md"
+  },
+  "limitations": [
+    "Exact tested Adobe CC 2020 AILib only",
+    "An Adobe engine remains required",
+    "No independent Illustrator UI golden reference",
+    "Full OCR and existing DirectWrite qualification are separate"
+  ],
+  "user_steering": [
+    "Make Adobe the sole AI/PDF/SVG parsing route in review-tool after qualification; remove redundant COM/Inkscape component routes, not unrelated full-product code",
+    "Strictly audit every included component for automatic networking/telemetry before completing integration"
+  ]
+}

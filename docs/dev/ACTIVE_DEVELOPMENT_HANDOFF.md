@@ -1,13 +1,11 @@
-# 當前：review-tool Illustrator 接口已實作，實機 Adobe 驗收待辦
+# 當前：review-tool 統一 Adobe 解析，先稽核網路行為
 
-指定 `feature/review-tool-v0.1.0`，本輪基底 `f0aaddd9dd87f76d9ea85853bfd633548906c942`；checkpoint `CP-20261025-REVIEW-ILLUSTRATOR-002`。先讀 [部件 STATE](windows_review_environment/illustrator-20261025/STATE.json)、[報告](windows_review_environment/illustrator-20261025/REPORT.md) 與 [接口指南](../../tools/windows_review_dev/illustrator_bridge/README.md)。使用者最新要求是在有 Illustrator 的 Windows 環境建立接口。
+使用者已授權整合已驗證的無視窗 Adobe 讀取方案，後續明確要求 AI／PDF／SVG 優先統一由 Adobe 原生部件解析，通過回歸後移除 review-tool 的 COM／Inkscape 重複路徑。仍保留其他部件需要的共用程式。
 
-「更多」→「使用 Illustrator 匯入 AI（實驗性）」以選配 pywin32 311 呼叫本機 Illustrator，輸出新 PDF 來源；「停止等候 Illustrator」只停止自身 helper，遲到輸出不採用。原稿雜湊、全部畫板頁數及提示頁檢查通過才加入。原稿／既有文件與人工核對保留，不自動當作已核對。
+先讀 [本輪 STATE](windows_review_environment/adobe-headless-20261025/STATE.json) 與 [契約](windows_review_environment/adobe-headless-20261025/CONTRACT.json)。分支 feature/review-tool-v0.1.0，開工基底 7df7a26f3b1995a73e58626edd20bf9c8d77314a。目前僅登錄要求，產品尚未改動，網路行為稽核正在進行。
 
-Windows 最終 56 PASS／0 skip（接口 26、PDF 17、Jobs/UI 13），接口測試含 14 個合成 Adobe DOM 情境。此機無 Illustrator，真 host 回報 NOT_INSTALLED；真實原生 AI 轉 PDF／保真仍 NOT_VERIFIED。不要將合成結果升為 Adobe／私人文件／EXE 資格。
+前輪本機隔離實驗證實指定 CC 2020 引擎可逐文件背景讀取與 PDF 輸出，合成與指定私人樣本在補齊本機字型後與同引擎主機參照一致；不等於所有 AI／PDF／SVG、字型或無網路嘗試已驗證。本輪需 native 字型替換檢查、獨立程序、取消／逾時、原檔不變與新 PDF 驗證，並做 Windows 產品回歸。
 
-下一步：有 Illustrator 的機器依指南安裝選配 COM 套件並跑 smoke.py，以新短路徑建立兩畫板合成 AI，確認自動與人工目視結果，再測缺字型／連結、已有未保存文件及取消。原 Inkscape 原生 AI 擴充仍因文字遺失而未接入。DirectWrite 未重現；完整 OCR 未配置。
+最新指令要求極嚴格稽核所有採用部件的自動連線／遙測。先做來源／簽章與靜態連線能力盤點，再於無網路隔離環境觀察原生連線嘗試並設正向控制。現有 Python offline guard 不約束原生 DLL／外部程序，不能當作原生斷網證明。使用者提供的作品、字型、Adobe 引擎、原始診斷都只留本機。
 
-源碼仍 0.1.0-beta.3.dev1，既有 beta.2 發布不變。不合併 main、不打包發布，私人資料不上傳。依 [同步規則](windows_review_environment/SYNC_POLICY.md) 讀回；共享歷史 AGENTS／STATE／WORK_LOG 不更新。精確提交／收據以本部件 STATE 為準。
-
-快照已讀回：`94fc1be90356fc8290d9f77764ee94e4f06f73f5`；明確部件清單＋checkpoint 逐 blob 相符，全部變更檔逐 byte／SHA256 相符。收據另筆提交後完成本機 HEAD 對齊。
+依 SYNC_POLICY 僅同步部件程式、合成測試與匿名交接；共享歷史 AGENTS／STATE／WORK_LOG 不重傳。全專案歷史 governance check 在開工前已因舊證據過期失敗，不升其資格。本輪尚未完成整合或回歸。不合併 main、不打包發布。舊 COM／USB 交付保留於歷史 checkpoint，不能當新 Adobe 無視窗方案的驗收。
