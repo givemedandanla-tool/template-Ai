@@ -367,6 +367,8 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
                     renderer_identity=deepcopy(source.get('renderer_identity')),
                     renderer_execution=source.get('renderer_execution', 'NOT_USED'))
         packet['pages'].append(page)
+        if source.get('native_derivative'):
+            page['native_derivative']=deepcopy(source['native_derivative'])
         identity=source.get('renderer_identity') or {}
         safe_identity={k:identity[k] for k in (
             'state','origin','policy','version','executable_sha256','verified_files') if k in identity}

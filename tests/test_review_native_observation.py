@@ -41,4 +41,19 @@ class NativeObservationTests(unittest.TestCase):
                 with self.assertRaises(NativeReaderError):analyse_file(source,Path(folder)/'cache',ocr=False)
                 old.assert_not_called()
 
+    def test_svg_font_check_keeps_requested_face_and_rejects_linked_assets(self):
+        from template_ai.review_tool.native_reader import svg_preflight
+        with tempfile.TemporaryDirectory() as folder:
+            p=Path(folder)/'synthetic.svg'
+            p.write_text('<svg xmlns="http://www.w3.org/2000/svg"><style>.a {font-family: MissingTestFace, Arial;}</style><text class="a">SYNTHETIC</text></svg>')
+            self.assertEqual(svg_preflight(p),['MissingTestFace'])
+            p.write_text('<svg xmlns="http://www.w3.org/2000/svg"><image href="local.png"/></svg>')
+            with self.assertRaises(NativeReaderError):svg_preflight(p)
+
+    def test_svg_font_shorthand_is_not_silently_accepted(self):
+        from template_ai.review_tool.native_reader import svg_preflight
+        with tempfile.TemporaryDirectory() as folder:
+            p=Path(folder)/'synthetic.svg';p.write_text('<svg xmlns="http://www.w3.org/2000/svg"><text style="font:12px MissingTestFace">SYNTHETIC</text></svg>')
+            with self.assertRaises(NativeReaderError):svg_preflight(p)
+
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261025-REVIEW-ADOBE-HEADLESS-006",
+  "created_utc": "2026-10-25T15:45:02.705420+00:00",
+  "base_commit": "d4315dd2fc6958ce46cd072953c3b881fd7635d2",
+  "phase": "PREPARED",
+  "summary": "Deliver source review-tool with enforced offline native AI reading and verified Windows regression",
+  "requirement_ids": [
+    "REVIEW-ADOBE-HEADLESS-01"
+  ],
+  "next_step": "Continue user local review; private diagnostics local, no release or main merge",
+  "source_files": {
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 4311,
+      "sha256": "769bc65e9b6072c6e4659e6c976040d18bbf7ea267a8094ed7de1756b952a3bf",
+      "git_blob_sha1": "aa3ecdb92796df70b7227002b5edbee05d12cfd3"
+    },
+    "docs/dev/windows_review_environment/adobe-headless-20261025/CONTRACT.json": {
+      "bytes": 4675,
+      "sha256": "ce60aff6d39ac020a3e8fa0c6bfe84505d618c1199258a38e0e53063d1facadc",
+      "git_blob_sha1": "fb85b2cc2dbf7e95ebb4551d8c88af5f451cdf1e"
+    },
+    "docs/dev/windows_review_environment/adobe-headless-20261025/DELIVERY_EVIDENCE.json": {
+      "bytes": 18732,
+      "sha256": "ff44d15463278521f039fccdb7ceb2dd41eb7f59df22c2af0a210e39c5d55bcd",
+      "git_blob_sha1": "9f35f940c7ff2f4c1778f8083d3620f8ad400a19"
+    },
+    "docs/dev/windows_review_environment/adobe-headless-20261025/DELIVERY_REPORT.md": {
+      "bytes": 4409,
+      "sha256": "15ac0a7b394fc74cbca20a8bb120feaddf3c8d4512f309b42df3751b27cb5515",
+      "git_blob_sha1": "789efbfc156e70f102e9433b6f161fd201c0d2cb"
+    },
+    "docs/dev/windows_review_environment/adobe-headless-20261025/LOCAL_READER.md": {
+      "bytes": 2023,
+      "sha256": "ca3b59ed70d5a50f0c2b3cfae54bd1a576dced2421d9effaaf7bd132277a374d",
+      "git_blob_sha1": "dbdbe9cf8d265ff93872803b1be09c2c62f02767"
+    },
+    "docs/dev/windows_review_environment/adobe-headless-20261025/STATE.json": {
+      "bytes": 1406,
+      "sha256": "270101ab9c291989752dcac78c0be8dc0f965b07c585b0b7913a9c1c2ef41b26",
+      "git_blob_sha1": "8467f3ca9a8e5bb6fbf77766577d1e3974c72519"
+    },
+    "template_ai/review_tool/analysis.py": {
+      "bytes": 29683,
+      "sha256": "77df99c86aab235a0076e5c569865fa5f573d4f16b1361c5e35438cce69fc98b",
+      "git_blob_sha1": "240ad03117443e0498db6016aff2bd43e6257fb5"
+    },
+    "template_ai/review_tool/canvas.py": {
+      "bytes": 32423,
+      "sha256": "bf64ac741415202f0858de7ac13986d376709b76d6dcc0bb5b5bc6fb9af85a6b",
+      "git_blob_sha1": "b448047d599f4f36f2582bf4d75b539c66b236ea"
+    },
+    "template_ai/review_tool/window.py": {
+      "bytes": 52517,
+      "sha256": "5c55851c764b4a81da19c88aee8d50fb67c3b1f1d30b5535524b9e337c6635df",
+      "git_blob_sha1": "8dd631362d8cf5d249db34a42677cae204f53498"
+    },
+    "tests/test_review_native_observation.py": {
+      "bytes": 3848,
+      "sha256": "7030505b4cb893baaa17c3a91a959849e34093de981f9c74773d31d2fb9786ba",
+      "git_blob_sha1": "0b770b297affd4fc93194854ca36682fe110a910"
+    },
+    "tests/test_review_tool_gui.py": {
+      "bytes": 29644,
+      "sha256": "c6a49252cb0205afda505c14c3f821c47e18d112382af8ef8fd61fb4e047e0f1",
+      "git_blob_sha1": "25d3268d1b58358562ecea7d6df554855261de6b"
+    },
+    "tools/windows_review_dev/illustrator_bridge/README.md": {
+      "bytes": 5148,
+      "sha256": "56f5e9f774e31f589f245a9b7f5d8113efb3d68ad94e53fc0664adf9a83fc701",
+      "git_blob_sha1": "b7c2038fd12cfad8dba674bfd44470ae0de82bd7"
+    },
+    "tools/windows_review_dev/run_native_component_tests.py": {
+      "bytes": 2100,
+      "sha256": "51a33d031835f8c0644787dfcaccf766e1531843c01f4128fec2d3de4a0bcae2",
+      "git_blob_sha1": "63544c7370df246c1a5fab03506b91db0d67806b"
+    },
+    "tools/windows_review_dev/verify_native_gui.py": {
+      "bytes": 4370,
+      "sha256": "c1502ee5863062bae9a9cc09886e60661cbac899d3a66f9ca380941cf9d881d0",
+      "git_blob_sha1": "f87cedfab934246c8b9154169404a484688b7ec5"
+    }
+  },
+  "source_manifest_sha256": "0b3eb051a172c8e683383cb0dac29efdac14f1ba3b8a9238de22d277f855aa7c",
+  "local_snapshot": {
+    "path": ".checkpoints\\CP-20261025-REVIEW-ADOBE-HEADLESS-006\\source.zip",
+    "sha256": "e089b837579ddb82cafb29c619f50e90655217eb59fc99bdde3bf9c3465f794f"
+  },
+  "remote_confirmation": "尚未確認；本機快照不能冒稱已在 GitHub 保存"
+}

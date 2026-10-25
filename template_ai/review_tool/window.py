@@ -116,6 +116,7 @@ class ReviewWindow(QMainWindow):
         QTreeWidget::item:selected{background:#e8f0ff;color:#153c91;} QHeaderView::section{background:#f6f8fb;border:0;padding:7px;}
         QSplitter::handle{background:#e2e7ef;width:1px;} QScrollArea{border:0;background:white;}
         QFrame#panel{background:white;border:1px solid #e1e6ef;border-radius:7px;}
+        QWidget#reviewForm{background:#ffffff;color:#172033;}
         QLabel#notice{background:#eef4ff;color:#20477d;padding:9px;border-radius:5px;}
         ''')
         central = QWidget()
@@ -222,6 +223,7 @@ class ReviewWindow(QMainWindow):
         placeholder.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.detail_stack.addWidget(placeholder)
         form_page = QWidget()
+        form_page.setObjectName('reviewForm')
         form = QFormLayout(form_page)
         form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapAllRows)

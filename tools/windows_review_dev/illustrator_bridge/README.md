@@ -1,6 +1,6 @@
 # 此接口已退役
 
-目前 review-tool 僅使用隔離原生讀取。以下為歷史說明，不適用新版本；舊接口已停止執行。參見 [本機讀取指南](../../../docs/dev/windows_review_environment/adobe-headless-20261025/LOCAL_READER.md)。
+目前 review-tool 僅使用隔離原生讀取。以下為歷史說明，不適用新版本；舊接口已停止執行。參見 [本機讀取指南](../../../../docs/dev/windows_review_environment/adobe-headless-20261025/LOCAL_READER.md)。
 
 # review-tool 的 Windows Illustrator 接口（實驗性）
 

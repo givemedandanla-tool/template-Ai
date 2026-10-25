@@ -1,3 +1,7 @@
+# 最新交付：review-tool 0.1.0-beta.3.dev2 離線原生讀取
+
+CP-20261025-REVIEW-ADOBE-HEADLESS-006。一般判讀已使用零網路能力的每文件獨立 Adobe 程序；原 COM／Inkscape review 路徑停用。89 Windows 元件、六個原生全流程／拒絕情境、四個停止控制、七個真實 GUI 檢查通過；五頁 72／300 dpi 與本機基準一致，最後 GUI DirectWrite 為零。新本機工作階段已啟動。先讀[交付報告](windows_review_environment/adobe-headless-20261025/DELIVERY_REPORT.md)、部件 STATE 與本機指南。私人資料、字型、引擎與原始診斷不上傳；不合併 main、不打包發布。全專案歷史治理資格未升級。
+
 # 最新進度：隔離原生引擎已接入，缺字型修正待重驗
 
 CP-20261025-REVIEW-ADOBE-HEADLESS-005；先讀部件 STATE、[產品接入進度](windows_review_environment/adobe-headless-20261025/INTEGRATION_PROGRESS.md) 與 [本機指南](windows_review_environment/adobe-headless-20261025/LOCAL_READER.md)。使用者要求持續至可交付，不以此 checkpoint 結束。

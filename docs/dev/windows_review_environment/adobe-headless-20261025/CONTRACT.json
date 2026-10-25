@@ -23,7 +23,7 @@
     },
     {
       "id": "A5",
-      "requirement": "Expose an opt-in review UI action, preserve existing work and provenance, and prevent overlapping analysis/import operations."
+      "requirement": "Use the ordinary review action as the sole Adobe AI/PDF/SVG route per subsequent user steering; preserve existing work and provenance, and prevent overlapping jobs."
     },
     {
       "id": "A6",
@@ -70,5 +70,17 @@
     "Make Adobe the sole AI/PDF/SVG parsing route in review-tool after qualification; remove redundant COM/Inkscape component routes, not unrelated full-product code",
     "Strictly audit every included component for automatic networking/telemetry before completing integration",
     "Cut all review-tool and future Template AI Adobe server associations through component minimization and enforceable native-process network isolation; no domain-only blacklists."
-  ]
+  ],
+  "acceptance_results": {
+    "A1": "PASS_WITH_RECORDED_SCOPE_LIMITS",
+    "A2": "PASS_WITH_RECORDED_SCOPE_LIMITS",
+    "A3": "PASS_WITH_RECORDED_SCOPE_LIMITS",
+    "A4": "PASS_WITH_RECORDED_SCOPE_LIMITS",
+    "A5": "PASS_WITH_RECORDED_SCOPE_LIMITS",
+    "A6": "PASS_WITH_RECORDED_SCOPE_LIMITS",
+    "A7": "PASS_WITH_RECORDED_SCOPE_LIMITS",
+    "A8": "PASS_WITH_RECORDED_SCOPE_LIMITS",
+    "A9": "PASS_WITH_RECORDED_SCOPE_LIMITS",
+    "A10": "PASS_WITH_RECORDED_SCOPE_LIMITS"
+  }
 }

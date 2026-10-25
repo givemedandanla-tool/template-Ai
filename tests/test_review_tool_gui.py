@@ -10,7 +10,7 @@ from unittest.mock import patch
 from PySide6.QtCore import QEventLoop, QTimer, Qt
 from PySide6.QtGui import QColor, QImage, QPalette
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication, QMessageBox
+from PySide6.QtWidgets import QApplication, QMessageBox, QWidget
 
 
 APP = QApplication.instance() or QApplication([])
@@ -84,6 +84,9 @@ class ReviewToolGuiTests(unittest.TestCase):
                 try:
                     window.show()
                     APP.processEvents()
+                    form=window.findChild(QWidget,'reviewForm')
+                    self.assertIsNotNone(form)
+                    self.assertEqual(form.grab().toImage().pixelColor(1,1).name(),'#ffffff')
                     for button in (window.more_button, window.add_mark_button):
                         with self.subTest(menu=button.text()):
                             menu = button.menu()
