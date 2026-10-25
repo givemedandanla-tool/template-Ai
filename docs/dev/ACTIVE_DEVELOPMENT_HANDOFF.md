@@ -1,3 +1,7 @@
+# 最新授權：持續至可交付的離線 review-tool
+
+使用者已要求全部完成，持續工作直到能正確讀取 AI 且不能連線至 Adobe。依 [執行計畫](windows_review_environment/adobe-headless-20261025/IMPLEMENTATION_PLAN.md) 推進；checkpoint CP-20261025-REVIEW-ADOBE-HEADLESS-003 是進行中保存。原生除錯縮小至 AdobeLinguistic 初始化例外，原因仍在定位，不得放寬網路封鎖換取成功。最新資格仍未完成產品整合。
+
 # 當前：review-tool Adobe 稽核部分完成，產品尚未整合
 
 分支 feature/review-tool-v0.1.0。先讀 [本輪 STATE](windows_review_environment/adobe-headless-20261025/STATE.json)、[契約](windows_review_environment/adobe-headless-20261025/CONTRACT.json) 與 [匿名網路稽核](windows_review_environment/adobe-headless-20261025/NETWORK_AUDIT.md)。目前 checkpoint CP-20261025-REVIEW-ADOBE-HEADLESS-002，遠端確認以其獨立收據為準。
