@@ -1,3 +1,7 @@
+# 最新進度：隔離原生讀取成功，產品接入進行中
+
+CP-20261025-REVIEW-ADOBE-HEADLESS-004：零網路能力的原生讀取已連續三程序正常退出，合成與指定私人樣本的五頁輸出與本機基準一致。請讀 [階段紀錄](windows_review_environment/adobe-headless-20261025/ISOLATION_PROGRESS.md) 及部件 STATE。DNS 正向對照、正式 review-tool 接入與完整回歸仍待完成；依使用者指令繼續至可交付，不以此 checkpoint 結束任務。
+
 # 最新授權：持續至可交付的離線 review-tool
 
 使用者已要求全部完成，持續工作直到能正確讀取 AI 且不能連線至 Adobe。依 [執行計畫](windows_review_environment/adobe-headless-20261025/IMPLEMENTATION_PLAN.md) 推進；checkpoint CP-20261025-REVIEW-ADOBE-HEADLESS-003 是進行中保存。原生除錯縮小至 AdobeLinguistic 初始化例外，原因仍在定位，不得放寬網路封鎖換取成功。最新資格仍未完成產品整合。
