@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261025-REVIEW-ADOBE-HEADLESS-005",
+  "created_utc": "2026-10-25T15:12:21.040705+00:00",
+  "base_commit": "53913a1efcf36150be7b343a303ae945824f1685",
+  "phase": "PREPARED",
+  "summary": "Integrate contained native reader; preserve regression and pending font correction",
+  "requirement_ids": [
+    "REVIEW-ADOBE-HEADLESS-01"
+  ],
+  "next_step": "Retest font protection and actual UI before delivery",
+  "source_files": {
+    ".gitignore": {
+      "bytes": 590,
+      "sha256": "9a69a835c297b9dd81a698f25472ba32dd5f3245e7226364b5285aff3d701830",
+      "git_blob_sha1": "330f28f76290d004860923269b3c4144e04aaf32"
+    },
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 3614,
+      "sha256": "c990eaab30b2a2813eaa7e3c420ce42cfa40076296f4f293cd748a6c75ddd61b",
+      "git_blob_sha1": "63102f109082653e40a32f17b5955a13b6026be9"
+    },
+    "docs/dev/windows_review_environment/adobe-headless-20261025/INTEGRATION_PROGRESS.md": {
+      "bytes": 1139,
+      "sha256": "d4705344e21230bb6db32d5d7bc68a79c4776aebb6c3ca177849fac78a594cbf",
+      "git_blob_sha1": "0290ee932275d3139dd2af650b21b86b0b53ec45"
+    },
+    "docs/dev/windows_review_environment/adobe-headless-20261025/LOCAL_READER.md": {
+      "bytes": 2035,
+      "sha256": "1df2199653301f10597f8eac3295f392d4f302ec25f13e69c37be3f3867c1e5a",
+      "git_blob_sha1": "91a1b25a912e87f91fa3254c8fa324fdd73f1a9f"
+    },
+    "docs/dev/windows_review_environment/adobe-headless-20261025/STATE.json": {
+      "bytes": 1243,
+      "sha256": "0bd185c9a8744926435f6042bd2a209566e33213c580f09065012bd57c0569f8",
+      "git_blob_sha1": "dd46391f9e31b1a3a177aba76da9fe36989d6f82"
+    },
+    "template_ai/review_tool/__init__.py": {
+      "bytes": 112,
+      "sha256": "29aa48d4d15a9f356a022b2747feb8d61bb93d537782e14d0fd81190e0553b91",
+      "git_blob_sha1": "97fab004af6e8079d2a58818f59ccfa8f0713265"
+    },
+    "template_ai/review_tool/analysis.py": {
+      "bytes": 29563,
+      "sha256": "3c7b63bff6bc8a1a5145b1622b84a4465f71c28ef148289d4c9675a796ffc9da",
+      "git_blob_sha1": "2fcaaeb1cb9bdb4f9944aa6e5bf26a5d5c27518d"
+    },
+    "template_ai/review_tool/illustrator_bridge.py": {
+      "bytes": 336,
+      "sha256": "b6cecbfc5a3c4569331ee53ca77017482076eef53c2a8211e0ec1c6bf53da559",
+      "git_blob_sha1": "c569bf8ce0e760e3b6741d1cb1c946e3dc96304b"
+    },
+    "template_ai/review_tool/illustrator_host.py": {
+      "bytes": 149,
+      "sha256": "8568b785950a44d6338bbb149580ad268601f349ed7f14c264f65ed362b517ac",
+      "git_blob_sha1": "cb52ba4ba373af886e117c9745a014a7e5d53ee2"
+    },
+    "template_ai/review_tool/native_observation.py": {
+      "bytes": 4112,
+      "sha256": "71f80dcb56b2ee327d5696eacfeb326b98f7d7db943cc2707817b8a08544c883",
+      "git_blob_sha1": "d78d4bbe5259bce6f3ce4d1371aecc202fd01402"
+    },
+    "template_ai/review_tool/native_reader.py": {
+      "bytes": 10862,
+      "sha256": "f8ee5caa09afddbd50e1988512db3d10319ae58acdd2e64db0d533df9b6e429d",
+      "git_blob_sha1": "e8dc9e1beccade14ad1baf61b62a5090ef371982"
+    },
+    "template_ai/review_tool/native_worker/engine_worker.py": {
+      "bytes": 6841,
+      "sha256": "e718ca2a444f0fccf8dc6f01126529c707e38251ab7699c6f331f36506931e4e",
+      "git_blob_sha1": "934c48c6863cfbedca1bc5de40ee2ae22f753d57"
+    },
+    "template_ai/review_tool/native_worker/export_document.py": {
+      "bytes": 2191,
+      "sha256": "aaaae17c8c4b627b6a47d42b1db636204316d28cad4471e3c73aa5b8389f4bc5",
+      "git_blob_sha1": "13f72962ef3348fdc798783c223a0fc30b04a82b"
+    },
+    "template_ai/review_tool/native_worker/export_svg.py": {
+      "bytes": 1964,
+      "sha256": "42b3af45e81d7b6942de15c6396ddcd247b86820ccdd0c912aee00b30464b735",
+      "git_blob_sha1": "13895ecc1e0b65432934ad4461a2de8f82b5bfe2"
+    },
+    "template_ai/review_tool/native_worker/font_probe.py": {
+      "bytes": 2464,
+      "sha256": "9b512b2a95dc8d42e2104a133adabfbe0c9f13e9665f7d2a8dd214b405191602",
+      "git_blob_sha1": "8aad4fddbfa397d6230d1ddc185b9a5e14fa1676"
+    },
+    "template_ai/review_tool/native_worker/guarded.py": {
+      "bytes": 1312,
+      "sha256": "529fb5f2aafdd1f66d7b54877f213015a6b68015c013fec22484ba9f50906a17",
+      "git_blob_sha1": "c5d8874ba59862e49a7906c8eb2c76b783cb95be"
+    },
+    "template_ai/review_tool/native_worker/local_mailbox.py": {
+      "bytes": 3380,
+      "sha256": "0fc6319cc1524375f94827789040eefa963f6fb4d80617403348972bd0cc4de5",
+      "git_blob_sha1": "d1ca986d44c699497686e5ab692865dd2f393f6e"
+    },
+    "template_ai/review_tool/native_worker/observe_host.py": {
+      "bytes": 1593,
+      "sha256": "fcb4dd87e133097723914d386f034b614f68b816a1eda25721afc8a59fd0e6f7",
+      "git_blob_sha1": "1becbd206464c97ddd726215a41d0015ddab4a96"
+    },
+    "template_ai/review_tool/native_worker/read_artwork.py": {
+      "bytes": 5364,
+      "sha256": "50151969b46e764f7858dc7ecaa3c9ce5ccc0a81394b0230047cc23124a79fc5",
+      "git_blob_sha1": "387a5a5fafffaa208004ca49c45948c56abb951b"
+    },
+    "template_ai/review_tool/window.py": {
+      "bytes": 52409,
+      "sha256": "29c0837bbdec978726b1740d3febab0eb763c149759454c6a21931284c7d738a",
+      "git_blob_sha1": "945bcf3e7c6cd99129983cb7ac598f7b634bdd09"
+    },
+    "template_ai/review_tool/worker.py": {
+      "bytes": 3098,
+      "sha256": "6f1d9fdde59a6728ec595acdd0d5adc1fec61f7b4db7de9e247464033601e498",
+      "git_blob_sha1": "905aad9c05c518ad32624450dbdfca4719d147c0"
+    },
+    "template_ai/source_analysis.py": {
+      "bytes": 12733,
+      "sha256": "26cac6cadddf81a7542b686026ebdbab22c3dea4b70a3618f9ce36dcf8e99bc1",
+      "git_blob_sha1": "bc6e86be7b837f4163cc1f5e9f4599949033d10e"
+    },
+    "tests/test_review_illustrator_bridge.py": {
+      "bytes": 380,
+      "sha256": "fbc5e6cd5cbf684f3f774d2961ac1ddbfb3309fe3401136519fe9373ca8378c9",
+      "git_blob_sha1": "ae4a606e64518031c222c57620c1e6a1f29f8555"
+    },
+    "tests/test_review_native_observation.py": {
+      "bytes": 2771,
+      "sha256": "bb0475d8f8304957c3bcfdc866f50985e02f7aae7045c65b0a78798de4f3db94",
+      "git_blob_sha1": "cb1d120563c35c9b74c5c0dd09be82df912fc1b2"
+    },
+    "tools/windows_review_dev/illustrator_bridge/README.md": {
+      "bytes": 5145,
+      "sha256": "9d073403201be267a2b442da8eefd4d651db5bc606b242548b24f69f0b7864f0",
+      "git_blob_sha1": "4accbf72b037f293f866edff6ef68c6a8542ca65"
+    },
+    "tools/windows_review_dev/prepare_native_reader.py": {
+      "bytes": 2995,
+      "sha256": "1934ae372bc27bbf44cb9fa41380183a462cc5d49cbe0c790d9ee1cf91a988b1",
+      "git_blob_sha1": "a5afe43bad67b924b8496bd61be335ed663d5e41"
+    },
+    "tools/windows_review_dev/usb/offline_start.py": {
+      "bytes": 15632,
+      "sha256": "d4c959e2712ae5487d6975bfaa24bc4b8b7c78fd40f7d8314a9ed893bf700285",
+      "git_blob_sha1": "669e916b887026a8cd058abd7aef9838ccc88f22"
+    },
+    "tools/windows_review_dev/usb/prepare_usb.py": {
+      "bytes": 9294,
+      "sha256": "c7bf4bfedef7b445f0a350e91f16b9d9ad32e0e87a604dcb6d8239091070bb29",
+      "git_blob_sha1": "463eeef968d8b18f01f9a69ec96a42c5c01a69fb"
+    },
+    "tools/windows_review_dev/verify_native_lifetime.py": {
+      "bytes": 3651,
+      "sha256": "3bbc9312bde8aa33db81a15fd43749dafe505f1951857eaac5a5fe9885b9fc9f",
+      "git_blob_sha1": "87e0be6e18651fea94856f628f51f7ec55fda7ea"
+    }
+  },
+  "source_manifest_sha256": "aaa64479789b38469174f3d6049dcf2d79c7e0781ddf8bc756c8a287f65712e3",
+  "local_snapshot": {
+    "path": ".checkpoints\\CP-20261025-REVIEW-ADOBE-HEADLESS-005\\source.zip",
+    "sha256": "25979446caba46df52aec11fcfa3eaedc8e2e46eef3d11bd09c1717d1dc0b52a"
+  },
+  "remote_confirmation": "尚未確認；本機快照不能冒稱已在 GitHub 保存"
+}

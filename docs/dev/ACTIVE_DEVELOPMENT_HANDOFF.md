@@ -1,3 +1,7 @@
+# 最新進度：隔離原生引擎已接入，缺字型修正待重驗
+
+CP-20261025-REVIEW-ADOBE-HEADLESS-005；先讀部件 STATE、[產品接入進度](windows_review_environment/adobe-headless-20261025/INTEGRATION_PROGRESS.md) 與 [本機指南](windows_review_environment/adobe-headless-20261025/LOCAL_READER.md)。使用者要求持續至可交付，不以此 checkpoint 結束。
+
 # 最新進度：隔離原生讀取成功，產品接入進行中
 
 CP-20261025-REVIEW-ADOBE-HEADLESS-004：零網路能力的原生讀取已連續三程序正常退出，合成與指定私人樣本的五頁輸出與本機基準一致。請讀 [階段紀錄](windows_review_environment/adobe-headless-20261025/ISOLATION_PROGRESS.md) 及部件 STATE。DNS 正向對照、正式 review-tool 接入與完整回歸仍待完成；依使用者指令繼續至可交付，不以此 checkpoint 結束任務。

@@ -68,8 +68,8 @@ def classify(value):
     return recognize(value)['slot_kind']
 
 
-def analyse_source(source,assets,semantic_model=None,model_context=None):
-    root,elements,bounds=vector_objects(source,assets)
+def analyse_source(source,assets,semantic_model=None,model_context=None,*,vector_provider=None,pdf_text_provider=None,evidence_method=None,require_text_coverage=False):
+    root,elements,bounds=(vector_provider or vector_objects)(source,assets)
     page=Rect(0,0,source['width_mm'],source['height_mm']);byid={e.get('id'):e for e in elements if e.get('id')}
     candidate_rects=[];boundary_adjustments={}
     for node in elements:
@@ -93,12 +93,17 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
         rect=bounds.get(node.get('id'))
         if value.strip() and rect:texts.append((node.get('id'),value.strip(),rect))
     from .source_region_hypotheses import original_pdf_texts,region_hypotheses,size_note
-    native_texts,native_evidence=original_pdf_texts(source)
+    native_texts,native_evidence=(pdf_text_provider or original_pdf_texts)(source)
     # Exact original runs supplement outlined derivatives; no proximity-based identity merge.
     for native,value,rect in native_texts:
         if any(contains(bounds[node.get('id')],rect) for node in logos):continue
         if any(value==old_value and contains(old_rect,rect,tolerance=.5) for _,old_value,old_rect in texts):continue
         texts.append((native,value,rect))
+    if require_text_coverage:
+        # Decorative native rectangles must not silently discard visible text.
+        visible=[row for row in texts if contains(page,row[2])]
+        if any(sum(contains(crop,row[2]) for _,crop in regions)!=1 for row in visible):
+            regions=[('page-region-hypothesis',page)]
     region_evidence=region_hypotheses(texts,page)
     if regions==[('page-region-hypothesis',page)] and region_evidence['candidates']:
         proposed=[(row['key'],Rect(**row['crop'])) for row in region_evidence['candidates']]
@@ -169,7 +174,7 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
             crop=asdict(crop),work_width=crop.w,work_height=crop.h,slots=slots,observations=observations,
             company_bindings={'p1':companies} if name_used else {},visual_confirmed=False,
             analysis_version=ANALYSER_VERSION,review_state='AI_PENDING_REVIEW',
-            evidence=dict(method='INKSCAPE_TRANSFORMED_BOUNDS_AND_SOURCE_LABELS',native_illustrator_mapping='UNKNOWN',
+            evidence=dict(method=evidence_method or 'INKSCAPE_TRANSFORMED_BOUNDS_AND_SOURCE_LABELS',native_illustrator_mapping='UNKNOWN',
                 physical_size='SOURCE_GEOMETRY_HYPOTHESIS_REQUIRES_CONFIRMATION',
                 page_boundary_adjustment=boundary_adjustments.get(key),
                 original_glyph_analysis=native_evidence,unframed_region_hypotheses=region_evidence,font_size='DEFAULT_REQUIRES_SOURCE_REVIEW',

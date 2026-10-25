@@ -47,7 +47,8 @@ def main(request_path) -> int:
         # Raw exception text can contain customer strings or paths. Keep it in
         # local logs only if a caller separately opts in; safe IPC has a code.
         from .source_compatibility import ReviewSourceCompatibilityError
-        if isinstance(error, ReviewSourceCompatibilityError):
+        from .native_reader import NativeReaderError,IsolationError
+        if isinstance(error, (ReviewSourceCompatibilityError,NativeReaderError,IsolationError)):
             _emit(dict(type='error', code=error.code, message=error.safe_message))
         else:
             _emit(dict(type='error',code=type(error).__name__,

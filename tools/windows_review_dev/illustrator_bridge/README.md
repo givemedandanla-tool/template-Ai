@@ -1,3 +1,7 @@
+# 此接口已退役
+
+目前 review-tool 僅使用隔離原生讀取。以下為歷史說明，不適用新版本；舊接口已停止執行。參見 [本機讀取指南](../../../docs/dev/windows_review_environment/adobe-headless-20261025/LOCAL_READER.md)。
+
 # review-tool 的 Windows Illustrator 接口（實驗性）
 
 目的：在已安裝、已啟用且能正常開檔的 Illustrator 電腦，以本機 COM／ExtendScript 開啟 AI，另存獨立 PDF 副本供 review-tool 判讀。這台開發機沒有 Illustrator；合成邊界測試不能當真實 Adobe 轉檔通過。

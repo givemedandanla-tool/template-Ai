@@ -18,7 +18,7 @@ import tempfile
 import time
 from typing import Callable
 
-VERSION = 'review-observations-3-source-compatibility'
+VERSION = 'review-observations-4-contained-native'
 MAX_PAGES = 100
 MAX_FIELDS = 4000
 # These are bounds for actual phases, not fake heartbeats.  Conversion can make
@@ -312,7 +312,18 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
     page_count = 1
     page_number = 1
     fields_count = 0
-    pdf_compatibility_source = pdf_backed_source(path)
+    native_document=None
+    if path.suffix.lower() in ('.ai','.pdf','.svg','.eps'):
+        from .native_reader import read_document,import_page
+        progress('import','正在離線讀取原稿與檢查字型；每份文件使用獨立程序')
+        native_document=read_document(path)
+        packet['capabilities']['adobe_native']=dict(
+            isolation=native_document['containment'],font_status=native_document['fonts']['status'],
+            substituted_fonts=native_document['fonts']['substituted_count'],
+            runtime_manifest_sha256=native_document['manifest_sha256'],
+            derivative_provenance='ADOBE_EXPORT_NOT_ORIGINAL_AI_DECLARATIONS')
+        page_count=native_document['artboard_count']
+    pdf_compatibility_source = not native_document and pdf_backed_source(path)
     def block_placeholder(page_number, evidence):
         packet['issues'].append(_issue(ISSUE_CODE, SAFE_MESSAGE, page=page_number,
                                       detail=evidence))
@@ -337,7 +348,8 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
                 continue
         progress('import', f'正在準備第 {page_number} 頁原稿預覽', page_number, page_count)
         try:
-            imported = import_file(path, cache_dir/'assets', page=page_number)
+            imported = (import_page(path,cache_dir/'assets',native_document,page_number) if native_document
+                        else import_file(path, cache_dir/'assets', page=page_number))
         except Exception as error:
             if not packet['pages']:
                 raise
@@ -361,14 +373,17 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
         safe_identity['origin']='BUNDLED' if identity.get('policy')=='BUNDLED_ONLY' else 'EXTERNAL' if identity.get('policy')=='SOURCE_EXTERNAL' else 'NONE'
         if identity.get('runtime_manifest_sha256'):
             safe_identity['manifest_sha256']=identity['runtime_manifest_sha256']
-        packet['capabilities']['inkscape_runtime']=safe_identity
+        if not native_document:packet['capabilities']['inkscape_runtime']=safe_identity
         if source.get('renderer_execution')=='SELECTED_INKSCAPE_CONVERSION_SUCCEEDED':
             packet['capabilities']['inkscape_conversion_executed']=True
         if not source.get('calibrated',False):
             packet['issues'].append(_issue('PHYSICAL_SIZE_UNCALIBRATED',
                 '這一頁只有預覽比例，實體尺寸尚未確認；請勿將畫面大小當成印刷尺寸',page=page_number))
         progress('original_text', '正在保存來源文字與字型依據', page_number, page_count)
-        document = original_text_observation(source)
+        if native_document:
+            from .native_observation import original_observation
+            document=original_observation(source)
+        else:document = original_text_observation(source)
         folder=cache_dir/'observations'/sha/f'page-{page_number}'
         page['original_evidence'] = _atomic_json(folder/'original-text.json', document)
         page['original_evidence']['state']=document.get('state')
@@ -376,7 +391,11 @@ def analyse_file(path, cache_dir, progress_callback: Callable | None = None, ocr
         progress('geometry', '正在尋找作品範圍、文字及圖形', page_number, page_count)
         candidates=[]
         try:
-            candidates=analyse_source(source, cache_dir/'analysis')
+            if native_document:
+                from .native_observation import vector_objects,pdf_texts
+                candidates=analyse_source(source,cache_dir/'analysis',vector_provider=vector_objects,
+                    pdf_text_provider=pdf_texts,evidence_method='ADOBE_EXPORT_QT_SHAPE_BOUNDS_AND_DERIVED_PDF_GLYPHS',require_text_coverage=True)
+            else:candidates=analyse_source(source, cache_dir/'analysis')
             packet['capabilities']['vector_analysis_executed']=True
         except Exception as error:
             packet['issues'].append(_issue('VECTOR_ANALYSIS_UNAVAILABLE',

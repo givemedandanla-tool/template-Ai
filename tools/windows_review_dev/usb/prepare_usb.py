@@ -124,6 +124,7 @@ def copy_engine(extracted, output):
 
 
 def main():
+    raise RuntimeError("舊 COM／Inkscape 隨身碟啟動方案已停用；請依 LOCAL_READER.md 準備隔離原生讀取環境。")
     parser = argparse.ArgumentParser()
     parser.add_argument('--repo', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)

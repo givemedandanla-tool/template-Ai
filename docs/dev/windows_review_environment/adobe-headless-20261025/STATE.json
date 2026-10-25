@@ -2,18 +2,25 @@
   "component": "review-tool",
   "branch": "feature/review-tool-v0.1.0",
   "requirement": "REVIEW-ADOBE-HEADLESS-01",
-  "status": "IMPLEMENTING_ENFORCED_OFFLINE_READER",
+  "status": "PRODUCT_INTEGRATED_REGRESSION_IN_PROGRESS",
   "contract": "docs/dev/windows_review_environment/adobe-headless-20261025/CONTRACT.json",
   "base_commit": "7df7a26f3b1995a73e58626edd20bf9c8d77314a",
-  "checkpoint": "CP-20261025-REVIEW-ADOBE-HEADLESS-004",
+  "checkpoint": "CP-20261025-REVIEW-ADOBE-HEADLESS-005",
   "scope": "Unified local Adobe AI/PDF/SVG reading, native font checks and enforced network isolation before product integration",
   "private_data_upload": false,
   "engine_or_fonts_upload": false,
   "main_merge": false,
   "package_release": false,
-  "next_step": "Finish valid DNS controls, qualify derivative provenance and wire the contained reader into the normal review workflow.",
+  "next_step": "Recheck SVG declared-font detection, run actual UI regression, archive diagnostics and deliver.",
   "report": "docs/dev/windows_review_environment/adobe-headless-20261025/NETWORK_AUDIT.md",
   "integration_complete": false,
   "adobe_dll_modified": false,
-  "isolation_prototype": "THREE_DOCUMENT_READ_AND_NORMAL_EXIT_PASS"
+  "isolation_prototype": "THREE_DOCUMENT_READ_AND_NORMAL_EXIT_PASS",
+  "code_integrated": true,
+  "tests": {
+    "windows_component": 67,
+    "lifetime_controls": 4,
+    "network_controls": "PASS_TCP4_TCP6_HTTP_UDP_DNS_CHILD_AND_FILE",
+    "full_pipeline": "AI_PRIVATE_AI_PDF_SVG_MALFORMED_PASS; SVG_MISSING_FONT_FIX_PENDING_RETEST"
+  }
 }

@@ -235,6 +235,7 @@ def launch(target, logs):
 
 
 def main(argv=None):
+    raise RuntimeError("舊 COM／Inkscape 隨身碟啟動方案已停用；請依 LOCAL_READER.md 準備隔離原生讀取環境。")
     parser = argparse.ArgumentParser()
     parser.add_argument('--bundle', required=True, type=Path)
     parser.add_argument('--local-root', type=Path, help='Optional short LOCAL installation parent')
